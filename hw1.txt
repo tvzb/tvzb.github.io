@@ -1,0 +1,61 @@
+1-ABC新闻频道,http://cms-wowza.lunabyte.io/wbrz-live-1/_definst_/smil:wbrz-live.smil/chunklist_b1300000.m3u8
+2-Astrakhan24(Opt-2),http://streaming.astrakhan.ru/astrakhan24/index.m3u8
+3-BBS佛教广播,http://bbstv.clouducs.com:1935/bbstv-live/livestream/chunklist_w1403706733.m3u8
+4-CanadaOne,http://cdn8.live247stream.com/canadaone/tv/playlist.m3u8
+5-Comedy,http://51.210.199.27/hls/stream.m3u8
+6-Documentary,http://51.210.199.23/hls/stream.m3u8
+7-Family,http://51.210.199.19/hls/stream.m3u8
+8-InsightTV,https://insighttv-samsung-canada.amagi.tv/playlist.m3u8
+9-Inwonder,https://inwonder-samsung-canada.amagi.tv/playlist.m3u8
+10-Iranian,http://51.210.199.22/hls/stream.m3u8
+11-moviesphere,https://moviesphere-samsung-samsungus.amagi.tv/playlist.m3u8
+12-Music,http://51.210.199.24/hls/stream.m3u8
+13-News Max,https://nmxlive.akamaized.net/hls/live/529965/Live_1/index_720.m3u8
+14-NewsmaxTV,http://nmxlive.akamaized.net/hls/live/529965/Live_1/index.m3u8
+15-NHK World,https://nhkwlive-ojp.akamaized.net/hls/live/2003459/nhkwlive-ojp-en/index.m3u8
+16-NHK World,https://nhkwlive-ojp.akamaized.net/hls/live/2003459/nhkwlive-ojp-en/index_4M.m3u8
+17-Nostalgia,http://51.210.199.20/hls/stream.m3u8
+18-RTHK,http://rthktv32-live.akamaized.net/hls/live/2036819/RTHKTV32/master.m3u8
+19-RTHK32,https://rthktv32-live.akamaized.net/hls/live/2036819/RTHKTV32/master.m3u8
+20-TVBS新闻,http://38.64.72.148/hls/modn/list/4006/playlist.m3u8
+21-TVB星河,http://103.112.191.9:880/LAOSAT1092.m3u8
+22-UniverTV,http://cdn.universmotri.ru/live/hq.sdp/chunklist_w1792531.m3u8
+23-Weather News,https://movie.mcas.jp/mcas/smil:wn1.smil/master.m3u8
+24-Прямий,http://95.67.21.100/hls/prm_ua_hi/index.m3u8
+25-埃及 Mokameleen TV,http://mn-nl.mncdn.com/mekameleen/smil:mekameleentv.smil/chunklist_b1864000.m3u8?v=787761179
+26-澳门莲花,http://103.112.191.9:880/LAOSAT1069.m3u8
+27-半·新闻,http://live-hls-web-aja.getaj.net/AJA/02.m3u8
+28-半岛电视台,http://live-hls-web-aje.getaj.net/AJE/01.m3u8
+29-博斯高球Ⅱ,http://103.112.191.9:880/LAOSAT1081.m3u8
+30-국악방송,http://mgugaklive.nowcdn.co.kr/gugakvideo/gugakvideo.stream/playlist.m3u8
+31-朝鲜中央台,http://119.77.96.184:1935/chn05/chn05/chunklist_w644291506.m3u8
+32-创世电视,https://cdn.deepcore.online/hlsme/ctv_hk_1080.m3u8
+33-东森电影,http://103.112.191.9:880/LAOSAT1017.m3u8
+34-东森洋片,http://103.112.191.9:880/LAOSAT1018.m3u8
+35-俄·IGITV蓝光,http://hls-igi.cdnvideo.ru/igi/igi_hq/playlist.m3u8
+36-法·24台,http://tv.balkanweb.com/news24/livestream/playlist.m3u8
+37-法·时尚,http://lb.streaming.sk/fashiontv/stream/chunklist_w1906011378.m3u8
+38-凤凰卫视香港台,http://lcx-olt.8866.org:8181/tsfile/live/1071_1.m3u8
+39-国家地理野生,https://sc.id-tv.kz/NatGeoWildHD_34_35.m3u8
+40-好消息综合台,https://dqhxk7sbp7xog.cloudfront.net/hls-live/goodtv/_definst_/liveevent/live-ch1-2.m3u8
+41-红牛REDBULL TV,https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_3360.m3u8
+42-环球电视台,http://zb.xzxwhcb.com:9999/hls/world.m3u8
+43-龙祥时代,http://103.112.191.9:880/LAOSAT1084.m3u8
+44-美·NASA Public Channel,https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master_2000.m3u8
+45-美·NASA Public Channel,https://ntv2.akamaized.net/hls/live/2013923/NASA-NTV2-HLS/master_2000.m3u8
+46-美·红牛运动,http://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_1660.m3u8
+47-美·红牛运动,http://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_928.m3u8
+48-美国mytime,https://mytime-tcl.amagi.tv/playlist1080-p.m3u8?blog.ntnas.top
+49-泰·THAIPBS,http://thaipbs-live.cdn.byteark.com/live-en/playlist_720p/index.m3u8
+50-泰·公共三台,http://thaipbs-live.cdn.byteark.com/live/playlist_1080p/index.m3u8
+51-泰国 ASTV News 1,http://news1.live14.com/stream/news1_hi.m3u8
+52-天映频道,http://103.112.191.9:880/LAOSAT1029.m3u8
+53-卫视电影,http://103.112.191.9:880/LAOSAT1085.m3u8
+54-新加坡,https://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_4.m3u8
+55-新加坡中文台,https://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_4.m3u8?zshijd
+56-伊拉克-SharqiyaNews,http://ns8.indexforce.com:1935/alsharqiyalive/mystream/playlist.m3u8
+57-印尼-METROTV,http://edge.metrotvnews.com:1935/live-edge/smil:metro.smil/playlist.m3u8
+58-印尼-TVRIKanal3,http://wpc.d1627.nucdn.net/80D1627/o-tvri/Content/HLS/Live/Channel(TVRI3)/Stream(03)/index.m3u8
+59-印尼-TVRISports,http://wpc.d1627.nucdn.net/80D1627/o-tvri/Content/HLS/Live/Channel(TVRI4)/Stream(03)/index.m3u8
+60-越·HBTV,http://hoabinhtvlive.746b3ddb.cdnviet.com/hoabinhtv/playlist.m3u8
+61-越南-VBSTV,http://uni6rtmp.tulix.tv:1935/vbstv/vbsabr.smil/playlist.m3u8

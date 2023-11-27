@@ -1,0 +1,124 @@
+1-寰宇新闻,https://www.youtube.com/watch?v=B7Zp3d6xXWw
+2-镜新闻,https://www.youtube.com/watch?v=5n0y6b0Q25o
+3-东森Live,https://www.youtube.com/watch?v=R2iMq5LKXco
+4-中天新闻,https://www.youtube.com/watch?v=oIgbl7t0S_w
+5-中天新闻,https://www.youtube.com/live/oIgbl7t0S_w?feature=share
+6-中天新闻2,https://www.youtube.com/watch?v=WPfPjbOLNfE
+7-三立live,https://www.youtube.com/watch?v=FoBfXvlOR6I
+8-三立inews,https://www.youtube.com/watch?v=CKjSm5ZeehE
+9-三立NEWS+,https://www.youtube.com/watch?v=oZdzzvxTfUY
+10-TVBS新闻,https://www.youtube.com/watch?v=2mCSYvcfhtc
+11-TVBS NEWS LIVE,https://www.youtube.com/watch?v=m_dhMSvUCIc
+12-民视新闻,https://www.youtube.com/watch?v=ylYJSBUgaMA
+13-华视新闻,https://www.youtube.com/watch?v=wM0g8EoUZ_E
+14-中视新闻,https://www.youtube.com/watch?v=TCnaIE_SAtM
+15-台视新闻,https://www.youtube.com/watch?v=xL0ch83RAK8
+16-EBC东森财经,https://www.youtube.com/watch?v=WHEPzbFA3hw
+17-三立财经,https://www.youtube.com/watch?v=CKjSm5ZeehE
+18-NHK WORLD,https://www.youtube.com/watch?v=f0lYkdA-Gtw
+19-Sky News,https://www.youtube.com/watch?v=9Auq9mYxFEE
+20-FRANCE 24,https://www.youtube.com/watch?v=h3MuIUNCCzI
+21-ABC News,https://www.youtube.com/watch?v=w_Ma8oQLmSM
+22-Euronews English,https://www.youtube.com/watch?v=pykpO5kQJ98
+23-DW,https://www.youtube.com/watch?v=pqabxBKzZ6M
+24-ANN News,https://www.youtube.com/watch?v=coYw-eVU0Ks
+25-KBS KOREA,https://www.youtube.com/watch?v=HnfpTMtfFk8
+26-NBC NEW,https://www.youtube.com/watch?v=0IUbD_4ytuo
+27-凤凰信息,https://www.youtube.com/watch?v=sUISafvOieY
+28-凤凰卫视,https://www.youtube.com/watch?v=dmDg7NfUoSw
+29-CCTV中文国际,https://www.youtube.com/watch?v=9sE12tg3CmA
+30-东森财经股市,https://www.youtube.com/watch?v=LbS-xQ67fos
+31-公视直播,https://www.youtube.com/watch?v=4Uc00FPs27M
+32-KOMPASTV,https://www.youtube.com/watch?v=4rmf-lk3ito
+33-东京新宿,https://www.youtube.com/watch?v=DjdUEyjx8GM
+34-台湾地震监视,https://www.youtube.com/watch?v=Owke6Quk7T0
+35-凤凰中文,https://playtv-live.ifeng.com/live/06OLEGEGM4G.m3u8
+36-凤凰中文,http://qspyx.7766.org:9999/tsfile/live/1106_1.m3u8
+37-凤凰资讯,http://qspyx.7766.org:9999/tsfile/live/1105_1.m3u8
+38-凤凰中文,http://r.jdshipin.com/cCCzW
+39-凤凰资讯,http://r.jdshipin.com/0Rp07
+40-澳门莲花,http://epg.112114.xyz/lotus
+41-无线新闻台,http://r.jdshipin.com/CkuBd
+42-莲花卫视,http://107.151.203.111:2209/135/hk.php?id=amlh
+43-莲花卫视,http://www.238311.cn:555/lotustv.php
+44-澳亚卫视,http://107.151.203.111:2209/135/hk.php?id=aoya
+45-澳亚卫视,https://live.mastvnet.com/lsdream/lY44pmm/2000/live.m3u8
+46-翡翠台,http://60.208.16.27:1505/gudou.php?id=1350_4500
+47-明珠台,http://60.208.16.27:1505/gudou.php?id=1351_4500
+48-星空卫视,http://60.208.16.27:1505/gudou.php?id=xingkong_1500
+49-有线新闻,http://61.10.2.141/live_freedirect/hd110_h.live/playlist.m3u8
+50-时尚台FTV,http://80.94.54.42/fashiontv/stream/playlist.m3u8
+51-时尚台FTV,http://lb.streaming.sk/fashiontv/stream/chunklist.m3u8
+52-长城精品,http://38.64.72.148:80/hls/modn/list/4008/chunklist1.m3u8
+53-长城精品,http://38.64.72.148:80/hls/modn/list/4008/chunklist0.m3u8
+54-翡翠台,https://live.astradamy.com/tvbfc/index.m3u8
+55-明珠台,https://live.astradamy.com/tvbpearl/index.m3u8
+56-香港32台,https://rthktv32-live.akamaized.net/hls/live/2036819/RTHKTV32/stream5/streamPlaylist.m3u8
+57-TVBS新闻台,http://38.64.72.148/hls/modn/list/4006/chunklist0.m3u8
+58-TVBS新闻台,http://38.64.72.148:80/hls/modn/list/4006/chunklist0.m3u8
+59-TVBS亚洲台,http://38.64.72.148:80/hls/modn/list/4005/chunklist1.m3u8
+60-东森美洲卫视,http://38.64.72.148:80/hls/modn/list/2015/chunklist0.m3u8
+61-华语电视2,http://38.64.72.148:80/hls/modn/list/4002/chunklist0.m3u8
+62-华语电视3,http://38.64.72.148:80/hls/modn/list/4003/chunklist0.m3u8
+63-TW台视新闻,http://38.64.72.148:80/hls/modn/list/4013/chunklist1.m3u8
+64-TW台视新闻,http://38.64.72.148:80/hls/modn/list/4013/chunklist0.m3u8
+65-番薯,http://61.216.67.119:1935/TWHG/E1/chunklist_w705811302.m3u8
+66-民视新闻,http://38.64.72.148/hls/modn/list/4012/chunklist0.m3u8
+67-民视新闻,http://38.64.72.148/hls/modn/list/4012/chunklist1.m3u8
+68-台视新闻,http://38.64.72.148/hls/modn/list/4013/chunklist0.m3u8
+69-台视新闻,http://38.64.72.148/hls/modn/list/4013/chunklist1.m3u8
+70-TVBS新闻,http://38.64.72.148/hls/modn/list/4006/chunklist1.m3u8
+71-东森超视34.5,http://38.64.72.148:80/hls/modn/list/2013/chunklist1.m3u8
+72-TVBS亚洲,http://38.64.72.148:80/hls/modn/list/4005/playlist.m3u8
+73-民视新闻台,http://38.64.72.148:80/hls/modn/list/4012/chunklist1.m3u8
+74-澳门莲花,http://anren.live/HK/BiIOU11uLA.m3u8
+75-HKIBC,https://live.astradamy.com/hk76/index.m3u8
+76-RTHK港台电视33(720p),https://live.astradamy.com/hk33/index.m3u8
+77-耀才财经台 (576p),http://202.69.67.66:443/webcast/bshdlive-pc/playlist.m3u8
+78-有线新闻台,http://61.10.2.141/live_freedirect/freehd209_h.live/playlist.m3u8
+79-耀才财经新闻,http://202.69.67.66:443/webcast/bshdlive-pc/playlist.m3u8?wowzasessionid=64000?zgangd
+80-RTHK32,https://rthktv32-live.akamaized.net/hls/live/2036819/RTHKTV32/stream2/streamPlaylist.m3u8
+81-台视新闻,http://38.64.72.148/hls/modn/list/4013/playlist.m3u8
+82-台视新闻,http://38.64.72.148:80/hls/modn/list/4013/chunklist0.m3u8?blog.ntnas.top
+83-民视新闻,http://38.64.72.148/hls/modn/list/4012/playlist.m3u8
+84-TVBS亚洲台,http://38.64.72.148/hls/modn/list/4005/playlist.m3u8
+85-GOODTV好医生,https://dqhxk7sbp7xog.cloudfront.net/hls-live/goodtv/_definst_/liveevent/live-ch9-2.m3u8
+86-GOODTV旅行,https://dqhxk7sbp7xog.cloudfront.net/hls-live/goodtv/_definst_/liveevent/live-ch11-2.m3u8
+87-GOODTV经典音乐河,https://dqhxk7sbp7xog.cloudfront.net/hls-live/goodtv/_definst_/liveevent/live-ch6-2.m3u8
+88-番薯台,http://61.216.67.119:1935/TWHG/E1/chunklist_w70581102.m3u8
+89-人间卫视,https://5ddce30eb4b55.streamlock.net/bltvhd/bltv1/chunklist_w511254805.m3u8
+90-人间卫视,http://61.216.67.119:1935/bltvhd/bltv1/chunklist_w1266569526.m3u
+91-人间卫视,http://61.216.67.119:1935/bltvhd/bltv1/chunklist_w1266569526.m3u8
+92-香港佛陀,https://js1.amtb.cn/liveedge/_definst_/livetv/playlist.m3u8
+93-民视新闻台,http://38.64.72.148:80/hls/modn/list/4012/chunklist0.m3u8
+94-TVBS新闻,http://38.64.72.148:80/hls/modn/list/4006/chunklist1.m3u8
+95-TVBS-Asia,http://38.64.72.148:80/hls/modn/list/4005/chunklist0.m3u8
+96-凤凰资讯,http://playtv-live.ifeng.com:80/live/06OLEEWQKN4.m3u8?zgangd
+97-创世.电视,https://cdn.deepcore.online/hlsme/ctv_hk.m3u8?zgangd
+98-澳门莲花,http://anren.live/HK/BiIOU11uLA.m3u8?zgangd
+99-耀才财经,http://202.69.67.66:443/webcast/bshdlive-mobile/playlist.m3u8
+100-耀才财经,https://v3.mediacast.hk/webcast/bshdlive-pc/playlist.m3u8
+101-耀才财经,http://202.69.67.66:443/webcast/bshdlive-pc/playlist.m3u8?wowzasessionid=64000
+102-东森美洲,http://38.64.72.148:80/hls/modn/list/2015/chunklist1.m3u8
+103-东森美洲,http://38.64.72.148/hls/modn/list/2015/chunklist0.m3u8
+104-TVBS亚洲,http://38.64.72.148/hls/modn/list/4005/chunklist0.m3u8
+105-TVBS亚洲,http://38.64.72.148/hls/modn/list/4005/chunklist1.m3u8
+106-美国中文电视,https://jpts.sinovision.net/livestream.m3u8
+107-美国中文电视,https://cdnts.sinovision.net/livestream.m3u8
+108-华语电视2,http://38.64.72.148:80/hls/modn/list/4002/chunklist1.m3u8
+109-华语电视3,http://38.64.72.148:80/hls/modn/list/4003/chunklist1.m3u8
+110-亚洲新闻,http://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_4.m3u8
+111-中国环球电视,http://live.cgtn.com/500/prog_index.m3u8
+112-人间卫视,https://5ddce30eb4b55.streamlock.net/bltvhd/bltv1/chunklist_w614428743.m3u8
+113-香港卫视文旅,https://myun-hw-s3.myun.tv/melj80jz/lxx27bol/1551285536499984128.m3u8
+114-CTN,http://58.99.33.16:1935/liveedge17/live_854_3.stream/chunklist.m3u8
+115-FashionTV,http://lb.streaming.sk/fashiontv/stream/chunklist_w1702070444.m3u8
+116-FashionTV,http://lb.streaming.sk/fashiontv/stream/chunklist_w1402273512.m3u8
+117-CGNTV,http://live.cgtn.com/1000/prog_index.m3u8
+118-CGNTV,http://livear.cgtn.com/1000a/prog_index.m3u8
+119-CGNTV,http://livees.cgtn.com/1000e/prog_index.m3u8
+120-CGNTV,http://liveru.cgtn.com/1000r/prog_index.m3u8
+121-CGNTV,https://livedoc.cgtn.com/500d/prog_index.m3u8
+122-Channel News Asia『蓝光』,http://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_5.m3u8
+123-THAIPBS-3,http://thaipbs-live.cdn.byteark.com/live/playlist_480p/index.m3u8
+124-VB,http://live.tv2bornholm.dk/stream/live/chunklist.m3u8
