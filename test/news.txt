@@ -1,0 +1,114 @@
+CA | Global News, Global News,https://live.corusdigitaldev.com/groupd/live/49a91e7f-1023-430f-8d66-561055f3d0f7/live.isml/master.m3u8
+CA | Global News, Global News,https://live.corusdigitaldev.com/groupd/live/8970c668-40cd-4ca9-8c4d-25fd04f619b5/live.isml/master.m3u8
+Global News BC,https://live.corusdigitaldev.com/groupa/live/48a5882b-a1ec-42d7-bfd7-6c2739e737da/live.isml/.m3u8
+Global News BC,https://live.corusdigitaldev.com/groupa/live/b60d1d57-2851-4c29-bf5c-36feed988e57/live.isml/.m3u8
+Global News Calgary (720p),http://51.210.199.20/hls/stream.m3u8
+Global News Calgary (720p),http://cdn12.henico.net:8080/live/gsctv/index.m3u8
+Global News Calgary (720p),http://kuchini.site:8080/tomstme300/tomasarenatelegramme300/18445
+Global News Calgary (720p),http://kuchini.site:8080/tomstme300/tomasarenatelegramme300/2116
+Global News Calgary (720p),https://hls.erfanhalgheh.live/hls/stream.m3u8
+Global News Calgary (720p),https://live.corusdigitaldev.com/groupb/live/215422c9-d1b9-4009-aaca-32e403f22b01/live.isml/.m3u8
+Global News Calgary (720p),https://live.corusdigitaldev.com/groupc/live/9fd97fb0-baa8-4191-bd2c-59aa5c9a1d48/live.isml/.m3u8
+Global News Calgary (720p),https://live.corusdigitaldev.com/groupd/live/8970c668-40cd-4ca9-8c4d-25fd04f619b5/live.isml/.m3u8
+Global News Calgary (720p),https://livedoc.cgtn.com/1000d/prog_index.m3u8
+Global News Calgary (720p),https://news.cgtn.com/resource/live/document/cgtn-doc.m3u8
+Global News Calgary (720p),https://rpn1.bozztv.com/36bay2/gusa-nostalgia/index.m3u8
+Global News Calgary (720p),https://stream01.welocal.stream/stream/fhd-allgaeutv_25679/ngrp:stream_all/playlist.m3u8
+Global News Edmonton (720p),http://listplay4k.live:8080/play/sEqGlXBK924GUbV9yuY_SFE99t27cO7M5JwwroFe-lU/ts
+Global News Edmonton (720p),https://cloud28.vsgtech.co:3932/live/cncmonterialive.m3u8
+Global News Edmonton (720p),https://live.corusdigitaldev.com/groupb/live/215422c9-d1b9-4009-aaca-32e403f22b01/live.isml/.m3u8
+Global News Edmonton (720p),https://live.corusdigitaldev.com/groupc/live/cea96246-9af2-4373-932f-cdd3f8db2bc0/live.isml/.m3u8
+Global News Edmonton (720p),https://live.corusdigitaldev.com/groupd/live/deb8cec5-87fb-460a-ab82-0929374fc5fb/live.isml/.m3u8
+Global News Edmonton (720p),https://stmv2.zcasthn.com.br/canal5/canal5/playlist.m3u8
+Global News Edmonton (720p),https://stream.wifispeed.cl:3033/hybrid/play.m3u8
+Global News Edmonton (720p),https://unlimited1-us.dps.live/canal2/canal2.smil/playlist.m3u8
+Global News Edmonton (720p),https://videostream.jpbgdigital.com/NOWTV.m3u8
+Global News Edmonton (720p),https://webtvmonacoinfo.mc/live/prod_720/index.m3u8
+Global News Halifax,http://62.210.209.138:41000/movie/v52/v43/9.mp4
+Global News Halifax,http://vip.lotusnet.digital:19051/OSMANIsefa/kWTNrXBAH2Tg/21630
+Global News Halifax,https://1840769862.rsc.cdn77.org/FTF/LSN_SCTE.m3u8
+Global News Halifax,https://itftv-italianfishingtv-1-it.samsung.wurl.tv/playlist.m3u8
+Global News Halifax,https://live.corusdigitaldev.com/groupa/live/023a9e25-f0cf-4d97-af9f-5c665b7d45b9/live.isml/.m3u8
+Global News Halifax,https://live.corusdigitaldev.com/groupa/live/b60d1d57-2851-4c29-bf5c-36feed988e57/live.isml/.m3u8
+Global News Kingston,http://pluto-live.plutotv.net/egress/chandler/pluto01/live/VIACBS07/master.m3u8
+Global News Kingston,https://a.jsrdn.com/broadcast/e9b4093a41/+0000/c.m3u8
+Global News Kingston,https://cdn3.wowza.com/5/M0lyamVmM2JWcjhQ/huntingtonbeach/G0088_005/playlist.m3u8
+Global News Kingston,https://dai2.xumo.com/amagi_hls_data_xumo1212A-redboxglorykickboxing/CDN/playlist.m3u8
+Global News Kingston,https://dai2.xumo.com/amagi_hls_data_xumo1212A-redboxjustforlaughsgags/CDN/playlist.m3u8
+Global News Kingston,https://live.corusdigitaldev.com/groupa/live/023a9e25-f0cf-4d97-af9f-5c665b7d45b9/live.isml/.m3u8
+Global News Kingston,https://live.corusdigitaldev.com/groupa/live/6bfb7f13-9d9d-4211-9c50-fb56330e4ccd/live.isml/.m3u8
+Global News Lethbridge (720p),http://kuchini.site:8080/tomstme300/tomasarenatelegramme300/66463
+Global News Lethbridge (720p),http://listplay4k.live:8080/play/sEqGlXBK924GUbV9yuY_SHjArCj_vDb-pKvpwUjhJz0/ts
+Global News Lethbridge (720p),http://listplay4k.live:8080/play/sEqGlXBK924GUbV9yuY_SP_FGOQ4yZeu9dP7KIUSVp0/ts
+Global News Lethbridge (720p),http://platin4k.eu:80/eagleiptv/SsFAljPDDi/115504
+Global News Lethbridge (720p),https://6362ca6f1fc28.streamlock.net/8062/8062/playlist.m3u8
+Global News Lethbridge (720p),https://live.corusdigitaldev.com/groupc/live/9fd97fb0-baa8-4191-bd2c-59aa5c9a1d48/live.isml/.m3u8
+Global News Lethbridge (720p),https://live.corusdigitaldev.com/groupc/live/cea96246-9af2-4373-932f-cdd3f8db2bc0/live.isml/.m3u8
+Global News Lethbridge (720p),https://origin.dpsgo.com/ssai/event/LhHrVtyeQkKZ-Ye_xEU75g/master.m3u8
+Global News Lethbridge (720p),https://tv.streaming-chile.com:19360/elsembrador/elsembrador.m3u8
+Global News Lethbridge (720p),https://unlimited1-us.dps.live/uatv/uatv.smil/uatv/livestream1/playlist.m3u8
+Global News Lethbridge (720p),https://vse2-eu-all59.secdn.net/barakyah-channel/live/plymouthtv/playlist.m3u8
+Global News Lethbridge (720p),https://vse2-eu-all59.secdn.net/barakyah-channel/live/plymouthtvedge/playlist.m3u8
+Global News Montreal,http://62.210.209.138:41000/movie/v52/v43/8236.mp4
+Global News Montreal,https://amdici.akamaized.net/hls/live/873426/ICI-Live-Stream/master.m3u8
+Global News Montreal,https://hncfree-samsungau.amagi.tv/playlist.m3u8
+Global News Montreal,https://hncfree-samsung-uk.amagi.tv/playlist.m3u8
+Global News Montreal,https://hse24trend.akamaized.net/hls/live/2006597/hse24trend/playlist.m3u8
+Global News Montreal,https://live.corusdigitaldev.com/groupa/live/6bfb7f13-9d9d-4211-9c50-fb56330e4ccd/live.isml/.m3u8
+Global News Montreal,https://live.corusdigitaldev.com/groupd/live/49a91e7f-1023-430f-8d66-561055f3d0f7/live.isml/.m3u8
+Global News Montreal,https://livefta.malimarcdn.com/ftaedge00/hmongstartv.sdp/playlist.m3u8
+Global News National,http://streamplayapptv.xyz:8080/Liandragraca/hxk7r1aG/51951
+Global News National,https://brightstar-hisword.secure.footprint.net/egress/bhandler/brightstar/brightstarHisLight/manifest.m3u8
+Global News National,https://entertainment.sechls01.visionip.tv/live/visiontvuk-entertainment-ntai-hsslive-25f-4x3-SD/chunklist.m3u8
+Global News National,https://isntv.mmdlive.lldns.net/isntv/f79b65204e7141c6a5cc74e63cf0dae5/playlist.m3u8
+Global News National,https://live.corusdigitaldev.com/groupa/live/5eb39b64-58e8-47d2-97ca-25e8cd760b63/live.isml/.m3u8
+Global News National,https://live.corusdigitaldev.com/groupd/live/49a91e7f-1023-430f-8d66-561055f3d0f7/live.isml/.m3u8
+Global News Okanagan (720p),http://cdn12.henico.net:8080/live/gsctv/index.m3u8
+Global News Okanagan (720p),http://cdn27.live247stream.com/primecanada/247/primecanada/stream1/playlist.m3u8
+Global News Okanagan (720p),http://dee7mwgg9dzvl.cloudfront.net/hls/uvagut/playlist.m3u8
+Global News Okanagan (720p),http://listplay4k.live:8080/play/sEqGlXBK924GUbV9yuY_SNrAnUefBcKHBK-45c-geII/ts
+Global News Okanagan (720p),http://rctv.tech:80/EbhTbZp8Zudg/kQyPeRtp2jRM/1044642
+Global News Okanagan (720p),http://xtra.fireottplus.com:2052/017458648389/407609858756/248825
+Global News Okanagan (720p),https://58bd5b7a98e04.streamlock.net/medienasa-live/_definst_/mp4:ok-dessau_high/playlist.m3u8?&ref=www.ok-dessau.de&seid=408238&checkedby:iptvcat.com
+Global News Okanagan (720p),https://59b954022ec35.streamlock.net:443/liveTV2/_definst_/smil:liveTVstream2.transcoder.smil/playlist.m3u8
+Global News Okanagan (720p),https://6362ca6f1fc28.streamlock.net/8062/8062/playlist.m3u8
+Global News Okanagan (720p),https://best-str.umn.cdn.united.cloud/stream?channel=n1hrv&p=n1Sh4redSecre7iNf0&sp=n1info&stream=sp1400&u=n1info&checkedby:iptvcat.com
+Global News Okanagan (720p),https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01602-themahqfrance-vivekanald-samsungspain/playlist.m3u8
+Global News Okanagan (720p),https://fash1043.cloudycdn.services/slive/_definst_/ftv_ftv_pg13_zw9_27065_ftv_pg13_sam_197_hls.smil/playlist.m3u8
+Global News Okanagan (720p),https://live.corusdigitaldev.com/groupc/live/9fd97fb0-baa8-4191-bd2c-59aa5c9a1d48/live.isml/.m3u8
+Global News Okanagan (720p),https://live.corusdigitaldev.com/groupd/live/deb8cec5-87fb-460a-ab82-0929374fc5fb/live.isml/.m3u8
+Global News Okanagan (720p),https://stream.ichibantv.ga:3612/live/kanadetvlive.m3u8
+Global News Peterborough,http://176.57.50.167:25461/536416/231244/71834
+Global News Peterborough,https://cdn3.wowza.com/5/M0lyamVmM2JWcjhQ/hillsboroughcounty/G2155_002/playlist.m3u8
+Global News Peterborough,https://cdn3.wowza.com/5/RXJNMFI3VlVkOEFP/stpete/G0187_002/playlist.m3u8
+Global News Peterborough,https://cdn-apse1-prod.tsv2.amagi.tv/linear/amg01076-lightningintern-petclub-samsungnz/playlist.m3u8
+Global News Peterborough,https://live.corusdigitaldev.com/groupa/live/5eb39b64-58e8-47d2-97ca-25e8cd760b63/live.isml/.m3u8
+Global News Peterborough,https://live.corusdigitaldev.com/groupb/live/3062d0e3-ed4c-4f47-8482-95648250f4b8/live.isml/.m3u8
+Global News Regina,http://restream.skyhd-iptv.com:25461/lazerlokale/Nhy5XbHsuZ/184
+Global News Regina,http-delivery.isilive.ca/live/_definst_/ontla/house-en/playlist.m3u8
+Global News Regina,https://dai.google.com/linear/hls/event/QuSOUXM4RPaC5zL4J8ZY3w/master.m3u8
+Global News Regina,https://live.corusdigitaldev.com/groupb/live/3062d0e3-ed4c-4f47-8482-95648250f4b8/live.isml/.m3u8
+Global News Regina,https://live.corusdigitaldev.com/groupc/live/f191ef59-6c28-42ba-86d0-d47df5280249/live.isml/.m3u8
+Global News Regina,https://live-news-manifest.tubi.video/live-news-manifest/csm/extlive/tubiprd01,Cloudfront-KSBW.m3u8
+Global News Saskatoon,http://darkteam.vip:25461/testar12op2o1/85445hfhjowqRtgv788/603
+Global News Saskatoon,http://rtmp1.40e.hu:8000/live/ktv.m3u8
+Global News Saskatoon,https://cdn-apse1-prod.tsv2.amagi.tv/linear/amg01076-lightningintern-kartoonchannel-samsungnz/playlist.m3u8
+Global News Saskatoon,https://linear-207.frequency.stream/dist/localnow/207/hls/master/playlist.m3u8
+Global News Saskatoon,https://live.corusdigitaldev.com/groupb/live/564df695-94f9-4f27-b1b9-0a936ab01721/live.isml/.m3u8
+Global News Saskatoon,https://live.corusdigitaldev.com/groupc/live/f191ef59-6c28-42ba-86d0-d47df5280249/live.isml/.m3u8
+Global News Toronto (720p),https://live.corusdigitaldev.com/groupd/live/deb8cec5-87fb-460a-ab82-0929374fc5fb/live.isml/.m3u8
+Global News Winnipeg,http://62.210.209.138:41000/movie/v52/v43/8243.mp4
+Global News Winnipeg,http://cdnh4.iblups.com/hls/OVJNKV4pSr.m3u8
+Global News Winnipeg,http://flysilo.top:8080/live/8031659300659217/8611659300659217/8126.ts
+Global News Winnipeg,http://kuchini.site:8080/GenIptvLast/Z0cMmSRZnDvDtkJP/172318
+Global News Winnipeg,http://listplay4k.live:8080/play/sEqGlXBK924GUbV9yuY_SP_FGOQ4yZeu9dP7KIUSVp0/ts
+Global News Winnipeg,http://live-1.otcnet.ru/globalstar/tracks-v1a1/mono.m3u8
+Global News Winnipeg,https://bozztv.com/hwotta/playlist/playlist.m3u8
+Global News Winnipeg,https://c.mjh.nz/101002810281/
+Global News Winnipeg,https://inliveserver.com:1936/11010/11010/playlist.m3u8?PlaylistM3UCL&checkedby:iptvcat.com
+Global News Winnipeg,https://live.corusdigitaldev.com/groupa/live/48a5882b-a1ec-42d7-bfd7-6c2739e737da/live.isml/.m3u8
+Global News Winnipeg,https://live.corusdigitaldev.com/groupb/live/564df695-94f9-4f27-b1b9-0a936ab01721/live.isml/.m3u8
+Global News Winnipeg,https://streamer.winfoundation.in:8081/live/winstream/playlist.m3u8
+Global News Winnipeg,https://uni10rtmp.tulix.tv/iipctv/iipctv.smil/playlist.m3u8
+Global News,https://live.corusdigitaldev.com/groupb/live/3062d0e3-ed4c-4f47-8482-95648250f4b8/live.isml/.m3u8
+GLOBAL NEWS,https://live.corusdigitaldev.com/groupd/live/8970c668-40cd-4ca9-8c4d-25fd04f619b5/live.isml/.m3u8
