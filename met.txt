@@ -1,4 +1,3 @@
-🔫电影,#genre#
 电影_星爷,https://live.metshop.top/huya/11342412
 电影_英叔,https://live.metshop.top/huya/11342421
 电影_发哥,https://live.metshop.top/huya/11342387
@@ -79,16 +78,11 @@
 解说_越哥说电影,https://live.metshop.top/huya/15894162
 解说_小冉看电影,https://live.metshop.top/huya/17341907
 解说_嫦娥撩电影,https://live.metshop.top/huya/18201106
-解说_阿翔说电影,https://live.metshop.top/huya/16868935
-解说_疯狂解说家,https://live.metshop.top/huya/18366196
 解说_虎妞说电影,https://live.metshop.top/huya/20343144
-解说_顾久撩电影,https://live.metshop.top/huya/16422212
 解说_涵哥评电影,https://live.metshop.top/huya/16865726
-解说_俗哥看电影,https://live.metshop.top/huya/15452736
 解说_老皮讲电影,https://live.metshop.top/huya/16968572
 解说_默爷侃电影,https://live.metshop.top/huya/17204307
 解说_冷君说电影,https://live.metshop.top/huya/16739452
-解说_老炮说电影,https://live.metshop.top/huya/15454716
 解说_刘老师说电影,https://live.metshop.top/huya/20289754
 解说_恐怖电影解说,https://live.metshop.top/huya/16741179
 剧集_老三国,https://live.metshop.top/huya/11602081
@@ -103,8 +97,7 @@
 剧集_武林外传,https://live.metshop.top/huya/21059598
 剧集_地下交通站,https://live.metshop.top/huya/11342433
 剧集_邻里一家亲,https://live.metshop.top/huya/11342426
-
-
+,
 🔫埋堆堆,#genre#
 埋堆堆1,https://live.metshop.top/huya/23749096
 埋堆堆2,https://live.metshop.top/huya/23735126
