@@ -5,12 +5,14 @@ CCTV-1 综合,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001022/i
 CCTV-1 综合,http://[2409:8087:2001:20:2800:0:df6e:eb02]/ott.mobaibox.com/PLTV/4/224/3221228149/index.m3u8
 CCTV-1 综合,http://[2409:8087:2001:20:2800:0:df6e:eb12]:80/wh7f454c46tw3965349198_413260074/ott.mobaibox.com/PLTV/3/224/3221227725/index.m3u8?icpid=3&RTS=1674379785&from=40&ocs=2_2409:8087:2001:20:2800:0:df6e:eb10_80&popid=40&hms_devid=2112&prioritypopid=40&vqe=3
 CCTV-1 综合,http://[2409:8087:2001:20:2800:0:df6e:eb26]/ott.mobaibox.com/PLTV/1/224/3221228213/index.m3u8
+CCTV-1 综合,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000080630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000080630&livemode=1&stbId=3
 CCTV-1 综合,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001068/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 CCTV-1 综合,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001331/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 CCTV-1 综合,http://39.134.24.161/dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225804/index.m3u8
 CCTV-1 综合,http://39.134.24.162/dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221225804/1.m3u8
 CCTV-1 综合,http://39.134.24.162/dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225804/index.m3u8
 CCTV-1 综合,http://39.134.24.162/dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225804/index.m3u8?
+CCTV-1 综合,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225753/index.m3u8
 CCTV-1 综合,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225783/index.m3u8
 CCTV-1 综合,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225804/index.m3u8
 CCTV-1 综合,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226231/index.m3u8
@@ -21,6 +23,8 @@ CCTV-1 综合,http://zteres.sn.chinamobile.com:6060/000000001000/100000000500026
 CCTV-1 综合,http://zteres.sn.chinamobile.com:6060/000000001000/5000000004000002226/1.m3u8?channel-id=bestzb&Contentid=5000000004000002226&livemode=1&stbId=3
 CCTV-1 综合,http://zteres.sn.chinamobile.com:6060/000000001000/5000000010000030810/1.m3u8?channel-id=bestzb&Contentid=5000000010000030810&livemode=1&stbId=3
 CCTV-1 综合,http://zteres.sn.chinamobile.com:6060/000000001000/6000000001000029752/1.m3u8?channel-id=wasusyt&Contentid=6000000001000029752&livemode=1&stbId=3
+CCTV-1 综合,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000080630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000080630&livemode=1&stbId=3
+CCTV-1 综合,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000080630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000080630&livemode=1&stbId=3
 CCTV-10 科教,http://[2409:8087:1a01:df::4077]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225730/index.m3u8
 CCTV-10 科教,http://[2409:8087:1a01:df::4077]/PLTV/88888888/224/3221225677/index.m3u8
 CCTV-10 科教,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001238/index.m3u8
@@ -237,6 +241,7 @@ CCTV-6 电影,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001188/i
 CCTV-6 电影,http://[2409:8087:2001:20:2800:0:df6e:eb21]:80/wh7f454c46tw91887181_2105545525/ott.mobaibox.com/PLTV/3/224/3221228280/index.m3u8?icpid=3&RTS=1674380207&from=40&popid=40&hms_devid=2290&prioritypopid=40&vqe=3
 CCTV-6 电影,http://[2409:8087:2001:20:2800:0:df6e:eb22]/ott.mobaibox.com/PLTV/4/224/3221228516/index.m3u8
 CCTV-6 电影,http://[2409:8087:2001:20:2800:0:df6e:eb26]/ott.mobaibox.com/PLTV/1/224/3221228484/index.m3u8
+CCTV-6 电影,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001275/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 CCTV-6 电影,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001859/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 CCTV-6 电影,http://39.134.24.162/dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226393/index.m3u8
 CCTV-6 电影,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226011/index.m3u8
@@ -255,6 +260,7 @@ CCTV-7 国防军事,http://[2409:8087:2001:20:2800:0:df6e:eb26]/ott.mobaibox.com
 CCTV-7 国防军事,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001291/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 CCTV-7 国防军事,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225778/index.m3u8
 CCTV-7 国防军事,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226192/index.m3u8
+CCTV-7 国防军事,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226248/index.m3u8
 CCTV-7 国防军事,http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225733/index.m3u8
 CCTV-7 国防军事,http://zteres.sn.chinamobile.com:6060/000000001000/1000000001000017218/1.m3u8?channel-id=ystenlive&Contentid=1000000001000017218&livemode=1&stbId=3
 CCTV-7 国防军事,http://zteres.sn.chinamobile.com:6060/000000001000/1000000001000024341/1.m3u8?channel-id=ystenlive&Contentid=1000000001000024341&livemode=1&stbId=3
@@ -302,14 +308,18 @@ CCTV第一剧场,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch000000909900
 CCTV第一剧场,http://zteres.sn.chinamobile.com:6060/yinhe/2/ch00000090990000002498/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 CCTV电视指南,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002545/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 CCTV风云剧场,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002505/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+CCTV风云剧场,http://[2409:8087:7001:20:2::3]:80/dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226950/index.m3u8
 CCTV风云剧场,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226950/index.m3u8
 CCTV风云剧场,http://zteres.sn.chinamobile.com:6060/yinhe/2/ch00000090990000002505/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 CCTV风云音乐,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002525/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+CCTV风云音乐,http://[2409:8087:7001:20:2::3]:80/dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226953/index.m3u8
 CCTV风云音乐,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226953/index.m3u8
+CCTV风云音乐,http://dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226953/index.m3u8
 CCTV风云音乐,http://zteres.sn.chinamobile.com:6060/yinhe/2/ch00000090990000002525/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 CCTV风云足球,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002499/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 CCTV风云足球,http://[2409:8087:7001:20:2::3]:80/dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226984/index.m3u8
 CCTV风云足球,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226984/index.m3u8
+CCTV风云足球,http://dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226984/index.m3u8
 CCTV风云足球,http://zteres.sn.chinamobile.com:6060/yinhe/2/ch00000090990000002499/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 CCTV高尔夫网球,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226978/index.m3u8
 CCTV高尔夫网球,http://zteres.sn.chinamobile.com:6060/yinhe/2/ch00000090990000002497/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
@@ -317,7 +327,9 @@ CCTV怀旧剧场,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch000000909900
 CCTV怀旧剧场,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226972/index.m3u8
 CCTV怀旧剧场,http://zteres.sn.chinamobile.com:6060/yinhe/2/ch00000090990000002495/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 CCTV女性时尚,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002475/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+CCTV女性时尚,http://[2409:8087:7001:20:2::3]:80/dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226969/index.m3u8
 CCTV女性时尚,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226237/index.m3u8
+CCTV女性时尚,http://dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226969/index.m3u8
 CCTV女性时尚,http://zteres.sn.chinamobile.com:6060/yinhe/2/ch00000090990000002475/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 CCTV世界地理,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002485/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 CCTV世界地理,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226947/index.m3u8
@@ -325,9 +337,51 @@ CCTV世界地理,http://zteres.sn.chinamobile.com:6060/yinhe/2/ch000000909900000
 CCTV文化精品,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002535/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 CCTV文化精品,http://[2409:8087:7001:20:2::3]:80/dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226981/index.m3u8
 CCTV文化精品,http://zteres.sn.chinamobile.com:6060/yinhe/2/ch00000090990000002535/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+CCTV央视高网,http://[2409:8087:7001:20:2::3]:80/dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226978/index.m3u8
 CCTV央视台球,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002496/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+CCTV央视台球,http://[2409:8087:7001:20:2::3]:80/dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226956/index.m3u8
 CCTV央视台球,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226956/index.m3u8
+CCTV央视台球,http://dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226956/index.m3u8
 CCTV央视台球,http://zteres.sn.chinamobile.com:6060/yinhe/2/ch00000090990000002496/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+CCTV央视文化精品,http://dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226981/index.m3u8
+CETV1,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001020/index.m3u8
+CETV1,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001020/index.m3u8?
+CETV1,http://zteres.sn.chinamobile.com:6060/000000001000/1000000002000027253/1.m3u8?channel-id=ystenlive&Contentid=1000000002000027253&livemode=1&stbId=3
+CETV1,http://zteres.sn.chinamobile.com:6060/000000001000/5000000002000002652/1.m3u8?channel-id=bestzb&Contentid=5000000002000002652&livemode=1&stbId=3
+CETV1,http://zteres.sn.chinamobile.com:6060/000000001000/6000000003000018981/1.m3u8?channel-id=wasusyt&Contentid=6000000003000018981&livemode=1&stbId=3
+CETV2,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001226/index.m3u8
+CETV2,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225756/index.m3u8
+CETV2,http://zteres.sn.chinamobile.com:6060/000000001000/1000000005000266004/1.m3u8?channel-id=ystenlive&Contentid=1000000005000266004&livemode=1&stbId=3
+CETV2,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000047/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000047&livemode=1&stbId=3
+CETV2,http://zteres.sn.chinamobile.com:6060/000000001000/5000000011000031201/1.m3u8?channel-id=bestzb&Contentid=5000000011000031201&livemode=1&stbId=3
+CETV3,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226226/index.m3u8
+CETV4,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001348/index.m3u8
+CETV4,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001348/index.m3u8?
+CETV4,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226225/index.m3u8
+CETV4,http://zteres.sn.chinamobile.com:6060/000000001000/1000000005000025333/1.m3u8?channel-id=ystenlive&Contentid=1000000005000025333&livemode=1&stbId=3
+CETV4,http://zteres.sn.chinamobile.com:6060/000000001000/5000000006000012123/1.m3u8?channel-id=bestzb&Contentid=5000000006000012123&livemode=1&stbId=3
+CETV4,http://zteres.sn.chinamobile.com:6060/000000001000/5000000011000031126/1.m3u8?channel-id=bestzb&Contentid=5000000011000031126&livemode=1&stbId=3
+CETV4,http://zteres.sn.chinamobile.com:6060/000000001000/6000000005000042312/1.m3u8?channel-id=wasusyt&Contentid=6000000005000042312&livemode=1&stbId=3
+CGTN,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001024/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+CGTN,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225745/index.m3u8
+CGTN,http://zteres.sn.chinamobile.com:6060/000000001000/1000000002000009569/1.m3u8?channel-id=ystenlive&Contentid=1000000002000009569&livemode=1&stbId=3
+CGTN,http://zteres.sn.chinamobile.com:6060/000000001000/7745129417417101820/1.m3u8?channel-id=hnbblive&Contentid=7745129417417101820&livemode=1&stbId=3
+CGTN阿拉伯语,http://zteres.sn.chinamobile.com:6060/000000001000/1000000006000280001/1.m3u8?channel-id=ystenlive&Contentid=1000000006000280001&livemode=1&stbId=3
+CGTN俄语,http://zteres.sn.chinamobile.com:6060/000000001000/1000000006000280004/1.m3u8?channel-id=ystenlive&Contentid=1000000006000280004&livemode=1&stbId=3
+CGTN法语,http://zteres.sn.chinamobile.com:6060/000000001000/1000000006000280003/1.m3u8?channel-id=ystenlive&Contentid=1000000006000280003&livemode=1&stbId=3
+CGTN记录,http://zteres.sn.chinamobile.com:6060/000000001000/7114647837765104058/1.m3u8?channel-id=hnbblive&Contentid=7114647837765104058&livemode=1&stbId=3
+CGTN西班牙语,http://zteres.sn.chinamobile.com:6060/000000001000/1000000006000280002/1.m3u8?channel-id=ystenlive&Contentid=1000000006000280002&livemode=1&stbId=3
+CGTN英语,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001058/index.m3u8
+CHC动作电影,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002055/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+CHC动作电影,http://dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221226465/1.m3u8
+CHC动作电影,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226465/index.m3u8
+CHC高清电影,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002065/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+CHC高清电影,http://dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221226463/1.m3u8
+CHC高清电影,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226463/index.m3u8
+CHC家庭影院,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002085/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+CHC家庭影院,http://dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221226462/1.m3u8
+CHC家庭影院,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226462/index.m3u8
+
 
 
 卫视频道,#genre#
@@ -484,7 +538,9 @@ CCTV央视台球,http://zteres.sn.chinamobile.com:6060/yinhe/2/ch000000909900000
 黑龙江卫视,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001338/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 黑龙江卫视,http://39.134.24.162/dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225802/index.m3u8
 黑龙江卫视,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225802/index.m3u8
+黑龙江卫视,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226010/index.m3u8
 黑龙江卫视,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226215/index.m3u8
+黑龙江卫视,http://dbiptv.sn.chinamobile.com/TVOD/88888893/224/3221226010/index.m3u8?世界杯WorldCup
 黑龙江卫视,http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226327/index.m3u8
 黑龙江卫视,http://zteres.sn.chinamobile.com:6060/000000001000/1000000001000001925/1.m3u8?channel-id=ystenlive&Contentid=1000000001000001925&livemode=1&stbId=3
 黑龙江卫视,http://zteres.sn.chinamobile.com:6060/000000001000/1000000001000009082/1.m3u8?channel-id=ystenlive&Contentid=1000000001000009082&livemode=1&stbId=3
@@ -609,6 +665,7 @@ CCTV央视台球,http://zteres.sn.chinamobile.com:6060/yinhe/2/ch000000909900000
 山东卫视,http://[2409:8087:1a01:df::4077]/PLTV/88888888/224/3221225952/index.m3u8
 山东卫视,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001028/index.m3u8
 山东卫视,http://[2409:8087:1e04:21::102]:6060/cms001/ch00000090990000001028/1.m3u8
+山东卫视,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001276/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 山东卫视,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001341/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 山东卫视,http://39.134.24.162/dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221226012/1.m3u8
 山东卫视,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225771/index.m3u8
@@ -719,6 +776,7 @@ CCTV央视台球,http://zteres.sn.chinamobile.com:6060/yinhe/2/ch000000909900000
 重庆卫视,http://zteres.sn.chinamobile.com:6060/000000001000/5000000004000025797/1.m3u8?channel-id=bestzb&Contentid=5000000004000025797&livemode=1&stbId=3
 
 
+
 IHOT频道,#genre#
 IHOT爱电竞,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000004000000054/index.m3u8?channel-id=hnbblive&Contentid=2000000004000000054&livemode=1&stbId=3
 IHOT爱电竞,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000230630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000230630&livemode=1&stbId=3
@@ -735,35 +793,11 @@ IHOT爱动漫,http://[2409:8087:7000:20:1000::22]:6060/000000001000/600000000600
 IHOT爱动漫,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000059/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000059&livemode=1&stbId=3
 IHOT爱动漫,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000280630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000280630&livemode=1&stbId=3
 IHOT爱动漫,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000280630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000280630&livemode=1&stbId=3
-IHOT爱都市,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000004000000039/index.m3u8?channel-id=hnbblive&Contentid=2000000004000000039&livemode=1&stbId=3
-IHOT爱都市,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000080630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000080630&livemode=1&stbId=3
-IHOT爱都市,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000039/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000039&livemode=1&stbId=3
-IHOT爱都市,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000080630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000080630&livemode=1&stbId=3
-IHOT爱都市,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000080630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000080630&livemode=1&stbId=3
 IHOT爱怀旧,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000004000000057/index.m3u8?channel-id=hnbblive&Contentid=2000000004000000057&livemode=1&stbId=3
 IHOT爱怀旧,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000260630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000260630&livemode=1&stbId=3
 IHOT爱怀旧,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000057/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000057&livemode=1&stbId=3
 IHOT爱怀旧,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000260630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000260630&livemode=1&stbId=3
 IHOT爱怀旧,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000260630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000260630&livemode=1&stbId=3
-IHOT爱极限,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000004000000048/index.m3u8?channel-id=hnbblive&Contentid=2000000004000000048&livemode=1&stbId=3
-IHOT爱极限,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000170630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000170630&livemode=1&stbId=3
-IHOT爱极限,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000048/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000048&livemode=1&stbId=3
-IHOT爱极限,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000170630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000170630&livemode=1&stbId=3
-IHOT爱极限,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000170630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000170630&livemode=1&stbId=3
-IHOT爱家庭,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000004000000040/index.m3u8?channel-id=hnbblive&Contentid=2000000004000000040&livemode=1&stbId=3
-IHOT爱家庭,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000090630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000090630&livemode=1&stbId=3
-IHOT爱家庭,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000040/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000040&livemode=1&stbId=3
-IHOT爱家庭,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000090630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000090630&livemode=1&stbId=3
-IHOT爱家庭,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000090630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000090630&livemode=1&stbId=3
-IHOT爱江湖,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000004000000042/index.m3u8?channel-id=hnbblive&Contentid=2000000004000000042&livemode=1&stbId=3
-IHOT爱江湖,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000042/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000042&livemode=1&stbId=3
-IHOT爱江湖,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000110630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000110630&livemode=1&stbId=3
-IHOT爱江湖,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000110630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000110630&livemode=1&stbId=3
-IHOT爱解密,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000004000000051/index.m3u8?channel-id=hnbblive&Contentid=2000000004000000051&livemode=1&stbId=3
-IHOT爱解密,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000200630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000200630&livemode=1&stbId=3
-IHOT爱解密,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000051/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000051&livemode=1&stbId=3
-IHOT爱解密,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000200630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000200630&livemode=1&stbId=3
-IHOT爱解密,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000200630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000200630&livemode=1&stbId=3
 IHOT爱经典,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000004000000037/index.m3u8?channel-id=hnbblive&Contentid=2000000004000000037&livemode=1&stbId=3
 IHOT爱经典,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000060630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000060630&livemode=1&stbId=3
 IHOT爱经典,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000037/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000037&livemode=1&stbId=3
@@ -789,52 +823,21 @@ IHOT爱历史,http://[2409:8087:7000:20:1000::22]:6060/000000001000/600000000600
 IHOT爱历史,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000046/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000046&livemode=1&stbId=3
 IHOT爱历史,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000150630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000150630&livemode=1&stbId=3
 IHOT爱历史,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000150630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000150630&livemode=1&stbId=3
-IHOT爱猎奇,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000004000000050/index.m3u8?channel-id=hnbblive&Contentid=2000000004000000050&livemode=1&stbId=3
-IHOT爱猎奇,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000190630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000190630&livemode=1&stbId=3
-IHOT爱猎奇,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000050/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000050&livemode=1&stbId=3
-IHOT爱猎奇,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000190630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000190630&livemode=1&stbId=3
-IHOT爱猎奇,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000190630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000190630&livemode=1&stbId=3
 IHOT爱旅行,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000004000000056/index.m3u8?channel-id=hnbblive&Contentid=2000000004000000056&livemode=1&stbId=3
 IHOT爱旅行,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000250630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000250630&livemode=1&stbId=3
 IHOT爱旅行,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000056/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000056&livemode=1&stbId=3
 IHOT爱旅行,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000250630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000250630&livemode=1&stbId=3
 IHOT爱旅行,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000250630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000250630&livemode=1&stbId=3
-IHOT爱美食,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000004000000043/index.m3u8?channel-id=hnbblive&Contentid=2000000004000000043&livemode=1&stbId=3
-IHOT爱美食,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000120630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000120630&livemode=1&stbId=3
-IHOT爱美食,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000043/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000043&livemode=1&stbId=3
-IHOT爱美食,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000120630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000120630&livemode=1&stbId=3
-IHOT爱美食,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000120630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000120630&livemode=1&stbId=3
 IHOT爱奇谈,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000004000000058/index.m3u8?channel-id=hnbblive&Contentid=2000000004000000058&livemode=1&stbId=3
 IHOT爱奇谈,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000270630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000270630&livemode=1&stbId=3
 IHOT爱奇谈,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000058/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000058&livemode=1&stbId=3
 IHOT爱奇谈,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000270630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000270630&livemode=1&stbId=3
 IHOT爱奇谈,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000270630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000270630&livemode=1&stbId=3
-IHOT爱青春,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000004000000041/index.m3u8?channel-id=hnbblive&Contentid=2000000004000000041&livemode=1&stbId=3
-IHOT爱青春,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000100630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000100630&livemode=1&stbId=3
-IHOT爱青春,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000041/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000041&livemode=1&stbId=3
-IHOT爱青春,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000100630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000100630&livemode=1&stbId=3
-IHOT爱青春,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000100630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000100630&livemode=1&stbId=3
-IHOT爱情喜剧,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000010/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000010&livemode=1&stbId=3
 IHOT爱赛车,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000004000000055/index.m3u8?channel-id=hnbblive&Contentid=2000000004000000055&livemode=1&stbId=3
 IHOT爱赛车,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000240630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000240630&livemode=1&stbId=3
 IHOT爱赛车,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000055/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000055&livemode=1&stbId=3
 IHOT爱赛车,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000240630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000240630&livemode=1&stbId=3
 IHOT爱赛车,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000240630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000240630&livemode=1&stbId=3
-IHOT爱时尚,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000004000000045/index.m3u8?channel-id=hnbblive&Contentid=2000000004000000045&livemode=1&stbId=3
-IHOT爱时尚,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000140630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000140630&livemode=1&stbId=3
-IHOT爱时尚,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000045/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000045&livemode=1&stbId=3
-IHOT爱时尚,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000140630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000140630&livemode=1&stbId=3
-IHOT爱时尚,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000140630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000140630&livemode=1&stbId=3
-IHOT爱世界,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000004000000052/index.m3u8?channel-id=hnbblive&Contentid=2000000004000000052&livemode=1&stbId=3
-IHOT爱世界,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000210630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000210630&livemode=1&stbId=3
-IHOT爱世界,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000052/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000052&livemode=1&stbId=3
-IHOT爱世界,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000210630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000210630&livemode=1&stbId=3
-IHOT爱世界,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000210630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000210630&livemode=1&stbId=3
-IHOT爱探索,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000004000000061/index.m3u8?channel-id=hnbblive&Contentid=2000000004000000061&livemode=1&stbId=3
-IHOT爱探索,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000300630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000300630&livemode=1&stbId=3
-IHOT爱探索,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000061/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000061&livemode=1&stbId=3
-IHOT爱探索,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000300630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000300630&livemode=1&stbId=3
-IHOT爱探索,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000300630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000300630&livemode=1&stbId=3
 IHOT爱体育,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000004000000060/index.m3u8?channel-id=hnbblive&Contentid=2000000004000000060&livemode=1&stbId=3
 IHOT爱体育,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000290630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000290630&livemode=1&stbId=3
 IHOT爱体育,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000060/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000060&livemode=1&stbId=3
@@ -860,17 +863,12 @@ IHOT爱幼教,http://[2409:8087:7000:20:1000::22]:6060/000000001000/600000000600
 IHOT爱幼教,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000049/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000049&livemode=1&stbId=3
 IHOT爱幼教,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000180630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000180630&livemode=1&stbId=3
 IHOT爱幼教,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000180630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000180630&livemode=1&stbId=3
-IHOT爱娱乐,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000004000000044/index.m3u8?channel-id=hnbblive&Contentid=2000000004000000044&livemode=1&stbId=3
-IHOT爱娱乐,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000130630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000130630&livemode=1&stbId=3
-IHOT爱娱乐,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000044/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000044&livemode=1&stbId=3
-IHOT爱娱乐,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000130630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000130630&livemode=1&stbId=3
-IHOT爱娱乐,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000130630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000130630&livemode=1&stbId=3
 IHOT爱院线,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000004000000034/index.m3u8?channel-id=hnbblive&Contentid=2000000004000000034&livemode=1&stbId=3
 IHOT爱院线,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000030630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000030630&livemode=1&stbId=3
 IHOT爱院线,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000034/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000034&livemode=1&stbId=3
 IHOT爱院线,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000030630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000030630&livemode=1&stbId=3
 IHOT爱院线,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000030630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000030630&livemode=1&stbId=3
-IHot风尚音乐,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000004/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000004&livemode=1&stbId=3
+IHOT风尚音乐,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000004/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000004&livemode=1&stbId=3
 IHOT风尚音乐,http://zteres.sn.chinamobile.com:6060/000000001000/5529729098703832176/1.m3u8?channel-id=wasusyt&Contentid=5529729098703832176&livemode=1&stbId=3
 IHOT精品剧场,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000002/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000002&livemode=1&stbId=3
 IHOT精品剧场,http://zteres.sn.chinamobile.com:6060/000000001000/8230197131234717902/1.m3u8?channel-id=wasusyt&Contentid=8230197131234717902&livemode=1&stbId=3
@@ -881,7 +879,14 @@ IHOT亚洲影院,http://zteres.sn.chinamobile.com:6060/000000001000/584181622753
 
 
 
+
 NewTV频道,#genre#
+NewTV爱青春,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000004000000041/index.m3u8?channel-id=hnbblive&Contentid=2000000004000000041&livemode=1&stbId=3
+NewTV爱青春,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000100630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000100630&livemode=1&stbId=3
+NewTV爱青春,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000041/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000041&livemode=1&stbId=3
+NewTV爱青春,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000100630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000100630&livemode=1&stbId=3
+NewTV爱青春,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000100630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000100630&livemode=1&stbId=3
+NewTV爱情喜剧,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000010/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000010&livemode=1&stbId=3
 NewTV爱情喜剧,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000010/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000010&livemode=1&stbId=3
 NewTV超级电视剧,http://[2409:8087:1a01:df::7005]:80/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225716/index.m3u8
 NewTV超级电视剧,http://[2409:8087:7000:20:1000::22]:6060/000000001000/1000000001000008139/index.m3u8?channel-id=ystenlive&Contentid=1000000001000008139&livemode=1&stbId=3
@@ -905,7 +910,6 @@ NewTV超级体育,http://[2409:8087:1a01:df::7005]:80/ottrrs.hl.chinamobile.com/
 NewTV超级体育,http://[2409:8087:7000:20:1000::22]:6060/000000001000/1000000001000009204/index.m3u8?channel-id=ystenlive&Contentid=1000000001000009204&livemode=1&stbId=3
 NewTV超级体育,http://[2409:8087:7000:20:1000::22]:6060/000000001000/1000000001000009601/index.m3u8?channel-id=ystenlive&Contentid=1000000001000009601&livemode=1&stbId=3
 NewTV超级体育,http://[2409:8087:7000:20:1000::22]:6060/000000001000/1000000004000007755/index.m3u8?channel-id=ystenlive&Contentid=1000000004000007755&livemode=1&stbId=3
-NewTV超级体育,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000030/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000030&livemode=1&stbId=3
 NewTV超级体育,http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225715/index.m3u8?世界杯WorldCup
 NewTV超级体育,http://zteres.sn.chinamobile.com:6060/000000001000/1000000001000009204/1.m3u8?channel-id=ystenlive&Contentid=1000000001000009204&livemode=1&stbId=3
 NewTV超级体育,http://zteres.sn.chinamobile.com:6060/000000001000/1000000001000009601/1.m3u8?channel-id=ystenlive&Contentid=1000000001000009601&livemode=1&stbId=3
@@ -920,30 +924,41 @@ NewTV超级综艺,http://zteres.sn.chinamobile.com:6060/000000001000/10000000010
 NewTV超级综艺,http://zteres.sn.chinamobile.com:6060/000000001000/1000000004000023658/1.m3u8?channel-id=ystenlive&Contentid=1000000004000023658&livemode=1&stbId=3
 NewTV超级综艺,http://zteres.sn.chinamobile.com:6060/000000001000/1000000006000268002/1.m3u8?channel-id=ystenlive&Contentid=1000000006000268002&livemode=1&stbId=3
 NewTV超级综艺,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000029/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000029&livemode=1&stbId=3
+NewTV潮妈辣婆,http://[2409:8087:2001:20:2800:0:df6e:eb19]:80/wh7f454c46tw1705588260_46164741/ott.mobaibox.com/PLTV/3/224/3221227527/index.m3u8
+NewTV潮妈辣婆,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000018/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000018&livemode=1&stbId=3
 NewTV潮妈辣婆,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000018/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000018&livemode=1&stbId=3
-NewTV东北剧场,http://zteres.sn.chinamobile.com:6060/000000001000/1000000005000266013/1.m3u8?channel-id=ystenlive&Contentid=1000000005000266013&livemode=1&stbId=3
+NewTV东北热剧,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000051/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000051&livemode=1&stbId=3
+NewTV东北热剧,http://zteres.sn.chinamobile.com:6060/000000001000/1000000005000266013/1.m3u8?channel-id=ystenlive&Contentid=1000000005000266013&livemode=1&stbId=3
 NewTV东北热剧,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000051/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000051&livemode=1&stbId=3
+NewTV动作电影,http://[2409:8087:7000:20:1000::22]:6060/000000001000/1000000004000018653/index.m3u8?channel-id=ystenlive&Contentid=1000000004000018653&livemode=1&stbId=3
+NewTV动作电影,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000017/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000017&livemode=1&stbId=3
 NewTV动作电影,http://zteres.sn.chinamobile.com:6060/000000001000/1000000004000018653/1.m3u8?channel-id=ystenlive&Contentid=1000000004000018653&livemode=1&stbId=3
 NewTV动作电影,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000017/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000017&livemode=1&stbId=3
-NewTV古装剧场,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000024/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000024&livemode=1&stbId=3
+NewTV古装剧场,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000024/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000024&livemode=1&stbId=3
+NewTV欢乐剧场,http://[2409:8087:1a01:df::7005]:80/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225742/index.m3u8
+NewTV欢乐剧场,http://[2409:8087:7000:20:1000::22]:6060/000000001000/1000000005000266012/index.m3u8?channel-id=ystenlive&Contentid=1000000005000266012&livemode=1&stbId=3
+NewTV欢乐剧场,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000050/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000050&livemode=1&stbId=3
 NewTV欢乐剧场,http://zteres.sn.chinamobile.com:6060/000000001000/1000000005000266012/1.m3u8?channel-id=ystenlive&Contentid=1000000005000266012&livemode=1&stbId=3
 NewTV欢乐剧场,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000050/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000050&livemode=1&stbId=3
+NewTV欢笑剧场,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001193/index.m3u8
+NewTV家庭剧场,http://[2409:8087:2001:20:2800:0:df6e:eb06]:80/wh7f454c46tw3441504651_1879058580/ott.mobaibox.com/PLTV/3/224/3221227600/index.m3u8
+NewTV家庭剧场,http://[2409:8087:7000:20:1000::22]:6060/000000001000/1000000004000008284/index.m3u8?channel-id=ystenlive&Contentid=1000000004000008284&livemode=1&stbId=3
+NewTV家庭剧场,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000012/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000012&livemode=1&stbId=3
 NewTV家庭剧场,http://zteres.sn.chinamobile.com:6060/000000001000/1000000004000008284/1.m3u8?channel-id=ystenlive&Contentid=1000000004000008284&livemode=1&stbId=3
 NewTV家庭剧场,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000012/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000012&livemode=1&stbId=3
 NewTV金牌综艺,http://[2409:8087:1a01:df::4077]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225666/index.m3u8
 NewTV金牌综艺,http://[2409:8087:1a01:df::4077]/PLTV/88888888/224/3221225525/index.m3u8
+NewTV金牌综艺,http://[2409:8087:7000:20:1000::22]:6060/000000001000/1000000004000026167/index.m3u8?channel-id=ystenlive&Contentid=1000000004000026167&livemode=1&stbId=3
+NewTV金牌综艺,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000005/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000005&livemode=1&stbId=3
 NewTV金牌综艺,http://zteres.sn.chinamobile.com:6060/000000001000/1000000004000026167/1.m3u8?channel-id=ystenlive&Contentid=1000000004000026167&livemode=1&stbId=3
 NewTV金牌综艺,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000005/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000005&livemode=1&stbId=3
 NewTV惊悚悬疑,http://[2409:8087:7000:20:1000::22]:6060/000000001000/1000000004000024282/index.m3u8?channel-id=ystenlive&Contentid=1000000004000024282&livemode=1&stbId=3
 NewTV惊悚悬疑,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000015/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000015&livemode=1&stbId=3
 NewTV惊悚悬疑,http://zteres.sn.chinamobile.com:6060/000000001000/1000000004000024282/1.m3u8?channel-id=ystenlive&Contentid=1000000004000024282&livemode=1&stbId=3
 NewTV惊悚悬疑,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000015/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000015&livemode=1&stbId=3
-NewTV精彩电视剧,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001276/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
-NewTV精彩电影,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001275/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
-NewTV精彩体育,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226010/index.m3u8
-NewTV精彩体育,http://dbiptv.sn.chinamobile.com/TVOD/88888893/224/3221226010/index.m3u8?世界杯WorldCup
 NewTV精彩影视,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000063/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000063&livemode=1&stbId=3
 NewTV精彩影视,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000320630/1.m3u8?channel-id=wasusyt&Contentid=6000000006000320630&livemode=1&stbId=3
+NewTV精彩综艺,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000030/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000030&livemode=1&stbId=3
 NewTV精彩综艺,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001273/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 NewTV精彩综艺,http://zteres.sn.chinamobile.com:6060/yinhe/2/ch00000090990000001273/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 NewTV精品大剧,http://[2409:8087:2001:20:2800:0:df6e:eb1a]:80/wh7f454c46tw2817459161_-1430429466/ott.mobaibox.com/PLTV/3/224/3221227618/index.m3u8
@@ -951,11 +966,11 @@ NewTV精品大剧,http://[2409:8087:7000:20:1000::22]:6060/000000001000/10000000
 NewTV精品大剧,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000020/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000020&livemode=1&stbId=3
 NewTV精品大剧,http://zteres.sn.chinamobile.com:6060/000000001000/1000000004000013968/1.m3u8?channel-id=ystenlive&Contentid=1000000004000013968&livemode=1&stbId=3
 NewTV精品大剧,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000020/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000020&livemode=1&stbId=3
-NewTV精品记录,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000019/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000019&livemode=1&stbId=3
-NewTV精品记录,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000019/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000019&livemode=1&stbId=3
 NewTV精品纪录,http://[2409:8087:2001:20:2800:0:df6e:eb1a]:80/wh7f454c46tw2837435881_530071425/ott.mobaibox.com/PLTV/3/224/3221227547/index.m3u8
 NewTV精品纪录,http://[2409:8087:7000:20:1000::22]:6060/000000001000/1000000004000013730/index.m3u8?channel-id=ystenlive&Contentid=1000000004000013730&livemode=1&stbId=3
+NewTV精品纪录,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000019/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000019&livemode=1&stbId=3
 NewTV精品纪录,http://zteres.sn.chinamobile.com:6060/000000001000/1000000004000013730/1.m3u8?channel-id=ystenlive&Contentid=1000000004000013730&livemode=1&stbId=3
+NewTV精品纪录,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000019/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000019&livemode=1&stbId=3
 NewTV精品萌宠,http://[2409:8087:7000:20:1000::22]:6060/000000001000/1000000006000032328/index.m3u8?channel-id=ystenlive&Contentid=1000000006000032328&livemode=1&stbId=3
 NewTV精品萌宠,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000067/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000067&livemode=1&stbId=3
 NewTV精品萌宠,http://zteres.sn.chinamobile.com:6060/000000001000/1000000006000032328/1.m3u8?channel-id=ystenlive&Contentid=1000000006000032328&livemode=1&stbId=3
@@ -969,7 +984,11 @@ NewTV精品综合,http://[2409:8087:7000:20:1000::22]:6060/000000001000/10000000
 NewTV精品综合,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000008/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000008&livemode=1&stbId=3
 NewTV精品综合,http://zteres.sn.chinamobile.com:6060/000000001000/1000000004000019008/1.m3u8?channel-id=ystenlive&Contentid=1000000004000019008&livemode=1&stbId=3
 NewTV精品综合,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000008/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000008&livemode=1&stbId=3
+NewTV军旅剧场,http://[2409:8087:2001:20:2800:0:df6e:eb06]:80/wh7f454c46tw1807611386_-262631246/ott.mobaibox.com/PLTV/3/224/3221227603/index.m3u8
+NewTV军旅剧场,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000014/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000014&livemode=1&stbId=3
 NewTV军旅剧场,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000014/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000014&livemode=1&stbId=3
+NewTV军事评论,http://[2409:8087:2001:20:2800:0:df6e:eb18]:80/wh7f454c46tw3373254713_-1111569189/ott.mobaibox.com/PLTV/3/224/3221227544/index.m3u8
+NewTV军事评论,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000022/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000022&livemode=1&stbId=3
 NewTV军事评论,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000022/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000022&livemode=1&stbId=3
 NewTV魅力潇湘,http://zteres.sn.chinamobile.com:6060/000000001000/1000000001000006197/1.m3u8?channel-id=ystenlive&Contentid=1000000001000006197&livemode=1&stbId=3
 NewTV魅力潇湘,http://zteres.sn.chinamobile.com:6060/000000001000/1000000005000266014/1.m3u8?channel-id=ystenlive&Contentid=1000000005000266014&livemode=1&stbId=3
@@ -977,11 +996,18 @@ NewTV魅力潇湘,http://zteres.sn.chinamobile.com:6060/000000001000/20000000030
 NewTV明星大片,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000016/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000016&livemode=1&stbId=3
 NewTV农业致富,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000003/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000003&livemode=1&stbId=3
 NewTV武博世界,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000007/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000007&livemode=1&stbId=3
+NewTV炫舞未来,http://[2409:8087:2001:20:2800:0:df6e:eb09]:80/wh7f454c46tw2582593423_1721070986/ott.mobaibox.com/PLTV/3/224/3221227475/index.m3u8
+NewTV炫舞未来,http://[2409:8087:7000:20:1000::22]:6060/000000001000/1000000001000000515/index.m3u8?channel-id=ystenlive&Contentid=1000000001000000515&livemode=1&stbId=3
+NewTV炫舞未来,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000044/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000044&livemode=1&stbId=3
 NewTV炫舞未来,http://zteres.sn.chinamobile.com:6060/000000001000/1000000001000000515/1.m3u8?channel-id=ystenlive&Contentid=1000000001000000515&livemode=1&stbId=3
 NewTV炫舞未来,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000044/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000044&livemode=1&stbId=3
+NewTV怡伴健康,http://[2409:8087:7000:20:1000::22]:6060/000000001000/1000000005000266011/index.m3u8?channel-id=ystenlive&Contentid=1000000005000266011&livemode=1&stbId=3
+NewTV怡伴健康,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000023/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000023&livemode=1&stbId=3
 NewTV怡伴健康,http://zteres.sn.chinamobile.com:6060/000000001000/1000000005000266011/1.m3u8?channel-id=ystenlive&Contentid=1000000005000266011&livemode=1&stbId=3
 NewTV怡伴健康,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000023/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000023&livemode=1&stbId=3
+NewTV中国功夫,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000009/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000009&livemode=1&stbId=3
 NewTV中国功夫,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000009/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000009&livemode=1&stbId=3
+
 
 
 SiTV频道,#genre#
@@ -995,24 +1021,21 @@ SiTV都市剧场,http://zteres.sn.chinamobile.com:6060/000000001000/500000001100
 SiTV法治天地,http://zteres.sn.chinamobile.com:6060/000000001000/9001547084732463424/1.m3u8?channel-id=bestzb&Contentid=9001547084732463424&livemode=1&stbId=3
 SiTV欢笑剧场,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000016/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000016&livemode=1&stbId=3
 SiTV欢笑剧场,http://zteres.sn.chinamobile.com:6060/000000001000/5000000002000009455/1.m3u8?channel-id=bestzb&Contentid=5000000002000009455&livemode=1&stbId=3
-SiTV欢笑剧场-4K,http://zteres.sn.chinamobile.com:6060/000000001000/5000000007000010001/1.m3u8?channel-id=bestzb&Contentid=5000000007000010001&livemode=1&stbId=3
-SiTV极速汽车,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226583/index.m3u8
 SiTV金色学堂,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000061/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000061&livemode=1&stbId=3
 SiTV金色学堂,http://zteres.sn.chinamobile.com:6060/000000001000/5000000010000026105/1.m3u8?channel-id=bestzb&Contentid=5000000010000026105&livemode=1&stbId=3
 SiTV劲爆体育,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000008/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000008&livemode=1&stbId=3
 SiTV劲爆体育,http://zteres.sn.chinamobile.com:6060/000000001000/5000000002000029972/1.m3u8?channel-id=bestzb&Contentid=5000000002000029972&livemode=1&stbId=3
+SiTV乐游,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001200/index.m3u8
+SiTV乐游,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002157/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+SiTV乐游,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226580/index.m3u8
 SiTV乐游,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000059/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000059&livemode=1&stbId=3
 SiTV乐游,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000092/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000092&livemode=1&stbId=3
 SiTV乐游,http://zteres.sn.chinamobile.com:6060/000000001000/5000000006000040025/1.m3u8?channel-id=bestzb&Contentid=5000000006000040025&livemode=1&stbId=3
-SiTV乐游,http://zteres.sn.chinamobile.com:6060/000000001000/5000000010000006249/1.m3u8?channel-id=bestzb&Contentid=5000000010000006249&livemode=1&stbId=3
 SiTV乐游,http://zteres.sn.chinamobile.com:6060/000000001000/5000000011000031112/1.m3u8?channel-id=bestzb&Contentid=5000000011000031112&livemode=1&stbId=3
-SiTV魅力足球,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000060/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000060&livemode=1&stbId=3
 SiTV魅力足球,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000068/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000068&livemode=1&stbId=3
-SiTV魅力足球,http://zteres.sn.chinamobile.com:6060/000000001000/5000000010000008656/1.m3u8?channel-id=bestzb&Contentid=5000000010000008656&livemode=1&stbId=3
 SiTV魅力足球,http://zteres.sn.chinamobile.com:6060/000000001000/5000000011000031207/1.m3u8?channel-id=bestzb&Contentid=5000000011000031207&livemode=1&stbId=3
 SiTV七彩戏剧,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000010/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000010&livemode=1&stbId=3
 SiTV七彩戏剧,http://zteres.sn.chinamobile.com:6060/000000001000/5000000011000031116/1.m3u8?channel-id=bestzb&Contentid=5000000011000031116&livemode=1&stbId=3
-SiTV全纪实,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226580/index.m3u8
 SiTV生活时尚,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000006/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000006&livemode=1&stbId=3
 SiTV生活时尚,http://zteres.sn.chinamobile.com:6060/000000001000/5000000002000019634/1.m3u8?channel-id=bestzb&Contentid=5000000002000019634&livemode=1&stbId=3
 SiTV游戏风云,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000011/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000011&livemode=1&stbId=3
@@ -1020,99 +1043,12 @@ SiTV游戏风云,http://zteres.sn.chinamobile.com:6060/000000001000/500000000200
 SiTV游戏风云,http://zteres.sn.chinamobile.com:6060/000000001000/5000000011000031114/1.m3u8?channel-id=bestzb&Contentid=5000000011000031114&livemode=1&stbId=3
 
 
-百视通频道,#genre#
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000024/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000024&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000025/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000025&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000026/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000026&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000027/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000027&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000028/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000028&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000029/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000029&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000030/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000030&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000031/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000031&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000032/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000032&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000033/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000033&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000034/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000034&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000035/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000035&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000036/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000036&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000037/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000037&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000038/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000038&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000039/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000039&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000040/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000040&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000041/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000041&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000042/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000042&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000043/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000043&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000044/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000044&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000045/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000045&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000046/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000046&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000047/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000047&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000048/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000048&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000049/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000049&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000050/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000050&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000051/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000051&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000052/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000052&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/5000000001000001116/1.m3u8?channel-id=bestzb&Contentid=5000000001000001116&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/5000000001000002898/1.m3u8?channel-id=bestzb&Contentid=5000000001000002898&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/5000000001000004876/1.m3u8?channel-id=bestzb&Contentid=5000000001000004876&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/5000000001000004953/1.m3u8?channel-id=bestzb&Contentid=5000000001000004953&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/5000000001000006777/1.m3u8?channel-id=bestzb&Contentid=5000000001000006777&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/5000000001000017342/1.m3u8?channel-id=bestzb&Contentid=5000000001000017342&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/5000000001000018009/1.m3u8?channel-id=bestzb&Contentid=5000000001000018009&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/5000000001000019233/1.m3u8?channel-id=bestzb&Contentid=5000000001000019233&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/5000000001000022620/1.m3u8?channel-id=bestzb&Contentid=5000000001000022620&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/5000000001000023256/1.m3u8?channel-id=bestzb&Contentid=5000000001000023256&livemode=1&stbId=3
-百视通,http://zteres.sn.chinamobile.com:6060/000000001000/5000000001000026930/1.m3u8?channel-id=bestzb&Contentid=5000000001000026930&livemode=1&stbId=3
-百视通超级体育,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225847/index.m3u8
-百视通超级体育,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225848/index.m3u8
-百视通超级体育,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225849/index.m3u8
-百视通体育,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225834/index.m3u8
-百视通体育,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225835/index.m3u8
-百视通体育,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225836/index.m3u8
-百视通体育,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225839/index.m3u8
-百视通体育,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225845/index.m3u8
-百视通体育,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225850/index.m3u8
-
 
 其它频道,#genre#
 4KUHD,http://zteres.sn.chinamobile.com:6060/000000001000/1000000004000011651/1.m3u8?channel-id=ystenlive&Contentid=1000000004000011651&livemode=1&stbId=3
 BRTV纪实科教,http://[2409:8087:2001:20:2800:0:df6e:eb0e]/wh7f454c46tw1542052607_1430934483/ott.mobaibox.com/PLTV/3/224/3221227699/index.m3u8
-CETV1,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001020/index.m3u8?
-CETV1,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225753/index.m3u8
-CETV2,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225756/index.m3u8
-CETV3,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226226/index.m3u8
-CETV4,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001348/index.m3u8?
-CETV4,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226225/index.m3u8
-CGTN,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001024/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
-CGTN,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221225745/index.m3u8
-CGTN,http://zteres.sn.chinamobile.com:6060/000000001000/1000000002000009569/1.m3u8?channel-id=ystenlive&Contentid=1000000002000009569&livemode=1&stbId=3
-CGTN,http://zteres.sn.chinamobile.com:6060/000000001000/7745129417417101820/1.m3u8?channel-id=hnbblive&Contentid=7745129417417101820&livemode=1&stbId=3
-CGTN阿拉伯语,http://zteres.sn.chinamobile.com:6060/000000001000/1000000006000280001/1.m3u8?channel-id=ystenlive&Contentid=1000000006000280001&livemode=1&stbId=3
-CGTN俄语,http://zteres.sn.chinamobile.com:6060/000000001000/1000000006000280004/1.m3u8?channel-id=ystenlive&Contentid=1000000006000280004&livemode=1&stbId=3
-CGTN法语,http://zteres.sn.chinamobile.com:6060/000000001000/1000000006000280003/1.m3u8?channel-id=ystenlive&Contentid=1000000006000280003&livemode=1&stbId=3
-CGTN记录,http://zteres.sn.chinamobile.com:6060/000000001000/7114647837765104058/1.m3u8?channel-id=hnbblive&Contentid=7114647837765104058&livemode=1&stbId=3
-CGTN西班牙语,http://zteres.sn.chinamobile.com:6060/000000001000/1000000006000280002/1.m3u8?channel-id=ystenlive&Contentid=1000000006000280002&livemode=1&stbId=3
-CGTN英语,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001058/index.m3u8
-CHC动作电影,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002055/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
-CHC动作电影,http://dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221226465/1.m3u8
-CHC动作电影,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226465/index.m3u8
-CHC高清电影,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002065/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
-CHC高清电影,http://dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221226463/1.m3u8
-CHC高清电影,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226463/index.m3u8
-CHC家庭电影,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002085/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
-CHC家庭影院,http://dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221226462/1.m3u8
-CHC家庭影院,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226462/index.m3u8
-CNC新华社,http://[2409:8087:3800:20:1000::802]:8080/hwrr.jx.chinamobile.com/PLTV/88888888/224/3221225694/index.m3u8
-IPTV3+,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226341/index.m3u8
-IPTV5+,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001592/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
-IPTV5+,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226342/index.m3u8
-IPTV5+,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226345/index.m3u8
-IPTV6+,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226343/index.m3u8
-IPTV8+,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226344/index.m3u8
-IPTV相声小品,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226346/index.m3u8
 LBRTV,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001268/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
-LBRTV,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001447/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 LYTV,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001417/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
-LYTV,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001440/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
-宝鸡2,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001736/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 宝鸡2,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001737/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 宝应生活资讯高清,http://[2409:8087:2001:20:2800:0:df6e:eb12]/wh7f454c46tw2889103905_1760287796/ott.mobaibox.com/PLTV/3/224/3221228039/index.m3u8?icpid=3&RTS=1663228974&from=40&popid=40&hms_devid=2112&prioritypopid=40&vqe=3
 宝应新闻综合高清,http://[2409:8087:2001:20:2800:0:df6e:eb02]/wh7f454c46tw2870965829_-39927312/ott.mobaibox.com/PLTV/3/224/3221228007/index.m3u8?icpid=3&RTS=1663228956&from=40&popid=40&hms_devid=2039&prioritypopid=40&vqe=3
@@ -1148,8 +1084,6 @@ LYTV,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001440/ind
 常州生活高清,http://[2409:8087:2001:20:2800:0:df6e:eb12]/wh7f454c46tw3951544714_750576923/ott.mobaibox.com/PLTV/3/224/3221227902/index.m3u8?icpid=3&RTS=1663019583&from=40&popid=40&hms_devid=2112&prioritypopid=40&vqe=3
 常州新闻,http://[2409:8087:2001:20:2800:0:df6e:eb12]/ott.mobaibox.com/PLTV/3/224/3221227899/index.m3u8
 常州新闻综合高清,http://[2409:8087:2001:20:2800:0:df6e:eb12]/wh7f454c46tw3810615020_450111224/ott.mobaibox.com/PLTV/3/224/3221227899/index.m3u8?icpid=3&RTS=1663019442&from=40&popid=40&hms_devid=2112&prioritypopid=40&vqe=3
-潮妈辣婆,http://[2409:8087:2001:20:2800:0:df6e:eb19]:80/wh7f454c46tw1705588260_46164741/ott.mobaibox.com/PLTV/3/224/3221227527/index.m3u8
-潮妈辣婆,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000018/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000018&livemode=1&stbId=3
 城固,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002375/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 纯享超清,http://[2409:8087:2001:20:2800:0:df6e:eb26]:80/ott.mobaibox.com/PLTV/3/224/3221228472/index.m3u8
 哒啵电竞,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226951/index.m3u8
@@ -1173,22 +1107,15 @@ LYTV,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001440/ind
 电视指南,http://dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226987/index.m3u8
 电子竞技,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000015/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000015&livemode=1&stbId=3
 电子竞技,http://zteres.sn.chinamobile.com:6060/000000001000/6000000003000011654/1.m3u8?channel-id=wasusyt&Contentid=6000000003000011654&livemode=1&stbId=3
-东北热剧,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000051/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000051&livemode=1&stbId=3
 东方财经,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001318/index.m3u8
 东方财经,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001318/index.m3u8?
 东方影视,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001016/index.m3u8
 东方影视,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001016/index.m3u8?
 东海综合高清,http://[2409:8087:2001:20:2800:0:df6e:eb11]/wh7f454c46tw2532366382_-413976163/ott.mobaibox.com/PLTV/3/224/3221227792/index.m3u8?icpid=3&RTS=1663228617&from=40&popid=40&hms_devid=2110&prioritypopid=40&vqe=3
-动作电影,http://[2409:8087:7000:20:1000::22]:6060/000000001000/1000000004000018653/index.m3u8?channel-id=ystenlive&Contentid=1000000004000018653&livemode=1&stbId=3
-动作电影,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000017/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000017&livemode=1&stbId=3
 都市剧场,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001203/index.m3u8
 都市剧场,http://[2409:8087:7000:20::F]:80/dbiptv.sn.chinamobile.com/TVOD/88888890/224/3221226581/index.m3u8
 都市剧场,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002108/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 法治天地,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001195/index.m3u8
-风云剧场,http://[2409:8087:7001:20:2::3]:80/dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226950/index.m3u8
-风云音乐,http://[2409:8087:7001:20:2::3]:80/dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226953/index.m3u8
-风云音乐,http://dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226953/index.m3u8
-风云足球,http://dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226984/index.m3u8
 凤凰香港,http://[2409:8087:2001:20:2800:0:df6e:eb1d]:80/ott.mobaibox.com/PLTV/1/224/3221228530/1.m3u8
 凤凰香港,http://39.134.116.108:8080/hwrr.jx.chinamobile.com/PLTV/88888888/224/3221226251/index.m3u8
 凤凰中文 576,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002275/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
@@ -1212,8 +1139,6 @@ LYTV,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001440/ind
 高尔夫网球,http://dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226978/index.m3u8
 高清娱乐,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000013/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000013&livemode=1&stbId=3
 高清娱乐,http://zteres.sn.chinamobile.com:6060/000000001000/6000000003000001569/1.m3u8?channel-id=wasusyt&Contentid=6000000003000001569&livemode=1&stbId=3
-购物,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001277/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
-古装剧场,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000024/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000024&livemode=1&stbId=3
 广东嘉佳卡通,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226227/index.m3u8
 广东嘉佳卡通,http://zteres.sn.chinamobile.com:6060/000000001000/1000000002000025964/1.m3u8?channel-id=ystenlive&Contentid=1000000002000025964&livemode=1&stbId=3
 广东嘉佳卡通,http://zteres.sn.chinamobile.com:6060/000000001000/6000000003000025508/1.m3u8?channel-id=wasusyt&Contentid=6000000003000025508&livemode=1&stbId=3
@@ -1265,22 +1190,14 @@ LYTV,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001440/ind
 怀旧剧场,http://[2409:8087:7001:20:2::3]:80/dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226972/index.m3u8
 怀旧剧场,http://dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226972/index.m3u8
 淮安新闻综合,http://[2409:8087:2001:20:2800:0:df6e:eb11]/wh7f454c46tw1933892795_-1561469258/ott.mobaibox.com/PLTV/4/224/3221228215/index.m3u8?icpid=4&RTS=1663232314&from=40&popid=40&hms_devid=2110&prioritypopid=40&vqe=3
-欢乐剧场,http://[2409:8087:1a01:df::7005]:80/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225742/index.m3u8
-欢乐剧场,http://[2409:8087:7000:20:1000::22]:6060/000000001000/1000000005000266012/index.m3u8?channel-id=ystenlive&Contentid=1000000005000266012&livemode=1&stbId=3
-欢乐剧场,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000050/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000050&livemode=1&stbId=3
-欢笑剧场,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001193/index.m3u8
 欢笑剧场,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002156/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 欢笑剧场4K,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226582/index.m3u8
 欢笑剧场4K,http://zteres.sn.chinamobile.com:6060/yinhe/2/ch00000090990000002156/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 极速汽车,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002263/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 极速汽车体育,http://dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221226574/1.m3u8?zshangd?世界杯WorldCup
-几个购物频道轮播,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000057/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000057&livemode=1&stbId=3
 纪实人文,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001019/index.m3u8
 纪实人文,http://[2409:8087:2001:20:2800:0:df6e:eb12]/wh7f454c46tw1293235676_155310184/ott.mobaibox.com/PLTV/3/224/3221227635/index.m3u8
 纪实人文,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226230/index.m3u8
-家庭剧场,http://[2409:8087:2001:20:2800:0:df6e:eb06]:80/wh7f454c46tw3441504651_1879058580/ott.mobaibox.com/PLTV/3/224/3221227600/index.m3u8
-家庭剧场,http://[2409:8087:7000:20:1000::22]:6060/000000001000/1000000004000008284/index.m3u8?channel-id=ystenlive&Contentid=1000000004000008284&livemode=1&stbId=3
-家庭剧场,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000012/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000012&livemode=1&stbId=3
 家庭理财,http://zteres.sn.chinamobile.com:6060/000000001000/5000000011000031210/1.m3u8?channel-id=bestzb&Contentid=5000000011000031210&livemode=1&stbId=3
 嘉佳卡通,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001227/index.m3u8
 贾汪旅游,http://[2409:8087:2001:20:2800:0:df6e:eb08]/wh7f454c46tw3158177609_-1622861678/ott.mobaibox.com/PLTV/3/224/3221227389/index.m3u8?icpid=3&RTS=1668606542&from=40&popid=40&hms_devid=2037&prioritypopid=40&vqe=3
@@ -1306,8 +1223,6 @@ LYTV,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001440/ind
 江西少儿家庭,http://39.134.115.191:8080/ysten.jx.chinamobile.com/PLTV/88888888/224/3221225577/2/index.m3u8?fmt=ts2hls?zjiangxd
 江西新闻,http://39.134.115.191:8080/ysten.jx.chinamobile.com/PLTV/88888888/224/3221225576/2/index.m3u8?fmt=ts2hls?zjiangxd
 江西影旅游,http://39.134.115.191:8080/ysten.jx.chinamobile.com/PLTV/88888888/224/3221225579/2/index.m3u8?fmt=ts2hls?zjiangxd
-金牌综艺,http://[2409:8087:7000:20:1000::22]:6060/000000001000/1000000004000026167/index.m3u8?channel-id=ystenlive&Contentid=1000000004000026167&livemode=1&stbId=3
-金牌综艺,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000005/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000005&livemode=1&stbId=3
 金色学堂,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001194/index.m3u8
 金鹰纪实,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001230/index.m3u8
 金鹰纪实,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226351/index.m3u8
@@ -1315,15 +1230,9 @@ LYTV,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001440/ind
 京视剧场,http://[2409:8087:2001:20:2800:0:df6e:eb04]/wh7f454c46tw2927670510_1843427486/ott.mobaibox.com/PLTV/3/224/3221227040/index.m3u8?icpid=3&RTS=1668606312&from=40&popid=40&hms_devid=2041&prioritypopid=40&vqe=3
 京视剧场,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226242/index.m3u8
 聚鲨环球精选,http://zteres.sn.chinamobile.com:6060/000000001000/6000000004000014516/1.m3u8?channel-id=wasusyt&Contentid=6000000004000014516&livemode=1&stbId=3
-军旅剧场,http://[2409:8087:2001:20:2800:0:df6e:eb06]:80/wh7f454c46tw1807611386_-262631246/ott.mobaibox.com/PLTV/3/224/3221227603/index.m3u8
-军旅剧场,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000014/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000014&livemode=1&stbId=3
-军事评论,http://[2409:8087:2001:20:2800:0:df6e:eb18]:80/wh7f454c46tw3373254713_-1111569189/ott.mobaibox.com/PLTV/3/224/3221227544/index.m3u8
-军事评论,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000022/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000022&livemode=1&stbId=3
 卡酷少儿,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001245/index.m3u8
 快乐垂钓,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001235/index.m3u8
 快乐垂钓,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226805/index.m3u8
-乐游,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001200/index.m3u8
-乐游,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002157/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 连云港公共高清,http://[2409:8087:2001:20:2800:0:df6e:eb12]/wh7f454c46tw913656304_601285611/ott.mobaibox.com/PLTV/3/224/3221227819/index.m3u8?icpid=3&RTS=1663226999&from=40&popid=40&hms_devid=2112&prioritypopid=40&vqe=3
 连云港新闻综合高清,http://[2409:8087:2001:20:2800:0:df6e:eb0f]/wh7f454c46tw1598526246_-2101199601/ott.mobaibox.com/PLTV/3/224/3221227758/index.m3u8?icpid=3&RTS=1663227683&from=40&popid=40&hms_devid=2111&prioritypopid=40&vqe=3
 栾坛春秋,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226245/index.m3u8
@@ -1440,14 +1349,14 @@ LYTV,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001440/ind
 南通2高清,http://[2409:8087:2001:20:2800:0:df6e:eb24]/wh7f454c46tw1356203236_1007889310/ott.mobaibox.com/PLTV/4/224/3221228448/index.m3u8?icpid=4&RTS=1664455802&from=40&popid=40&hms_devid=2292&prioritypopid=40&vqe=3
 南通3高清,http://[2409:8087:2001:20:2800:0:df6e:eb23]/wh7f454c46tw1440049912_-2025370179/ott.mobaibox.com/PLTV/4/224/3221228451/index.m3u8?icpid=4&RTS=1664455886&from=40&popid=40&hms_devid=2291&prioritypopid=40&vqe=3
 农业致富,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000003/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000003&livemode=1&stbId=3
-女性时尚,http://[2409:8087:7001:20:2::3]:80/dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226969/index.m3u8
-女性时尚,http://dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226969/index.m3u8
 沛县经济生活高清,http://[2409:8087:2001:20:2800:0:df6e:eb0e]/wh7f454c46tw2485154935_560997466/ott.mobaibox.com/PLTV/3/224/3221227611/index.m3u8?icpid=3&RTS=1663018117&from=40&popid=40&hms_devid=2111&prioritypopid=40&vqe=3
 沛县文化影视高清,http://[2409:8087:2001:20:2800:0:df6e:eb0e]/wh7f454c46tw2571577223_-1607544057/ott.mobaibox.com/PLTV/3/224/3221227681/index.m3u8?icpid=3&RTS=1663018203&from=40&popid=40&hms_devid=2111&prioritypopid=40&vqe=3
 沛县新闻综合高清,http://[2409:8087:2001:20:2800:0:df6e:eb0e]/wh7f454c46tw2694495294_-336953709/ott.mobaibox.com/PLTV/3/224/3221227678/index.m3u8?icpid=3&RTS=1663018326&from=40&popid=40&hms_devid=2111&prioritypopid=40&vqe=3
 邳州综合高清,http://[2409:8087:2001:20:2800:0:df6e:eb08]/wh7f454c46tw2533804280_-725162855/ott.mobaibox.com/PLTV/3/224/3221227576/index.m3u8?icpid=3&RTS=1663254388&from=40&popid=40&hms_devid=2037&prioritypopid=40&vqe=3
+频道
 七彩戏剧,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001308/index.m3u8
 七彩戏剧,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001308/index.m3u8?
+其它频道,#genre#
 青海果洛电视台,http://zteres.sn.chinamobile.com:6060/000000001000/1000000004000002589/1.m3u8?channel-id=ystenlive&Contentid=1000000004000002589&livemode=1&stbId=3
 青海果洛电视台,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000034/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000034&livemode=1&stbId=3
 青海海东综合,http://zteres.sn.chinamobile.com:6060/000000001000/1000000006000035339/1.m3u8?channel-id=ystenlive&Contentid=1000000006000035339&livemode=1&stbId=3
@@ -1612,57 +1521,23 @@ LYTV,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001440/ind
 徐州4高清,http://[2409:8087:2001:20:2800:0:df6e:eb1a]/wh7f454c46tw646564841_-1162201747/ott.mobaibox.com/PLTV/3/224/3221225951/index.m3u8?icpid=3&RTS=1663016278&from=40&popid=40&hms_devid=2116&prioritypopid=40&vqe=3
 炫动3D,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000012/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000012&livemode=1&stbId=3
 炫动3D,http://zteres.sn.chinamobile.com:6060/000000001000/6000000003000000558/1.m3u8?channel-id=wasusyt&Contentid=6000000003000000558&livemode=1&stbId=3
-炫舞未来,http://[2409:8087:2001:20:2800:0:df6e:eb09]:80/wh7f454c46tw2582593423_1721070986/ott.mobaibox.com/PLTV/3/224/3221227475/index.m3u8
-炫舞未来,http://[2409:8087:7000:20:1000::22]:6060/000000001000/1000000001000000515/index.m3u8?channel-id=ystenlive&Contentid=1000000001000000515&livemode=1&stbId=3
-炫舞未来,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000044/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000044&livemode=1&stbId=3
 盐城1高清,http://[2409:8087:2001:20:2800:0:df6e:eb25]/wh7f454c46tw1245367087_-983708624/ott.mobaibox.com/PLTV/4/224/3221228435/index.m3u8?icpid=4&RTS=1664455691&from=40&popid=40&hms_devid=2292&prioritypopid=40&vqe=3
 盐城2高清,http://[2409:8087:2001:20:2800:0:df6e:eb22]/wh7f454c46tw1131928239_2039612798/ott.mobaibox.com/PLTV/4/224/3221228433/index.m3u8?icpid=4&RTS=1664455577&from=40&popid=40&hms_devid=2291&prioritypopid=40&vqe=3
 盐城3高清,http://[2409:8087:2001:20:2800:0:df6e:eb21]/wh7f454c46tw1299375729_1661164560/ott.mobaibox.com/PLTV/4/224/3221228436/index.m3u8?icpid=4&RTS=1664455745&from=40&popid=40&hms_devid=2290&prioritypopid=40&vqe=3
-央广购物,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000036/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000036&livemode=1&stbId=3
-央广购物,http://zteres.sn.chinamobile.com:6060/000000001000/5000000009000012021/1.m3u8?channel-id=bestzb&Contentid=5000000009000012021&livemode=1&stbId=3
-央视高网,http://[2409:8087:7001:20:2::3]:80/dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226978/index.m3u8
-央视台球,http://[2409:8087:7001:20:2::3]:80/dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226956/index.m3u8
-央视台球,http://dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226956/index.m3u8
-央视文化精品,http://dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226981/index.m3u8
 扬州1,http://[2409:8087:2001:20:2800:0:df6e:eb14]/wh7f454c46tw2042951982_296363859/ott.mobaibox.com/PLTV/4/224/3221228155/index.m3u8?icpid=4&RTS=1663232423&from=40&popid=40&hms_devid=2115&prioritypopid=40&vqe=3
 扬州2,http://[2409:8087:2001:20:2800:0:df6e:eb20]/wh7f454c46tw2079693471_1453629667/ott.mobaibox.com/PLTV/4/224/3221228338/index.m3u8?icpid=4&RTS=1663232460&from=40&popid=40&hms_devid=2290&prioritypopid=40&vqe=3
 扬州3,http://[2409:8087:2001:20:2800:0:df6e:eb0d]/wh7f454c46tw2162902736_1088905287/ott.mobaibox.com/PLTV/4/224/3221227867/index.m3u8?icpid=4&RTS=1663232543&from=40&popid=40&hms_devid=2040&prioritypopid=40&vqe=3
 仪化有线高清,http://[2409:8087:2001:20:2800:0:df6e:eb0c]/wh7f454c46tw2007904333_996227273/ott.mobaibox.com/PLTV/3/224/3221227702/index.m3u8?icpid=3&RTS=1663228093&from=40&popid=40&hms_devid=2040&prioritypopid=40&vqe=3
-怡伴健康,http://[2409:8087:7000:20:1000::22]:6060/000000001000/1000000005000266011/index.m3u8?channel-id=ystenlive&Contentid=1000000005000266011&livemode=1&stbId=3
-怡伴健康,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000023/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000023&livemode=1&stbId=3
-优漫卡通,http://111.20.41.242/dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221225795/1.m3u8?zjiangsd
 游戏风云,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001192/index.m3u8
 游戏风云,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002295/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 游戏风云,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002306/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 游戏风云,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226579/index.m3u8
 圆点生活,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226552/index.m3u8
 浙江教科影视,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000001/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000001&livemode=1&stbId=3
-中国功夫,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000003000000009/index.m3u8?channel-id=hnbblive&Contentid=2000000003000000009&livemode=1&stbId=3
-中国交通,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226248/index.m3u8
-中国教育1,http://zteres.sn.chinamobile.com:6060/000000001000/1000000002000027253/1.m3u8?channel-id=ystenlive&Contentid=1000000002000027253&livemode=1&stbId=3
-中国教育1,http://zteres.sn.chinamobile.com:6060/000000001000/5000000002000002652/1.m3u8?channel-id=bestzb&Contentid=5000000002000002652&livemode=1&stbId=3
-中国教育1,http://zteres.sn.chinamobile.com:6060/000000001000/6000000003000018981/1.m3u8?channel-id=wasusyt&Contentid=6000000003000018981&livemode=1&stbId=3
-中国教育1台,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001020/index.m3u8
-中国教育2,http://zteres.sn.chinamobile.com:6060/000000001000/1000000005000266004/1.m3u8?channel-id=ystenlive&Contentid=1000000005000266004&livemode=1&stbId=3
-中国教育2,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000047/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000047&livemode=1&stbId=3
-中国教育2,http://zteres.sn.chinamobile.com:6060/000000001000/5000000011000031201/1.m3u8?channel-id=bestzb&Contentid=5000000011000031201&livemode=1&stbId=3
-中国教育2台,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001226/index.m3u8
-中国教育4,http://zteres.sn.chinamobile.com:6060/000000001000/1000000005000025333/1.m3u8?channel-id=ystenlive&Contentid=1000000005000025333&livemode=1&stbId=3
-中国教育4,http://zteres.sn.chinamobile.com:6060/000000001000/5000000006000012123/1.m3u8?channel-id=bestzb&Contentid=5000000006000012123&livemode=1&stbId=3
-中国教育4,http://zteres.sn.chinamobile.com:6060/000000001000/5000000011000031126/1.m3u8?channel-id=bestzb&Contentid=5000000011000031126&livemode=1&stbId=3
-中国教育4,http://zteres.sn.chinamobile.com:6060/000000001000/6000000005000042312/1.m3u8?channel-id=wasusyt&Contentid=6000000005000042312&livemode=1&stbId=3
-中国教育4台,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001348/index.m3u8
 中国天气,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001102/index.m3u
 中国天气,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001102/index.m3u8
 中国天气,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000057/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000057&livemode=1&stbId=3
 中国天气,http://zteres.sn.chinamobile.com:6060/000000001000/5000000005000031974/1.m3u8?channel-id=bestzb&Contentid=5000000005000031974&livemode=1&stbId=3
 中华美食,http://zteres.sn.chinamobile.com:6060/000000001000/1000000005000266015/1.m3u8?channel-id=ystenlive&Contentid=1000000005000266015&livemode=1&stbId=3
 中华美食,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000052/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000052&livemode=1&stbId=3
-中央新影,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226235/index.m3u8
 中央新影,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226236/index.m3u8
-重庆汽摩,http://39.134.115.191:8080/ysten.jx.chinamobile.com/PLTV/88888888/224/3221225506/2/index.m3u8?fmt=ts2hls
-足球,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226347/index.m3u8
-中央新影,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226235/index.m3u8
-中央新影,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226236/index.m3u8
-重庆汽摩,http://39.134.115.191:8080/ysten.jx.chinamobile.com/PLTV/88888888/224/3221225506/2/index.m3u8?fmt=ts2hls
-足球,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226347/index.m3u8
