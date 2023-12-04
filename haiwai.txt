@@ -1,123 +1,112 @@
-[KR]tvN,http://198.16.100.90:8278/TVN/playlist.m3u8?tid=ME2E2714748027147480&ct=19225&tsum=48ef5f1d47a64fc90e5f5ad5b182fb5d
-[KR]tvN,http://198.16.100.90:8278/TVN/playlist.m3u8?tid=ME8E2207086222070862&ct=19249&tsum=b7f602e68174a03e917c7b354788bce9
-ABC News,http://198.16.100.90:8278/abcnews_glo/playlist.m3u8?tid=MAEA6759929367599293&ct=19225&tsum=edd59704e2182262583ea5b0e1093b9d
-ALTITUDE SPORTS 2 HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=1060883&extension=ts
-ANIMAL PLANET HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176865&extension=ts
-ANIMAL PLANET HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45447&extension=ts
-Animal Planet ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683085&extension=ts
-Animal Planet MY,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=571227&extension=ts
-Animal Planet,http://198.16.100.90:8278/AnimalPlanet/playlist.m3u8?tid=MC3C3856400538564005&ct=19225&tsum=6255ab9649411a8a70c7cbf2ebd7eb23
-Animal Planet,http://198.16.100.90:8278/AnimalPlanet/playlist.m3u8?tid=MD5D8455808984558089&ct=19254&tsum=899db3292c39fbba53680601a57ee552
-Animal Planet,http://208.115.225.174:14192
-Animal Planet,http://50.7.238.114:8278/animalplanet_twn/playlist.m3u8?tid=ME1E7303496773034967&ct=19225&tsum=07b0edc521a4edcb7a00d7e943b8aa72
+ABC NEWS,http://198.16.100.90:8278/abcnews_glo/playlist.m3u8?tid=MAEA6759929367599293&ct=19225&tsum=edd59704e2182262583ea5b0e1093b9d
+ALTITUDE SPORTS 2 US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=1060883&extension=ts
+ANIMAL PLANET,http://198.16.100.90:8278/AnimalPlanet/playlist.m3u8?tid=MC3C3856400538564005&ct=19225&tsum=6255ab9649411a8a70c7cbf2ebd7eb23
+ANIMAL PLANET,http://198.16.100.90:8278/AnimalPlanet/playlist.m3u8?tid=MD5D8455808984558089&ct=19254&tsum=899db3292c39fbba53680601a57ee552
+ANIMAL PLANET,http://208.115.225.174:14192
+ANIMAL PLANET,http://50.7.238.114:8278/animalplanet_twn/playlist.m3u8?tid=ME1E7303496773034967&ct=19225&tsum=07b0edc521a4edcb7a00d7e943b8aa72
+ANIMAL PLANET CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176865&extension=ts
+ANIMAL PLANET ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683085&extension=ts
+ANIMAL PLANET MY,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=571227&extension=ts
+ANIMAL PLANET US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45447&extension=ts
 AOD 512 MY,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=571229&extension=ts
 AOD 513 MY,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=571226&extension=ts
-Arirang,http://50.7.238.114:8278/arirang_twn/playlist.m3u8?tid=MF5F3988861839888618&ct=19249&tsum=781d490a6abe9f48f5b93e211cbe0307
+ARIRANG,http://50.7.238.114:8278/arirang_twn/playlist.m3u8?tid=MF5F3988861839888618&ct=19249&tsum=781d490a6abe9f48f5b93e211cbe0307
 ASSP 2,http://198.16.100.90:8278/Assp2/playlist.m3u8?tid=ME1E4056565440565654&ct=19249&tsum=1bf59bebb8a43a859eae9f1b3759f844
 ASSP 3,http://198.16.100.90:8278/Assp3/playlist.m3u8?tid=MB4B2552451125524511&ct=19249&tsum=f6cb45a995e37dfc7c40d515f29924e4
 ASSP UHD MY,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=571245&extension=ts
 ASSP3 MY,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=571247&extension=ts
-AT&T SPORTSNET ROCKY MOUNTAIN HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=272826&extension=ts
-Awani,http://198.16.100.90:8278/Awani/playlist.m3u8?tid=MB3B5555835155558351&ct=19225&tsum=148341f2ac3dfc57fd8bb8b2f6e4d190
+AT&T SPORTSNET ROCKY MOUNTAIN US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=272826&extension=ts
+AWANI,http://198.16.100.90:8278/Awani/playlist.m3u8?tid=MB3B5555835155558351&ct=19225&tsum=148341f2ac3dfc57fd8bb8b2f6e4d190
 AXN,http://198.16.100.90:8278/Axn/playlist.m3u8?tid=MDAD8374621983746219&ct=19225&tsum=60883af30a38d2c40db4c04f8651ffaa
 AXN,http://198.16.100.90:8278/axn_twn/playlist.m3u8?tid=MA1A8358225083582250&ct=19193&tsum=105511aaad1c3ff86d7489e83e18b209
 AXN,http://198.16.100.90:8278/axn_twn/playlist.m3u8?tid=MC6C9875939098759390&ct=19254&tsum=5a6772e6e852b06c1b5741eeb4002a1a
-Baby TV,http://198.16.100.90:8278/Babytv/playlist.m3u8?tid=MEEE1890535318905353&ct=19225&tsum=416f2cc4b72f4963317f557858cdbd02
+BABY TV,http://198.16.100.90:8278/Babytv/playlist.m3u8?tid=MEEE1890535318905353&ct=19225&tsum=416f2cc4b72f4963317f557858cdbd02
 BBC 1,http://198.16.100.90:8278/bbc1_antik/playlist.m3u8?tid=MA4A9532597395325973&ct=19230&tsum=730628fd737b265598d82053feb30902
 BBC 1,http://198.16.100.90:8278/bbc1_antik/playlist.m3u8?tid=MF5F6677034466770344&ct=19225&tsum=7620e8a88546352c525938a2dee63a56
 BBC 2,http://198.16.100.90:8278/bbc2_antik/playlist.m3u8?tid=MA6A4519490645194906&ct=19225&tsum=9b7ac03eed5276fa8bda87e0e8e64ed1
 BBC 2,http://198.16.100.90:8278/bbc2_antik/playlist.m3u8?tid=MABA3261818232618182&ct=19254&tsum=3aebf2128ba27b23c78bfd4160c63750
-BBC AMERICA HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45612&extension=ts
+BBC AMERICA US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45612&extension=ts
 BBC FOOD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=866345&extension=ts
 BBC WORLD NEWS,http://198.16.100.90:8278/bbcnews_twn/playlist.m3u8?tid=MF3F9344101593441015&ct=19254&tsum=ee2dfdc43081584c1c81ddf78256bf30
-BEIN SPORTS 2 EN FHD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=483920&extension=ts
-BEIN SPORTS 2 HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=83953&extension=ts
-BEIN SPORTS 4 HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=83954&extension=ts
-BEIN SPORTS 5 HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=83955&extension=ts
-BIG TEN NETWORK HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45609&extension=ts
-Bloomberg,http://198.16.100.90:8278/bloomberg_twn/playlist.m3u8?tid=MBDB5111864051118640&ct=19254&tsum=20e267ffc313070f5fff457700929457
-Bloomberg,http://198.16.100.90:8278/bloomberg_twn/playlist.m3u8?tid=MD2D8088860380888603&ct=19225&tsum=ea1c6a2c09cef99386e1768a4ff4c61c
-Boomerang ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683172&extension=ts
-CARTOON NETWORK EAST HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=754475&extension=ts
-Cartoon Network ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683174&extension=ts
-Cartoon Network,http://198.16.100.90:8278/Cn/playlist.m3u8?tid=MCDC2144535021445350&ct=19225&tsum=32569c846de798e3502372d35d00773f
+BEIN SPORTS 2 EN UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=483920&extension=ts
+BEIN SPORTS 2 US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=83953&extension=ts
+BEIN SPORTS 4 US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=83954&extension=ts
+BEIN SPORTS 5 US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=83955&extension=ts
+BIG TEN NETWORK US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45609&extension=ts
+BLOOMBERG,http://198.16.100.90:8278/bloomberg_twn/playlist.m3u8?tid=MBDB5111864051118640&ct=19254&tsum=20e267ffc313070f5fff457700929457
+BLOOMBERG,http://198.16.100.90:8278/bloomberg_twn/playlist.m3u8?tid=MD2D8088860380888603&ct=19225&tsum=ea1c6a2c09cef99386e1768a4ff4c61c
+BOOMERANG ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683172&extension=ts
+CARTOON NETWORK,http://198.16.100.90:8278/Cn/playlist.m3u8?tid=MCDC2144535021445350&ct=19225&tsum=32569c846de798e3502372d35d00773f
+CARTOON NETWORK EAST US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=754475&extension=ts
+CARTOON NETWORK ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683174&extension=ts
 CBBC,http://198.16.100.90:8278/cbbc_antik/playlist.m3u8?tid=MA5A6456021664560216&ct=19254&tsum=14ac9f534102578c23e9e229d28b4fe0
-CBeebies,http://198.16.100.90:8278/Cbeebies/playlist.m3u8?tid=ME5E7901951779019517&ct=19225&tsum=03bb5bab7f669081444ce37cda408b8d
+CBEEBIES,http://198.16.100.90:8278/Cbeebies/playlist.m3u8?tid=ME5E7901951779019517&ct=19225&tsum=03bb5bab7f669081444ce37cda408b8d
 CBS,http://50.7.238.114:8278/cbshd_glo/playlist.m3u8?tid=MA1A7337105773371057&ct=19254&tsum=89d432f03b1b50b68b7bace382dc13ac
-CBSNews,http://198.16.100.90:8278/cbsn_glo/playlist.m3u8?tid=ME2E7003518970035189&ct=19225&tsum=c1cc67ff59df6d6f608a400760be0bda
-CBSNews,http://50.7.238.114:8278/cbsn_glo/playlist.m3u8?tid=ME2E7003518970035189&ct=19225&tsum=c1cc67ff59df6d6f608a400760be0bda
-Channel3Thailand,http://198.16.100.90:8278/ch3_pat/playlist.m3u8?tid=MB6B7545566875455668&ct=19254&tsum=80c0722e6c93923edad559f6b70efb47
-CinemaWorld ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683146&extension=ts
-CINEMAX ACTION EAST HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45599&extension=ts
-CINEMAX EAST HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45598&extension=ts
-CINEMAX HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45597&extension=ts
-CINEMAX MOREMAX HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45596&extension=ts
-CINEMAX THRILLERMAX HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45595&extension=ts
-CINEMAX WEST HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45594&extension=ts
+CBSNEWS,http://198.16.100.90:8278/cbsn_glo/playlist.m3u8?tid=ME2E7003518970035189&ct=19225&tsum=c1cc67ff59df6d6f608a400760be0bda
+CBSNEWS,http://50.7.238.114:8278/cbsn_glo/playlist.m3u8?tid=ME2E7003518970035189&ct=19225&tsum=c1cc67ff59df6d6f608a400760be0bda
+CHANNEL3THAILAND,http://198.16.100.90:8278/ch3_pat/playlist.m3u8?tid=MB6B7545566875455668&ct=19254&tsum=80c0722e6c93923edad559f6b70efb47
+CINEMAWORLD ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683146&extension=ts
 CINEMAX,http://198.16.100.90:8278/cinemax_twn/playlist.m3u8?tid=MCEC1614519816145198&ct=19193&tsum=e635ddeeb683b5cbcda1319d0cc18f84
 CINEMAX,http://198.16.100.90:8278/cinemax_twn/playlist.m3u8?tid=MF6F1142326311423263&ct=19254&tsum=716939f2b6d75d0bb83a4c780e00dbd3
 CINEMAX,http://50.7.238.114:8278/cinemax_twn/playlist.m3u8?tid=MCEC1614519816145198&ct=19193&tsum=e635ddeeb683b5cbcda1319d0cc18f84
 CINEMAX,http://50.7.238.114:8278/cinemax_twn/playlist.m3u8?tid=MF6F1142326311423263&ct=19254&tsum=716939f2b6d75d0bb83a4c780e00dbd3
-CNA ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683185&extension=ts
+CINEMAX ACTION EAST US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45599&extension=ts
+CINEMAX EAST US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45598&extension=ts
+CINEMAX MOREMAX US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45596&extension=ts
+CINEMAX THRILLERMAX US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45595&extension=ts
+CINEMAX US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45597&extension=ts
+CINEMAX US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45594&extension=ts
 CNA,http://198.16.100.90:8278/cna/playlist.m3u8?tid=MFAF1272681512726815&ct=19225&tsum=4d6a781648283b1bb018bc5c098432d0
-CNBC HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45593&extension=ts
-CNBC ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683186&extension=ts
+CNA ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683185&extension=ts
 CNBC,http://198.16.100.90:8278/cnbc_twn/playlist.m3u8?tid=MA5A9732497897324978&ct=19225&tsum=268e38e98d745f914c001c83d98b4b60
 CNBC,http://198.16.100.90:8278/cnbc_twn/playlist.m3u8?tid=MCBC5251518852515188&ct=19254&tsum=37bd48b924a593e126344eae8baec162
-CNN FHD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=442785&extension=ts
-CNN HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45592&extension=ts
+CNBC ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683186&extension=ts
+CNBC US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45593&extension=ts
 CNN,http://198.16.100.90:8278/cnn_twn/playlist.m3u8?tid=ME9E1590756115907561&ct=19225&tsum=adf5db9504938a69e07bad07c9d6f7d6
+CNN US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=442785&extension=ts
+CNN US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45592&extension=ts
 CN卡通频道,http://198.16.100.90:8278/momo1_twn/playlist.m3u8?tid=MA0A4898983648989836&ct=19225&tsum=bd109117d126916f203880b1f2063d5e
 CN卡通频道,http://198.16.100.90:8278/momo1_twn/playlist.m3u8?tid=MDCD8337337283373372&ct=18393&tsum=3744c35f02ab2207fb7dbbcb450f02d6
-CRIME & INVESTIGATION HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176874&extension=ts
-CRIME & INVESTIGATION HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=90938&extension=ts
+CRIME & INVESTIGATION CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176874&extension=ts
+CRIME & INVESTIGATION US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=90938&extension=ts
 CRIME DRAMA US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=866308&extension=ts
-DESTINATION AMERICA HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=90954&extension=ts
-DISCOVERY FAMILY HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45443&extension=ts
-DISCOVERY HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45442&extension=ts
-DISCOVERY WEST HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91819&extension=ts
-Discovery,http://198.16.100.90:8278/discoveryhd_twn/playlist.m3u8?tid=MF6F9560989795609897&ct=19254&tsum=5c76a2419ab5b56e7202248db95be60e
-DiscoveryAsia,http://50.7.238.114:8278/discoverytwn_twn/playlist.m3u8?tid=MB1B4014431840144318&ct=19254&tsum=a72e8caa6986ef92c4d6cb743e22a78f
-Discovery频道,http://198.16.100.90:8278/discoverych_twn/playlist.m3u8?tid=MA3A2844188928441889&ct=18393&tsum=5b966ba17918ab0d7dd4c462d1b0b811
-DISNEY CHANNEL HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45588&extension=ts
-DISNEY CHANNEL WEST HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91829&extension=ts
-DISNEY JR HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45587&extension=ts
-DISNEY JR WEST HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91832&extension=ts
-DISNEY JUNIOR HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177331&extension=ts
-DISNEY XD HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45586&extension=ts
-Disney XD ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683171&extension=ts
-DISNEY XD WEST HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91833&extension=ts
-DniproTV (1080p),https://live.corusdigitaldev.com/groupb/live/564df695-94f9-4f27-b1b9-0a936ab01721/live.isml/.m3u8
+DESTINATION AMERICA US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=90954&extension=ts
+DISCOVERY,http://198.16.100.90:8278/discoveryhd_twn/playlist.m3u8?tid=MF6F9560989795609897&ct=19254&tsum=5c76a2419ab5b56e7202248db95be60e
+DISCOVERY FAMILY US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45443&extension=ts
+DISCOVERY US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45442&extension=ts
+DISCOVERY US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91819&extension=ts
+DISCOVERYASIA,http://50.7.238.114:8278/discoverytwn_twn/playlist.m3u8?tid=MB1B4014431840144318&ct=19254&tsum=a72e8caa6986ef92c4d6cb743e22a78f
+DISCOVERY频道,http://198.16.100.90:8278/discoverych_twn/playlist.m3u8?tid=MA3A2844188928441889&ct=18393&tsum=5b966ba17918ab0d7dd4c462d1b0b811
+DISNEY CHANNEL US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45588&extension=ts
+DISNEY CHANNEL US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91829&extension=ts
+DISNEY JR US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45587&extension=ts
+DISNEY JR US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91832&extension=ts
+DISNEY JUNIOR CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177331&extension=ts
+DISNEY XD ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683171&extension=ts
+DISNEY XD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45586&extension=ts
+DISNEY XD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91833&extension=ts
+DNIPROTV (1080P),https://live.corusdigitaldev.com/groupb/live/564df695-94f9-4f27-b1b9-0a936ab01721/live.isml/.m3u8
 DW ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683192&extension=ts
-E! ENTERTAINMENT HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45584&extension=ts
-E! ENTERTAINMENT WEST HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91834&extension=ts
+E! ENTERTAINMENT US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45584&extension=ts
+E! ENTERTAINMENT US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91834&extension=ts
 ELEVEN 1,http://198.16.100.90:8278/golfchannel_twn/playlist.m3u8?tid=MFBF2798068027980680&ct=18393&tsum=d8204023f67120512c75a8882f121120
-ELEVEN SPORTS HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45583&extension=ts
+ELEVEN SPORTS US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45583&extension=ts
 ELEVEN体育1,http://50.7.238.114:8278/golfchannel_twn/playlist.m3u8?tid=m43df9270caf7&ct=18335&tsum=3bcc02e810e7073b86bb40d392e95f23
-ESPN NEWS HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45578&extension=ts
-Euronews,http://198.16.100.90:8278/euronews_antik/playlist.m3u8?tid=MF2F8095655880956558&ct=19225&tsum=30c549f4730e3d83725a443cf0c16bbe
+ESPN NEWS US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45578&extension=ts
+EURONEWS,http://198.16.100.90:8278/euronews_antik/playlist.m3u8?tid=MF2F8095655880956558&ct=19225&tsum=30c549f4730e3d83725a443cf0c16bbe
 EYETV旅游,http://50.7.238.114:8278/eyetvtravel_twn/playlist.m3u8?tid=MFDF5066608450666084&ct=19254&tsum=0bb4cbfc0d32bff89ab5b3a5352fcf94
 EYETV戏剧,http://50.7.238.114:8278/eyetvxiju_twn/playlist.m3u8?tid=ME3E6686724066867240&ct=19254&tsum=728fc49fcd53cd770381ffd87883b1d1
-FIGHT NETWORK HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91897&extension=ts
+FIGHT NETWORK US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91897&extension=ts
 FIGHT US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=866288&extension=ts
-Fox News ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683179&extension=ts
-Fox News,http://198.16.100.90:8278/foxnews_twn/playlist.m3u8?tid=MC6C3693629036936290&ct=19225&tsum=f5a714cff126a87d446c0613d9e80e14
-Fox News,https://fox-foxnewsnow-samsungus.amagi.tv/playlist720p.m3u8
-FOX NewsNOW,http://fox-foxnewsnow-samsungus.amagi.tv/playlist.m3u8
-France24 ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683191&extension=ts
-Fresno CMAC 3 Government Channel (720p),http://fox-foxnewsnow-samsungus.amagi.tv/playlist360p.m3u8
-FUBO SPORTS NETWORK HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91895&extension=ts
-GINX ESPORTS HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91854&extension=ts
+FOX NEWS,http://198.16.100.90:8278/foxnews_twn/playlist.m3u8?tid=MC6C3693629036936290&ct=19225&tsum=f5a714cff126a87d446c0613d9e80e14
+FOX NEWS,https://fox-foxnewsnow-samsungus.amagi.tv/playlist720p.m3u8
+FOX NEWS ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683179&extension=ts
+FOX NEWSNOW,http://fox-foxnewsnow-samsungus.amagi.tv/playlist.m3u8
+FRANCE24 ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683191&extension=ts
+FRESNO CMAC 3 GOVERNMENT CHANNEL (720P),http://fox-foxnewsnow-samsungus.amagi.tv/playlist360p.m3u8
+FUBO SPORTS NETWORK US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91895&extension=ts
+GINX ESPORTS US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91854&extension=ts
 GOODTVCH02真理,http://50.7.238.114:8278/good2_twn/playlist.m3u8?tid=ME9E3966510439665104&ct=19225&tsum=a2788b2ccea04a8a8082d663fb7838e5
-HBO 2 HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176914&extension=ts
-HBO 2 HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45552&extension=ts
-HBO HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45549&extension=ts
-HBO ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683152&extension=ts
-HBO Mundi,http://208.115.225.174:14148
-HBO SIGNATURE HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45547&extension=ts
-HBO WEST HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91884&extension=ts
-HBO ZONE HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45546&extension=ts
-HBO 强档巨献,http://50.7.238.114:8278/hbohead_twn/playlist.m3u8?tid=MCDC6663932966639329&ct=19193&tsum=6999a99699b097f3af2ef550e5c81f93
 HBO,http://198.16.100.90:8278/hbohd_twn/playlist.m3u8?tid=MBBB7425808074258080&ct=19193&tsum=a0bdd395bfc4cf07d9414d5372f59ad2
 HBO,http://198.16.100.90:8278/hbohd_twn/playlist.m3u8?tid=ME7E8473082984730829&ct=18392&tsum=acad12b7c208bda39b68dec98349e138
 HBO,http://208.115.225.174:14136
@@ -125,64 +114,73 @@ HBO,http://208.115.225.174:14160
 HBO,http://208.115.225.174:14165
 HBO,http://50.7.238.114:8278/hbohd_twn/playlist.m3u8?tid=m8d785f4e022616401837&ct=17877&tsum=56e767abfc65234db52b017576b00403
 HBO,http://50.7.238.114:8278/hbosignature_twn/playlist.m3u8?tid=MC5C5754321157543211&ct=19225&tsum=2b86077147813534b4cae6dd85bb3c4a
+HBO 2 CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176914&extension=ts
+HBO 2 US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45552&extension=ts
+HBO ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683152&extension=ts
+HBO MUNDI,http://208.115.225.174:14148
+HBO SIGNATURE US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45547&extension=ts
+HBO US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45549&extension=ts
+HBO US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91884&extension=ts
+HBO ZONE US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45546&extension=ts
+HBO 强档巨献,http://50.7.238.114:8278/hbohead_twn/playlist.m3u8?tid=MCDC6663932966639329&ct=19193&tsum=6999a99699b097f3af2ef550e5c81f93
 HBO温馨家庭,http://198.16.100.90:8278/fyi_twn/playlist.m3u8?tid=18186902&ct=17988&&tsum=7a21abab0a5912afb0ebc01db111e59f
 HBO原创,http://198.16.100.90:8278/hbosignature_twn/playlist.m3u8?tid=m48ee99a5dacb15948906&ct=17874&tsum=3d127801d49fa098b4118400117b4fbb
 HBO原创,http://198.16.100.90:8278/hbosignature_twn/playlist.m3u8?tid=MD6D5767423357674233&ct=18392&tsum=995709f1100cf1b07964790160bfb4ee
 HBO原创巨献,http://198.16.100.90:8278/hbosignature_twn/playlist.m3u8?tid=MC5C5754321157543211&ct=19225&tsum=2b86077147813534b4cae6dd85bb3c4a
+HISTORY,http://198.16.100.90:8278/History/playlist.m3u8?tid=MBCB1996306119963061&ct=19225&tsum=7c5458c8f917c8d0b182fb436f66e64f
 HISTORY ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683091&extension=ts
 HISTORY MY,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=571201&extension=ts
-HISTORY,http://198.16.100.90:8278/History/playlist.m3u8?tid=MBCB1996306119963061&ct=19225&tsum=7c5458c8f917c8d0b182fb436f66e64f
-HITS Movies ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683163&extension=ts
-Itv 1,http://198.16.100.90:8278/itv1_antik/playlist.m3u8?tid=MA7A3116345831163458&ct=19254&tsum=fe64dc99ba95f220bea2a2a29319b065
-Itv 1,http://198.16.100.90:8278/itv1_antik/playlist.m3u8?tid=MD2D6334659563346595&ct=19226&tsum=79815878394f0f1cd30a6f043febfbb8
-Itv 2,http://198.16.100.90:8278/itv2_antik/playlist.m3u8?tid=ME1E6151053761510537&ct=19249&tsum=1ef927017460bcb40a504bbebc9eecb8
-Itv 2,http://198.16.100.90:8278/itv2_antik/playlist.m3u8?tid=MFFF6920712969207129&ct=19226&tsum=8d0ef3e278e5c4010cec6570464fa2ea
+HITS MOVIES ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683163&extension=ts
+ITV 1,http://198.16.100.90:8278/itv1_antik/playlist.m3u8?tid=MA7A3116345831163458&ct=19254&tsum=fe64dc99ba95f220bea2a2a29319b065
+ITV 1,http://198.16.100.90:8278/itv1_antik/playlist.m3u8?tid=MD2D6334659563346595&ct=19226&tsum=79815878394f0f1cd30a6f043febfbb8
+ITV 2,http://198.16.100.90:8278/itv2_antik/playlist.m3u8?tid=ME1E6151053761510537&ct=19249&tsum=1ef927017460bcb40a504bbebc9eecb8
+ITV 2,http://198.16.100.90:8278/itv2_antik/playlist.m3u8?tid=MFFF6920712969207129&ct=19226&tsum=8d0ef3e278e5c4010cec6570464fa2ea
 J2,http://198.16.100.90:8278/j2_twn/playlist.m3u8?tid=m22905da1d346&ct=18336&tsum=3b4998c4f5367bb820165f66b0caab0e
 KIX ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683134&extension=ts
-LIFETIME HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176919&extension=ts
-Lifetime ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683129&extension=ts
-LIFETIME REAL WOMEN HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=150353&extension=ts
-Mewatch Ch 5,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=941615&extension=ts
-Mewatch Ch 8,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=941616&extension=ts
-Mewatch Ch U,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=941617&extension=ts
-Mnc Sports 1 HD ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683133&extension=ts
-Momo TV,http://198.16.100.90:8278/momo1_twn/playlist.m3u8?tid=MFFF9797479997974799&ct=19249&tsum=0bd9dac79cd373cc918357d3199c8b22
-Momo TV,http://50.7.238.114:8278/momo1_twn/playlist.m3u8?tid=MFFF9797479997974799&ct=19249&tsum=0bd9dac79cd373cc918357d3199c8b22
-More4,http://198.16.100.90:8278/more4_antik/playlist.m3u8?tid=MD1D7057164370571643&ct=19249&tsum=f95f2b7a56561d56eb8075ecee70e90f
-MOVIETIME HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176921&extension=ts
+LIFETIME CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176919&extension=ts
+LIFETIME ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683129&extension=ts
+LIFETIME REAL WOMEN US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=150353&extension=ts
+MEWATCH CH 5,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=941615&extension=ts
+MEWATCH CH 8,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=941616&extension=ts
+MEWATCH CH U,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=941617&extension=ts
+MNC SPORTS 1 ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683133&extension=ts
+MOMO TV,http://198.16.100.90:8278/momo1_twn/playlist.m3u8?tid=MFFF9797479997974799&ct=19249&tsum=0bd9dac79cd373cc918357d3199c8b22
+MOMO TV,http://50.7.238.114:8278/momo1_twn/playlist.m3u8?tid=MFFF9797479997974799&ct=19249&tsum=0bd9dac79cd373cc918357d3199c8b22
+MORE4,http://198.16.100.90:8278/more4_antik/playlist.m3u8?tid=MD1D7057164370571643&ct=19249&tsum=f95f2b7a56561d56eb8075ecee70e90f
+MOVIETIME CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176921&extension=ts
+MTV CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176922&extension=ts
 MTV DATING US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=866244&extension=ts
-MTV HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176922&extension=ts
-MTV LIVE HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45460&extension=ts
+MTV LIVE US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45460&extension=ts
 MTV PLUTO TV US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=866242&extension=ts
 MTV U US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91913&extension=ts
-MUCH MUSIC HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176924&extension=ts
+MUCH MUSIC CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176924&extension=ts
 MUSIC CHOICE  MAX US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=991598&extension=ts
 MUSIC CHOICE HIP-HOP AND R&B US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=991602&extension=ts
 MUSIC CHOICE HIT LIST UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=1014276&extension=ts
 MUSIC CHOICE JAZZ US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=991599&extension=ts
-Music TV,http://198.16.100.90:8278/MusicTV/playlist.m3u8?tid=MFEF2771586927715869&ct=19225&tsum=25aeb843227531bfab3d9fde062323b2
-NAT GEO HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45453&extension=ts
-Nat Geo ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683086&extension=ts
-NatGeo Tamil,http://198.16.100.90:8278/natgeotamil_raj/playlist.m3u8?tid=MC8C8508198685081986&ct=19249&tsum=211a7c56c1dd113e10eae565520483d0
-Nation,http://198.16.100.90:8278/nation_pat/playlist.m3u8?tid=MB1B9139560291395602&ct=19249&tsum=ce6f7c87a3c920df0d5212ee4b98ba18
-National Geographic Wild 中字,http://198.16.100.90:8278/natgeowild_twn/playlist.m3u8?tid=MF6F5354447153544471&ct=19249&tsum=fcc679b64dded7ec1ff6a0f09e335f38
-National Geographic Wild,http://198.16.100.90:8278/natgeowild_twn/playlist.m3u8?tid=MDDD9803492998034929&ct=18393&tsum=b276f2598186cdc8f4c513d89bfc2032
-National Geographic,http://198.16.100.90:8278/natgeohd_twn/playlist.m3u8?tid=ma1f0b9808d5014467661&ct=17874&tsum=73dfb91284f5b1358251546e6f03da3d
+MUSIC TV,http://198.16.100.90:8278/MusicTV/playlist.m3u8?tid=MFEF2771586927715869&ct=19225&tsum=25aeb843227531bfab3d9fde062323b2
+NAT GEO ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683086&extension=ts
+NAT GEO US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45453&extension=ts
+NATGEO TAMIL,http://198.16.100.90:8278/natgeotamil_raj/playlist.m3u8?tid=MC8C8508198685081986&ct=19249&tsum=211a7c56c1dd113e10eae565520483d0
+NATION,http://198.16.100.90:8278/nation_pat/playlist.m3u8?tid=MB1B9139560291395602&ct=19249&tsum=ce6f7c87a3c920df0d5212ee4b98ba18
+NATIONAL GEOGRAPHIC,http://198.16.100.90:8278/natgeohd_twn/playlist.m3u8?tid=ma1f0b9808d5014467661&ct=17874&tsum=73dfb91284f5b1358251546e6f03da3d
+NATIONAL GEOGRAPHIC WILD,http://198.16.100.90:8278/natgeowild_twn/playlist.m3u8?tid=MDDD9803492998034929&ct=18393&tsum=b276f2598186cdc8f4c513d89bfc2032
+NATIONAL GEOGRAPHIC WILD 中字,http://198.16.100.90:8278/natgeowild_twn/playlist.m3u8?tid=MF6F5354447153544471&ct=19249&tsum=fcc679b64dded7ec1ff6a0f09e335f38
 NBA TV CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=1000006&extension=ts
-Net TV,http://198.16.100.90:8278/NetTV/playlist.m3u8?tid=MB0B1364823413648234&ct=19249&tsum=4109bb7ef2f8a60d80af6c88a23ce242
+NET TV,http://198.16.100.90:8278/NetTV/playlist.m3u8?tid=MB0B1364823413648234&ct=19249&tsum=4109bb7ef2f8a60d80af6c88a23ce242
 NICK LATINO US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=866235&extension=ts
-NICK TOONS HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45520&extension=ts
-NICKELODEON HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177335&extension=ts
-Nickelodeon ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683175&extension=ts
-Nickelodeon,http://198.16.100.90:8278/Nickelodeon/playlist.m3u8?tid=MBBB9174743591747435&ct=19249&tsum=9901089db6361b9cafc0ab9de5612bee
-Oasis,http://198.16.100.90:8278/Oasis/playlist.m3u8?tid=MABA2020629120206291&ct=19249&tsum=46be05252007b1efaae28ae3ab4cc7bb
-One ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683130&extension=ts
+NICK TOONS US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45520&extension=ts
+NICKELODEON,http://198.16.100.90:8278/Nickelodeon/playlist.m3u8?tid=MBBB9174743591747435&ct=19249&tsum=9901089db6361b9cafc0ab9de5612bee
+NICKELODEON CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177335&extension=ts
+NICKELODEON ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683175&extension=ts
+OASIS,http://198.16.100.90:8278/Oasis/playlist.m3u8?tid=MABA2020629120206291&ct=19249&tsum=46be05252007b1efaae28ae3ab4cc7bb
+ONE,http://198.16.100.90:8278/One/playlist.m3u8?tid=MC4C3559816135598161&ct=19249&tsum=dce7930990cd11c5385de1298a06c226
+ONE,http://198.16.100.90:8278/SetOne/playlist.m3u8?tid=MD7D1616979216169792&ct=19249&tsum=228e9d46280149ba7ecfdce2acb28ad9
+ONE ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683130&extension=ts
 ONE MY,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=571193&extension=ts
-One,http://198.16.100.90:8278/One/playlist.m3u8?tid=MC4C3559816135598161&ct=19249&tsum=dce7930990cd11c5385de1298a06c226
-One,http://198.16.100.90:8278/SetOne/playlist.m3u8?tid=MD7D1616979216169792&ct=19249&tsum=228e9d46280149ba7ecfdce2acb28ad9
-OUTDOOR CHANNEL HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=90964&extension=ts
-Pick TV,http://198.16.100.90:8278/picktv_antik/playlist.m3u8?tid=MB5B4434522744345227&ct=19249&tsum=b97fd4168586dc65fbe4ac3cd28d8240
-PPTV Thailand1,http://198.16.100.90:8278/pptv_pat/playlist.m3u8?tid=MC2C3662850236628502&ct=19249&tsum=efb951731b4d0d420dedc866c9fa789f
+OUTDOOR CHANNEL US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=90964&extension=ts
+PICK TV,http://198.16.100.90:8278/picktv_antik/playlist.m3u8?tid=MB5B4434522744345227&ct=19249&tsum=b97fd4168586dc65fbe4ac3cd28d8240
+PPTV THAILAND1,http://198.16.100.90:8278/pptv_pat/playlist.m3u8?tid=MC2C3662850236628502&ct=19249&tsum=efb951731b4d0d420dedc866c9fa789f
 PREMIER SPORTS 1 UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=1032487&extension=ts
 PREMIER SPORTS 2 UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=1032486&extension=ts
 PREMIER SPORTS 3 UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=1032485&extension=ts
@@ -191,127 +189,127 @@ PREMIER SPORTS 5 UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=
 PREMIER SPORTS 6 UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=1032482&extension=ts
 PREMIER SPORTS 7 UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=1032481&extension=ts
 PREMIER SPORTS MY,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=571253&extension=ts
-ProTV ,https://cdn3.wowza.com/5/M0lyamVmM2JWcjhQ/weho/G0161_004/playlist.m3u8
-PT - FOX News,https://fox-foxnewsnow-samsungus.amagi.tv/playlist.m3u8
-Quran ,http://198.16.100.90:8278/quran_mido/playlist.m3u8?tid=MDBD3234169932341699&ct=19249&tsum=9ab67cfe5792350388a7777b56fa3108
+PROTV ,https://cdn3.wowza.com/5/M0lyamVmM2JWcjhQ/weho/G0161_004/playlist.m3u8
+PT - FOX NEWS,https://fox-foxnewsnow-samsungus.amagi.tv/playlist.m3u8
+QURAN ,http://198.16.100.90:8278/quran_mido/playlist.m3u8?tid=MDBD3234169932341699&ct=19249&tsum=9ab67cfe5792350388a7777b56fa3108
 ROOT SPORTS US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=272827&extension=ts
-RT NEWS HD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=149648&extension=ts
-RT UK HD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=149649&extension=ts
+RT NEWS UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=149648&extension=ts
+RT UK UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=149649&extension=ts
 RTE NEWS NOW UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=1014206&extension=ts
 RTHK31,http://50.7.238.114:8278/rhk31_twn/playlist.m3u8?tid=MA6A6225600662256006&ct=19249&tsum=7b0adccccff4fded44e906e9d848ee35
 RTHK32,http://198.16.100.90:8278/rhk32_twn/playlist.m3u8?tid=MBCB4455322944553229&ct=19226&tsum=60bac13753ada5abc8873783d6611ebd
 RTHK32,http://198.16.100.90:8278/rhk32_twn/playlist.m3u8?tid=MDBD4704174447041744&ct=19249&tsum=763ebe53fc33677d02ebf83b4d558d33
 RTHK32,http://50.7.238.114:8278/rhk32_twn/playlist.m3u8?tid=MBCB4455322944553229&ct=19226&tsum=60bac13753ada5abc8873783d6611ebd
 RTHK32,http://50.7.238.114:8278/rhk32_twn/playlist.m3u8?tid=MDBD4704174447041744&ct=19249&tsum=763ebe53fc33677d02ebf83b4d558d33
-RTM Sports ,http://198.16.100.90:8278/Rtmsport/playlist.m3u8?tid=MF8F1702154217021542&ct=19249&tsum=e027d4717db55d11df07ebe27f5eb3a5
+RTM SPORTS ,http://198.16.100.90:8278/Rtmsport/playlist.m3u8?tid=MF8F1702154217021542&ct=19249&tsum=e027d4717db55d11df07ebe27f5eb3a5
 SCM,http://198.16.100.90:8278/Weishimovie/playlist.m3u8?tid=MEEE4802495448024954&ct=19249&tsum=1731f56127d23a79a645f2d7d958dec7
 SCTV,http://198.16.100.90:8278/Sctv/playlist.m3u8?tid=MEAE5576803555768035&ct=19249&tsum=22cd08338943a038eb9a5bcf2ff7cba3
-SHOWTIME 2 HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45505&extension=ts
-SHOWTIME BET HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=303331&extension=ts
-SHOWTIME EAST HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45504&extension=ts
-SHOWTIME EXTREME HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91887&extension=ts
-SHOWTIME FAMILY ZONE HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91888&extension=ts
-SHOWTIME HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45503&extension=ts
-SHOWTIME NEXT HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=92019&extension=ts
-SHOWTIME SHOWCASE HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45502&extension=ts
-SHOWTIME WEST HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=92020&extension=ts
-SHOWTIME WOMEN HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=92018&extension=ts
-SKY CINEMA ACTION FHD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=163996&extension=ts
-SKY CINEMA ACTION HD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30517&extension=ts
+SHOWTIME 2 US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45505&extension=ts
+SHOWTIME BET US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=303331&extension=ts
+SHOWTIME EAST US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45504&extension=ts
+SHOWTIME EXTREME US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91887&extension=ts
+SHOWTIME FAMILY ZONE US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91888&extension=ts
+SHOWTIME NEXT US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=92019&extension=ts
+SHOWTIME SHOWCASE US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45502&extension=ts
+SHOWTIME US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45503&extension=ts
+SHOWTIME US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=92020&extension=ts
+SHOWTIME WOMEN US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=92018&extension=ts
+SKY CINEMA ACTION UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=163996&extension=ts
+SKY CINEMA ACTION UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30517&extension=ts
 SKY CINEMA ACTION UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=79471&extension=ts
-SKY CINEMA ANIMATION FHD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=873868&extension=ts
-SKY CINEMA ANIMATION HD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30513&extension=ts
-SKY CINEMA COMEDY FHD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=163994&extension=ts
-SKY CINEMA COMEDY HD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30516&extension=ts
+SKY CINEMA ANIMATION UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=873868&extension=ts
+SKY CINEMA ANIMATION UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30513&extension=ts
+SKY CINEMA COMEDY UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=163994&extension=ts
+SKY CINEMA COMEDY UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30516&extension=ts
 SKY CINEMA COMEDY UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=79470&extension=ts
-SKY CINEMA DRAMA FHD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=163997&extension=ts
-SKY CINEMA DRAMA HD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30514&extension=ts
+SKY CINEMA DRAMA UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=163997&extension=ts
+SKY CINEMA DRAMA UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30514&extension=ts
 SKY CINEMA DRAMA UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=79468&extension=ts
-SKY CINEMA FAMILY FHD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=163993&extension=ts
-SKY CINEMA FAMILY HD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=79467&extension=ts
-SKY CINEMA GREATS FHD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=164000&extension=ts
-SKY CINEMA GREATS HD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30512&extension=ts
+SKY CINEMA FAMILY UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=163993&extension=ts
+SKY CINEMA FAMILY UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=79467&extension=ts
+SKY CINEMA GREATS UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=164000&extension=ts
+SKY CINEMA GREATS UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30512&extension=ts
 SKY CINEMA GREATS UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=79466&extension=ts
-SKY CINEMA HITS FHD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=163992&extension=ts
-SKY CINEMA HITS HD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30510&extension=ts
+SKY CINEMA HITS UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=163992&extension=ts
+SKY CINEMA HITS UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30510&extension=ts
 SKY CINEMA HITS UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=79465&extension=ts
-SKY CINEMA OSCARS HD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30511&extension=ts
-SKY CINEMA PREMIER FHD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=163991&extension=ts
-SKY CINEMA PREMIERE HD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30509&extension=ts
+SKY CINEMA OSCARS UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30511&extension=ts
+SKY CINEMA PREMIER UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=163991&extension=ts
+SKY CINEMA PREMIERE UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30509&extension=ts
 SKY CINEMA PREMIERE UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=79464&extension=ts
-SKY CINEMA SCI-FI FHD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=163998&extension=ts
-SKY CINEMA SCIFI HD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30508&extension=ts
+SKY CINEMA SCIFI UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30508&extension=ts
+SKY CINEMA SCI-FI UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=163998&extension=ts
 SKY CINEMA SCI-FI UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=79463&extension=ts
-SKY CINEMA SELECT HD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=949137&extension=ts
-SKY CINEMA THRILLER FHD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=163999&extension=ts
-SKY CINEMA THRILLER HD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30506&extension=ts
+SKY CINEMA SELECT UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=949137&extension=ts
+SKY CINEMA THRILLER UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=163999&extension=ts
+SKY CINEMA THRILLER UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30506&extension=ts
 SKY CINEMA THRILLER UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=79461&extension=ts
-SKY CRIME FHD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=164073&extension=ts
-SKY NATURE FHD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=164071&extension=ts
-SKY NEWS HD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30504&extension=ts
-Sky News,http://198.16.100.90:8278/skynews_antik/playlist.m3u8?tid=MA0A3161061431610614&ct=19249&tsum=15f8cca00a8cc3a6d2a61519b7dfeb59
-SKY SHOWCASE FHD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=741952&extension=ts
+SKY CRIME UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=164073&extension=ts
+SKY NATURE UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=164071&extension=ts
+SKY NEWS,http://198.16.100.90:8278/skynews_antik/playlist.m3u8?tid=MA0A3161061431610614&ct=19249&tsum=15f8cca00a8cc3a6d2a61519b7dfeb59
+SKY NEWS UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30504&extension=ts
+SKY SHOWCASE UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=741952&extension=ts
 SKY SHOWCASE UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=741953&extension=ts
-Sky Sports Cricket,http://198.16.100.90:8278/tiankongcricket/playlist.m3u8?tid=MF0F2840305428403054&ct=19225&tsum=b212d3a5e0f928f816ba4653a3b31f6d
-Sky Sports F1,http://198.16.100.90:8278/tiankongf1/playlist.m3u8?tid=MEEE9486185594861855&ct=19225&tsum=bb4f02666ab26ce255f8e16f7ce67dd2
+SKY SPORTS CRICKET,http://198.16.100.90:8278/tiankongcricket/playlist.m3u8?tid=MF0F2840305428403054&ct=19225&tsum=b212d3a5e0f928f816ba4653a3b31f6d
+SKY SPORTS F1,http://198.16.100.90:8278/tiankongf1/playlist.m3u8?tid=MEEE9486185594861855&ct=19225&tsum=bb4f02666ab26ce255f8e16f7ce67dd2
 SONY ACTION UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=114738&extension=ts
-SONY MOVIE CHANNEL HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91789&extension=ts
+SONY MOVIE CHANNEL US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91789&extension=ts
 SONY MOVIES ACTION UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=79703&extension=ts
 SPORTS US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=866203&extension=ts
 SPORTSGRID US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=988340&extension=ts
-SPORTSMAN CHANNEL HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91873&extension=ts
-SPORTSMAN HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176905&extension=ts
-SPORTSNET 360 FHD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=904211&extension=ts
-SPORTSNET 360 HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177349&extension=ts
-SPORTSNET EAST FHD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=904210&extension=ts
-SPORTSNET EAST HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177350&extension=ts
-SPORTSNET EVENT 1 HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=735987&extension=ts
-SPORTSNET EVENT 2 HD  CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=735986&extension=ts
-SPORTSNET EVENT 3 HD  CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=735985&extension=ts
-SPORTSNET EVENT 4 HD  CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=735984&extension=ts
-SPORTSNET EVENT 5 HD  CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=735983&extension=ts
-SPORTSNET EVENT 6 HD  CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=735982&extension=ts
-SPORTSNET EVENT 7 HD  CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=735981&extension=ts
-SPORTSNET LA DODGERS HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91905&extension=ts
-SPORTSNET LA LAKERS HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91904&extension=ts
-SPORTSNET NEW YORK HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=90946&extension=ts
-SPORTSNET ONE FHD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=904209&extension=ts
-SPORTSNET ONE HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177352&extension=ts
-SPORTSNET ONTARIO FHD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=904208&extension=ts
-SPORTSNET ONTARIO HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177353&extension=ts
-SPORTSNET PACIFIC FHD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=904207&extension=ts
-SPORTSNET PACIFIC HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177354&extension=ts
-SPORTSNET WEST FHD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=904206&extension=ts
-SPORTSNET WEST HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177351&extension=ts
-SPORTSNET WORLD FHD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=904205&extension=ts
-SPORTSNET WORLD HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177355&extension=ts
-SPORTSNET WWE FHD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=904204&extension=ts
-SPORTSNET WWE HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=735988&extension=ts
-SPOTV ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683117&extension=ts
+SPORTSMAN CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176905&extension=ts
+SPORTSMAN CHANNEL US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91873&extension=ts
+SPORTSNET 360 CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=904211&extension=ts
+SPORTSNET 360 CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177349&extension=ts
+SPORTSNET CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=904206&extension=ts
+SPORTSNET CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177351&extension=ts
+SPORTSNET EAST CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=904210&extension=ts
+SPORTSNET EAST CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177350&extension=ts
+SPORTSNET EVENT 1 CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=735987&extension=ts
+SPORTSNET EVENT 2  CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=735986&extension=ts
+SPORTSNET EVENT 3  CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=735985&extension=ts
+SPORTSNET EVENT 4  CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=735984&extension=ts
+SPORTSNET EVENT 5  CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=735983&extension=ts
+SPORTSNET EVENT 6  CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=735982&extension=ts
+SPORTSNET EVENT 7  CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=735981&extension=ts
+SPORTSNET LA DODGERS US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91905&extension=ts
+SPORTSNET LA LAKERS US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91904&extension=ts
+SPORTSNET NEW YORK US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=90946&extension=ts
+SPORTSNET ONE CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=904209&extension=ts
+SPORTSNET ONE CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177352&extension=ts
+SPORTSNET ONTARIO CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=904208&extension=ts
+SPORTSNET ONTARIO CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177353&extension=ts
+SPORTSNET PACIFIC CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=904207&extension=ts
+SPORTSNET PACIFIC CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177354&extension=ts
+SPORTSNET WORLD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=904205&extension=ts
+SPORTSNET WORLD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177355&extension=ts
+SPORTSNET WWE CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=904204&extension=ts
+SPORTSNET WWE CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=735988&extension=ts
 SPOTV,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=941564&extension=ts
+SPOTV ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683117&extension=ts
 SPOTV2,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=941563&extension=ts
-STARZ 1 HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176929&extension=ts
-STARZ 2 HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176930&extension=ts
-STARZ BLACK HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45498&extension=ts
-STARZ CINEMA EAST HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45497&extension=ts
-STARZ CINEMA HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45496&extension=ts
-STARZ COMEDY HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45494&extension=ts
-STARZ EAST HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45493&extension=ts
-STARZ EDGE HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45492&extension=ts
-STARZ ENCORE ACTION HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45489&extension=ts
-STARZ ENCORE BLACK HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45488&extension=ts
-STARZ ENCORE CLASSIC HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45487&extension=ts
-STARZ ENCORE EAST HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45486&extension=ts
-STARZ ENCORE FAMILY HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45485&extension=ts
-STARZ ENCORE HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45484&extension=ts
-STARZ ENCORE SUSPENSE HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91948&extension=ts
-STARZ ENCORE WEST HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45482&extension=ts
-STARZ ENCORE WESTERNS HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91947&extension=ts
-STARZ FAMILY HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45481&extension=ts
-STARZ HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45480&extension=ts
-STARZ KIDS & FAMILY HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45479&extension=ts
-STARZ WEST HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45478&extension=ts
-Sunnah ,http://198.16.100.90:8278/sunnah_mido/playlist.m3u8?tid=MA3A8891710288917102&ct=19249&tsum=a43fbbc6ed6e843b1711624a239c14d1
+STARZ 1 CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176929&extension=ts
+STARZ 2 CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176930&extension=ts
+STARZ BLACK US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45498&extension=ts
+STARZ CINEMA EAST US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45497&extension=ts
+STARZ CINEMA US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45496&extension=ts
+STARZ COMEDY US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45494&extension=ts
+STARZ EAST US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45493&extension=ts
+STARZ EDGE US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45492&extension=ts
+STARZ ENCORE ACTION US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45489&extension=ts
+STARZ ENCORE BLACK US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45488&extension=ts
+STARZ ENCORE CLASSIC US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45487&extension=ts
+STARZ ENCORE EAST US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45486&extension=ts
+STARZ ENCORE FAMILY US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45485&extension=ts
+STARZ ENCORE SUSPENSE US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91948&extension=ts
+STARZ ENCORE US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45484&extension=ts
+STARZ ENCORE US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45482&extension=ts
+STARZ ENCOREERNS US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91947&extension=ts
+STARZ FAMILY US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45481&extension=ts
+STARZ KIDS & FAMILY US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45479&extension=ts
+STARZ US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45480&extension=ts
+STARZ US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45478&extension=ts
+SUNNAH ,http://198.16.100.90:8278/sunnah_mido/playlist.m3u8?tid=MA3A8891710288917102&ct=19249&tsum=a43fbbc6ed6e843b1711624a239c14d1
 SUPER SPORTS CH 267 CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=1043914&extension=ts
 SUPER SPORTS CH 368 CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=1043915&extension=ts
 SUPER SPORTS CH 422 CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=1043916&extension=ts
@@ -350,41 +348,41 @@ SUPER SPORTS CH 476 CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stre
 SUPER SPORTS CH 477 CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=1043959&extension=ts
 TEEN NICK US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91877&extension=ts
 TENNIS CHANNEL US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=811667&extension=ts
-TENNIS HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45474&extension=ts
-Thrill ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683154&extension=ts
-TLC FHD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30489&extension=ts
-TLC FHD UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=549409&extension=ts
-TLC HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176906&extension=ts
-TLC HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45471&extension=ts
-TLC MY,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=571189&extension=ts
-TLC WEST US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91912&extension=ts
+TENNIS US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45474&extension=ts
+THRILL ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683154&extension=ts
 TLC,http://198.16.100.90:8278/Tlc/playlist.m3u8?tid=MDAD1036602010366020&ct=19225&tsum=ac890e48736a7dd973b991044c960239
 TLC,http://198.16.100.90:8278/Tlc/playlist.m3u8?tid=MF3F1922397419223974&ct=19249&tsum=463e97d27a96d75f2d46fe7f081af271
 TLC,http://198.16.100.90:8278/tlc_twn/playlist.m3u8?tid=MA0A5904082259040822&ct=19226&tsum=8fa7deead1d4b260825af15bc7378132
+TLC CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176906&extension=ts
+TLC MY,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=571189&extension=ts
+TLC UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=30489&extension=ts
+TLC UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=549409&extension=ts
+TLC US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45471&extension=ts
+TLC US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91912&extension=ts
 TLC旅游生活,http://50.7.238.114:8278/tlc_twn/playlist.m3u8?tid=MA0A5904082259040822&ct=19226&tsum=8fa7deead1d4b260825af15bc7378132
-Tnn24,http://198.16.100.90:8278/tnn24_pat/playlist.m3u8?tid=MA1A4244094842440948&ct=19249&tsum=0913ba2ca4190c831479ae37a7517664
-Trans 7,http://198.16.100.90:8278/Trans7_eko/playlist.m3u8?tid=MABA8459856784598567&ct=19249&tsum=355af3a5c5bdf35204c638fb2076d199
-Transtv,http://198.16.100.90:8278/Transtv/playlist.m3u8?tid=MCFC2537709525377095&ct=19249&tsum=dcb22c095fc52f971f7dea381f456a43
-TRAVEL AND ESCAPE HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176907&extension=ts
-TRAVEL CHANNEL HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45437&extension=ts
+TNN24,http://198.16.100.90:8278/tnn24_pat/playlist.m3u8?tid=MA1A4244094842440948&ct=19249&tsum=0913ba2ca4190c831479ae37a7517664
+TRANS 7,http://198.16.100.90:8278/Trans7_eko/playlist.m3u8?tid=MABA8459856784598567&ct=19249&tsum=355af3a5c5bdf35204c638fb2076d199
+TRANSTV,http://198.16.100.90:8278/Transtv/playlist.m3u8?tid=MCFC2537709525377095&ct=19249&tsum=dcb22c095fc52f971f7dea381f456a43
+TRAVEL AND ESCAPE CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=176907&extension=ts
 TRAVEL CHANNEL UK,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=79718&extension=ts
-TRAVEL CHANNEL WEST HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91880&extension=ts
+TRAVEL CHANNEL US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45437&extension=ts
+TRAVEL CHANNEL US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91880&extension=ts
 TRAVEL US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=866178&extension=ts
-TREEHOUSE HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177337&extension=ts
+TREEHOUSE CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177337&extension=ts
 TRUE CRIME US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=866177&extension=ts
-TSN 1 HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177344&extension=ts
-TSN 2 HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177345&extension=ts
-TSN 3 HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177346&extension=ts
-TSN 4 HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177347&extension=ts
-TSN 5 HD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177348&extension=ts
-TSN1 FHD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=904216&extension=ts
-TSN2 FHD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=904215&extension=ts
-TSN3 FHD CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=904214&extension=ts
+TSN 1 CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177344&extension=ts
+TSN 2 CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177345&extension=ts
+TSN 3 CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177346&extension=ts
+TSN 4 CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177347&extension=ts
+TSN 5 CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=177348&extension=ts
+TSN1 CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=904216&extension=ts
+TSN2 CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=904215&extension=ts
+TSN3 CA,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=904214&extension=ts
 TVB1,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=153396&extension=ts
 TVB1,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=153401&extension=ts
-TVBS News,http://198.16.100.90:8278/tvbs_n/playlist.m3u8?tid=MA4A2233260122332601&ct=19249&tsum=513a9dcb42fa8b98e1792d513dd3e2ee
 TVBS,http://198.16.100.90:8278/tvbs/playlist.m3u8?tid=MDED5111960351119603&ct=19226&tsum=49931e2d3885c468d56ffae2c2db9e6e
 TVBS,http://50.7.238.114:8278/tvbs/playlist.m3u8?tid=MDED5111960351119603&ct=19226&tsum=49931e2d3885c468d56ffae2c2db9e6e
+TVBS NEWS,http://198.16.100.90:8278/tvbs_n/playlist.m3u8?tid=MA4A2233260122332601&ct=19249&tsum=513a9dcb42fa8b98e1792d513dd3e2ee
 TVBS欢乐,http://198.16.100.90:8278/tvbshuanle_twn/playlist.m3u8?tid=MA5A9262292692622926&ct=19254&tsum=cd369d68a5d2c1a2fa04df748cda142c
 TVBS欢乐,http://198.16.100.90:8278/tvbshuanle_twn/playlist.m3u8?tid=MA9A4111409641114096&ct=19225&tsum=600f3056bba6413dec3155efd19e2d20
 TVBS新闻,http://198.16.100.90:8278/tvbs_n/playlist.m3u8?tid=MECE3233774032337740&ct=19225&tsum=47a22a993d8e9b29582dfde5631c78b0
@@ -394,22 +392,24 @@ TVBS亚洲台 MY,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=571
 TVB明珠,http://198.16.100.90:8278/pearl_twn/playlist.m3u8?tid=MC6C7041327570413275&ct=19226&tsum=681972baf66d69caf7cccc92a90e5aad
 TVB星河,http://198.16.100.90:8278/Xinhe/playlist.m3u8?tid=MCFC2010151520101515&ct=19249&tsum=a8fd0cb32ef01d8472773a604402a683
 TVB娱乐新闻台 MY,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=571188&extension=ts
-tvN ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683148&extension=ts
-tvN Movies ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683149&extension=ts
-tvN MOVIES MY,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=571261&extension=ts
-TVN Movies,http://198.16.100.90:8278/Tvnmovie/playlist.m3u8?tid=MFFF1556953015569530&ct=19254&tsum=f4498d6da7a4ccf9064e26396a90e4a7
-tvN MY,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=571260&extension=ts
-TVRI National,http://198.16.100.90:8278/TVRI/playlist.m3u8?tid=MBEB3773542337735423&ct=19249&tsum=9a00b24e2d7d7ac6a58ce692c2147e2e
-UFC HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91949&extension=ts
-UNIVERSAL KIDS HD US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45499&extension=ts
+TVN,http://198.16.100.90:8278/TVN/playlist.m3u8?tid=ME2E2714748027147480&ct=19225&tsum=48ef5f1d47a64fc90e5f5ad5b182fb5d
+TVN,http://198.16.100.90:8278/TVN/playlist.m3u8?tid=ME8E2207086222070862&ct=19249&tsum=b7f602e68174a03e917c7b354788bce9
+TVN ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683148&extension=ts
+TVN MOVIES,http://198.16.100.90:8278/Tvnmovie/playlist.m3u8?tid=MFFF1556953015569530&ct=19254&tsum=f4498d6da7a4ccf9064e26396a90e4a7
+TVN MOVIES ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683149&extension=ts
+TVN MOVIES MY,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=571261&extension=ts
+TVN MY,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=571260&extension=ts
+TVRI NATIONAL,http://198.16.100.90:8278/TVRI/playlist.m3u8?tid=MBEB3773542337735423&ct=19249&tsum=9a00b24e2d7d7ac6a58ce692c2147e2e
+UFC US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=91949&extension=ts
+UNIVERSAL KIDS US,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=45499&extension=ts
 VIU TV,http://198.16.100.90:8278/viu1_twn/playlist.m3u8?tid=MF9F2344917423449174&ct=19254&tsum=3cb061ac749a32280d3b88c022a1403f
-Viu TV,http://50.7.238.114:8278/viusix_twn/playlist.m3u8?tid=MD7D9950629799506297&ct=19234&tsum=83ba3013be3e325b775bcd348b38eab1
-Viu6,http://198.16.100.90:8278/viusix_twn/playlist.m3u8?tid=MF0F4217630642176306&ct=19249&tsum=33becc0fe8466036420dbbb4727dc49e
+VIU TV,http://50.7.238.114:8278/viusix_twn/playlist.m3u8?tid=MD7D9950629799506297&ct=19234&tsum=83ba3013be3e325b775bcd348b38eab1
+VIU6,http://198.16.100.90:8278/viusix_twn/playlist.m3u8?tid=MF0F4217630642176306&ct=19249&tsum=33becc0fe8466036420dbbb4727dc49e
 W SPORT,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=918982&extension=ts
-Warner TV ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683173&extension=ts
+WARNER TV ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683173&extension=ts
 WB TV,http://208.115.225.174:14132
 WWE MY,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=571184&extension=ts
-Zee TV ,http://198.16.100.90:8278/Zeetvhd/playlist.m3u8?tid=MC1C1971765019717650&ct=19249&tsum=7fea673ee3cb17eeb5c4f9aa6eeec8af
+ZEE TV ,http://198.16.100.90:8278/Zeetvhd/playlist.m3u8?tid=MC1C1971765019717650&ct=19249&tsum=7fea673ee3cb17eeb5c4f9aa6eeec8af
 爱尔达影剧,http://198.16.100.90:8278/eltadrama_twn/playlist.m3u8?tid=mea60e416943110603068&ct=17874&tsum=ede38d2a218a34b5397af9d19e0c39a3
 爱尔达影剧,http://198.16.100.90:8278/eltadrama_twn/playlist.m3u8?tid=MFDF4206608342066083&ct=19225&tsum=c6e03c86e60731f01aef66e1b32dcc84
 爱尔达影剧,http://198.16.100.90:8278/eltayingju_twn/playlist.m3u8?tid=MFBF4492563944925639&ct=19225&tsum=d4fb09f164ea4850c14546a14d075d04
@@ -443,23 +443,23 @@ Zee TV ,http://198.16.100.90:8278/Zeetvhd/playlist.m3u8?tid=MC1C1971765019717650
 大爱2,http://50.7.238.114:8278/daai_twn/playlist.m3u8?tid=MF5F4357730143577301&ct=19225&tsum=10c092424b1c12259444b68ad663c9eb
 东方国际,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=156415&extension=ts
 东森LIVE,http://50.7.238.114:8278/ettvnews/playlist.m3u8?tid=m208c21bf386611408694&ct=17874&tsum=d1b4de373c886cd8015974fa8c5d6d12
-东森财经(美洲),http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=156396&extension=ts
 东森财经,http://198.16.100.90:8278/ettvcaijing_twn/playlist.m3u8?tid=m999b5a0f7fca17599138&ct=17874&tsum=345085d2d6d4401fdb3da968dfee5a54
 东森财经,http://198.16.100.90:8278/ettvcaijing_twn/playlist.m3u8?tid=MD5D9010164090101640&ct=19225&tsum=cc229773020f89af853b23d81e0e6371
 东森财经,http://50.7.238.114:8278/ettvcaijing_twn/playlist.m3u8?tid=m999b5a0f7fca17599138&ct=17874&tsum=345085d2d6d4401fdb3da968dfee5a54
 东森财经,http://50.7.238.114:8278/ettvcaijing_twn/playlist.m3u8?tid=MD5D9010164090101640&ct=19225&tsum=cc229773020f89af853b23d81e0e6371
+东森财经(美洲),http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=156396&extension=ts
 东森财经新闻,http://50.7.238.114:8278/ettvcaijing_twn/playlist.m3u8?tid=MB8B2069463920694639&ct=19249&tsum=05ff51a1b274ce7d31d05bbf11df18ad
 东森超视,http://198.16.100.90:8278/ettvsuper/playlist.m3u8?tid=MA4A3005409230054092&ct=19225&tsum=c5d89f66fa1a8bcd26f482d4a370def5
 东森超视,http://50.7.238.114:8278/ettvsuper/playlist.m3u8?tid=MB0B9022098390220983&ct=19249&tsum=594e3a93afe766cf27fd21b8addee391
 东森卫视(美洲),http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=156394&extension=ts
-东森戏剧(美洲),http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=156395&extension=ts
 东森戏剧,http://198.16.100.90:8278/ettvdrama/playlist.m3u8?tid=ME1E3883142638831426&ct=19225&tsum=12c87a5fab65a0ba071cebce86313f45
+东森戏剧(美洲),http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=156395&extension=ts
 东森洋片,http://50.7.238.114:8278/ettvwestern/playlist.m3u8?tid=mfdfc048e6c2416337202&ct=17874&tsum=cad39b26202d525ea820bee1d69e545f
 东森中国台(美洲),http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=156393&extension=ts
 东森综合,http://198.16.100.90:8278/ettvzhonghe/playlist.m3u8?tid=MC4C1214674912146749&ct=19254&tsum=9b96a50ba99dca1a02a27b05a6fb4b0d
 动物星球,http://198.16.100.90:8278/animalplanet_twn/playlist.m3u8?tid=m4da2c053371613331372&ct=17874&tsum=4481f502bb91c2c67964feecfbc4b702
 动物星球1,http://50.7.238.114:8278/animalplanet_twn/playlist.m3u8?tid=MF4F9191603991916039&ct=19254&tsum=8eeac3e9b8c5f58ad74a17b9b4813ed1
-动物星球720p,http://208.115.225.174:14263
+动物星球720P,http://208.115.225.174:14263
 翡翠台 MY,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=571187&extension=ts
 凤凰美洲,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=156408&extension=ts
 凤凰资讯,http://198.16.100.90:8278/phoenixinfo_hd/playlist.m3u8?tid=MB5B7253262872532628&ct=19249&tsum=e2b2dcd00f39adb64b6c03601da1e0e0
@@ -501,9 +501,9 @@ Zee TV ,http://198.16.100.90:8278/Zeetvhd/playlist.m3u8?tid=MC1C1971765019717650
 民视第一,http://50.7.238.114:8278/lunghuajingdian_twn/playlist.m3u8?tid=MC2C7597780175977801&ct=19249&tsum=b7602981567d8f0171e8de29154f5014
 民视台湾,http://198.16.100.90:8278/ftvtaiwan_twn/playlist.m3u8?tid=MDFD6045594360455943&ct=19193&tsum=0de4f998b15ba8f2ecdaa107d866212a
 民视台湾,http://50.7.238.114:8278/ftvtaiwan_twn/playlist.m3u8?tid=MDFD6045594360455943&ct=19193&tsum=0de4f998b15ba8f2ecdaa107d866212a
-民视新闻 ,http://50.7.238.114:8278/ftvnew_taiwan/playlist.m3u8?tid=md953ce86cdad16241449&ct=17874&tsum=949d4aace793a001dd41392b210ba406
 民视新闻,http://198.16.100.90:8278/ftvnew_taiwan/playlist.m3u8?tid=ME4E4172771041727710&ct=19226&tsum=7b91c7af6212419479b392ff575e0689
 民视新闻,http://50.7.238.114:8278/ftvnew_taiwan/playlist.m3u8?tid=MA7A6968320369683203&ct=19249&tsum=e3b040434ed43f12a738964a100a0e59
+民视新闻 ,http://50.7.238.114:8278/ftvnew_taiwan/playlist.m3u8?tid=md953ce86cdad16241449&ct=17874&tsum=949d4aace793a001dd41392b210ba406
 三立国际,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=156390&extension=ts
 三立戏剧,http://198.16.100.90:8278/sanlixiju_twn/playlist.m3u8?tid=MA8A4626080046260800&ct=19053&tsum=205a453781925ebfb8996c1db8d4ed59
 三立戏剧,http://198.16.100.90:8278/sanlixiju_twn/playlist.m3u8?tid=MCFC5174201151742011&ct=19193&tsum=27477ddeec029345da276c2c903f09c2
@@ -520,14 +520,14 @@ Zee TV ,http://198.16.100.90:8278/Zeetvhd/playlist.m3u8?tid=MC1C1971765019717650
 天下卫视2,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=156400&extension=ts
 天映经典 ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683110&extension=ts
 天映经典 MY,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=571182&extension=ts
+天映频道,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=941618&extension=ts
 天映频道 ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=571218&extension=ts
 天映频道 ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683142&extension=ts
-天映频道,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=941618&extension=ts
 卫视中文,http://198.16.100.90:8278/weishichinese_twn/playlist.m3u8?tid=MA8A7894022878940228&ct=19226&tsum=c0323ce59263e0096d4181626874e17c
 卫视中文,http://50.7.238.114:8278/weishichinese_twn/playlist.m3u8?ct=19226&tid=MA8A7894022878940228&tsum=c0323ce59263e0096d4181626874e17c
 无线新闻,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=153399&extension=ts
 小太阳 MY,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=571230&extension=ts
-新加坡lU,http://198.16.100.90:8278/ChannelU/playlist.m3u8?tid=m014a6e987db6&ct=18336&tsum=fa5cb77a8be6edc061828d231e5769f9
+新加坡LU,http://198.16.100.90:8278/ChannelU/playlist.m3u8?tid=m014a6e987db6&ct=18336&tsum=fa5cb77a8be6edc061828d231e5769f9
 星空卫视 ID,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=683118&extension=ts
 星卫电影,http://50.7.238.114:8278/xingwei_movie/playlist.m3u8?tid=MBAB2096754620967546&ct=18392&tsum=2c800c1f0b6cc98d2404608c294dcbc2
 亚洲.旅游,http://50.7.238.114:8278/asiatravel_twn/playlist.m3u8?tid=MB9B9461769094617690&ct=18393&tsum=57c12e5ba95cca684613ec5e14714ff8
