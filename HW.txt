@@ -1,0 +1,367 @@
+00124 Hour Free Movies (720p) [Not 24/7],https://cdn-apse1-prod.tsv2.amagi.tv/linear/amg01076-lightningintern-actionhollywood-samsungnz/playlist.m3u8
+00224/7 Real Husbands Of Hollywood,http://1175df3a.kazaktelekom.com/iptv/EZ2X5DEMS7L3L5/557/index.m3u8
+00324/7 Real Husbands Of Hollywood,http://wszi7k2g.akciatv.ru/iptv/V5EDB64MU562U2/557/index.m3u8
+00424/7 Starhunter Redux,https://1111296894.rsc.cdn77.org/LS-ATL-56868-1/index.m3u8 
+00530A Georgia Hollywood Review TV,http://tvpremiumhd.club/lista-gratuita/221424/tv/live.php?id=video3.earthcam.com/fecnetwork/4017timessquare.flv/.m3u8&checkedby:iptvcat.com
+00630A Georgia Hollywood Review TV,https://30a-tv.com/gh.m3u8
+00730A Georgia Hollywood Review TV,https://catholictvhd-lh.akamaized.net/hls/live/2043390/CTVLiveHD/master.m3u8
+0084K HOLLYWOOD,http://xtra.fireottplus.com:2052/017458648389/407609858756/96224
+009555 Hunt Fishing TV HD,https://1111296894.rsc.cdn77.org/LS-ATL-56868-1/mono.m3u8 
+010Action Hollywood Movies,http://170.178.189.70:1935/live/Stream1/playlist.m3u8
+011Action Hollywood Movies,http://62.210.209.138:41000/movie/v52/v43/6542.mp4
+012Action Hollywood Movies,http://62.210.209.138:41000/movie/v52/v43/6759.mp4
+013Action Hollywood Movies,http://62.210.209.138:41000/series/v52/v43/7870.mp4
+014Action Hollywood Movies,http://video.ct-n.com/live/ctnstream/playlist.m3u8
+015Action Hollywood Movies,https://bozztv.com/hwotta/playlist/playlist.m3u8
+016Action Hollywood Movies,https://cdn.igocast.com/channel4_hls/channel4_master.m3u8
+017Action Hollywood Movies,https://cdn-apse1-prod.tsv2.amagi.tv/linear/amg01076-lightningintern-actionhollywood-samsungnz/playlist.m3u8?
+018Action Hollywood Movies,https://dai.google.com/linear/hls/event/-A9339ixSzydnZQZHd1u2A/master.m3u8
+019Action Hollywood Movies,https://dai.google.com/linear/hls/event/-V3XSvA2Sa6e8h7cnHXB8w/master.m3u8
+020Action Hollywood Movies,https://linear-119.frequency.stream/dist/localnow/119/hls/master/playlist.m3u8
+021Action Hollywood Movies,https://live.obslivestream.com/cdeportivo/index.m3u8
+022Action Hollywood Movies,https://minerva-bizzarromovies-1-it.samsung.wurl.tv/playlist.m3u8
+023Action Hollywood Movies,https://uni8rtmp.tulix.tv/cfntv/cfntv/playlist.m3u8
+024Afarin TV (1080p) [Not 24/7],https://1189614805.rsc.cdn77.org/hls/bmt.m3u8 
+025AFN MUSIC IRAN,https://1494836162.rsc.cdn77.org/LS-PRG-59570-1/tracks-v1a1/mono.m3u8 
+026Aghapy Kids (1080p),http://ebsonairios.ebs.co.kr/ebsutablet500k/_definst_/tablet500k/playlist.m3u8 
+027BBC lifestyle,https://ktpremium.com:443/M919HR/5577/870684?c=台湾
+028Big B Radio - 亚洲流行,http://apop.bigbradio.net/s
+029Big B Radio - 中文流行,http://cpop.bigbradio.net/s
+030Canal Hollywood,http://176.57.50.167:25461/536416/231244/7659
+031Canal Hollywood,http://2hubs.ddns.net:25461/BabNour/telegrramm/62027
+032Canal Hollywood,http://darkteam.vip:25461/testar12op2o1/85445hfhjowqRtgv788/10180
+033Canal Hollywood,http://darkteam.vip:25461/testar12op2o1/85445hfhjowqRtgv788/19636
+034Canal Iberoamericano (720p),https://1206618505.rsc.cdn77.org/LS-ATL-59020-1/tracks-v1a1/mono.m3u8 
+035CBC TV8 (1080p) [Not 24/7],https://1740288887.rsc.cdn77.org/1740288887/index.m3u8 
+036Channel V,https://1826200335.rsc.cdn77.org/1826200335/index.m3u8 
+037Ci,https://ktpremium.com:443/M919HR/5577/515100?c=台湾
+038Cinemax,https://ktpremium.com:443/M919HR/5577/515076?c=台湾
+039CINEMAX,https://ktpremium.com:443/M919HR/5577/870555?c=台湾
+040CMC加州音乐,https://cmc-ono.amagi.tv/playlist.m3u8
+041CNA,https://1667517699.rsc.cdn77.org/hls/tacna.m3u8 
+042CNA亚洲新闻,http://198.16.100.90:8278/cna/playlist.m3u8?tid=MFAF1272681512726815&ct=19225&tsum=4d6a781648283b1bb018bc5c098432d0
+043CNA亚洲新闻,http://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_4.m3u8?zshijd
+044CNA亚洲新闻,https://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_5.m3u8
+045CNA亚洲新闻 International,https://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index.m3u8
+046CNA亚洲新闻 Singapore(,https://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_4.m3u8
+047CNA亚洲新闻台,http://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_5.m3u8
+048CNBC,https://ktpremium.com:443/M919HR/5577/900839?c=台湾
+049CNC中文,http://[2409:8087:3869:8021:1001::e5]:6610/PLTV/88888888/224/3221225694/2/index.m3u8
+050CNC中文,http://39.134.115.163:8080/PLTV/88888910/224/3221225694/index.m3u8
+051CNC中文,http://39.135.138.58:18890/PLTV/88888888/224/3221225694/index.m3u8
+052CNC中文,http://39.135.138.59:18890/PLTV/88888910/224/3221225694/index.m3u8
+053CNC中文,http://39.135.138.60:18890/PLTV/88888888/224/3221225694/index.m3u8
+054CNC中文,http://hwrr.jx.chinamobile.com:8080/PLTV/88888888/224/3221225694/index.m3u8
+055CNC中文,http://source07.v.news.cn/live/CNC_CN/playlist.m3u8
+056CNC中文,http://source07.v.news.cn/live/CNC_CN/playlist.m3u8?zshijd
+057CNN全球新闻,http://ip2121.com:8081/live/cnn/playlist.m3u8
+058cnr经典音乐,http://ngcdn004.cnr.cn/live/dszs/index.m3u8
+059CN卡通,http://198.16.100.90:8278/momo1_twn/playlist.m3u8?tid=MA0A4898983648989836&ct=19225&tsum=bd109117d126916f203880b1f2063d5e
+060CN卡通,http://198.16.100.90:8278/momo1_twn/playlist.m3u8?tid=MDCD8337337283373372&ct=18393&tsum=3744c35f02ab2207fb7dbbcb450f02d6
+061CN卡通,http://198.16.100.90:8278/momo1_twn/playlist.m3u8?tid=MFFF9797479997974799&ct=19249&tsum=0bd9dac79cd373cc918357d3199c8b22
+062CN卡通,http://66.181.39.224/ml.php?id=Cn
+063CN卡通,http://66.181.39.224/ml.php?id=momo1_twn
+064CN卡通,mitv://generationnexxxt.com:19806/96e4992ec1f74491bc997bc076d01513
+065CRI 环球资讯广播,https://sk.cri.cn/905.m3u8
+066CRI 中文环球广播,http://sk.cri.cn/hyhq.m3u8
+067CTi Variety (中天综合台),http://23.237.10.66:16372
+068CTS News (华视新闻信息),http://seb.sason.top/sc/hsxw_fhd.m3u8
+069Discovery Asia,https://ktpremium.com:443/M919HR/5577/698399?c=台湾
+070Discovery科学,https://ktpremium.com:443/K3939/6757/698400
+071Discovery科学,https://ktpremium.com:443/M919HR/5577/698400?c=台湾
+072Discovery,http://198.16.100.90:8278/discoverych_twn/playlist.m3u8?tid=MA3A2844188928441889&ct=18393&tsum=5b966ba17918ab0d7dd4c462d1b0b811
+073Discovery,http://50.7.238.114:8278/ba86fcd935/playlist.m3u8?tid=m1b458a366fcb&ct=18335&tsum=6ee1498a5e37d8bd1e3f62954629ed4f
+074Discovery,http://50.7.238.114:8278/discoverych_twn/playlist.m3u8?tid=MA3A2844188928441889&ct=18393&tsum=5b966ba17918ab0d7dd4c462d1b0b811
+075Discovery,http://50.7.238.114:8278/discoveryhd_twn/playlist.m3u8?tid=ME6E2405719624057196&ct=19225&tsum=57a7c421c65e00c1b8f68f67c30141dc
+076EBS +1,http://ebsonairios.ebs.co.kr/plus1tablet500k/tablet500k/plus1tablet500k.index.m3u8 
+077EBS +2,http://ebsonairios.ebs.co.kr/plus2tablet500k/tablet500k/plus2tablet500k.index.m3u8 
+078EBS 1,http://ebsonairios.ebs.co.kr/groundwavefamilypc/familypc1m/playlist.m3u8 
+079EBS 1,http://ebsonairios.ebs.co.kr/groundwavetablet500k/tablet500k/groundwavetablet500k.m3u8 
+080EBS 1,http://ebsonairios.ebs.co.kr/groundwavetablet500k/tablet500k/playlist.m3u8 
+081EBS 2,http://ebsonairios.ebs.co.kr/ebs2familypc/familypc1m/playlist.m3u8 
+082EBS 2,http://ebsonairios.ebs.co.kr/ebs2tablet500k/tablet500k/ebs2tablet500k.index.m3u8 
+083EBS E,http://ebsonairios.ebs.co.kr/plus3familypc/familypc1m/playlist.m3u8 
+084EBS E,http://ebsonairios.ebs.co.kr/plus3tablet500k/tablet500k/plus3tablet500k.index.m3u8 
+085EBS 儿童,http://ebsonair.ebs.co.kr/plus3familypc/familypc1m/playlist.m3u8
+086EBS 儿童,http://ebsonairios.ebs.co.kr/ebsutablet500k/_definst_/tablet500k/chunklist_w1965791004.m3u8
+087EBS 儿童,http://ebsonairios.ebs.co.kr/ebsutablet500k/tablet500k/playlist.m3u8
+088EBS 兒童頻道,http://ebsonairios.ebs.co.kr/ebsutablet500k/_definst_/tablet500k/chunklist_w1965791004.m3u8 
+089EBS 兒童頻道,http://ebsonairios.ebs.co.kr/ebsutablet500k/tablet500k/playlist.m3u8 
+090ELEVEN 1 体育,http://61.221.81.93:8078/hls/25/80/esport.m3u8
+091ELEVEN 2 体育,http://61.221.81.93:8078/hls/26/80/esport2.m3u8
+092ELTA娱乐,http://www.336699.live:1935/blockfour/4gtv-4gtv070.stream/playlist.m3u8
+093ELTA娱乐,https://ktpremium.com:443/K3939/6757/900865
+094ELTA娱乐台 (测试),https://sc2022.stream-link.org/tv2306.php?id=c09&checkedby:iptvcat.com
+095ELTA综合,http://66.181.39.224/ml.php?id=eltazonghe
+096elta综合,https://epg.pw/stream/291da24fd7ecb35199a1210c7b9af7edf3fcf3bbf73622c409ba792d780c9b99.m3u8
+097ELTV英语学习,https://ktpremium.com:443/K3939/6757/900863
+098English Club orig,http://1111296894.rsc.cdn77.org/LS-ATL-56868-1/tracks-v1a1/index.m3u8 
+099ESR eSports Network,https://1840769862.rsc.cdn77.org/FTF/LSN_SCTE.m3u8 
+100EZTV6欧洲华文电视 福州,http://vvlive.eztv.vip:80/huawen6/huawen6.m3u8?auth_key=1660814676-0-0-4d45d97f017e545dd368719f8dd48ffe
+101Fox 54.1 Huntsville,https://1111296894.rsc.cdn77.org/LS-ATL-56868-1/tracks-v1a1/mono.m3u8 
+102FOX新闻,http://fox-foxnewsnow-samsungus.amagi.tv/playlist.m3u8
+103FOX新闻,https://fox-foxnewsnow-samsungus.amagi.tv/playlist720p.m3u8
+104FOX新闻台,http://fox-foxnewsnow-samsungus.amagi.tv/playlist.m3u
+105FTV足球,https://nmglive.imfc.cn/5n1r1c/182396.m3u8
+106GOOD TV CH01 综合台,https://dqhxk7sbp7xog.cloudfront.net/hls-live/goodtv/_definst_/liveevent/live-ch1-2.m3u8
+107GOOD TV CH29 经典音乐,https://live-350k.streamingfast.net/hls-live/goodtv/_definst_/liveevent/live-ch6-2.m3u8
+108GOODTV经典音乐河,https://dqhxk7sbp7xog.cloudfront.net/hls-live/goodtv/_definst_/liveevent/live-ch6-2.m3u8
+109GRTN文化,http://ci.emdoor.tech:8080/touchtv.php?pk=2511
+110Guney TV Tarsus (270p),https://1247634592.rsc.cdn77.org/1247634592/tracks-v1a1/mono.m3u8 
+111,hBO Family,https://ktpremium.com:443/M919HR/5577/900875?c=台湾
+112,hBO HD,https://ktpremium.com:443/M919HR/5577/870553?c=台湾
+113,hBO HITS,https://ktpremium.com:443/M919HR/5577/870554?c=台湾
+114,hBO Signature,https://ktpremium.com:443/M919HR/5577/900881?c=台湾
+115,hD HOLLYWOOD,http://176.57.50.167:25461/536416/231244/85889
+116,hD HOLLYWOOD,http://ttv.bz:80/xgennnnldfsdnvsdvidufvndasnn/TzGCKJYsl9/69338
+117,hD Mix Hollywood,http://xtra.fireottplus.com:2052/017458648389/407609858756/13391
+118,hD Mix Hollywood,http://xtra.fireottplus.com:2052/017458648389/407609858756/241421
+119,hD Mix Hollywood,http://xtra.fireottplus.com:2052/017458648389/407609858756/36350
+120,hD Mix Hollywood,https://panel.dattalive.com/8068/8068/playlist.m3u8
+121,history ,https://dispatch.ulivetv.net/v/live/cl7ch406n6ww.m3u8?stream_id=cl7ch406n6ww×tamp=1685730862&rand=mEXcpr6pFp&uuid=9b647b3816b2a66a&from=web&sign=32b8f6839a3a4eff8730696c456c394b
+122,history-2 ,https://dispatch.ulivetv.net/v/live/cl7chgdb1t4w.m3u8?stream_id=cl7chgdb1t4w×tamp=1685731182&rand=usaMhFMk54&uuid=9b647b3816b2a66a&from=web&sign=7714491d8110abb08df3092c3422ed05
+123,history历史 (测试),https://sc2022.stream-link.org/tv2306.php?id=c06&checkedby:iptvcat.com
+124,hKC有线新闻台,https://api.leonardpark.dev/live/icable/109
+125,hollywood,http://198.16.100.90:8278/hollywoodmovies_twn/playlist.m3u8?tid=MD8D9429794794297947&ct=19193&tsum=fbe097bcbe37adad90e8bef964cac161
+126,hollywood,http://darkteam.vip:25461/testar12op2o1/85445hfhjowqRtgv788/10231
+127,hollywood,http://flv.mp4cdn.live/gt-key=00569874.php?id=100
+128,hollywood,http://stream01.vnet.am/ParamountChannel/mono.m3u8
+129,hollywood,https://connection3-ent-nz.samsung.wurl.tv/playlist.m3u8
+130,hollywood FHD,http://ttv.bz:80/xgennnnldfsdnvsdvidufvndasnn/TzGCKJYsl9/69453
+131,hollywood Full HD,http://ttv.bz:80/xgennnnldfsdnvsdvidufvndasnn/TzGCKJYsl9/69317
+132,hollywood HD,http://1111296894.rsc.cdn77.org/LS-ATL-56868-1/tracks-v1a1/index.m3u8
+133,hollywood HD,http://1175df3a.kazaktelekom.com/iptv/EZ2X5DEMS7L3L5/209/index.m3u8
+134,hollywood HD,http://moobl.ru/hls/Hollywood_hd.m3u8
+135,hollywood HD,http://myott.top/stream/DT6QU63K5VX/268.m3u8
+136,hollywood HD,http://wszi7k2g.akciatv.ru/iptv/V5EDB64MU562U2/209/index.m3u8
+137,hollywood HD orig,http://1175df3a.kazaktelekom.com/iptv/EZ2X5DEMS7L3L5/9017/index.m3u8
+138,hollywood HD orig,http://1175df3a.kazaktelekom.com/iptv/EZ2X5DEMS7L3L5/9236/index.m3u8
+139,hollywood HD orig,http://wszi7k2g.akciatv.ru/iptv/V5EDB64MU562U2/9017/index.m3u8
+140,hollywood HD orig,http://wszi7k2g.akciatv.ru/iptv/V5EDB64MU562U2/9236/index.m3u8
+141,hollywood orig,http://wszi7k2g.akciatv.ru/iptv/V5EDB64MU562U2/12125/index.m3u8
+142,hollywood orig,http://wszi7k2g.akciatv.ru/iptv/V5EDB64MU562U2/19335/index.m3u8
+143,hollywood SD,http://xtra.fireottplus.com:2052/017458648389/407609858756/96223
+144,hollywood Suite 90s,http://kuchini.site:8080/tomstme300/tomasarenatelegramme300/193087
+145,hollywood Suite 90s,https://mediacpstreamchile.com:1936/8102/8102/playlist.m3u8
+146,hollywood Suite 90s,https://unlimited1-us.dps.live/holvoettv/holvoettv.smil/playlist.m3u8
+147,hollywood 中字,http://198.16.100.90:8278/hollywoodmovies_twn/playlist.m3u8?tid=MECE5611281156112811&ct=19225&tsum=ad8884ee16b04f885f24bae98fc5fb9f
+148,hosanna Vision (480p) [Not 24/7],https://1206618505.rsc.cdn77.org/LS-ATL-59020-1/playlist.m3u8 
+149,hot亚洲影院,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000006/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000006&livemode=1&stbId=3
+150,hot亚洲影院,http://zteres.sn.chinamobile.com:6060/000000001000/5841816227539527643/1.m3u8?channel-id=wasusyt&Contentid=5841816227539527643&livemode=1&stbId=3
+151,hOY TV信息台,https://ktpremium.com:443/K3939/6757/492403
+152,hOY 信息台,https://dispatch.ulivetv.net/v/live/cn6djw7s44ow.m3u8?stream_id=cn6djw7s44ow×tamp=1685726063&rand=2vu6ds8NIN&uuid=9b647b3816b2a66a&from=web&sign=1c1958af21ed4c2576cb0dc1829033ec
+153,hOY 资讯台,http://47.113.189.55/iptv/iptv.php?key=ced93979274d74470b525fc6372adbc9&id=23
+154,hoy信息,http://103.45.68.47/gy/gy563/xsj.php?id=hoy-info
+155,hOY信息台,https://pull-f5-spe.ixigua.com/live/YesLiveTV-3e9f20e4-e6fd-4292-ac7a-3180610b1edd/index.m3u8
+156,hoy资讯,http://sc2022.stream-link.org/list.php?id=h011
+157,hoy资讯,http://sc2022.stream-link.org/tv2306.php?id=h11
+158,hTV-4影视,http://183.129.242.178:3333/tsfile/live/1018_1.m3u8
+159iHOT爱探索,http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000300630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000300630&livemode=1&stbId=3
+160iHot爱探索,http://111.13.111.242/0000000000001000/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000061&livemode=1&stbId=3&HlsProfileId=
+161iHot爱探索,http://111.13.111.242/0000000000001000/1.m3u8?channel-id=wasusyt&Contentid=6000000006000300630&livemode=1&stbId=3&HlsProfileId=
+162IHOT爱探索,http://zteres.sn.chinamobile.com:6060/000000001000/6000000006000300630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000300630&livemode=1&stbId=3
+163Lifetime,https://ktpremium.com:443/M919HR/5577/900851?c=台湾
+164,made in Hollywood,http://62.210.209.138:41000/movie/v52/v43/7220.mp4
+165,made in Hollywood,https://cdn3.wowza.com/5/M0lyamVmM2JWcjhQ/weho/G0161_004/playlist.m3u8
+166,made in Hollywood,https://dai2.xumo.com/amagi_hls_data_xumo1212A-redboxshowtimeattheapollo/CDN/playlist.m3u8
+167,made in Hollywood,https://re1.siar.us/madutv/hd720/playlist.m3u8
+168,made in Hollywood,https://stirr.ott-channels.stingray.com/155/master.m3u8
+169,made in Hollywood,https://tastemade-es8intl-roku.amagi.tv/playlist.m3u8
+170,maría+Visión Medjugorje (720p),https://1601580044.rsc.cdn77.org/live/_jcn_/amlst:Italiasette/playlist.m3u8 
+171NBC KTVB,http://176.57.50.167:25461/536416/231244/71476
+172NHK 资讯,http://81.69.20.196/mqlive.m3u8?ip=61.220.72.26:1888&id=live1027
+173NHK新闻,http://123.51.230.108:18525/.m3u8
+174Now 新闻台,http://103.45.68.47/gy/gy563/xsj.php?id=now-news
+175Now华剧台,https://ktpremium.com:443/M919HR/5577/889363?c=台湾
+176now新闻台,http://47.113.189.55/iptv/iptv.php?key=ced93979274d74470b525fc6372adbc9&id=17
+177Now新闻台,http://pull-l3-cny.douyincdn.com/third/stream-f49db49809a6d8e96047011ee9160bc8.flv
+178NOW新闻台,http://sc2022.stream-link.org/tv2306.php?id=h08
+179NOW新闻台,https://dispatch.ulivetv.net/v/live/cfxqkxoxany8.m3u8?stream_id=cfxqkxoxany8×tamp=1685726175&rand=lajorjPI7G&uuid=9b647b3816b2a66a&from=web&sign=4860fc70674f68e100ec6e84a4994d93
+180Now新闻台,https://sc2022.stream-link.org/tv2306.php?id=h08&checkedby:iptvcat.com
+181Now新闻台（测试）,http://209.141.47.175/kstv2.php?id=5
+182one,http://1111296894.rsc.cdn77.org/LS-ATL-56868-1/tracks-v1a1/index.m3u8 06-03-2023 checked
+183OSN MOVIES HOLLYWOOD +2 HD,https://rpn1.bozztv.com/36bay2/gusa-tvshollywoohistory/tracks-v1a1/mono.m3u8
+184Promising.Young.Woman.2020,https://younghollywood-rakuten-samsung.amagi.tv/playlist.m3u8
+185Promising.Young.Woman.2020,https://younghollywood-tcl.amagi.tv/playlist.m3u8
+186Promising.Young.Woman.2020,https://younghollywood-vizio.amagi.tv/playlist.m3u8
+187PT HOLLYWOOD,http://176.57.50.167:25461/536416/231244/7674
+188PT HOLLYWOOD,http://xtra.fireottplus.com:2052/017458648389/407609858756/96225
+189Resurrection TV (720p),https://1681360479.rsc.cdn77.org/1681360479/index.m3u8 
+190Sheffield TV,https://1247634592.rsc.cdn77.org/1247634592/playlist.m3u8 
+191Sportsnet NY,https://1187196200.rsc.cdn77.org/SportsnetNY/index.m3u8 
+192TV BRICS中文台,https://brics.bonus-tv.ru/cdn/brics/chinese/tracks-v1a1/mono.m3u8
+193TV Rain (1080p),https://1527562093.rsc.cdn77.org/transcode/ngrp:ses_all/playlist.m3u8 
+194TVS Hollywood History,https://rpn1.bozztv.com/36bay2/gusa-tvshollywoohistory/mono.m3u8
+195West Hollywood WeHoTV (West Hollywood CA) (360p),http://4.bp.blogspot.com/-mlFvknLpfgE/VQy5lg2IcyI/AAAAAAAAAXc/w4LPztKxtKc/s320/CantinazoTV.jpg”
+196West Hollywood WeHoTV (West Hollywood CA) (360p),https://dai.google.com/linear/hls/event/fLqJePs_QR-FRTttC8fMIA/master.m3u8
+197West Hollywood WeHoTV (West Hollywood CA) (360p),https://stream-us-east-1.getpublica.com/playlist.m3u8?network_id=73&checkedby:iptvcat.com
+198West Hollywood WeHoTV (West Hollywood CA) (360p),https://yt3.ggpht.com/-7goHLt_GUT4/AAAAAAAAAAI/AAAAAAAAAAA/WYzGwTryx-o/c-k-no/photo.jpg”
+199Young Hollywood (720p),https://younghollywood-rakuten.amagi.tv/playlist.m3u8
+200Young Hollywood (US),http://1175df3a.kazaktelekom.com/iptv/EZ2X5DEMS7L3L5/16147/index.m3u8
+201Young Hollywood (US),http://176.57.50.167:25461/536416/231244/80890
+202Young Hollywood (US),http://tv.pro-ott.com:25443/live/V50Dr59OcPNY/v2R1gYuCM1/16021.ts
+203Young Hollywood (US),http://wszi7k2g.akciatv.ru/iptv/V5EDB64MU562U2/12267/index.m3u8
+204Young Hollywood (US),http://wszi7k2g.akciatv.ru/iptv/V5EDB64MU562U2/16147/index.m3u8
+205Young Hollywood (US),https://a.jsrdn.com/broadcast/e0f99ab19c/+0000/high/c.m3u8
+206Young Hollywood (US),https://hls.yourtime.live/hls/stream.m3u8
+207Young Hollywood (US),https://rakuten-hola-2-es.samsung.wurl.tv/playlist.m3u8
+208半·新闻,http://live-hls-web-aja.getaj.net/AJA/02.m3u8
+209半岛新闻,http://live-hls-web-aje.getaj.net/AJE/01.m3u8
+210半岛新闻,http://www.336699.live:1935/blockfour/litv-ftv10.stream/playlist.m3u8
+211半岛新闻,https://live-hls-web-aje.getaj.net/AJE/01.m3u8
+212半岛新闻,https://live-hls-web-aje.getaj.net/AJE/02.m3u8
+213国会1,http://61.58.60.230:9319/live/123.m3u8
+214国会2台,http://61.58.60.230:9319/live/124.m3u8
+215国际,http://39.165.35.152:9901/tsfile/live/1067_1.m3u8?key=txiptv
+216国际,http://hw-m-l.cztv.com/channels/lantian/channel010/1080p.m3u8
+217国家宝藏,https://hxf119.gzc.svp.tencent-cloud.com/0bc3laamcaaauaapqslk75rvawgdyfmabqia.f10002.mp4?
+218国家地理,http://198.16.100.90:8278/Natgeo/playlist.m3u8?tid=MD9D9302547893025478&ct=19249&tsum=98e3f2f5104d6ed1e826d12d93d64794
+219国家地理,http://198.16.100.90:8278/natgeohd_twn/playlist.m3u8?tid=MD3D4446495344464953&ct=19249&tsum=f8c0bfc8c564a4a28247dad400acddba
+220国家地理,http://50.7.238.114:8278/natgeohd_twn/playlist.m3u8?tid=MD3D4446495344464953&ct=19249&tsum=f8c0bfc8c564a4a28247dad400acddba
+221国家地理,http://66.181.39.224/ml.php?id=natgeohd_twn
+222国家地理,http://grogi.online:80/live/localSkypFr1220/localSkypFr1220/69316.t
+223国家地理,http://live.hust.edu.cn/hls/natlgeo.m3u8
+224国家地理,https://dispatch.ulivetv.net/v/live/cg1khzm3mzls.m3u8?stream_id=cg1khzm3mzls×tamp=1685730695&rand=8KKbMjSNDu&uuid=9b647b3816b2a66a&from=web&sign=55b83f935e3b2076c0ce351ae90e1309
+225国家地理,https://ktpremium.com:443/K3939/6757/870687
+226国家地理,https://ktpremium.com:443/M919HR/5577/870687?c=台湾
+227国家地理 野生,https://dispatch.ulivetv.net/v/live/cg1kmp2fnw00.m3u8?stream_id=cg1kmp2fnw00×tamp=1685730770&rand=ExMG5UR0Hf&uuid=9b647b3816b2a66a&from=web&sign=ca7ed690efaf6ac148dd80ab49a73ec2
+228国家地理HD,http://49.235.110.121:9090/898/peda/twjd.php?id=9
+229国家地理,http://198.16.100.90:8278/natgeohd_twn/playlist.m3u8?tid=ma1f0b9808d5014467661&ct=17874&tsum=73dfb91284f5b1358251546e6f03da3d
+230国家地理,http://198.16.100.90:8278/natgeohd_twn/playlist.m3u8?tid=MB5B4841803948418039&ct=18393&tsum=a2343b2c061fc9de3fa7857e832d9625
+231国家地理,http://198.16.100.90:8278/natgeohd_twn/playlist.m3u8?tid=ME0E9332119893321198&ct=19225&tsum=86a42e161c519916f498348c3c672787
+232国家地理,http://50.7.238.114:8278/natgeohd_twn/playlist.m3u8?tid=ma1f0b9808d5014467661&ct=17874&tsum=73dfb91284f5b1358251546e6f03da3d
+233国家地理,http://50.7.238.114:8278/natgeohd_twn/playlist.m3u8?tid=MB5B4841803948418039&ct=18393&tsum=a2343b2c061fc9de3fa7857e832d9625
+234国家地理,http://pull-l3-cny.douyincdn.com/third/stream-4f444d2b71e8fbab0a8802b9fa23ea5b.m3u8
+235国家地理野生,http://198.16.100.90:8278/natgeowild_twn/playlist.m3u8?tid=MF6F5354447153544471&ct=19249&tsum=fcc679b64dded7ec1ff6a0f09e335f38
+236国家地理野生,http://66.181.39.224/ml.php?id=natgeowild_twn
+237国家地理野生,http://pull-l3-cny.douyincdn.com/third/stream-9accc1d4ae7e4bfa7350249c05a0e3af.m3u8
+238国家地理野生,https://ktpremium.com:443/K3939/6757/870688
+239国家地理野生,https://ktpremium.com:443/M919HR/5577/870688?c=台湾
+240国家地理野生,https://sc.id-tv.kz/NatGeoWildHD_34_35.m3u8
+241国家地理野生,http://198.16.100.90:8278/natgeowild_twn/playlist.m3u8?tid=mc9d789e8a1bb12836354&ct=17877&tsum=82c5ce1596dc364c112c79b239c3f5e8
+242国家地理野生,http://198.16.100.90:8278/natgeowild_twn/playlist.m3u8?tid=MDDD9803492998034929&ct=18393&tsum=b276f2598186cdc8f4c513d89bfc2032
+243国家地理野生,http://198.16.100.90:8278/natgeowild_twn/playlist.m3u8?tid=ME7E6122598161225981&ct=19225&tsum=c88897efa30d472128421acf3d4b62c8
+244国家地理野生,http://50.7.238.114:8278/natgeowild_twn/playlist.m3u8?tid=mc9d789e8a1bb12836354&ct=17877&tsum=82c5ce1596dc364c112c79b239c3f5e8
+245国家地理野生,http://50.7.238.114:8278/natgeowild_twn/playlist.m3u8?tid=MDDD9803492998034929&ct=18393&tsum=b276f2598186cdc8f4c513d89bfc2032
+246韩国·EBS加二(5G专线),http://ebsonairios.ebs.co.kr/plus2tablet500k/tablet500k/plus2tablet500k.index.m3u8
+247韩国EBS_E,http://ebsonairios.ebs.co.kr/plus3tablet500k/tablet500k/plus3tablet500k.index.m3u8
+248韩国EBS第二,http://ebsonairios.ebs.co.kr/ebs2tablet500k/tablet500k/ebs2tablet500k.index.m3u8
+249韩国EBS第一,http://ebsonairios.ebs.co.kr/groundwavetablet500k/tablet500k/playlist.m3u8
+250韩国EBS第一(5G专线),http://ebsonairios.ebs.co.kr/groundwavetablet500k/tablet500k/groundwavetablet500k.m3u8
+251韩国EBS加一(5G专线),http://ebsonairios.ebs.co.kr/plus1tablet500k/tablet500k/plus1tablet500k.index.m3u8
+252韩国EBS少儿童,http://ebsonairios.ebs.co.kr/ebsutablet500k/_definst_/tablet500k/chunklist_w1965791004.m3u8?zshijd 
+253韩国新闻,http://183.110.27.87/mtnlive/definst/720/chunklist.m3u8
+254韩国新闻,http://moneytoday1.ktcdn.co.kr:1935/mtnlive/720/playlist.m3u8
+255韩国娱乐台,http://8.210.88.135/1023/4g16.php?p=3
+256韩国中文,https://sjva.soa1.duckdns.org/klive/api/url.m3u8?m=url&s=wavve&i=C8401&q=default
+257好莱坞电影,http://103.45.68.47/gy/gy563/xsj.php?id=hollywood-tw
+258好莱坞电影,http://198.16.100.90:8278/hollywoodmovies_twn/playlist.m3u8?tid=m39bfcd99239617992917&ct=17874&tsum=774ffa7546c934dc27e743c5bbb454d3
+259好莱坞电影,http://198.16.100.90:8278/hollywoodmovies_twn/playlist.m3u8?tid=MA8A4005638840056388&ct=18392&tsum=a1f1517d4ea64fd01267905f21d83859
+260好莱坞电影,http://198.16.100.90:8278/hollywoodmovies_twn/playlist.m3u8?tid=MF6F7143280071432800&ct=19211&tsum=c0bc00f05a03eb1bef16741e9fd9737e
+261好莱坞电影,http://50.7.238.114:8278/hollywoodmovies_twn/playlist.m3u8?tid=m39bfcd99239617992917&ct=17874&tsum=774ffa7546c934dc27e743c5bbb454d3
+262好莱坞电影,http://50.7.238.114:8278/hollywoodmovies_twn/playlist.m3u8?tid=MF6F7143280071432800&ct=19211&tsum=c0bc00f05a03eb1bef16741e9fd9737e
+263好莱坞电影,http://66.181.39.224/ml.php?id=hollywoodmovies_twn
+264好莱坞电影 中字,http://50.7.238.114:8278/hollywoodmovies_twn/playlist.m3u8?tid=MA8A4005638840056388&ct=18392&tsum=a1f1517d4ea64fd01267905f21d83859
+265美国中文,https://cdnts.sinovision.net/livestream.m3u8
+266美国中文电视,http://123.146.162.24:8017/d4ceB1a/1000/live.m3u8
+267美国中文电视,http://39.134.115.163:8080/PLTV/88888910/224/3221225723/index.m3u8
+268美国中文电视,http://pull.dayuntongzhou.com/live/tztv.m3u8
+269美国中文电视,http://video.blivenyc.com/broadcast/prod/2061/22/file-3192k.m3u8
+270求索science,http://suixiaobin.dsmynas.net:5666/gudou.php?phone=18998910474&ptoken=SZESNUL4i2PcZZKV1JA9jw%3D%3D&pserialnumber=63eee104cf9602bf&cid=860&id=qiusuokexueHD_7000
+271求索science,http://xiaozeng.aweitv.top/tv/gdtv.php?id=qiusuokexueHD_7000
+272求索动物,http://[2409:8087:4402:20:1:1216:401:41]/iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221226118/index.m3u8
+273求索动物,http://[2409:8087:441a:20:101:211:601:6]:6610/PLTV/88888888/224/3221226118/index.m3u8?servicetype=1
+274求索动物,http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000002000010046/index.m3u8?channel-id=wasusyt&Contentid=6000000002000010046&livemode=1&stbId=3
+275求索动物,http://111.13.111.242/0000000000001000/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000009&livemode=1&stbId=3&HlsProfileId=
+276求索动物,http://111.13.111.242/0000000000001000/1.m3u8?channel-id=wasusyt&Contentid=6000000002000010046&livemode=1&stbId=3&HlsProfileId=
+277求索动物,http://111.40.196.27:443/0000000000001000/6000000002000010046/index.m3u8?livemode=1&stbId=10&channel-id=wasusyt&Contentid=6000000002000010046
+278求索动物,http://39.134.136.138:6610/000000001000/6000000002000010046/index.m3u8?channel-id=wasusyt&Contentid=6000000002000010046&livemode=1&stbId=3
+279求索动物,http://39.134.136.200:6610/000000001001/1/index.m3u8?channel-id=wasusyt&Contentid=6000000002000010046&livemode=1&stbId=no
+280求索动物,http://60.208.16.27:1505/gudou.php?id=364&id=QSDWHD_7000
+281求索动物,http://suixiaobin.dsmynas.net:5666/gudou.php?phone=18998910474&ptoken=SZESNUL4i2PcZZKV1JA9jw%3D%3D&pserialnumber=63eee104cf9602bf&cid=860&id=QSDWHD_7000
+282求索动物,http://xiaozeng.aweitv.top/tv/gdtv.php?id=QSDWHD_7000
+283求索动物,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000009/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000009&livemode=1&stbId=3
+284求索动物,http://zteres.sn.chinamobile.com:6060/000000001000/6000000002000010046/1.m3u8?channel-id=wasusyt&Contentid=6000000002000010046&livemode=1&stbId=3
+285求索动物HD,http://suixiaobin.dsmynas.net:5666/gudou.php?phone=18998910474&ptoken=SZESNUL4i2PcZZKV1JA9jw%3D%3D&pserialnumber=63eee104cf9602bf&cid=860&id=QSDWHD_7000&/PLTV/hls.smil.m3u8
+286求索记录,http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000002000032052/index.m3u8?channel-id=wasusyt&Contentid=6000000002000032052&livemode=1&stbId=3
+287求索记录,http://111.11.123.33:6610/000000001000/6000000002000032052/index.m3u8?channel-id=wasusyt&Contentid=6000000002000032052&livemode=1&stbId=3
+288求索纪录,http://[2409:8087:441a:20:101:211:601:6]:6610/PLTV/88888888/224/3221226114/index.m3u8?servicetype=1
+289求索纪录,http://111.13.111.242/0000000000001000/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000010&livemode=1&stbId=3&HlsProfileId=
+290求索纪录,http://111.13.111.242/0000000000001000/1.m3u8?channel-id=wasusyt&Contentid=6000000002000032052&livemode=1&stbId=3&HlsProfileId=
+291求索纪录,http://111.40.196.27:443/0000000000001000/6000000002000032052/index.m3u8?livemode=1&stbId=10&channel-id=wasusyt&Contentid=6000000002000032052
+292求索纪录,http://39.134.136.138:6610/000000001000/6000000002000032052/index.m3u8?channel-id=wasusyt&Contentid=6000000002000032052&livemode=1&stbId=3
+293求索纪录,http://39.134.136.200:6610/000000001001/1/index.m3u8?channel-id=wasusyt&Contentid=6000000002000032052&livemode=1&stbId=no
+294求索纪录,http://60.208.16.27:1505/gudou.php?id=364&id=QSJLHD_7000
+295求索纪录,http://ct.whosayssowhat.top:4022/udp/239.77.0.241:5146
+296求索纪录,http://suixiaobin.dsmynas.net:5666/gudou.php?phone=18998910474&ptoken=SZESNUL4i2PcZZKV1JA9jw%3D%3D&pserialnumber=63eee104cf9602bf&cid=860&id=QSJLHD_7000
+297求索纪录,http://terrysg.cn:4000/udp/239.77.0.21:5146
+298求索纪录,http://xiaozeng.aweitv.top/tv/gdtv.php?id=QSJLHD_7000
+299求索纪录,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000010/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000010&livemode=1&stbId=3
+300求索纪录,http://zteres.sn.chinamobile.com:6060/000000001000/6000000002000032052/1.m3u8?channel-id=wasusyt&Contentid=6000000002000032052&livemode=1&stbId=3
+301求索纪录,https://tv.youshijiea.cn/uploads/itvbox/cqgd.php?id=qsjlHD
+302求索纪录HD,http://suixiaobin.dsmynas.net:5666/gudou.php?phone=18998910474&ptoken=SZESNUL4i2PcZZKV1JA9jw%3D%3D&pserialnumber=63eee104cf9602bf&cid=860&id=QSJLHD_7000&/PLTV/hls.smil.m3u8
+303求索纪录高清,http://118.24.227.124/bytedance.live.cqccn.com/__cl/cg:live/__c/qsjlHD/__op/default/__f//index.m3u8
+304求索科学,http://[2409:8087:4402:20:1:1216:401:46]/iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221226115/index.m3u8
+305求索科学,http://[2409:8087:441a:20:101:211:601:6]:6610/PLTV/88888888/224/3221226115/index.m3u8?servicetype=1
+306求索科学,http://[2409:8087:441a:20:101:211:601:6]:6610/PLTV/88888888/224/3221226116/index.m3u8?servicetype=1
+307求索科学,http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000002000032344/index.m3u8?channel-id=wasusyt&Contentid=6000000002000032344&livemode=1&stbId=3
+308求索科学,http://111.13.111.242/0000000000001000/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000011&livemode=1&stbId=3&HlsProfileId=
+309求索科学,http://111.13.111.242/0000000000001000/1.m3u8?channel-id=wasusyt&Contentid=6000000002000032344&livemode=1&stbId=3&HlsProfileId=
+310求索科学,http://111.40.196.27:443/0000000000001000/6000000002000032344/index.m3u8?livemode=1&stbId=10&channel-id=wasusyt&Contentid=6000000002000032344
+311求索科学,http://39.134.136.138:6610/000000001000/6000000002000032344/index.m3u8?channel-id=wasusyt&Contentid=6000000002000032344&livemode=1&stbId=3
+312求索科学,http://39.134.136.200:6610/000000001001/1/index.m3u8?channel-id=wasusyt&Contentid=6000000002000032344&livemode=1&stbId=no
+313求索科学,http://60.208.16.27:1505/gudou.php?id=364&id=qiusuokexueHD_7000
+314求索科学,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000011/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000011&livemode=1&stbId=3
+315求索科学,http://zteres.sn.chinamobile.com:6060/000000001000/6000000002000032344/1.m3u8?channel-id=wasusyt&Contentid=6000000002000032344&livemode=1&stbId=3
+316求索科学HD,http://suixiaobin.dsmynas.net:5666/gudou.php?phone=18998910474&ptoken=SZESNUL4i2PcZZKV1JA9jw%3D%3D&pserialnumber=63eee104cf9602bf&cid=860&id=qiusuokexueHD_7000&/PLTV/hls.smil.m3u8
+317求索生活,http://[2409:8087:4402:20:1:1216:401:43]/iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221226116/index.m3u8
+318求索生活,http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000002000003382/index.m3u8?channel-id=wasusyt&Contentid=6000000002000003382&livemode=1&stbId=3
+319求索生活,http://111.13.111.242/0000000000001000/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000008&livemode=1&stbId=3&HlsProfileId=
+320求索生活,http://111.13.111.242/0000000000001000/1.m3u8?channel-id=wasusyt&Contentid=6000000002000003382&livemode=1&stbId=3&HlsProfileId=
+321求索生活,http://111.40.196.27:443/0000000000001000/6000000002000003382/index.m3u8?livemode=1&stbId=10&channel-id=wasusyt&Contentid=6000000002000003382
+322求索生活,http://39.134.136.138:6610/000000001000/6000000002000003382/index.m3u8?channel-id=wasusyt&Contentid=6000000002000003382&livemode=1&stbId=3
+323求索生活,http://39.134.136.200:6610/000000001001/1/index.m3u8?channel-id=wasusyt&Contentid=6000000002000003382&livemode=1&stbId=no
+324求索生活,http://60.208.16.27:1505/gudou.php?id=364&id=1612
+325求索生活,http://ct.whosayssowhat.top:4022/udp/239.77.0.153:5146
+326求索生活,http://suixiaobin.dsmynas.net:5666/gudou.php?phone=18998910474&ptoken=SZESNUL4i2PcZZKV1JA9jw%3D%3D&pserialnumber=63eee104cf9602bf&cid=860&id=1612
+327求索生活,http://terrysg.cn:4000/udp/239.77.0.153:5146
+328求索生活,http://xiaozeng.aweitv.top/tv/gdtv.php?id=1612
+329求索生活,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000008/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000008&livemode=1&stbId=3
+330求索生活,http://zteres.sn.chinamobile.com:6060/000000001000/6000000002000003382/1.m3u8?channel-id=wasusyt&Contentid=6000000002000003382&livemode=1&stbId=3
+331求索生活HD,http://suixiaobin.dsmynas.net:5666/gudou.php?phone=18998910474&ptoken=SZESNUL4i2PcZZKV1JA9jw%3D%3D&pserialnumber=63eee104cf9602bf&cid=860&id=QSSHHD_7000&/PLTV/hls.smil.m3u8
+332日本·NHK国际(高清),https://nhkwlive-xjp.akamaized.net/hls/live/2003458/nhkwlive-xjp-en/index_1M.m3u8
+333日本全天新闻,https://n24-cdn-live.ntv.co.jp/ch01/index.m3u8
+334探索,http://66.181.39.224/ml.php?id=discoverych_twn
+335探索动力,http://198.16.100.90:8278/discoveryturbo_twn/playlist.m3u8?tid=m33a70bc8259c12219783&ct=17877&tsum=b8470668b7a41d6b15a90b7aa43b3279
+336探索动力,http://198.16.100.90:8278/discoveryturbo_twn/playlist.m3u8?tid=MA4A9062409890624098&ct=19254&tsum=a08aaae68298f6df5540cb41f9d7fdd5
+337探索动力,http://198.16.100.90:8278/discoveryturbo_twn/playlist.m3u8?tid=MD5D5964869459648694&ct=19225&tsum=a21251b62069dff5c52601a3e4bc4a6d
+338探索动力,http://198.16.100.90:8278/discoveryturbo_twn/playlist.m3u8?tid=MECE3122352031223520&ct=18393&tsum=66f49d6631e9a76ea563d20a25e0bd4c
+339探索动力,http://50.7.238.114:8278/discoveryturbo_twn/playlist.m3u8?tid=MD5D5964869459648694&ct=19225&tsum=a21251b62069dff5c52601a3e4bc4a6d
+340探索动力,http://50.7.238.114:8278/discoveryturbo_twn/playlist.m3u8?tid=MECE3122352031223520&ct=18393&tsum=66f49d6631e9a76ea563d20a25e0bd4c
+341探索发现,http://hls.cntv.kcdnvip.com/asp/hls/1200/0303000a/3/default/25137bd7c4494128bf0cba271974928f/1200.m3u8
+342探索纪录,http://hlsbkmgsplive.miguvideo.com/wd_r1/2018/wasu/tsjl/1000/index.m3u8?&encrypt=
+343探索纪录,http://hlsbkmgsplive.miguvideo.com/wd_r1/2018/wasu/tsjl/350/index.m3u8?&encrypt=
+344探索纪录,http://zteres.sn.chinamobile.com:6060/000000001000/2000000004000000007/1.m3u8?channel-id=hnbblive&Contentid=2000000004000000007&livemode=1&stbId=3
+345探索纪录,http://zteres.sn.chinamobile.com:6060/000000001000/5359008697329269813/1.m3u8?channel-id=wasusyt&Contentid=5359008697329269813&livemode=1&stbId=3
+346探索科学,http://198.16.100.90:8278/discoverysc_twn/playlist.m3u8?tid=MA9A4194864841948648&ct=19225&tsum=d87ede28c5152d8a730038fd5fb8207f
+347探索科学,http://198.16.100.90:8278/discoverysc_twn/playlist.m3u8?tid=mc6599c2e8abf17200438&ct=17877&tsum=04c82c404888445ec55711287ad6b21b
+348探索科学,http://198.16.100.90:8278/discoverysc_twn/playlist.m3u8?tid=MECE1045237810452378&ct=18393&tsum=806a4803bc2c402750bf7fde4daaf50e
+349探索科学,http://198.16.100.90:8278/discoverysc_twn/playlist.m3u8?tid=MEDE7333306673333066&ct=19254&tsum=c17c57e395a30ccf636418530f7811a9
+350探索科学,http://50.7.238.114:8278/discoverysc_twn/playlist.m3u8?tid=mc6599c2e8abf17200438&ct=17877&tsum=04c82c404888445ec55711287ad6b21b
+351探索科学,http://50.7.238.114:8278/discoverysc_twn/playlist.m3u8?tid=MECE1045237810452378&ct=18393&tsum=806a4803bc2c402750bf7fde4daaf50e
+352探索科学,https://dispatch.ulivetv.net/v/live/cg1lhf32n268.m3u8?stream_id=cg1lhf32n268×tamp=1685730843&rand=UWIceJVOIv&uuid=9b647b3816b2a66a&from=web&sign=3cfb6a154f3e66af761b6f7b30834c69
+353探索,http://198.16.100.90:8278/ba86fcd935/playlist.m3u8?tid=m1b458a366fcb&ct=18335&tsum=6ee1498a5e37d8bd1e3f62954629ed4f
+354探索,http://198.16.100.90:8278/discoveryhd_twn/playlist.m3u8?tid=ME6E2405719624057196&ct=19225&tsum=57a7c421c65e00c1b8f68f67c30141dc
+355探索,http://4ksuper.live/play/live.php?mac=00:1A:79:50:63:9E&stream=571210&extension=ts
+356探索,http://66.181.39.224/ml.php?id=ba86fcd935
+357探索,http://66.181.39.224/ml.php?id=discoveryhd_twn
+358探索,https://ktpremium.com:443/K3939/6757/870683
+359探索,https://ktpremium.com:443/M919HR/5577/870683?c=台湾
+360探索亚洲,http://103.112.191.9:880/LAOSAT1095.m3u8
+361探索亚洲,http://198.16.100.90:8278/discoverytwn_twn/playlist.m3u8?tid=m42a2d91d6f2413622196&ct=17874&tsum=3653c4c61f0a0443dbb256dc465b4715
+362探索亚洲,http://198.16.100.90:8278/discoverytwn_twn/playlist.m3u8?tid=MAAA4463833744638337&ct=18393&tsum=c4bd4c633430327425e073012785525e
+363探索亚洲,http://4ksuper.live/play/live.php?mac=00:1A:79:50:63:9E&stream=571181&extension=ts
+364探索亚洲,http://50.7.238.114:8278/discoverytwn_twn/playlist.m3u8?tid=MAAA4463833744638337&ct=18393&tsum=c4bd4c633430327425e073012785525e
+365探索亚洲,http://66.181.39.224/ml.php?id=discoverytwn_twn
+366探索亚洲,https://dispatch.ulivetv.net/v/live/cg1ll3fch4g0.m3u8?stream_id=cg1ll3fch4g0×tamp=1685730853&rand=etuQ7GqT8g&uuid=9b647b3816b2a66a&from=web&sign=42abf6ecc4f7857c91d95cca140ae112
+367探索自然,http://hlsbkmgsplive.miguvideo.com/migu/gunbo/5102439963/51/20190827/index.m3u8?&encrypt=
