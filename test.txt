@@ -170,9 +170,9 @@ A33-三立台湾,http://sc2022.stream-link.org/tv2306.php?id=t23
 A34-三立都会,http://sc2022.stream-link.org/tv2306.php?id=t24
 A35-三立iNews,http://seb.sason.top/sc/slinews_fhd.m3u8
 A36-三立Live新闻,http://seb.sason.top/sc/sllive_fhd.m3u8
-A37-三立台湾,http://tianhewan.top/ZIPP.php?url=http://211.72.65.236:8521/.m3u8
-A38-三立都会,http://tianhewan.top/ZIPP.php?url=http://211.72.65.236:8522/.m3u8
-A39-三立新闻,http://tianhewan.top/ZIPP.php?url=http://211.72.65.236:8543/.m3u8
+A37-三立台湾,http://211.72.65.236:8521/.m3u8
+A38-三立都会,http://211.72.65.236:8522/.m3u8
+A39-三立新闻,http://211.72.65.236:8543/.m3u8
 A40-三立财经,http://tv.redrainl.site:9500/live.m3u8?c=51
 A41-三立綜合,https://epg.pw/stream/2ae8ba664e18a15acef81d53edb6f594d9966d599d6a3f4e575718094b9cc14a.m3u8
 A42-三立臺灣台,https://epg.pw/stream/6cbb5a395d787bd3f6333051a9436880165517d14c0cf42385908f669b061e88.m3u8
