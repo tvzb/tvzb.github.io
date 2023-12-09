@@ -874,7 +874,7 @@ CHC家庭影院,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226462/in
 重庆卫视,http://zteres.sn.chinamobile.com:6060/000000001000/1000000005000265017/1.m3u8?channel-id=ystenlive&Contentid=1000000005000265017&livemode=1&stbId=3
 重庆卫视,http://zteres.sn.chinamobile.com:6060/000000001000/5000000004000025797/1.m3u8?channel-id=bestzb&Contentid=5000000004000025797&livemode=1&stbId=3
 
-
+香港台湾,#genre#
 澳门|澳视资讯,http://61.244.22.5/ch5/info_ch5.live/index.m3u8
 台湾|AXN,http://50.7.238.114:8278/axn_twn/playlist.m3u8?tid=MC6C9875939098759390&ct=19254&tsum=5a6772e6e852b06c1b5741eeb4002a1a
 台湾|AXN,http://50.7.238.114:8278/axn_twn/playlist.m3u8?tid=m1776995e9b3e16458394&ct=17874&tsum=b8a111d0b13c7761ce8b4e8f047adddb
@@ -1349,7 +1349,7 @@ SiTV游戏风云,http://zteres.sn.chinamobile.com:6060/000000001000/500000001100
 
 
 
-其它频道,#genre#
+地方频道,#genre#
 LBRTV,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001268/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 LYTV,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001417/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 宝鸡2,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001737/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
@@ -2091,6 +2091,8 @@ ITV_44,http://epg.112114.xyz/douyu/8788687
 埋堆堆19,https://live.metshop.top/huya/23728674
 
 
+
+海外频道,#genre#
 A.NEWS,https://d10rltuy0iweup.cloudfront.net/ATNNEWS/myStream/chunklist.m3u8
 A2I.RELIGION,https://d10rltuy0iweup.cloudfront.net/ATNINT/myStream/playlist.m3u8
 AAJ.TAK,https://aajtaklive-amd.akamaized.net/hls/live/2014416/aajtak/aajtaklive/live_404p/chunks.m3u8
