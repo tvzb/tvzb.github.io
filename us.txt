@@ -1,0 +1,37 @@
+CGTN美国,http://live.cgtn.com/1000/prog_index.m3u8
+ETRV美国,http://38.64.72.148/hls/modn/list/2015/chunklist0.m3u8
+CGTN美国,http://live.cgtn.com/1000/prog_index.m3u8?zshijd
+CGTN 美國,http://live.cgtn.com/1000/prog_index.m3u8?zshijd
+美国mytime,https://mytime-tcl.amagi.tv/playlist1080-p.m3u8?blog.ntnas.top
+美国中文,https://cdnts.sinovision.net/livestream.m3u8
+美国卫视台,https://voa-ingest.akamaized.net/hls/live/2033876/tvmc07/playlist.m3u8
+美国中文电视,https://jpts.sinovision.net/livestream.m3u8
+东森新闻美国,http://38.64.72.148:80/hls/modn/list/2015/chunklist0.m3u8
+美國城市衛視,http://dtv21.org:8080/play/live.php?mac=00:1A:79:00:21:D9&extension=ts&stream=283900
+美國城市衛視,http://dtv21.org:8080/play/live.php?mac=00:1A:79:00:21:D9&extension=ts&stream=482636
+美国中文电视,http://123.146.162.24:8017/d4ceB1a/1000/live.m3u8
+美国mytime 电影频道,https://mytime-tcl.amagi.tv/playlist1080-p.m3u8?blog.ntnas.top
+美国mytime 电影频道[1920*1080],https://mytime-tcl.amagi.tv/playlist1080-p.m3u8?blog.ntnas.to
+美国中文,https://jpts.sinovision.net/livestream.m3u8
+美国之音,http://voa-ingest.akamaized.net/hls/live/2035206/151_124L/playlist.m3u8
+美国之音,http://www.336699.live:1935/blockfour/litv-ftv03.stream/playlist.m3u8
+美國之音,http://www.336699.live:1935/blockfour/litv-ftv03.stream/playlist.m3u8
+美国中文台,https://jpts.sinovision.net/livestream.m3u8
+美国城市卫星,http://line.premiumpowers.net/play/live.php?mac=00:1A:79:73:45:10&extension=ts&stream=156401
+美国中文电视,https://jpts.sinovision.net/livestream.m3u8
+美国中文电视,https://cdnts.sinovision.net/livestream.m3u8
+美国城市卫星,http://line.premiumpowers.net/play/live.php?mac=00:1A:79:69:40:42&extension=ts&stream=156401
+美國中文電視,https://jpts.sinovision.net/livestream.m3u8
+美國中文電視,https://cdnts.sinovision.net/livestream.m3u8
+美国城市卫星,http://line.premiumpowers.net/play/live.php?mac=00:1A:79:BF:D2:44&extension=ts&stream=156401
+美国城市卫视,http://protv.fun/play/live.php?mac=00:1A:79:50:63:9E&stream=156401&extension=ts
+美国城市卫星,http://line.premiumpowers.net/play/live.php?mac=00:1A:79:45:5E:9A&extension=ts&stream=156401
+美国中文电视,http://pull.dayuntongzhou.com/live/tztv.m3u8
+美国中文电视,http://video.blivenyc.com/broadcast/prod/2061/22/file-3192k.m3u8
+美国中文电视,http://39.134.115.163:8080/PLTV/88888910/224/3221225723/index.m3u8
+美国狗狗宠物 (720p),http://123.146.162.24:8017/c2F0hmi/1000/live.m3u8
+美国狗狗宠物 (720p),http://video.blivenyc.com/broadcast/prod/2061/22/file-3192k.m3u8
+CNN International (美国),https://live.duhnet.tv/S2/HLS_LIVE/cnnturknp/playlist.m3u8
+CNN International (美国),http://210.210.155.37/uq2663/h/h152/index2.m3u8
+CNN International (美国),https://jpts.sinovision.net/livestream.m3u8
+
