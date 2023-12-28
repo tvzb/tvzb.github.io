@@ -44,19 +44,14 @@
 0044CTi Variety (中天综合台),http://23.237.10.66:16372
 0045ELTA综合,http://66.181.39.224/ml.php?id=eltazonghe
 0046elta综合,https://epg.pw/stream/291da24fd7ecb35199a1210c7b9af7edf3fcf3bbf73622c409ba792d780c9b99.m3u8
-0047ETtoday综合台mitv://generationnexxxt.com:19806/9667fbc558a84e76baf883b01086eee4
+0047ETtoday综合台mitv://generationnexxxt.com:19806/9667fbc558a84e76baf883b01086eee4	
 0048GOOD TV CH01 综合台,https://dqhxk7sbp7xog.cloudfront.net/hls-live/goodtv/_definst_/liveevent/live-ch1-2.m3u8
-0049HKC综合娱乐台mitv://generationnexxxt.com:19806/f4815802ef204971b9820b0d6e0bd096
-0050JET综合台mitv://generationnexxxt.com:19806/d4d21dd1897942949b51dc54ee30bee4
 0051MOMO综合台,http://tianhewan.top/ZIPP.php?url=http://211.72.65.236:8553/.m3u8
-0052momo综合台rtmp://119.81.124.89/sat/tv761
-0053momo综合台rtmp://219.80.97.77/sat/tv761
 0054NewTV精品综合,http://111.40.196.27:443/0000000000001000/2000000003000000008/index.m3u8?livemode=1&stbId=10&channel-id=hnbblive&Contentid=2000000003000000008
 0055NewTV精品综合,http://111.40.196.27:443/PLTV/88888888/224/3221225632/1.m3u8
 0056NewTV精品综合,http://111.40.196.28:443/PLTV/88888888/224/3221225632/1.m3u8
 0057NewTV精品综合,http://zteres.sn.chinamobile.com:6060/000000001000/1000000004000019008/1.m3u8?channel-id=ystenlive&Contentid=1000000004000019008&livemode=1&stbId=3
 0058NewTV精品综合,http://zteres.sn.chinamobile.com:6060/000000001000/2000000003000000008/1.m3u8?channel-id=hnbblive&Contentid=2000000003000000008&livemode=1&stbId=3
-0059NHK-G综合mitv://generationnexxxt.com:19806/b5bda0c5078d430c942c13681802be15
 0060TVBS综合台,http://pull-l3-cny.douyincdn.com/third/stream-304b8e04a437299311112b7f4902c9dd.m3u8
 0061安徽|定远综合,http://ssdyapp.cn/live/dyv1.m3u8
 0062安徽|肥西新闻综合,http://stream.ahwanyun.cn/live/7210e3a27cc64ac4a3f7aba2e2b683d5/hls.m3u8
@@ -90,7 +85,6 @@
 0090八大综合,https://ktpremium.com:443/M919HR/5577/877049?c=台湾
 0091八大综合台,http://50.7.238.114:8278/badazhonghe/playlist.m3u8?tid=MC7C4692263546922635&ct=19225&tsum=ffdc7a6397b511103e0df0b92e678790
 0092八大综合台,http://66.181.39.224/ml.php?id=badazhonghe
-0093八大综合台mitv://generationnexxxt.com:19806/37b63f7a24134b7a94fb56123b0dd012
 0094巴中综合,http://ocj2.kksmg.com/ocj1/ocj1.m3u8
 0095白城新闻综合 [Geo-blocked],http://l.cztvcloud.com/channels/lantian/SXxiaoshan1/720p.m3u8
 0096白城新闻综合 [Geo-blocked],https://stream2.jlntv.cn/liaoyuan1/sd/live.m3u8
@@ -239,7 +233,6 @@
 0239东森综合,https://ktpremium.com:443/M919HR/5577/870545?c=台湾
 0240东森综合HD,http://103.68.63.37:8278/ettvzhonghe/playlist.m3u8?tid=m65c4e525f24617101171&ct=17874&tsum=663db593cfeefc92ce4b5d7461988f3f
 0241东森综合台,http://66.181.39.224/ml.php?id=ettvzhonghe
-0242东森综合台mitv://generationnexxxt.com:19806/106c81959d3c4466be186b19f43484f0
 0243东森综合台-2,https://epg.pw/stream/1bf26eee56bae96461c6815d13947141356d866c8a5e5569063aa7ba90d03c2a.m3u8
 0244东乡区综合频道,http://live.mudu.tv/watch/hnkexb.m3u8?zjiangxd
 0245东营综合,http://222.134.240.136:9901/tsfile/live/1009_1.m3u8
@@ -314,7 +307,6 @@
 0314甘孜综合,http://m3u8.channel.ganzitv.com/vms/videos/nmip-media/channellive/channel1/playlist.m3u8
 0315甘孜综合,http://tv.drs.ganzitv.com:8100/channellive/gztv.flv
 0316甘孜综合,http://tv.drs.ganzitv.com:8100/channellive/gztv.flv?zsicd
-0317高点综合台mitv://generationnexxxt.com:19806/dbe3f7ae2d124d92946eb98a0bb79bb0
 0318高陵综合,http://120.204.20.48/zycfcdn.gdwlcloud.com/PLTV/88888888/224/3221225836/index.m3u8
 0319高陵综合,http://120.204.20.48/zycfcdn.gdwlcloud.com/PLTV/88888888/224/3221225920/index.m3u8
 0320高陵综合,http://120.204.20.48/zycfcdn.gdwlcloud.com/PLTV/88888888/224/3221225970/index.m3u8
@@ -774,7 +766,6 @@
 0774靖边综合,http://223.109.210.41/zycfcdn.gdwlcloud.com/PLTV/88888888/224/3221225892/index.m3u8
 0775靖江新闻综合,http://visit.jjbctv.com:1935/live/xwzhmb/playlist.m3u8?zjiangsd
 0776靖江新闻综合,http://visit.jjbctv.com:1935/live/xwzhpc/playlist.m3u8?zjiangsd
-0777靖天综合台mitv://generationnexxxt.com:19806/baa8ea1bb88b4d1ea9e45d3bff27c45b
 0778靖宇综合,http://stream8.jlntv.cn/jytv/sd/live.m3u8
 0779靖宇综合,http://stream8.jlntv.cn/jytv/sd/live.m3u8?zjild
 0780静态_梅州综合,http://p2.weizan.cn/slowlive/403126774572750089/live.m3u8
@@ -1024,7 +1015,6 @@
 1024祁阳综合,http://play-dgv-xhncloud.voc.com.cn/live/5243_PREfDG.m3u8?zhund
 1025岐山综合,http://120.204.20.48/zycfcdn.gdwlcloud.com/PLTV/88888888/224/3221225911/index.m3u8
 1026岐山综合,http://223.109.210.41/zycfcdn.gdwlcloud.com/PLTV/88888888/224/3221225911/index.m3u8
-1027其它zbrzbrzbrzbrMTV Spankin' New
 1028千阳综合,http://120.204.20.48/zycfcdn.gdwlcloud.com/PLTV/88888888/224/3221225937/index.m3u8
 1029千阳综合,http://223.109.210.41/zycfcdn.gdwlcloud.com/PLTV/88888888/224/3221225937/index.m3u8
 1030乾县综合,http://120.204.20.48/zycfcdn.gdwlcloud.com/PLTV/88888888/224/3221225977/index.m3u8
@@ -1081,7 +1071,6 @@
 1081三立综合,https://ktpremium.com:443/K3939/6757/877054
 1082三立综合,https://ktpremium.com:443/M919HR/5577/877054?c=台湾
 1083三立综合台,http://66.181.39.224/ml.php?id=sanlizhonghe
-1084三立综合台mitv://generationnexxxt.com:19806/ee47ad1ea78049ac8577929b4cef18f6
 1085三门峡新闻综合,http://180.97.247.27/1301-tx.otvstream.otvcloud.com/otv/skcc/live/channel41124/index.m3u8
 1086三门峡新闻综合,http://223.109.210.41/1301-tx.otvstream.otvcloud.com/otv/skcc/live/channel41124/index.m3u8
 1087三明新闻综合,http://fjnhdb.chinashadt.com:2036/live/stream:nh2.stream/playlist.m3u8
@@ -1303,7 +1292,6 @@
 1303纬来综合,https://epg.pw/stream/35977b6d6949604387ec2eef890876cda04cd06dcbc1d89c6d2fa0664da01c7f.m3u8
 1304纬来综合,https://ktpremium.com:443/K3939/6757/870549
 1305纬来综合,https://ktpremium.com:443/M919HR/5577/870549?c=台湾
-1306纬来综合台mitv://generationnexxxt.com:19806/00417bdd1ce245a9b5a919abb5f6aae8
 1307渭南新闻综合,http://223.109.210.41/zycfcdn.gdwlcloud.com/PLTV/88888888/224/3221225660/index.m3u8
 1308渭南新闻综合,http://223.109.210.41/zycfcdn.gdwlcloud.com/PLTV/88888888/224/3221225818/index.m3u8
 1309渭南新闻综合,http://223.109.210.41/zycfcdn.gdwlcloud.com/PLTV/88888888/224/3221225819/index.m3u8
@@ -1462,7 +1450,6 @@
 1462耀州综合,http://223.109.210.41/zycfcdn.gdwlcloud.com/PLTV/88888888/224/3221225884/index.m3u8
 1463伊春综合,http://live.yichuntv.com/e5d7b4b95cf849d79fa3964431dca1f3/h264_800k_ts/index.m3u8?type=flv2hls_m3u8?zheild
 1464伊犁汉语综合,http://110.153.180.106:55555/out_1/index.m3u8?zxinjd
-1465壹电视综合mitv://generationnexxxt.com:19806/164313f61c904a32913b338b5318ef33
 1466黟县综合,http://114.104.147.15:1935/live/yixian/playlist.m3u8
 1467黟县综合,http://app.yixianfabu.com:1935/live/yixian/playlist.m3u8
 1468宜昌新闻综合广播,http://play.3xgd.com/fm/xwt.m3u8
@@ -1619,7 +1606,6 @@
 1619中天综合HD,http://103.68.63.37:8278/ctizhonghe/playlist.m3u8?tid=m85005aeec85b14021104&ct=17874&tsum=69f19f4b12ab79d2ee683b28cdb1c8ca
 1620中天综合台,http://pull-l3-cny.douyincdn.com/third/stream-5f26752efeee9e0c53cf6b530640ce60.flv
 1621中天综合台,https://epg.pw/stream/9ffc906d37cf095d0fb596c3cba6c6253e8e445f4ccd24563c7a2e9e99c39f39.m3u8
-1622中天综合台mitv://generationnexxxt.com:19806/632df82d30984a6a9983c3d0ed8f35e2
 1623忠县综合频道,https://qxlmlive9.cbg.cn/applive/zxtv2/chunklist.m3u8
 1624重庆璧山综合,http://222.179.42.129:8181/hls1.m3u8?zzhongqd
 1625舟山新闻综合,http://live1.plus.wifizs.cn/xwzh/sd/live.m3u8
