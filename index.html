@@ -45,6 +45,16 @@
       border-radius: 8px; /* 圆角边框 */
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
     }
+    .video-container {
+  width: 100%; /* 设置视频容器宽度 */
+  max-width: 800px; /* 可根据需要设置最大宽度 */
+  margin: 0 auto; /* 居中显示 */
+}
+
+.video-container video {
+  width: 100%; /* 视频宽度占满容器 */
+  height: auto; /* 高度自适应，保持视频比例 */
+}
   </style>
 </head>
 <body>
@@ -63,10 +73,12 @@
       <li>至此，就可以随心所欲的观看提供的电视节目了。</li>
     </ol>
     <h2>视频教程：</h2>
-    <video controls>
-  <source src="https://tvzb.github.io/iptv.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+<div class="video-container">
+  <video controls>
+    <source src="http://XXX.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
   </section>
   <h2>使用技巧：</h2>
   <ul>
