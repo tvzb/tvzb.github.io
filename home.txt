@@ -578,3 +578,7 @@ CCTV15-音乐,http://171.223.215.229:4000/udp/239.93.0.171:5140
 第28集,https://vip15.play-cdn15.com/20230809/23450_5f3a2c61/index.m3u8
 第29集,https://vip15.play-cdn15.com/20230809/23451_c40da6be/index.m3u8
 第30集,https://vip15.play-cdn15.com/20230809/23452_b9c40be5/index.m3u8
+
+疯狂原始人,#genre#
+疯狂原始人1,https://yzzy.play-cdn2.com/20220405/7672_23db76cd/index.m3u8
+疯狂原始人2,https://yzzy.play-cdn2.com/20220405/7671_0110bf91/index.m3u8
