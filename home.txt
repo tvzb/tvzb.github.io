@@ -13,6 +13,11 @@ CCTV10-科教,http://tljdh.vip:9901/tsfile/live/0010_1.m3u8
 CCTV11-戏曲,http://tljdh.vip:9901/tsfile/live/0011_1.m3u8
 CCTV12-社会与法,http://tljdh.vip:9901/tsfile/live/0012_2.m3u8
 CCTV13-新闻,http://tljdh.vip:9901/tsfile/live/0013_1.m3u8
+CCTV13-新闻,https://live-play.cctvnews.cctv.com/cctv/merge_cctv13.m3u8?auth_key=1635962688
+CCTV13-新闻,https://live-play.cctvnews.cctv.com/cctv/merge_cctv13_mud.m3u8?auth_key=1635962688
+CCTV13-新闻,https://live-play.cctvnews.cctv.com/cctv/merge_cctv13_mhd.m3u8?auth_key=1635962688-0-e013f973588e41599d7751a912170d78-fd33c55f8befe5c00fb32fee650348c0
+CCTV13-新闻,https://live-play.cctvnews.cctv.com/cctv/merge_cctv13.m3u8?auth_key=1635962688
+CCTV13-新闻,https://live-play.cctvnews.cctv.com/cctv/merge_cctv13_mud.m3u8?auth_key=1635962688
 CCTV14-少儿,http://tljdh.vip:9901/tsfile/live/0014_1.m3u8
 CCTV15-音乐,http://tljdh.vip:9901/tsfile/live/0015_1.m3u8
 江西卫视,http://tljdh.vip:9901/tsfile/live/0138_1.m3u8
