@@ -122,23 +122,6 @@ CGTN,http://101.75.215.122:8008/hls/16/index.m3u8
 
 
 卫视高清,#genre#
-江西卫视,http://125.210.152.19:9123/live/hzgq-jxwsgq-h264.m3u8
-北京卫视,http://125.210.152.19:9123/live/hzgq-bjgqws-h264.m3u8
-东方卫视,http://125.210.152.19:9123/live/hzgq-dftvgq-h264.m3u8
-甘肃卫视,http://125.210.152.19:9123/live/hszx-gstv-h264.m3u8
-河北卫视,http://125.210.152.19:9123/live/hzgq-hbwsgq1-h264.m3u8
-黑龙江卫视,http://125.210.152.19:9123/live/hzgq-hljwsgq-h264.m3u8
-吉林卫视,http://125.210.152.19:9123/live/hzgq-jlwsgq-h264.m3u8
-辽宁卫视,http://125.210.152.19:9123/live/hzgq-lnwsgq-h264.m3u8
-内蒙古卫视,http://125.210.152.19:9123/live/hszx-nmgtv-h264.m3u8
-宁夏卫视,http://125.210.152.19:9123/live/hszx-nxtv-h264.m3u8
-青海卫视,http://125.210.152.19:9123/live/hszx-qhtv-h264.m3u8
-山东卫视,http://125.210.152.19:9123/live/hzgq-sdwsgq-h264.m3u8
-山西卫视,http://125.210.152.19:9123/live/hszx-shanxitv-h264.m3u8
-陕西卫视,http://125.210.152.19:9123/live/hszx-sxtv-h264.m3u8
-天津卫视,http://125.210.152.19:9123/live/hzgq-tjwsgq-h264.m3u8
-重庆卫视,http://125.210.152.19:9123/live/hzgq-cqwsgq-h264.m3u8
-
 北京卫视,http://120.211.119.222:8899/hls/21/index.m3u8
 北京卫视,http://120.211.119.222:8899/hls/87/index.m3u8
 东方卫视,http://120.211.119.222:8899/hls/32/index.m3u8
