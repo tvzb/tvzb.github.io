@@ -1,13 +1,4 @@
 中央高清,#genre#
-CCTV-1,http://125.210.152.19:9123/live/hzgq-cctv1gq-h264.m3u8
-CCTV-2,http://125.210.152.19:9123/live/hzgq-cctv2gq-h264.m3u8
-CCTV-3,http://125.210.152.19:9123/live/hzgq-cctv3gq-h264.m3u8
-CCTV-4,http://125.210.152.19:9123/live/hzgq-cctv4gq-h264.m3u8
-CCTV-5,http://125.210.152.19:9123/live/hzgq-cctv5gq-h264.m3u8
-CCTV-6,http://125.210.152.19:9123/live/hzgq-cctv6gq-h264.m3u8
-CCTV-7,http://125.210.152.19:9123/live/hzgq-cctv7gq-h264.m3u8
-CCTV-8,http://125.210.152.19:9123/live/hzgq-cctv8gq-h264.m3u8
-CCTV-9,http://125.210.152.19:9123/live/hzgq-cctvjlgq-h264.m3u8
 CCTV-1,http://120.211.119.222:8899/hls/1/index.m3u8
 CCTV-1,http://120.211.119.222:8899/hls/69/index.m3u8
 CCTV-2,http://120.211.119.222:8899/hls/2/index.m3u8
@@ -147,23 +138,6 @@ CGTN,http://101.75.215.122:8008/hls/16/index.m3u8
 陕西卫视,http://125.210.152.19:9123/live/hszx-sxtv-h264.m3u8
 天津卫视,http://125.210.152.19:9123/live/hzgq-tjwsgq-h264.m3u8
 重庆卫视,http://125.210.152.19:9123/live/hzgq-cqwsgq-h264.m3u8
-
-江西卫视,http://bsdcdn.qnqcdn.net/gdcucc-livod.qn-cdn.gitv.tv/gitv_live/G_JIANGXI-HQ/G_JIANGXI-HQ.m3u8
-北京卫视,http://bsdcdn.qnqcdn.net/gdcucc-livod.qn-cdn.gitv.tv/gitv_live/G_BEIJING-HQ/G_BEIJING-HQ.m3u8
-广东卫视,http://bsdcdn.qnqcdn.net/gdcucc-livod.qn-cdn.gitv.tv/gitv_live/G_GUANGDONG-HQ/G_GUANGDONG-HQ.m3u8
-广西卫视,http://bsdcdn.qnqcdn.net/gdcucc-livod.qn-cdn.gitv.tv/gitv_live/G_GUANGXI-HQ/G_GUANGXI-HQ.m3u8
-安徽卫视,http://bsdcdn.qnqcdn.net/gdcucc-livod.qn-cdn.gitv.tv/gitv_live/G_ANHUI-HQ/G_ANHUI-HQ.m3u8
-海南卫视,http://bsdcdn.qnqcdn.net/gdcucc-livod.qn-cdn.gitv.tv/gitv_live/G_HAINAN-HQ/G_HAINAN-HQ.m3u8
-河北卫视,http://bsdcdn.qnqcdn.net/gdcucc-livod.qn-cdn.gitv.tv/gitv_live/G_HEBEI-HQ/G_HEBEI-HQ.m3u8
-湖北卫视,http://bsdcdn.qnqcdn.net/gdcucc-livod.qn-cdn.gitv.tv/gitv_live/G_HUBEI-HQ/G_HUBEI-HQ.m3u8
-湖南卫视,http://bsdcdn.qnqcdn.net/gdcucc-livod.qn-cdn.gitv.tv/gitv_live/G_HUNAN-HQ/G_HUNAN-HQ.m3u8
-江苏卫视,http://bsdcdn.qnqcdn.net/gdcucc-livod.qn-cdn.gitv.tv/gitv_live/G_JIANGSU-HQ/G_JIANGSU-HQ.m3u8
-山东卫视,http://bsdcdn.qnqcdn.net/gdcucc-livod.qn-cdn.gitv.tv/gitv_live/G_SHANDONG-HQ/G_SHANDONG-HQ.m3u8
-陕西卫视,http://bsdcdn.qnqcdn.net/gdcucc-livod.qn-cdn.gitv.tv/gitv_live/G_SHANXI-HQ/G_SHANXI-HQ.m3u8
-深圳卫视,http://bsdcdn.qnqcdn.net/gdcucc-livod.qn-cdn.gitv.tv/gitv_live/G_SHENZHEN-HQ/G_SHENZHEN-HQ.m3u8
-四川卫视,http://bsdcdn.qnqcdn.net/gdcucc-livod.qn-cdn.gitv.tv/gitv_live/G_SICHUAN-HQ/G_SICHUAN-HQ.m3u8
-天津卫视,http://bsdcdn.qnqcdn.net/gdcucc-livod.qn-cdn.gitv.tv/gitv_live/G_TIANJIN-HQ/G_TIANJIN-HQ.m3u8
-浙江卫视,http://bsdcdn.qnqcdn.net/gdcucc-livod.qn-cdn.gitv.tv/gitv_live/G_ZHEJIANG-HQ/G_ZHEJIANG-HQ.m3u8
 
 北京卫视,http://120.211.119.222:8899/hls/21/index.m3u8
 北京卫视,http://120.211.119.222:8899/hls/87/index.m3u8
