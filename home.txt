@@ -61,7 +61,6 @@ CCTV怀旧剧场,http://111.225.95.33:8800/hls/66/index.m3u8
 CCTV怀旧剧场,http://120.211.119.222:8899/hls/56/index.m3u8
 CGTN,http://125.210.152.19:9123/live/hszx-cctvgj-h264.m3u8
 CGTN,http://120.211.119.222:8899/hls/16/index.m3u8
-CGTN,,http://111.225.95.33:8800/hls/16/index.m3u8
 
 卫视高清,#genre#
 北京卫视,http://120.211.119.222:8899/hls/21/index.m3u8
@@ -104,7 +103,6 @@ CGTN,,http://111.225.95.33:8800/hls/16/index.m3u8
 新疆卫视,http://120.211.119.222:8899/hls/43/index.m3u8
 云南卫视,http://120.211.119.222:8899/hls/47/index.m3u8
 浙江卫视,http://120.211.119.222:8899/hls/26/index.m3u8
-浙江卫视,http://120.211.119.222:8899/hls/84/index.m3u8
 重庆卫视,http://120.211.119.222:8899/hls/33/index.m3u8
 
 电影频道,#genre#
