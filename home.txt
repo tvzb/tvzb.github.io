@@ -11,9 +11,9 @@ CCTV-9,http://171.8.247.34:808/hls/9/index.m3u8
 CCTV-10,http://171.8.247.34:808/hls/10/index.m3u8
 CCTV-11,http://171.8.247.34:808/hls/11/index.m3u8
 CCTV-12,http://171.8.247.34:808/hls/12/index.m3u8
-CCTV13,http://171.8.247.34:808/hls/13/index.m3u8
-CCTV14,http://171.8.247.34:808/hls/14/index.m3u8
-CCTV15,http://171.8.247.34:808/hls/15/index.m3u8
+CCTV-13,http://171.8.247.34:808/hls/13/index.m3u8
+CCTV-14,http://171.8.247.34:808/hls/14/index.m3u8
+CCTV-15,http://171.8.247.34:808/hls/15/index.m3u8
 CCTV-1,http://120.211.119.222:8899/hls/69/index.m3u8
 CCTV-2,http://120.211.119.222:8899/hls/70/index.m3u8
 CCTV-3,http://120.211.119.222:8899/hls/71/index.m3u8
@@ -241,7 +241,7 @@ CHC高清电影,http://115.148.104.135:20000/hls/67/index.m3u8
 重庆卫视,http://110.72.70.55:808/hls/33/index.m3u8
 重庆卫视,http://115.148.104.135:20000/hls/47/index.m3u8
 重庆卫视,http://120.211.119.222:8899/hls/33/index.m3u8
-凤凰卫视,http://101.23.216.151:8090/hls/66/index.m3u8
+凤凰资讯,http://101.23.216.151:8090/hls/66/index.m3u8
 凤凰卫视,http://110.72.70.55:808/hls/62/index.m3u8
 星空卫视,http://110.72.70.55:808/hls/60/index.m3u8
 
