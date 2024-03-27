@@ -253,11 +253,15 @@ CCTV-14,http://120.211.119.222:8899/hls/80/index.m3u8
 凤凰资讯,http://101.23.216.151:8090/hls/66/index.m3u8
 
 动画卡通,#genre#
-嘉佳卡通,http://101.23.216.151:8090/hls/52/index.m3u8
-卡酷卡通,http://101.23.216.151:8090/hls/51/index.m3u8
 GOOD卡通,https://dqhxk7sbp7xog.cloudfront.net/osmflivech45.m3u8
 CN卡通,http://198.16.100.90:8278/momo1_twn/playlist.m3u8?tid=MFFF9797479997974799&ct=19249&tsum=0bd9dac79cd373cc918357d3199c8b22
 CN卡通,http://50.7.238.114:8278/momo1_twn/playlist.m3u8?tid=MDCD8337337283373372&ct=18393&tsum=3744c35f02ab2207fb7dbbcb450f02d6
+嘉佳卡通,http://ci.emdoor.tech:8080/touchtv.php?pk=1187
+嘉佳卡通,http://101.23.216.151:8090/hls/52/index.m3u8
+卡酷卡通,http://101.23.216.151:8090/hls/51/index.m3u8
+金鹰卡通,http://116.128.243.121:9901/tsfile/live/1007_1.m3u8
+优漫卡通,http://110.179.80.141:8083/udp/239.1.1.72:8072
+炫动卡通,http://61.170.164.195:9901/tsfile/live/1008_1.m3u8
 靖天卡通,http://198.16.100.90:8278/jingtiancartoon_twn/playlist.m3u8?tid=m1465dab025b5&ct=18335&tsum=ba935e583d90bfbe1d1d9662e9ac600c
 靖天卡通,http://50.7.238.114:8278/jingtiancartoon_twn/playlist.m3u8?tid=m1465dab025b5&ct=18335&tsum=ba935e583d90bfbe1d1d9662e9ac600c
 Cartoon Network,http://198.16.100.90:8278/Cn/playlist.m3u8?tid=MCDC2144535021445350&ct=19225&tsum=32569c846de798e3502372d35d00773f
