@@ -274,7 +274,7 @@ IMAX影厅,http://epg.112114.xyz/douyu/4332
 蜘蛛侠-平行宇宙,https://s2.bfzycdn.com/video/zhizhuxiapingxingyuzhou/HD%E4%B8%AD%E5%AD%97/index.m3u8
 蜘蛛侠-平行宇宙,https://vip.kuaikan-cdn3.com/20230331/gW2Asq51/hls/index.m3u8
 
-小谢尔顿,#genre#
+小谢尔顿第一季,#genre#
 第01集,https://vip.kuaikan-play2.com/20230403/yenQC6YJ/index.m3u8
 第02集,https://vip.kuaikan-play2.com/20230403/8RFP7Uz0/index.m3u8
 第03集,https://vip.kuaikan-play2.com/20230403/Yt50yLpN/index.m3u8
