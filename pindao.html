@@ -1,889 +1,117 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>频道列表预览</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 40px 20px; /* 增加内边距 */
-      background-color: #f9f9f9; /* 更轻的背景颜色 */
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-      font-size: 36px;
-      color: #333; /* 标题字体颜色 */
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* 添加标题的文字阴影 */
-    }
-
-    h2 {
-      font-size: 24px;
-      color: #007bff; /* 优化标题颜色 */
-    }
-
-    img {
-      display: block;
-      margin: 20px auto; /* 增加图片周围的间距 */
-      max-width: 100%;
-      height: auto;
-    }
-
-    ol, ul {
-      margin-bottom: 20px; /* 增加列表间距 */
-      column-count: 2; /* 将每个有序列表分成两列 */
-    }
-
-    section {
-      padding: 20px; /* 段落容器增加内边距 */
-      margin-bottom: 30px;
-      background-color: #fff; /* 白色背景 */
-      border-radius: 8px; /* 圆角边框 */
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
-    }
-  </style>
-</head>
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+*{
+  box-sizing:border-box;
+}
+body{
+  margin-top:0px;
+  margin-right:0px;
+  margin-bottom:0px;
+  margin-left:0px;
+  font-family:-apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+}
+.panel{
+  color:rgb(51, 51, 51);
+  font-weight:100;
+}
+.logo path{
+  pointer-events:none;
+  fill:none;
+  stroke-linecap:round;
+  stroke-width:7;
+  stroke:rgb(255, 255, 255);
+}
+.description{
+  text-align:center;
+  font-size:1em;
+  font-weight:500;
+  line-height:1.8rem;
+  margin-bottom:1rem;
+}
+.wechat-group{
+  text-align:center;
+  padding-bottom:10px;
+}
+.wechat-group img{
+  max-width:220px;
+  height:auto;
+  border-top-left-radius:8px;
+  border-top-right-radius:8px;
+  border-bottom-right-radius:8px;
+  border-bottom-left-radius:8px;
+  margin-top:0px;
+  margin-right:auto;
+  margin-bottom:0px;
+  margin-left:auto;
+  width:100%;
+}
+.welcome-img img{
+  width:100%;
+}
+.bg-gradient-primary{
+  border-top-left-radius:8px;
+  border-top-right-radius:8px;
+  border-bottom-right-radius:8px;
+  border-bottom-left-radius:8px;
+}
 <body>
-   <h1><strong>频道列表预览</strong></h1>
-<section>
-<h2>中央频道：</h2>
-    <ol>
-      <li>CCTV-01综合</li>
-      <li>CCTV-02财经</li>
-      <li>CCTV-03综艺</li>
-      <li>CCTV-04中文国际</li>
-      <li>CCTV-05+体育赛事</li>
-      <li>CCTV-05体育</li>
-      <li>CCTV-05体育频道</li>
-      <li>CCTV-06电影</li>
-      <li>CCTV-07国防军事</li>
-      <li>CCTV-08电视剧</li>
-      <li>CCTV-09纪录</li>
-      <li>CCTV-10科教</li>
-      <li>CCTV-11戏曲</li>
-      <li>CCTV-12社会与法</li>
-      <li>CCTV-13新闻</li>
-      <li>CCTV-14少儿</li>
-      <li>CCTV-15音乐</li>
-      <li>CCTV-16奥林匹克</li>
-      <li>CCTV-17农业农村</li>
-      <li>CCTV-兵器科技</li>
-      <li>CCTV-超高清</li>
-      <li>CCTV-第一剧场</li>
-      <li>CCTV-电视指南</li>
-      <li>CCTV-电子竞技</li>
-      <li>CCTV-风云剧场</li>
-      <li>CCTV-风云音乐</li>
-      <li>CCTV-风云足球</li>
-      <li>CCTV-高尔夫网球</li>
-      <li>CCTV-怀旧剧场</li>
-      <li>CCTV-女性时尚</li>
-      <li>CCTV-世界地理</li>
-      <li>CCTV-文化精品</li>
-      <li>CCTV-央视高网</li>
-      <li>CCTV-央视台球</li>
-      <li>CCTV-央视文化精品</li>
-      <li>CCTV-中央新影发现之旅</li>
-      <li>CCTV-中央新影老故事</li>
-      <li>CGTN国际</li>
-      <li>CGTN阿拉伯语</li>
-      <li>CGTN俄语</li>
-      <li>CGTN法语</li>
-      <li>CGTN记录</li>
-      <li>CGTN纪录</li>
-      <li>CGTN西班牙语</li>
-      <li>CGTN英语</li>
-      <li>CHC动作电影</li>
-      <li>CHC高清电影</li>
-      <li>CHC家庭影院</li>
-      <li>国际教育1</li>
-      <li>国际教育3</li>
-      <li>中国教育1</li>
-      <li>中国教育2</li>
-      <li>中国教育3</li>
-      <li>中国教育4</li>
-      <li>中国天气</li>
-    </ol>
-<h2>卫视频道：</h2>
-    <ol>
-      <li>安徽卫视</li>
-      <li>北京卫视</li>
-      <li>兵团卫视</li>
-      <li>东方卫视</li>
-      <li>东南卫视</li>
-      <li>甘肃卫视</li>
-      <li>广东大湾区卫视</li>
-      <li>广东卫视</li>
-      <li>广西卫视</li>
-      <li>贵州卫视</li>
-      <li>海南卫视</li>
-      <li>河北卫视</li>
-      <li>河南卫视</li>
-      <li>黑龙江卫视</li>
-      <li>湖北卫视</li>
-      <li>湖南卫视</li>
-      <li>吉林卫视</li>
-      <li>吉林延边卫视</li>
-      <li>江苏卫视</li>
-      <li>江西卫视</li>
-      <li>辽宁卫视</li>
-      <li>内蒙古卫视</li>
-      <li>宁夏卫视</li>
-      <li>青海安多卫视</li>
-      <li>青海卫视</li>
-      <li>三沙卫视</li>
-      <li>厦门卫视</li>
-      <li>山东教育卫视</li>
-      <li>山东卫视</li>
-      <li>山西卫视</li>
-      <li>陕西农林卫视</li>
-      <li>陕西卫视</li>
-      <li>深圳卫视</li>
-      <li>四川康巴卫视</li>
-      <li>四川卫视</li>
-      <li>天津卫视</li>
-      <li>西藏藏语卫视</li>
-      <li>西藏卫视</li>
-      <li>新疆卫视</li>
-      <li>云南卫视</li>
-      <li>浙江卫视</li>
-      <li>重庆卫视</li>
-    </ol>
-<h2>影视频道：</h2>
-    <ol>
-      <li>贝贝影视</li>
-      <li>避风港影院</li>
-      <li>刀刀影院</li>
-      <li>斗鱼电视剧10</li>
-      <li>斗鱼电视剧11</li>
-      <li>斗鱼电视剧13</li>
-      <li>斗鱼电视剧14</li>
-      <li>斗鱼电视剧15</li>
-      <li>斗鱼电视剧6</li>
-      <li>斗鱼电视剧HD1</li>
-      <li>斗鱼电视剧HD2</li>
-      <li>斗鱼电视剧HD3</li>
-      <li>斗鱼电视剧HD4</li>
-      <li>斗鱼电视剧HD5</li>
-      <li>斗鱼电影06</li>
-      <li>斗鱼电影08</li>
-      <li>斗鱼电影122</li>
-      <li>斗鱼电影13</li>
-      <li>斗鱼电影134</li>
-      <li>斗鱼电影137</li>
-      <li>斗鱼电影15</li>
-      <li>斗鱼电影16</li>
-      <li>斗鱼电影165</li>
-      <li>斗鱼电影2</li>
-      <li>斗鱼电影21</li>
-      <li>斗鱼电影3</li>
-      <li>斗鱼电影4</li>
-      <li>斗鱼电影5</li>
-      <li>斗鱼电影7</li>
-      <li>斗鱼电影9</li>
-      <li>斗鱼电影92</li>
-      <li>斗鱼电影HD10</li>
-      <li>斗鱼电影HD12</li>
-      <li>斗鱼电影HD14</li>
-      <li>斗鱼电影HD17</li>
-      <li>斗鱼电影HD19</li>
-      <li>斗鱼电影HD2</li>
-      <li>斗鱼电影HD21</li>
-      <li>斗鱼电影HD24</li>
-      <li>斗鱼电影HD25</li>
-      <li>斗鱼电影HD27</li>
-      <li>斗鱼电影HD3</li>
-      <li>斗鱼电影HD5</li>
-      <li>斗鱼电影HD6</li>
-      <li>斗鱼电影HD7</li>
-      <li>斗鱼电影-LIZ陪看</li>
-      <li>斗鱼电影-邦德影院</li>
-      <li>斗鱼电影-贝贝影院</li>
-      <li>斗鱼电影-贝爷影院</li>
-      <li>斗鱼电影-避风港影院</li>
-      <li>斗鱼电影-国产青春</li>
-      <li>斗鱼电影-科幻系列</li>
-      <li>斗鱼电影-恐怖电影</li>
-      <li>斗鱼电影-恐怖故事</li>
-      <li>斗鱼电影-凌儿影院</li>
-      <li>斗鱼电影-邵氏影院</li>
-      <li>斗鱼电影-桃花影院</li>
-      <li>斗鱼电影-特辑影院</li>
-      <li>斗鱼电影-网神影厅</li>
-      <li>斗鱼电影-午夜故事</li>
-      <li>斗鱼电影-怡寳影院</li>
-      <li>斗鱼电影-粤语综艺</li>
-      <li>斗鱼动漫1</li>
-      <li>斗鱼动漫3</li>
-      <li>斗鱼搞笑HD1</li>
-      <li>斗鱼搞笑HD4</li>
-      <li>斗鱼歌舞HD1</li>
-      <li>斗鱼科普HD2</li>
-      <li>斗鱼连续剧-老三国</li>
-      <li>斗鱼连续剧-庆余年 3</li>
-      <li>斗鱼美食HD1</li>
-      <li>斗鱼美食HD2</li>
-      <li>斗鱼音乐-韩国女团</li>
-      <li>斗鱼音乐华语点歌台</li>
-      <li>斗鱼音乐-秋月剪水</li>
-      <li>斗鱼影评01</li>
-      <li>斗鱼影评02</li>
-      <li>斗鱼影评03</li>
-      <li>斗鱼影评05</li>
-      <li>斗鱼影评06</li>
-      <li>斗鱼影评07</li>
-      <li>斗鱼影评09</li>
-      <li>金马影院</li>
-      <li>酒染影视</li>
-      <li>开心影院</li>
-      <li>科幻影视</li>
-      <li>可乐影视</li>
-      <li>凌儿影院</li>
-      <li>漫威影院</li>
-      <li>米娜影视</li>
-      <li>芊珏影视</li>
-      <li>邵氏影院</li>
-      <li>特辑电影院</li>
-      <li>舔狗波比的幸福生活</li>
-      <li>幸福影视</li>
-      <li>怡宝影院</li>
-      <li>圆子影视</li>
-      <li>云宝影院</li>
-    </ol>
-<h2>地方频道：</h2>
-    <ol>
-      <li>安徽|安徽公共</li>
-      <li>安徽|安徽经济生活</li>
-      <li>安徽|安徽影视</li>
-      <li>安徽|滁州新闻综合</li>
-      <li>安徽|东至新闻综合</li>
-      <li>安徽|固镇综合</li>
-      <li>安徽|经济生活</li>
-      <li>安徽|灵璧综合</li>
-      <li>安徽|农业科教</li>
-      <li>安徽|歙县综合</li>
-      <li>安徽|宿州公共</li>
-      <li>安徽|宿州科教</li>
-      <li>安徽|宿州新闻综合</li>
-      <li>北京|北京卫视</li>
-      <li>北京|黑莓电影</li>
-      <li>北京|黑莓动画</li>
-      <li>北京|纪实科教</li>
-      <li>北京|卡酷少儿</li>
-      <li>北京|弈坛春秋</li>
-      <li>福建|建宁综合</li>
-      <li>福建|三明-1</li>
-      <li>福建|三明公共</li>
-      <li>福建|三明新闻综合</li>
-      <li>福建|云霄综合</li>
-      <li>福建|漳浦综合</li>
-      <li>福建|漳州新闻综合</li>
-      <li>甘肃|白银公共</li>
-      <li>甘肃|白银综合</li>
-      <li>甘肃|甘肃都市</li>
-      <li>甘肃|甘肃公共应急</li>
-      <li>甘肃|甘肃经济</li>
-      <li>甘肃|甘肃少儿</li>
-      <li>甘肃|甘肃文化影视</li>
-      <li>甘肃|崆峒综合</li>
-      <li>甘肃|兰州新闻综合</li>
-      <li>广东|潮安综合</li>
-      <li>广东|番禺综合</li>
-      <li>广东|广东少儿</li>
-      <li>广东|广宁综合</li>
-      <li>广东|河源公共</li>
-      <li>广东|河源综合</li>
-      <li>广东|化州综合</li>
-      <li>广东|怀集综合</li>
-      <li>广东|惠东综合</li>
-      <li>广东|嘉佳卡通</li>
-      <li>广东|经济科教</li>
-      <li>广东|开平生活</li>
-      <li>广东|开平综合</li>
-      <li>广东|清新综合</li>
-      <li>广东|韶关综合</li>
-      <li>广东|深圳都市</li>
-      <li>广东|吴川综合</li>
-      <li>广东|新会综合</li>
-      <li>广东|信宜综合</li>
-      <li>广东|阳春综合</li>
-      <li>广东|阳江公共</li>
-      <li>广东|阳江综合</li>
-      <li>广东|阳西综合</li>
-      <li>广东|英德新闻综合</li>
-      <li>广东|肇庆生活</li>
-      <li>广东|肇庆综合</li>
-      <li>广西|贺州综合</li>
-      <li>海南|海南少儿</li>
-      <li>海南|新海南</li>
-      <li>韩国|EBS少儿</li>
-      <li>韩国|MBC综合</li>
-      <li>河北|霸州少儿</li>
-      <li>河北|保定公共</li>
-      <li>河北|保定生活</li>
-      <li>河北|昌黎综合</li>
-      <li>河北|承德新闻综合</li>
-      <li>河北|定州国学影视</li>
-      <li>河北|定州生活</li>
-      <li>河北|定州新闻综合</li>
-      <li>河北|丰宁综合</li>
-      <li>河北|邯郸公共</li>
-      <li>河北|邯郸科技教育</li>
-      <li>河北|邯郸新闻综合</li>
-      <li>河北|河北都市</li>
-      <li>河北|荆门教育</li>
-      <li>河北|鹿泉综合</li>
-      <li>河北|平泉影视</li>
-      <li>河北|平泉综合</li>
-      <li>河北|清河经济综艺</li>
-      <li>河北|清河新闻综合</li>
-      <li>河北|任丘综合</li>
-      <li>河北|石家庄都市</li>
-      <li>河北|石家庄生活</li>
-      <li>河北|石家庄新闻综合</li>
-      <li>河北|石家庄娱乐</li>
-      <li>河北|望都综合</li>
-      <li>河北|武汉教育</li>
-      <li>河北|武汉生活</li>
-      <li>河北|武汉新闻综合</li>
-      <li>河南|宝丰综合</li>
-      <li>河南|登封综合</li>
-      <li>河南|方城一套</li>
-      <li>河南|封丘新闻综合</li>
-      <li>河南|扶沟综合</li>
-      <li>河南|巩义新闻综合</li>
-      <li>河南|固始综合</li>
-      <li>河南|光山综合</li>
-      <li>河南|鹤岗新闻综合</li>
-      <li>河南|滑县新闻</li>
-      <li>河南|潢川综合</li>
-      <li>河南|辉县新闻综合</li>
-      <li>河南|获嘉综合</li>
-      <li>河南|济源电视</li>
-      <li>河南|郏县综合</li>
-      <li>河南|焦作公共</li>
-      <li>河南|焦作教育</li>
-      <li>河南|焦作综合</li>
-      <li>河南|睛彩焦作</li>
-      <li>河南|开封文化旅游</li>
-      <li>河南|开封新闻综合</li>
-      <li>河南|兰考新闻</li>
-      <li>河南|林州综合</li>
-      <li>河南|临颍综合</li>
-      <li>河南|灵宝新闻综合</li>
-      <li>河南|鲁山综合</li>
-      <li>河南|鹿邑新闻</li>
-      <li>河南|罗山综合</li>
-      <li>河南|洛阳都市</li>
-      <li>河南|孟津新闻</li>
-      <li>河南|孟州综合</li>
-      <li>河南|泌阳新闻综合</li>
-      <li>河南|渑池新闻综合</li>
-      <li>河南|南乐综合</li>
-      <li>河南|内黄综合</li>
-      <li>河南|平舆综合</li>
-      <li>河南|淇县电视台</li>
-      <li>河南|杞县新闻综合</li>
-      <li>河南|沁阳新闻综合</li>
-      <li>河南|商城新闻</li>
-      <li>河南|上蔡综合</li>
-      <li>河南|嵩县综合新闻</li>
-      <li>河南|遂平一套</li>
-      <li>河南|太康综合</li>
-      <li>河南|汤阴综合</li>
-      <li>河南|唐河一套</li>
-      <li>河南|通许综合</li>
-      <li>河南|桐柏新闻综合</li>
-      <li>河南|卫辉综合</li>
-      <li>河南|尉氏综合</li>
-      <li>河南|温县综合</li>
-      <li>河南|舞钢新闻综合</li>
-      <li>河南|舞阳新闻综合</li>
-      <li>河南|西华综合</li>
-      <li>河南|西平综合</li>
-      <li>河南|淅川综合</li>
-      <li>河南|襄城综合</li>
-      <li>河南|项城新闻</li>
-      <li>河南|新安新闻综合</li>
-      <li>河南|新蔡综合</li>
-      <li>河南|新县综合</li>
-      <li>河南|新乡县电视</li>
-      <li>河南|新野综合</li>
-      <li>河南|新郑综合</li>
-      <li>河南|荥阳综合</li>
-      <li>河南|鄢陵综合</li>
-      <li>河南|延津综合</li>
-      <li>河南|叶县</li>
-      <li>河南|宜阳综合</li>
-      <li>河南|义马新闻综合</li>
-      <li>河南|永城新闻</li>
-      <li>河南|禹州公共</li>
-      <li>河南|禹州综合</li>
-      <li>河南|原阳新闻综合</li>
-      <li>河南|镇平新闻综合</li>
-      <li>黑龙江|富裕综合</li>
-      <li>黑龙江|哈尔滨生活</li>
-      <li>黑龙江|哈尔滨新闻综合</li>
-      <li>黑龙江|哈尔滨影视</li>
-      <li>黑龙江|哈尔滨娱乐</li>
-      <li>黑龙江|黑龙江都市</li>
-      <li>黑龙江|黑龙江农业科教</li>
-      <li>黑龙江|黑龙江少儿</li>
-      <li>黑龙江|黑龙江文体</li>
-      <li>黑龙江|黑龙江新闻法治</li>
-      <li>黑龙江|黑龙江影视</li>
-      <li>黑龙江|佳木斯新闻综合</li>
-      <li>湖北|崇阳综合</li>
-      <li>湖北|荆门新闻综合</li>
-      <li>湖北|麻城综合</li>
-      <li>湖北|郧阳新闻综合</li>
-      <li>湖南|金鹰纪实</li>
-      <li>湖南|金鹰卡通</li>
-      <li>湖南|快乐垂钓</li>
-      <li>湖南|湘潭新闻综合</li>
-      <li>湖南|湘潭综合</li>
-      <li>华数|4KUHD</li>
-      <li>华数|哒啵电竞</li>
-      <li>华数|哒啵赛事</li>
-      <li>华数|华数4K</li>
-      <li>华数|精彩影视</li>
-      <li>华数|精彩综艺</li>
-      <li>华数|漫游世界</li>
-      <li>华数|求索动物</li>
-      <li>华数|求索纪录</li>
-      <li>华数|求索科学</li>
-      <li>华数|求索生活</li>
-      <li>华数|台球</li>
-      <li>华数|探索纪录</li>
-      <li>华数|信号测试</li>
-      <li>华数|中华美食</li>
-      <li>吉林|德惠综合</li>
-      <li>吉林|东丰综合</li>
-      <li>吉林|桦甸综合</li>
-      <li>吉林|珲春新闻综合</li>
-      <li>吉林|辉南新闻综合</li>
-      <li>吉林|吉林公共</li>
-      <li>吉林|吉林公共新闻</li>
-      <li>吉林|江源综合</li>
-      <li>吉林|靖宇综合</li>
-      <li>吉林|九台综合</li>
-      <li>吉林|柳河综合</li>
-      <li>吉林|龙井综合</li>
-      <li>吉林|盘石综合</li>
-      <li>吉林|舒兰新闻综合</li>
-      <li>吉林|双辽综合</li>
-      <li>吉林|双阳综合</li>
-      <li>吉林|松原新闻综合</li>
-      <li>吉林|通化县综合</li>
-      <li>吉林|汪清综合</li>
-      <li>吉林|延边朝鲜语综合</li>
-      <li>吉林|延边汉语综合</li>
-      <li>吉林|永吉综合</li>
-      <li>江苏|8K测试</li>
-      <li>江苏|宝应生活资讯</li>
-      <li>江苏|宝应新闻综合</li>
-      <li>江苏|宝应综合</li>
-      <li>江苏|滨海新闻综合</li>
-      <li>江苏|滨海影视</li>
-      <li>江苏|财富天下</li>
-      <li>江苏|常熟民生经济</li>
-      <li>江苏|常熟综合</li>
-      <li>江苏|常州都市</li>
-      <li>江苏|常州公共</li>
-      <li>江苏|常州生活</li>
-      <li>江苏|常州新闻综合</li>
-      <li>江苏|东海综合</li>
-      <li>江苏|赣榆</li>
-      <li>江苏|淮安公共</li>
-      <li>江苏|淮安新闻综合</li>
-      <li>江苏|贾汪旅游</li>
-      <li>江苏|贾汪新闻</li>
-      <li>江苏|江苏城市</li>
-      <li>江苏|江苏公共新闻</li>
-      <li>江苏|江苏教育</li>
-      <li>江苏|江苏体育休闲</li>
-      <li>江苏|江苏影视</li>
-      <li>江苏|江苏综艺</li>
-      <li>江苏|江阴新闻综合</li>
-      <li>江苏|京视剧场</li>
-      <li>江苏|靖江新闻综合</li>
-      <li>江苏|句容生活</li>
-      <li>江苏|句容新闻综合</li>
-      <li>江苏|句容影视</li>
-      <li>江苏|句容影院</li>
-      <li>江苏|连云港公共</li>
-      <li>江苏|连云港新闻综合</li>
-      <li>江苏|连云港综合</li>
-      <li>江苏|南京科技</li>
-      <li>江苏|南京少儿</li>
-      <li>江苏|南京生活</li>
-      <li>江苏|南京十八</li>
-      <li>江苏|南京新闻综合</li>
-      <li>江苏|南京信息</li>
-      <li>江苏|南京影视</li>
-      <li>江苏|南京娱乐</li>
-      <li>江苏|南京综合</li>
-      <li>江苏|南通2</li>
-      <li>江苏|南通3</li>
-      <li>江苏|沛县经济生活</li>
-      <li>江苏|沛县文化影视</li>
-      <li>江苏|沛县新闻综合</li>
-      <li>江苏|邳州综合</li>
-      <li>江苏|苏州社会经济</li>
-      <li>江苏|苏州生活资讯</li>
-      <li>江苏|苏州文化生活</li>
-      <li>江苏|苏州新闻综合</li>
-      <li>江苏|宿迁公共</li>
-      <li>江苏|宿迁综合</li>
-      <li>江苏|睢宁三农</li>
-      <li>江苏|睢宁生活教育</li>
-      <li>江苏|睢宁资讯</li>
-      <li>江苏|睢宁综合</li>
-      <li>江苏|泰州1</li>
-      <li>江苏|泰州2</li>
-      <li>江苏|泰州3</li>
-      <li>江苏|铜山1</li>
-      <li>江苏|铜山2</li>
-      <li>江苏|铜山综合</li>
-      <li>江苏|无锡新闻综合</li>
-      <li>江苏|武进生活</li>
-      <li>江苏|新沂1</li>
-      <li>江苏|新沂2</li>
-      <li>江苏|徐州1</li>
-      <li>江苏|徐州2</li>
-      <li>江苏|徐州3</li>
-      <li>江苏|徐州4</li>
-      <li>江苏|徐州公共</li>
-      <li>江苏|徐州经济生活</li>
-      <li>江苏|徐州文艺影视</li>
-      <li>江苏|徐州新闻综合</li>
-      <li>江苏|盐城1</li>
-      <li>江苏|盐城2</li>
-      <li>江苏|盐城3</li>
-      <li>江苏|扬州1</li>
-      <li>江苏|扬州2</li>
-      <li>江苏|扬州3</li>
-      <li>江苏|阳湖综合</li>
-      <li>江苏|优漫卡通</li>
-      <li>江苏|张家港综合</li>
-      <li>江苏|镇江2</li>
-      <li>江苏|镇江3</li>
-      <li>江苏|镇江新闻综合</li>
-      <li>江西|赣州公共</li>
-      <li>江西|赣州教育</li>
-      <li>江西|赣州新闻</li>
-      <li>江西|南昌文旅</li>
-      <li>江西|南昌新闻综合</li>
-      <li>江西|南昌资讯</li>
-      <li>江西|万载综合</li>
-      <li>辽宁|家庭理财</li>
-      <li>咪咕|咪咕篮球</li>
-      <li>咪咕|咪咕足球</li>
-      <li>咪咕|全民热练</li>
-      <li>内蒙古|鄂尔多斯经济服务</li>
-      <li>内蒙古|鄂尔多斯蒙语综合</li>
-      <li>内蒙古|鄂尔多斯新闻综合</li>
-      <li>内蒙古|元宝山综合</li>
-      <li>宁夏|吴忠公共</li>
-      <li>宁夏|吴忠综合</li>
-      <li>青海|贵南综合</li>
-      <li>青海|化隆综合</li>
-      <li>青海|门源综合</li>
-      <li>青海|民和综合</li>
-      <li>青海|青海都市</li>
-      <li>青海|青海综合</li>
-      <li>青海|长宁综合</li>
-      <li>山东|菏泽经济生活</li>
-      <li>山东|济宁公共</li>
-      <li>山东|济宁生活</li>
-      <li>山东|青州综合</li>
-      <li>山东|山东教育</li>
-      <li>山东|新泰乡村</li>
-      <li>山东|新泰综合</li>
-      <li>山东|烟台公共</li>
-      <li>山东|烟台经济科技</li>
-      <li>山东|烟台新闻综合</li>
-      <li>山东|烟台影视</li>
-      <li>山东|枣庄公共</li>
-      <li>山东|枣庄经济生活</li>
-      <li>山东|枣庄新闻综合</li>
-      <li>山西|定襄综合</li>
-      <li>山西|汾西综合</li>
-      <li>山西|高平综合</li>
-      <li>山西|古县综合</li>
-      <li>山西|吉县新闻综合</li>
-      <li>山西|晋中公共</li>
-      <li>山西|晋中综合</li>
-      <li>山西|灵石新闻综合</li>
-      <li>山西|潞城电视台</li>
-      <li>山西|山西经济</li>
-      <li>山西|山西影视</li>
-      <li>山西|太原教育台</li>
-      <li>山西|太原经济生活</li>
-      <li>山西|太原新闻综合</li>
-      <li>山西|闻喜综合</li>
-      <li>山西|五台综合</li>
-      <li>山西|武乡新闻综合</li>
-      <li>山西|襄汾综合</li>
-      <li>山西|阳曲综合</li>
-      <li>山西|阳泉科教</li>
-      <li>山西|阳泉新闻综合</li>
-      <li>山西|翼城综合</li>
-      <li>山西|原平综合</li>
-      <li>陕西|安康-1</li>
-      <li>陕西|宝鸡公共</li>
-      <li>陕西|宝鸡综合</li>
-      <li>陕西|城固</li>
-      <li>陕西|都市青春</li>
-      <li>陕西|佛坪综合</li>
-      <li>陕西|汉中公共</li>
-      <li>陕西|汉中教育</li>
-      <li>陕西|汉中综合</li>
-      <li>陕西|略阳综合</li>
-      <li>陕西|宁强综合</li>
-      <li>陕西|宁武综合</li>
-      <li>陕西|山西公共</li>
-      <li>陕西|陕西都市青春</li>
-      <li>陕西|陕西公共</li>
-      <li>陕西|陕西生活</li>
-      <li>陕西|陕西体育休闲</li>
-      <li>陕西|陕西西部电影</li>
-      <li>陕西|陕西新闻资讯</li>
-      <li>陕西|陕西影视</li>
-      <li>陕西|商洛综合</li>
-      <li>陕西|铜川公共</li>
-      <li>陕西|铜川综合</li>
-      <li>陕西|渭南新闻综合</li>
-      <li>陕西|西安都市</li>
-      <li>陕西|西安教育</li>
-      <li>陕西|西安商务资讯</li>
-      <li>陕西|西安丝路</li>
-      <li>陕西|西安新闻</li>
-      <li>陕西|西安新闻综合</li>
-      <li>陕西|西安影视</li>
-      <li>陕西|西部电影</li>
-      <li>陕西|西乡融媒</li>
-      <li>陕西|咸阳综合</li>
-      <li>陕西|延安公共</li>
-      <li>陕西|延安综合</li>
-      <li>陕西|榆林综合</li>
-      <li>陕西|镇巴电视台</li>
-      <li>上海|ICS外语</li>
-      <li>上海|第一财经</li>
-      <li>上海|东方财经</li>
-      <li>上海|东方影视</li>
-      <li>上海|哈哈炫动</li>
-      <li>上海|纪实人文</li>
-      <li>上海|上海都市</li>
-      <li>上海|上海教育</li>
-      <li>上海|五星体育</li>
-      <li>上海|新闻综合</li>
-      <li>上海|炫动3D电影</li>
-      <li>四川|巴适旅途</li>
-      <li>四川|成都公共</li>
-      <li>四川|成都经济</li>
-      <li>四川|成都少儿</li>
-      <li>四川|成都新闻综合</li>
-      <li>四川|成都影视</li>
-      <li>四川|达州公共</li>
-      <li>四川|达州新闻综合</li>
-      <li>四川|德格综合</li>
-      <li>四川|德阳科教</li>
-      <li>四川|德阳新闻综合</li>
-      <li>四川|甘孜综合</li>
-      <li>四川|广安公共</li>
-      <li>四川|汉源综合</li>
-      <li>四川|黑水新闻综合</li>
-      <li>四川|洪雅新闻综合</li>
-      <li>四川|会东综合</li>
-      <li>四川|江津新闻综合</li>
-      <li>四川|金川新闻综合</li>
-      <li>四川|康定新闻综合</li>
-      <li>四川|乐山公共</li>
-      <li>四川|乐山新闻综合</li>
-      <li>四川|乐至综合</li>
-      <li>四川|利州综合</li>
-      <li>四川|凉山新闻综合</li>
-      <li>四川|泸县新闻综合</li>
-      <li>四川|泸州科教</li>
-      <li>四川|泸州新闻综合</li>
-      <li>四川|泸州综合</li>
-      <li>四川|马尔康综合</li>
-      <li>四川|南部新闻综合</li>
-      <li>四川|攀枝花公共</li>
-      <li>四川|蓬安新闻综合</li>
-      <li>四川|青神综合</li>
-      <li>四川|渠县新闻综合</li>
-      <li>四川|双流综合</li>
-      <li>四川|松潘新闻综合</li>
-      <li>四川|万源新闻综合</li>
-      <li>四川|威远新闻综合</li>
-      <li>四川|汶川新闻综合</li>
-      <li>四川|巫山综合</li>
-      <li>四川|小金综合</li>
-      <li>四川|新闻综合</li>
-      <li>四川|叙州新闻综合</li>
-      <li>四川|长宁综合</li>
-      <li>四川|忠县综合</li>
-      <li>四川|自贡文化生活</li>
-      <li>四川|自贡综合</li>
-      <li>新疆|兵团八师石河子新闻综合</li>
-      <li>新疆|兵团十三师新星综合</li>
-      <li>新疆|兵团四师可克达拉综合</li>
-      <li>新疆|兵团五师双河新闻综合</li>
-      <li>新疆|霍尔果斯综合</li>
-      <li>新疆|可克达拉综合</li>
-      <li>新疆|克拉玛依汉语综合</li>
-      <li>新疆|克拉玛依影视</li>
-      <li>新疆|奎屯汉语综合</li>
-      <li>新疆|伊犁经济法制</li>
-      <li>云南|红河综合台</li>
-      <li>云南|丘北新闻综合</li>
-      <li>云南|文山州新闻综合</li>
-      <li>云南|文山综合</li>
-      <li>云南|西双版纳公共</li>
-      <li>云南|西双版纳综合</li>
-      <li>云南|新平综合</li>
-      <li>云南|云南少儿</li>
-      <li>浙江|洞头综合</li>
-      <li>浙江|海宁新闻综合</li>
-      <li>浙江|杭州萧山综合</li>
-      <li>浙江|杭州余杭综合</li>
-      <li>浙江|金华东阳综合</li>
-      <li>浙江|金华兰溪综合</li>
-      <li>浙江|金华武义综合</li>
-      <li>浙江|晋城公共</li>
-      <li>浙江|缙云综合</li>
-      <li>浙江|开化新闻综合</li>
-      <li>浙江|兰溪新闻综合</li>
-      <li>浙江|丽水龙泉综合</li>
-      <li>浙江|丽水青田综合</li>
-      <li>浙江|丽水庆元综合</li>
-      <li>浙江|丽水松阳综合</li>
-      <li>浙江|丽水云和综合</li>
-      <li>浙江|龙泉新闻综合</li>
-      <li>浙江|龙游生活娱乐</li>
-      <li>浙江|龙游新闻综合</li>
-      <li>浙江|宁波象山综合</li>
-      <li>浙江|宁波余姚生活</li>
-      <li>浙江|平湖新闻综合</li>
-      <li>浙江|普陀新闻综合</li>
-      <li>浙江|庆元综合</li>
-      <li>浙江|衢江新闻综合</li>
-      <li>浙江|衢州龙游生活</li>
-      <li>浙江|衢州龙游综合</li>
-      <li>浙江|上虞1新闻综合</li>
-      <li>浙江|上虞新闻综合</li>
-      <li>浙江|绍兴公共</li>
-      <li>浙江|绍兴文化影视</li>
-      <li>浙江|绍兴新闻综合</li>
-      <li>浙江|嵊州新闻综合</li>
-      <li>浙江|嵊州综合</li>
-      <li>浙江|遂昌综合</li>
-      <li>浙江|文成综合</li>
-      <li>浙江|武义新闻综合</li>
-      <li>浙江|象山新闻综合</li>
-      <li>浙江|萧山新闻综合</li>
-      <li>浙江|姚江文化</li>
-      <li>浙江|姚江新闻综合</li>
-      <li>浙江|义乌新闻综合</li>
-      <li>浙江|永嘉新闻综合</li>
-      <li>浙江|余杭综合</li>
-      <li>浙江|余姚新闻综合</li>
-      <li>浙江|云和新闻综合</li>
-      <li>浙江|浙江公共新闻</li>
-      <li>浙江|浙江教科影视</li>
-      <li>浙江|浙江经济生活</li>
-      <li>浙江|浙江少儿</li>
-      <li>浙江|诸暨新闻综合</li>
-      <li>重庆|北碚综合</li>
-      <li>重庆|大足综合</li>
-      <li>重庆|江津新闻综合</li>
-      <li>重庆|梁平综合</li>
-      <li>重庆|荣昌综合</li>
-      <li>重庆|铜梁综合</li>
-      <li>重庆|万州综合</li>
-      <li>重庆|武隆综合</li>
-      <li>重庆|永川综合</li>
-      <li>重庆|酉阳综合</li>
-    </ol>
-<h2>系列频道：</h2>
-    <ol>
-      <li>NewTV超级电视剧</li>
-      <li>NewTV超级电影</li>
-      <li>NewTV超级体育</li>
-      <li>NewTV超级综艺</li>
-      <li>NewTV潮妈辣婆</li>
-      <li>NewTV东北剧场</li>
-      <li>NewTV东北热剧</li>
-      <li>NewTV动作电影</li>
-      <li>NewTV高清娱乐</li>
-      <li>NewTV古装剧场</li>
-      <li>NewTV欢乐剧场</li>
-      <li>NewTV家庭剧场</li>
-      <li>NewTV金牌综艺</li>
-      <li>NewTV惊悚悬疑</li>
-      <li>NewTV精彩体育</li>
-      <li>NewTV精品大剧</li>
-      <li>NewTV精品纪录</li>
-      <li>NewTV精品萌宠</li>
-      <li>NewTV精品体育</li>
-      <li>NewTV精品综合</li>
-      <li>NewTV军旅剧场</li>
-      <li>NewTV军事评论</li>
-      <li>NewTV魅力潇湘</li>
-      <li>NewTV明星大片</li>
-      <li>NewTV农业致富</li>
-      <li>NewTV少儿动漫</li>
-      <li>NewTV武博世界</li>
-      <li>NewTV炫舞未来</li>
-      <li>NewTV怡伴健康</li>
-      <li>NewTV中国功夫</li>
-      <li>IHOT爱电竞</li>
-      <li>IHOT爱谍战</li>
-      <li>IHOT爱动漫</li>
-      <li>IHOT爱怀旧</li>
-      <li>IHOT爱经典</li>
-      <li>IHOT爱科幻</li>
-      <li>IHOT爱科学</li>
-      <li>IHOT爱浪漫</li>
-      <li>IHOT爱历史</li>
-      <li>IHOT爱旅行</li>
-      <li>IHOT爱奇谈</li>
-      <li>IHOT爱青春</li>
-      <li>IHOT爱情喜剧</li>
-      <li>IHOT爱赛车</li>
-      <li>IHOT爱体育</li>
-      <li>IHOT爱玩具</li>
-      <li>IHOT爱喜剧</li>
-      <li>IHOT爱悬疑</li>
-      <li>IHOT爱幼教</li>
-      <li>IHOT爱院线</li>
-      <li>HOT风尚音乐</li>
-      <li>HOT精品剧场</li>
-      <li>HOT欧美影院</li>
-      <li>HOT亚洲影院</li>
-      <li>SITV动漫秀场</li>
-      <li>SITV都市剧场</li>
-      <li>SITV法治天地</li>
-      <li>SITV欢笑剧场</li>
-      <li>SITV金色学堂</li>
-      <li>SITV乐游</li>
-      <li>SITV魅力足球</li>
-      <li>SITV七彩戏剧</li>
-      <li>SITV生活时尚</li>
-      <li>SITV游戏风云</li>
-    </ol>
-  </section>
-      <h2>联系方式：</h2>
-  <ul>
-    <li>手机/微信：18507078300</li>
-    <li><a href="https://www.douyin.com/user/MS4wLjABAAAAb_bPN4494lU_C2r03qXgxF7mx3XOLt6sSJXLetr0s_UD7PA4A4UZOpZ1EbXv4pc9?vid=7315600540388363572" target="_blank" rel="noopener">抖音@眼镜李哥</a></p></li>
-  </ul>
+  <div id="default-editor-page__placeholder" class="panel">
+    <link rel="stylesheet" href="https://coscdn.htmlpage.cn/vip-tpl/assets/css/plugins.css"/>
+    <link rel="stylesheet" href="https://coscdn.htmlpage.cn/vip-tpl/assets/css/style.css"/>
+    <section class="wrapper bg-gradient-primary">
+      <div class="container py-18 pt-md-14 pb-md-14">
+        <div class="row text-center">
+          <div class="col-lg-9 col-xxl-7 mx-auto">
+            <h2 class="display-1 mb-4">抖音@电视全频道-倾情分享
+              <br/>IPTV电视直播源
+            </h2>
+            <p class="lead fs-24 lh-sm px-md-5 px-xl-15 px-xxl-10 mb-7">所有的电视直播APP，都是壳子，最重要的是直播源
+              <br/>直播源一断，任何电视无法播放
+              <br/>从此刻开始，你的电视你作主
+            </p>
+          </div>
+          <!-- /column -->
+        </div>
+        <!-- /.row -->
+        <div class="d-flex justify-content-center">
+          <span><a href="https://appzy.lanzouw.com/ijgWi1amk00j" class="btn btn-lg btn-primary rounded-pill mx-1">马上下载app</a></span>
+          <span><a href="https://htmlpage.cn/contact" class="btn btn-lg btn-outline-primary rounded-pill mx-1">使用说明</a></span>
+        </div>
+        <!-- /div -->
+        <div class="row mt-10">
+          <div class="col-lg-8 mx-auto">
+            <figure>
+              <img src="https://coscdn.htmlpage.cn/sandbox/assets/img/illustrations/i12.png" alt="" class="img-fluid"/>
+              <img src="https://coscdn.htmlpage.cn/sandbox/assets/img/illustrations/i12.png" alt="" class="img-fluid"/>
+            </figure>
+          </div>
+          <!-- /column -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container -->
+    </section>
+    <section class="wrapper bg-gradient-primary">
+      <div class="container pt-14 pb-8">
+        <div class="row text-center">
+          <div class="col-lg-9 col-xxl-7 mx-auto">
+            <h2 class="display-1 mb-4">扫描二维码加入交流群
+            </h2>
+            <p class="lead fs-24 lh-sm px-md-5 px-xl-15 px-xxl-10 mb-7">使用过程中遇到问题，可以在群里求助
+            </p>
+          </div>
+          <!-- /column -->
+        </div>
+      </div>
+    </section>
+    <div class="wechat-group pb-12">
+      <img src="https://coscdn.htmlpage.cn/wechat/wechat-group-3.jpeg"/>
+    </div>
+    <div class="description">© 2023 Lapus. 版权所有
+    </div>
+  </div>
 </body>
-</html>
