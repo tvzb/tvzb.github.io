@@ -1,15 +1,13 @@
 Hilton公告,#genre#
-Hilton,http://1.62.64.252/1.v.smtcdns.net/qctv.fengshows.cn/live/0701pin72.flv#http://115.171.216.22:4000/udp/225.1.1.10:8128
-请勿购买,https://ldncctvwbndhwy.cntv.myhwcdn.cn/ldncctvwbnd/ldcctv1_2/index.m3u8#http://1.62.64.76/0b926d37065dc656266be75dd9d25565.v.smtcdns.net/tlive-test-cdn.ysp.cctv.cn/ysp/2022576803.m3u8#https://a.xttv.top/xttv/27f43e697655f4d44c62d7f4d32fcctv.m3u8?aliyun_uuid=b3b8e538-3470-4fa0-b6ed-2b138e5f5fef&auth_key=2145888000-0-0-fda7ddb73d3cb5ac5bddf4eeba9b665e#http://110.249.196.71/0b926d37065dc656266be75dd9d25565.v.smtcdns.net/zycfcdn.gdwlcloud.com/PLTV/88888888/224/3221225490/index.m3u8
-谨防受骗,http://liveop.cctv.cn:80/hls/CCTV28bee868714f04ea2af79947bb9b46fc3H/playlist.m3u8#https://cd-live-stream.news.cctvplus.com/live/smil:CHANNEL1.smil/playlist.m3u8
-如果付款,http://hls.szsummer.cn/live/446035/playlist.m3u8?k=32f9ec7c13e4b390289143a8e1b2a898&t=1840341130
-说明上当,http://43.138.170.29:35455/douyu/276200
-申请退款,http://diyp.112114.xyz/douyu/8770422
-把家里路由器,https://tc-tc2-interact.douyucdn2.cn/dyliveflv1a/122402rK7MO9bXSq_900.m3u8
-换成支持ipv6,http://mhq.yundown.cf/1905.php?id=1905b
-支持所有线路,http://mobilelive-ds.ysp.cctv.cn/ysp/2013693901.m3u8
-直播高清流畅,http://159.75.85.63:35455/douyu/74374
-更换享受超清,https://tc-tc2-interact.douyucdn2.cn/dyliveflv1/85894rmovieChow_900p.m3u8
+凤凰卫视,http://1.62.64.252/1.v.smtcdns.net/qctv.fengshows.cn/live/0701pin72.flv#http://115.171.216.22:4000/udp/225.1.1.10:8128
+CCTV-1,https://ldncctvwbndhwy.cntv.myhwcdn.cn/ldncctvwbnd/ldcctv1_2/index.m3u8#http://1.62.64.76/0b926d37065dc656266be75dd9d25565.v.smtcdns.net/tlive-test-cdn.ysp.cctv.cn/ysp/2022576803.m3u8#https://a.xttv.top/xttv/27f43e697655f4d44c62d7f4d32fcctv.m3u8?aliyun_uuid=b3b8e538-3470-4fa0-b6ed-2b138e5f5fef&auth_key=2145888000-0-0-fda7ddb73d3cb5ac5bddf4eeba9b665e#http://110.249.196.71/0b926d37065dc656266be75dd9d25565.v.smtcdns.net/zycfcdn.gdwlcloud.com/PLTV/88888888/224/3221225490/index.m3u8
+CCTV-2,http://liveop.cctv.cn:80/hls/CCTV28bee868714f04ea2af79947bb9b46fc3H/playlist.m3u8#https://cd-live-stream.news.cctvplus.com/live/smil:CHANNEL1.smil/playlist.m3u8
+轮播刘德华,http://43.138.170.29:35455/douyu/276200
+轮播美剧,http://diyp.112114.xyz/douyu/8770422
+周星驰,https://tc-tc2-interact.douyucdn2.cn/dyliveflv1a/122402rK7MO9bXSq_900.m3u8
+CCTV-6,http://mobilelive-ds.ysp.cctv.cn/ysp/2013693901.m3u8
+轮播喜剧,http://159.75.85.63:35455/douyu/74374
+轮播港片,https://tc-tc2-interact.douyucdn2.cn/dyliveflv1/85894rmovieChow_900p.m3u8
 
 中国港澳xing,#genre#
 
