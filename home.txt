@@ -833,8 +833,6 @@ CCTV-央视文化精品,http://113.24.136.240:8083/udp/239.1.1.91:8091
 电影轮播,#genre#
 神乐影院-1台,https://tc-tc2-interact.douyucdn2.cn/dyliveflv1/85894rmovieChow_900p.m3u8
 神乐影院-2台,https://tc-tc2-interact.douyucdn2.cn/dyliveflv1a/122402rK7MO9bXSq_900.m3u8
-林正英台,http://epg.112114.xyz/douyu/218859
-吃米滴虫,http://159.75.85.63:35455/douyu/315457
 冰冰经典,http://159.75.85.63:35455/douyu/74374
 星爷影院,http://159.75.85.63:35455/douyu/508118
 凌儿影院,http://159.75.85.63:35455/douyu/1377142
