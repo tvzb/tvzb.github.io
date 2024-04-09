@@ -818,17 +818,6 @@ CCTV-央视文化精品,http://113.24.136.240:8083/udp/239.1.1.91:8091
 爱动漫,http://171.212.212.47:8000/udp/239.93.42.23:5140
 爱动漫,http://171.213.37.127:4022/udp/239.93.42.23:5140
 
-电影点播,#genre#
-周处除三害,https://yzzy1.play-cdn20.com/20240301/18306_a4032b1d/index.m3u8
-蜘蛛侠-纵横宇宙,https://cdn18.yzzy-kb-cdn.com/20230807/3890_c802be56/index.m3u8
-蜘蛛侠-纵横宇宙,https://v9.dious.cc/20230808/vpXoCRIS/2000kb/hls/index.m3u8
-流浪地球1,https://vip.kuaikan-cdn3.com/20230331/mGNbHxSC/hls/index.m3u8
-流浪地球1,https://cdn17.yzzy-kb-cdn.com/20230721/11910_09310882/2000k/hls/index.m3u8
-流浪地球2,https://cdn16.yzzy-tv-cdn.com/20230414/7_d0737c10/2000k/hls/index.m3u8
-流浪地球2,https://v.gsuus.com/play/Le3Gjnre/index.m3u8
-蜘蛛侠-平行宇宙,https://s2.bfzycdn.com/video/zhizhuxiapingxingyuzhou/HD%E4%B8%AD%E5%AD%97/index.m3u8
-蜘蛛侠-平行宇宙,https://vip.kuaikan-cdn3.com/20230331/gW2Asq51/hls/index.m3u8
-
 小谢尔顿第一季,#genre#
 第01集,https://vip.kuaikan-play2.com/20230403/yenQC6YJ/index.m3u8
 第02集,https://vip.kuaikan-play2.com/20230403/8RFP7Uz0/index.m3u8
