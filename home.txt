@@ -822,6 +822,17 @@ CCTV-17,http://221.219.98.251:4022/rtp/239.3.1.151:8144
 青海卫视,http://221.219.98.251:4022/rtp/239.3.1.44:8184
 内蒙古卫视,http://221.219.98.251:4022/rtp/239.3.1.43:8176
 
+网络短剧,#genre#
+闪婚老伴是豪门1,https://vv.jisuzyv.com/play/penpVRlb/index.m3u8
+闪婚老伴是豪门1,https://v.gsuus.com/play/lejlVY5b/index.m3u8
+闪婚老伴是豪门1,https://play.hhuus.com/play/vbmoVq0e/index.m3u8
+闪婚老伴是豪门2,https://vv.jisuzyv.com/play/DdwB80Jb/index.m3u8
+闪婚老伴是豪门2,https://v.gsuus.com/play/mep06Z1e/index.m3u8
+闪婚老伴是豪门2,https://play.hhuus.com/play/9avA7QVe/index.m3u8
+闪婚老伴是豪门3,https://vv.jisuzyv.com/play/1aMpmJQe/index.m3u8
+闪婚老伴是豪门3,https://v.gsuus.com/play/RdGj7Ryb/index.m3u8
+闪婚老伴是豪门3,https://play.hhuus.com/play/wdLolvgb/index.m3u8
+
 电影轮播,#genre#
 神乐影院-1台,https://tc-tc2-interact.douyucdn2.cn/dyliveflv1/85894rmovieChow_900p.m3u8
 神乐影院-2台,https://tc-tc2-interact.douyucdn2.cn/dyliveflv1a/122402rK7MO9bXSq_900.m3u8
