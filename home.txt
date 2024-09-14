@@ -833,6 +833,26 @@ CCTV-17,http://221.219.98.251:4022/rtp/239.3.1.151:8144
 闪婚老伴是豪门3,https://v.gsuus.com/play/RdGj7Ryb/index.m3u8
 闪婚老伴是豪门3,https://play.hhuus.com/play/wdLolvgb/index.m3u8
 
+宫女扶摇录1,https://vv.jisuzyv.com/play/yb85o5jd/index.m3u8
+宫女扶摇录1,https://play.xluuss.com/play/7e55l5Ye/index.m3u8
+宫女扶摇录1,https://v.gsuus.com/play/Rb47k77a/index.m3u8
+宫女扶摇录2,https://vv.jisuzyv.com/play/1aKnY4xe/index.m3u8
+宫女扶摇录2,https://play.xluuss.com/play/oeE5Z4ge/index.m3u8
+宫女扶摇录2,https://v.gsuus.com/play/DbD5Y4Kd/index.m3u8
+宫女扶摇录3,https://vv.jisuzyv.com/play/qaQwN49d/index.m3u8
+宫女扶摇录3,https://play.xluuss.com/play/0dNqE4vb/index.m3u8
+宫女扶摇录3,https://v.gsuus.com/play/1aMpE4Ge/index.m3u8
+
+换亲1,https://vv.jisuzyv.com/play/mep0Z9Qe/index.m3u8
+换亲1,https://play.xluuss.com/play/vbmoq7Re/index.m3u8
+换亲1,https://v.gsuus.com/play/nelnRvjb/index.m3u8
+换亲2,https://vv.jisuzyv.com/play/lejlYAvb/index.m3u8
+换亲2,https://play.xluuss.com/play/9avAQm8e/index.m3u8
+换亲2,https://v.gsuus.com/play/Yerw2g2a/index.m3u8
+换亲3,https://vv.jisuzyv.com/play/9b65WmOa/index.m3u8
+换亲3,https://play.xluuss.com/play/Le356jAb/index.m3u8
+换亲3,https://v.gsuus.com/play/rb258gMa/index.m3u8
+
 电影轮播,#genre#
 神乐影院-1台,https://tc-tc2-interact.douyucdn2.cn/dyliveflv1/85894rmovieChow_900p.m3u8
 神乐影院-2台,https://tc-tc2-interact.douyucdn2.cn/dyliveflv1a/122402rK7MO9bXSq_900.m3u8
