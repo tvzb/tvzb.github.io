@@ -853,6 +853,27 @@ CCTV-17,http://221.219.98.251:4022/rtp/239.3.1.151:8144
 换亲3,https://play.xluuss.com/play/Le356jAb/index.m3u8
 换亲3,https://v.gsuus.com/play/rb258gMa/index.m3u8
 
+学生必看,#genre#
+放牛班的春天,https://v.gsuus.com/play/7e53ZZb2/index.m3u8
+放牛班的春天,https://vv.jisuzyv.com/play/Pe9X0rPd/index.m3u8
+放牛班的春天,https://m3u.nikanba.live/share/045fc3287611460e96b483318fb807cf.m3u8
+听见天堂,https://play.xluuss.com/play/Xe02m5bx/index.m3u8
+听见天堂,https://vv.jisuzyv.com/play/7axj3Nld/index.m3u8
+听见天堂,https://v.gsuus.com/play/Pe9pyJdL/index.m3u8
+怦然心动,https://vv.jisuzyv.com/play/xe77LvGe/index.m3u8
+怦然心动,https://v.gsuus.com/play/kaz6Q35a/index.m3u8
+怦然心动,https://vip.kuaikan-cdn3.com/20230409-1/pQpDSoIZ/hls/index.m3u8
+阿甘正传,https://vv.jisuzyv.com/play/QdJ2kp2d/index.m3u8
+阿甘正传,https://play.xluuss.com/play/nelYOBVa/index.m3u8
+阿甘正传,https://v.gsuus.com/play/mbkR5AKa/index.m3u8
+天堂电影院,https://vip.kuaikan-cdn3.com/20230424-187/FWO9zhrk/hls/index.m3u8
+天堂电影院,https://vv.jisuzyv.com/play/vbmX3VRa/index.m3u8
+天堂电影院,https://play.hhuus.com/play/nel63Ljb/index.m3u8
+动画-小王子,https://v3.dious.cc/20220402/D83wRHFI/2000kb/hls/index.m3u8
+动画-小王子,https://s7.fsvod1.com/20220708/qlNm94Y2/1200kb/hls/index.m3u8
+动画-小王子,https://v5.daayee.com/yyv5/202405/26/QwF1jnTrCR7/video/2000k_0X1080_64k_25/hls/index.m3u8
+
+
 电影轮播,#genre#
 神乐影院-1台,https://tc-tc2-interact.douyucdn2.cn/dyliveflv1/85894rmovieChow_900p.m3u8
 神乐影院-2台,https://tc-tc2-interact.douyucdn2.cn/dyliveflv1a/122402rK7MO9bXSq_900.m3u8
