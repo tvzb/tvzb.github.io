@@ -595,9 +595,6 @@ CCTV-17,http://221.219.98.251:4022/rtp/239.3.1.151:8144
 宫女扶摇录3,https://play.xluuss.com/play/0dNqE4vb/index.m3u8
 宫女扶摇录3,https://v.gsuus.com/play/1aMpE4Ge/index.m3u8
 
-我在八零年代当后妈1,https://play.subokk.com/play/meppVGNe/index.m3u8
-我在八零年代当后妈2,https://play.subokk.com/play/PdyBk1Pe/index.m3u8
-
 换亲1,https://vv.jisuzyv.com/play/mep0Z9Qe/index.m3u8
 换亲1,https://play.xluuss.com/play/vbmoq7Re/index.m3u8
 换亲1,https://v.gsuus.com/play/nelnRvjb/index.m3u8
@@ -607,6 +604,34 @@ CCTV-17,http://221.219.98.251:4022/rtp/239.3.1.151:8144
 换亲3,https://vv.jisuzyv.com/play/9b65WmOa/index.m3u8
 换亲3,https://play.xluuss.com/play/Le356jAb/index.m3u8
 换亲3,https://v.gsuus.com/play/rb258gMa/index.m3u8
+
+我在八零年代当后妈1,https://play.subokk.com/play/meppVGNe/index.m3u8
+我在八零年代当后妈1,https://play.xluuss.com/play/meppVGNe/index.m3u8
+我在八零年代当后妈1,https://play.hhuus.com/play/Yerr7KKe/index.m3u8
+我在八零年代当后妈2,https://play.subokk.com/play/PdyBk1Pe/index.m3u8
+我在八零年代当后妈2,https://play.xluuss.com/play/PdyBk1Pe/index.m3u8
+我在八零年代当后妈2,https://play.hhuus.com/play/9aAzOJPb/index.m3u8
+
+妖妃在上1,https://play.subokk.com/play/6dB5M4Qb/index.m3u8
+妖妃在上2,https://play.subokk.com/play/9avAMAne/index.m3u8
+妖妃在上3,https://play.subokk.com/play/vbmozJRe/index.m3u8
+妖妃在上4,$https://play.subokk.com/play/9avAMV8e/index.m3u8
+
+古相思曲01,https://play.subokk.com/play/nelVOvJb/index.m3u8
+古相思曲02,https://play.subokk.com/play/YerN0gke/index.m3u8
+古相思曲03,https://play.subokk.com/play/9aA7n81d/index.m3u8
+古相思曲04,https://play.subokk.com/play/1aKkOAza/index.m3u8
+古相思曲5,https://play.subokk.com/play/penVPLWe/index.m3u8
+古相思曲6,https://play.subokk.com/play/Xe0yB5ya/index.m3u8
+古相思曲7,https://play.subokk.com/play/QeZDn6wb/index.m3u8
+古相思曲8,https://play.subokk.com/play/qaQqGW0a/index.m3u8
+古相思曲9,https://play.subokk.com/play/penVDO7e/index.m3u8
+古相思曲10,https://play.subokk.com/play/Xe0y4LLa/index.m3u8
+古相思曲11,https://play.subokk.com/play/9b6v6v9b/index.m3u8
+古相思曲12,https://play.subokk.com/play/QeZo4o6a/index.m3u8
+古相思曲13,https://play.subokk.com/play/nelm9qVa/index.m3u8
+古相思曲14,https://play.subokk.com/play/yb8xDRWb/index.m3u8
+古相思曲,https://play.subokk.com/play/9aA2yg3b/index.m3u8
 
 学生必看,#genre#
 放牛班的春天,https://v.gsuus.com/play/7e53ZZb2/index.m3u8
