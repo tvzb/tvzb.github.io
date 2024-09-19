@@ -617,6 +617,11 @@ CCTV-17,http://221.219.98.251:4022/rtp/239.3.1.151:8144
 妖妃在上3,https://play.subokk.com/play/vbmozJRe/index.m3u8
 妖妃在上4,https://play.subokk.com/play/9avAMV8e/index.m3u8
 妖妃在上4,https://play.xluuss.com/play/9avAMV8e/index.m3u8
+妖妃在上4,https://vv.jisuzyv.com/play/PdyE4Y6d/index.m3u8
+妖妃在上4,https://hd.ijycnd.com/play/DdwBNWrb/index.m3u8
+
+
+
 古相思曲01,https://play.subokk.com/play/nelVOvJb/index.m3u8
 古相思曲02,https://play.subokk.com/play/YerN0gke/index.m3u8
 古相思曲03,https://play.subokk.com/play/9aA7n81d/index.m3u8
