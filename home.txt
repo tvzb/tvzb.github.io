@@ -604,9 +604,10 @@ CCTV-17,http://221.219.98.251:4022/rtp/239.3.1.151:8144
 换亲2,https://vv.jisuzyv.com/play/lejlYAvb/index.m3u8
 换亲2,https://play.xluuss.com/play/9avAQm8e/index.m3u8
 换亲2,https://v.gsuus.com/play/Yerw2g2a/index.m3u8
+换亲3,https://play.subokk.com/play/Le356jAb
 换亲3,https://vv.jisuzyv.com/play/9b65WmOa/index.m3u8
-换亲3,https://play.xluuss.com/play/Le356jAb/index.m3u8
 换亲3,https://v.gsuus.com/play/rb258gMa/index.m3u8
+换亲3,https://play.hhuus.com/play/7e557lYe/index.m3u8
 
 我在八零年代当后妈1,https://play.subokk.com/play/meppVGNe/index.m3u8
 我在八零年代当后妈1,https://play.xluuss.com/play/meppVGNe/index.m3u8
