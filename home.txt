@@ -691,3 +691,12 @@ CCTV-17,http://221.219.98.251:4022/rtp/239.3.1.151:8144
 斗鱼频道,http://zzy789.xyz/douyu1.php?id=218859
 斗鱼频道,http://epg.112114.xyz/douyu/9292492
 斗鱼频道,http://zzy789.xyz/douyu1.php?id=9292492
+闪电-桃花马上请长缨,https://v5.fentvoss.com/sdv5/202408/23/Dq4t74AkBJ7/video/index.m3u8
+豪华-桃花马上请长缨1,https://play.hhuus.com/play/9avA9gXe/index.m3u8
+金鹰-桃花马上请长缨1,https://hd.ijycnd.com/play/YerwM0Ka/index.m3u8
+卧龙-望北思南,https://cdn.wlcdn99.com:777/72fd8598/index.m3u8
+无尽-桃花马上请长缨,https://v12.tlkqc.com/wjv12/202408/23/86Pd59rte584/video/index.m3u8
+极速-桃花马上请长缨,https://play.jisuzyv.com/play/DdwBRjMb/index.m3u8
+光速-张亮升职记,https://v.gsuus.com/play/9aAVXZpb/index.m3u8
+红牛-大佬妈咪不忍了1,https://hn.bfvvs.com/play/ZdP47Znd/index.m3u8
+速播-星光依旧如人初1,https://play.subokk.com/play/Le3WQyre/index.m3u8
