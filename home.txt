@@ -58,27 +58,6 @@ CCTV-14,http://gzly.hkychina.com:6001/udp/239.252.220.92:5140
 CCTV-15,http://gzly.hkychina.com:6001/udp/239.252.219.79:5140
 CCTV-17,http://gzly.hkychina.com:6001/udp/239.252.220.192:5140
 
-CCTV-1,http://gzly.hkychina.com:6001/udp/239.252.219.200:5140
-CCTV-2,http://gzly.hkychina.com:6001/udp/239.252.220.183:5140
-CCTV-3,http://gzly.hkychina.com:6001/udp/239.252.219.252:5140
-CCTV-3,http://gzly.hkychina.com:6001/udp/239.252.220.193:5140
-CCTV-4,http://gzly.hkychina.com:6001/udp/239.252.220.184:5140
-CCTV-5,http://gzly.hkychina.com:6001/udp/239.252.219.198:5140
-CCTV-5,http://gzly.hkychina.com:6001/udp/239.252.219.236:5140
-CCTV-6,http://gzly.hkychina.com:6001/udp/239.252.219.237:5140
-CCTV-6,http://gzly.hkychina.com:6001/udp/239.252.220.195:5140
-CCTV-7,http://gzly.hkychina.com:6001/udp/239.252.220.185:5140
-CCTV-8,http://gzly.hkychina.com:6001/udp/239.252.219.253:5140
-CCTV-8,http://gzly.hkychina.com:6001/udp/239.252.220.196:5140
-CCTV-9,http://gzly.hkychina.com:6001/udp/239.252.220.186:5140
-CCTV-10,http://gzly.hkychina.com:6001/udp/239.252.220.91:5140
-CCTV-11,http://gzly.hkychina.com:6001/udp/239.252.219.78:5140
-CCTV-12,http://gzly.hkychina.com:6001/udp/239.252.220.187:5140
-CCTV-13,http://gzly.hkychina.com:6001/udp/239.252.219.139:5140
-CCTV-14,http://gzly.hkychina.com:6001/udp/239.252.220.92:5140
-CCTV-15,http://gzly.hkychina.com:6001/udp/239.252.219.79:5140
-CCTV-17,http://gzly.hkychina.com:6001/udp/239.252.220.192:5140
-
 CCTV-1,http://tnvcn.com:8012/rtp/239.3.1.129:8008
 CCTV-1,http://180.103.165.76:8888/rtp/239.49.8.19:9614
 CCTV-1,http://180.103.165.77:8888/rtp/239.49.8.19:9614
