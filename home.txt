@@ -1042,6 +1042,15 @@ CCTV-17,http://27.184.66.85:1024/rtp/239.254.201.120:8144
 动画-大圣归来,https://vv.jisuzyv.com/play/ZdP9qJye/index.m3u8
 动画-大圣归来,https://v.gsuus.com/play/Qe1wj1Pb/index.m3u8
 动画-大圣归来,https://play.hhuus.com/play/YaO2p9Be/index.m3u8
+钢铁侠1,https://hd.ijycnd.com/play/negZJYdw/index.m3u8
+钢铁侠1,https://play.hhuus.com/play/QeZXBxRb/index.m3u8
+钢铁侠1,https://vod2.bdzybf11.com/20220330/p8hafu5J/index.m3u8
+钢铁侠2,https://hd.ijycnd.com/play/7axnkrdy/index.m3u8
+钢铁侠2,https://play.hhuus.com/play/lejJmr5e/index.m3u8
+钢铁侠2,https://vod2.bdzybf11.com/20220330/W1baYRFv/index.m3u8
+钢铁侠3,https://hd.ijycnd.com/play/0dNLkzaL/index.m3u8
+钢铁侠3,https://play.hhuus.com/play/qaQLpMYe/index.m3u8
+钢铁侠3,https://vod2.bdzybf11.com/20220330/XoE4YD79/index.m3u8
 
 电影轮播,#genre#
 漫威剧情,http://159.75.85.63:35455/douyu/6140589
