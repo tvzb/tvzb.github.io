@@ -1102,10 +1102,3 @@ CCTV-17,http://27.184.66.85:1024/rtp/239.254.201.120:8144
 悬疑犯罪,http://zzy789.xyz/douyu1.php?id=218859
 不一样的电影,http://zzy789.xyz/douyu1.php?id=310926
 高分影视,http://zzy789.xyz/douyu1.php?id=1226741
-
-豪华-桃花马上请长缨1,https://play.hhuus.com/play/9avA9gXe/index.m3u8
-金鹰-桃花马上请长缨1,https://hd.ijycnd.com/play/YerwM0Ka/index.m3u8
-卧龙-望北思南,https://cdn.wlcdn99.com:777/72fd8598/index.m3u8
-极速-桃花马上请长缨,https://play.jisuzyv.com/play/DdwBRjMb/index.m3u8
-速播-星光依旧如人初1,https://play.subokk.com/play/Le3WQyre/index.m3u8
-百度-父女特工,https://vod6.bdzybf11.com/20240917/ZHIb9BMS/index.m3u8
