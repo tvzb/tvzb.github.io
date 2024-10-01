@@ -964,6 +964,13 @@ CCTV-17,http://27.184.66.85:1024/rtp/239.254.201.120:8144
 新疆卫视,http://118.112.148.249:4022/rtp/239.93.0.194:5140
 
 网络短剧,#genre#
+爱在黄昏前相遇1,https://hd.ijycnd.com/play/penK5nPa/index.m3u8
+爱在黄昏前相遇2,https://hd.ijycnd.com/play/YaO4Y1Bb/index.m3u8
+爱在黄昏前相遇3,https://hd.ijycnd.com/play/Xe0QRvVa/index.m3u8
+爱在黄昏前相遇1,https://play.jisuzyv.com/play/mepMYrma/index.m3u8
+爱在黄昏前相遇2,https://play.jisuzyv.com/play/qaQ4W3Me/index.m3u8
+爱在黄昏前相遇3,https://play.jisuzyv.com/play/lejDR7Yb/index.m3u8
+
 江湖少年诀,https://hd.ijycnd.com/play/0dNyBgLb/index.m3u8
 江湖少年诀,https://play.subokk.com/play/1aMxAPQe/index.m3u8
 江湖少年诀,https://play.hhuus.com/play/YaOzDjge/index.m3u8
