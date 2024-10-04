@@ -1087,6 +1087,21 @@ CCTV-17,http://27.184.66.85:1024/rtp/239.254.201.120:8144
 小谢尔顿第二季20,https://vip.kuaikan-play2.com/20230403/GqWOv8AF/index.m3u8
 小谢尔顿第二季21,https://vip.kuaikan-play2.com/20230403/ORMv3j6a/index.m3u8
 小谢尔顿第二季22,https://vip.kuaikan-play2.com/20230403/POK50PbH/index.m3u8
+小谢尔顿第二季08,https://vod4.bdzybf11.com/20220413/Vuwm85lh/index.m3u8
+小谢尔顿第二季09,https://vod4.bdzybf11.com/20220413/1LHt7TkB/index.m3u8
+小谢尔顿第二季10,https://vod4.bdzybf11.com/20220413/DHZhOe0U/index.m3u8
+小谢尔顿第二季11,https://vod4.bdzybf11.com/20220413/Qjrozilw/index.m3u8
+小谢尔顿第二季12,https://vod4.bdzybf11.com/20220413/j80izUNj/index.m3u8
+小谢尔顿第二季13,https://vod4.bdzybf11.com/20220413/U9CLe18K/index.m3u8
+小谢尔顿第二季14,https://vod4.bdzybf11.com/20220413/lec4XGc0/index.m3u8
+小谢尔顿第二季15,https://vod4.bdzybf11.com/20220413/uZAgFhPw/index.m3u8
+小谢尔顿第二季16,https://vod4.bdzybf11.com/20220413/WHx5GI7e/index.m3u8
+小谢尔顿第二季17,https://vod4.bdzybf11.com/20220413/vzs1E8Vj/index.m3u8
+小谢尔顿第二季18,https://vod4.bdzybf11.com/20220413/2VzWpGRC/index.m3u8
+小谢尔顿第二季19,https://vod4.bdzybf11.com/20220413/2eDUF17c/index.m3u8
+小谢尔顿第二季20,https://vod4.bdzybf11.com/20220413/KjrmT7oA/index.m3u8
+小谢尔顿第二季21,https://vod4.bdzybf11.com/20220413/4EeSczf6/index.m3u8
+小谢尔顿第二季22,https://vod4.bdzybf11.com/20220413/Ov7pOwQe/index.m3u8
 
 电影轮播,#genre#
 漫威剧情,http://159.75.85.63:35455/douyu/6140589
