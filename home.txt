@@ -975,6 +975,14 @@ CCTV-17,http://27.184.66.85:1024/rtp/239.254.201.120:8144
 大夏荣耀2,https://hd.ijycnd.com/play/PdyYw4Ed/index.m3u8
 大夏荣耀3,https://hd.ijycnd.com/play/mepMZDpa/index.m3u8
 大夏荣耀4,https://hd.ijycnd.com/play/lejDYwPb/index.m3u8
+大夏荣耀1,https://play.hhuus.com/play/QdJ58nJb/index.m3u8
+大夏荣耀2,https://play.hhuus.com/play/kazZ68Za/index.m3u8
+大夏荣耀3,https://play.hhuus.com/play/zbqNQE0d/index.m3u8
+大夏荣耀4,https://play.hhuus.com/play/mbkE2xNe/index.m3u8
+大夏荣耀1,https://play.jisuzyv.com/play/1aK48oMb/index.m3u8
+大夏荣耀2,https://play.jisuzyv.com/play/9aA46L3e/index.m3u8
+大夏荣耀3,https://play.jisuzyv.com/play/YerO2G4a/index.m3u8
+大夏荣耀4,https://play.jisuzyv.com/play/nelGRygd/index.m3u8
 
 学生必看,#genre#
 放牛班的春天,https://v.gsuus.com/play/7e53ZZb2/index.m3u8
