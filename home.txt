@@ -963,27 +963,6 @@ CCTV-17,http://27.184.66.85:1024/rtp/239.254.201.120:8144
 新疆卫视,http://171.213.129.5:58888/rtp/239.93.0.194:5140
 新疆卫视,http://118.112.148.249:4022/rtp/239.93.0.194:5140
 
-网络短剧,#genre#
-我的龙主身份被女儿曝光了1,https://play.hhuus.com/play/DbDnl6xe/index.m3u8
-我的龙主身份被女儿曝光了2,https://play.hhuus.com/play/pen4j7Rb/index.m3u8
-我的龙主身份被女儿曝光了3,https://play.hhuus.com/play/Ddw4v2Re/index.m3u8
-我的龙主身份被女儿曝光了1,https://hd.ijycnd.com/play/6dB0jOXa/index.m3u8
-我的龙主身份被女儿曝光了2,https://hd.ijycnd.com/play/vbm4g8Oa/index.m3u8
-我的龙主身份被女儿曝光了3,https://hd.ijycnd.com/play/9av4rRmd/index.m3u8
-
-大夏荣耀1,https://play.subokk.com/play/oeE4qgYd/index.m3u8
-大夏荣耀2,https://play.subokk.com/play/7axX603a/index.m3u8
-大夏荣耀3,https://play.subokk.com/play/xboLZBBd/index.m3u8
-大夏荣耀4,https://play.subokk.com/play/negzpqGd/index.m3u8
-大夏荣耀1,https://hd.ijycnd.com/play/RdG4RkLe/index.m3u8
-大夏荣耀2,https://hd.ijycnd.com/play/PdyYw4Ed/index.m3u8
-大夏荣耀3,https://hd.ijycnd.com/play/mepMZDpa/index.m3u8
-大夏荣耀4,https://hd.ijycnd.com/play/lejDYwPb/index.m3u8
-大夏荣耀1,https://play.jisuzyv.com/play/1aK48oMb/index.m3u8
-大夏荣耀2,https://play.jisuzyv.com/play/9aA46L3e/index.m3u8
-大夏荣耀3,https://play.jisuzyv.com/play/YerO2G4a/index.m3u8
-大夏荣耀4,https://play.jisuzyv.com/play/nelGRygd/index.m3u8
-
 学生必看,#genre#
 放牛班的春天,https://v.gsuus.com/play/7e53ZZb2/index.m3u8
 放牛班的春天,https://vv.jisuzyv.com/play/Pe9X0rPd/index.m3u8
