@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>水费计算器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label {
+            margin-bottom: 10px;
+            display: block;
+        }
+        input[type="number"] {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>水费计算器</h1>
+    <form id="waterForm">
+        <label for="prevReading">上次水表读数（吨）：</label>
+        <input type="number" id="prevReading" required>
+
+        <label for="currentReading">本次水表读数（吨）：</label>
+        <input type="number" id="currentReading" required>
+
+        <button type="submit">计算水费</button>
+    </form>
+
+    <h2 id="result"></h2>
+
+    <script>
+        const form = document.getElementById('waterForm');
+        const result = document.getElementById('result');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const prevReading = parseFloat(document.getElementById('prevReading').value);
+            const currentReading = parseFloat(document.getElementById('currentReading').value);
+            const waterRate = 2.8; // 每吨水的单价
+            const waterLoss = 1; // 水损扣除
+
+            if (currentReading < prevReading) {
+                result.textContent = '错误：本次读数不能小于上次读数。';
+                return;
+            }
+
+            const usage = currentReading - prevReading - waterLoss;
+            const fee = usage * waterRate;
+
+            result.textContent = `使用量：${usage.toFixed(2)} 吨，水费：${fee.toFixed(2)} 元。`;
+        });
+    </script>
+</body>
+</html>
