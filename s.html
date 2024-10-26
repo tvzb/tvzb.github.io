@@ -41,7 +41,7 @@
 <body>
 
 <h2>2024年各住户水费和卫生费详单</h2>
-<p>请住户输入8月和10月的读数，系统将自动计算水费和卫生费。</p>
+<p>请住户输入较大的月份读数（如10月），系统将自动计算水费和卫生费。</p>
 
 <table>
     <thead>
@@ -49,30 +49,32 @@
             <th>楼数</th>
             <th>门牌号</th>
             <th>住户姓名</th>
-            <th>卫生费（元）</th>
-            <th>水损扣除（吨）</th>
+            <th>月份差</th>
+            <th>卫生费（元/月）</th>
+            <th>水损扣除（吨/月）</th>
             <th>单价（元/吨）</th>
             <th>8月读数（吨）</th>
-            <th>10月读数（吨）</th>
+            <th>输入大月份读数（吨）</th>
             <th>本次水量（吨）</th>
             <th>合计（元）</th>
         </tr>
     </thead>
     <tbody id="household-table">
-        <!-- 在这里填入数据行 -->
+        <!-- 数据行 -->
         <tr>
             <td>3楼</td>
             <td>102</td>
             <td>盛军</td>
+            <td>2</td> <!-- 月份差 -->
             <td>15</td>
             <td>1</td>
             <td>2.8</td>
-            <td><input type="number" id="prevReading-102" value="2438"></td>
+            <td><input type="number" id="prevReading-102" value="2438" disabled></td>
             <td><input type="number" id="currentReading-102"></td>
             <td id="usage-102">0</td>
             <td id="total-102">0</td>
         </tr>
-        <!-- 可复制上方tr扩展到其他住户 -->
+        <!-- 继续添加其他住户信息 -->
     </tbody>
 </table>
 
@@ -80,9 +82,9 @@
 
 <script>
     function calculateFees() {
-        // 获取表格中的住户
+        // 住户数据
         let households = [
-            { id: '102', prevReading: 2438, price: 2.8, waterLoss: 1, sanitationFee: 15 }
+            { id: '102', prevReading: 2438, price: 2.8, waterLossPerMonth: 1, sanitationFeePerMonth: 15, monthDiff: 2 }
             // 继续添加其他住户数据
         ];
 
@@ -93,11 +95,17 @@
             let totalElement = document.getElementById(`total-${household.id}`);
 
             if (!isNaN(currentReading) && currentReading >= prevReading) {
-                // 计算本次水量 = 10月读数 - 8月读数 - 水损扣除
-                let usage = currentReading - prevReading - household.waterLoss;
+                // 水损扣除 = 月份差 * 水损扣除/吨
+                let waterLoss = household.waterLossPerMonth * household.monthDiff;
+
+                // 卫生费 = 月份差 * 每月卫生费
+                let sanitationFee = household.sanitationFeePerMonth * household.monthDiff;
+
+                // 计算本次水量 = 大月份读数 - 小月份读数 - 总水损
+                let usage = currentReading - prevReading - waterLoss;
 
                 // 计算合计 = (水量 * 单价) + 卫生费
-                let total = (usage * household.price) + household.sanitationFee;
+                let total = (usage * household.price) + sanitationFee;
 
                 usageElement.textContent = usage.toFixed(2);
                 totalElement.textContent = total.toFixed(2);
