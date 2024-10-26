@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024年万新集团3-4栋各户水费和卫生费详单</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        input[type="number"] {
+            width: 100px;
+            padding: 5px;
+        }
+        .calculate {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 600px) {
+            table, th, td {
+                display: block; /* Stack elements vertically */
+                width: 100%; /* Full width */
+                box-sizing: border-box; /* Include padding in width */
+                margin-bottom: 10px; /* Space between rows */
+            }
+            th {
+                display: none; /* Hide headers for mobile */
+            }
+            tr {
+                margin-bottom: 20px; /* Space between rows */
+                border: 1px solid #ccc; /* Add border to rows */
+                padding: 10px; /* Add padding to rows */
+                background-color: #fff; /* White background for rows */
+            }
+            td {
+                text-align: left; /* Align text to the left */
+                position: relative; /* Position for pseudo-elements */
+                padding-left: 50%; /* Space for labels */
+            }
+            td::before {
+                content: attr(data-label); /* Use data-label for headers */
+                position: absolute; /* Position labels absolutely */
+                left: 10px; /* Position from left */
+                font-weight: bold; /* Bold labels */
+                text-align: left; /* Align labels to the left */
+                font-size: 0.8em; /* Smaller font size for labels */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h2>2024年万新集团3-4栋各户水费和卫生费详单</h2>
+<p>备注：卫生费15元/月/户；水损耗1吨/月/户。</p>
+<p>请自行输入本次水表读数，系统将自动计算各项费用。</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>栋数</th>
+            <th>门牌号</th>
+            <th>住户姓名</th>
+            <th>卫生费（元/2月）</th>
+            <th>水损耗（吨/2月）</th>
+            <th>单价（元/吨）</th>
+            <th>8月读数（吨）</th>
+            <th>10月读数（吨）</th>
+            <th>用水量（吨）</th>
+            <th>本次水费（元）</th>
+            <th>合计（元）</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody id="household-table">
+        <!-- 数据行 -->
+        <tr>
+            <td data-label="栋数">3栋</td>
+            <td data-label="门牌号">102</td>
+            <td data-label="住户姓名">盛军</td>
+            <td data-label="卫生费（元/2月）">0</td>
+            <td data-label="水损耗（吨/2月）">2</td>
+            <td data-label="单价（元/吨）">2.8</td>
+            <td data-label="8月读数（吨）"><input type="number" id="prevReading-盛军" value="2438" disabled></td>
+            <td data-label="10月读数（吨)"><input type="number" id="currentReading-盛军"></td>
+            <td data-label="用水量（吨）" id="usage-盛军">0</td>
+            <td data-label="本次水费（元）" id="waterFee-盛军">0</td>
+            <td data-label="合计（元）" id="total-盛军">0</td>
+            <td data-label="操作"><button class="calculate" onclick="calculateFees('盛军')">计算费用</button></td>
+        </tr>
+
+      <!-- Repeat for each household with unique IDs -->
+      <!-- Example for another household -->
+      <tr>
+          <td data-label="栋数">3栋</td>
+          <td data-label="门牌号">201</td>
+          <td data-label="住户姓名">雷小玉</td>
+          <td data-label="卫生费（元/2月）">30</td>
+          <td data-label="水损耗（吨/2月）">2</td>
+          <td data-label="单价（元/吨）">2.8</td>
+          <td data-label="8月读数（吨）"><input type="number" id="prevReading-雷小玉" value="2678" disabled></td>
+          <td data-label="10月读数（吨)"><input type="number" id="currentReading-雷小玉"></td>
+          <td data-label="用水量（吨）" id="usage-雷小玉">0</td>
+          <td data-label="本次水费（元）" id="waterFee-雷小玉">0</td>
+          <td data-label="合计（元）" id="total-雷小玉">0</td>
+          <td data-label="操作"><button class="calculate" onclick="calculateFees('雷小玉')">计算费用</button></td>
+      </tr>
+
+      <!-- Continue adding rows similarly with unique IDs -->
+      <!-- ... -->
+
+    </tbody>
+</table>
+
+<script>
+// Function to calculate fees based on unique resident name
+function calculateFees(name) {
+    let prevReading = parseFloat(document.getElementById(`prevReading-${name}`).value);
+    let currentReading = parseFloat(document.getElementById(`currentReading-${name}`).value);
+    let price = 2.8; // 单价
+    let waterLoss = 2; // 水损耗
+    let sanitationFee = 30; // 卫生费
+    let usageElement = document.getElementById(`usage-${name}`);
+    let waterFeeElement = document.getElementById(`waterFee-${name}`);
+    let totalElement = document.getElementById(`total-${name}`);
+
+    if (!isNaN(currentReading) && currentReading >= prevReading) {
+        // 用水量 = 大月份读数 - 小月份读数
+        let usage = currentReading - prevReading;
+
+        // 本次水费 = (用水量 + 水损耗) * 单价
+        let waterFee = (usage + waterLoss) * price;
+
+        // 合计 = 本次水费 + 卫生费
+        let total = waterFee + sanitationFee;
+
+        usageElement.textContent = usage.toFixed(2);
+        waterFeeElement.textContent = waterFee.toFixed(2);
+        totalElement.textContent = total.toFixed(2);
+    } else {
+        usageElement.textContent = '错误';
+        waterFeeElement.textContent = '错误';
+        totalElement.textContent = '错误';
+    }
+}
+</script>
+
+</body>
+</html>
