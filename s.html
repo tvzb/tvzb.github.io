@@ -42,6 +42,7 @@
 
 <h2>2024年各住户水费和卫生费详单</h2>
 <p>请住户输入较大的月份读数（如10月），系统将自动计算水费和卫生费。</p>
+<p>备注：卫生费15元/月/户；水损耗1吨/月/户。</p>
 
 <table>
     <thead>
@@ -49,12 +50,11 @@
             <th>楼数</th>
             <th>门牌号</th>
             <th>住户姓名</th>
-            <th>月份差</th>
-            <th>卫生费（元/月）</th>
-            <th>水损扣除（吨/月）</th>
+            <th>卫生费（元/2月）</th>
+            <th>水损扣除（吨/2月）</th>
             <th>单价（元/吨）</th>
             <th>8月读数（吨）</th>
-            <th>输入大月份读数（吨）</th>
+            <th>10月读数（吨）</th>
             <th>本次水量（吨）</th>
             <th>合计（元）</th>
         </tr>
@@ -65,9 +65,8 @@
             <td>3楼</td>
             <td>102</td>
             <td>盛军</td>
-            <td>2</td> <!-- 月份差 -->
-            <td>15</td>
-            <td>1</td>
+            <td>30</td> <!-- 固定卫生费 -->
+            <td>2</td> <!-- 固定水损耗 -->
             <td>2.8</td>
             <td><input type="number" id="prevReading-102" value="2438" disabled></td>
             <td><input type="number" id="currentReading-102"></td>
@@ -84,7 +83,7 @@
     function calculateFees() {
         // 住户数据
         let households = [
-            { id: '102', prevReading: 2438, price: 2.8, waterLossPerMonth: 1, sanitationFeePerMonth: 15, monthDiff: 2 }
+            { id: '102', prevReading: 2438, price: 2.8, waterLoss: 2, sanitationFee: 30 }
             // 继续添加其他住户数据
         ];
 
@@ -95,13 +94,13 @@
             let totalElement = document.getElementById(`total-${household.id}`);
 
             if (!isNaN(currentReading) && currentReading >= prevReading) {
-                // 水损扣除 = 月份差 * 水损扣除/吨
-                let waterLoss = household.waterLossPerMonth * household.monthDiff;
+                // 水损扣除固定为 2 吨
+                let waterLoss = household.waterLoss;
 
-                // 卫生费 = 月份差 * 每月卫生费
-                let sanitationFee = household.sanitationFeePerMonth * household.monthDiff;
+                // 卫生费固定为 30 元（每两个月）
+                let sanitationFee = household.sanitationFee;
 
-                // 计算本次水量 = 大月份读数 - 小月份读数 - 总水损
+                // 计算本次水量 = 大月份读数 - 小月份读数 - 水损扣除
                 let usage = currentReading - prevReading - waterLoss;
 
                 // 计算合计 = (水量 * 单价) + 卫生费
