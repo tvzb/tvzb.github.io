@@ -14,6 +14,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
+            display: none; /* 默认隐藏表单 */
         }
         table, th, td {
             border: 1px solid black;
@@ -30,244 +31,686 @@
             padding: 5px;
         }
         .calculate {
-            padding: 10px 20px;
+            padding: 5px 10px;
             background-color: #4CAF50;
             color: white;
             border: none;
             cursor: pointer;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
 
 <h2>2024年万新集团3-4栋各住户水费和卫生费详单</h2>
-<p>备注：卫生费15元/月/户；水损耗1吨/月/户。</p>
-<p>请住户输本次水表读数，系统将自动计算水费和卫生费。</p>
+<p>请输入您的手机号码后四位以查看费用详情。</p>
 
-<table>
+<!-- 输入后四位以验证身份 -->
+<div id="phoneInputSection">
+    <input type="text" id="lastFourDigits" placeholder="输入手机号码后四位">
+    <button onclick="validatePhone()">确认身份</button>
+</div>
+
+<table id="household-table">
     <thead>
         <tr>
-            <th>楼数</th>
+            <th>栋数</th>
             <th>门牌号</th>
             <th>住户姓名</th>
             <th>卫生费（元/2月）</th>
-            <th>水损扣除（吨/2月）</th>
+            <th>水损耗（吨/2月）</th>
             <th>单价（元/吨）</th>
             <th>8月读数（吨）</th>
             <th>10月读数（吨）</th>
             <th>用水量（吨）</th>
             <th>本次水费（元）</th>
             <th>合计（元）</th>
+            <th>操作</th>
         </tr>
     </thead>
-    <tbody id="household-table">
+    <tbody>
         <!-- 数据行 -->
-<tr>
-    <td>3楼</td>
-    <td>102</td>
-    <td>盛军</td>
-    <td>30</td> <!-- 固定卫生费 -->
-    <td>2</td> <!-- 固定水损耗 -->
-    <td>2.8</td>
-    <td><input type="number" id="prevReading-102" value="2438" disabled></td>
-    <td><input type="number" id="currentReading-102"></td>
-    <td id="usage-102">0</td>
-    <td id="waterFee-102">0</td>
-    <td id="total-102">0</td>
-</tr>
-
-<tr>
-    <td>3楼</td>
-    <td>201</td>
-    <td>雷小玉</td>
-    <td>30</td>
-    <td>2</td>
-    <td>2.8</td>
-    <td><input type="number" id="prevReading-201" value="2678" disabled></td>
-    <td><input type="number" id="currentReading-201"></td>
-    <td id="usage-201">0</td>
-    <td id="waterFee-201">0</td>
-    <td id="total-201">0</td>
-</tr>
-
-<tr>
-    <td>3楼</td>
-    <td>301</td>
-    <td>罗勇</td>
-    <td>30</td>
-    <td>2</td>
-    <td>2.8</td>
-    <td><input type="number" id="prevReading-301" value="2598" disabled></td>
-    <td><input type="number" id="currentReading-301"></td>
-    <td id="usage-301">0</td>
-    <td id="waterFee-301">0</td>
-    <td id="total-301">0</td>
-</tr>
-
-<tr>
-    <td>3楼</td>
-    <td>302</td>
-    <td>李贵南</td>
-    <td>30</td>
-    <td>2</td>
-    <td>2.8</td>
-    <td><input type="number" id="prevReading-302" value="37" disabled></td>
-    <td><input type="number" id="currentReading-302"></td>
-    <td id="usage-302">0</td>
-    <td id="waterFee-302">0</td>
-    <td id="total-302">0</td>
-</tr>
-
-<tr>
-    <td>3楼</td>
-    <td>401</td>
-    <td>黄大仓</td>
-    <td>30</td>
-    <td>2</td>
-    <td>2.8</td>
-    <td><input type="number" id="prevReading-401" value="5016" disabled></td>
-    <td><input type="number" id="currentReading-401"></td>
-    <td id="usage-401">0</td>
-    <td id="waterFee-401">0</td>
-    <td id="total-401">0</td>
-</tr>
-
-<tr>
-    <td>3楼</td>
-    <td>402</td>
-    <td>李彦</td>
-    <td>30</td>
-    <td>2</td>
-    <td>2.8</td>
-    <td><input type="number" id="prevReading-402" value="1565" disabled></td>
-    <td><input type="number" id="currentReading-402"></td>
-    <td id="usage-402">0</td>
-    <td id="waterFee-402">0</td>
-    <td id="total-402">0</td>
-</tr>
-
-<tr>
-    <td>4楼</td>
-    <td>501</td>
-    <td>邱玉香</td>
-    <td>30</td>
-    <td>2</td>
-    <td>2.8</td>
-    <td><input type="number" id="prevReading-501" value="3623" disabled></td>
-    <td><input type="number" id="currentReading-501"></td>
-    <td id="usage-501">0</td>
-    <td id="waterFee-501">0</td>
-    <td id="total-501">0</td>
-</tr>
-
-<tr>
-    <td>4楼</td>
-    <td>502</td>
-    <td>刘德春</td>
-    <td>30</td>
-    <td>2</td>
-    <td>2.8</td>
-    <td><input type="number" id="prevReading-502" value="3155" disabled></td>
-    <td><input type="number" id="currentReading-502"></td>
-    <td id="usage-502">0</td>
-    <td id="waterFee-502">0</td>
-    <td id="total-502">0</td>
-</tr>
-
-<tr>
-    <td>4楼</td>
-    <td>601</td>
-    <td>游保军</td>
-    <td>30</td>
-    <td>2</td>
-    <td>2.8</td>
-    <td><input type="number" id="prevReading-601" value="3433" disabled></td>
-    <td><input type="number" id="currentReading-601"></td>
-    <td id="usage-601">0</td>
-    <td id="waterFee-601">0</td>
-    <td id="total-601">0</td>
-</tr>
-
-<tr>
-    <td>4楼</td>
-    <td>602</td>
-    <td>钟冬秀</td>
-    <td>30</td>
-    <td>2</td>
-    <td>2.8</td>
-    <td><input type="number" id="prevReading-602" value="1806" disabled></td>
-    <td><input type="number" id="currentReading-602"></td>
-    <td id="usage-602">0</td>
-    <td id="waterFee-602">0</td>
-    <td id="total-602">0</td>
-</tr>
-
-<tr>
-    <td>5楼</td>
-    <td>401</td>
-    <td>邱玉喜</td>
-    <td>30</td>
-    <td>2</td>
-    <td>2.8</td>
-    <td><input type="number" id="prevReading-401b" value="2484" disabled></td>
-    <td><input type="number" id="currentReading-401b"></td>
-    <td id="usage-401b">0</td>
-    <td id="waterFee-401b">0</td>
-    <td id="total-401b">0</td>
-</tr>
-
-<tr>
-    <td>5楼</td>
-    <td>402</td>
-    <td>黄福荣</td>
-    <td>30</td>
-    <td>2</td>
-    <td>2.8</td>
-    <td><input type="number" id="prevReading-402b" value="3429" disabled></td>
-    <td><input type="number" id="currentReading-402b"></td>
-    <td id="usage-402b">0</td>
-    <td id="waterFee-402b">0</td>
-    <td id="total-402b">0</td>
-</tr>
+        <tr id="household-row">
+            <td>3栋</td>
+            <td>102</td>
+            <td>盛军</td>
+            <td>0</td>
+            <td>2</td>
+            <td>2.8</td>
+            <td><input type="number" id="prevReading" value="2438" disabled></td>
+            <td><input type="number" id="currentReading"></td>
+            <td id="usage">0</td>
+            <td id="waterFee">0</td>
+            <td id="total">0</td>
+            <td><button class="calculate" onclick="calculateFees()">计算费用</button></td>
+        </tr>
     </tbody>
+
+<table id="household-table">
+    <thead>
+        <tr>
+            <th>栋数</th>
+            <th>门牌号</th>
+            <th>住户姓名</th>
+            <th>卫生费（元/2月）</th>
+            <th>水损耗（吨/2月）</th>
+            <th>单价（元/吨）</th>
+            <th>8月读数（吨）</th>
+            <th>10月读数（吨）</th>
+            <th>用水量（吨）</th>
+            <th>本次水费（元）</th>
+            <th>合计（元）</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- 数据行 -->
+        <tr id="household-row">
+            <td>3栋</td>
+            <td>201</td>
+            <td>雷小玉</td>
+            <td>30</td>
+            <td>2</td>
+            <td>2.8</td>
+            <td><input type="number" id="prevReading" value="2678" disabled></td>
+            <td><input type="number" id="currentReading"></td>
+            <td id="usage">0</td>
+            <td id="waterFee">0</td>
+            <td id="total">0</td>
+            <td><button class="calculate" onclick="calculateFees()">计算费用</button></td>
+        </tr>
+    </tbody>
+
+<table id="household-table">
+    <thead>
+        <tr>
+            <th>栋数</th>
+            <th>门牌号</th>
+            <th>住户姓名</th>
+            <th>卫生费（元/2月）</th>
+            <th>水损耗（吨/2月）</th>
+            <th>单价（元/吨）</th>
+            <th>8月读数（吨）</th>
+            <th>10月读数（吨）</th>
+            <th>用水量（吨）</th>
+            <th>本次水费（元）</th>
+            <th>合计（元）</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- 数据行 -->
+        <tr id="household-row">
+            <td>3栋</td>
+            <td>301</td>
+            <td>罗勇</td>
+            <td>30</td>
+            <td>2</td>
+            <td>2.8</td>
+            <td><input type="number" id="prevReading" value="2598" disabled></td>
+            <td><input type="number" id="currentReading"></td>
+            <td id="usage">0</td>
+            <td id="waterFee">0</td>
+            <td id="total">0</td>
+            <td><button class="calculate" onclick="calculateFees()">计算费用</button></td>
+        </tr>
+    </tbody>
+
+ <table id="household-table">
+    <thead>
+        <tr>
+            <th>栋数</th>
+            <th>门牌号</th>
+            <th>住户姓名</th>
+            <th>卫生费（元/2月）</th>
+            <th>水损耗（吨/2月）</th>
+            <th>单价（元/吨）</th>
+            <th>8月读数（吨）</th>
+            <th>10月读数（吨）</th>
+            <th>用水量（吨）</th>
+            <th>本次水费（元）</th>
+            <th>合计（元）</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+   <tbody>
+        <!-- 数据行 -->
+        <tr id="household-row">
+            <td>3栋</td>
+            <td>302</td>
+            <td>李贵南</td>
+            <td>30</td>
+            <td>2</td>
+            <td>2.8</td>
+            <td><input type="number" id="prevReading" value="37" disabled></td>
+            <td><input type="number" id="currentReading"></td>
+            <td id="usage">0</td>
+            <td id="waterFee">0</td>
+            <td id="total">0</td>
+            <td><button class="calculate" onclick="calculateFees()">计算费用</button></td>
+        </tr>
+    </tbody>
+
+<table id="household-table">
+    <thead>
+        <tr>
+            <th>栋数</th>
+            <th>门牌号</th>
+            <th>住户姓名</th>
+            <th>卫生费（元/2月）</th>
+            <th>水损耗（吨/2月）</th>
+            <th>单价（元/吨）</th>
+            <th>8月读数（吨）</th>
+            <th>10月读数（吨）</th>
+            <th>用水量（吨）</th>
+            <th>本次水费（元）</th>
+            <th>合计（元）</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- 数据行 -->
+        <tr id="household-row">
+            <td>3栋</td>
+            <td>401</td>
+            <td>黄大仓</td>
+            <td>30</td>
+            <td>2</td>
+            <td>2.8</td>
+            <td><input type="number" id="prevReading" value="5016" disabled></td>
+            <td><input type="number" id="currentReading"></td>
+            <td id="usage">0</td>
+            <td id="waterFee">0</td>
+            <td id="total">0</td>
+            <td><button class="calculate" onclick="calculateFees()">计算费用</button></td>
+        </tr>
+    </tbody>
+
+<table id="household-table">
+    <thead>
+        <tr>
+            <th>栋数</th>
+            <th>门牌号</th>
+            <th>住户姓名</th>
+            <th>卫生费（元/2月）</th>
+            <th>水损耗（吨/2月）</th>
+            <th>单价（元/吨）</th>
+            <th>8月读数（吨）</th>
+            <th>10月读数（吨）</th>
+            <th>用水量（吨）</th>
+            <th>本次水费（元）</th>
+            <th>合计（元）</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- 数据行 -->
+        <tr id="household-row">
+            <td>3栋</td>
+            <td>402</td>
+            <td>李彦</td>
+            <td>30</td>
+            <td>2</td>
+            <td>2.8</td>
+            <td><input type="number" id="prevReading" value="1565" disabled></td>
+            <td><input type="number" id="currentReading"></td>
+            <td id="usage">0</td>
+            <td id="waterFee">0</td>
+            <td id="total">0</td>
+            <td><button class="calculate" onclick="calculateFees()">计算费用</button></td>
+        </tr>
+    </tbody>
+
+<table id="household-table">
+    <thead>
+        <tr>
+            <th>栋数</th>
+            <th>门牌号</th>
+            <th>住户姓名</th>
+            <th>卫生费（元/2月）</th>
+            <th>水损耗（吨/2月）</th>
+            <th>单价（元/吨）</th>
+            <th>8月读数（吨）</th>
+            <th>10月读数（吨）</th>
+            <th>用水量（吨）</th>
+            <th>本次水费（元）</th>
+            <th>合计（元）</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- 数据行 -->
+        <tr id="household-row">
+            <td>3栋</td>
+            <td>502</td>
+            <td>汪保生</td>
+            <td>22</td>
+            <td>2</td>
+            <td>2.8</td>
+            <td><input type="number" id="prevReading" value="383" disabled></td>
+            <td><input type="number" id="currentReading"></td>
+            <td id="usage">0</td>
+            <td id="waterFee">0</td>
+            <td id="total">0</td>
+            <td><button class="calculate" onclick="calculateFees()">计算费用</button></td>
+        </tr>
+    </tbody>
+
+<table id="household-table">
+    <thead>
+        <tr>
+            <th>栋数</th>
+            <th>门牌号</th>
+            <th>住户姓名</th>
+            <th>卫生费（元/2月）</th>
+            <th>水损耗（吨/2月）</th>
+            <th>单价（元/吨）</th>
+            <th>8月读数（吨）</th>
+            <th>10月读数（吨）</th>
+            <th>用水量（吨）</th>
+            <th>本次水费（元）</th>
+            <th>合计（元）</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- 数据行 -->
+        <tr id="household-row">
+            <td>3栋</td>
+            <td>602</td>
+            <td>阳荷</td>
+            <td>30</td>
+            <td>2</td>
+            <td>2.8</td>
+            <td><input type="number" id="prevReading" value="3866" disabled></td>
+            <td><input type="number" id="currentReading"></td>
+            <td id="usage">0</td>
+            <td id="waterFee">0</td>
+            <td id="total">0</td>
+            <td><button class="calculate" onclick="calculateFees()">计算费用</button></td>
+        </tr>
+    </tbody>
+
+<table id="household-table">
+    <thead>
+        <tr>
+            <th>栋数</th>
+            <th>门牌号</th>
+            <th>住户姓名</th>
+            <th>卫生费（元/2月）</th>
+            <th>水损耗（吨/2月）</th>
+            <th>单价（元/吨）</th>
+            <th>8月读数（吨）</th>
+            <th>10月读数（吨）</th>
+            <th>用水量（吨）</th>
+            <th>本次水费（元）</th>
+            <th>合计（元）</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- 数据行 -->
+        <tr id="household-row">
+            <td>4栋</td>
+            <td>101</td>
+            <td>魏文腾</td>
+            <td>30</td>
+            <td>2</td>
+            <td>2.8</td>
+            <td><input type="number" id="prevReading" value="3084" disabled></td>
+            <td><input type="number" id="currentReading"></td>
+            <td id="usage">0</td>
+            <td id="waterFee">0</td>
+            <td id="total">0</td>
+            <td><button class="calculate" onclick="calculateFees()">计算费用</button></td>
+        </tr>
+    </tbody>
+
+<table id="household-table">
+    <thead>
+        <tr>
+            <th>栋数</th>
+            <th>门牌号</th>
+            <th>住户姓名</th>
+            <th>卫生费（元/2月）</th>
+            <th>水损耗（吨/2月）</th>
+            <th>单价（元/吨）</th>
+            <th>8月读数（吨）</th>
+            <th>10月读数（吨）</th>
+            <th>用水量（吨）</th>
+            <th>本次水费（元）</th>
+            <th>合计（元）</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- 数据行 -->
+        <tr id="household-row">
+            <td>4栋</td>
+            <td>102</td>
+            <td>刘镱佳</td>
+            <td>30</td>
+            <td>2</td>
+            <td>2.8</td>
+            <td><input type="number" id="prevReading" value="55" disabled></td>
+            <td><input type="number" id="currentReading"></td>
+            <td id="usage">0</td>
+            <td id="waterFee">0</td>
+            <td id="total">0</td>
+            <td><button class="calculate" onclick="calculateFees()">计算费用</button></td>
+        </tr>
+    </tbody>
+
+<table id="household-table">
+    <thead>
+        <tr>
+            <th>栋数</th>
+            <th>门牌号</th>
+            <th>住户姓名</th>
+            <th>卫生费（元/2月）</th>
+            <th>水损耗（吨/2月）</th>
+            <th>单价（元/吨）</th>
+            <th>8月读数（吨）</th>
+            <th>10月读数（吨）</th>
+            <th>用水量（吨）</th>
+            <th>本次水费（元）</th>
+            <th>合计（元）</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- 数据行 -->
+        <tr id="household-row">
+            <td>4栋</td>
+            <td>202</td>
+            <td>黄辉</td>
+            <td>30</td>
+            <td>2</td>
+            <td>2.8</td>
+            <td><input type="number" id="prevReading" value="3433" disabled></td>
+            <td><input type="number" id="currentReading"></td>
+            <td id="usage">0</td>
+            <td id="waterFee">0</td>
+            <td id="total">0</td>
+            <td><button class="calculate" onclick="calculateFees()">计算费用</button></td>
+        </tr>
+    </tbody>
+
+<table id="household-table">
+    <thead>
+        <tr>
+            <th>栋数</th>
+            <th>门牌号</th>
+            <th>住户姓名</th>
+            <th>卫生费（元/2月）</th>
+            <th>水损耗（吨/2月）</th>
+            <th>单价（元/吨）</th>
+            <th>8月读数（吨）</th>
+            <th>10月读数（吨）</th>
+            <th>用水量（吨）</th>
+            <th>本次水费（元）</th>
+            <th>合计（元）</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- 数据行 -->
+        <tr id="household-row">
+            <td>4栋</td>
+            <td>301</td>
+            <td>钟冬秀</td>
+            <td>30</td>
+            <td>2</td>
+            <td>2.8</td>
+            <td><input type="number" id="prevReading" value="186" disabled></td>
+            <td><input type="number" id="currentReading"></td>
+            <td id="usage">0</td>
+            <td id="waterFee">0</td>
+            <td id="total">0</td>
+            <td><button class="calculate" onclick="calculateFees()">计算费用</button></td>
+        </tr>
+    </tbody>
+
+<table id="household-table">
+    <thead>
+        <tr>
+            <th>栋数</th>
+            <th>门牌号</th>
+            <th>住户姓名</th>
+            <th>卫生费（元/2月）</th>
+            <th>水损耗（吨/2月）</th>
+            <th>单价（元/吨）</th>
+            <th>8月读数（吨）</th>
+            <th>10月读数（吨）</th>
+            <th>用水量（吨）</th>
+            <th>本次水费（元）</th>
+            <th>合计（元）</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- 数据行 -->
+        <tr id="household-row">
+            <td>4栋</td>
+            <td>401</td>
+            <td>曾金华</td>
+            <td>30</td>
+            <td>2</td>
+            <td>2.8</td>
+            <td><input type="number" id="prevReading" value="3316" disabled></td>
+            <td><input type="number" id="currentReading"></td>
+            <td id="usage">0</td>
+            <td id="waterFee">0</td>
+            <td id="total">0</td>
+            <td><button class="calculate" onclick="calculateFees()">计算费用</button></td>
+        </tr>
+    </tbody>
+
+<table id="household-table">
+    <thead>
+        <tr>
+            <th>栋数</th>
+            <th>门牌号</th>
+            <th>住户姓名</th>
+            <th>卫生费（元/2月）</th>
+            <th>水损耗（吨/2月）</th>
+            <th>单价（元/吨）</th>
+            <th>8月读数（吨）</th>
+            <th>10月读数（吨）</th>
+            <th>用水量（吨）</th>
+            <th>本次水费（元）</th>
+            <th>合计（元）</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- 数据行 -->
+        <tr id="household-row">
+            <td>4栋</td>
+            <td>501</td>
+            <td>邱玉香</td>
+            <td>30</td>
+            <td>2</td>
+            <td>2.8</td>
+            <td><input type="number" id="prevReading" value="1688" disabled></td>
+            <td><input type="number" id="currentReading"></td>
+            <td id="usage">0</td>
+            <td id="waterFee">0</td>
+            <td id="total">0</td>
+            <td><button class="calculate" onclick="calculateFees()">计算费用</button></td>
+        </tr>
+    </tbody>
+
+<table id="household-table">
+    <thead>
+        <tr>
+            <th>栋数</th>
+            <th>门牌号</th>
+            <th>住户姓名</th>
+            <th>卫生费（元/2月）</th>
+            <th>水损耗（吨/2月）</th>
+            <th>单价（元/吨）</th>
+            <th>8月读数（吨）</th>
+            <th>10月读数（吨）</th>
+            <th>用水量（吨）</th>
+            <th>本次水费（元）</th>
+            <th>合计（元）</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- 数据行 -->
+        <tr id="household-row">
+            <td>4栋</td>
+            <td>601</td>
+            <td>黄福秀</td>
+            <td>30</td>
+            <td>2</td>
+            <td>2.8</td>
+            <td><input type="number" id="prevReading" value="1811" disabled></td>
+            <td><input type="number" id="currentReading"></td>
+            <td id="usage">0</td>
+            <td id="waterFee">0</td>
+            <td id="total">0</td>
+            <td><button class="calculate" onclick="calculateFees()">计算费用</button></td>
+        </tr>
+    </tbody>
+
+<table id="household-table">
+    <thead>
+        <tr>
+            <th>栋数</th>
+            <th>门牌号</th>
+            <th>住户姓名</th>
+            <th>卫生费（元/2月）</th>
+            <th>水损耗（吨/2月）</th>
+            <th>单价（元/吨）</th>
+            <th>8月读数（吨）</th>
+            <th>10月读数（吨）</th>
+            <th>用水量（吨）</th>
+            <th>本次水费（元）</th>
+            <th>合计（元）</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- 数据行 -->
+        <tr id="household-row">
+            <td>4栋</td>
+            <td>602</td>
+            <td>薛德俊</td>
+            <td>30</td>
+            <td>2</td>
+            <td>2.8</td>
+            <td><input type="number" id="prevReading" value="5028" disabled></td>
+            <td><input type="number" id="currentReading"></td>
+            <td id="usage">0</td>
+            <td id="waterFee">0</td>
+            <td id="total">0</td>
+            <td><button class="calculate" onclick="calculateFees()">计算费用</button></td>
+        </tr>
+    </tbody>
+
+<table id="household-table">
+    <thead>
+        <tr>
+            <th>栋数</th>
+            <th>门牌号</th>
+            <th>住户姓名</th>
+            <th>卫生费（元/2月）</th>
+            <th>水损耗（吨/2月）</th>
+            <th>单价（元/吨）</th>
+            <th>8月读数（吨）</th>
+            <th>10月读数（吨）</th>
+            <th>用水量（吨）</th>
+            <th>本次水费（元）</th>
+            <th>合计（元）</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- 数据行 -->
+        <tr id="household-row">
+            <td>底铺</td>
+            <td>0</td>
+            <td>大众配件</td>
+            <td>0</td>
+            <td>2</td>
+            <td>3.4</td>
+            <td><input type="number" id="prevReading" value="429" disabled></td>
+            <td><input type="number" id="currentReading"></td>
+            <td id="usage">0</td>
+            <td id="waterFee">0</td>
+            <td id="total">0</td>
+            <td><button class="calculate" onclick="calculateFees()">计算费用</button></td>
+        </tr>
+    </tbody>
+
 </table>
 
-<button class="calculate" onclick="calculateFees()">计算水费和卫生费</button>
-
 <script>
+    // 预设的住户信息，使用手机号码后四位作为键
+    const validResidents = { 
+      "1234": "盛军" 
+      "8300": "李彦"
+      "2345": "黄大仓"
+      "5678": "李贵南"
+      "3580": "雷小玉"
+      "3686": "罗勇"
+    };
+
+    // 验证手机号码后四位
+    function validatePhone() {
+        let inputDigits = document.getElementById("lastFourDigits").value.trim();
+        
+        if (validResidents[inputDigits]) {
+            // 显示表单并隐藏输入区
+            document.getElementById("household-table").style.display = "table";
+            document.getElementById("phoneInputSection").style.display = "none";
+        } else {
+            alert("手机号码后四位不正确，请重新输入！");
+        }
+    }
+
+    // 计算费用并显示确认对话框
     function calculateFees() {
-        // 住户数据
-        let households = [
-            { id: '102', prevReading: 2438, price: 2.8, waterLoss: 2, sanitationFee: 30 }
-            // 继续添加其他住户数据
-        ];
+        let prevReading = parseFloat(document.getElementById("prevReading").value);
+        let currentReading = parseFloat(document.getElementById("currentReading").value);
+        let price = 2.8;
+        let waterLoss = 2;
+        let sanitationFee = 30;
+        let usageElement = document.getElementById("usage");
+        let waterFeeElement = document.getElementById("waterFee");
+        let totalElement = document.getElementById("total");
+        let currentReadingInput = document.getElementById("currentReading");
+        let buttonElement = document.querySelector(`#currentReading ~ .calculate`);
 
-        households.forEach(household => {
-            let prevReading = household.prevReading;
-            let currentReading = parseFloat(document.getElementById(`currentReading-${household.id}`).value);
-            let usageElement = document.getElementById(`usage-${household.id}`);
-            let waterFeeElement = document.getElementById(`waterFee-${household.id}`);
-            let totalElement = document.getElementById(`total-${household.id}`);
+        if (!isNaN(currentReading) && currentReading >= prevReading) {
+            // 用水量 = 大月份读数 - 小月份读数
+            let usage = currentReading - prevReading;
 
-            if (!isNaN(currentReading) && currentReading >= prevReading) {
-                // 用水量 = 大月份读数 - 小月份读数
-                let usage = currentReading - prevReading;
+            // 本次水费 = (用水量 + 水损耗) * 单价
+            let waterFee = (usage + waterLoss) * price;
 
-                // 本次水费 = (用水量 + 水损耗) * 单价
-                let waterFee = (usage + household.waterLoss) * household.price;
+            // 合计 = 本次水费 + 卫生费
+            let total = waterFee + sanitationFee;
 
-                // 合计 = 本次水费 + 卫生费
-                let total = waterFee + household.sanitationFee;
-
+            // 确认对话框
+            let confirmation = confirm(`确认计算费用？\n用水量：${usage.toFixed(2)} 吨\n水费：${waterFee.toFixed(2)} 元\n总计：${total.toFixed(2)} 元`);
+            if (confirmation) {
                 usageElement.textContent = usage.toFixed(2);
                 waterFeeElement.textContent = waterFee.toFixed(2);
                 totalElement.textContent = total.toFixed(2);
-            } else {
-                usageElement.textContent = '错误';
-                waterFeeElement.textContent = '错误';
-                totalElement.textContent = '错误';
+
+                // 读数输入框变为不可修改，隐藏“计算费用”按钮
+                currentReadingInput.disabled = true;
+                buttonElement.style.display = 'none';
             }
-        });
+        } else {
+            usageElement.textContent = '错误';
+            waterFeeElement.textContent = '错误';
+            totalElement.textContent = '错误';
+        }
     }
 </script>
 
