@@ -3,57 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>水费计算器</title>
+    <title>2024年住户水费和卫生费详单</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
         }
-        label {
-            margin-bottom: 10px;
-            display: block;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
         }
         input[type="number"] {
-            margin-bottom: 20px;
+            width: 100px;
+            padding: 5px;
+        }
+        .calculate {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <h1>水费计算器</h1>
-    <form id="waterForm">
-        <label for="prevReading">上次水表读数（吨）：</label>
-        <input type="number" id="prevReading" required>
 
-        <label for="currentReading">本次水表读数（吨）：</label>
-        <input type="number" id="currentReading" required>
+<h2>2024年各住户水费和卫生费详单</h2>
+<p>请住户输入8月和10月的读数，系统将自动计算水费和卫生费。</p>
 
-        <button type="submit">计算水费</button>
-    </form>
+<table>
+    <thead>
+        <tr>
+            <th>楼数</th>
+            <th>门牌号</th>
+            <th>住户姓名</th>
+            <th>卫生费（元）</th>
+            <th>水损扣除（吨）</th>
+            <th>单价（元/吨）</th>
+            <th>8月读数（吨）</th>
+            <th>10月读数（吨）</th>
+            <th>本次水量（吨）</th>
+            <th>合计（元）</th>
+        </tr>
+    </thead>
+    <tbody id="household-table">
+        <!-- 在这里填入数据行 -->
+        <tr>
+            <td>3楼</td>
+            <td>102</td>
+            <td>盛军</td>
+            <td>15</td>
+            <td>1</td>
+            <td>2.8</td>
+            <td><input type="number" id="prevReading-102" value="2438"></td>
+            <td><input type="number" id="currentReading-102"></td>
+            <td id="usage-102">0</td>
+            <td id="total-102">0</td>
+        </tr>
+        <!-- 可复制上方tr扩展到其他住户 -->
+    </tbody>
+</table>
 
-    <h2 id="result"></h2>
+<button class="calculate" onclick="calculateFees()">计算水费和卫生费</button>
 
-    <script>
-        const form = document.getElementById('waterForm');
-        const result = document.getElementById('result');
+<script>
+    function calculateFees() {
+        // 获取表格中的住户
+        let households = [
+            { id: '102', prevReading: 2438, price: 2.8, waterLoss: 1, sanitationFee: 15 }
+            // 继续添加其他住户数据
+        ];
 
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
+        households.forEach(household => {
+            let prevReading = household.prevReading;
+            let currentReading = parseFloat(document.getElementById(`currentReading-${household.id}`).value);
+            let usageElement = document.getElementById(`usage-${household.id}`);
+            let totalElement = document.getElementById(`total-${household.id}`);
 
-            const prevReading = parseFloat(document.getElementById('prevReading').value);
-            const currentReading = parseFloat(document.getElementById('currentReading').value);
-            const waterRate = 2.8; // 每吨水的单价
-            const waterLoss = 1; // 水损扣除
+            if (!isNaN(currentReading) && currentReading >= prevReading) {
+                // 计算本次水量 = 10月读数 - 8月读数 - 水损扣除
+                let usage = currentReading - prevReading - household.waterLoss;
 
-            if (currentReading < prevReading) {
-                result.textContent = '错误：本次读数不能小于上次读数。';
-                return;
+                // 计算合计 = (水量 * 单价) + 卫生费
+                let total = (usage * household.price) + household.sanitationFee;
+
+                usageElement.textContent = usage.toFixed(2);
+                totalElement.textContent = total.toFixed(2);
+            } else {
+                usageElement.textContent = '错误';
+                totalElement.textContent = '错误';
             }
-
-            const usage = currentReading - prevReading - waterLoss;
-            const fee = usage * waterRate;
-
-            result.textContent = `使用量：${usage.toFixed(2)} 吨，水费：${fee.toFixed(2)} 元。`;
         });
-    </script>
+    }
+</script>
+
 </body>
 </html>
