@@ -42,35 +42,29 @@
 <body>
 
 <h2>2024年万新集团3-4栋各户水费和卫生费详单</h2>
-<p>备注：卫生费15元/月/户；水损耗1吨/月/户。</p>
-<p>请自行输入本次水表读数，系统将自动计算各项费用。</p>
+<p>备注：卫生费15元/月/户；水损耗1吨/月/户；水单价2.8元/吨。</p>
+<p>输入最近水表读数，系统将自动计算各项费用。</p>
 
 <table>
     <thead>
         <tr>
-            <th>栋数</th>
             <th>门牌号</th>
-            <th>住户姓名</th>
+            <th>姓名</th>
             <th>卫生费（元/2月）</th>
-            <th>水损耗（吨/2月）</th>
-            <th>单价（元/吨）</th>
             <th>8月读数（吨）</th>
             <th>10月读数（吨）</th>
-            <th>用水量（吨）</th>
+            <th>水量+损耗（吨）</th>
             <th>本次水费（元）</th>
             <th>合计（元）</th>
-            <th>操作</th>
+            <th>计算</th>
         </tr>
     </thead>
     <tbody id="household-table">
         <!-- 数据行 -->
         <tr>
-            <td>3栋</td>
-            <td>102</td>
+            <td>3-102</td>
             <td>盛军</td>
-            <td>0</td>
-            <td>2</td>
-            <td>2.8</td>
+            <td>30</td>
             <td><input type="number" id="prevReading-盛军" value="2438" disabled></td>
             <td><input type="number" id="currentReading-盛军"></td>
             <td id="usage-盛军">0</td>
@@ -80,12 +74,9 @@
         </tr>
 
       <tr id="household-row">
-            <td>3栋</td>
-            <td>201</td>
+            <td>3-201</td>
             <td>雷小玉</td>
             <td>30</td>
-            <td>2</td>
-            <td>2.8</td>
             <td><input type="number" id="prevReading-雷小玉" value="2678" disabled></td>
             <td><input type="number" id="currentReading-雷小玉"></td>
             <td id="usage-雷小玉">0</td>
@@ -96,12 +87,9 @@
         </tr>
 
         <tr id="household-row">
-            <td>3栋</td>
-            <td>301</td>
+            <td>3-301</td>
             <td>罗勇</td>
             <td>30</td>
-            <td>2</td>
-            <td>2.8</td>
             <td><input type="number" id="prevReading-罗勇" value="2598" disabled></td>
             <td><input type="number" id="currentReading-罗勇"></td>
             <td id="usage-罗勇">0</td>
@@ -110,12 +98,9 @@
             <td><button class="calculate" onclick="calculateFees('罗勇')">计算费用</button></td>
         </tr>
         <tr id="household-row">
-            <td>3栋</td>
-            <td>302</td>
+            <td>3-302</td>
             <td>李贵南</td>
             <td>30</td>
-            <td>2</td>
-            <td>2.8</td>
             <td><input type="number" id="prevReading-李贵南" value="37" disabled></td>
             <td><input type="number" id="currentReading-李贵南"></td>
             <td id="usage-李贵南">0</td>
@@ -124,12 +109,9 @@
             <td><button class="calculate" onclick="calculateFees('李贵南')">计算费用</button></td>
         </tr>
         <tr id="household-row">
-            <td>3栋</td>
-            <td>401</td>
+            <td>3-401</td>
             <td>黄大仓</td>
             <td>30</td>
-            <td>2</td>
-            <td>2.8</td>
             <td><input type="number" id="prevReading-黄大仓" value="5016" disabled></td>
             <td><input type="number" id="currentReading-黄大仓"></td>
             <td id="usage-黄大仓">0</td>
@@ -138,12 +120,9 @@
             <td><button class="calculate" onclick="calculateFees('黄大仓')">计算费用</button></td>
         </tr>
         <tr id="household-row">
-            <td>3栋</td>
-            <td>402</td>
+            <td>3-402</td>
             <td>李彦</td>
             <td>30</td>
-            <td>2</td>
-            <td>2.8</td>
             <td><input type="number" id="prevReading-李彦" value="1565" disabled></td>
             <td><input type="number" id="currentReading-李彦"></td>
             <td id="usage-李彦">0</td>
@@ -152,12 +131,9 @@
             <td><button class="calculate" onclick="calculateFees('李彦')">计算费用</button></td>
         </tr>
         <tr id="household-row">
-            <td>3栋</td>
-            <td>502</td>
+            <td>3-502</td>
             <td>汪保生</td>
             <td>22</td>
-            <td>2</td>
-            <td>2.8</td>
             <td><input type="number" id="prevReading-汪保生" value="383" disabled></td>
             <td><input type="number" id="currentReading-汪保生"></td>
             <td id="usage-汪保生">0</td>
@@ -166,12 +142,9 @@
             <td><button class="calculate" onclick="calculateFees('汪保生')">计算费用</button></td>
         </tr>
         <tr id="household-row">
-            <td>3栋</td>
-            <td>602</td>
+            <td>3-602</td>
             <td>阳荷</td>
             <td>30</td>
-            <td>2</td>
-            <td>2.8</td>
             <td><input type="number" id="prevReading-阳荷" value="3866" disabled></td>
             <td><input type="number" id="currentReading-阳荷"></td>
             <td id="usage-阳荷">0</td>
@@ -180,12 +153,9 @@
             <td><button class="calculate" onclick="calculateFees('阳荷')">计算费用</button></td>
         </tr>
         <tr id="household-row">
-            <td>4栋</td>
-            <td>101</td>
+            <td>4-101</td>
             <td>魏文腾</td>
             <td>30</td>
-            <td>2</td>
-            <td>2.8</td>
             <td><input type="number" id="prevReading-魏文腾" value="3084" disabled></td>
             <td><input type="number" id="currentReading-魏文腾"></td>
             <td id="usage-魏文腾">0</td>
@@ -194,12 +164,9 @@
             <td><button class="calculate" onclick="calculateFees('魏文腾')">计算费用</button></td>
         </tr>
         <tr id="household-row">
-            <td>4栋</td>
-            <td>102</td>
+            <td>4-102</td>
             <td>刘镱佳</td>
             <td>30</td>
-            <td>2</td>
-            <td>2.8</td>
             <td><input type="number" id="prevReading-刘镱佳" value="55" disabled></td>
             <td><input type="number" id="currentReading-刘镱佳"></td>
             <td id="usage-刘镱佳">0</td>
@@ -208,12 +175,9 @@
             <td><button class="calculate" onclick="calculateFees('刘镱佳')">计算费用</button></td>
         </tr>
         <tr id="household-row">
-            <td>4栋</td>
-            <td>202</td>
+            <td>4-202</td>
             <td>黄辉</td>
             <td>30</td>
-            <td>2</td>
-            <td>2.8</td>
             <td><input type="number" id="prevReading-黄辉" value="3433" disabled></td>
             <td><input type="number" id="currentReading-黄辉"></td>
             <td id="usage-黄辉">0</td>
@@ -222,12 +186,9 @@
             <td><button class="calculate" onclick="calculateFees('黄辉')">计算费用</button></td>
         </tr>
         <tr id="household-row">
-            <td>4栋</td>
-            <td>301</td>
+            <td>4-301</td>
             <td>钟冬秀</td>
             <td>30</td>
-            <td>2</td>
-            <td>2.8</td>
             <td><input type="number" id="prevReading-钟冬秀" value="186" disabled></td>
             <td><input type="number" id="currentReading-钟冬秀"></td>
             <td id="usage-钟冬秀">0</td>
@@ -236,12 +197,9 @@
             <td><button class="calculate" onclick="calculateFees('钟冬秀')">计算费用</button></td>
         </tr>
         <tr id="household-row">
-            <td>4栋</td>
-            <td>401</td>
+            <td>4-401</td>
             <td>曾金华</td>
             <td>30</td>
-            <td>2</td>
-            <td>2.8</td>
             <td><input type="number" id="prevReading-曾金华" value="3316" disabled></td>
             <td><input type="number" id="currentReading-曾金华"></td>
             <td id="usage-曾金华">0</td>
@@ -250,12 +208,9 @@
             <td><button class="calculate" onclick="calculateFees('曾金华')">计算费用</button></td>
         </tr>
         <tr id="household-row">
-            <td>4栋</td>
-            <td>501</td>
+            <td>4-501</td>
             <td>邱玉香</td>
             <td>30</td>
-            <td>2</td>
-            <td>2.8</td>
             <td><input type="number" id="prevReading-邱玉香" value="1688" disabled></td>
             <td><input type="number" id="currentReading-邱玉香"></td>
             <td id="usage-邱玉香">0</td>
@@ -264,12 +219,9 @@
             <td><button class="calculate" onclick="calculateFees('邱玉香')">计算费用</button></td>
         </tr>
         <tr id="household-row">
-            <td>4栋</td>
-            <td>601</td>
+            <td>4-601</td>
             <td>黄福秀</td>
             <td>30</td>
-            <td>2</td>
-            <td>2.8</td>
             <td><input type="number" id="prevReading-黄福秀" value="1811" disabled></td>
             <td><input type="number" id="currentReading-黄福秀"></td>
             <td id="usage-黄福秀">0</td>
@@ -278,32 +230,15 @@
             <td><button class="calculate" onclick="calculateFees('黄福秀')">计算费用</button></td>
         </tr>
         <tr id="household-row">
-            <td>4栋</td>
-            <td>602</td>
+            <td>4-602</td>
             <td>薛德俊</td>
             <td>30</td>
-            <td>2</td>
-            <td>2.8</td>
             <td><input type="number" id="prevReading-薛德俊" value="5028" disabled></td>
             <td><input type="number" id="currentReading-薛德俊"></td>
             <td id="usage-薛德俊">0</td>
             <td id="waterFee-薛德俊">0</td>
             <td id="total-薛德俊">0</td>
             <td><button class="calculate" onclick="calculateFees('薛德俊')">计算费用</button></td>
-        </tr>
-        <tr id="household-row">
-            <td>底铺</td>
-            <td></td>
-            <td>大众配件</td>
-            <td>0</td>
-            <td>2</td>
-            <td>3.4</td>
-            <td><input type="number" id="prevReading-大众配件" value="429" disabled></td>
-            <td><input type="number" id="currentReading-大众配件"></td>
-            <td id="usage-大众配件">0</td>
-            <td id="waterFee-大众配件">0</td>
-            <td id="total-大众配件">0</td>
-            <td><button class="calculate" onclick="calculateFees('大众配件')">计算费用</button></td>
         </tr>
 
     </tbody>
@@ -320,13 +255,12 @@
         let waterFeeElement = document.getElementById(`waterFee-${id}`);
         let totalElement = document.getElementById(`total-${id}`);
         let buttonElement = document.querySelector(`#currentReading-${id} ~ .calculate`);
-
         if (!isNaN(currentReading) && currentReading >= prevReading) {
-            // 用水量 = 大月份读数 - 小月份读数
-            let usage = currentReading - prevReading;
+            // 用水量 = 大月份读数 - 小月份读数 + 水损耗
+            let usage = currentReading - prevReading + waterLoss;
 
-            // 本次水费 = (用水量 + 水损耗) * 单价
-            let waterFee = (usage + waterLoss) * price;
+            // 本次水费 = 用水量 * 单价
+            let waterFee = usage * price;
 
             // 合计 = 本次水费 + 卫生费
             let total = waterFee + sanitationFee;
