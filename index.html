@@ -269,23 +269,26 @@
         let prevReading = parseFloat(document.getElementById(`prevReading-${id}`).value);
         let currentReading = parseFloat(document.getElementById(`currentReading-${id}`).value);
         let price = 2.8;
-        let waterLoss = 2;
         let sanitationFee = 30;
         let usageElement = document.getElementById(`usage-${id}`);
         let waterFeeElement = document.getElementById(`waterFee-${id}`);
         let totalElement = document.getElementById(`total-${id}`);
         let buttonElement = document.querySelector(`#currentReading-${id} ~ .calculate`);
+        
         if (!isNaN(currentReading) && currentReading >= prevReading) {
             // 用水量 = 大月份读数 - 小月份读数 + 水损耗
-            let usage = currentReading - prevReading + waterLoss;
-
+            let usage = Math.floor(currentReading - prevReading) + 2;
+            
+            // 显示用水量时包含“+2”
+            let usageDisplay = `${Math.floor(currentReading - prevReading)}+2`;
+            
             // 本次水费 = 用水量 * 单价
             let waterFee = usage * price;
 
             // 合计 = 本次水费 + 卫生费
             let total = waterFee + sanitationFee;
 
-            usageElement.textContent = usage.toFixed(2);
+            usageElement.textContent = usageDisplay;
             waterFeeElement.textContent = waterFee.toFixed(2);
             totalElement.textContent = total.toFixed(2);
 
