@@ -85,10 +85,10 @@ CHC家庭影院,http://annaxi.lw-home.com:11111/udp/239.253.254.152:8000
 精彩电影,http://annaxi.lw-home.com:11111/udp/239.253.254.142:8000
 都市剧场,http://annaxi.lw-home.com:11111/udp/239.253.254.98:8000
 
-少儿频道,#genre#
-金鹰卡通,http://annaxi.lw-home.com:11111/udp/239.253.254.117:8000
-卡酷少儿,http://annaxi.lw-home.com:11111/udp/239.253.254.66:8000
-动漫秀场,http://annaxi.lw-home.com:11111/udp/239.253.254.115:8000
+/少儿频道,#genre#
+//金鹰卡通,http://annaxi.lw-home.com:11111/udp/239.253.254.117:8000
+/卡酷少儿,http://annaxi.lw-home.com:11111/udp/239.253.254.66:8000
+/动漫秀场,http://annaxi.lw-home.com:11111/udp/239.253.254.115:8000
 米小圈上学记-暴风,https://c1.ddbbffcdn.com/video/mixiaoquanshangxueji/第01集/index.m3u8
 米小圈上学记-暴风,https://c1.ddbbffcdn.com/video/mixiaoquanshangxueji/第02集/index.m3u8
 米小圈上学记-暴风,https://c1.ddbbffcdn.com/video/mixiaoquanshangxueji/第03集/index.m3u8
