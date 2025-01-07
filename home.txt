@@ -96,7 +96,6 @@ CCTV17,http://144.52.160.109:9901/tsfile/live/1062_1.m3u8
 
 卫视频道,#genre#
 江西卫视,http://z.b.bkpcp.top/m.php?id=jxws
-北京卫视,http://z.b.bkpcp.top/m.php?id=bjws
 东方卫视,http://z.b.bkpcp.top/m.php?id=dfws
 江苏卫视,http://z.b.bkpcp.top/m.php?id=jsws
 东南卫视,http://z.b.bkpcp.top/m.php?id=dnws
