@@ -130,6 +130,17 @@ CCTV16,http://114.243.110.133:8888/udp/239.3.1.184:8001
 CCTV17,http://114.243.110.133:8888/udp/239.3.1.151:8144
 
 卫视频道,#genre#
+江西卫视,http://z.b.bkpcp.top/m.php?id=jxws
+北京卫视,http://z.b.bkpcp.top/m.php?id=bjws
+东方卫视,http://z.b.bkpcp.top/m.php?id=dfws
+江苏卫视,http://z.b.bkpcp.top/m.php?id=jsws
+东南卫视,http://z.b.bkpcp.top/m.php?id=dnws
+陕西卫视,http://z.b.bkpcp.top/m.php?id=sxws
+河南卫视,http://z.b.bkpcp.top/m.php?id=hnws
+广东卫视,http://z.b.bkpcp.top/m.php?id=gdws
+青海卫视,http://z.b.bkpcp.top/m.php?id=qhws
+吉林卫视,http://z.b.bkpcp.top/m.php?id=jlws
+
 贵州卫视,http://annaxi.lw-home.com:11111/udp/239.253.254.113:8000
 海南卫视,http://annaxi.lw-home.com:11111/udp/239.253.254.179:8000
 河北卫视,http://annaxi.lw-home.com:11111/udp/239.253.254.112:8000
