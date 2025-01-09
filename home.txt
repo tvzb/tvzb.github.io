@@ -14,6 +14,7 @@ CCTV12,http://z.b.bkpcp.top/m.php?id=cctv12
 CCTV13,http://z.b.bkpcp.top/m.php?id=cctv13
 CCTV14,http://z.b.bkpcp.top/m.php?id=cctv14
 CCTV15,http://z.b.bkpcp.top/m.php?id=cctv15
+CCTV16,http://171.120.109.24:9003//hls/17/index.m3u8
 CCTV17,http://z.b.bkpcp.top/m.php?id=cctv17
 CCTV1,http://113.57.111.4:1111/tsfile/live/1000_1.m3u8
 CCTV2,http://113.57.111.4:1111/tsfile/live/1001_1.m3u8
@@ -89,7 +90,6 @@ CCTV12,http://171.120.109.24:9003//hls/13/index.m3u8
 CCTV13,http://171.120.109.24:9003//hls/14/index.m3u8
 CCTV14,http://171.120.109.24:9003//hls/15/index.m3u8
 CCTV15,http://171.120.109.24:9003//hls/16/index.m3u8
-CCTV16,http://171.120.109.24:9003//hls/17/index.m3u8
 CCTV17,http://171.120.109.24:9003//hls/18/index.m3u8
 
 卫视频道,#genre#
