@@ -76,6 +76,7 @@ CCTV17,http://annaxi.lw-home.com:11111/udp/239.253.254.168:8000
 
 
 卫视频道,#genre#
+江西卫视,http://219.145.93.74:9999/tsfile/live/0141_1.m3u8
 江西卫视,http://z.b.bkpcp.top/m.php?id=jxws
 东方卫视,https://www.freetv.top/migu/651632648.m3u8?migutoken=e765bb663396911e0fa027f64c4378a4811b733586444461515451642f01e401c61987a7256405e562f272d4a45cf003c8974fd47f47765203988df87102570687a04fcdd402aa62918f1cad2f
 浙江卫视,http://ali-m-l.cztv.com/channels/lantian/channel001/1080p.m3u8
