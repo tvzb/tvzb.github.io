@@ -41,6 +41,21 @@ CCTV16,https://yunmei.tv/main/cctv-16.m3u8
 CCTV17,http://www.freetv.top/migu/673168256.m3u8?migutoken=698e0ff1ba47e7b3e38326199e2ee0a1b7bd0b0dd192935d111a196fb0a283c3070537cce6951301b2cc3e6f7de31ffdb9b7c4095d6c008d8333e21e5070375ca86124640133c9fa4c6ffa847f
 CCTV5+,http://www.freetv.top/migu/641886773.m3u8?migutoken=752524a725f1fe3e2f8566518e97cd59f827e367318341fa56132b91af956b4e1cd85f255dd26352c1e9611c76770d0ba4afaf07d71eb65ec9859b3d8239dd7806fb2b21c9410b3e062eab2fcc
 
+CCTV1,http://dsm.huarunguoji.top:35455/gaoma/cctv1.m3u8
+CCTV2,http://dsm.huarunguoji.top:35455/gaoma/cctv2.m3u8
+CCTV3,http://dsm.huarunguoji.top:35455/gaoma/cctv3.m3u8
+CCTV4,http://dsm.huarunguoji.top:35455/gaoma/cctv4.m3u8
+CCTV4,http://dsm.huarunguoji.top:35455/gaoma/cctv4k.m3u8
+CCTV5,http://dsm.huarunguoji.top:35455/gaoma/cctv5.m3u8
+CCTV6,http://dsm.huarunguoji.top:35455/gaoma/cctv6.m3u8
+CCTV7,http://dsm.huarunguoji.top:35455/gaoma/cctv7.m3u8
+CCTV12,http://dsm.huarunguoji.top:35455/gaoma/cctv12.m3u8
+CCTV13,http://dsm.huarunguoji.top:35455/gaoma/cctv13.m3u8
+CCTV14,http://dsm.huarunguoji.top:35455/gaoma/cctv14.m3u8
+CCTV15,http://dsm.huarunguoji.top:35455/gaoma/cctv15.m3u8
+CCTV17,http://dsm.huarunguoji.top:35455/gaoma/cctv17.m3u8
+CCTV5+,http://dsm.huarunguoji.top:35455/gaoma/cctv5p.m3u8
+
 CCTV1,http://58.19.38.162:9901/tsfile/live/0001_2.m3u8
 CCTV1,http://58.19.38.162:9901/tsfile/live/0001_1.m3u8
 CCTV2,http://58.19.38.162:9901/tsfile/live/0002_1.m3u8
