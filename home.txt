@@ -193,3 +193,19 @@ CCTV17,http://annaxi.lw-home.com:11111/udp/239.253.254.168:8000
 卡酷少儿http://annaxi.lw-home.com:11111/udp/239.253.254.66:8000
 动漫秀场http://annaxi.lw-home.com:11111/udp/239.253.254.115:8000
 
+斩神,#genre#
+斩神1,https://c1.ddbbffcdn.com/video/zhanshenzhifanchenshenyu/第01集/index.m3u8
+斩神2,https://c1.ddbbffcdn.com/video/zhanshenzhifanchenshenyu/第02集/index.m3u8
+斩神3,https://c1.ddbbffcdn.com/video/zhanshenzhifanchenshenyu/第03集/index.m3u8
+斩神4,https://c1.ddbbffcdn.com/video/zhanshenzhifanchenshenyu/第04集/index.m3u8
+斩神5,https://c1.ddbbffcdn.com/video/zhanshenzhifanchenshenyu/第05集/index.m3u8
+斩神6,https://c1.ddbbffcdn.com/video/zhanshenzhifanchenshenyu/第06集/index.m3u8
+斩神7,https://c1.ddbbffcdn.com/video/zhanshenzhifanchenshenyu/第07集/index.m3u8
+斩神8,https://c1.ddbbffcdn.com/video/zhanshenzhifanchenshenyu/第08集/index.m3u8
+斩神9,https://c1.ddbbffcdn.com/video/zhanshenzhifanchenshenyu/第09集/index.m3u8
+斩神10,https://c1.ddbbffcdn.com/video/zhanshenzhifanchenshenyu/第10集/index.m3u8
+斩神11,https://c1.7bbffvip.com/video/zhanshenzhifanchenshenyu/第11集/index.m3u8
+斩神12,https://c1.7bbffvip.com/video/zhanshenzhifanchenshenyu/第12集/index.m3u8
+斩神13,https://c1.7bbffvip.com/video/zhanshenzhifanchenshenyu/第13集/index.m3u8
+斩神14,https://c1.7bbffvip.com/video/zhanshenzhifanchenshenyu/第14集/index.m3u8
+斩神15,https://c1.7bbffvip.com/video/zhanshenzhifanchenshenyu/第15集/index.m3u8
