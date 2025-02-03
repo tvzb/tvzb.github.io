@@ -194,6 +194,21 @@ CCTV17,http://annaxi.lw-home.com:11111/udp/239.253.254.168:8000
 动漫秀场http://annaxi.lw-home.com:11111/udp/239.253.254.115:8000
 
 斩神,#genre#
+斩神1,https://play.xluuss.com/play/xe7GmDje/index.m3u8 
+斩神2,https://play.xluuss.com/play/xbo5rYke/index.m3u8 
+斩神3,https://play.xluuss.com/play/6dBW3PNe/index.m3u8 
+斩神4,https://play.xluuss.com/play/Pe9KRWxb/index.m3u8 
+斩神5,https://play.xluuss.com/play/PdRx1vOa/index.m3u8 
+斩神6,https://play.xluuss.com/play/vbmo08pe/index.m3u8 
+斩神7,https://play.xluuss.com/play/mbkm0LJe/index.m3u8 
+斩神8,https://play.xluuss.com/play/NbWDD6Ed/index.m3u8 
+斩神9,https://play.xluuss.com/play/Qe182gGd/index.m3u8 
+斩神10,https://play.xluuss.com/play/zbqN790d/index.m3u8 
+斩神11,https://play.xluuss.com/play/9avVRgXa/index.m3u8 
+斩神12,https://play.xluuss.com/play/9avVLo8a/index.m3u8 
+斩神13,https://play.xluuss.com/play/Pe94Y8Jd/index.m3u8 
+斩神14,https://play.xluuss.com/play/vbmJNQRd/index.m3u8 
+斩神15,https://play.xluuss.com/play/vbmJNQGd/index.m3u8 
 斩神1,https://c1.ddbbffcdn.com/video/zhanshenzhifanchenshenyu/第01集/index.m3u8
 斩神2,https://c1.ddbbffcdn.com/video/zhanshenzhifanchenshenyu/第02集/index.m3u8
 斩神3,https://c1.ddbbffcdn.com/video/zhanshenzhifanchenshenyu/第03集/index.m3u8
