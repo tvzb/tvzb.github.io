@@ -1,4 +1,9 @@
 中央频道,#genre#
+CCTV1,http://36.40.236.179:9999/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV2,http://36.40.236.179:9999/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV3,http://36.40.236.179:9999/tsfile/live/0003_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV4,http://36.40.236.179:9999/tsfile/live/0004_1.m3u8?key=txiptv&playlive=1&authid=0
+
 CCTV1,http://113.220.234.47:9999/tsfile/live/0017_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV2,http://113.220.234.47:9999/tsfile/live/0018_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV3,http://113.220.234.47:9999/tsfile/live/0019_1.m3u8?key=txiptv&playlive=1&authid=0
