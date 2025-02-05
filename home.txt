@@ -42,16 +42,14 @@ CCTV15,http://113.220.234.47:9999/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&
 黑龙江卫视,http://tvpull.careryun.com/tv/cn_hljws.m3u8
 安徽卫视,http://tvpull.careryun.com/tv/ahws.m3u8
 重庆卫视,http://tvpull.careryun.com/tv/cn_cqws.m3u8
-东南卫视,http://tvpull.careryun.com/tv/cn_dnws.m3u8
 甘肃卫视,http://tvpull.careryun.com/tv/cn_gsws.m3u8
 广西卫视,http://tvpull.careryun.com/tv/cn_gxws.m3u8
 贵州卫视,http://tvpull.careryun.com/tv/cn_gzws.m3u8
 河北卫视,http://tvpull.careryun.com/tv/hbws.m3u8
-河北卫视,http://tvpull.careryun.com/tv/cn_hbws.m3u8
+湖北卫视,http://tvpull.careryun.com/tv/cn_hbws.m3u8
 河南卫视,http://tvpull.careryun.com/tv/cn_hnws.m3u8
 吉林卫视,http://tvpull.careryun.com/tv/jlws.m3u8
 江苏卫视,http://tvpull.careryun.com/tv/jsws.m3u8
-辽宁卫视,http://tvpull.careryun.com/tv/cn_lnws.m3u8
 宁夏卫视,http://tvpull.careryun.com/tv/cn_nxws.m3u8
 青海卫视,http://tvpull.careryun.com/tv/qhws.m3u8
 陕西卫视,http://tvpull.careryun.com/tv/sxws.m3u8
