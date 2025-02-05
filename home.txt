@@ -138,6 +138,7 @@ X战警,http://liushizupu.site:35455/yy/1382736893
 岳云鹏宋小宝,http://liushizupu.site:35455/yy/1354926612
 
 斗鱼电影,#genre#
+魔童闹海,https://play.xluuss.com/play/9avP9y8d/index.m3u8
 斗鱼电影1,https://www.goodiptv.club/douyu/4246519
 斗鱼电影1,https://live.metshop.top/douyu/4246519
 斗鱼电影1,http://www.52sw.top:678/play/douyu.php?id=4246519
@@ -159,6 +160,9 @@ X战警,http://liushizupu.site:35455/yy/1382736893
 斗鱼电影25,https://live.metshop.top/douyu/8945323
 斗鱼电影35,https://www.goodiptv.club/douyu/1165374
 斗鱼电影29,https://live.metshop.top/douyu/9651304
+
+
+魔童闹海,https://play.xluuss.com/play/9avP9y8d/index.m3u8
 
 斩神,#genre#
 斩神1,https://play.xluuss.com/play/xe7GmDje/index.m3u8 
