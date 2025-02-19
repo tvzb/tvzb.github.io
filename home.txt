@@ -199,7 +199,7 @@ CCTV15,http://113.220.234.47:9999/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&
 第24集,https://hd.ijycnd.com/play/Le3GXr4e/index.m3u8
 第25集,https://hd.ijycnd.com/play/kazoz5Ob/index.m3u8
 
-茶馆-陈宝国,#genre#
+茶馆1,#genre#
 第01集,https://v.cdnlz20.com/20241127/21849_6e5fcc19/index.m3u8
 第02集,https://v.cdnlz20.com/20241127/21850_67a0bcac/index.m3u8
 第03集,https://v.cdnlz20.com/20241127/21851_cabfac24/index.m3u8
@@ -239,6 +239,7 @@ CCTV15,http://113.220.234.47:9999/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&
 第37集,https://v.cdnlz20.com/20241130/22360_ee7d573a/index.m3u8
 第38集,https://v.cdnlz20.com/20241127/21886_d528445c/index.m3u8
 第39集,https://v.cdnlz20.com/20241127/21887_320d4530/index.m3u8
+茶馆2,#genre#
 第01集,https://c1.rrcdnbf6.com/video/chaguan2010/第01集/index.m3u8
 第02集,https://c1.rrcdnbf5.com/video/chaguan2010/第02集/index.m3u8
 第03集,https://c1.rrcdnbf6.com/video/chaguan2010/第03集/index.m3u8
@@ -278,6 +279,7 @@ CCTV15,http://113.220.234.47:9999/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&
 第37集,https://c1.rrcdnbf5.com/video/chaguan2010/第37集/index.m3u8
 第38集,https://c1.rrcdnbf6.com/video/chaguan2010/第38集/index.m3u8
 第39集,https://c1.rrcdnbf5.com/video/chaguan2010/第39集/index.m3u8
+茶馆3,#genre#
 第1集,https://play.subokk.com/play/DdwzlxXb/index.m3u8
 第2集,https://play.subokk.com/play/1aMP6g1e/index.m3u8
 第3集,https://play.subokk.com/play/5eVq9rod/index.m3u8
