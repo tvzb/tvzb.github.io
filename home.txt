@@ -366,6 +366,8 @@ X战警,http://liushizupu.site:35455/yy/1382736893
 哪吒,https://v2.longshengtea.com/yyv2/202502/13/8D5yhT7b1u21/video/index.m3u8
 哪吒,https://play.hhuus.com/play/Qe1XkYZd/index.m3u8
 哪吒,https://hd.ijycnd.com/play/QeZ2EwQe/index.m3u8
+哪吒,https://play.subokk.com/play/QbY1DQAb/index.m3u8
+哪吒,https://v.cdnlz3.com/20250130/32951_7aff9de8/index.m3u8
 金刚2005-1,https://play.xluuss.com/play/Ddwpj88e/index.m3u8
 金刚2005-2,https://v.gsuus.com/play/9av2g75a/index.m3u8
 金刚2005-3,https://v1.longshengtea.com/yyv1/202308/20/yjtwjdtG4B2/video/index.m3u8
@@ -391,7 +393,5 @@ X战警,http://liushizupu.site:35455/yy/1382736893
 金刚2005-23,https://v1.xingchongwang.com/yyv1/202308/20/yjtwjdtG4B2/video/index.m3u8
 金刚2005-24,https://vod4.wgslsw.com/20240413/0wdCZ36Y/index.m3u8
 金刚2005-25,https://v1.bxgbnet.com/yyv1/202308/20/yjtwjdtG4B2/video/index.m3u8
-哪吒,https://play.subokk.com/play/QbY1DQAb/index.m3u8
-哪吒,https://v.cdnlz3.com/20250130/32951_7aff9de8/index.m3u8
 
 
