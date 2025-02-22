@@ -361,6 +361,33 @@ CCTV15,http://113.220.234.47:9999/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&
 第38集,https://play.subokk.com/play/DbDDAA6b/index.m3u8
 第39集,https://play.subokk.com/play/Ddwzllrb/index.m3u8
 
+剑来,#genre#
+剑来动画版2024-第1集,https://m1.taopianplay1.com:43333/c56b1bc09da3/HD/2024-08-16/30/95ee21a9abd0/cee868d1394e/playlist.m3u8
+剑来动画版2024-第2集,https://m1.taopianplay1.com:43333/c56b1bc09da3/HD/2024-08-16/30/95ee21a9abd0/3d95825fda85/playlist.m3u8
+剑来动画版2024-第3集,https://m1.taopianplay1.com:43333/c56b1bc09da3/HD/2024-08-16/30/95ee21a9abd0/525a9dad99c1/playlist.m3u8
+剑来动画版2024-第4集,https://m1.taopianplay1.com:43333/c56b1bc09da3/HD/2024-08-23/30/95ee21a9abd0/3745bcab2cb5/playlist.m3u8
+剑来动画版2024-第5集,https://m1.taopianplay1.com:43333/c56b1bc09da3/HD/2024-08-30/30/95ee21a9abd0/c22985507bf8/playlist.m3u8
+剑来动画版2024-第6集,https://m1.taopianplay1.com:43333/c56b1bc09da3/HD/2024-09-06/30/95ee21a9abd0/b6074037fcb9/playlist.m3u8
+剑来动画版2024-第7集,https://m1.taopianplay1.com:43333/c56b1bc09da3/HD/2024-09-13/30/95ee21a9abd0/c101d4d3c6ca/playlist.m3u8
+剑来动画版2024-第8集,https://m1.taopianplay1.com:43333/c56b1bc09da3/HD/2024-09-20/30/95ee21a9abd0/f6ac0be6042c/playlist.m3u8
+剑来动画版2024-第9集,https://sd8.taopianplay1.com:43333/c56b1bc09da3/HD/2024-10-07/30/95ee21a9abd0/0ab0be927c4a/playlist.m3u8
+剑来动画版2024-第10集,https://sd8.taopianplay1.com:43333/c56b1bc09da3/HD/2024-10-07/30/95ee21a9abd0/2f6ef710009e/playlist.m3u8
+剑来动画版2024-第11集,https://sd8.taopianplay1.com:43333/c56b1bc09da3/HD/2024-10-11/30/95ee21a9abd0/a300b23ee84d/playlist.m3u8
+剑来动画版2024-第12集,https://sd8.taopianplay1.com:43333/c56b1bc09da3/HD/2024-10-18/30/95ee21a9abd0/a21ad33b101f/playlist.m3u8
+剑来动画版2024-第13集,https://sd8.taopianplay1.com:43333/c56b1bc09da3/HD/2024-10-25/30/95ee21a9abd0/5505e95536b1/playlist.m3u8
+剑来动画版2024-第14集,https://sd8.taopianplay1.com:43333/c56b1bc09da3/HD/2024-11-01/30/95ee21a9abd0/42d8a5e99e3c/playlist.m3u8
+剑来动画版2024-第15集,https://sd8.taopianplay1.com:43333/c56b1bc09da3/HD/2024-11-08/30/95ee21a9abd0/9084f66e9eb9/playlist.m3u8
+剑来动画版2024-第16集,https://sd8.taopianplay1.com:43333/c56b1bc09da3/HD/2024-11-15/30/95ee21a9abd0/705f82062817/playlist.m3u8
+剑来动画版2024-第17集,https://sd8.taopianplay1.com:43333/c56b1bc09da3/HD/2024-11-22/30/95ee21a9abd0/e0bfe1a992a2/playlist.m3u8
+剑来动画版2024-第18集,https://sd8.taopianplay1.com:43333/c56b1bc09da3/HD/2024-11-29/30/95ee21a9abd0/4d88eb7b7c25/playlist.m3u8
+剑来动画版2024-第19集,https://sd8.taopianplay1.com:43333/c56b1bc09da3/HD/2024-12-06/30/95ee21a9abd0/cec25cdebf2c/playlist.m3u8
+剑来动画版2024-第20集,https://sd8.taopianplay1.com:43333/c56b1bc09da3/HD/2024-12-13/30/95ee21a9abd0/f6bb82e45a29/playlist.m3u8
+剑来动画版2024-第21集,https://sd8.taopianplay1.com:43333/c56b1bc09da3/HD/2024-12-16/30/95ee21a9abd0/14f49c196774/playlist.m3u8
+剑来动画版2024-第22集,https://sd8.taopianplay1.com:43333/c56b1bc09da3/HD/2024-12-16/30/95ee21a9abd0/d16930785437/playlist.m3u8
+剑来动画版2024-第23集,https://sd8.taopianplay1.com:43333/c56b1bc09da3/HD/2024-12-16/30/95ee21a9abd0/af3b1483eba4/playlist.m3u8
+剑来动画版2024-第24集,https://sd8.taopianplay1.com:43333/c56b1bc09da3/HD/2024-12-16/30/95ee21a9abd0/16574b6d6de6/playlist.m3u8
+剑来动画版2024-第25集,https://sd8.taopianplay1.com:43333/c56b1bc09da3/HD/2024-12-16/30/95ee21a9abd0/db1f43fd7b7f/playlist.m3u8
+剑来动画版2024-第26集,https://sd8.taopianplay1.com:43333/c56b1bc09da3/HD/2024-12-16/30/95ee21a9abd0/c791ef679af7/playlist.m3u8
 
 电影轮播,#genre#
 电影_盗墓,http://rihou.cc:555/huyad.php?id=21059552
