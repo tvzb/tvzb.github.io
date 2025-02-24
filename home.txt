@@ -160,7 +160,6 @@ CCTV15,http://113.220.234.47:9999/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&
 全集,https://v4.bxgbnet.com/yyv4/202412/14/FyuMAdRpRt19/video/index.m3u8
 全集,https://v4.qdhdcate.com/yyv4/202412/14/FyuMAdRpRt19/video/index.m3u8
 全集,https://vod12.wgslsw.com/20241218/7Yyj9H6pYk83/index.m3u8
-全集,https://v4.xingchongwang.com/yyv4/202412/14/FyuMAdRpRt19/video/index.m3u8
 
 西游记86,#genre#
 第1集,https://play.hhuus.com/play/lejPKVBb/index.m3u8
