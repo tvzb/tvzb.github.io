@@ -277,7 +277,7 @@ CCTV15,http://113.220.234.47:9999/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&
 第24集,https://hd.ijycnd.com/play/Le3GXr4e/index.m3u8
 第25集,https://hd.ijycnd.com/play/kazoz5Ob/index.m3u8
 
-茶馆A,#genre#
+茶馆2010,#genre#
 第1集,https://hd.ijycnd.com/play/7axAmyPb/index.m3u8
 第2集,https://hd.ijycnd.com/play/0dNgRj8e/index.m3u8
 第3集,https://hd.ijycnd.com/play/NbWrRvoa/index.m3u8
