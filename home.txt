@@ -206,6 +206,9 @@ CCTV15,http://113.220.234.47:9999/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&
 第4集,https://play.hhuus.com/play/QbYgQz9e/index.m3u8
 第5集,https://play.hhuus.com/play/Qe1RYXoa/index.m3u8
 第6集,https://play.hhuus.com/play/ZdP4Mnld/index.m3u8
+第7集,https://cdn13.yzzy-tv-cdn.com/20230411/25489_14c5d9d7/index.m3u8
+第7集,https://vip.ffzy-online2.com/20230811/42806_04ee3acb/index.m3u8
+第7集,https://ikcdn01.ikzybf.com/20220921/yjUy4YJv/index.m3u8
 第8集,https://play.hhuus.com/play/7e5YlBZe/index.m3u8
 第9集,https://play.hhuus.com/play/xe74ngGa/index.m3u8
 第10集,https://play.hhuus.com/play/wdL4YKWd/index.m3u8
