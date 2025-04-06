@@ -1,0 +1,52 @@
+{
+  "sites": [
+    {
+      "key": "source_a",
+      "name": "极速",
+      "type": 0,
+      "api": "https://jszyapi.com/api.php/provide/vod/at/json",
+      "searchable": 1,
+      "quickSearch": 1
+    },
+    {
+      "key": "source_b",
+      "name": "光速",
+      "type": 0,
+      "api": "https://api.guangsuapi.com/api.php/provide/vod/josn",
+      "searchable": 1,
+      "quickSearch": 1
+    },
+    {
+      "key": "source_c",
+      "name": "豪华",
+      "type": 0,
+      "api": "https://hhzyapi.com/api.php/provide/vod/at/json",
+      "searchable": 1,
+      "quickSearch": 1
+    },
+    {
+      "key": "source_d",
+      "name": "快车",
+      "type": 0,
+      "api": "https://caiji.kuaichezy.org/api.php/provide/vod/?ac=list",
+      "searchable": 1,
+      "quickSearch": 1
+    },
+    {
+      "key": "source_e",
+      "name": "虎牙",
+      "type": 0,
+      "api": "https://www.huyaapi.com/api.php/provide/vod/from/hym3u8/at/json",
+      "searchable": 1,
+      "quickSearch": 1
+    },
+    {
+      "key": "source_f",
+      "name": "速播",
+      "type": 0,
+      "api": "https://subocaiji.com/api.php/provide/vod/at/json",
+      "searchable": 1,
+      "quickSearch": 1
+    }
+  ]
+}
