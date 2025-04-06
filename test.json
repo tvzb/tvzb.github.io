@@ -30,59 +30,9 @@
     {"id": 28,"name": "寒27","url": "https://jx.playerjy.com/?url=","isActive": true,"id": 250}
     ],
 
-  "iptv": [
-   {
-      "id": 1,
-      "name": "胜寒1",
-      "url": "https://github.moeyy.xyz/raw.githubusercontent.com/hanhan8127/TVBox/main/live.txt",
-      "type": "remote",
-      "isActive": true,
-      "epg": "https://epg.112114.xyz/"
-    },
-    {
-      "id": 2,
-      "name": "胜寒2",
-      "url": "https://mirror.ghproxy.com/raw.githubusercontent.com/hanhan8127/TVBox/main/live.txt",
-      "isActive": true,
-      "type": "remote",
-      "epg": "https://epg.112114.xyz/"
-    },
-    {
-      "id": 3,
-      "name": "888",
-      "url": "http://a.rihou.cc/lib/live.txt",
-      "isActive": true,
-      "type": "remote",
-      "epg": "https://epg.112114.xyz/"
-    },
-  
-    {
-      "name": "999",
-      "url": "http://qrh.yimkj.cn/ym/lib/zb1122.txt",
-      "epg": "https://epg.112114.xyz/",
-      "type": "remote",
-      "isActive": true,
-      "id": 4
-    }
-  ],
-
   "sites": [
     
-     {
-      "key": "cb658939-5abf-5d37-81d9-16633d80818e",
-      "name": "胜寒推荐",
-      "api": "https://api.1080zyku.com/inc/apijson.php",
-      "download": "",
-      "playUrl": "",
-      "group": "影视",
-      "search": 1,
-      "status": true,
-      "type": 1,
-      "id": 1,
-      "isActive": true,
-      "resource": 48916
-    },
-    {
+   {
       "key": "lziapi",
       "name": "量子资源",
       "api": "http://cj.lziapi.com/api.php/provide/vod/",
