@@ -1,6 +1,7 @@
-
 {
 "wallpaper": "https://pictures.catvod.eu.org",
+"spider":"http://127.0.0.1:9978/file/TVBox/jar/fm.jar",
+//"lives":[{"group":"redirect","channels":[{"name":"redirect","urls":["proxy://do=live&type=txt&ext=Y2xhbjovL1RWQm94L3R2L2xpdmUudHh0"]}]}],
 "lives": [
 {"name": "本地","type": 0,"url": "http://127.0.0.1:9978/file/TVBox/tv/live.txt","playerType":1,"ua": "okhttp/3.15","epg": "http://epg.112114.xyz/?ch={name}&date={date}","logo": "https://epg.112114.xyz/logo/{name}.png"},
 {"name": "爽翻天","type": 0,"url": "aHR0cHM6Ly9teTUzNTMuY29tL3Y2emJ5","playerType": 1,"ua": "okhttp/3.15","epg": "http://epg.112114.xyz/?ch={name}&date={date}","logo": "https://epg.112114.xyz/logo/{name}.png"},
