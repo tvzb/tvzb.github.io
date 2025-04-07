@@ -70,7 +70,7 @@
 "key":"无尽资源",
 "name":"无尽资源",
 "type":1,
-"api":"https://api.wujinapi.com/api.php/provide/vod/",
+"api":"https://api.wujinapi.net/api.php/provide/vod/",
 "playUrl":"https://jx.wujinkk.com/dplayer/?url=",
 "searchable":1,
 "quickSearch":1,
