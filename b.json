@@ -1,0 +1,38 @@
+[
+    {
+        "key": "百度资源",
+        "name": "百度资源",
+        "type": 1,
+        "api": "https://api.apibdzy.com/api.php/provide/vod/?ac=list",
+        "playUrl": "https://jx.jxbdzyw.com/m3u8/?url=",
+        "searchable": 1,
+        "quickSearch": 1,
+        "filterable": 1,
+        "categories": [
+            "大陆剧",
+            "国产动漫",
+            "大陆综艺",
+            "港澳剧",
+            "台湾剧",
+            "欧美剧",
+            "动画电影",
+            "喜剧片",
+            "动作片",
+            "爱情片",
+            "科幻片",
+            "恐怖片",
+            "剧情片",
+            "战争片",
+            "犯罪片",
+            "悬疑片",
+            "韩剧",
+            "日剧",
+            "其他剧",
+            "日韩综艺",
+            "港台综艺",
+            "欧美综艺",
+            "日韩动漫",
+            "欧美动漫"
+        ]
+    }
+]
