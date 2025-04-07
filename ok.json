@@ -1,6 +1,33 @@
 {
     "sites": [
         {
+            "key": "新浪资源",
+            "name": "新浪资源",
+            "type": 1,
+            "api": "https://api.xinlangapi.com/xinlangapi.php/provide/vod/josn",
+            "playUrl": "https://www.xinlangjiexi.com/m3u8/?url=",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 0,
+            "categories": [
+                “动作片”,
+                “爱情片”,
+                “科幻片”,
+                “战争片”,
+                “剧情片”,
+                “恐怖片”,
+                “喜剧片”,
+                “动漫电影”,
+                “大陆剧”,
+                “港澳剧”,
+                “台湾剧”,
+                “欧美剧”,
+                “韩剧”,
+                “日剧”,
+                “泰剧”
+            ]
+        },
+        {
             "key": "金鹰资源",
             "name": "金鹰资源",
             "type": 1,
