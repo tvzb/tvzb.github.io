@@ -1,3 +1,5 @@
+{
+"sites",[
 {"key":"海外看","name":"海外看","type":1,"api":"https://haiwaikan.com/api.php/provide/vod/","searchable":1,"quickSearch":1}
 {"key":"映迷","name":"映迷","type":1,"api":"https://www.inmi.app/api.php/provide/vod/","searchable":1,"quickSearch":1}
 {"key":"唐人街","name":"唐人街","type":1,"api":"https://www.tangrenjie.tv/api.php/provide/vod/","searchable":1,"quickSearch":1}
@@ -39,3 +41,4 @@
 {"key":"鱼乐资源","name":"鱼乐资源","type":1,"api":"https://api.ylzy.me/api.php/provide/vod/","searchable":1,"quickSearch":1}
 {"key":"大漠资源","name":"大漠资源","type":1,"api":"https://damozy1.com/api.php/provide/vod/","searchable":1,"quickSearch":1}
 {"key":"奇虎资源","name":"奇虎资源","type":1,"api":"https://caiji.qhzyapi.com/api.php/provide/vod","searchable":1,"quickSearch":1}
+]}
