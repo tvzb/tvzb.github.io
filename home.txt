@@ -1,5 +1,5 @@
 
-中央频道,#gere#
+中央频道,#genre#
 CCTV1,http://119.91.33.253/migu.php?id=cctv1 
 CCTV1,http://39.165.196.149:9003//hls/1/index.m3u8
 CCTV1,http://goo.bkpcp.top/mg/cctv1
@@ -136,7 +136,7 @@ CHC动作电影,http://z.b.bkpcp.top/m.php?id=dzdy
 CHC家庭影院,http://tvbox6.icu/tv/migu.php?id=chcjtdy
 CHC家庭影院,http://z.b.bkpcp.top/m.php?id=jtyy
 
-卫视频道,#gere#
+卫视频道,#genre#
 江西卫视,http://113.56.95.69:53765/tsfile/live/1016_1.m3u8?key=txiptv&playlive=1&authid=0
 江西卫视,http://150.158.112.123/php/dl.php?id=江西卫视
 江西卫视,http://39.164.160.249:9901/tsfile/live/0138_1.m3u8
