@@ -1,0 +1,2 @@
+https://raw.githubusercontent.com/asxs123/TV/d6016c17b45692e42006a13d02d4384766ce8739/output/result.txt
+http://api.mytv666.top/lives/free.php?type=txt
