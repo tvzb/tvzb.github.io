@@ -3,9 +3,6 @@ CCTV1,http://api.mytv666.top/api/mg.php?id=cctv1&auth_key=6dc83c58ebf01292014df5
 CCTV2,http://api.mytv666.top/api/mg.php?id=cctv2&auth_key=6dc83c58ebf01292014df5f110a33437b257e2ff381f5908f571cf708e17cafd&t=1745317523&session=b798b059cc9f11364c8b83bd7a2d22ad
 CCTV3,http://api.mytv666.top/api/mg.php?id=cctv3&auth_key=6dc83c58ebf01292014df5f110a33437b257e2ff381f5908f571cf708e17cafd&t=1745317523&session=b798b059cc9f11364c8b83bd7a2d22ad
 CCTV4,http://api.mytv666.top/api/mg.php?id=cctv4&auth_key=6dc83c58ebf01292014df5f110a33437b257e2ff381f5908f571cf708e17cafd&t=1745317523&session=b798b059cc9f11364c8b83bd7a2d22ad
-CCTV4欧洲,http://api.mytv666.top/api/mg.php?id=cctv4o&auth_key=6dc83c58ebf01292014df5f110a33437b257e2ff381f5908f571cf708e17cafd&t=1745317523&session=b798b059cc9f11364c8b83bd7a2d22ad
-CCTV4美洲,http://api.mytv666.top/api/mg.php?id=cctv4m&auth_key=6dc83c58ebf01292014df5f110a33437b257e2ff381f5908f571cf708e17cafd&t=1745317523&session=b798b059cc9f11364c8b83bd7a2d22ad
-CCTV5+,http://api.mytv666.top/api/mg.php?id=cctv5p&auth_key=6dc83c58ebf01292014df5f110a33437b257e2ff381f5908f571cf708e17cafd&t=1745317523&session=b798b059cc9f11364c8b83bd7a2d22ad
 CCTV5,http://api.mytv666.top/api/mg.php?id=cctv5&auth_key=6dc83c58ebf01292014df5f110a33437b257e2ff381f5908f571cf708e17cafd&t=1745317523&session=b798b059cc9f11364c8b83bd7a2d22ad
 CCTV6,http://api.mytv666.top/api/mg.php?id=cctv6&auth_key=6dc83c58ebf01292014df5f110a33437b257e2ff381f5908f571cf708e17cafd&t=1745317523&session=b798b059cc9f11364c8b83bd7a2d22ad
 CCTV7,http://api.mytv666.top/api/mg.php?id=cctv7&auth_key=6dc83c58ebf01292014df5f110a33437b257e2ff381f5908f571cf708e17cafd&t=1745317523&session=b798b059cc9f11364c8b83bd7a2d22ad
