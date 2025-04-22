@@ -1,21 +1,4 @@
 央视频道,#genre#
-CCTV-1,http://219.145.201.198:3389/cctv1ly/index.m3u8
-CCTV-2,http://123.138.88.162:3389/cctv2qp/index.m3u8
-CCTV-3,http://219.145.201.198:3389/cctv3pA/index.m3u8
-CCTV-4,http://123.138.88.162:3389/cctv4rC/index.m3u8
-CCTV-5,http://219.145.201.198:3389/cctv5yo/index.m3u8
-CCTV-6,http://123.138.88.162:3389/cctv6om/index.m3u8
-CCTV-7,http://219.145.201.198:3389/cctv7Et/index.m3u8
-CCTV-8,http://123.138.88.162:3389/cctv8Bk/index.m3u8
-CCTV-9,http://219.145.201.198:3389/cctv9Oy/index.m3u8
-CCTV-10,http://123.138.88.162:3389/cctv10yW/index.m3u8
-CCTV-11,http://219.145.201.198:3389/cctv11xW/index.m3u8
-CCTV-12,http://123.138.88.162:3389/cctv12vb/index.m3u8
-CCTV-13,http://219.145.201.198:3389/cctv13xM/index.m3u8
-CCTV-14,http://123.138.88.162:3389/cctv14Vh/index.m3u8
-CCTV-15,http://219.145.201.198:3389/cctv15xL/index.m3u8
-CCTV-16,http://123.138.88.162:3389/cctv16GL/index.m3u8
-CCTV-17,http://219.145.201.198:3389/cctv17MV/index.m3u8
 CCTV-1,https://p2.bdstatic.com/rtmp.liveshow.lss-user.baidubce.com/live/stream_bduid_6488563992_8982723413/merged_1707497046297_88536_25144_41936.m3u8
 CCTV-1,http://39.164.180.36:19901/tsfile/live/0001_2.m3u8?key=txiptv&playlive=0&authid=0
 CCTV-1,http://202.168.187.208:9089/tsfile/live/1003_1.m3u8?key=txiptv&playlive=1&authid=0
@@ -139,6 +122,23 @@ CCTV-17,http://222.219.183.103:8089/hls/17/index.m3u8
 CCTV-17,http://219.135.180.210:18888/hls/24/index.m3u8
 CCTV-17,http://183.223.157.33:9901/tsfile/live/0016_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-17,http://218.13.170.98:9901/tsfile/live/0016_1.m3u8?key=txiptv
+CCTV-1,http://219.145.201.198:3389/cctv1ly/index.m3u8
+CCTV-2,http://123.138.88.162:3389/cctv2qp/index.m3u8
+CCTV-3,http://219.145.201.198:3389/cctv3pA/index.m3u8
+CCTV-4,http://123.138.88.162:3389/cctv4rC/index.m3u8
+CCTV-5,http://219.145.201.198:3389/cctv5yo/index.m3u8
+CCTV-6,http://123.138.88.162:3389/cctv6om/index.m3u8
+CCTV-7,http://219.145.201.198:3389/cctv7Et/index.m3u8
+CCTV-8,http://123.138.88.162:3389/cctv8Bk/index.m3u8
+CCTV-9,http://219.145.201.198:3389/cctv9Oy/index.m3u8
+CCTV-10,http://123.138.88.162:3389/cctv10yW/index.m3u8
+CCTV-11,http://219.145.201.198:3389/cctv11xW/index.m3u8
+CCTV-12,http://123.138.88.162:3389/cctv12vb/index.m3u8
+CCTV-13,http://219.145.201.198:3389/cctv13xM/index.m3u8
+CCTV-14,http://123.138.88.162:3389/cctv14Vh/index.m3u8
+CCTV-15,http://219.145.201.198:3389/cctv15xL/index.m3u8
+CCTV-16,http://123.138.88.162:3389/cctv16GL/index.m3u8
+CCTV-17,http://219.145.201.198:3389/cctv17MV/index.m3u8
 第一剧场,http://183.237.95.108:9901/tsfile/live/1066_1.m3u8?key=txiptv&playlive=0&authid=0
 第一剧场,http://58.221.214.82:9901/tsfile/live/0015_2.m3u8?key=txiptv
 第一剧场,http://dassby.qqff.top:99/live/第一剧场/index.m3u8
@@ -408,17 +408,3 @@ NEWTV动作电影,http://43.138.0.72:35455/yy/1382736823
 NEWTV动作电影,http://dassby.qqff.top:99/live/CHC动作电影/index.m3u8
 NEWTV超级电影,https://cloudvideo.servers10.com:8081/8130/index.m3u8
 
-少儿地理,#genre#
-海绵宝宝,http://zzy789.xyz/douyu1.php?id=3949681
-中华小当家,http://kkk.jjjj.jiduo.me/api.php?n=tttt&id=8291&tk=e640d0a1bf70
-猫和老鼠,http://huanqiuzhibo.cn/manifest/huya.php?id=11352879
-经典动漫,http://61.133.118.228:5001/yy/24180320
-经典动漫,http://43.138.0.72:35455/yy/24180320
-Loupe 4K,https://d2dw21aq0j0l5c.cloudfront.net/playlist_3840x2160.m3u8
-Loupe 4K,http://kkk.jjjj.jiduo.me/api.php?n=tttt&id=4726&tk=f6cc1e0a0e1a
-动物星球,https://d18dyiwu97wm6q.cloudfront.net/playlist2160p.m3u8
-动物星球,http://ku9.3n.cc/smt.php?id=animalplanet_twn
-动物星球,http://122.117.71.103:8512/动物星球.m3u8
-amc电影台,http://122.117.71.103:8559/http/61.222.53.250:8092/upload/115/AMC_TS-1111_1.m3u8
-amc,http://fl5.moveonjoy.com/AMC_NETWORK/index.m3u8
-东森美洲卫视,http://38.64.72.148:80/hls/modn/list/2015/chunklist0.m3u8
