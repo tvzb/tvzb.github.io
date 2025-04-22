@@ -1,11 +1,29 @@
-https://raw.githubusercontent.com/asxs123/TV/d6016c17b45692e42006a13d02d4384766ce8739/output/result.txt
-https://raw.githubusercontent.com/fuleishu/ceshi/72e5eabbd12f53c8d2f7936429fb4eeeeafb4600/zhibo1.txt
+http://8.138.7.223/2025.txt
+https://live.iptv365.org/live.m3u
+https://gh.jasonzeng.dev/https://raw.githubusercontent.com/suxuang/myIPTV/master/ipv6.m3u
+http://175.178.251.183:6689/live.m3u
+https://gh.jasonzeng.dev/https://raw.githubusercontent.com/Guovin/iptv-api/gd/output/result.m3u
+https://gh.jasonzeng.dev/https://raw.githubusercontent.com/PizazzGY/TV/master/output/user_result.txt
+http://iptv.diyp.site/diyp.php
+http://211.154.28.50:5898/2025.txt
+https://livetv.gungfu2012.tk
 http://api.mytv666.top/lives/free.php?type=txt
-https://raw.githubusercontent.com/anbianxi/anbianxi/deefe6b71e2a1f146182b7e2116c3ed309d460eb/test.txt
-https://raw.githubusercontent.com/2025my/myiptv6/cd418c10cb9334de35cbffd3031221a637222874/tvshau.m3u
-https://github.com/KimShenGod/live/blob/369b72d5f312a76376e4b5a80f38b09540460513/iptv.m3u#L159
-
-
-
+http://iptv.huohuoaa.tech/jiekou/live.txt
+http://iptv.herissmon.dpdns.org/jiekou/live.txt
+https://10526.kstore.vip/星河浩瀚.txt
+http://xn--elt51t.azip.dpdns.org:5008/?type=txt
+https://ghproxy.net/https://raw.githubusercontent.com/ywg228/dsjtv/main/live.txt
+https://pan.baidu.re/down.php/a000e4282aff237d88e7dc2b7adf620f.txt
+http://nctv.top/x.txt
+https://hao-wu-liao-a.o0o0o0o0o0o.top/epg/live.m3u
+https://qu.ax/vUBde.txt
+https://gh.jasonzeng.dev/https://raw.githubusercontent.com/rad168/iptv/main/live.m3u
+https://gh.jasonzeng.dev/https://raw.githubusercontent.com/wwb521/live/main/tv.m3u
+https://gh.jasonzeng.dev/https://raw.githubusercontent.com/yoursmile66/TVBox/main/live.txt
+http://home.jundie.top:81/Cat/tv/live.txt
+https://gh.jasonzeng.dev/https://raw.githubusercontent.com/whpsky/IPTV/main/CHINATV.m3u
+http://iptv.catvod.com/tv.m3u
+https://gh.jasonzeng.dev/https://raw.githubusercontent.com/YanG-1989/m3u/refs/heads/main/Gather.m3u
+https://gh.jasonzeng.dev/https://raw.githubusercontent.com/fanmingming/live/refs/heads/main/tv/m3u/ipv6.m3u
 
 
