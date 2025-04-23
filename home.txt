@@ -98,7 +98,7 @@ CCTV17农业农村,http://39.165.196.149:9003//hls/17/index.m3u8
 海南卫视,http://api.mytv666.top/api/migu.php?id=海南卫视&type=1&auth_key=4802e2e81019c6cba588fc5c0d53bffb3191b7bdf214987766117d56e86262e7&t=1745411419&session=b798b059cc9f11364c8b83bd7a2d22ad
 东方卫视,http://api.mytv666.top/api/migu.php?id=东方卫视&type=1&auth_key=4802e2e81019c6cba588fc5c0d53bffb3191b7bdf214987766117d56e86262e7&t=1745411419&session=b798b059cc9f11364c8b83bd7a2d22ad
 广东卫视,http://api.mytv666.top/api/migu.php?id=广东卫视&type=1&auth_key=4802e2e81019c6cba588fc5c0d53bffb3191b7bdf214987766117d56e86262e7&t=1745411419&session=b798b059cc9f11364c8b83bd7a2d22ad
-
+江西卫视,http://112.30.73.119:9902/tsfile/live/0138_1.m3u8?key=txiptv&playlive=0&authid=0
 
 江西卫视,http://z.b.bkpcp.top/m.php?id=jxws
 东方卫视,http://z.b.bkpcp.top/m.php?id=dfws
