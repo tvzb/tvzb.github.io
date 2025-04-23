@@ -34,8 +34,6 @@ CCTV12社会与法,http://api.mytv666.top/api/migu.php?id=CCTV12社会与法&typ
 CCTV13新闻,http://api.mytv666.top/api/migu.php?id=CCTV13新闻&type=1&auth_key=f931a3e3bb4efd711a9288dd960d929e5456d99984efb18dbadd3acc306f1e6e&t=1745372928&session=b798b059cc9f11364c8b83bd7a2d22ad
 CCTV14少儿,http://api.mytv666.top/api/migu.php?id=CCTV14少儿&type=1&auth_key=f931a3e3bb4efd711a9288dd960d929e5456d99984efb18dbadd3acc306f1e6e&t=1745372928&session=b798b059cc9f11364c8b83bd7a2d22ad
 CCTV15音乐,http://api.mytv666.top/api/migu.php?id=CCTV15音乐&type=1&auth_key=f931a3e3bb4efd711a9288dd960d929e5456d99984efb18dbadd3acc306f1e6e&t=1745372928&session=b798b059cc9f11364c8b83bd7a2d22ad
-CCTV-16奥利匹克,http://api.mytv666.top/api/migu.php?id=CCTV-16奥利匹克&type=1&auth_key=f931a3e3bb4efd711a9288dd960d929e5456d99984efb18dbadd3acc306f1e6e&t=1745372928&session=b798b059cc9f11364c8b83bd7a2d22ad
-CCTV17农业农村,http://api.mytv666.top/api/migu.php?id=CCTV17农业农村&type=1&auth_key=f931a3e3bb4efd711a9288dd960d929e5456d99984efb18dbadd3acc306f1e6e&t=1745372928&session=b798b059cc9f11364c8b83bd7a2d22ad
 
 卫视频道,#genre#
 江西卫视,http://39.165.196.149:9003//hls/46/index.m3u8
@@ -81,7 +79,7 @@ CCTV17农业农村,http://api.mytv666.top/api/migu.php?id=CCTV17农业农村&typ
 东方卫视,http://api.mytv666.top/api/migu.php?id=东方卫视&type=1&auth_key=f931a3e3bb4efd711a9288dd960d929e5456d99984efb18dbadd3acc306f1e6e&t=1745372928&session=b798b059cc9f11364c8b83bd7a2d22ad
 广东卫视,http://api.mytv666.top/api/migu.php?id=广东卫视&type=1&auth_key=f931a3e3bb4efd711a9288dd960d929e5456d99984efb18dbadd3acc306f1e6e&t=1745372928&session=b798b059cc9f11364c8b83bd7a2d22ad
 
-中央频道备用,#genre#
+中央备用,#genre#
 CCTV1,http://39.165.196.149:9003//hls/1/index.m3u8
 CCTV1,http://goo.bkpcp.top/mg/cctv1
 CCTV1,http://z.b.bkpcp.top/m.php?id=cctv1
@@ -134,7 +132,7 @@ CCTV17,http://z.b.bkpcp.top/m.php?id=cctv17
 CHC动作电影,http://z.b.bkpcp.top/m.php?id=dzdy
 CHC家庭影院,http://z.b.bkpcp.top/m.php?id=jtyy
 
-卫视频道备用,#genre#
+卫视备用,#genre#
 江西卫视,http://113.56.95.69:53765/tsfile/live/1016_1.m3u8?key=txiptv&playlive=1&authid=0
 江西卫视,http://150.158.112.123/php/dl.php?id=江西卫视
 江西卫视,http://39.164.160.249:9901/tsfile/live/0138_1.m3u8
