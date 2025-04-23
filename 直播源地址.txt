@@ -7,7 +7,7 @@ https://gh.jasonzeng.dev/https://raw.githubusercontent.com/PizazzGY/TV/master/ou
 http://iptv.diyp.site/diyp.php
 http://211.154.28.50:5898/2025.txt
 https://livetv.gungfu2012.tk
-http://api.mytv666.top/lives/free.php?type=txt
+有效：http://api.mytv666.top/lives/free.php?type=txt
 http://iptv.huohuoaa.tech/jiekou/live.txt
 http://iptv.herissmon.dpdns.org/jiekou/live.txt
 https://10526.kstore.vip/星河浩瀚.txt
