@@ -4,7 +4,6 @@ https://gh.jasonzeng.dev/https://raw.githubusercontent.com/suxuang/myIPTV/master
 http://175.178.251.183:6689/live.txt
 https://gh.jasonzeng.dev/https://raw.githubusercontent.com/Guovin/iptv-api/gd/output/result.txt
 https://gh.jasonzeng.dev/https://raw.githubusercontent.com/PizazzGY/TV/master/output/user_result.txt
-http://iptv.diyp.site/diyp.php
 http://211.154.28.50:5898/2025.txt
 https://livetv.gungfu2012.tk
 有效：http://api.mytv666.top/lives/free.php?type=txt
@@ -25,3 +24,45 @@ https://gh.jasonzeng.dev/https://raw.githubusercontent.com/whpsky/IPTV/main/CHIN
 http://iptv.catvod.com/tv.txt
 https://gh.jasonzeng.dev/https://raw.githubusercontent.com/YanG-1989/m3u/refs/heads/main/Gather.txt
 https://gh.jasonzeng.dev/https://raw.githubusercontent.com/fanmingming/live/refs/heads/main/tv/m3u/ipv6.txt
+
+# 自己添加的订阅源
+https://raw.githubusercontent.com/iptv-org/iptv/gh-pages/countries/kr.m3u
+https://raw.githubusercontent.com/iptv-org/iptv/master/streams/kr.m3u
+# 拾光｜影仓0312
+https://4708.kstore.space/svip/ITV.txt
+# 月光宝盒
+https://ygbh.site/bh.txt
+# NEW直播
+https://raw.githubusercontent.com/chuzjie/wuihui/main/小米/DSJ240101.txt
+# 七星itv
+https://gitlab.com/tvkj/loong/-/raw/main/loog.txt
+# 野火LIVE
+https://pastebin.com/raw/V0BhYHF4
+# 欧歌vjj
+https://欧歌vjj.u.nxog.top/m/tv/
+# 欧歌AI直播
+https://raw.githubusercontent.com/PizazzGY/TV/master/output/user_result.txt
+# 宝全影院272 ①live(EXO)、②Live(IJK)
+http://rihou.cc:55/lib/kx2024.txt
+# 宝全影院272 ③猫TV线路(EXO)、④猫TV线路(IJK)
+http://rihou.cc:567/gggg.nzk
+# 肥猫  同上
+# http://rihou.cc:555/gggg.nzk
+# 码点影仓
+http://mdxgh.tpddns.cn:9999/new/mdzb.txt
+# 易看电视
+http://117.72.68.25:9230/latest.txt
+# 海燕直播
+https://chuxinya.top/f/AD5QHE/%E6%B5%B7%E7%87%95.txt
+# 乘风TV-1.0.0-002
+http://file.91kds.cn/tvlist/2025030711/kds_all_lnyd.txt
+# 拾光ITV
+https://4708.kstore.space/svip/ITV.txt
+# 小苹果，蜗牛线路[测试2]
+http://wp.wadg.pro/down.php/d7b52d125998d00e2d2339bac6abd2b5.txt
+# 电视家9.0-2025
+http://8.138.7.223/2025.txt
+# 猫TV
+http://dd.rihou.cc:555/gggg.nzk
+# 飞蓝电视free_1.1.1_免费版
+# http://api.mytv666.top/lives/free.php?type=txt
