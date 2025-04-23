@@ -74,21 +74,6 @@ CCTV15音乐,http://api.mytv666.top/api/migu.php?id=CCTV15音乐&type=1&auth_key
 CCTV5 体育赛事,http://api.mytv666.top/api/migu.php?id=CCTV5 体育赛事&type=1&auth_key=f931a3e3bb4efd711a9288dd960d929e5456d99984efb18dbadd3acc306f1e6e&t=1745372928&session=b798b059cc9f11364c8b83bd7a2d22ad
 
 卫视频道,#genre#
-
-内蒙古卫视,http://113.195.7.56:9901/tsfile/live/0109_1.m3u8?key=txiptv&playlive=1&authid=0
-吉林卫视,http://113.195.7.56:9901/tsfile/live/0116_1.m3u8?key=txiptv&playlive=1&authid=0
-四川卫视,http://113.195.7.56:9901/tsfile/live/0123_2.m3u8?key=txiptv&playlive=0&authid=0
-天津卫视,http://113.195.7.56:9901/tsfile/live/0135_1.m3u8?key=txiptv&playlive=1&authid=0
-安徽卫视,http://113.195.7.56:9901/tsfile/live/0130_2.m3u8?key=txiptv&playlive=0&authid=0
-山东卫视,http://113.195.7.56:9901/tsfile/live/0131_2.m3u8?key=txiptv&playlive=0&authid=0
-山西卫视,http://113.195.7.56:9901/tsfile/live/0118_1.m3u8?key=txiptv&playlive=1&authid=0
-广东卫视,http://113.195.7.56:9901/tsfile/live/0125_2.m3u8?key=txiptv&playlive=0&authid=0
-广西卫视,http://113.195.7.56:9901/tsfile/live/0113_2.m3u8?key=txiptv&playlive=0&authid=0
-河南卫视,http://113.195.7.56:9901/tsfile/live/0139_1.m3u8?key=txiptv&playlive=1&authid=0
-湖北卫视,http://113.195.7.56:9901/tsfile/live/0132_1.m3u8?key=txiptv&playlive=1&authid=0
-重庆卫视,http://113.195.7.56:9901/tsfile/live/0142_2.m3u8?key=txiptv&playlive=0&authid=0
-黑龙江卫视,http://113.195.7.56:9901/tsfile/live/0143_1.m3u8?key=txiptv&playlive=1&authid=0
-
 江西卫视,http://goo.bkpcp.top/mg/jxws
 东方卫视,http://goo.bkpcp.top/mg/dfws
 广东卫视,http://goo.bkpcp.top/mg/gdws
@@ -108,6 +93,19 @@ CCTV5 体育赛事,http://api.mytv666.top/api/migu.php?id=CCTV5 体育赛事&typ
 江苏卫视,http://z.b.bkpcp.top/m.php?id=jsws
 青海卫视,http://z.b.bkpcp.top/m.php?id=qhws
 陕西卫视,http://z.b.bkpcp.top/m.php?id=sxws
+内蒙古卫视,http://113.195.7.56:9901/tsfile/live/0109_1.m3u8?key=txiptv&playlive=1&authid=0
+吉林卫视,http://113.195.7.56:9901/tsfile/live/0116_1.m3u8?key=txiptv&playlive=1&authid=0
+四川卫视,http://113.195.7.56:9901/tsfile/live/0123_2.m3u8?key=txiptv&playlive=0&authid=0
+天津卫视,http://113.195.7.56:9901/tsfile/live/0135_1.m3u8?key=txiptv&playlive=1&authid=0
+安徽卫视,http://113.195.7.56:9901/tsfile/live/0130_2.m3u8?key=txiptv&playlive=0&authid=0
+山东卫视,http://113.195.7.56:9901/tsfile/live/0131_2.m3u8?key=txiptv&playlive=0&authid=0
+山西卫视,http://113.195.7.56:9901/tsfile/live/0118_1.m3u8?key=txiptv&playlive=1&authid=0
+广东卫视,http://113.195.7.56:9901/tsfile/live/0125_2.m3u8?key=txiptv&playlive=0&authid=0
+广西卫视,http://113.195.7.56:9901/tsfile/live/0113_2.m3u8?key=txiptv&playlive=0&authid=0
+河南卫视,http://113.195.7.56:9901/tsfile/live/0139_1.m3u8?key=txiptv&playlive=1&authid=0
+湖北卫视,http://113.195.7.56:9901/tsfile/live/0132_1.m3u8?key=txiptv&playlive=1&authid=0
+重庆卫视,http://113.195.7.56:9901/tsfile/live/0142_2.m3u8?key=txiptv&playlive=0&authid=0
+黑龙江卫视,http://113.195.7.56:9901/tsfile/live/0143_1.m3u8?key=txiptv&playlive=1&authid=0
 
 江西卫视,http://39.165.196.149:9003//hls/46/index.m3u8
 北京卫视,http://39.165.196.149:9003//hls/27/index.m3u8
