@@ -16,6 +16,17 @@ CCTV14少儿,http://goo.bkpcp.top/mg/cctv14
 CCTV15音乐,http://goo.bkpcp.top/mg/cctv15
 CCTV17农业农村,http://goo.bkpcp.top/mg/cctv17
 
+CCTV1综合,http://107.174.52.32/itv.php?id=CCTV1
+CCTV2财经,http://107.174.52.32/itv.php?id=CCTV2
+CCTV3综艺,http://107.174.52.32/itv.php?id=CCTV3
+CCTV4中文国际,http://107.174.52.32/itv.php?id=CCTV4
+CCTV5体育,http://107.174.52.32/itv.php?id=CCTV5
+CCTV6电影,http://14.153.183.65:8883/bptv/10000100000000050000000003870749.m3u8
+CCTV7国防军事,http://107.174.52.32/itv.php?id=CCTV7
+CCTV8电视剧,http://107.174.52.32/itv.php?id=CCTV8
+CCTV9纪录,http://107.174.52.32/itv.php?id=CCTV9
+CCTV13新闻,http://8.138.7.223/tv/ptbtv.php?id=28
+
 CCTV1综合,http://api.mytv666.top/api/migu.php?id=CCTV1综合&type=1&auth_key=4802e2e81019c6cba588fc5c0d53bffb3191b7bdf214987766117d56e86262e7&t=1745411419&session=b798b059cc9f11364c8b83bd7a2d22ad
 CCTV2财经,http://api.mytv666.top/api/migu.php?id=CCTV2财经&type=1&auth_key=4802e2e81019c6cba588fc5c0d53bffb3191b7bdf214987766117d56e86262e7&t=1745411419&session=b798b059cc9f11364c8b83bd7a2d22ad
 CCTV3综艺,http://api.mytv666.top/api/migu.php?id=CCTV3综艺&type=1&auth_key=4802e2e81019c6cba588fc5c0d53bffb3191b7bdf214987766117d56e86262e7&t=1745411419&session=b798b059cc9f11364c8b83bd7a2d22ad
