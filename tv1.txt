@@ -1,4 +1,6 @@
-{"sites":[
+{
+"lives":[{"name":"live","type":0,"url":"https://tvzb.github.io/home.txt","playerType":1]}
+"sites":[
 {"key": "①豆瓣资源", "name": "豆瓣资源", "type": 1, "api": "https://caiji.dbzy.tv/api.php/provide/vod/", "playUrl": "https://www.dbzy8.com:699/?url=", "searchable": 1, "quickSearch": 1, "categories": ["爱情片", "伦理片", "综艺片", "恐怖片", "惊悚片", "科幻片", "战争片", "剧情片", "纪录片", "动作片", "喜剧片", "台湾剧", "泰国剧", "韩剧", "海外剧", "香港剧", "欧美剧", "国产剧", "反转爽剧", "连续剧", "日本剧", "国产动漫", "欧美动漫", "动漫", "海外动漫", "日本动漫"]},
 
 {"key": "②金鹰资源", "name": "金鹰资源", "type": 1, "api": "https://jyzyapi.com/provide/vod/", "playUrl": "https://hd.iapijy.com/play?url=", "searchable": 1, "quickSearch": 1, "categories": ["恐怖片", "伦理片", "科幻片", "动画片", "喜剧片", "记录片", "战争片", "爱情片", "动作片", "剧情片", "香港剧", "马泰剧", "短剧", "台湾剧", "日剧", "韩剧", "欧美剧", "电视剧", "内地剧", "欧美动漫", "动漫", "日本动漫", "中国动漫"]},
