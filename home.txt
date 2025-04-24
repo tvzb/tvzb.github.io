@@ -167,6 +167,14 @@ CCTV17农业农村,http://39.165.196.149:9003//hls/17/index.m3u8
 广东卫视,http://39.164.160.249:9901/tsfile/live/0125_1.m3u8
 
 极速精选,#genre#
+龙华电影,https://cdn3.132.us.kg/live/lhdy/stream.m3u8
+龙华经典,https://cdn3.132.us.kg/live/lhjd/stream.m3u8
+天映频道,http://php.jdshipin.com/smt.php?id=Celestial
+天映经典,http://php.jdshipin.com/smt.php?id=Celestial2
+美亚电影,http://php.jdshipin.com/TVOD/iptv.php?id=meiya
+纬来电影,http://mytv.cdn.com.mp/live/wldy/stream.m3u8
+好莱电影,http://mytv.cdn.com.mp/live/hlwdy/stream.m3u8
+东森电影,http://mytv.cdn.com.mp/live/dsdy/stream.m3u8
 家庭剧场,http://gdctyuncdnct.inter.ptqy.gitv.tv:80/tslive/c54_fast_877_720P_t10/c54_fast_877_720P_t10.m3u8?d 
 怀旧年代,http://newstreamcdnct.inter.ptqy.gitv.tv:80/tslive/c57_fast_883_720P_t10/c57_fast_883_720P_t10.m3u8?d 
 都市生活,http://bscloudcdnct.inter.ptqy.gitv.tv:80/tslive/c56_fast_878_720P_t10/c56_fast_878_720P_t10.m3u8?d 
