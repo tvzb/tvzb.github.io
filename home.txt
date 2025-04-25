@@ -166,7 +166,7 @@ CCTV17农业农村,http://39.165.196.149:9003//hls/17/index.m3u8
 海南卫视,http://39.165.196.149:9003//hls/55/index.m3u8
 广东卫视,http://39.164.160.249:9901/tsfile/live/0125_1.m3u8
 
-极速精选,#genre#
+影视频道,#genre#
 龙华电影,https://cdn3.132.us.kg/live/lhdy/stream.m3u8
 龙华经典,https://cdn3.132.us.kg/live/lhjd/stream.m3u8
 天映频道,http://php.jdshipin.com/smt.php?id=Celestial
