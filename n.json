@@ -1,6 +1,12 @@
 {  
     "spider": "./jar/巧技0410.txt",
     "wallpaper": "http://饭太硬.top/深色壁纸/api.php",
+    //type 是站点数据获取方式的总开关，1 表示标准接口不需要jar，3 表示自定义爬虫从jar中获取地址
+    //ext中以base64编码，以c开头 配置类型 j开头 json类型 f开头文件类型
+    //type: 1 从url直接获取无须jar 3 从jar中获取要有jar
+    //playerType: 1 内置播放器 2 外置播放器
+    //http://cdn.qiaoji8.com/tvbox.json
+
     "sites": [
         {"key":"Douban","name": "豆瓣热门","type":3,"jar":"./jar/肥猫.txt","api": "csp_Douban","searchable": 0,"returnFormat": "txt"},
         {"key":"蝴蝶","name":"🐴蝴蝶┃大良","type":3,"api":"csp_Hudie","playerType": 2,"ext": "7lj763gg402i794255648kj0hj539g9hl7k6jk52ji"},
