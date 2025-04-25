@@ -1,5 +1,5 @@
 {  
-    "spider": "https://raw.githubusercontent.com/skyyaman/skyyaman.github.io/main/4991538581867b7d50caa774463988760d206559/jar/巧技0410.txt",
+    "spider": "./jar/jq0410.txt",
     "wallpaper": "http://饭太硬.top/深色壁纸/api.php",
     "sites": [
         {"key":"Douban","name": "豆瓣热门","type":3,"jar":"./jar/肥猫.txt","api": "csp_Douban","searchable": 0,"returnFormat": "txt"},
