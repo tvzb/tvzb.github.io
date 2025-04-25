@@ -1,6 +1,7 @@
 {  
     "spider": "./jar/jq0410.txt",
     "wallpaper": "http://饭太硬.top/深色壁纸/api.php",
+    "lives": [ {"name": "live","type": 0,"url": "https://tvzb.github.io/home.txt" } ],
     "sites": [
         {"key":"Douban","name": "豆瓣热门","type":3,"jar":"./jar/肥猫.txt","api": "csp_Douban","searchable": 0,"returnFormat": "txt"},
         {"key":"蝴蝶","name":"蝴蝶","type":3,"api":"csp_Hudie","playerType": 2,"ext": "7lj763gg402i794255648kj0hj539g9hl7k6jk52ji"},
