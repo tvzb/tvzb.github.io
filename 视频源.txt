@@ -1,6 +1,6 @@
 TVBOX源：
 https://raw.githubusercontent.com/skyyaman/skyyaman.github.io/4991538581867b7d50caa774463988760d206559/index.json
-
+https://raw.githubusercontent.com/SSM0415/apptest/214fdea305288434a16a4efe6d773c9341e414b3/TVbox2.txt
 
 
 
