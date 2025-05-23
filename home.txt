@@ -1,14 +1,20 @@
 中央频道,#genre#
 CCTV1综合,http://goo.bkpcp.top/mg/cctv1
+CCTV1综合,http://ms.fxim.net:808/hls/8/index.m3u8
 CCTV2财经,http://goo.bkpcp.top/mg/cctv2
 CCTV3综艺,http://goo.bkpcp.top/mg/cctv3
 CCTV4中文国际,http://goo.bkpcp.top/mg/cctv4
 CCTV5体育,http://goo.bkpcp.top/mg/cctv5
+CCTV5体育,http://ms.fxim.net:808/hls/3/index.m3u8
 CCTV6电影,http://goo.bkpcp.top/mg/cctv6
+CCTV6电影,http://ms.fxim.net:808/hls/6/index.m3u8
 CCTV7国防军事,http://goo.bkpcp.top/mg/cctv7
 CCTV8电视剧,http://goo.bkpcp.top/mg/cctv8
+CCTV8电视剧,http://ms.fxim.net:808/hls/2/index.m3u8
 CCTV9纪录,http://goo.bkpcp.top/mg/cctv9
+CCTV9纪录,http://ms.fxim.net:808/hls/9/index.m3u8
 CCTV10科教,http://goo.bkpcp.top/mg/cctv10
+CCTV10科教,http://ms.fxim.net:808/hls/10/index.m3u8
 CCTV11戏曲,http://goo.bkpcp.top/mg/cctv11
 CCTV12社会与法,http://goo.bkpcp.top/mg/cctv12
 CCTV13新闻,http://goo.bkpcp.top/mg/cctv13
@@ -18,15 +24,23 @@ CCTV17农业农村,http://goo.bkpcp.top/mg/cctv17
 
 卫视频道,#genre#
 江西卫视,http://goo.bkpcp.top/mg/jxws
+江西卫视,http://112.30.73.119:9902/tsfile/live/0138_1.m3u8?key=txiptv&playlive=0&authid=0
 东方卫视,http://goo.bkpcp.top/mg/dfws
+东方卫视,http://ms.fxim.net:808/hls/4/index.m3u8
+浙江卫视,http://ms.fxim.net:808/hls/7/index.m3u8
+江苏卫视,http://goo.bkpcp.top/mg/jsws
+江苏卫视,http://ms.fxim.net:808/hls/1/index.m3u8
 广东卫视,http://goo.bkpcp.top/mg/gdws
 海南卫视,http://goo.bkpcp.top/mg/hinws
 湖北卫视,http://goo.bkpcp.top/mg/hubws
 吉林卫视,http://goo.bkpcp.top/mg/jlws
-江苏卫视,http://goo.bkpcp.top/mg/jsws
 青海卫视,http://goo.bkpcp.top/mg/qhws
 陕西卫视,http://goo.bkpcp.top/mg/sxws
-江西卫视,http://112.30.73.119:9902/tsfile/live/0138_1.m3u8?key=txiptv&playlive=0&authid=0
+
+未分类,#genre#
+
+
+
 
 影视频道,#genre#
 龙华电影,https://cdn3.132.us.kg/live/lhdy/stream.m3u8
