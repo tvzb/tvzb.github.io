@@ -1,4 +1,5 @@
 中央频道,#genre#
+CCTV-01,http://php.jdshipin.com/TVOD/iptv.php?id=rthk33
 CCTV-01,http://goo.bkpcp.top/mg/cctv1
 CCTV-02,http://goo.bkpcp.top/mg/cctv2
 CCTV-03,http://goo.bkpcp.top/mg/cctv3
