@@ -8,13 +8,13 @@ CCTV-06,http://106.52.196.79:80/TV/mui.php?id=cctv6
 CCTV-07,http://106.52.196.79:80/TV/mui.php?id=cctv7
 CCTV-08,http://106.52.196.79:80/TV/mui.php?id=cctv8
 CCTV-09,http://106.52.196.79:80/TV/mui.php?id=cctv9
-CCTV-010,http://106.52.196.79:80/TV/mui.php?id=cctv10
-CCTV-011,http://106.52.196.79:80/TV/mui.php?id=cctv11
-CCTV-012,http://106.52.196.79:80/TV/mui.php?id=cctv12
-CCTV-013,http://106.52.196.79:80/TV/mui.php?id=cctv13
-CCTV-014,http://106.52.196.79:80/TV/mui.php?id=cctv14
-CCTV-015,http://106.52.196.79:80/TV/mui.php?id=cctv15
-CCTV-017,http://106.52.196.79:80/TV/mui.php?id=cctv17
+CCTV-10,http://106.52.196.79:80/TV/mui.php?id=cctv10
+CCTV-11,http://106.52.196.79:80/TV/mui.php?id=cctv11
+CCTV-12,http://106.52.196.79:80/TV/mui.php?id=cctv12
+CCTV-13,http://106.52.196.79:80/TV/mui.php?id=cctv13
+CCTV-14,http://106.52.196.79:80/TV/mui.php?id=cctv14
+CCTV-15,http://106.52.196.79:80/TV/mui.php?id=cctv15
+CCTV-17,http://106.52.196.79:80/TV/mui.php?id=cctv17
 CCTV-01,https://rthktv33-live.akamaized.net/hls/live/2101641/RTHKTV33/stream05/streamPlaylist.m3u8?
 
 CCTV-01,http://php.jdshipin.com/TVOD/iptv.php?id=rthk33
