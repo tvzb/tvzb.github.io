@@ -1,7 +1,7 @@
 TVBOX源：
 https://raw.githubusercontent.com/skyyaman/skyyaman.github.io/4991538581867b7d50caa774463988760d206559/index.json
 https://raw.githubusercontent.com/SSM0415/apptest/214fdea305288434a16a4efe6d773c9341e414b3/TVbox2.txt
-https://raw.githubusercontent.com/Supprise0901/TVBox_live/0ca31978ecec3a631387da821f437f3dbd35c193/live.txt
+
 
 
 
@@ -26,6 +26,7 @@ https://raw.githubusercontent.com/Supprise0901/TVBox_live/0ca31978ecec3a631387da
 
 
 直播源地址：
+https://raw.githubusercontent.com/Supprise0901/TVBox_live/0ca31978ecec3a631387da821f437f3dbd35c193/live.txt
 http://8.138.7.223/2025.txt
 港台频道ok http://xn--elt51t.azip.dpdns.org:5008/?type=txt
 http://117.72.68.25:9230/latest.txt
