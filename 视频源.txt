@@ -26,6 +26,7 @@ https://raw.githubusercontent.com/SSM0415/apptest/214fdea305288434a16a4efe6d773c
 
 
 直播源地址：
+https://raw.githubusercontent.com/ssili126/ds/199d6970365e597a555420e488d49b272bf62f74/itvlist.txt
 https://raw.githubusercontent.com/Supprise0901/TVBox_live/0ca31978ecec3a631387da821f437f3dbd35c193/live.txt
 http://8.138.7.223/2025.txt
 港台频道ok http://xn--elt51t.azip.dpdns.org:5008/?type=txt
