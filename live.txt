@@ -223,7 +223,7 @@ CCTV高尔夫.网球,http://119.125.134.199:9901/tsfile/live/1011_1.m3u8?key=txi
 吉林卫视,http://101.66.199.111:9901/tsfile/live/0116_1.m3u8?key=txiptv&playlive=0&authid=0
 吉林卫视,http://101.66.199.243:9901/tsfile/live/0116_1.m3u8?key=txiptv&playlive=0&authid=0
 吉林卫视,http://144.52.162.219:9901/tsfile/live/1040_1.m3u8?key=txiptv&playlive=1&authid=0
-吉林卫视台,http://61.138.128.226:19901/tsfile/live/1022_1.m3u8?key=txiptv&playlive=1&authid=0
+吉林卫视,http://61.138.128.226:19901/tsfile/live/1022_1.m3u8?key=txiptv&playlive=1&authid=0
 四川卫视,http://123.55.3.48:9901/tsfile/live/0123_1.m3u8?key=txiptv&playlive=1&authid=0
 四川卫视,http://125.43.249.66:9901/tsfile/live/0123_1.m3u8?key=txiptv&playlive=1&authid=0
 四川卫视,http://122.246.75.237:9901/tsfile/live/0123_1.m3u8?key=txiptv&playlive=1&authid=0
@@ -254,7 +254,6 @@ CCTV高尔夫.网球,http://119.125.134.199:9901/tsfile/live/1011_1.m3u8?key=txi
 安徽卫视,http://119.125.104.37:9901/tsfile/live/1059_1.m3u8?key=txiptv&playlive=1&down=1
 安徽卫视,http://112.234.23.189:9901/tsfile/live/0130_1.m3u8?key=txiptv&playlive=1&authid=0
 安徽卫视,http://1.195.130.118:9901/tsfile/live/0130_1.m3u8?key=txiptv&playlive=1&authid=0
-少儿卫视,http://119.125.104.37:9901/tsfile/live/1032_1.m3u8?key=txiptv&playlive=1&down=1
 山东卫视,http://110.72.53.126:8181/tsfile/live/0131_2.m3u8?key=txiptv&playlive=1&authid=0
 山东卫视,http://125.43.249.66:9901/tsfile/live/0131_1.m3u8?key=txiptv&playlive=1&authid=0
 山东卫视,http://122.246.75.237:9901/tsfile/live/0131_1.m3u8?key=txiptv&playlive=1&authid=0
