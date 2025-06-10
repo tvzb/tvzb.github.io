@@ -109,18 +109,7 @@ CCTV-17,http://goo.bkpcp.top/mg/cctv17
 江西卫视,http://goo.bkpcp.top/mg/jxws
 江苏卫视,http://goo.bkpcp.top/mg/jsws
 海南卫视,http://goo.bkpcp.top/mg/hinws
-湖南卫视,http://smart.pendy.dpdns.org/Smart.php?id=hunan_twn
-江苏卫视,http://smart.pendy.dpdns.org/Smart.php?id=jiangsu_twn
-深圳卫视,http://smart.pendy.dpdns.org/Smart.php?id=shenzhen
-广东卫视,http://smart.pendy.dpdns.org/Smart.php?id=guangdongweishi_twn
-北京卫视,http://smart.pendy.dpdns.org/Smart.php?id=beijing
-广西卫视,http://smart.pendy.dpdns.org/Smart.php?id=guangxi
-湖北卫视,http://smart.pendy.dpdns.org/Smart.php?id=hubei
-四川卫视,http://smart.pendy.dpdns.org/Smart.php?id=sichuan_twn
-东方卫视,http://smart.pendy.dpdns.org/Smart.php?id=dongfangweishi_twn
-东南卫视,https://smart.pendy.dpdns.org/Smart.php?id=fujian
 
-卫视test,#genre#
 北京卫视,http://125.43.249.66:9901/tsfile/live/0107_1.m3u8?key=txiptv&playlive=1&authid=0
 东方卫视,http://125.43.249.66:9901/tsfile/live/0107_2.m3u8?key=txiptv&playlive=1&authid=0
 安徽卫视,http://125.43.249.66:9901/tsfile/live/0130_1.m3u8?key=txiptv&playlive=1&authid=0
