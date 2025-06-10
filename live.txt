@@ -24,7 +24,8 @@ CCTV-5+,http://ali.hlspull.yximgs.com/live/8163b2f6952708d1d1211065dd1ab47f.flv
 CCTV-1,http://106.52.196.79:80/TV/mui.php?id=cctv1 
 CCTV-2,http://106.52.196.79:80/TV/mui.php?id=cctv2 
 CCTV-3,http://106.52.196.79:80/TV/mui.php?id=cctv3 
-CCTV-4,http://106.52.196.79:80/TV/mui.php?id=cctv4 
+CCTV-4,http://106.52.196.79:80/TV/mui.php?id=cctv4
+CCTV-4,http://106.52.196.79:80/TV/mui.php?id=jdxgdy
 CCTV-6,http://106.52.196.79:80/TV/mui.php?id=cctv6 
 CCTV-7,http://106.52.196.79:80/TV/mui.php?id=cctv7 
 CCTV-8,http://106.52.196.79:80/TV/mui.php?id=cctv8 
@@ -80,9 +81,6 @@ CCTV-17,http://goo.bkpcp.top/mg/cctv17
 江苏卫视,http://106.52.196.79:80/TV/mui.php?id=jsws
 江西卫视,http://106.52.196.79:80/TV/mui.php?id=jxws
 陕西卫视,http://106.52.196.79:80/TV/mui.php?id=sxws
-CHC动作电影,http://106.52.196.79:80/TV/mui.php?id=chcdz
-CHC家庭影院,http://106.52.196.79:80/TV/mui.php?id=chcjt
-CHC经典电影,http://106.52.196.79:80/TV/mui.php?id=jdxgdy
 
 东方卫视,http://goo.bkpcp.top/mg/dfws
 陕西卫视,http://goo.bkpcp.top/mg/sxws
