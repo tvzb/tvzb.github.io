@@ -16,58 +16,13 @@ CCTV13,http://106.52.196.79:80/TV/mui.php?id=cctv13
 CCTV14,http://106.52.196.79:80/TV/mui.php?id=cctv14 
 CCTV15,http://106.52.196.79:80/TV/mui.php?id=cctv15 
 CCTV17,http://106.52.196.79:80/TV/mui.php?id=cctv17
-CGTN,http://106.52.196.79:80/TV/mui.php?id=cgtn
-CGTN纪录,http://106.52.196.79:80/TV/mui.php?id=cgtnjl
-CGTN西语,http://106.52.196.79:80/TV/mui.php?id=cgtne
-CGTN阿语,http://106.52.196.79:80/TV/mui.php?id=cgtna
-CGTN法语,http://106.52.196.79:80/TV/mui.php?id=cgtnf
-CGTN俄语,http://106.52.196.79:80/TV/mui.php?id=cgtnr
-中央新影-发现之旅,http://106.52.196.79:80/TV/mui.php?id=fxzl
-中央新影-老故事,http://106.52.196.79:80/TV/mui.php?id=lgs
-中央新影-中学生,http://106.52.196.79:80/TV/mui.php?id=zxs
-大湾区卫视,http://106.52.196.79:80/TV/mui.php?id=dwqws
 广东卫视,http://106.52.196.79:80/TV/mui.php?id=gdws
 广东影视,http://106.52.196.79:80/TV/mui.php?id=gdys
 河南卫视,http://106.52.196.79:80/TV/mui.php?id=hnws
 江西卫视,http://106.52.196.79:80/TV/mui.php?id=jxws
 江苏卫视,http://106.52.196.79:80/TV/mui.php?id=jsws
-江苏教育,http://106.52.196.79:80/TV/mui.php?id=jsjy
-江苏城市,http://106.52.196.79:80/TV/mui.php?id=jscs
-江苏综艺,http://106.52.196.79:80/TV/mui.php?id=jszy
-江苏影视,http://106.52.196.79:80/TV/mui.php?id=jsys
-江苏新闻,http://106.52.196.79:80/TV/mui.php?id=jsggxw
-江苏国际,http://106.52.196.79:80/TV/mui.php?id=jsgj
-江苏教育,http://106.52.196.79:80/TV/mui.php?id=jsjy
-上海新闻综合,http://106.52.196.79:80/TV/mui.php?id=shxwzh
-上海第一财经,http://106.52.196.79:80/TV/mui.php?id=dycj
-南京新闻综合,http://106.52.196.79:80/TV/mui.php?id=njxwzh
-南京教科,http://106.52.196.79:80/TV/mui.php?id=njkj
-南京十八,http://106.52.196.79:80/TV/mui.php?id=njsb
-淮安新闻综合,http://106.52.196.79:80/TV/mui.php?id=haxwzh
-连云港新闻综合,http://106.52.196.79:80/TV/mui.php?id=lygxwzh
-泰州新闻综合,http://106.52.196.79:80/TV/mui.php?id=tzxwzh
-宿迁新闻综合,http://106.52.196.79:80/TV/mui.php?id=sqxwzh
-徐州新闻综合,http://106.52.196.79:80/TV/mui.php?id=xzxwzh
-咪咕音乐,http://106.52.196.79:80/TV/mui.php?id=ljcwhg
 咪咕新片放映厅,http://106.52.196.79:80/TV/mui.php?id=xpfyt
 咪咕经典深圳旁边电影,http://106.52.196.79:80/TV/mui.php?id=jdxgdy
-咪咕军事迷必看大片,http://106.52.196.79:80/TV/mui.php?id=jsdp
-咪咕24小时体育台,http://106.52.196.79:80/TV/mui.php?id=mg24hty
-咪咕体育轮播台,http://106.52.196.79:80/TV/mui.php?id=mglbt
-咪咕体育欧洲足球风云,http://106.52.196.79:80/TV/mui.php?id=ozzqfy
-咪咕体育全民乒乓,http://106.52.196.79:80/TV/mui.php?id=qmpp
-咪咕体育赛事最经典,http://nctv.top/IDOEPpiry/migu.php?id=sszjd
-咪咕体育体坛名栏汇,http://106.52.196.79:80/TV/mui.php?id=ttmlh
-咪咕熊猫1,http://106.52.196.79:80/TV/mui.php?id=xm1
-咪咕熊猫2,http://106.52.196.79:80/TV/mui.php?id=xm2
-咪咕熊猫3,http://106.52.196.79:80/TV/mui.php?id=xm3
-咪咕熊猫4,http://106.52.196.79:80/TV/mui.php?id=xm4
-咪咕熊猫5,http://106.52.196.79:80/TV/mui.php?id=xm5
-咪咕熊猫6,http://106.52.196.79:80/TV/mui.php?id=xm6
-咪咕熊猫7,http://106.52.196.79:80/TV/mui.php?id=xm7
-咪咕熊猫8,http://106.52.196.79:80/TV/mui.php?id=xm8
-咪咕熊猫9,http://106.52.196.79:80/TV/mui.php?id=xm9
-咪咕熊猫10,http://106.52.196.79:80/TV/mui.php?id=xm10
 
 中國China,#genre#
 CCTV-1,http://smart.pendy.dpdns.org/Smart.php?id=cctv1
@@ -92,7 +47,6 @@ CCTV-17,http://smart.pendy.dpdns.org/Smart.php?id=cctv17
 湖南衛視,http://smart.pendy.dpdns.org/Smart.php?id=hunan_twn
 江蘇衛視,http://smart.pendy.dpdns.org/Smart.php?id=jiangsu_twn
 深圳衛視,http://smart.pendy.dpdns.org/Smart.php?id=shenzhen
-大灣區衛視,http://smart.pendy.dpdns.org/Smart.php?id=nanfang_twn
 廣東衛視,http://smart.pendy.dpdns.org/Smart.php?id=guangdongweishi_twn
 北京衛視,http://smart.pendy.dpdns.org/Smart.php?id=beijing
 廣東珠江,http://smart.pendy.dpdns.org/Smart.php?id=zhujiang
@@ -122,10 +76,6 @@ CCTV 15,http://ali.hlspull.yximgs.com/live/b8601817d86a1bfcf34ea5675fa6df6f.flv
 CCTV 16,http://ali.hlspull.yximgs.com/live/d41a11eb8e0553d0af32fd9f36bc2ff8.flv
 CCTV 17,http://ali.hlspull.yximgs.com/live/d70a43706e8a782e692fc4f95acae0ec.flv
 CCTV-娱乐,http://ali.hlspull.yximgs.com/live/3add763c53cc8f899d2aec9055660b30.flv
-CGTN,http://ali.hlspull.yximgs.com/live/f505f6e7d2e7c9cf180afdcf212a3752.flv
-CETV 1,http://ali.hlspull.yximgs.com/live/869d05e8c06943e06fa6b4099bd229d6.flv
-CETV 2,http://ali.hlspull.yximgs.com/live/e4f61c3b9a59d0879a476e7daea169a9.flv
-CETV 4,http://ali.hlspull.yximgs.com/live/1dcf519ae3cc33404484e6d5d40bda32.flv
 CHC影迷电影,http://ali.hlspull.yximgs.com/live/d557f743cc2d9d0e6ed2b1883e67d1ff.flv
 CHC动作电影,http://ali.hlspull.yximgs.com/live/6871dafc920a73e359888af4ea3eb1e8.flv
 CHC家庭影院,http://ali.hlspull.yximgs.com/live/7d1b72eb97316a2b539bb471c1d82c94.flv
@@ -147,8 +97,6 @@ CHC家庭影院,http://ali.hlspull.yximgs.com/live/7d1b72eb97316a2b539bb471c1d82
 四川卫视,http://ali.hlspull.yximgs.com/live/74351ddf35973ad88abbfc082211c453.flv
 山东卫视,http://ali.hlspull.yximgs.com/live/f403ffbbde5d6a00be349a55fcf438d7.flv
 西藏卫视,http://ali.hlspull.yximgs.com/live/d75875dc935e6e5e2b5a81b265fb80bc.flv
-大湾区卫视,http://ali.hlspull.yximgs.com/live/1a3c1ecf24cfaae73a7f6246849a8cba.flv
-广东体育,http://ali.hlspull.yximgs.com/live/b7b55e2feb76ffea15973b7d6f077d8f.flv
 
 電影Movie,#genre#
 AXN,http://smart.pendy.dpdns.org/Smart.php?id=axn_twn
