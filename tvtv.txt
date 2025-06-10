@@ -69,6 +69,39 @@ CGTN俄语,http://106.52.196.79:80/TV/mui.php?id=cgtnr
 咪咕熊猫9,http://106.52.196.79:80/TV/mui.php?id=xm9
 咪咕熊猫10,http://106.52.196.79:80/TV/mui.php?id=xm10
 
+中國China,#genre#
+CCTV-1,http://smart.pendy.dpdns.org/Smart.php?id=cctv1
+CCTV-2,http://smart.pendy.dpdns.org/Smart.php?id=cctv2
+CCTV-3,http://smart.pendy.dpdns.org/Smart.php?id=cctv3
+CCTV-4,http://smart.pendy.dpdns.org/Smart.php?id=cctv4
+CCTV-4,http://smart.pendy.dpdns.org/Smart.php?id=Cctv4
+CCTV-5,http://smart.pendy.dpdns.org/Smart.php?id=cctv5
+CCTV-5+,http://smart.pendy.dpdns.org/Smart.php?id=cctv5plus
+CCTV-6,http://smart.pendy.dpdns.org/Smart.php?id=cctv6
+CCTV-7,http://smart.pendy.dpdns.org/Smart.php?id=cctv7
+CCTV-8,http://smart.pendy.dpdns.org/Smart.php?id=cctv8hd
+CCTV-9,http://smart.pendy.dpdns.org/Smart.php?id=cctv9hd
+CCTV-10,http://smart.pendy.dpdns.org/Smart.php?id=cctv10hd
+CCTV-11,http://smart.pendy.dpdns.org/Smart.php?id=cctv11
+CCTV-12,http://smart.pendy.dpdns.org/Smart.php?id=cctv12
+CCTV-13,http://smart.pendy.dpdns.org/Smart.php?id=cctv13
+CCTV-14,http://smart.pendy.dpdns.org/Smart.php?id=cctv14
+CCTV-15,http://smart.pendy.dpdns.org/Smart.php?id=cctv15
+CCTV-16,http://smart.pendy.dpdns.org/Smart.php?id=cctv16
+CCTV-17,http://smart.pendy.dpdns.org/Smart.php?id=cctv17
+湖南衛視,http://smart.pendy.dpdns.org/Smart.php?id=hunan_twn
+江蘇衛視,http://smart.pendy.dpdns.org/Smart.php?id=jiangsu_twn
+深圳衛視,http://smart.pendy.dpdns.org/Smart.php?id=shenzhen
+大灣區衛視,http://smart.pendy.dpdns.org/Smart.php?id=nanfang_twn
+廣東衛視,http://smart.pendy.dpdns.org/Smart.php?id=guangdongweishi_twn
+北京衛視,http://smart.pendy.dpdns.org/Smart.php?id=beijing
+廣東珠江,http://smart.pendy.dpdns.org/Smart.php?id=zhujiang
+廣西衛視,http://smart.pendy.dpdns.org/Smart.php?id=guangxi
+湖北衛視,http://smart.pendy.dpdns.org/Smart.php?id=hubei
+四川衛視,http://smart.pendy.dpdns.org/Smart.php?id=sichuan_twn
+東方衛視,http://smart.pendy.dpdns.org/Smart.php?id=dongfangweishi_twn
+东南卫视,https://smart.pendy.dpdns.org/Smart.php?id=fujian
+
 ali央视卫视,#genre#
 CCTV 1,http://ali.hlspull.yximgs.com/live/f655c8a5013519c8184eb45b1ca05e67.flv
 CCTV 2,http://ali.hlspull.yximgs.com/live/94c7295bbfe8b26bb7a09787555278b6.flv
