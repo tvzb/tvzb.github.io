@@ -38,26 +38,6 @@ CCTV-14,http://106.52.196.79:80/TV/mui.php?id=cctv14
 CCTV-15,http://106.52.196.79:80/TV/mui.php?id=cctv15 
 CCTV-17,http://106.52.196.79:80/TV/mui.php?id=cctv17
 
-CCTV-1,http://smart.pendy.dpdns.org/Smart.php?id=cctv1
-CCTV-2,http://smart.pendy.dpdns.org/Smart.php?id=cctv2
-CCTV-3,http://smart.pendy.dpdns.org/Smart.php?id=cctv3
-CCTV-4,http://smart.pendy.dpdns.org/Smart.php?id=cctv4
-CCTV-4,http://smart.pendy.dpdns.org/Smart.php?id=Cctv4
-CCTV-5,http://smart.pendy.dpdns.org/Smart.php?id=cctv5
-CCTV-6,http://smart.pendy.dpdns.org/Smart.php?id=cctv6
-CCTV-7,http://smart.pendy.dpdns.org/Smart.php?id=cctv7
-CCTV-8,http://smart.pendy.dpdns.org/Smart.php?id=cctv8hd
-CCTV-9,http://smart.pendy.dpdns.org/Smart.php?id=cctv9hd
-CCTV-10,http://smart.pendy.dpdns.org/Smart.php?id=cctv10hd
-CCTV-11,http://smart.pendy.dpdns.org/Smart.php?id=cctv11
-CCTV-12,http://smart.pendy.dpdns.org/Smart.php?id=cctv12
-CCTV-13,http://smart.pendy.dpdns.org/Smart.php?id=cctv13
-CCTV-14,http://smart.pendy.dpdns.org/Smart.php?id=cctv14
-CCTV-15,http://smart.pendy.dpdns.org/Smart.php?id=cctv15
-CCTV-16,http://smart.pendy.dpdns.org/Smart.php?id=cctv16
-CCTV-17,http://smart.pendy.dpdns.org/Smart.php?id=cctv17
-CCTV-5+,http://smart.pendy.dpdns.org/Smart.php?id=cctv5plus
-
 CCTV-1,http://tvbox6.icu/tv/migu.php?id=cctv1$咪咕直播
 CCTV-2,http://tvbox6.icu/tv/migu.php?id=cctv2$咪咕直播
 CCTV-3,http://tvbox6.icu/tv/migu.php?id=cctv3$咪咕直播
