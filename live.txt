@@ -21,6 +21,10 @@ CHC动作电影,http://ali.hlspull.yximgs.com/live/6871dafc920a73e359888af4ea3eb
 CHC家庭影院,http://ali.hlspull.yximgs.com/live/7d1b72eb97316a2b539bb471c1d82c94.flv
 CCTV-5+,http://ali.hlspull.yximgs.com/live/8163b2f6952708d1d1211065dd1ab47f.flv
 
+CCTV1,http://8.138.7.223/tv/ptbtv.php?id=27
+CCTV1,http://183.215.134.239:19901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV3,http://61.156.228.12:8154/tsfile/live/0003_1.m3u8?key=txiptv&playlive=1&authid=0
+
 CCTV-1,http://106.52.196.79:80/TV/mui.php?id=cctv1 
 CCTV-2,http://106.52.196.79:80/TV/mui.php?id=cctv2 
 CCTV-3,http://106.52.196.79:80/TV/mui.php?id=cctv3 
@@ -78,6 +82,7 @@ CCTV-17,http://goo.bkpcp.top/mg/cctv17
 
 卫视频道,#genre#
 江西卫视,http://203.205.191.53/yun-live.jxtvcn.com.cn/live-jxtv/tv_jxtv1.m3u8
+江西卫视,http://183.215.134.239:19901/tsfile/live/0138_1.m3u8?key=txiptv&playlive=1&authid=0
 江西卫视,http://106.52.196.79:80/TV/mui.php?id=jxws
 东方卫视,http://106.52.196.79:80/TV/mui.php?id=dfws
 江苏卫视,http://106.52.196.79:80/TV/mui.php?id=jsws
