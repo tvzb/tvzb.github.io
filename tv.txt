@@ -1,6 +1,6 @@
 {
-  "lives": [{"name": "live1", "type": 0, "url": "https://raw.githubusercontent.com/tvzb/tvzb.github.io/main/home.txt" },
-            {"name": "live2", "type": 0, "url": "http://api.mytv666.top/lives/free.php?type=txt"}],
+  "lives": [{"name": "live1", "type": 0, "url": "https://ghfast.top/https://raw.githubusercontent.com/tvzb/tvzb.github.io/main/live.txt" },
+            {"name": "live2", "type": 0, "url": "https://ghfast.top/https://raw.githubusercontent.com/tvzb/tvzb.github.io/main/home.txt"}],
 "sites":[
 {"key": "豆瓣资源", "name": "豆瓣资源", "type": 1, "api": "https://caiji.dbzy.tv/api.php/provide/vod/", "playUrl": "https://www.dbzy8.com:699/?url=", "searchable": 1, "quickSearch": 1, "categories": ["爱情片", "伦理片", "综艺片", "恐怖片", "惊悚片", "科幻片", "战争片", "剧情片", "纪录片", "动作片", "喜剧片", "台湾剧", "泰国剧", "韩剧", "海外剧", "香港剧", "欧美剧", "国产剧", "反转爽剧", "连续剧", "日本剧", "国产动漫", "欧美动漫", "动漫", "海外动漫", "日本动漫"]},
 
