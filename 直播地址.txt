@@ -1,9 +1,8 @@
 播放地址：
 https://raw.githubusercontent.com/gitgordon85/Gordon85_IPTV/2a6b1c1ec1e76d9e75e6e26af38629f6b83cb4e7/output/ipv6/result.txt
 https://raw.githubusercontent.com/gitgordon85/Gordon85_IPTV/2a6b1c1ec1e76d9e75e6e26af38629f6b83cb4e7/config/user_local.txt
-https://raw.githubusercontent.com/fleung49/star/3a634820a73c7fa6f2afee3abf55b9136547634f/mit
-
-
+https://raw.githubusercontent.com/fleung49/star/f01e5ee088604f0b92fa3a04b6f10b08270866ea/mit
+https://raw.githubusercontent.com/cnliux/TV/7e16ab6d2455c412aba0c67bde640e27220094a2/outputs/all.txt
 
 
 
@@ -19,7 +18,7 @@ https://raw.githubusercontent.com/fleung49/star/3a634820a73c7fa6f2afee3abf55b913
 仓库地址：
 https://github.com/gitgordon85/Gordon85_IPTV/blob/2a6b1c1ec1e76d9e75e6e26af38629f6b83cb4e7/output/ipv6/result.txt#L17
 https://github.com/gitgordon85/Gordon85_IPTV/blob/2a6b1c1ec1e76d9e75e6e26af38629f6b83cb4e7/config/user_local.txt#L90
-
-
-
+https://github.com/fleung49/star/blob/f01e5ee088604f0b92fa3a04b6f10b08270866ea/mit#L1871
+https://github.com/cnliux/TV/blob/7e16ab6d2455c412aba0c67bde640e27220094a2/outputs/all.txt#L39
+https://github.com/tzk426/iptv-api/blob/a16090afd343af2c99ac156760660cdc721ca0a7/config/whitelist.txt
 
