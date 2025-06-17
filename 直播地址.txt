@@ -1,5 +1,6 @@
 播放地址：
 https://raw.githubusercontent.com/Cx4x/xd/5686fcc5de6b983ba85de7010ec3381c8693519a/output/user_result.txt
+https://raw.githubusercontent.com/gitgordon85/Gordon85_IPTV/2a6b1c1ec1e76d9e75e6e26af38629f6b83cb4e7/output/result.txt
 https://raw.githubusercontent.com/gitgordon85/Gordon85_IPTV/2a6b1c1ec1e76d9e75e6e26af38629f6b83cb4e7/output/ipv6/result.txt
 https://raw.githubusercontent.com/gitgordon85/Gordon85_IPTV/2a6b1c1ec1e76d9e75e6e26af38629f6b83cb4e7/config/user_local.txt
 https://raw.githubusercontent.com/fleung49/star/f01e5ee088604f0b92fa3a04b6f10b08270866ea/mit
@@ -18,6 +19,7 @@ https://raw.githubusercontent.com/cnliux/TV/7e16ab6d2455c412aba0c67bde640e272200
 
 仓库地址：
 https://github.com/gitgordon85/Gordon85_IPTV/blob/2a6b1c1ec1e76d9e75e6e26af38629f6b83cb4e7/output/ipv6/result.txt#L17
+https://github.com/gitgordon85/Gordon85_IPTV/blob/2a6b1c1ec1e76d9e75e6e26af38629f6b83cb4e7/output/result.txt#L27
 https://github.com/Cx4x/xd/blob/5686fcc5de6b983ba85de7010ec3381c8693519a/output/user_result.txt#L18
 https://github.com/gitgordon85/Gordon85_IPTV/blob/2a6b1c1ec1e76d9e75e6e26af38629f6b83cb4e7/config/user_local.txt#L90
 https://github.com/fleung49/star/blob/f01e5ee088604f0b92fa3a04b6f10b08270866ea/mit#L1871
