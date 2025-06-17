@@ -21,26 +21,6 @@ CCTV-14,http://106.52.196.79:80/TV/mui.php?id=cctv14
 CCTV-15,http://106.52.196.79:80/TV/mui.php?id=cctv15 
 CCTV-17,http://106.52.196.79:80/TV/mui.php?id=cctv17
 
-CCTV-1,http://tvbox6.icu/tv/migu.php?id=cctv1$咪咕直播
-CCTV-2,http://tvbox6.icu/tv/migu.php?id=cctv2$咪咕直播
-CCTV-3,http://tvbox6.icu/tv/migu.php?id=cctv3$咪咕直播
-CCTV-4,http://tvbox6.icu/tv/migu.php?id=cctv4$咪咕直播
-CCTV-4,http://tvbox6.icu/tv/migu.php?id=cctv4a$咪咕直播
-CCTV-4,http://tvbox6.icu/tv/migu.php?id=cctv4o$咪咕直播
-CCTV-5,http://tvbox6.icu/tv/migu.php?id=cctv5$咪咕直播
-CCTV-6,http://tvbox6.icu/tv/migu.php?id=cctv6$咪咕直播
-CCTV-7,http://tvbox6.icu/tv/migu.php?id=cctv7$咪咕直播
-CCTV-8,http://tvbox6.icu/tv/migu.php?id=cctv8$咪咕直播
-CCTV-9,http://tvbox6.icu/tv/migu.php?id=cctv9$咪咕直播
-CCTV-10,http://tvbox6.icu/tv/migu.php?id=cctv10$咪咕直播
-CCTV-11,http://tvbox6.icu/tv/migu.php?id=cctv11$咪咕直播
-CCTV-12,http://tvbox6.icu/tv/migu.php?id=cctv12$咪咕直播
-CCTV-13,http://tvbox6.icu/tv/migu.php?id=cctv13$咪咕直播
-CCTV-14,http://tvbox6.icu/tv/migu.php?id=cctv14$咪咕直播
-CCTV-15,http://tvbox6.icu/tv/migu.php?id=cctv15$咪咕直播
-CCTV-17,http://tvbox6.icu/tv/migu.php?id=cctv17$咪咕直播
-CCTV-5+,http://tvbox6.icu/tv/migu.php?id=cctv5p$咪咕直播
-
 CCTV-1,http://goo.bkpcp.top/mg/cctv1
 CCTV-2,http://goo.bkpcp.top/mg/cctv2
 CCTV-3,http://goo.bkpcp.top/mg/cctv3
