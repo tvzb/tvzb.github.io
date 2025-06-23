@@ -34,3 +34,11 @@ CHC动作电影,http://z.b.bkpcp.top/m.php$订阅源
 新疆卫视,http://113.25.252.226:9901/tsfile/live/0110_1.m3u8?key=txiptv&playlive=1&authid=0
 西藏卫视,http://113.25.252.226:9901/tsfile/live/1003_1.m3u8?key=txiptv&playlive=1&authid=0
 青海卫视,http://113.25.252.226:9901/tsfile/live/0140_1.m3u8?key=txiptv&playlive=1&authid=0
+
+CCTV-2,http://goo.bkpcp.top/mg/CCTV2$订阅源
+CCTV-7,http://goo.bkpcp.top/mg/CCTV7$订阅源
+CCTV-8,http://goo.bkpcp.top/mg/cctv8$订阅源
+CCTV-10,http://goo.bkpcp.top/mg/cctv10$订阅源
+西藏卫视,http://goo.bkpcp.top/mg/xzws$订阅源
+CHC家庭影院,http://goo.bkpcp.top/mg/jtyy$订阅源
+CHC动作电影,http://goo.bkpcp.top/mg/dzdy$订阅源
