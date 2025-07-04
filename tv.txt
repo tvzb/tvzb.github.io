@@ -15,8 +15,7 @@
 
 {"key": "豪华资源", "name": "豪华资源", "type": 1, "api": "https://hhzyapi.com/api.php/provide/vod/", "playUrl": "https://hhjiexi.com/play/?url=", "searchable": 1, "quickSearch": 1, "categories": ["剧情片", "喜剧片", "灾难片", "恐怖片", "科幻片", "爱情片", "动画片", "战争片", "伦理片", "动作片", "悬疑片", "犯罪片", "记录片", "韩剧", "香港剧", "日剧", "电视剧", "台湾剧", "欧美剧", "马泰剧", "内地剧", "短剧", "日本动漫", "动漫", "欧美动漫", "中国动漫"]},
 
-{"key": "天涯资源", "name": "天涯资源", "type": 1, "api": "https://tyyszyapi.com/api.php/provide/vod/", "playUrl": "https://tyyszywjx.com/?url=", "searchable": 1, "quickSearch": 1, "categories": ["剧情片", "喜剧片", "灾难片", "恐怖片", "科幻片", "爱情片", "动画片", "战争片", "伦理片", "动作片", "悬疑片", "犯罪片", "记录片", "韩剧", "香港剧", "日剧", "电视剧", "台湾剧", "欧美剧", "马泰剧", "内地剧", "短剧", "日本动漫", "动漫", "欧美动漫", "中国动漫"]},
-
+{"key": "天涯资源", "name": "天涯资源", "type": 1, "api": "https://ty.tyyszy5.com/api.php/provide/vod/", "playUrl": "https://tyyszywjx.com/?url=", "searchable": 1, "quickSearch": 1, "categories": ["喜剧", "爱情", "动作", "犯罪", "科幻", "奇幻", "冒险", "灾难", "恐怖", "惊悚", "剧情", "战争", "歌舞", "经典", "悬疑", "动画", "网络电影", "国产剧", "港台剧", "日韩剧", "欧美剧", "其他剧", "国产综艺", "港台综艺", "日韩综艺", "欧美综艺", "国产动漫", "日本动漫", "欧美动漫"]},
 
 {"key": "u酷资源", "name": "u酷资源", "type": 1, "api": "https://api.ukuapi.com/api.php/provide/vod/", "playUrl": "https://api.ukubf.com/m3u8/?url=", "searchable": 1, "quickSearch": 1, "categories": ["战争片", "爱情片", "伦理片", "奇幻片", "犯罪片", "动作片", "喜剧片", "记录片", "剧情片", "科幻片", "恐怖片", "泰剧", "港澳剧", "欧美剧", "台湾剧", "日剧", "国产剧", "韩剧", "电视剧", "动漫"]},
 
