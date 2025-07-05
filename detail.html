@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>水表报数详情</title>
+  <style>
+    body { font-family: "微软雅黑", sans-serif; padding: 20px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { border: 1px solid #aaa; padding: 8px; text-align: center; }
+    th { background-color: #f0f0f0; }
+    .remark { font-size: 14px; margin-top: 10px; color: #666; }
+  </style>
+</head>
+<body>
+  <h2 id="title">住户水表详情</h2>
+  <p>上次读数时间：2025/6/30</p>
+  <p>上次读数：<span id="lastReading">-</span> 吨</p>
+
+  <h3>历史记录</h3>
+  <table>
+    <tr>
+      <th>读数时间</th>
+      <th>水表读数</th>
+      <th>用水量</th>
+      <th>水损耗</th>
+      <th>水费</th>
+    </tr>
+    <tbody id="history"></tbody>
+  </table>
+
+  <p class="remark">备注：水损耗1吨/月，水费2.8元/吨。</p>
+
+  <script>
+    const room = new URLSearchParams(window.location.search).get("room");
+
+    async function loadData() {
+      const res = await fetch(`https://你的-worker域名/history?room=${room}`);
+      const data = await res.json();
+
+      document.getElementById("title").innerText = `${room} - ${data.name} 水表详情`;
+      const lastReading = data.records[data.records.length - 1].reading;
+      document.getElementById("lastReading").innerText = lastReading;
+
+      let html = "";
+      for (let i = data.records.length - 1; i >= 0; i--) {
+        const rec = data.records[i];
+        let usage = "";
+        let loss = "";
+        let fee = "";
+        if (i > 0) {
+          usage = rec.reading - data.records[i - 1].reading;
+          loss = 3;
+          fee = ((usage + loss) * 2.8).toFixed(2);
+        }
+        html += `<tr>
+          <td>${rec.date}</td>
+          <td>${rec.reading}</td>
+          <td>${usage || ""}</td>
+          <td>${loss || ""}</td>
+          <td>${fee || ""}</td>
+        </tr>`;
+      }
+      document.getElementById("history").innerHTML = html;
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
