@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>104-张三 水表读数</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: "微软雅黑", sans-serif;
+      background: linear-gradient(to bottom right, #f0f8ff, #e6f7ff);
+      padding: 20px;
+      color: #333;
+    }
+    h2 {
+      color: #007acc;
+      border-bottom: 2px solid #007acc;
+      padding-bottom: 5px;
+      font-size: 22px;
+    }
+    p {
+      font-size: 18px;
+      margin: 10px 0;
+      word-break: break-word;
+    }
+    input[type="number"] {
+      padding: 10px;
+      font-size: 18px;
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 5px;
+    }
+    button {
+      background-color: #007acc;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 15px;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #005fa3;
+    }
+    .success {
+      color: green;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    table {
+      border-collapse: collapse;
+      margin-top: 20px;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+    }
+    table, th, td {
+      border: 1px solid #aaa;
+    }
+    th, td {
+      padding: 8px;
+      text-align: center;
+      font-size: 14px;
+    }
+    .remark {
+      font-size: 14px;
+      color: #666;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h2>104-张三 水表读数</h2>
+
+  <p>上次读数时间：<span id="lastTime">加载中...</span></p>
+  <p>上次读数：<span id="lastReading">加载中...</span> 吨</p>
+  <p>本次读数：
+    <input type="number" id="newReading" oninput="calculateUsage()"/>
+  </p>
+  <p>用水量：<span id="usage">-</span> 吨</p>
+  <p>水损耗：<span id="loss">-</span> 吨</p>
+  <p>水费：<span id="fee">-</span> 元</p>
+  <p class="remark">备注：水损耗 1 吨/月，水费 2.8 元/吨。</p>
+
+  <button onclick="confirmSubmit()">提交读数</button>
+  <p id="successMsg" class="success" style="display:none;">提交成功！</p>
+
+  <h3>历史记录</h3>
+  <div id="history">加载中...</div>
+
+  <script>
+    let lastReading = 0;
+    let lastDate = null;
+
+    async function loadLastData() {
+      const res = await fetch("https://hahagw.eu.org/history");
+      const history = await res.json();
+      if (history.length > 0) {
+        const lastRecord = history[history.length - 1];
+        lastReading = lastRecord.newReading;
+        lastDate = new Date(lastRecord.date);
+        document.getElementById("lastTime").innerText = lastDate.toLocaleDateString();
+        document.getElementById("lastReading").innerText = lastReading;
+      } else {
+        // 没有记录，使用默认
+        lastReading = 1234;
+        lastDate = new Date("2025-03-01");
+        document.getElementById("lastTime").innerText = "2025年3月";
+        document.getElementById("lastReading").innerText = lastReading;
+      }
+      showHistory(history);
+    }
+
+    function calculateLoss(currentDate) {
+      if (!lastDate || !currentDate) return 0;
+      const lastYear = lastDate.getFullYear();
+      const lastMonth = lastDate.getMonth();
+      const currentYear = currentDate.getFullYear();
+      const currentMonth = currentDate.getMonth();
+
+      const months = (currentYear - lastYear) * 12 + (currentMonth - lastMonth);
+      return months > 0 ? months : 0;
+    }
+
+    function calculateUsage() {
+      const newReading = parseFloat(document.getElementById("newReading").value);
+      if (isNaN(newReading) || newReading <= lastReading) {
+        document.getElementById("usage").innerText = "-";
+        document.getElementById("loss").innerText = "-";
+        document.getElementById("fee").innerText = "-";
+        return;
+      }
+      const used = newReading - lastReading;
+      const now = new Date();
+      const loss = calculateLoss(now);
+      const total = used + loss;
+      const fee = total * 2.8;
+
+      document.getElementById("usage").innerText = used.toFixed(2);
+      document.getElementById("loss").innerText = loss;
+      document.getElementById("fee").innerText = fee.toFixed(2);
+    }
+
+    async function confirmSubmit() {
+      const newReading = parseFloat(document.getElementById("newReading").value);
+      if (isNaN(newReading) || newReading <= lastReading) {
+        alert("请输入正确的本次读数（必须大于上次）");
+        return;
+      }
+
+      const confirmMsg = confirm("已核对读数，确认无误？");
+      if (!confirmMsg) return;
+
+      const res = await fetch("https://hahagw.eu.org/report", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reading: newReading })
+      });
+
+      const data = await res.json();
+      document.getElementById("successMsg").style.display = "block";
+      setTimeout(() => {
+        document.getElementById("successMsg").style.display = "none";
+      }, 3000);
+
+      loadLastData();
+      document.getElementById("newReading").value = "";
+      document.getElementById("usage").innerText = "-";
+      document.getElementById("loss").innerText = "-";
+      document.getElementById("fee").innerText = "-";
+    }
+
+    function showHistory(history) {
+      if (history.length === 0) {
+        document.getElementById("history").innerHTML = "暂无历史记录";
+        return;
+      }
+      let html = "<table><tr><th>读数时间</th><th>水表读数</th><th>用水量</th><th>水损耗</th><th>水费</th></tr>";
+      for (const record of history) {
+        const used = (record.newReading - record.lastReading).toFixed(2);
+        const now = new Date(record.date);
+        const loss = calculateLoss(now);
+        const total = (parseFloat(used) + loss).toFixed(2);
+        const fee = (total * 2.8).toFixed(2);
+        html += `<tr>
+          <td>${now.toLocaleDateString()}</td>
+          <td>${record.newReading}</td>
+          <td>${used}</td>
+          <td>${loss}</td>
+          <td>${fee}</td>
+        </tr>`;
+      }
+      html += "</table>";
+      document.getElementById("history").innerHTML = html;
+    }
+
+    loadLastData();
+  </script>
+</body>
+</html>
