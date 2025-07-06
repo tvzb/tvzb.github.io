@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>水费后台管理</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: "Microsoft YaHei", Arial, sans-serif; padding: 20px; }
+    h1 { text-align: center; }
+    label { display: block; margin-top: 10px; font-size: 18px; }
+    select, input { width: 100%; padding: 8px; font-size: 18px; margin-top: 5px; }
+    button { margin-top: 15px; padding: 10px; font-size: 20px; width: 100%; }
+    #result { margin-top: 15px; font-size: 18px; color: green; }
+    .section { border: 1px solid #ccc; padding: 10px; margin-top: 20px; border-radius: 8px; }
+    ul { padding-left: 20px; }
+    li { margin-bottom: 8px; }
+    .small-btn { font-size: 14px; padding: 4px 8px; margin-left: 10px; }
+  </style>
+</head>
+<body>
+  <h1>水费报数后台</h1>
+
+  <div class="section">
+    <h2>➕ 添加住户</h2>
+    <label>房号：</label>
+    <input type="text" id="newId" placeholder="例：3-101">
+    <label>姓名：</label>
+    <input type="text" id="newName" placeholder="例：张三">
+    <label>当前水表读数：</label>
+    <input type="number" id="newReading" placeholder="请输入当前水表读数">
+    <button onclick="addHousehold()">添加住户</button>
+  </div>
+
+  <div class="section">
+    <h2>💧 添加报数记录</h2>
+    <label>选择住户：</label>
+    <select id="householdSelect" onchange="showRecords()"></select>
+
+    <label>报数日期：</label>
+    <input type="date" id="dateInput">
+
+    <label>新的水表读数：</label>
+    <input type="number" id="readingInput">
+
+    <label>水损耗（吨）：</label>
+    <input type="number" id="lossInput" value="3">
+
+    <button onclick="submitData()">提交报数</button>
+  </div>
+
+  <div class="section">
+    <h2>🗑️ 删除功能</h2>
+    <button onclick="deleteHousehold()">删除选中住户</button>
+    <h3>📄 报数记录</h3>
+    <ul id="recordList"></ul>
+  </div>
+
+  <div id="result"></div>
+
+  <script>
+    let households = [];
+
+    function getToday() {
+      const today = new Date();
+      return today.toISOString().split('T')[0];
+    }
+
+    document.getElementById('dateInput').value = getToday();
+
+    fetch('https://water.hahagw2016.workers.dev/data')
+      .then(res => res.json())
+      .then(data => {
+        households = data.households;
+        sortHouseholds();
+        refreshSelect();
+        showRecords();
+      })
+      .catch(err => {
+        document.getElementById('result').innerText = '❌ 加载住户列表失败: ' + err;
+      });
+
+    function sortHouseholds() {
+      households.sort((a, b) => a.id.localeCompare(b.id, 'zh-Hans-CN', { numeric: true }));
+    }
+
+    function refreshSelect() {
+      const select = document.getElementById('householdSelect');
+      select.innerHTML = "";
+      households.forEach(h => {
+        const option = document.createElement('option');
+        option.value = h.id;
+        option.textContent = `${h.id} - ${h.name}`;
+        select.appendChild(option);
+      });
+    }
+
+    function addHousehold() {
+      const newId = document.getElementById('newId').value.trim();
+      const newName = document.getElementById('newName').value.trim();
+      const newReading = parseInt(document.getElementById('newReading').value);
+
+      if (!newId || !newName || isNaN(newReading)) {
+        alert("请填写房号、姓名和当前水表读数");
+        return;
+      }
+
+      if (households.some(h => h.id === newId)) {
+        alert("该房号已存在");
+        return;
+      }
+
+      const today = getToday();
+      const newHousehold = {
+        id: newId,
+        name: newName,
+        records: [{
+          date: today,
+          reading: newReading,
+          usage: 0,
+          loss: 0,
+          fee: 0
+        }]
+      };
+
+      households.push(newHousehold);
+      sortHouseholds();
+      refreshSelect();
+
+      document.getElementById('newId').value = "";
+      document.getElementById('newName').value = "";
+      document.getElementById('newReading').value = "";
+
+      uploadData('✅ 新住户已添加: ');
+    }
+
+    function submitData() {
+      const selectedId = document.getElementById('householdSelect').value;
+      const date = document.getElementById('dateInput').value;
+      const newReading = parseInt(document.getElementById('readingInput').value);
+      const loss = parseInt(document.getElementById('lossInput').value);
+
+      if (!date || isNaN(newReading)) {
+        alert("请填写日期和新的水表读数");
+        return;
+      }
+
+      if (!confirm("确定要提交该报数记录吗？请确认填写无误。")) {
+        return;
+      }
+
+      const household = households.find(h => h.id === selectedId);
+      if (!household) {
+        alert("找不到住户");
+        return;
+      }
+
+      let lastReading = household.records.length > 0 ? household.records[0].reading : 0;
+      const usage = newReading - lastReading;
+      const fee = (usage + loss) * 2.8;
+
+      const newRecord = { date, reading: newReading, usage, loss, fee };
+      household.records.unshift(newRecord);
+
+      uploadData('✅ 报数已提交: ');
+      showRecords();
+    }
+
+    function deleteHousehold() {
+      const selectedId = document.getElementById('householdSelect').value;
+      if (!selectedId) {
+        alert("请选择要删除的住户");
+        return;
+      }
+
+      if (!confirm("⚠️ 确认删除该住户及其所有记录吗？操作不可撤销！")) return;
+
+      households = households.filter(h => h.id !== selectedId);
+      refreshSelect();
+      showRecords();
+      uploadData('✅ 住户已删除');
+    }
+
+    function showRecords() {
+      const selectedId = document.getElementById('householdSelect').value;
+      const list = document.getElementById('recordList');
+      list.innerHTML = '';
+
+      const household = households.find(h => h.id === selectedId);
+      if (!household || household.records.length === 0) {
+        list.innerHTML = '<li>无报数记录</li>';
+        return;
+      }
+
+      household.records.forEach((rec, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `📅 ${rec.date} ｜ 💧 ${rec.reading} 吨 ｜ 🔢 用水 ${rec.usage} 吨 ｜ 损耗 ${rec.loss} 吨 ｜ 💰 ￥${rec.fee.toFixed(2)} 
+          <button class="small-btn" onclick="deleteRecord('${household.id}', ${index})">删除</button>`;
+        list.appendChild(li);
+      });
+    }
+
+    function deleteRecord(householdId, recordIndex) {
+      const household = households.find(h => h.id === householdId);
+      if (!household) return;
+
+      if (!confirm("⚠️ 确认删除该条报数记录？")) return;
+
+      household.records.splice(recordIndex, 1);
+      uploadData('✅ 报数记录已删除');
+      showRecords();
+    }
+
+    function uploadData(successMsg) {
+      fetch('https://water.hahagw2016.workers.dev/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ households })
+      })
+      .then(res => res.text())
+      .then(text => {
+        document.getElementById('result').innerText = successMsg + text;
+      })
+      .catch(err => {
+        document.getElementById('result').innerText = '❌ 上传失败: ' + err;
+      });
+    }
+  </script>
+</body>
+</html>
