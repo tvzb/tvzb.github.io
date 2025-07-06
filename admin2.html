@@ -6,15 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body { font-family: "Microsoft YaHei", Arial, sans-serif; padding: 20px; }
-    h1 { text-align: center; }
+    h1, h2 { text-align: center; }
     label { display: block; margin-top: 10px; font-size: 18px; }
     select, input { width: 100%; padding: 8px; font-size: 18px; margin-top: 5px; }
     button { margin-top: 15px; padding: 10px; font-size: 20px; width: 100%; }
     #result { margin-top: 15px; font-size: 18px; color: green; }
-    .section { border: 1px solid #ccc; padding: 10px; margin-top: 20px; border-radius: 8px; }
+    .section { border: 1px solid #ccc; padding: 15px; margin-top: 20px; border-radius: 8px; }
     table { width: 100%; border-collapse: collapse; margin-top: 10px; }
     th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
     th { background-color: #f5f5f5; }
+    ul { list-style: none; padding: 0; }
+    li { margin: 5px 0; }
   </style>
 </head>
 <body>
@@ -23,7 +25,7 @@
   <div id="loginSection">
     <label>请输入后台密码：</label>
     <input type="password" id="passwordInput">
-    <button onclick="checkPassword()">登录</button>
+    <button onclick=" overweightPassword()">登录</button>
     <div id="loginMsg" style="color:red; margin-top:10px;"></div>
   </div>
 
@@ -38,16 +40,12 @@
       <input type="number" id="readingInput">
       <label>水损耗（吨）：</label>
       <input type="number" id="lossInput" value="3">
-      <label>水价（元/吨）：</label>
-      <select id="priceInput">
-        <option value="2.8">2.8</option>
-        <option value="3.4">3.4</option>
-      </select>
       <button onclick="submitData()">提交读数</button>
     </div>
 
     <div class="section">
-      <h2>🏠 编辑住户</h2>
+      <h2>🏠 住户管理</h2>
+      <h3>添加住户</h3>
       <label>房号：</label>
       <input type="text" id="newId" placeholder="例：3-101">
       <label>姓名：</label>
@@ -56,22 +54,24 @@
       <input type="number" id="newReading" placeholder="请输入当前水表读数">
       <button onclick="addHousehold()">添加住户</button>
 
+      <h3>修改住户姓名</h3>
       <label>选择住户：</label>
       <select id="editHouseholdSelect"></select>
       <label>新姓名：</label>
       <input type="text" id="editName">
       <button onclick="editHousehold()">修改姓名</button>
 
+      <h3>删除住户</h3>
       <label>选择住户：</label>
       <select id="deleteHouseholdSelect"></select>
       <button onclick="deleteHousehold()">删除住户</button>
     </div>
 
     <div class="section">
-      <h2>📝 编辑记录</h2>
+      <h2>📝 记录管理</h2>
       <label>选择住户：</label>
       <select id="recordHouseholdSelect" onchange="populateRecordList()"></select>
-      <label>选择要修改或删除的记录：</label>
+      <label>选择记录：</label>
       <ul id="recordList"></ul>
       <button onclick="deleteSelectedRecord()">删除记录</button>
 
@@ -80,12 +80,8 @@
       <input type="date" id="editRecordDate">
       <label>水表读数（吨）：</label>
       <input type="number" id="editRecordReading">
-      <label>用水量（吨）：</label>
-      <input type="number" id="editRecordUsage" readonly>
       <label>水损耗（吨）：</label>
       <input type="number" id="editRecordLoss">
-      <label>水价（元/吨）：</label>
-      <input type="number" id="editRecordPrice" step="0.1">
       <button onclick="modifySelectedRecord()">修改记录</button>
     </div>
 
@@ -103,10 +99,11 @@
     <div id="result"></div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr9899/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script>
     let households = [];
     let backendPwd = '';
+    const WATER_PRICE = 2.8; // 固定水价
 
     async function checkPassword() {
       const pwdInput = document.getElementById('passwordInput').value;
@@ -151,7 +148,7 @@
     }
 
     function refreshAllSelects() {
-      ['householdSelect', 'deleteHouseholdSelect', 'recordHouseholdSelect', 'editHouseholdSelect'].forEach(id => {
+      ['householdSelect', 'editHouseholdSelect', 'deleteHouseholdSelect', 'recordHouseholdSelect'].forEach(id => {
         const sel = document.getElementById(id);
         sel.innerHTML = '';
         households.forEach(h => {
@@ -179,10 +176,9 @@
       const newName = document.getElementById('newName').value.trim();
       const newReading = parseInt(document.getElementById('newReading').value);
       if (!newId || !newName || isNaN(newReading)) return alert("请填写完整信息");
-      if (!confirm(`确认添加住户：${newId} - ${newName}？`)) return;
       if (households.some(h => h.id === newId)) return alert("该房号已存在");
       const today = getToday();
-      households.push({ id: newId, name: newName, records: [{ date: today, reading: newReading, usage: 0, loss: 0, price: 2.8, fee: 0 }] });
+      households.push({ id: newId, name: newName, records: [{ date: today, reading: newReading, loss: 0, price: WATER_PRICE, fee: 0 }] });
       sortHouseholds();
       refreshAllSelects();
       uploadData("✅ 住户已添加");
@@ -193,14 +189,12 @@
       const date = document.getElementById('dateInput').value;
       const reading = parseInt(document.getElementById('readingInput').value);
       const loss = parseInt(document.getElementById('lossInput').value);
-      const price = parseFloat(document.getElementById('priceInput').value);
-      if (!date || isNaN(reading) || isNaN(price)) return alert("请填写完整读数");
-      if (!confirm("确认提交读数？")) return;
+      if (!date || isNaN(reading) || isNaN(loss)) return alert("请填写完整读数");
       const h = households.find(h => h.id === id);
       const last = h.records.length > 0 ? h.records[0].reading : 0;
       const usage = reading - last;
-      const fee = (usage + loss) * price;
-      h.records.unshift({ date, reading, usage, loss, price, fee });
+      const fee = (usage + loss) * WATER_PRICE;
+      h.records.unshift({ date, reading, usage, loss, price: WATER_PRICE, fee });
       uploadData("✅ 读数已提交");
     }
 
@@ -208,7 +202,6 @@
       const id = document.getElementById('editHouseholdSelect').value;
       const name = document.getElementById('editName').value.trim();
       if (!name) return alert("请输入新姓名");
-      if (!confirm("确认修改住户姓名？")) return;
       const h = households.find(h => h.id === id);
       h.name = name;
       refreshAllSelects();
@@ -231,7 +224,7 @@
       const h = households.find(h => h.id === id);
       h.records.forEach((r, i) => {
         const li = document.createElement('li');
-        li.innerHTML = `<label><input type="radio" name="recordIndex" value="${i}" onchange="fillEditFields()"> ${r.date} ｜ ${r.reading} 吨 ｜ 用水 ${r.usage || 0} ｜ ￥${r.fee?.toFixed(2) || 0} ｜ 水价 ${r.price || 2.8}</label>`;
+        li.innerHTML = `<label><input type="radio" name="recordIndex" value="${i}" onchange="fillEditFields()"> ${r.date} ｜ ${r.reading} 吨 ｜ 损耗 ${r.loss || 0} ｜ ￥${r.fee?.toFixed(2) || 0}</label>`;
         ul.appendChild(li);
       });
     }
@@ -239,14 +232,13 @@
     function fillEditFields() {
       const id = document.getElementById('recordHouseholdSelect').value;
       const h = households.find(h => h.id === id);
-      const idx = document.querySelector('input[name="recordIndex"]:checked');
+      const idx = document.queryquerySelector('input[name="recordIndex"]:checked');
       if (!idx) return;
       const i = parseInt(idx.value);
       const r = h.records[i];
       document.getElementById('editRecordDate').value = r.date;
       document.getElementById('editRecordReading').value = r.reading;
       document.getElementById('editRecordLoss').value = r.loss || 0;
-      document.getElementById('editRecordPrice').value = r.price || 2.8;
     }
 
     function modifySelectedRecord() {
@@ -258,19 +250,13 @@
       const date = document.getElementById('editRecordDate').value;
       const reading = parseInt(document.getElementById('editRecordReading').value);
       const loss = parseInt(document.getElementById('editRecordLoss').value);
-      const price = parseFloat(document.getElementById('editRecordPrice').value);
-      if (!date || isNaN(reading) || isNaN(loss) || isNaN(price)) return alert("请填写完整修改信息");
+      if (!date || isNaN(reading) || isNaN(loss)) return alert("请填写完整修改信息");
 
       const lastReading = i < h.records.length - 1 ? h.records[i + 1].reading : 0;
-      let usage = reading - lastReading;
-      let fee = (usage + loss) * price;
+      const usage = reading - lastReading;
+      const fee = (usage + loss) * WATER_PRICE;
 
-      if (h.records.length === 1) {
-        usage = '';
-        fee = 0;
-      }
-
-      h.records[i] = { date, reading, usage, loss, price, fee };
+      h.records[i] = { date, reading, usage, loss, price: WATER_PRICE, fee };
       populateRecordList();
       uploadData("✅ 记录已修改");
     }
@@ -293,7 +279,7 @@
         const usage = h.records.reduce((a, r) => a + (r.usage || 0), 0);
         const loss = h.records.reduce((a, r) => a + (r.loss || 0), 0);
         const fee = h.records.reduce((a, r) => a + (r.fee || 0), 0);
-        html += `<tr><td>${h.id}</td><td>${h.name}</td><td>${now}</td><td>${h.records.length > 1 ? usage : ''}</td><td>${h.records.length > 1 ? loss : ''}</td><td>${h.records.length > 1 ? `￥${fee.toFixed(2)}` : ''}</td></tr>`;
+        html += `<tr><td>${h.id}</td><td>${h.name}</td><td>${now}</td><td>${usage}</td><td>${loss}</td><td>￥${fee.toFixed(2)}</td></tr>`;
       });
       html += '</table>';
       document.getElementById('overview').innerHTML = html;
