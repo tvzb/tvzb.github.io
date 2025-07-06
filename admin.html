@@ -12,9 +12,8 @@
     button { margin-top: 15px; padding: 10px; font-size: 20px; width: 100%; }
     #result { margin-top: 15px; font-size: 18px; color: green; }
     .section { border: 1px solid #ccc; padding: 10px; margin-top: 20px; border-radius: 8px; }
-    ul { padding-left: 20px; }
-    li { margin-bottom: 8px; }
-    .small-btn { font-size: 14px; padding: 4px 8px; margin-left: 10px; }
+    ul { padding-left: 0; list-style: none; }
+    li { padding: 5px 0; }
   </style>
 </head>
 <body>
@@ -34,7 +33,7 @@
   <div class="section">
     <h2>💧 添加报数记录</h2>
     <label>选择住户：</label>
-    <select id="householdSelect" onchange="showRecords()"></select>
+    <select id="householdSelect" onchange="showRecordOptions()"></select>
 
     <label>报数日期：</label>
     <input type="date" id="dateInput">
@@ -49,10 +48,19 @@
   </div>
 
   <div class="section">
-    <h2>🗑️ 删除功能</h2>
+    <h2>🗑️ 删除住户</h2>
+    <label>选择住户：</label>
+    <select id="deleteHouseholdSelect"></select>
     <button onclick="deleteHousehold()">删除选中住户</button>
-    <h3>📄 报数记录</h3>
+  </div>
+
+  <div class="section">
+    <h2>🗑️ 删除报数记录</h2>
+    <label>选择住户：</label>
+    <select id="recordHouseholdSelect" onchange="populateRecordList()"></select>
+    <label>选择要删除的记录：</label>
     <ul id="recordList"></ul>
+    <button onclick="deleteSelectedRecord()">删除所选报数</button>
   </div>
 
   <div id="result"></div>
@@ -72,8 +80,9 @@
       .then(data => {
         households = data.households;
         sortHouseholds();
-        refreshSelect();
-        showRecords();
+        refreshAllSelects();
+        populateRecordList();
+        showRecordOptions();
       })
       .catch(err => {
         document.getElementById('result').innerText = '❌ 加载住户列表失败: ' + err;
@@ -83,14 +92,17 @@
       households.sort((a, b) => a.id.localeCompare(b.id, 'zh-Hans-CN', { numeric: true }));
     }
 
-    function refreshSelect() {
-      const select = document.getElementById('householdSelect');
-      select.innerHTML = "";
-      households.forEach(h => {
-        const option = document.createElement('option');
-        option.value = h.id;
-        option.textContent = `${h.id} - ${h.name}`;
-        select.appendChild(option);
+    function refreshAllSelects() {
+      const selects = ['householdSelect', 'deleteHouseholdSelect', 'recordHouseholdSelect'];
+      selects.forEach(id => {
+        const sel = document.getElementById(id);
+        sel.innerHTML = "";
+        households.forEach(h => {
+          const opt = document.createElement('option');
+          opt.value = h.id;
+          opt.textContent = `${h.id} - ${h.name}`;
+          sel.appendChild(opt);
+        });
       });
     }
 
@@ -113,24 +125,16 @@
       const newHousehold = {
         id: newId,
         name: newName,
-        records: [{
-          date: today,
-          reading: newReading,
-          usage: 0,
-          loss: 0,
-          fee: 0
-        }]
+        records: [{ date: today, reading: newReading, usage: 0, loss: 0, fee: 0 }]
       };
 
       households.push(newHousehold);
       sortHouseholds();
-      refreshSelect();
-
+      refreshAllSelects();
       document.getElementById('newId').value = "";
       document.getElementById('newName').value = "";
       document.getElementById('newReading').value = "";
-
-      uploadData('✅ 新住户已添加: ');
+      uploadData('✅ 新住户已添加');
     }
 
     function submitData() {
@@ -144,9 +148,7 @@
         return;
       }
 
-      if (!confirm("确定要提交该报数记录吗？请确认填写无误。")) {
-        return;
-      }
+      if (!confirm("确认提交该报数记录？")) return;
 
       const household = households.find(h => h.id === selectedId);
       if (!household) {
@@ -154,75 +156,83 @@
         return;
       }
 
-      let lastReading = household.records.length > 0 ? household.records[0].reading : 0;
+      const lastReading = household.records.length > 0 ? household.records[0].reading : 0;
       const usage = newReading - lastReading;
       const fee = (usage + loss) * 2.8;
 
-      const newRecord = { date, reading: newReading, usage, loss, fee };
-      household.records.unshift(newRecord);
-
-      uploadData('✅ 报数已提交: ');
-      showRecords();
+      household.records.unshift({ date, reading: newReading, usage, loss, fee });
+      uploadData('✅ 报数已提交');
+      populateRecordList();
+      showRecordOptions();
     }
 
     function deleteHousehold() {
-      const selectedId = document.getElementById('householdSelect').value;
-      if (!selectedId) {
-        alert("请选择要删除的住户");
-        return;
-      }
-
-      if (!confirm("⚠️ 确认删除该住户及其所有记录吗？操作不可撤销！")) return;
+      const selectedId = document.getElementById('deleteHouseholdSelect').value;
+      if (!selectedId) return;
+      if (!confirm("⚠️ 确认删除该住户及所有报数记录？")) return;
 
       households = households.filter(h => h.id !== selectedId);
-      refreshSelect();
-      showRecords();
-      uploadData('✅ 住户已删除');
+      refreshAllSelects();
+      populateRecordList();
+      uploadData("✅ 住户已删除");
     }
 
-    function showRecords() {
-      const selectedId = document.getElementById('householdSelect').value;
+    function populateRecordList() {
+      const selectedId = document.getElementById('recordHouseholdSelect').value;
       const list = document.getElementById('recordList');
-      list.innerHTML = '';
+      list.innerHTML = "";
 
       const household = households.find(h => h.id === selectedId);
       if (!household || household.records.length === 0) {
-        list.innerHTML = '<li>无报数记录</li>';
+        list.innerHTML = "<li>无报数记录</li>";
         return;
       }
 
-      household.records.forEach((rec, index) => {
+      household.records.forEach((r, index) => {
         const li = document.createElement('li');
-        li.innerHTML = `📅 ${rec.date} ｜ 💧 ${rec.reading} 吨 ｜ 🔢 用水 ${rec.usage} 吨 ｜ 损耗 ${rec.loss} 吨 ｜ 💰 ￥${rec.fee.toFixed(2)} 
-          <button class="small-btn" onclick="deleteRecord('${household.id}', ${index})">删除</button>`;
+        li.innerHTML = `
+          <label>
+            <input type="radio" name="recordIndex" value="${index}">
+            📅${r.date} ｜ 💧${r.reading} 吨 ｜ 用水 ${r.usage} 吨 ｜ 损耗 ${r.loss} 吨 ｜ ￥${r.fee.toFixed(2)}
+          </label>`;
         list.appendChild(li);
       });
     }
 
-    function deleteRecord(householdId, recordIndex) {
+    function deleteSelectedRecord() {
+      const householdId = document.getElementById('recordHouseholdSelect').value;
       const household = households.find(h => h.id === householdId);
       if (!household) return;
 
-      if (!confirm("⚠️ 确认删除该条报数记录？")) return;
+      const selectedRadio = document.querySelector('input[name="recordIndex"]:checked');
+      if (!selectedRadio) {
+        alert("请选择一条报数记录");
+        return;
+      }
 
-      household.records.splice(recordIndex, 1);
-      uploadData('✅ 报数记录已删除');
-      showRecords();
+      const index = parseInt(selectedRadio.value);
+      if (!confirm("确认删除这条报数记录？")) return;
+
+      household.records.splice(index, 1);
+      uploadData("✅ 报数记录已删除");
+      populateRecordList();
     }
 
-    function uploadData(successMsg) {
+    function showRecordOptions() {
+      const id = document.getElementById('householdSelect').value;
+      const h = households.find(h => h.id === id);
+      if (!h) return;
+    }
+
+    function uploadData(msg) {
       fetch('https://water.hahagw2016.workers.dev/update', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ households })
       })
-      .then(res => res.text())
-      .then(text => {
-        document.getElementById('result').innerText = successMsg + text;
-      })
-      .catch(err => {
-        document.getElementById('result').innerText = '❌ 上传失败: ' + err;
-      });
+        .then(res => res.text())
+        .then(text => document.getElementById('result').innerText = msg + ": " + text)
+        .catch(err => document.getElementById('result').innerText = "❌ 上传失败：" + err);
     }
   </script>
 </body>
