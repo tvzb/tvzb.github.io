@@ -25,12 +25,12 @@
   <div id="loginSection">
     <label>请输入后台密码：</label>
     <input type="password" id="passwordInput">
-    <button onclick=" overweightPassword()">登录</button>
+    <button onclick="checkPassword()">登录</button>
     <div id="loginMsg" style="color:red; margin-top:10px;"></div>
   </div>
 
   <div id="adminContent" style="display:none;">
-    <div class="section">
+    <section class="section">
       <h2>💧 提交读数</h2>
       <label>选择住户：</label>
       <select id="householdSelect"></select>
@@ -41,9 +41,9 @@
       <label>水损耗（吨）：</label>
       <input type="number" id="lossInput" value="3">
       <button onclick="submitData()">提交读数</button>
-    </div>
+    </section>
 
-    <div class="section">
+    <section class="section">
       <h2>🏠 住户管理</h2>
       <h3>添加住户</h3>
       <label>房号：</label>
@@ -65,9 +65,9 @@
       <label>选择住户：</label>
       <select id="deleteHouseholdSelect"></select>
       <button onclick="deleteHousehold()">删除住户</button>
-    </div>
+    </section>
 
-    <div class="section">
+    <section class="section">
       <h2>📝 记录管理</h2>
       <label>选择住户：</label>
       <select id="recordHouseholdSelect" onchange="populateRecordList()"></select>
@@ -83,32 +83,31 @@
       <label>水损耗（吨）：</label>
       <input type="number" id="editRecordLoss">
       <button onclick="modifySelectedRecord()">修改记录</button>
-    </div>
+    </section>
 
-    <div class="section">
+    <section class="section">
       <h2>📊 用水总览</h2>
       <button onclick="showOverview()">刷新总览</button>
       <div id="overview"></div>
-    </div>
+    </section>
 
-    <div class="section">
+    <section class="section">
       <h2>📁 导出数据（Excel）</h2>
       <button onclick="exportExcel()">导出 Excel 报表</button>
-    </div>
+    </section>
 
     <div id="result"></div>
   </div>
 
-  <script src="https://cdn.jsdelivr9899/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script>
     let households = [];
-    let backendPwd = '';
     const WATER_PRICE = 2.8; // 固定水价
 
-    async function checkPassword() {
-      const pwdInput = document.getElementById('passwordInput').value;
-      if (!backendPwd) return;
-      if (pwdInput === backendPwd) {
+    // 检查密码（保持原样）
+    function checkPassword() {
+      const password = document.getElementById('passwordInput').value;
+      if (password === 'admin123') {
         document.getElementById('loginSection').style.display = 'none';
         document.getElementById('adminContent').style.display = 'block';
         loadData();
@@ -117,20 +116,7 @@
       }
     }
 
-    async function loadPassword() {
-      const res = await fetch('https://hahagw.eu.org/password');
-      backendPwd = await res.text();
-    }
-
-    loadPassword();
-
-    function getToday() {
-      const today = new Date();
-      return today.toISOString().split('T')[0];
-    }
-
-    document.getElementById('dateInput').value = getToday();
-
+    // 加载数据
     function loadData() {
       fetch('https://hahagw.eu.org/data')
         .then(res => res.json())
@@ -143,10 +129,12 @@
         });
     }
 
+    // 排序住户
     function sortHouseholds() {
       households.sort((a, b) => a.id.localeCompare(b.id, 'zh-Hans-CN', { numeric: true }));
     }
 
+    // 刷新所有下拉框
     function refreshAllSelects() {
       ['householdSelect', 'editHouseholdSelect', 'deleteHouseholdSelect', 'recordHouseholdSelect'].forEach(id => {
         const sel = document.getElementById(id);
@@ -160,6 +148,7 @@
       });
     }
 
+    // 上传数据
     function uploadData(msg) {
       fetch('https://hahagw.eu.org/update', {
         method: 'POST',
@@ -171,19 +160,21 @@
         .catch(err => document.getElementById('result').innerText = '❌ 上传失败: ' + err);
     }
 
+    // 添加住户
     function addHousehold() {
       const newId = document.getElementById('newId').value.trim();
       const newName = document.getElementById('newName').value.trim();
       const newReading = parseInt(document.getElementById('newReading').value);
       if (!newId || !newName || isNaN(newReading)) return alert("请填写完整信息");
       if (households.some(h => h.id === newId)) return alert("该房号已存在");
-      const today = getToday();
+      const today = new Date().toISOString().split('T')[0];
       households.push({ id: newId, name: newName, records: [{ date: today, reading: newReading, loss: 0, price: WATER_PRICE, fee: 0 }] });
       sortHouseholds();
       refreshAllSelects();
       uploadData("✅ 住户已添加");
     }
 
+    // 提交读数
     function submitData() {
       const id = document.getElementById('householdSelect').value;
       const date = document.getElementById('dateInput').value;
@@ -198,6 +189,7 @@
       uploadData("✅ 读数已提交");
     }
 
+    // 修改住户姓名
     function editHousehold() {
       const id = document.getElementById('editHouseholdSelect').value;
       const name = document.getElementById('editName').value.trim();
@@ -208,6 +200,7 @@
       uploadData("✅ 姓名已修改");
     }
 
+    // 删除住户
     function deleteHousehold() {
       const id = document.getElementById('deleteHouseholdSelect').value;
       const h = households.find(h => h.id === id);
@@ -217,6 +210,7 @@
       uploadData("✅ 住户已删除");
     }
 
+    // 填充记录列表
     function populateRecordList() {
       const id = document.getElementById('recordHouseholdSelect').value;
       const ul = document.getElementById('recordList');
@@ -229,10 +223,11 @@
       });
     }
 
+    // 填充编辑字段
     function fillEditFields() {
       const id = document.getElementById('recordHouseholdSelect').value;
       const h = households.find(h => h.id === id);
-      const idx = document.queryquerySelector('input[name="recordIndex"]:checked');
+      const idx = document.querySelector('input[name="recordIndex"]:checked');
       if (!idx) return;
       const i = parseInt(idx.value);
       const r = h.records[i];
@@ -241,6 +236,7 @@
       document.getElementById('editRecordLoss').value = r.loss || 0;
     }
 
+    // 修改选中记录
     function modifySelectedRecord() {
       const id = document.getElementById('recordHouseholdSelect').value;
       const h = households.find(h => h.id === id);
@@ -261,6 +257,7 @@
       uploadData("✅ 记录已修改");
     }
 
+    // 删除选中记录
     function deleteSelectedRecord() {
       const id = document.getElementById('recordHouseholdSelect').value;
       const h = households.find(h => h.id === id);
@@ -272,6 +269,7 @@
       uploadData("✅ 读数记录已删除");
     }
 
+    // 显示用水总览
     function showOverview() {
       let html = '<table><tr><th>房号</th><th>姓名</th><th>当前读数</th><th>累计用水</th><th>累计损耗</th><th>累计水费</th></tr>';
       households.forEach(h => {
@@ -285,6 +283,7 @@
       document.getElementById('overview').innerHTML = html;
     }
 
+    // 导出 Excel
     function exportExcel() {
       const data = households.map(h => {
         return {
@@ -293,13 +292,13 @@
           当前读数: h.records.length > 0 ? h.records[0].reading : 0,
           累计用水: h.records.reduce((a, r) => a + (r.usage || 0), 0),
           累计损耗: h.records.reduce((a, r) => a + (r.loss || 0), 0),
-          累计水费: h.records.reduce((a, r) => a + (r.fee || 0), 0).toFixed(2),
+          累计水费: h.records.reduce((a, r) => a + (r.fee || 0), 0)."
         };
       });
 
       const ws = XLSX.utils.json_to_sheet(data);
       const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "水费报表");
+      XLSX.utils.book_append_sheet deh  wb, ws, "水费报表");
       XLSX.writeFile(wb, "水费报表.xlsx");
     }
   </script>
