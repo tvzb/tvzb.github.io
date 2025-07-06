@@ -29,7 +29,7 @@
 
   <div id="adminContent" style="display:none;">
     <div class="section">
-      <h2>💧 提交读数（默认水价 2.8 元/吨，可选择）</h2>
+      <h2>💧 提交读数</h2>
       <label>选择住户：</label>
       <select id="householdSelect"></select>
       <label>读数日期：</label>
@@ -71,6 +71,7 @@
       <h2>📝 编辑记录</h2>
       <label>选择住户：</label>
       <select id="recordHouseholdSelect" onchange="populateRecordList()"></select>
+      <label>选择要修改或删除的记录：</label>
       <ul id="recordList"></ul>
       <button onclick="deleteSelectedRecord()">删除记录</button>
 
@@ -79,13 +80,12 @@
       <input type="date" id="editRecordDate">
       <label>水表读数（吨）：</label>
       <input type="number" id="editRecordReading">
+      <label>用水量（吨）：</label>
+      <input type="number" id="editRecordUsage" readonly>
       <label>水损耗（吨）：</label>
       <input type="number" id="editRecordLoss">
       <label>水价（元/吨）：</label>
-      <select id="editRecordPrice">
-        <option value="2.8">2.8</option>
-        <option value="3.4">3.4</option>
-      </select>
+      <input type="number" id="editRecordPrice" step="0.1">
       <button onclick="modifySelectedRecord()">修改记录</button>
     </div>
 
@@ -124,14 +124,15 @@
       const res = await fetch('https://hahagw.eu.org/password');
       backendPwd = await res.text();
     }
+
     loadPassword();
 
     function getToday() {
       const today = new Date();
       return today.toISOString().split('T')[0];
     }
+
     document.getElementById('dateInput').value = getToday();
-    document.getElementById('editRecordDate').value = getToday();
 
     function loadData() {
       fetch('https://hahagw.eu.org/data')
@@ -230,20 +231,23 @@
       const h = households.find(h => h.id === id);
       h.records.forEach((r, i) => {
         const li = document.createElement('li');
-        li.innerHTML = `<label><input type="radio" name="recordIndex" value="${i}"> ${r.date} ｜ ${r.reading} 吨 ｜ 用水 ${r.usage} ｜ ￥${r.fee.toFixed(2)} ｜ 水价 ${r.price}</label>`;
+        li.innerHTML = `<label><input type="radio" name="recordIndex" value="${i}" onchange="fillEditFields()"> ${r.date} ｜ ${r.reading} 吨 ｜ 用水 ${r.usage || 0} ｜ ￥${r.fee?.toFixed(2) || 0} ｜ 水价 ${r.price || 2.8}</label>`;
         ul.appendChild(li);
       });
     }
 
-    function deleteSelectedRecord() {
+    function fillEditFields() {
       const id = document.getElementById('recordHouseholdSelect').value;
       const h = households.find(h => h.id === id);
       const idx = document.querySelector('input[name="recordIndex"]:checked');
-      if (!idx) return alert("请选择要删除的记录");
-      if (!confirm("确认删除该记录？")) return;
-      h.records.splice(parseInt(idx.value), 1);
-      populateRecordList();
-      uploadData("✅ 记录已删除");
+      if (!idx) return;
+      const i = parseInt(idx.value);
+      const r = h.records[i];
+      document.getElementById('editRecordDate').value = r.date;
+      document.getElementById('editRecordReading').value = r.reading;
+      document.getElementById('editRecordUsage').value = r.usage || '';
+      document.getElementById('editRecordLoss').value = r.loss || 0;
+      document.getElementById('editRecordPrice').value = r.price || 2.8;
     }
 
     function modifySelectedRecord() {
@@ -257,23 +261,40 @@
       const loss = parseInt(document.getElementById('editRecordLoss').value);
       const price = parseFloat(document.getElementById('editRecordPrice').value);
       if (!date || isNaN(reading) || isNaN(loss) || isNaN(price)) return alert("请填写完整修改信息");
+
       const lastReading = i < h.records.length - 1 ? h.records[i + 1].reading : 0;
-      const usage = reading - lastReading;
-      const fee = (usage + loss) * price;
+      let usage = reading - lastReading;
+      let fee = (usage + loss) * price;
+
+      if (h.records.length === 1) {
+        usage = '';
+        fee = 0;
+      }
+
       h.records[i] = { date, reading, usage, loss, price, fee };
       populateRecordList();
       uploadData("✅ 记录已修改");
     }
 
+    function deleteSelectedRecord() {
+      const id = document.getElementById('recordHouseholdSelect').value;
+      const h = households.find(h => h.id === id);
+      const idx = document.querySelector('input[name="recordIndex"]:checked');
+      if (!idx) return alert("请选择要删除的记录");
+      if (!confirm("确认删除该记录？")) return;
+      h.records.splice(parseInt(idx.value), 1);
+      populateRecordList();
+      uploadData("✅ 读数记录已删除");
+    }
+
     function showOverview() {
-      let html = '<table><tr><th>房号</th><th>姓名</th><th>当前读数</th><th>用水量</th><th>水损耗</th><th>水费</th><th>水价（备注）</th></tr>';
+      let html = '<table><tr><th>房号</th><th>姓名</th><th>当前读数</th><th>累计用水</th><th>累计损耗</th><th>累计水费</th></tr>';
       households.forEach(h => {
         const now = h.records.length > 0 ? h.records[0].reading : 0;
-        const usage = h.records.reduce((a, r) => a + r.usage, 0);
-        const loss = h.records.reduce((a, r) => a + r.loss, 0);
-        const fee = h.records.reduce((a, r) => a + r.fee, 0);
-        const price = h.records.length > 0 ? h.records[0].price : 2.8;
-        html += `<tr><td>${h.id}</td><td>${h.name}</td><td>${now}</td><td>${usage}</td><td>${loss}</td><td>￥${fee.toFixed(2)}</td><td>${price} 元/吨</td></tr>`;
+        const usage = h.records.reduce((a, r) => a + (r.usage || 0), 0);
+        const loss = h.records.reduce((a, r) => a + (r.loss || 0), 0);
+        const fee = h.records.reduce((a, r) => a + (r.fee || 0), 0);
+        html += `<tr><td>${h.id}</td><td>${h.name}</td><td>${now}</td><td>${h.records.length > 1 ? usage : ''}</td><td>${h.records.length > 1 ? loss : ''}</td><td>${h.records.length > 1 ? `￥${fee.toFixed(2)}` : ''}</td></tr>`;
       });
       html += '</table>';
       document.getElementById('overview').innerHTML = html;
@@ -285,12 +306,12 @@
           房号: h.id,
           姓名: h.name,
           当前读数: h.records.length > 0 ? h.records[0].reading : 0,
-          累计用水: h.records.reduce((a, r) => a + r.usage, 0),
-          累计损耗: h.records.reduce((a, r) => a + r.loss, 0),
-          累计水费: h.records.reduce((a, r) => a + r.fee, 0).toFixed(2),
-          水价: h.records.length > 0 ? h.records[0].price : 2.8,
+          累计用水: h.records.reduce((a, r) => a + (r.usage || 0), 0),
+          累计损耗: h.records.reduce((a, r) => a + (r.loss || 0), 0),
+          累计水费: h.records.reduce((a, r) => a + (r.fee || 0), 0).toFixed(2),
         };
       });
+
       const ws = XLSX.utils.json_to_sheet(data);
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, "水费报表");
