@@ -204,6 +204,11 @@
       uploadData("✅ 报数记录已删除");
     }
 
+    function getUnitPrice(household) {
+      // 判断是否为底铺 - 大众配件
+      return household.id.includes("底铺") || household.name.includes("大众配件") ? 3.4 : 2.8;
+    }
+    
     function showOverview() {
       let html = '<table><tr><th>房号</th><th>姓名</th><th>当前读数</th><th>用水量</th><th>水损耗</th><th>水费</th></tr>';
       let totalUsage = 0;
