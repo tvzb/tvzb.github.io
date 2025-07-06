@@ -94,7 +94,7 @@
 
     document.getElementById('dateInput').value = getToday();
 
-    fetch('https://water.hahagw2016.workers.dev/data')
+    fetch('https://hahagw.eu.org/data')
       .then(res => res.json())
       .then(data => {
         households = data.households;
@@ -122,7 +122,7 @@
     }
 
     function uploadData(msg) {
-      fetch('https://water.hahagw2016.workers.dev/update', {
+      fetch('https://hahagw.eu.org/update', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ households })
