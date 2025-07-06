@@ -47,7 +47,7 @@
   </div>
 
   <div class="section">
-    <h2>✏️ 修改住户信息</h2>
+    <h2>✏️ 修改住户</h2>
     <label>选择住户：</label>
     <select id="editHouseholdSelect"></select>
     <label>新姓名：</label>
@@ -63,7 +63,7 @@
   </div>
 
   <div class="section">
-    <h2>🗑️ 删除报数记录</h2>
+    <h2>🗑️ 删除记录</h2>
     <label>选择住户：</label>
     <select id="recordHouseholdSelect" onchange="populateRecordList()"></select>
     <label>选择要删除的记录：</label>
@@ -205,14 +205,26 @@
     }
 
     function showOverview() {
-      let html = '<table><tr><th>房号</th><th>姓名</th><th>当前读数</th><th>累计用水</th><th>费用合计</th></tr>';
+      let html = '<table><tr><th>房号</th><th>姓名</th><th>当前读数</th><th>用水量</th><th>水损耗</th><th>水费</th></tr>';
+      let totalUsage = 0;
+      let totalLoss = 0;
+      let totalFee = 0;
+
       households.forEach(h => {
         const now = h.records.length > 0 ? h.records[0].reading : 0;
-        const usage = h.records.reduce((a, r) => a + r.usage + r.loss, 0);
+        const usage = h.records.reduce((a, r) => a + r.usage, 0);
+        const loss = h.records.reduce((a, r) => a + r.loss, 0);
         const fee = h.records.reduce((a, r) => a + r.fee, 0);
-        html += `<tr><td>${h.id}</td><td>${h.name}</td><td>${now}</td><td>${usage}</td><td>￥${fee.toFixed(2)}</td></tr>`;
+        totalUsage += usage;
+        totalLoss += loss;
+        totalFee += fee;
+
+        html += `<tr><td>${h.id}</td><td>${h.name}</td><td>${now}</td><td>${usage}</td><td>${loss}</td><td>￥${fee.toFixed(2)}</td></tr>`;
       });
+
+      html += `<tr style="font-weight:bold;background:#f9f9f9;"><td>总计</td><td></td><td></td><td>${totalUsage}</td><td>${totalLoss}</td><td>￥${totalFee.toFixed(2)}</td></tr>`;
       html += '</table>';
+
       document.getElementById('overview').innerHTML = html;
     }
 
