@@ -283,24 +283,25 @@
       document.getElementById('overview').innerHTML = html;
     }
 
-    // 导出 Excel
-    function exportExcel() {
-      const data = households.map(h => {
-        return {
-          房号: h.id,
-          姓名: h.name,
-          当前读数: h.records.length > 0 ? h.records[0].reading : 0,
-          累计用水: h.records.reduce((a, r) => a + (r.usage || 0), 0),
-          累计损耗: h.records.reduce((a, r) => a + (r.loss || 0), 0),
-          累计水费: h.records.reduce((a, r) => a + (r.fee || 0), 0)."
-        };
-      });
+// 导出 Excel
+function exportExcel() {
+  const data = households.map(h => {
+    return {
+      房号: h.id,
+      姓名: h.name,
+      当前读数: h.records.length > 0 ? h.records[0].reading : 0,
+      累计用水: h.records.reduce((a, r) => a + (r.usage || 0), 0),
+      累计损耗: h.records.reduce((a, r) => a + (r.loss || 0), 0),
+      累计水费: h.records.reduce((a, r) => a + (r.fee || 0), 0)
+    };
+  });
 
-      const ws = XLSX.utils.json_to_sheet(data);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet deh  wb, ws, "水费报表");
-      XLSX.writeFile(wb, "水费报表.xlsx");
-    }
+  const ws = XLSX.utils.json_to_sheet(data);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "水费报表");
+  XLSX.writeFile(wb, "水费报表.xlsx");
+}
+
   </script>
 </body>
 </html>
