@@ -89,11 +89,12 @@
             const card = document.createElement('div');
             card.className = 'record-card';
             card.innerHTML = `
-              <div><span class="label">日期：</span>${record.date}</div>
+              <div><span class="label">读数日期：</span>${record.date}</div>
               <div><span class="label">水表读数(吨)：</span>${record.reading}</div>
               <div><span class="label">用水量(吨)：</span>${record.usage || 0}</div>
               <div><span class="label">水损耗(吨)：</span>${record.loss || 0}</div>
               <div><span class="label">水费：</span><span class="fee">${record.fee ? record.fee.toFixed(2) + ' 元' : '-'}</span></div>
+              <div style="color: gray; font-size: 14px; margin-top: 4px;">备注：水损耗 1 吨/月；水费 2.8元/吨</div>
             `;
             section.appendChild(card);
           });
