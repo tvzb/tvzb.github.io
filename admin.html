@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>水表后台管理</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* 通用样式 */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Microsoft YaHei", Arial, sans-serif; padding: 20px; background: #f4f7fa; color: #333; }
+    h1, h2, h3 { text-align: center; margin-bottom: 15px; }
+    .section { background: #fff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); padding: 20px; margin-bottom: 20px; }
+    label { display: block; margin-bottom: 5px; font-size: 16px; }
+    input, select, button { width: 100%; padding: 10px; margin-bottom: 15px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px; }
+    button { background: #007bff; color: #fff; border: none; cursor: pointer; transition: background 0.3s; }
+    button:hover { background: #0056b3; }
+    #result { text-align: center; font-size: 16px; margin-top: 10px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    th, td { border: 1px solid #e0e0e0; padding: 10px; text-align: center; }
+    th { background: #fafafa; font-weight: 600; }
+    ul { list-style: none; padding: 0; }
+    li { margin-bottom: 10px; }
+    /* 响应式布局 */
+    @media (min-width: 768px) {
+      .flex-row { display: flex; gap: 20px; }
+      .flex-item { flex: 1; }
+    }
+  </style>
+</head>
+<body>
+  <h1>水表后台管理（普通水价￥2.8/吨，底铺水价￥3.4/吨）</h1>
+
+  <div id="loginSection" class="section">
+    <label>请输入后台密码：</label>
+    <input type="password" id="passwordInput" placeholder="Password">
+    <button onclick="checkPassword()">登录</button>
+    <div id="loginMsg" style="color:red; margin-top:10px;"></div>
+  </div>
+
+  <div id="adminContent" style="display:none;">
+    <div class="section">
+      <h2>💧 提交读数</h2>
+      <div class="flex-row">
+        <div class="flex-item">
+          <label>选择住户：</label>
+          <select id="householdSelect"></select>
+        </div>
+        <div class="flex-item">
+          <label>读数日期：</label>
+          <input type="date" id="dateInput">
+        </div>
+      </div>
+      <div class="flex-row">
+        <div class="flex-item">
+          <label>水表读数（吨）：</label>
+          <input type="number" id="readingInput">
+        </div>
+        <div class="flex-item">
+          <label>水损耗（吨）：</label>
+          <input type="number" id="lossInput" value="3">
+        </div>
+      </div>
+      <button onclick="submitData()">提交读数</button>
+    </div>
+
+    <div class="section">
+      <h2>🏠 住户管理</h2>
+      <div class="flex-row">
+        <div class="flex-item">
+          <h3>添加住户</h3>
+          <label>房号：</label>
+          <input type="text" id="newId" placeholder="例：3-101">
+          <label>姓名：</label>
+          <input type="text" id="newName" placeholder="例：张三">
+          <button onclick="addHousehold()">添加住户</button>
+        </div>
+        <div class="flex-item">
+          <h3>修改住户姓名</h3>
+          <label>选择住户：</label>
+          <select id="editHouseholdSelect"></select>
+          <label>新姓名：</label>
+          <input type="text" id="editName">
+          <button onclick="editHousehold()">修改姓名</button>
+        </div>
+        <div class="flex-item">
+          <h3>删除住户</h3>
+          <label>选择住户：</label>
+          <select id="deleteHouseholdSelect"></select>
+          <button onclick="deleteHousehold()">删除住户</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>📝 记录管理</h2>
+      <div class="flex-row">
+        <div class="flex-item">
+          <label>选择住户：</label>
+          <select id="recordHouseholdSelect" onchange="populateRecordList()"></select>
+          <ul id="recordList"></ul>
+        </div>
+        <div class="flex-item">
+          <h3>修改选中记录</h3>
+          <label>读数日期：</label>
+          <input type="date" id="editRecordDate">
+          <label>水表读数（吨）：</label>
+          <input type="number" id="editRecordReading">
+          <label>水损耗（吨）：</label>
+          <input type="number" id="editRecordLoss">
+          <button onclick="modifySelectedRecord()">修改记录</button>
+          <button onclick="deleteSelectedRecord()" style="background:#dc3545; margin-top:10px;">删除记录</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>📊 用水总览</h2>
+      <button onclick="showOverview()">刷新总览</button>
+      <div id="overview"></div>
+    </div>
+
+    <div class="section">
+      <h2>📁 导出数据（Excel）</h2>
+      <button onclick="exportExcel()">导出 Excel 报表</button>
+    </div>
+
+    <div id="result"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script>
+    const DEFAULT_PRICE = 2.8;
+    const BOTTOM_PRICE = 3.4;
+    let households = [];
+
+    function checkPassword() {
+      const pw = document.getElementById('passwordInput').value;
+      if (pw === 'admin123') {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('adminContent').style.display = 'block';
+        loadData();
+      } else {
+        document.getElementById('loginMsg').innerText = '密码错误';
+      }
+    }
+
+    function loadData() {
+      fetch('https://hahagw.eu.org/data')
+        .then(res => res.json())
+        .then(data => {
+          households = data.households;
+          sortHouseholds();
+          refreshAllSelects();
+          populateRecordList();
+          showOverview();
+        });
+    }
+
+    function sortHouseholds() {
+      households.sort((a, b) => a.id.localeCompare(b.id, 'zh-Hans-CN', { numeric: true }));
+    }
+
+    function refreshAllSelects() {
+      ['householdSelect','editHouseholdSelect','deleteHouseholdSelect','recordHouseholdSelect'].forEach(id => {
+        const sel = document.getElementById(id);
+        sel.innerHTML = '';
+        households.forEach(h => {
+          const opt = document.createElement('option');
+          opt.value = h.id;
+          opt.textContent = `${h.id} - ${h.name}`;
+          sel.appendChild(opt);
+        });
+      });
+    }
+
+    function uploadData(msg) {
+      fetch('https://hahagw.eu.org/update',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({households})})
+        .then(res=>res.text())
+        .then(txt=>result.innerText = msg + '：' + txt)
+        .catch(err=>result.innerText = '❌ 上传失败: ' + err);
+    }
+
+    function addHousehold() {
+      const id = newId.value.trim(), name=newName.value.trim();
+      if(!id||!name) return alert('请填写完整信息');
+      if(households.some(h=>h.id===id)) return alert('该房号已存在');
+      const date=new Date().toISOString().split('T')[0];
+      households.push({id, name, records:[{date, reading:null}]});
+      sortHouseholds(); refreshAllSelects();
+      uploadData('✅ 住户已添加');
+    }
+
+    function submitData() {
+      const id=householdSelect.value, date=dateInput.value;
+      const reading=Number(readingInput.value), loss=Number(lossInput.value);
+      if(!date||isNaN(reading)||isNaN(loss)) return alert('请填写完整读数');
+      const h=households.find(x=>x.id===id);
+      const lastRec=h.records[0];
+      const lastReading = lastRec.reading||0;
+      const usage=reading - lastReading;
+      const price=h.name.includes('底铺')?BOTTOM_PRICE:DEFAULT_PRICE;
+      const fee=(usage+loss)*price;
+      h.records.unshift({date, reading, usage, loss, price, fee});
+      uploadData('✅ 读数已提交');
+    }
+
+    function populateRecordList() {
+      const h=households.find(x=>x.id===recordHouseholdSelect.value);
+      recordList.innerHTML='';
+      h.records.forEach((r,i)=>{
+        const li=document.createElement('li');
+        li.innerHTML=`<label><input type="radio" name="recIdx" value="${i}"> ${r.date} | ${r.reading||"-"} 吨 | 损耗 ${r.loss||"-"} | ￥${(r.fee||0).toFixed(2)}</label>`;
+        recordList.appendChild(li);
+      });
+      document.querySelectorAll('input[name=recIdx]').forEach(el=>el.onchange=fillEditFields);
+    }
+
+    function fillEditFields() {
+      const h=households.find(x=>x.id===recordHouseholdSelect.value);
+      const idx=Number(document.querySelector('input[name=recIdx]:checked').value);
+      const r=h.records[idx];
+      editRecordDate.value=r.date;
+      editRecordReading.value=r.reading;
+      editRecordLoss.value=r.loss;
+    }
+
+    function modifySelectedRecord() {
+      const h=households.find(x=>x.id===recordHouseholdSelect.value);
+      const sel=document.querySelector('input[name=recIdx]:checked');
+      if(!sel) return alert('请选择要修改的记录');
+      const i=Number(sel.value), date=editRecordDate.value;
+      const reading=Number(editRecordReading.value), loss=Number(editRecordLoss.value);
+      if(!date||isNaN(reading)||isNaN(loss)) return alert('请填写完整修改信息');
+      const prev=h.records[i+1];
+      const last=prev?prev.reading:0;
+      const usage=reading-last;
+      const price=h.name.includes('底铺')?BOTTOM_PRICE:DEFAULT_PRICE;
+      const fee=(usage+loss)*price;
+      h.records[i]={date, reading, usage, loss, price, fee};
+      populateRecordList(); uploadData('✅ 记录已修改');
+    }
+
+    function deleteSelectedRecord() {
+      const h=households.find(x=>x.id===recordHouseholdSelect.value);
+      const sel=document.querySelector('input[name=recIdx]:checked');
+      if(!sel) return alert('请选择要删除的记录');
+      if(!confirm('确认删除该记录？')) return;
+      h.records.splice(Number(sel.value),1);
+      if(h.records.length===1){ const r=h.records[0]; h.records[0]={date:r.date, reading:r.reading}; }
+      populateRecordList(); uploadData('✅ 读数记录已删除');
+    }
+
+    function editHousehold() {
+      const h=households.find(x=>x.id===editHouseholdSelect.value);
+      const name=editName.value.trim(); if(!name) return alert('请输入新姓名');
+      h.name=name; refreshAllSelects(); uploadData('✅ 姓名已修改');
+    }
+
+    function deleteHousehold() {
+      const id=deleteHouseholdSelect.value;
+      const h=households.find(x=>x.id===id);
+      if(!confirm(`确认删除住户 ${h.id} - ${h.name} 吗？`)) return;
+      households=households.filter(x=>x.id!==id);
+      refreshAllSelects(); uploadData('✅ 住户已删除');
+    }
+
+    function showOverview() {
+      let html='<table><tr><th>房号</th><th>姓名</th><th>当前读数</th><th>累计用水</th><th>累计损耗</th><th>累计水费</th></tr>';
+      households.forEach(h=>{
+        const now=h.records[0].reading||0;
+        const usage=h.records.reduce((s,r)=>(s+(r.usage||0)),0);
+        const loss=h.records.reduce((s,r)=>(s+(r.loss||0)),0);
+        const fee=h.records.reduce((s,r)=>(s+(r.fee||0)),0);
+        html+=`<tr><td>${h.id}</td><td>${h.name}</td><td>${now}</td><td>${usage}</td><td>${loss}</td><td>￥${fee.toFixed(2)}</td></tr>`;
+      });
+      html+='</table>';
+      overview.innerHTML=html;
+    }
+
+    function exportExcel() {
+      const data=households.map(h=>({房号:h.id, 姓名:h.name, 当前读数:h.records[0].reading||0, 累计用水:h.records.reduce((s,r)=>(s+(r.usage||0)),0), 累计损耗:h.records.reduce((s,r)=>(s+(r.loss||0)),0), 累计水费:h.records.reduce((s,r)=>(s+(r.fee||0)),0)}));
+      const ws=XLSX.utils.json_to_sheet(data);
+      const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"水费报表");
+      XLSX.writeFile(wb,"水费报表.xlsx");
+    }
+  </script>
+</body>
+</html>
