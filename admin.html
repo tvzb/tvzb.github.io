@@ -192,7 +192,7 @@
     // 检查密码（调用 Cloudflare KV）
     function checkPassword() {
       const password = document.getElementById('passwordInput').value;
-      fetch('/checkPassword', {
+      fetch('https://hahagw.eu.org/password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password })
