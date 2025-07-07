@@ -190,7 +190,7 @@
     let households = [];
 
     // 从 Cloudflare KV 获取密码
-    fetch('https://hahagw.eu.org/get_pwd')
+    fetch('https://hahagw.eu.org/password')
       .then(res => res.text())
       .then(pwd => { serverPassword = pwd; })
       .catch(() => { document.getElementById('loginMsg').innerText = '无法获取密码配置'; });
