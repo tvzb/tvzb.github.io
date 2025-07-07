@@ -5,36 +5,25 @@
   <title>水表后台管理</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body { font-family: "Microsoft YaHei", Arial, sans-serif; padding: 20px; background: #f4f6f9; }
+    body { font-family: "Microsoft YaHei", Arial, sans-serif; padding: 20px; background-color: #f8f9fa; }
     h1, h2 { text-align: center; }
-    .section {
-      background: #fff; padding: 15px; border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1); margin-top: 20px;
-    }
-    label { display: block; margin-top: 10px; }
-    input, select, button {
-      width: 100%; padding: 10px; margin-top: 5px;
-      font-size: 16px; border: 1px solid #ccc; border-radius: 4px;
-    }
-    button {
-      background-color: #007bff; color: white; border: none;
-    }
+    .section { border: 1px solid #ddd; padding: 15px; margin-top: 20px; border-radius: 8px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    label { display: block; margin-top: 10px; font-size: 16px; }
+    select, input { width: 100%; padding: 8px; font-size: 16px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; }
+    button { margin-top: 15px; padding: 10px; font-size: 18px; width: 100%; background-color: #007bff; color: #fff; border: none; border-radius: 4px; }
     button:hover { background-color: #0056b3; }
+    #result { margin-top: 15px; font-size: 16px; color: green; text-align: center; }
     table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-    th, td { border: 1px solid #ddd; padding: 8px; }
-    th { background-color: #f2f2f2; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background-color: #f1f1f1; }
     ul { list-style: none; padding: 0; }
     li { margin: 5px 0; }
-    @media (min-width: 768px) {
-      .flex-row { display: flex; gap: 20px; }
-      .flex-item { flex: 1; }
-    }
   </style>
 </head>
 <body>
   <h1>水表后台管理</h1>
 
-  <div id="loginSection" class="section">
+  <div id="loginSection">
     <label>请输入后台密码：</label>
     <input type="password" id="passwordInput">
     <button onclick="checkPassword()">登录</button>
@@ -51,7 +40,7 @@
       <label>水表读数（吨）：</label>
       <input type="number" id="readingInput">
       <label>水损耗（吨）：</label>
-      <input type="number" id="lossInput" value="0">
+      <input type="number" id="lossInput" value="3">
       <button onclick="submitData()">提交读数</button>
     </div>
 
@@ -60,8 +49,8 @@
       <h3>添加住户</h3>
       <label>房号：</label>
       <input type="text" id="newId" placeholder="例：3-101">
-      <label>姓名（含“底铺”视为3.4元/吨）：</label>
-      <input type="text" id="newName" placeholder="例：张三 或 底铺-店铺">
+      <label>姓名：</label>
+      <input type="text" id="newName" placeholder="例：张三">
       <button onclick="addHousehold()">添加住户</button>
 
       <h3>修改住户姓名</h3>
@@ -91,7 +80,7 @@
       <label>水表读数（吨）：</label>
       <input type="number" id="editRecordReading">
       <label>水损耗（吨）：</label>
-      <input type="number" id="editRecordLoss">
+      <input type="number" id="editRecordLoss" value="3">
       <button onclick="modifySelectedRecord()">修改记录</button>
     </div>
 
@@ -106,18 +95,24 @@
       <button onclick="exportExcel()">导出 Excel 报表</button>
     </div>
 
-    <div id="result" style="margin-top:15px; font-size:18px; color:green;"></div>
+    <div id="result"></div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script>
     let households = [];
-    const DEFAULT_PRICE = 2.8;
-    const HIGH_PRICE = 3.4;
+    let serverPassword = '';
 
+    // 从 Cloudflare KV 获取密码
+    fetch('https://hahagw.eu.org/get_pwd')
+      .then(res => res.text())
+      .then(pwd => { serverPassword = pwd; })
+      .catch(() => { document.getElementById('loginMsg').innerText = '无法获取密码配置'; });
+
+    // 检查密码
     function checkPassword() {
-      const pwd = document.getElementById('passwordInput').value;
-      if (pwd === 'admin123') {
+      const inputPwd = document.getElementById('passwordInput').value;
+      if (inputPwd === serverPassword) {
         document.getElementById('loginSection').style.display = 'none';
         document.getElementById('adminContent').style.display = 'block';
         loadData();
@@ -126,6 +121,7 @@
       }
     }
 
+    // 加载数据
     function loadData() {
       fetch('https://hahagw.eu.org/data')
         .then(res => res.json())
@@ -147,10 +143,10 @@
         const sel = document.getElementById(id);
         sel.innerHTML = '';
         households.forEach(h => {
-          const priceLabel = h.price === HIGH_PRICE ? '（3.4元/吨）' : '';
           const opt = document.createElement('option');
+          let priceMark = h.id.includes("底铺") ? " (3.4元/吨)" : " (2.8元/吨)";
           opt.value = h.id;
-          opt.textContent = `${h.id} - ${h.name}${priceLabel}`;
+          opt.textContent = `${h.id} - ${h.name}${priceMark}`;
           sel.appendChild(opt);
         });
       });
@@ -162,9 +158,9 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ households })
       })
-        .then(res => res.text())
-        .then(text => document.getElementById('result').innerText = msg + ': ' + text)
-        .catch(err => document.getElementById('result').innerText = '❌ 上传失败: ' + err);
+      .then(res => res.text())
+      .then(text => { alert(msg + ': ' + text); document.getElementById('result').innerText = msg + ': ' + text; })
+      .catch(err => alert('❌ 上传失败: ' + err));
     }
 
     function addHousehold() {
@@ -172,15 +168,9 @@
       const newName = document.getElementById('newName').value.trim();
       if (!newId || !newName) return alert("请填写完整信息");
       if (households.some(h => h.id === newId)) return alert("该房号已存在");
+      if (!confirm(`确认添加住户 ${newId} - ${newName}？`)) return;
 
-      const today = new Date().toISOString().split('T')[0];
-      const price = newName.includes('底铺') ? HIGH_PRICE : DEFAULT_PRICE;
-      households.push({
-        id: newId,
-        name: newName,
-        price,
-        records: [{ date: today, reading: 0 }]
-      });
+      households.push({ id: newId, name: newName, records: [] });
       sortHouseholds();
       refreshAllSelects();
       uploadData("✅ 住户已添加");
@@ -190,15 +180,21 @@
       const id = document.getElementById('householdSelect').value;
       const date = document.getElementById('dateInput').value;
       const reading = parseInt(document.getElementById('readingInput').value);
-      const loss = parseInt(document.getElementById('lossInput').value);
-      if (!date || isNaN(reading) || isNaN(loss)) return alert("请填写完整读数");
+      const loss = parseInt(document.getElementById('lossInput').value) || 3;
+      if (!date || isNaN(reading)) return alert("请填写完整读数");
 
       const h = households.find(h => h.id === id);
-      const last = h.records.length > 0 ? h.records[0].reading : 0;
-      const usage = reading - last;
-      const fee = (usage + loss) * (h.price || DEFAULT_PRICE);
+      if (!confirm(`确认提交 ${h.id} - ${h.name} 的读数？`)) return;
 
-      h.records.unshift({ date, reading, usage, loss, price: h.price, fee });
+      const price = h.id.includes("底铺") ? 3.4 : 2.8;
+      const lastRecord = h.records[0];
+      if (!lastRecord) {
+        h.records.unshift({ date, reading }); // 首次记录只保存日期和读数
+      } else {
+        const usage = reading - lastRecord.reading;
+        const fee = (usage + loss) * price;
+        h.records.unshift({ date, reading, usage, loss, price, fee });
+      }
       uploadData("✅ 读数已提交");
     }
 
@@ -206,10 +202,9 @@
       const id = document.getElementById('editHouseholdSelect').value;
       const name = document.getElementById('editName').value.trim();
       if (!name) return alert("请输入新姓名");
-
       const h = households.find(h => h.id === id);
+      if (!confirm(`确认修改 ${h.id} 的姓名为 ${name}？`)) return;
       h.name = name;
-      h.price = name.includes('底铺') ? HIGH_PRICE : DEFAULT_PRICE;
       refreshAllSelects();
       uploadData("✅ 姓名已修改");
     }
@@ -230,7 +225,7 @@
       const h = households.find(h => h.id === id);
       h.records.forEach((r, i) => {
         const li = document.createElement('li');
-        li.innerHTML = `<label><input type="radio" name="recordIndex" value="${i}" onchange="fillEditFields()"> ${r.date} ｜ ${r.reading} 吨 ｜ 损耗 ${r.loss || 0} ｜ ￥${r.fee?.toFixed(2) || 0}</label>`;
+        li.innerHTML = `<label><input type="radio" name="recordIndex" value="${i}" onchange="fillEditFields()"> ${r.date} ｜ ${r.reading} 吨</label>`;
         ul.appendChild(li);
       });
     }
@@ -244,7 +239,7 @@
       const r = h.records[i];
       document.getElementById('editRecordDate').value = r.date;
       document.getElementById('editRecordReading').value = r.reading;
-      document.getElementById('editRecordLoss').value = r.loss || 0;
+      document.getElementById('editRecordLoss').value = r.loss || 3;
     }
 
     function modifySelectedRecord() {
@@ -252,18 +247,24 @@
       const h = households.find(h => h.id === id);
       const idx = document.querySelector('input[name="recordIndex"]:checked');
       if (!idx) return alert("请选择要修改的记录");
+      if (!confirm(`确认修改 ${h.id} 的该记录？`)) return;
 
       const i = parseInt(idx.value);
       const date = document.getElementById('editRecordDate').value;
       const reading = parseInt(document.getElementById('editRecordReading').value);
-      const loss = parseInt(document.getElementById('editRecordLoss').value);
-      if (!date || isNaN(reading) || isNaN(loss)) return alert("请填写完整修改信息");
+      const loss = parseInt(document.getElementById('editRecordLoss').value) || 3;
 
-      const lastReading = i < h.records.length - 1 ? h.records[i + 1].reading : 0;
-      const usage = reading - lastReading;
-      const fee = (usage + loss) * (h.price || DEFAULT_PRICE);
+      const price = h.id.includes("底铺") ? 3.4 : 2.8;
+      const nextRecord = i < h.records.length - 1 ? h.records[i + 1] : null;
+      let usage = nextRecord ? reading - nextRecord.reading : null;
+      let fee = (usage != null) ? (usage + loss) * price : null;
 
-      h.records[i] = { date, reading, usage, loss, price: h.price, fee };
+      if (i === h.records.length - 1) { 
+        h.records[i] = { date, reading }; 
+      } else {
+        h.records[i] = { date, reading, usage, loss, price, fee };
+      }
+
       populateRecordList();
       uploadData("✅ 记录已修改");
     }
@@ -274,47 +275,51 @@
       const idx = document.querySelector('input[name="recordIndex"]:checked');
       if (!idx) return alert("请选择要删除的记录");
       if (!confirm("确认删除该记录？")) return;
-      const i = parseInt(idx.value);
-      h.records.splice(i, 1);
 
+      h.records.splice(parseInt(idx.value), 1);
       if (h.records.length === 1) {
         h.records[0] = { date: h.records[0].date, reading: h.records[0].reading };
       }
-
       populateRecordList();
       uploadData("✅ 读数记录已删除");
     }
 
     function showOverview() {
-      let totalUsage = 0, totalLoss = 0, totalFee = 0;
       let html = '<table><tr><th>房号</th><th>姓名</th><th>当前读数</th><th>累计用水</th><th>累计损耗</th><th>累计水费</th></tr>';
+      let totalUsage = 0, totalLoss = 0, totalFee = 0;
+
       households.forEach(h => {
         const now = h.records.length > 0 ? h.records[0].reading : 0;
-        const usage = h.records.reduce((a, r) => a + (r.usage || 0), 0);
-        const loss = h.records.reduce((a, r) => a + (r.loss || 0), 0);
-        const fee = h.records.reduce((a, r) => a + (r.fee || 0), 0);
+        const usage = h.records.slice(1).reduce((a, r) => a + (r.usage || 0), 0);
+        const loss = h.records.slice(1).reduce((a, r) => a + (r.loss || 0), 0);
+        const fee = h.records.slice(1).reduce((a, r) => a + (r.fee || 0), 0);
 
         totalUsage += usage;
         totalLoss += loss;
         totalFee += fee;
 
-        html += `<tr><td>${h.id}</td><td>${h.name}${h.price === HIGH_PRICE ? '（3.4元/吨）' : ''}</td><td>${now}</td><td>${usage}</td><td>${loss}</td><td>￥${fee.toFixed(2)}</td></tr>`;
+        html += `<tr><td>${h.id}</td><td>${h.name}</td><td>${now}</td><td>${usage}</td><td>${loss}</td><td>￥${fee.toFixed(2)}</td></tr>`;
       });
+
       html += `<tr style="font-weight:bold;"><td>总计</td><td></td><td></td><td>${totalUsage}</td><td>${totalLoss}</td><td>￥${totalFee.toFixed(2)}</td></tr>`;
       html += '</table>';
       document.getElementById('overview').innerHTML = html;
     }
 
     function exportExcel() {
-      const data = households.map(h => ({
-        房号: h.id,
-        姓名: h.name + (h.price === HIGH_PRICE ? '（3.4元/吨）' : ''),
-        当前读数: h.records.length > 0 ? h.records[0].reading : 0,
-        累计用水: h.records.reduce((a, r) => a + (r.usage || 0), 0),
-        累计损耗: h.records.reduce((a, r) => a + (r.loss || 0), 0),
-        累计水费: h.records.reduce((a, r) => a + (r.fee || 0), 0)
-      }));
-
+      const data = households.map(h => {
+        const usage = h.records.slice(1).reduce((a, r) => a + (r.usage || 0), 0);
+        const loss = h.records.slice(1).reduce((a, r) => a + (r.loss || 0), 0);
+        const fee = h.records.slice(1).reduce((a, r) => a + (r.fee || 0), 0);
+        return {
+          房号: h.id,
+          姓名: h.name,
+          当前读数: h.records.length > 0 ? h.records[0].reading : 0,
+          累计用水: usage,
+          累计损耗: loss,
+          累计水费: fee
+        };
+      });
       const ws = XLSX.utils.json_to_sheet(data);
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, "水费报表");
