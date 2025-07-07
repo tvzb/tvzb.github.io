@@ -81,8 +81,8 @@
                 font-size: 22px;
             }
             .links a {
-                font-size: 16px;
-                padding: 8px 12px;
+                font-size: 14px; /* Further reduced font size for mobile links */
+                padding: 8px 10px; /* Adjusted padding */
                 margin: 4px;
             }
             h2 {
@@ -132,7 +132,6 @@
                     section.appendChild(title);
 
                     // Determine the correct price for the current household
-                    // If household.id contains '底铺', use BOTTOM_SHOP_WATER_PRICE, otherwise use DEFAULT_WATER_PRICE
                     const waterPriceForHousehold = household.id.includes('底铺') ? BOTTOM_SHOP_WATER_PRICE : DEFAULT_WATER_PRICE;
 
                     // Sort records by date in descending order (latest first) for display
