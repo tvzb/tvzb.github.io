@@ -255,9 +255,9 @@
             #overview table td:nth-of-type(1):before { content: "房号"; }
             #overview table td:nth-of-type(2):before { content: "姓名"; }
             #overview table td:nth-of-type(3):before { content: "当前读数"; }
-            #overview table td:nth-of-type(4):before { content: "累计用水"; }
-            #overview table td:nth-of-type(5):before { content: "累计损耗"; }
-            #overview table td:nth-of-type(6):before { content: "累计水费"; }
+            #overview table td:nth-of-type(4):before { content: "用水量"; }
+            #overview table td:nth-of-type(5):before { content: "水损耗"; }
+            #overview table td:nth-of-type(6):before { content: "水费"; }
         }
 
         @media (max-width: 480px) {
@@ -305,9 +305,9 @@
             <h2>🏠 住户管理</h2>
             <h3>添加住户</h3>
             <label for="newId">房号：</label>
-            <input type="text" id="newId" placeholder="例：3-101 或 3-101底铺">
+            <input type="text" id="newId" placeholder="请输入房号">
             <label for="newName">姓名：</label>
-            <input type="text" id="newName" placeholder="例：张三">
+            <input type="text" id="newName" placeholder="请输入姓名">
             <button onclick="addHousehold()">添加住户</button>
 
             <h3>修改住户姓名</h3>
@@ -685,7 +685,7 @@
 
         // 显示用水总览
         function showOverview() {
-            let html = '<table><tr><th>房号</th><th>姓名</th><th>当前读数</th><th>累计用水 (吨)</th><th>累计损耗 (吨)</th><th>累计水费 (￥)</th></tr>';
+            let html = '<table><tr><th>房号</th><th>姓名</th><th>当前读数</th><th>用水量(吨)</th><th>水损耗(吨)</th><th>水费 (￥)</th></tr>';
             let totalUsage = 0;
             let totalLoss = 0;
             let totalFee = 0;
@@ -739,9 +739,9 @@
                     房号: h.id,
                     姓名: h.name,
                     当前读数: currentReading,
-                    累计用水: totalUsage.toFixed(2),
-                    累计损耗: totalLoss.toFixed(2),
-                    累计水费: totalFee.toFixed(2)
+                    用水量: totalUsage.toFixed(2),
+                    水损耗: totalLoss.toFixed(2),
+                    水费: totalFee.toFixed(2)
                 };
             });
 
