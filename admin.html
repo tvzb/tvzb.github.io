@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* ... (你的 CSS 样式保持不变) ... */
         :root {
             --primary-color: #4CAF50;
             --secondary-color: #2196F3;
@@ -294,9 +295,9 @@
             <select id="householdSelect"></select>
             <label for="dateInput">读数日期：</label>
             <input type="date" id="dateInput">
-            <label for="readingInput">水表读数（吨）：</label>
+            <label for="readingInput">水表读数(吨)：</label>
             <input type="number" id="readingInput">
-            <label for="lossInput">水损耗（吨）：</label>
+            <label for="lossInput">水损耗(吨)：</label>
             <input type="number" id="lossInput" value="3">
             <button onclick="submitData()">提交读数</button>
         </section>
@@ -305,9 +306,9 @@
             <h2>🏠 住户管理</h2>
             <h3>添加住户</h3>
             <label for="newId">房号：</label>
-            <input type="text" id="newId" placeholder="请输入房号">
+            <input type="text" id="newId" placeholder="输入房号">
             <label for="newName">姓名：</label>
-            <input type="text" id="newName" placeholder="请输入姓名">
+            <input type="text" id="newName" placeholder="输入姓名">
             <button onclick="addHousehold()">添加住户</button>
 
             <h3>修改住户姓名</h3>
@@ -334,9 +335,9 @@
             <h3>修改选中记录</h3>
             <label for="editRecordDate">读数日期：</label>
             <input type="date" id="editRecordDate">
-            <label for="editRecordReading">水表读数（吨）：</label>
+            <label for="editRecordReading">水表读数(吨)：</label>
             <input type="number" id="editRecordReading">
-            <label for="editRecordLoss">水损耗（吨）：</label>
+            <label for="editRecordLoss">水损耗(吨)：</label>
             <input type="number" id="editRecordLoss" value="3">
             <button onclick="modifySelectedRecord()">修改记录</button>
         </section>
@@ -360,29 +361,51 @@
         let households = [];
         const WATER_PRICE = 2.8; // 普通住户水价
         const BOTTOM_SHOP_WATER_PRICE = 3.4; // 底铺水价，请注意：此价格也用于 Excel 导出计算，请确保与实际计费标准一致。
+        const WORKER_BASE_URL = 'https://hahagw.eu.org'; // 你的 Worker 域名
 
-        // 检查密码（保持原样）
-        function checkPassword() {
-            const password = document.getElementById('passwordInput').value;
-            if (password === 'admin123') {
-                document.getElementById('loginSection').style.display = 'none';
-                document.getElementById('adminContent').style.display = 'block';
-                loadData();
-            } else {
-                document.getElementById('loginMsg').innerText = '密码错误';
+        // 修改 checkPassword 函数以从 Cloudflare Worker 获取密码
+        async function checkPassword() {
+            const enteredPassword = document.getElementById('passwordInput').value;
+            const loginMsgDiv = document.getElementById('loginMsg');
+            loginMsgDiv.innerText = '正在验证...'; // 显示加载信息
+
+            try {
+                // 从 Cloudflare Worker 获取正确密码
+                const response = await fetch(`${WORKER_BASE_URL}/password`);
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    loginMsgDiv.innerText = `获取密码失败: ${errorText}`;
+                    console.error('Failed to fetch password:', errorText);
+                    return;
+                }
+
+                const correctPassword = await response.text(); // 获取文本形式的密码
+
+                if (enteredPassword === correctPassword) {
+                    document.getElementById('loginSection').style.display = 'none';
+                    document.getElementById('adminContent').style.display = 'block';
+                    loginMsgDiv.innerText = ''; // 清除信息
+                    loadData(); // 登录成功后加载数据
+                } else {
+                    loginMsgDiv.innerText = '密码错误，请重试。';
+                }
+            } catch (error) {
+                loginMsgDiv.innerText = '登录请求失败，请检查网络或后端服务。';
+                console.error('Login fetch error:', error);
             }
         }
 
         // 加载数据
         function loadData() {
-            fetch('https://hahagw.eu.org/data')
+            fetch(`${WORKER_BASE_URL}/data`) // 使用定义的 Worker 基础 URL
                 .then(res => res.json())
                 .then(data => {
                     households = data.households;
-                    processLoadedData(); // Process data after loading
+                    processLoadedData(); // 处理加载后的数据
                     sortHouseholds();
                     refreshAllSelects();
-                    populateRecordList(); // Call populateRecordList initially
+                    populateRecordList(); // 初始化记录列表
                     showOverview();
                 })
                 .catch(err => {
@@ -391,31 +414,31 @@
                 });
         }
 
-        // Process loaded data to ensure records are sorted and calculations are correct
+        // 处理加载后的数据以确保记录排序和计算正确
         function processLoadedData() {
             households.forEach(h => {
-                // Sort records by date in descending order (latest first)
+                // 按日期降序排序记录（最新在前）
                 h.records.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-                // Recalculate usage, loss, and fee based on sorted records
+                // 重新计算使用量、损耗和费用
                 for (let i = 0; i < h.records.length; i++) {
                     const currentRecord = h.records[i];
-                    const previousRecord = h.records[i + 1]; // Previous record in time
+                    const previousRecord = h.records[i + 1]; // 时间上更早的记录
 
-                    currentRecord.loss = currentRecord.loss === undefined ? 3 : currentRecord.loss; // Ensure loss defaults to 3
+                    currentRecord.loss = currentRecord.loss === undefined ? 3 : currentRecord.loss; // 确保损耗默认为3
 
                     if (previousRecord) {
                         currentRecord.usage = currentRecord.reading - previousRecord.reading;
-                        // Ensure usage is not negative
+                        // 确保使用量不为负数
                         if (currentRecord.usage < 0) {
-                             currentRecord.usage = 0; // Or handle as an error/alert
+                             currentRecord.usage = 0; // 或者处理为错误/警告
                         }
                     } else {
-                        currentRecord.usage = 0; // For the oldest record, or if only one record
+                        currentRecord.usage = 0; // 最早的记录，或者只有一条记录时
                     }
 
                     const price = currentRecord.price || (h.id.includes('底铺') ? BOTTOM_SHOP_WATER_PRICE : WATER_PRICE);
-                    currentRecord.price = price; // Store the price used for this record
+                    currentRecord.price = price; // 存储此记录使用的价格
                     currentRecord.fee = (currentRecord.usage + currentRecord.loss) * price;
                 }
             });
@@ -430,7 +453,7 @@
         function refreshAllSelects() {
             ['householdSelect', 'editHouseholdSelect', 'deleteHouseholdSelect', 'recordHouseholdSelect'].forEach(id => {
                 const sel = document.getElementById(id);
-                const currentSelectedValue = sel.value; // Store the currently selected value
+                const currentSelectedValue = sel.value; // 存储当前选中的值
                 sel.innerHTML = '';
                 households.forEach(h => {
                     const opt = document.createElement('option');
@@ -438,18 +461,18 @@
                     opt.textContent = `${h.id} - ${h.name}`;
                     sel.appendChild(opt);
                 });
-                // Attempt to re-select the previously selected value if it still exists
+                // 尝试重新选中之前选中的值（如果仍然存在）
                 if (Array.from(sel.options).some(option => option.value === currentSelectedValue)) {
                     sel.value = currentSelectedValue;
                 } else if (sel.options.length > 0) {
-                    sel.value = sel.options[0].value; // Select the first option if the old one is gone
+                    sel.value = sel.options[0].value; // 如果旧值不存在，则选中第一个选项
                 }
             });
         }
 
         // 上传数据
         function uploadData(msg) {
-            fetch('https://hahagw.eu.org/update', {
+            fetch(`${WORKER_BASE_URL}/update`, { // 使用定义的 Worker 基础 URL
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ households })
@@ -457,7 +480,7 @@
                 .then(res => res.text())
                 .then(text => {
                     document.getElementById('result').innerText = msg + ': ' + text;
-                    loadData(); // Reload data to ensure consistency after upload
+                    loadData(); // 上传成功后重新加载数据以确保一致性
                 })
                 .catch(err => {
                     document.getElementById('result').innerText = '❌ 上传失败: ' + err;
@@ -474,12 +497,12 @@
 
             const defaultPrice = newId.includes('底铺') ? BOTTOM_SHOP_WATER_PRICE : WATER_PRICE;
 
-            households.push({ id: newId, name: newName, records: [] }); // No initial reading needed
+            households.push({ id: newId, name: newName, records: [] }); // 不再需要初始读数
             sortHouseholds();
             refreshAllSelects();
             uploadData("✅ 住户已添加");
 
-            // Clear input fields after adding
+            // 添加住户后清除输入字段
             document.getElementById('newId').value = '';
             document.getElementById('newName').value = '';
         }
@@ -489,27 +512,27 @@
             const id = document.getElementById('householdSelect').value;
             const date = document.getElementById('dateInput').value;
             const reading = parseInt(document.getElementById('readingInput').value);
-            const loss = parseInt(document.getElementById('lossInput').value || 3); // Default to 3 if empty or invalid
+            const loss = parseInt(document.getElementById('lossInput').value || 3); // 如果为空或无效则默认为3
             if (!date || isNaN(reading) || isNaN(loss)) return alert("请填写完整的读数、日期和水损耗");
 
             const h = households.find(h => h.id === id);
             if (!h) return alert("未找到选定住户");
 
-            // Check if a record for the exact date already exists
+            // 检查该日期是否已存在记录
             if (h.records.some(r => r.date === date)) {
                 return alert("该日期已有读数记录，请修改现有记录或选择其他日期。");
             }
 
             const currentPrice = h.id.includes('底铺') ? BOTTOM_SHOP_WATER_PRICE : WATER_PRICE;
 
-            // Get the *next* most recent record to calculate usage (records are sorted latest first)
+            // 获取时间上最近的一条记录来计算使用量（记录按最新在前排序）
             const nextMostRecentRecord = h.records.length > 0 ? h.records[0] : null;
 
             let usage = 0;
             let fee = 0;
 
             if (nextMostRecentRecord) {
-                // Calculate usage relative to the next most recent record
+                // 相对于最近记录计算使用量
                 usage = reading - nextMostRecentRecord.reading;
                 if (usage < 0) {
                     alert("当前读数不能小于最近一次读数！请检查输入或修改旧记录。");
@@ -517,42 +540,42 @@
                 }
                 fee = (usage + loss) * currentPrice;
             } else {
-                // If this is the first record, usage and fee are 0 (assuming no previous reading)
+                // 如果是第一条记录，使用量和费用为0（假设没有之前的读数）
                 usage = 0;
-                fee = 0; // No usage yet, so no fee from previous
+                fee = 0; // 尚无使用量，因此不产生费用
             }
 
-            // Add new record at the beginning and then re-sort all records for this household
+            // 在开头添加新记录，然后重新排序该住户的所有记录
             h.records.unshift({ date, reading, usage, loss, price: currentPrice, fee });
-            h.records.sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort by date descending (latest first)
+            h.records.sort((a, b) => new Date(b.date) - new Date(a.date)); // 按日期降序排序（最新在前）
 
-            // Recalculate all records for consistency after adding a new one
+            // 添加新记录后重新计算所有记录以保持一致性
             processLoadedDataForHousehold(h);
 
             uploadData("✅ 读数已提交");
 
-            // Clear input fields after submission
+            // 提交后清除输入字段
             document.getElementById('dateInput').value = '';
             document.getElementById('readingInput').value = '';
-            document.getElementById('lossInput').value = '3'; // Reset to default
+            document.getElementById('lossInput').value = '3'; // 重置为默认值
         }
 
-        // Helper to re-process records for a single household
+        // 辅助函数：重新处理单个住户的记录
         function processLoadedDataForHousehold(h) {
-            h.records.sort((a, b) => new Date(b.date) - new Date(a.date)); // Ensure sorted latest first
+            h.records.sort((a, b) => new Date(b.date) - new Date(a.date)); // 确保按最新在前排序
             for (let i = 0; i < h.records.length; i++) {
                 const currentRecord = h.records[i];
-                const previousRecord = h.records[i + 1]; // Previous record in time
+                const previousRecord = h.records[i + 1]; // 时间上更早的记录
 
                 currentRecord.loss = currentRecord.loss === undefined || isNaN(currentRecord.loss) ? 3 : currentRecord.loss;
 
                 if (previousRecord) {
                     currentRecord.usage = currentRecord.reading - previousRecord.reading;
                      if (currentRecord.usage < 0) {
-                         currentRecord.usage = 0; // Handle negative usage for display
+                         currentRecord.usage = 0; // 处理负数使用量以供显示
                     }
                 } else {
-                    currentRecord.usage = 0; // For the oldest record
+                    currentRecord.usage = 0; // 最早的记录
                 }
 
                 const price = h.id.includes('底铺') ? BOTTOM_SHOP_WATER_PRICE : WATER_PRICE;
@@ -572,7 +595,7 @@
             h.name = name;
             refreshAllSelects();
             uploadData("✅ 姓名已修改");
-            document.getElementById('editName').value = ''; // Clear input
+            document.getElementById('editName').value = ''; // 清除输入
         }
 
         // 删除住户
@@ -594,14 +617,14 @@
             const h = households.find(h => h.id === id);
             if (!h || !h.records) return;
 
-            // Sort records by date in descending order for display (latest first)
+            // 按日期降序排序记录（最新在前）以供显示
             h.records.sort((a, b) => new Date(b.date) - new Date(a.date));
 
             h.records.forEach((r, i) => {
                 const li = document.createElement('li');
-                // For a single record, usage, loss, and fee should be blank or 0
+                // 对于单条记录，使用量、损耗和费用应为空或0
                 const displayUsage = h.records.length > 1 ? (r.usage || 0) : 0;
-                const displayLoss = r.loss || 0; // Always display loss if available
+                const displayLoss = r.loss || 0; // 如果可用，始终显示损耗
                 const displayFee = h.records.length > 1 ? (r.fee?.toFixed(2) || 0) : 0;
 
                 li.innerHTML = `<label><input type="radio" name="recordIndex" value="${i}" onchange="fillEditFields()"> ${r.date} ｜ ${r.reading} 吨 ` +
@@ -609,10 +632,10 @@
                 ul.appendChild(li);
             });
 
-            // Clear edit fields when populating new list
+            // 填充新列表时清除编辑字段
             document.getElementById('editRecordDate').value = '';
             document.getElementById('editRecordReading').value = '';
-            document.getElementById('editRecordLoss').value = '3'; // Reset to default
+            document.getElementById('editRecordLoss').value = '3'; // 重置为默认值
         }
 
         // 填充编辑字段
@@ -641,24 +664,24 @@
 
             const date = document.getElementById('editRecordDate').value;
             const reading = parseInt(document.getElementById('editRecordReading').value);
-            const loss = parseInt(document.getElementById('editRecordLoss').value || 3); // Default to 3
+            const loss = parseInt(document.getElementById('editRecordLoss').value || 3); // 默认为3
 
             if (!date || isNaN(reading) || isNaN(loss)) return alert("请填写完整的修改信息");
 
-            // Check if the modified date already exists for another record (excluding the one being modified)
+            // 检查修改后的日期是否已存在其他记录（不包括正在修改的记录）
             if (h.records.some((rec, index) => rec.date === date && index !== i)) {
                 return alert("该日期已有其他读数记录，请选择其他日期。");
             }
 
             const currentPrice = h.id.includes('底铺') ? BOTTOM_SHOP_WATER_PRICE : WATER_PRICE;
 
-            // Update the record
-            h.records[i] = { date, reading, loss, price: currentPrice, usage: 0, fee: 0 }; // Temporarily reset usage/fee
+            // 更新记录
+            h.records[i] = { date, reading, loss, price: currentPrice, usage: 0, fee: 0 }; // 暂时重置使用量/费用
 
-            // Re-sort and re-calculate all records for this household to ensure consistency
+            // 重新排序并重新计算该住户的所有记录以确保一致性
             processLoadedDataForHousehold(h);
 
-            populateRecordList(); // Refresh the display
+            populateRecordList(); // 刷新显示
             uploadData("✅ 记录已修改");
         }
 
@@ -676,22 +699,22 @@
 
             h.records.splice(i, 1);
 
-            // Re-calculate all records for this household after deletion
+            // 删除后重新计算该住户的所有记录
             processLoadedDataForHousehold(h);
 
-            populateRecordList(); // Refresh the display
+            populateRecordList(); // 刷新显示
             uploadData("✅ 读数记录已删除");
         }
 
         // 显示用水总览
         function showOverview() {
-            let html = '<table><tr><th>房号</th><th>姓名</th><th>当前读数</th><th>用水量(吨)</th><th>水损耗(吨)</th><th>水费 (￥)</th></tr>';
+            let html = '<table><tr><th>房号</th><th>姓名</th><th>当前读数</th><th>用水量 (吨)</th><th>水损耗 (吨)</th><th>累计水费 (￥)</th></tr>';
             let totalUsage = 0;
             let totalLoss = 0;
             let totalFee = 0;
 
             households.forEach(h => {
-                // Ensure records are sorted correctly before calculation for overview
+                // 确保记录在计算总览前已正确排序
                 h.records.sort((a, b) => new Date(b.date) - new Date(a.date));
 
                 const nowReading = h.records.length > 0 ? h.records[0].reading : 0;
@@ -713,7 +736,7 @@
                          </tr>`;
             });
 
-            // Add total row
+            // 添加总计行
             html += `<tr style="font-weight: bold; background-color: #e6f7ff;">
                         <td data-label="总计" colspan="3" style="text-align: right;">总计：</td>
                         <td data-label="累计用水">${totalUsage.toFixed(2)}</td>
@@ -727,7 +750,7 @@
         // 导出 Excel
         function exportExcel() {
             const data = households.map(h => {
-                // Ensure records are sorted correctly for current reading and total calculations
+                // 确保记录在计算当前读数和总计前已正确排序
                 h.records.sort((a, b) => new Date(b.date) - new Date(a.date));
 
                 const currentReading = h.records.length > 0 ? h.records[0].reading : 0;
@@ -739,9 +762,9 @@
                     房号: h.id,
                     姓名: h.name,
                     当前读数: currentReading,
-                    用水量: totalUsage.toFixed(2),
-                    水损耗: totalLoss.toFixed(2),
-                    水费: totalFee.toFixed(2)
+                    累计用水: totalUsage.toFixed(2),
+                    累计损耗: totalLoss.toFixed(2),
+                    累计水费: totalFee.toFixed(2)
                 };
             });
 
@@ -750,9 +773,6 @@
             XLSX.utils.book_append_sheet(wb, ws, "水费报表");
             XLSX.writeFile(wb, "水费报表.xlsx");
         }
-
-        // Initial load of data when the page loads (after password check)
-        // loadData(); // This is called after successful login
     </script>
 </body>
 </html>
