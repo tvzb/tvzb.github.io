@@ -189,28 +189,22 @@
   <script>
     let households = [];
 
-    // 检查密码（调用 Cloudflare KV）
+    // 从 Cloudflare KV 获取密码
+    fetch('https://hahagw.eu.org/get_pwd')
+      .then(res => res.text())
+      .then(pwd => { serverPassword = pwd; })
+      .catch(() => { document.getElementById('loginMsg').innerText = '无法获取密码配置'; });
+
+    // 检查密码
     function checkPassword() {
-      const password = document.getElementById('passwordInput').value;
-      fetch('https://hahagw.eu.org/password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          document.getElementById('loginSection').style.display = 'none';
-          document.getElementById('adminContent').style.display = 'block';
-          loadData();
-        } else {
-          document.getElementById('loginMsg').innerText = '密码错误';
-        }
-      })
-      .catch(err => {
-        document.getElementById('loginMsg').innerText = '密码验证失败';
-        console.error('密码验证错误:', err);
-      });
+      const inputPwd = document.getElementById('passwordInput').value;
+      if (inputPwd === serverPassword) {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('adminContent').style.display = 'block';
+        loadData();
+      } else {
+        document.getElementById('loginMsg').innerText = '密码错误';
+      }
     }
 
     // 加载数据
