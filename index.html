@@ -150,13 +150,10 @@
 <body>
     <h1>住户水费详单</h1>
     
-    <!-- New container for two-column layout -->
     <div class="links-container" id="links-container">
-        <!-- Column for building 3 -->
         <div class="links-column" id="column-3">
             <h3>3栋住户</h3>
         </div>
-        <!-- Column for building 4 -->
         <div class="links-column" id="column-4">
             <h3>4栋住户</h3>
         </div>
@@ -180,23 +177,48 @@
                 const column4Div = document.getElementById('column-4');
                 const contentDiv = document.getElementById('content');
 
-                // Sort households by ID to ensure consistent order
-                data.households.sort((a, b) => a.id.localeCompare(b.id));
+                // Separate households into three arrays based on their building and type
+                const building3Households = [];
+                const building4Households = [];
+                const bottomShopHouseholds = [];
 
                 data.households.forEach(household => {
-                    // Create household jump buttons
+                    if (household.id.startsWith('3-') && !household.id.includes('底铺')) {
+                        building3Households.push(household);
+                    } else if (household.id.startsWith('4-')) {
+                        building4Households.push(household);
+                    } else if (household.id.includes('底铺')) {
+                        bottomShopHouseholds.push(household);
+                    }
+                });
+
+                // Sort each category of households by ID
+                building3Households.sort((a, b) => a.id.localeCompare(b.id));
+                building4Households.sort((a, b) => a.id.localeCompare(b.id));
+                bottomShopHouseholds.sort((a, b) => a.id.localeCompare(b.id));
+
+                // Append links for column 3 (only 3-building households)
+                building3Households.forEach(household => {
                     const link = document.createElement('a');
                     link.href = '#' + household.id;
                     link.textContent = household.id + '-' + household.name;
-                    
-                    // Append link to the correct column based on household ID
-                    if (household.id.startsWith('3-')) {
-                        column3Div.appendChild(link);
-                    } else if (household.id.startsWith('4-')) {
-                        column4Div.appendChild(link);
-                    }
+                    column3Div.appendChild(link);
+                });
 
-                    // Create household details section
+                // Combine 4-building households and bottom shop households for column 4
+                const column4SortedHouseholds = [...building4Households, ...bottomShopHouseholds];
+
+                // Append links for column 4
+                column4SortedHouseholds.forEach(household => {
+                    const link = document.createElement('a');
+                    link.href = '#' + household.id;
+                    link.textContent = household.id + '-' + household.name;
+                    column4Div.appendChild(link);
+                });
+
+                // Generate the detailed content for all households (sorted by ID for consistent display order)
+                data.households.sort((a, b) => a.id.localeCompare(b.id));
+                data.households.forEach(household => {
                     const section = document.createElement('section');
                     section.id = household.id;
                     section.style.scrollMarginTop = '20px'; // Offset for smooth scrolling
