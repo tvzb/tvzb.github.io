@@ -31,7 +31,7 @@
 
         /* Styling for each column */
         .links-column {
-            width: 48%; /* Each column takes up nearly half the width */
+            width: 48%; /* Each column takes up nearly half the width on larger screens */
             display: flex;
             flex-direction: column; /* Links stack vertically within a column */
         }
@@ -110,24 +110,27 @@
                 font-size: 24px;
             }
 
-            /* Stack columns on top of each other on mobile */
+            /* Keep columns side-by-side on mobile, adjust width */
             .links-container {
-                flex-direction: column;
-                align-items: center;
+                flex-direction: row; /* Ensure columns remain in a row */
+                justify-content: space-around;
+                align-items: flex-start; /* Align items to the top if one column is shorter */
+                padding: 0 5px; /* Reduce padding for smaller screens */
             }
 
             .links-column {
-                width: 95%; /* Columns take full width on mobile */
-                margin-bottom: 20px;
+                width: 49%; /* Slightly less than half to ensure space in between */
+                margin-bottom: 15px; /* Reduce margin */
             }
             
             .links-column h3 {
-                font-size: 20px;
+                font-size: 18px; /* Slightly smaller title for mobile */
             }
 
             .links-column a {
-                font-size: 18px;
-                padding: 10px 12px;
+                font-size: 16px; /* Smaller font for links on mobile */
+                padding: 8px 10px; /* Smaller padding */
+                margin: 5px 0; /* Smaller vertical margin */
             }
 
             h2 {
@@ -136,13 +139,13 @@
             }
 
             .record-card {
-                font-size: 20px; /* Slightly adjust for smaller screens but still large */
-                padding: 15px;
-                margin: 15px 5px;
+                font-size: 18px; /* Slightly adjust for smaller screens but still large */
+                padding: 12px;
+                margin: 10px 5px;
             }
 
             .fee {
-                font-size: 24px;
+                font-size: 22px;
             }
         }
     </style>
