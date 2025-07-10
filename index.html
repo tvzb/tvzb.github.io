@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>住户水费详单</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            padding: 10px;
+            background: #f2f2f2;
+            margin: 0;
+            color: #333;
+        }
+
+        h1 {
+            font-size: 28px;
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            padding-top: 10px;
+        }
+        
+        #residents-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Styling for a row containing two residents */
+        .resident-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px; /* Spacing between rows */
+        }
+
+        /* Container for each resident link to manage flex sizing */
+        .resident-item-container {
+            flex-basis: 48%; /* Each takes up slightly less than half the width */
+        }
+
+        .resident-item-container a {
+            display: block;
+            margin: 0;
+            padding: 12px 15px;
+            font-size: 20px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-align: center;
+            white-space: nowrap;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 2px solid transparent;
+        }
+
+        .resident-item-container a:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .resident-item-container a.active {
+            background-color: #004085;
+            border-color: #0056b3;
+            transform: translateY(0);
+        }
+
+        /* Wrapper for the details, now with relative positioning for the caret */
+        .details-wrapper {
+            position: relative;
+            padding: 20px 15px 15px;
+            margin-top: 12px; /* Space for the caret */
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background-color: #e9ecef;
+            box-shadow: inset 0 3px 5px rgba(0,0,0,0.05);
+        }
+
+        /* Caret (arrow) pointing up */
+        .details-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -10px; /* Position it above the wrapper */
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid #e9ecef; /* Same color as the wrapper bg */
+        }
+
+        /* Position caret for the left resident */
+        .details-wrapper.left::before {
+            left: 25%;
+            transform: translateX(-50%);
+        }
+
+        /* Position caret for the right resident */
+        .details-wrapper.right::before {
+            left: 75%;
+            transform: translateX(-50%);
+        }
+        
+        /* Headers for sections (e.g., "3栋住户", "底商") */
+        .section-header {
+            font-size: 22px;
+            text-align: center;
+            color: #1a237e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #c5cae9;
+            padding-bottom: 5px;
+        }
+
+        .record-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin: 10px 0;
+            font-size: 20px;
+            line-height: 1.8;
+        }
+
+        .fee {
+            font-weight: bold;
+            color: red;
+            font-size: 24px;
+        }
+
+        .label {
+            color: #555;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .remark {
+            color: #777;
+            font-size: 16px;
+            margin-top: 15px;
+            border-top: 1px dashed #ccc;
+            padding-top: 15px;
+        }
+
+        .more-details-btn {
+            display: block;
+            width: 100%;
+            margin: 15px auto 0;
+            padding: 10px;
+            font-size: 18px;
+            background-color: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .more-details-btn:hover {
+            background-color: #e0e0e0;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 24px; }
+            .section-header { font-size: 18px; }
+            .resident-item-container a { font-size: 14px; padding: 10px 8px; }
+            .record-card { font-size: 18px; padding: 12px; }
+            .fee { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+    <h1>住户水费详单</h1>
+    
+    <div id="residents-container">
+        </div>
+
+    <script>
+        const DEFAULT_WATER_PRICE = 2.8; // 普通住户水价
+        const BOTTOM_SHOP_WATER_PRICE = 3.4; // 底铺水价
+
+        fetch('https://hahagw.eu.org/data')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const container = document.getElementById('residents-container');
+
+                const householdsMap = new Map(data.households.map(h => [h.id, h]));
+                let activeHouseholdId = null;
+
+                // --- Separate and Sort Households ---
+                const building3Households = [];
+                const building4Households = [];
+
+                data.households.forEach(household => {
+                    if (household.id.startsWith('3-') && !household.id.includes('底铺')) {
+                        building3Households.push(household);
+                    } else if (household.id.startsWith('4-') || household.id.includes('底铺')) {
+                        // MODIFIED: Bottom shops are now added to building 4
+                        building4Households.push(household);
+                    }
+                });
+                
+                building3Households.sort((a, b) => a.id.localeCompare(b.id));
+                building4Households.sort((a, b) => a.id.localeCompare(b.id));
+                
+                // --- Create Household Rows (Paired Buildings) ---
+                const header = document.createElement('div');
+                header.innerHTML = `<div class="resident-row">
+                                            <h3 style="flex-basis: 48%; text-align:center;">3栋住户</h3>
+                                            <h3 style="flex-basis: 48%; text-align:center;">4栋住户</h3>
+                                        </div>`;
+                container.appendChild(header);
+
+                const maxLength = Math.max(building3Households.length, building4Households.length);
+                for (let i = 0; i < maxLength; i++) {
+                    const row = document.createElement('div');
+                    row.className = 'resident-row';
+                    
+                    const resident3 = building3Households[i];
+                    const resident4 = building4Households[i];
+
+                    // Left column (Building 3)
+                    const leftCol = document.createElement('div');
+                    leftCol.className = 'resident-item-container left';
+                    if (resident3) {
+                        const link = document.createElement('a');
+                        link.href = '#';
+                        link.textContent = resident3.id + '-' + resident3.name;
+                        link.setAttribute('data-id', resident3.id);
+                        leftCol.appendChild(link);
+                    }
+                    row.appendChild(leftCol);
+
+                    // Right column (Building 4 and Bottom Shops)
+                    const rightCol = document.createElement('div');
+                    rightCol.className = 'resident-item-container right';
+                    if (resident4) {
+                        const link = document.createElement('a');
+                        link.href = '#';
+                        link.textContent = resident4.id + '-' + resident4.name;
+                        link.setAttribute('data-id', resident4.id);
+                        rightCol.appendChild(link);
+                    }
+                    row.appendChild(rightCol);
+                    
+                    container.appendChild(row);
+                }
+
+                // REMOVED: The separate section for bottom shops is no longer needed.
+
+                // --- Event Handling ---
+                container.addEventListener('click', (e) => {
+                    const link = e.target.closest('a');
+                    if (!link) return;
+
+                    e.preventDefault();
+                    const householdId = link.getAttribute('data-id');
+                    const currentItemContainer = link.closest('.resident-item-container');
+                    const currentRow = link.closest('.resident-row');
+                    
+                    const wasActive = householdId === activeHouseholdId;
+                    
+                    // Always hide any open details first
+                    hideDetails();
+                    
+                    // If the clicked one was not the active one, show its details
+                    if (!wasActive) {
+                        const position = currentItemContainer.classList.contains('right') ? 'right' : 'left';
+                        showDetails(householdId, currentRow, link, position);
+                    }
+                });
+
+                // --- Functions to Show/Hide Details ---
+                function hideDetails() {
+                    const existingDetails = document.querySelector('.details-wrapper');
+                    if (existingDetails) {
+                        existingDetails.remove();
+                    }
+                    const activeLink = document.querySelector('.resident-item-container a.active');
+                    if (activeLink) {
+                        activeLink.classList.remove('active');
+                    }
+                    activeHouseholdId = null;
+                }
+
+                function showDetails(id, rowElement, linkElement, position) {
+                    activeHouseholdId = id;
+                    const household = householdsMap.get(id);
+
+                    linkElement.classList.add('active');
+
+                    const detailsWrapper = document.createElement('div');
+                    detailsWrapper.className = 'details-wrapper';
+
+                    // For bottom shops that are now in the right column, we can use the standard positioning
+                    detailsWrapper.classList.add(position);
+                    
+                    // MODIFIED: Add a header to the details box to identify the resident
+                    const detailsHeader = document.createElement('h4');
+                    detailsHeader.textContent = `${household.id}-${household.name}的水费详单`;
+                    detailsHeader.style.textAlign = 'center';
+                    detailsHeader.style.margin = "0 0 15px 0";
+                    detailsHeader.style.color = "#333";
+                    detailsWrapper.appendChild(detailsHeader);
+
+
+                    household.records.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                    const recordsToShow = household.records.slice(0, 2);
+                    recordsToShow.forEach(record => {
+                        detailsWrapper.appendChild(createRecordCard(record, household));
+                    });
+                    
+                    if (household.records.length > 2) {
+                        const moreBtn = document.createElement('button');
+                        moreBtn.className = 'more-details-btn';
+                        moreBtn.textContent = '更多详情';
+                        moreBtn.onclick = () => {
+                            const remainingRecords = household.records.slice(2);
+                            remainingRecords.forEach(record => {
+                                detailsWrapper.insertBefore(createRecordCard(record, household), moreBtn);
+                            });
+                            moreBtn.remove();
+                        };
+                        detailsWrapper.appendChild(moreBtn);
+                    }
+
+                    rowElement.insertAdjacentElement('afterend', detailsWrapper);
+                }
+
+                function createRecordCard(record, household) {
+                    const card = document.createElement('div');
+                    card.className = 'record-card';
+                    
+                    const waterPriceForHousehold = household.id.includes('底铺') ? BOTTOM_SHOP_WATER_PRICE : DEFAULT_WATER_PRICE;
+
+                    const isFirstRecord = household.records.length === 1 || record === household.records[household.records.length - 1];
+                    const displayUsage = (isFirstRecord || record.usage === undefined) ? 0 : record.usage;
+                    const displayLoss = record.loss === undefined ? 0 : record.loss;
+                    const displayFee = (isFirstRecord || record.fee === undefined) ? 0 : record.fee;
+
+                    card.innerHTML = `
+                        <div><span class="label">读数日期:</span>${record.date || '-'}</div>
+                        <div><span class="label">水表读数(吨):</span>${record.reading || 0}</div>
+                        <div><span class="label">用水量(吨):</span>${displayUsage}</div>
+                        <div><span class="label">水损耗(吨):</span>${displayLoss}</div>
+                        <div><span class="label">水费:</span><span class="fee">${displayFee.toFixed(2)} 元</span></div>
+                        <div class="remark">备注: 水损耗 1 吨/月；水费 ${waterPriceForHousehold.toFixed(1)} 元/吨</div>
+                    `;
+                    return card;
+                }
+            })
+            .catch(error => {
+                const displayArea = document.getElementById('residents-container') || document.body;
+                displayArea.innerHTML = `<p style="color: red; text-align: center; font-size: 18px;">加载数据失败: ${error}. 请检查网络连接或稍后再试。</p>`;
+                console.error("Error fetching data:", error);
+            });
+    </script>
+</body>
+</html>
