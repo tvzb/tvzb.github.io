@@ -42,8 +42,8 @@
             display: block;
             margin: 0;
             padding: 12px 15px;
-            font-size: 24px;
-            background-color: #007bff;
+            font-size: 30px;
+            background-color: #0056b3;
             color: white;
             border-radius: 8px;
             text-decoration: none;
@@ -55,12 +55,12 @@
         }
 
         .resident-item-container a:hover {
-            background-color: #0056b3;
+            background-color: #c90076;
             transform: translateY(-2px);
         }
 
         .resident-item-container a.active {
-            background-color: #004085;
+            background-color: #f44336;
             border-color: #0056b3;
             transform: translateY(0);
         }
@@ -304,7 +304,7 @@
                     const detailsHeader = document.createElement('h4');
                     detailsHeader.textContent = `${household.id}-${household.name}的水费详单`;
                     detailsHeader.style.textAlign = 'center';
-                    detailsHeader.style.margin = "0 0 15px 0";
+                    detailsHeader.style.margin = "0 0 18px 0";
                     detailsHeader.style.color = "#333";
                     detailsWrapper.appendChild(detailsHeader);
 
