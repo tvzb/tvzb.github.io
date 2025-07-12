@@ -1,19 +1,4 @@
 央视频道,#genre#
-CCTV-1,http://106.52.196.79:80/TV/mui.php?id=cctv1
-CCTV-2,http://106.52.196.79:80/TV/mui.php?id=cctv2
-CCTV-3,http://106.52.196.79:80/TV/mui.php?id=cctv3
-CCTV-4,http://106.52.196.79:80/TV/mui.php?id=cctv4
-CCTV-6,http://106.52.196.79:80/TV/mui.php?id=cctv6
-CCTV-7,http://106.52.196.79:80/TV/mui.php?id=cctv7
-CCTV-8,http://106.52.196.79:80/TV/mui.php?id=cctv8
-CCTV-9,http://106.52.196.79:80/TV/mui.php?id=cctv9
-CCTV-10,http://106.52.196.79:80/TV/mui.php?id=cctv10
-CCTV-12,http://106.52.196.79:80/TV/mui.php?id=cctv12
-CCTV-13,http://106.52.196.79:80/TV/mui.php?id=cctv13
-CCTV-14,http://106.52.196.79:80/TV/mui.php?id=cctv14
-CCTV-15,http://106.52.196.79:80/TV/mui.php?id=cctv15
-CCTV-17,http://106.52.196.79:80/TV/mui.php?id=cctv17
-
 CCTV-1,http://goo.bkpcp.top/mg/cctv1
 CCTV-2,http://goo.bkpcp.top/mg/cctv2
 CCTV-3,http://goo.bkpcp.top/mg/cctv3
@@ -31,6 +16,22 @@ CCTV-14,http://goo.bkpcp.top/mg/cctv14
 CCTV-15,http://goo.bkpcp.top/mg/cctv15
 CCTV-16,http://goo.bkpcp.top/mg/cctv16
 CCTV-17,http://goo.bkpcp.top/mg/cctv17
+
+CCTV-1,http://106.52.196.79:80/TV/mui.php?id=cctv1
+CCTV-2,http://106.52.196.79:80/TV/mui.php?id=cctv2
+CCTV-3,http://106.52.196.79:80/TV/mui.php?id=cctv3
+CCTV-4,http://106.52.196.79:80/TV/mui.php?id=cctv4
+CCTV-6,http://106.52.196.79:80/TV/mui.php?id=cctv6
+CCTV-7,http://106.52.196.79:80/TV/mui.php?id=cctv7
+CCTV-8,http://106.52.196.79:80/TV/mui.php?id=cctv8
+CCTV-9,http://106.52.196.79:80/TV/mui.php?id=cctv9
+CCTV-10,http://106.52.196.79:80/TV/mui.php?id=cctv10
+CCTV-12,http://106.52.196.79:80/TV/mui.php?id=cctv12
+CCTV-13,http://106.52.196.79:80/TV/mui.php?id=cctv13
+CCTV-14,http://106.52.196.79:80/TV/mui.php?id=cctv14
+CCTV-15,http://106.52.196.79:80/TV/mui.php?id=cctv15
+CCTV-17,http://106.52.196.79:80/TV/mui.php?id=cctv17
+新片映厅,http://106.52.196.79:80/TV/mui.php?id=xpfyt
 
 CCTV-1,http://z.b.bkpcp.top/m.php?id=cctv1
 CCTV-2,http://z.b.bkpcp.top/m.php?id=cctv2
@@ -50,11 +51,6 @@ CCTV-15,http://z.b.bkpcp.top/m.php?id=cctv15
 CCTV-17,http://z.b.bkpcp.top/m.php?id=cctv17
 
 卫视频道,#genre#
-江西卫视,http://106.52.196.79:80/TV/mui.php?id=jxws
-东方卫视,http://106.52.196.79:80/TV/mui.php?id=dfws
-江苏卫视,http://106.52.196.79:80/TV/mui.php?id=jsws
-海南卫视,http://106.52.196.79:80/TV/mui.php?id=hinws
-
 江西卫视,http://goo.bkpcp.top/mg/jxws
 湖南卫视,http://goo.bkpcp.top/mg/hunws
 东方卫视,http://goo.bkpcp.top/mg/dfws
@@ -78,6 +74,11 @@ CCTV-17,http://z.b.bkpcp.top/m.php?id=cctv17
 西藏卫视,http://goo.bkpcp.top/mg/xzws
 云南卫视,http://goo.bkpcp.top/mg/ynws
 新疆卫视,http://goo.bkpcp.top/mg/xjws
+
+江西卫视,http://106.52.196.79:80/TV/mui.php?id=jxws
+东方卫视,http://106.52.196.79:80/TV/mui.php?id=dfws
+江苏卫视,http://106.52.196.79:80/TV/mui.php?id=jsws
+海南卫视,http://106.52.196.79:80/TV/mui.php?id=hinws
 
 广东卫视,http://z.b.bkpcp.top/m.php?id=gdws
 湖南卫视,http://z.b.bkpcp.top/m.php?id=hunws
