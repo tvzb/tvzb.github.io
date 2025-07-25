@@ -179,7 +179,7 @@
         const DEFAULT_WATER_PRICE = 2.8; // 普通住户水价
         const BOTTOM_SHOP_WATER_PRICE = 3.4; // 底铺水价
 
-        fetch('https://hahagw.eu.org/water/data')
+        fetch('https://hahagw.eu.org/data')
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
