@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上门服务</title>
+    <style>
+        /* 全局样式 */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* 侧边栏样式 */
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50; /* 深蓝色背景 */
+            color: #ecf0f1; /* 浅色文字 */
+            padding: 20px 0;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            height: 100vh; /* 确保侧边栏高度与视口相同 */
+            overflow-y: auto; /* 当内容超出时允许滚动 */
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            padding: 15px 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar li:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar li:hover,
+        .sidebar li.active {
+            background-color: #34495e; /* 悬停/选中时的深一点的蓝色 */
+            color: #ffffff;
+        }
+
+        /* 内容区样式 */
+        .content {
+            flex-grow: 1;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            margin: 20px;
+        }
+
+        .content-item {
+            display: none; /* 默认隐藏所有内容 */
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .content-item.active {
+            display: block; /* 选中时显示 */
+        }
+
+        .content-item h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 2em;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .content-item p {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .content-item ul {
+            list-style: disc;
+            margin-left: 20px;
+            color: #555;
+        }
+
+        .content-item ul li {
+            margin-bottom: 8px;
+        }
+
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <ul>
+            <li class="active" data-target="appliance-cleaning">家电清洗</li>
+            <li data-target="movies-tv">电影电视</li>
+            <li data-target="e-books">电子书</li>
+            <li data-target="smart-tv">智能电视</li>
+            <li data-target="set-top-box">机顶盒</li>
+            <li data-target="wifi-internet">WIFI上网</li>
+            <li data-target="on-site-service">上门服务</li>
+            <li data-target="errand-service">跑腿服务</li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <div id="appliance-cleaning" class="content-item active">
+            <h2>家电清洗</h2>
+            <p>我们提供专业、高效的各类家电清洗服务，让您的家居环境更健康、电器使用寿命更长。</p>
+            <h3>服务项目：</h3>
+            <ul>
+                <li><strong>空调清洗：</strong> 深度清洁，去除灰尘、细菌、霉菌，提升制冷/热效果，减少能耗。</li>
+                <li><strong>油烟机清洗：</strong> 彻底清除油污，解决噪音大、吸力弱等问题，延长使用寿命。</li>
+                <li><strong>洗衣机清洗：</strong> 清除内筒污垢、细菌，防止衣物二次污染，保障家人健康。</li>
+                <li><strong>冰箱清洗消毒：</strong> 清理异味，去除霉菌，确保食物存储安全卫生。</li>
+                <li><strong>热水器清洗：</strong> 清除水垢，提高加热效率，延长热水器使用寿命，保障用水健康。</li>
+            </ul>
+            <p>我们采用环保清洗剂和专业设备，经验丰富的技师上门服务，让您省心省力。</p>
+        </div>
+
+        <div id="movies-tv" class="content-item">
+            <h2>电影电视</h2>
+            <p>提供最新、最全的电影和电视节目资源，助您轻松享受家庭影音娱乐。</p>
+            <h3>服务项目：</h3>
+            <ul>
+                <li><strong>影视内容推荐：</strong> 根据您的喜好，个性化推荐热门电影、电视剧、纪录片。</li>
+                <li><strong>播放设备调试：</strong> 协助您设置电视、投影仪、音响等播放设备，优化观影体验。</li>
+                <li><strong>流媒体平台指导：</strong> 指导您如何使用各大流媒体平台（如腾讯视频、爱奇艺、优酷等）。</li>
+                <li><strong>家庭影院搭建咨询：</strong> 提供专业的家庭影院系统搭建建议和安装指导。</li>
+            </ul>
+            <p>让您的客厅秒变私人影院，尽享高清震撼体验。</p>
+        </div>
+
+        <div id="e-books" class="content-item">
+            <h2>电子书</h2>
+            <p>海量电子书资源，涵盖各类题材，让您随时随地畅游书海。</p>
+            <h3>服务项目：</h3>
+            <ul>
+                <li><strong>电子书资源下载与导入：</strong> 协助您下载和导入各类格式的电子书到您的阅读设备。</li>
+                <li><strong>阅读器使用指导：</strong> 针对Kindle、掌阅、文石等电子阅读器提供操作指导。</li>
+                <li><strong>个性化书单推荐：</strong> 根据您的阅读偏好，推荐优质电子书资源。</li>
+                <li><strong>有声书配置：</strong> 协助您配置有声书播放，解放双眼，享受听书乐趣。</li>
+            </ul>
+            <p>享受数字阅读的便捷与乐趣，让知识触手可及。</p>
+        </div>
+
+        <div id="smart-tv" class="content-item">
+            <h2>智能电视</h2>
+            <p>解决智能电视的各种使用问题，让您的智能生活更顺畅。</p>
+            <h3>服务项目：</h3>
+            <ul>
+                <li><strong>智能电视安装与调试：</strong> 协助您完成智能电视的安装、联网和基本设置。</li>
+                <li><strong>应用安装与升级：</strong> 帮助您安装、更新各类智能电视应用（如视频APP、游戏等）。</li>
+                <li><strong>系统优化与故障排除：</strong> 解决电视卡顿、无法联网、应用闪退等常见问题。</li>
+                <li><strong>语音控制设置：</strong> 指导您如何使用智能电视的语音控制功能。</li>
+                <li><strong>外设连接与配置：</strong> 协助连接游戏手柄、键盘、音响等外部设备。</li>
+            </ul>
+            <p>让您的智能电视发挥最大潜能，享受科技带来的便利。</p>
+        </div>
+
+        <div id="set-top-box" class="content-item">
+            <h2>机顶盒</h2>
+            <p>提供机顶盒的安装、调试及常见故障排除服务。</p>
+            <h3>服务项目：</h3>
+            <ul>
+                <li><strong>机顶盒安装与连接：</strong> 协助您正确安装和连接各类机顶盒（有线、IPTV、网络盒子等）。</li>
+                <li><strong>频道搜索与设置：</strong> 指导您如何搜索、排序和管理电视频道。</li>
+                <li><strong>网络配置与优化：</strong> 解决机顶盒网络连接问题，提升播放流畅度。</li>
+                <li><strong>应用安装与升级：</strong> 帮助您安装和更新机顶盒上的各种应用。</li>
+                <li><strong>遥控器配对与故障排除：</strong> 解决遥控器失灵、按键不灵等问题。</li>
+            </ul>
+            <p>让您的机顶盒稳定运行，畅享丰富内容。</p>
+        </div>
+
+        <div id="wifi-internet" class="content-item">
+            <h2>WIFI上网</h2>
+            <p>解决您的家庭网络问题，确保WIFI信号稳定、上网流畅。</p>
+            <h3>服务项目：</h3>
+            <ul>
+                <li><strong>路由器安装与配置：</strong> 协助您安装、设置路由器，优化WIFI信号覆盖。</li>
+                <li><strong>WIFI故障排除：</strong> 解决WIFI无法连接、信号弱、网速慢等常见问题。</li>
+                <li><strong>网络安全设置：</strong> 帮助您设置WIFI密码、防蹭网，保护网络安全。</li>
+                <li><strong>设备连接与调试：</strong> 协助连接电脑、手机、智能家居设备到WIFI网络。</li>
+                <li><strong>网线布设与维护：</strong> 提供家庭网络布线和维护服务，确保网络稳定。</li>
+            </ul>
+            <p>告别网络烦恼，享受高速稳定的WIFI体验。</p>
+        </div>
+
+        <div id="on-site-service" class="content-item">
+            <h2>上门服务</h2>
+            <p>提供各类便捷的上门服务，满足您的日常需求。</p>
+            <h3>服务项目：</h3>
+            <ul>
+                <li><strong>电脑/手机维修：</strong> 专业的软硬件维修和系统维护。</li>
+                <li><strong>打印机/复印机维护：</strong> 故障排除、加墨、清洁等服务。</li>
+                <li><strong>智能家居设备安装：</strong> 智能门锁、智能音箱、智能照明等设备的安装与调试。</li>
+                <li><strong>摄影摄像服务：</strong> 提供活动跟拍、证件照拍摄等上门服务。</li>
+                <li><strong>衣物洗护取送：</strong> 高端衣物上门收取、清洗、送回。</li>
+            </ul>
+            <p>一站式上门服务，让您的生活更轻松、更高效。</p>
+        </div>
+
+        <div id="errand-service" class="content-item">
+            <h2>跑腿服务</h2>
+            <p>无论您需要取送文件、代购物品，还是排队办事，我们都能为您提供高效的跑腿服务。</p>
+            <h3>服务项目：</h3>
+            <ul>
+                <li><strong>文件/物品取送：</strong> 紧急文件、快递、包裹的上门取送。</li>
+                <li><strong>代购代排队：</strong> 代买指定商品、代排队办理业务（如医院挂号、政务办理等）。</li>
+                <li><strong>同城闪送：</strong> 急件、生鲜等同城快速送达服务。</li>
+                <li><strong>代办业务：</strong> 代办各类行政手续、票务预订等。</li>
+                <li><strong>生活缴费：</strong> 代缴水费、电费、燃气费、物业费等。</li>
+            </ul>
+            <p>省时省力，让您专注于更重要的事情。</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarItems = document.querySelectorAll('.sidebar li');
+            const contentItems = document.querySelectorAll('.content-item');
+
+            sidebarItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // 移除所有侧边栏项的 active 类
+                    sidebarItems.forEach(li => li.classList.remove('active'));
+                    // 为当前点击的侧边栏项添加 active 类
+                    this.classList.add('active');
+
+                    // 隐藏所有内容项
+                    contentItems.forEach(content => content.classList.remove('active'));
+
+                    // 显示与点击项对应的内容项
+                    const targetId = this.getAttribute('data-target');
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+
+            // 初始化：确保页面加载时显示第一个服务项的内容
+            // 已经在HTML中为第一个li和第一个content-item添加了active类，这里只是一个示例确保逻辑
+            // if (sidebarItems.length > 0) {
+            //     sidebarItems[0].click(); // 模拟点击第一个，确保内容显示
+            // }
+        });
+    </script>
+</body>
+</html>
