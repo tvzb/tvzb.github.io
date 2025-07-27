@@ -36,7 +36,6 @@
     {"key": "影视仓", "name": "影视①", "type": 3, "api": "csp_AppSK", "jar": "https://ztha.top/TVBox/fty.jar", "searchable": 1, "quickSearch": 0, "changeable": 0, "ext": "FbjPcVZY48PN/RIZ5UWFrphwLIZMAYVUEz5FpK6jnh0fUMKIpzPWz0jI/rymDTutcXiX2Dhu1XsjGntrH8QzPldJXdqa2h7TLjJF3DFX"},
     {"key": "瓜子", "name": "影视②", "type": 3, "api": "csp_Gz360", "searchable": 1, "quickSearch": 0, "filterable": 1, "order_num": 0, "jar": "http://rihou.cc:555/jar/nzk.jar", "changeable": 0},
     {"key": "豆豆", "name": "影瓣③", "type": 3, "api": "csp_DouDou", "jar": "http://rihou.cc:555/nzk/nzkk.jar", "searchable": 0, "quickSearch": 0, "filterable": 0},
-    {"key": "MV", "name": "影堂④", "type": 3, "api": "csp_Bili", "searchable": 1, "quickSearch": 1, "filterable": 1, "ext": "http://rihou.cc:555/nzk/Bili.json", "jar": "http://rihou.cc:555/jar/0819.jar;md5;380A08E7735A86D85AAA24E9A1C77AF3"},
     {"key": "cps_阿里", "name": "影视⑤", "type": 3, "playerType": 2, "changeable": 0, "api": "csp_Wwys", "jar": "http://rihou.cc:555/jar/nzk.jar", "ext": "https://www.wwgz.cn/"},
     {"key": "csp_SuBaiBai", "name": "影视⑥", "type": 3, "api": "csp_SuBaiBai", "playerType": 2, "jar": "http://rihou.cc:555/jar/nzk.jar", "ext": "https://subaibai.com/"},
     {"key": "csp_非凡", "name": "影视⑦", "type": 3, "api": "csp_XBPQ", "searchable": 1, "quickSearch": 1, "filterable": 1, "ext": "http://rihou.cc:555/nzk/非凡资源网.json"},
