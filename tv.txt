@@ -53,8 +53,6 @@
 
 {"key": "ok资源", "name": "ok资源", "type": 1, "api": "https://api.okzy.org/api.php/provide/vod/", "playUrl": "https://jiexi.okzyw.info/m3u8/?url=", "searchable": 1, "quickSearch": 1, "categories": ["剧情片", "战争片", "动作片", "喜剧片", "纪录片", "预告片", "爱情片", "科幻片", "恐怖片", "电视剧", "爽文短剧", "动漫"]},
 
-{"key": "魔都资源", "name": "魔都资源", "type": 1, "api": "https://www.mdzyapi.com/api.php/provide/vod/", "playUrl": "https://jiexi.modujx01.com/?url=", "searchable": 1, "quickSearch": 1, "categories": ["战争片", "记录片", "动画片", "剧情片", "冒险片", "奇幻片", "动作片", "喜剧片", "科幻片", "恐怖片", "犯罪片", "悬疑片", "惊悚片", "爱情片", "美国剧", "国产剧", "台湾剧", "日本剧", "短剧", "连续剧", "海外剧", "泰国剧", "香港剧", "韩国剧", "欧美动漫", "动漫", "国产动漫", "海外动漫", "港台动漫", "日韩动漫"]},
-
 {"key": "红牛资源", "name": "红牛资源", "type": 1, "api": "https://www.hongniuzy2.com/api.php/provide/vod/", "playUrl": "https://www.hnjiexi.com/m3u8/?url=", "searchable": 1, "quickSearch": 1, "categories": ["爱情片", "剧情片", "科幻片", "战争片", "动作片", "恐怖片", "喜剧片", "纪录片", "伦理片", "台湾剧", "港澳剧", "日剧", "短剧", "欧美剧", "泰剧", "韩剧", "连续剧", "国产剧", "动漫"]}
 
 "ijk": [{
