@@ -41,7 +41,6 @@ CCTV1,http://101.66.199.50:9901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=0&au
 CCTV1,http://101.66.199.76:9901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=0&authid=0
 CCTV1,http://218.77.81.186:9901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV1,http://1.197.251.119:9901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV1,http://14.204.32.194:6410/00000003/2/H_CCTV1?virtualDomain=00000003.live_hls.zte.com&programid=xxx&stbid=hotel&userid=hotel
 CCTV1,http://222.243.221.54:9901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV1,http://61.156.228.12:8154/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV1,http://192.168.10.200:8008/paiptv/CCTV1.m3u8
