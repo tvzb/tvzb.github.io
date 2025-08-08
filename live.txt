@@ -17,10 +17,6 @@ CCTV-15,http://z.b.bkpcp.top/m.php?id=cctv15
 CCTV-17,http://z.b.bkpcp.top/m.php?id=cctv17
 CCTV-1,http://php.jdshipin.com/TVOD/iptv.php?id=rthk33
 
-CCTV-2,http://fjcm-2118.live.iptv.darwinchow.com/PLTV/88888888/224/3221225923/index.m3u8
-CCTV-12,http://fjcm-2118.live.iptv.darwinchow.com/PLTV/88888888/224/3221225816/index.m3u8
-CCTV-17,http://fjcm-2118.live.iptv.darwinchow.com/PLTV/88888888/224/3221226986/index.m3u8
-
 卫视频道,#genre#
 
 
