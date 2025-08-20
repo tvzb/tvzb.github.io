@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>石子棋 - 在线博弈</title>
+<style>
+  :root { --size: 640px; }
+  body{margin:0;background:#f7f8fb;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif;color:#111;display:grid;place-items:center;min-height:100vh;padding:16px}
+  .card{width:min(100%,760px);background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.08);padding:16px}
+  .head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  h1{font-size:20px;margin:0}
+  .controls{display:flex;gap:8px;flex-wrap:wrap}
+  button,select{padding:10px 14px;border-radius:12px;border:1px solid #e5e7eb;background:#fff;font-weight:600;cursor:pointer}
+  button.primary{background:#111;color:#fff;border-color:#111}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  #status{margin:10px 0 14px;font-size:14px;color:#333}
+  .board-wrap{border:1px solid #eceef5;border-radius:12px;padding:10px;background:#fbfbfd}
+  canvas{width:var(--size);height:var(--size);display:block;border-radius:10px;background:#fff;margin:auto}
+  .legend{display:flex;gap:14px;align-items:center;margin-top:10px;font-size:13px;color:#555}
+  .dot{width:14px;height:14px;border-radius:50%;display:inline-block;border:2px solid #0002}
+  .blue{background:#2563eb;border-color:#1e3a8a}
+  .black{background:#111;border-color:#000}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="head">
+      <h1>石子棋（4×4格 · 5×5交点）</h1>
+      <div class="controls">
+        <button id="restart" class="primary">重新开始</button>
+        <button id="undo">悔棋</button>
+        <select id="mode" title="对弈模式">
+          <option value="hvh">双人对战</option>
+          <option value="blue-ai" selected>电脑执蓝</option>
+          <option value="black-ai">电脑执黑</option>
+        </select>
+      </div>
+    </div>
+    <div id="status"></div>
+    <div class="board-wrap">
+      <canvas id="board" aria-label="石子棋棋盘" role="img"></canvas>
+    </div>
+    <div class="legend">
+      <span><span class="dot blue"></span> 蓝子（默认在最上横线）</span>
+      <span><span class="dot black"></span> 黑子（默认在最下横线）</span>
+    </div>
+  </div>
+
+<script>
+(function(){
+  // ===== 棋盘参数 =====
+  const GRID = 5;              // 交点数（5x5 => 4x4格）
+  const CELL = 120;            // 交点间距（逻辑像素）
+  const PAD  = 40;             // 边距
+  const SIZE = PAD*2 + CELL*(GRID-1);
+
+  const canvas = document.getElementById('board');
+  const ctx = canvas.getContext('2d');
+
+  // 让高 DPI 屏幕清晰：使用 devicePixelRatio
+  const DPR = Math.max(1, window.devicePixelRatio || 1);
+  canvas.width  = Math.round(SIZE * DPR);
+  canvas.height = Math.round(SIZE * DPR);
+  canvas.style.width  = SIZE + "px";
+  canvas.style.height = SIZE + "px";
+  ctx.scale(DPR, DPR);
+
+  // 颜色 & UI
+  const modeSel = document.getElementById('mode');
+  const statusEl = document.getElementById('status');
+
+  // ===== 状态 =====
+  let board, turn, selected=null, legalMoves=[], lastMove=null, aiThinking=false;
+  const history = [];
+
+  // ===== 工具函数 =====
+  const inBoard = (x,y)=> x>=0 && y>=0 && x<GRID && y<GRID;
+  const get = (x,y)=> board[y][x];
+  const set = (x,y,v)=> { board[y][x]=v; };
+  const toPx = c => PAD + c*CELL;
+  const clamp = (v,min,max)=> Math.max(min,Math.min(max,v));
+  function fromPx(p){ return clamp(Math.round((p - PAD)/CELL), 0, GRID-1); }
+  const neighbors = (x,y)=> [{x:x+1,y},{x:x-1,y},{x,y:y+1},{x,y:y-1}].filter(p=>inBoard(p.x,p.y));
+  const computeLegal = (x,y)=> neighbors(x,y).filter(p=> get(p.x,p.y)===null );
+  const cloneBoard = (bd)=> bd.map(r=>r.slice());
+  const isAiTurn = ()=> (modeSel.value==='blue-ai' && turn==='blue') || (modeSel.value==='black-ai' && turn==='black');
+
+  // ===== 初始化 =====
+  function init(){
+    board = Array.from({length:GRID},()=>Array(GRID).fill(null));
+    for(let x=0;x<GRID;x++){
+      board[0][x] = 'blue';
+      board[GRID-1][x] = 'black';
+    }
+    turn = 'blue'; selected=null; legalMoves=[]; lastMove=null; aiThinking=false;
+    history.length = 0;
+    draw(); updateStatus();
+    maybeAiMove();
+  }
+
+  // ===== 绘制 =====
+  function draw(){
+    ctx.clearRect(0,0,SIZE,SIZE);
+    ctx.fillStyle = "#fff"; ctx.fillRect(0,0,SIZE,SIZE);
+    ctx.strokeStyle = "#111"; ctx.lineWidth = 2; ctx.lineCap="round";
+    for(let i=0;i<GRID;i++){
+      ctx.beginPath();
+      ctx.moveTo(toPx(0), toPx(i));
+      ctx.lineTo(toPx(GRID-1), toPx(i));
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(toPx(i), toPx(0));
+      ctx.lineTo(toPx(i), toPx(GRID-1));
+      ctx.stroke();
+    }
+    if(lastMove){
+      ctx.fillStyle = "rgba(0,0,0,.08)";
+      for(const c of [lastMove.from, lastMove.to]){
+        ctx.beginPath();
+        ctx.arc(toPx(c.x), toPx(c.y), 18, 0, Math.PI*2);
+        ctx.fill();
+      }
+    }
+    if(selected){
+      ctx.fillStyle = "rgba(37,99,235,.22)";
+      ctx.beginPath();
+      ctx.arc(toPx(selected.x), toPx(selected.y), 24, 0, Math.PI*2);
+      ctx.fill();
+      ctx.fillStyle = "rgba(37,99,235,.18)";
+      for(const p of legalMoves){
+        ctx.beginPath();
+        ctx.arc(toPx(p.x), toPx(p.y), 14, 0, Math.PI*2);
+        ctx.fill();
+      }
+    }
+    for(let y=0;y<GRID;y++)for(let x=0;x<GRID;x++){
+      const v = board[y][x]; if(!v) continue;
+      drawStone(x,y,v);
+    }
+  }
+
+  function drawStone(x,y,color){
+    const cx = toPx(x), cy = toPx(y);
+    const r = 20;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r+3, 0, Math.PI*2);
+    ctx.fillStyle = "rgba(0,0,0,.10)";
+    ctx.fill();
+    const g = ctx.createRadialGradient(cx-7, cy-8, 4, cx, cy, r);
+    if(color==='blue'){ g.addColorStop(0,"#69a9ff"); g.addColorStop(1,"#2563eb"); }
+    else { g.addColorStop(0,"#444"); g.addColorStop(1,"#111"); }
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI*2);
+    ctx.fillStyle = g; ctx.fill();
+    ctx.lineWidth = 2; ctx.strokeStyle = color==='blue' ? "#1e3a8a" : "#000";
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(cx-9, cy-11, 6, 0, Math.PI*2);
+    ctx.fillStyle = "rgba(255,255,255,.55)";
+    ctx.fill();
+  }
+
+  // ===== 状态文字 =====
+  function updateStatus(msg){
+    if(msg){ statusEl.textContent = msg; return; }
+    const who = turn==='blue' ? '蓝子' : '黑子';
+    statusEl.textContent = `当前回合：${who}${isAiTurn() ? '（电脑）' : '（玩家）'}`;
+  }
+
+  // ===== 吃子判定 =====
+  function checkCapturesOn(bd, current, afterX, afterY){
+    let captured = 0;
+    function checkLine(getCell,setCell){
+      const occ = [];
+      for(let i=0;i<GRID;i++){ const v=getCell(i); if(v) occ.push({i,v}); }
+      if(occ.length !== 3) return 0;
+      const my = occ.filter(o=>o.v===current).length;
+      if(my !== 2) return 0;
+      occ.sort((a,b)=>a.i-b.i);
+      const idxs = occ.map(o=>o.i);
+      if(idxs[2]-idxs[0] !== 2) return 0;
+      const pat = occ.map(o=>o.v);
+      const ok = (pat[0]===current && pat[1]===current && pat[2]!==current) ||
+                 (pat[0]!==current && pat[1]===current && pat[2]===current);
+      if(!ok) return 0;
+      const eatIndex = pat[0]!==current ? idxs[0] : idxs[2];
+      if(getCell(eatIndex)){ setCell(eatIndex, null); return 1; }
+      return 0;
+    }
+    captured += checkLine(i=>bd[afterY][i], (i,v)=> bd[afterY][i]=v);
+    captured += checkLine(i=>bd[i][afterX], (i,v)=> bd[i][afterX]=v);
+    return captured;
+  }
+
+  function checkCaptures(afterX, afterY){
+    return checkCapturesOn(board, turn, afterX, afterY);
+  }
+
+  // ===== 胜负 & 计数 =====
+  function countPiecesOn(bd){
+    let B=0,K=0;
+    for(let y=0;y<GRID;y++)for(let x=0;x<GRID;x++){
+      const v=bd[y][x];
+      if(v==='blue') B++;
+      else if(v==='black') K++;
+    }
+    return {blue:B,black:K};
+  }
+  function countPieces(){ return countPiecesOn(board); }
+
+  // ===== AI 逻辑 =====
+  function allMovesFor(bd, color){
+    const mv = [];
+    for(let y=0;y<GRID;y++)for(let x=0;x<GRID;x++){
+      if(bd[y][x]!==color) continue;
+      for(const p of neighbors(x,y)) if(bd[p.y][p.x]===null) mv.push({from:{x,y},to:{x:p.x,y:p.y}});
+    }
+    return mv;
+  }
+
+  function applyMove(bd, move, color){
+    const newBd = cloneBoard(bd);
+    newBd[move.to.y][move.to.x] = color;
+    newBd[move.from.y][move.from.x] = null;
+    checkCapturesOn(newBd, color, move.to.x, move.to.y);
+    return newBd;
+  }
+
+  function evaluateBoard(bd, aiColor){
+    const opponent = aiColor === 'blue' ? 'black' : 'blue';
+    const cnt = countPiecesOn(bd);
+    const aiPieces = cnt[aiColor];
+    const oppPieces = cnt[opponent];
+
+    // 终局：胜负
+    if(oppPieces <= 1) return 1000000; // AI 赢
+    if(aiPieces <= 1) return -1000000; // AI 输
+
+    let score = 0;
+
+    // 1. 棋子数量差
+    score += (aiPieces - oppPieces) * 1000;
+
+    // 2. 吃子机会（进攻）
+    const aiMoves = allMovesFor(bd, aiColor);
+    let aiCapturePotential = 0;
+    for(const move of aiMoves){
+      const tmp = cloneBoard(bd);
+      tmp[move.to.y][move.to.x] = aiColor;
+      tmp[move.from.y][move.from.x] = null;
+      aiCapturePotential += checkCapturesOn(tmp, aiColor, move.to.x, move.to.y);
+    }
+    score += aiCapturePotential * 500;
+
+    // 3. 防守：检测对手的吃子威胁
+    const oppMoves = allMovesFor(bd, opponent);
+    let oppCaptureThreat = 0;
+    for(const move of oppMoves){
+      const tmp = cloneBoard(bd);
+      tmp[move.to.y][move.to.x] = opponent;
+      tmp[move.from.y][move.from.x] = null;
+      oppCaptureThreat += checkCapturesOn(tmp, opponent, move.to.x, move.to.y);
+    }
+    score -= oppCaptureThreat * 600; // 防守优先级稍高于进攻
+
+    // 4. 机动性：己方棋子的合法移动数
+    score += aiMoves.length * 50;
+
+    // 5. 位置控制：靠近中心更有利
+    const center = (GRID-1)/2;
+    for(let y=0;y<GRID;y++)for(let x=0;x<GRID;x++){
+      if(bd[y][x] === aiColor){
+        const dist = Math.abs(x - center) + Math.abs(y - center);
+        score -= dist * 10; // 靠近中心加分
+      } else if(bd[y][x] === opponent){
+        const dist = Math.abs(x - center) + Math.abs(y - center);
+        score += dist * 5; // 对手远离中心加分
+      }
+    }
+
+    return score;
+  }
+
+  function minimax(bd, depth, alpha, beta, maximizing, aiColor, originalTurn){
+    if(depth === 0){
+      return evaluateBoard(bd, aiColor);
+    }
+    const cnt = countPiecesOn(bd);
+    if(cnt[aiColor] <= 1) return -1000000;
+    if(cnt[aiColor === 'blue' ? 'black' : 'blue'] <= 1) return 1000000;
+
+    const currentColor = maximizing ? aiColor : (aiColor === 'blue' ? 'black' : 'blue');
+    const moves = allMovesFor(bd, currentColor);
+
+    if(maximizing){
+      let maxEval = -Infinity;
+      for(const move of moves){
+        const newBd = applyMove(bd, move, currentColor);
+        const evalScore = minimax(newBd, depth-1, alpha, beta, false, aiColor, originalTurn);
+        maxEval = Math.max(maxEval, evalScore);
+        alpha = Math.max(alpha, evalScore);
+        if(beta <= alpha) break; // Alpha-Beta 剪枝
+      }
+      return maxEval;
+    } else {
+      let minEval = Infinity;
+      for(const move of moves){
+        const newBd = applyMove(bd, move, currentColor);
+        const evalScore = minimax(newBd, depth-1, alpha, beta, true, aiColor, originalTurn);
+        minEval = Math.min(minEval, evalScore);
+        beta = Math.min(beta, evalScore);
+        if(beta <= alpha) break;
+      }
+      return minEval;
+    }
+  }
+
+  function aiPickMove(){
+    const color = turn;
+    const moves = allMovesFor(board, color);
+    if(!moves.length) return null;
+
+    // 动态深度：棋子越少，搜索越深
+    const cnt = countPieces();
+    const depth = (cnt.blue + cnt.black <= 6) ? 4 : 3;
+
+    let bestMoves = [];
+    let bestScore = -Infinity;
+
+    for(const move of moves){
+      const newBd = applyMove(board, move, color);
+      const score = minimax(newBd, depth-1, -Infinity, Infinity, false, color, color);
+      if(score > bestScore){
+        bestScore = score;
+        bestMoves = [move];
+      } else if(score === bestScore){
+        bestMoves.push(move);
+      }
+    }
+
+    // 随机选择最佳移动之一，增加“人性化”感觉
+    return bestMoves[Math.floor(Math.random() * bestMoves.length)];
+  }
+
+  function maybeAiMove(){
+    if(!isAiTurn()) return;
+    aiThinking = true;
+    updateStatus('电脑思考中…');
+    setTimeout(()=>{
+      const mv = aiPickMove();
+      if(!mv){
+        aiThinking = false;
+        turn = (turn==='blue') ? 'black' : 'blue';
+        updateStatus('电脑无子可走');
+        draw();
+        return;
+      }
+      history.push(structuredClone({board, turn, lastMove}));
+      set(mv.to.x, mv.to.y, turn);
+      set(mv.from.x, mv.from.y, null);
+      lastMove = {from: mv.from, to: mv.to};
+      const eaten = checkCaptures(mv.to.x, mv.to.y);
+
+      const cnt = countPieces();
+      if(cnt.blue <= 1 || cnt.black <= 1){
+        draw();
+        updateStatus(`${cnt.blue<=1 ? '黑子' : '蓝子'}获胜！`);
+        aiThinking = false;
+        return;
+      }
+      turn = (turn==='blue') ? 'black' : 'blue';
+      aiThinking = false;
+      draw();
+      updateStatus(eaten ? `电脑吃掉你${eaten}子！` : undefined);
+      maybeAiMove(); // 继续检查是否轮到AI
+    }, 500); // 稍长延迟，模拟“思考”
+  }
+
+  // ===== 交互：点击 =====
+  canvas.addEventListener('click', (evt)=>{
+    if(aiThinking) return;
+    const rect = canvas.getBoundingClientRect();
+    const sx = (evt.clientX - rect.left) * (canvas.width/rect.width) / DPR;
+    const sy = (evt.clientY - rect.top)  * (canvas.height/rect.height) / DPR;
+    const x = fromPx(sx), y = fromPx(sy);
+    if(!inBoard(x,y)) return;
+
+    const cell = get(x,y);
+
+    if(cell === turn && !isAiTurn()){
+      selected = {x,y};
+      legalMoves = computeLegal(x,y);
+      draw();
+      updateStatus();
+      return;
+    }
+
+    if(selected && !isAiTurn() && legalMoves.some(p=>p.x===x && p.y===y)){
+      history.push(structuredClone({board, turn, lastMove}));
+      set(x,y, turn);
+      set(selected.x, selected.y, null);
+      lastMove = { from:{...selected}, to:{x,y} };
+      const eaten = checkCaptures(x,y);
+
+      const cnt = countPieces();
+      if(cnt.blue<=1 || cnt.black<=1){
+        draw();
+        updateStatus(`${cnt.blue<=1 ? '黑子' : '蓝子'}获胜！`);
+        return;
+      }
+
+      turn = (turn==='blue') ? 'black' : 'blue';
+      selected = null;
+      legalMoves = [];
+      draw();
+      updateStatus(eaten ? `吃掉对方${eaten}子！` : undefined);
+      maybeAiMove();
+      return;
+    }
+
+    selected = null;
+    legalMoves = [];
+    draw();
+    updateStatus();
+  });
+
+  // ===== 控件 =====
+  document.getElementById('restart').addEventListener('click', init);
+  document.getElementById('undo').addEventListener('click', ()=>{
+    if(aiThinking || !history.length) return;
+    const prev = history.pop();
+    board = structuredClone(prev.board);
+    turn = prev.turn;
+    lastMove = prev.lastMove;
+    selected = null;
+    legalMoves = [];
+    draw();
+    updateStatus('已悔一步');
+    maybeAiMove();
+  });
+  modeSel.addEventListener('change', ()=>{
+    updateStatus();
+    maybeAiMove();
+  });
+
+  // 启动
+  init();
+})();
+</script>
+</body>
+</html>
