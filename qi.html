@@ -414,17 +414,19 @@
   function showGameOver(winner){
     gameOver = true;
     modalMessage.innerHTML = `<h2>游戏结束！${winner}获胜！</h2>`;
-    modalButtons.innerHTML = `<button class="primary" onclick="showFirstPlayerPrompt()">重新开始</button>`;
+    modalButtons.innerHTML = `<button class="primary" onclick="modal.style.display='none'; showFirstPlayerPrompt()">重新开始</button>`;
     modal.style.display = 'flex';
   }
 
   function showFirstPlayerPrompt(){
     modalMessage.innerHTML = `<h2>选择先手方</h2><p>谁先下第一步棋？</p>`;
     modalButtons.innerHTML = `
-      <button class="primary" onclick="startGame('blue')">蓝子先手</button>
-      <button class="primary" onclick="startGame('black')">黑子先手</button>
+      <button class="primary" id="blue-first">蓝子先手</button>
+      <button class="primary" id="black-first">黑子先手</button>
     `;
     modal.style.display = 'flex';
+    document.getElementById('blue-first').addEventListener('click', () => startGame('blue'));
+    document.getElementById('black-first').addEventListener('click', () => startGame('black'));
   }
 
   function startGame(firstPlayer){
