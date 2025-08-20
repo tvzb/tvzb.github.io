@@ -8,9 +8,9 @@
   :root {
     --size: 640px;
     --board-bg: #ffffff;
-    --blue-piece: #2563eb;
-    --blue-piece-dark: #1e3a8a;
-    --black-piece: #111111;
+    --blue-piece: #dc2626; /* Default to red for computer */
+    --blue-piece-dark: #7f1d1d;
+    --black-piece: #111111; /* Default to black for player */
     --black-piece-dark: #000000;
   }
   body {
@@ -153,7 +153,7 @@
         <button id="undo">悔棋</button>
         <select id="mode" title="对弈模式">
           <option value="hvh">双人对战</option>
-          <option value="blue-ai" selected>电脑执蓝</option>
+          <option value="blue-ai" selected>电脑执红</option>
           <option value="black-ai">电脑执黑</option>
         </select>
       </div>
@@ -163,8 +163,8 @@
       <canvas id="board" aria-label="石子棋棋盘" role="img"></canvas>
     </div>
     <div class="legend">
-      <span><span class="dot blue"></span> 蓝子（默认在最上横线）</span>
-      <span><span class="dot black"></span> 黑子（默认在最下横线）</span>
+      <span><span class="dot blue"></span> 电脑方（默认在最上横线）</span>
+      <span><span class="dot black"></span> 玩家方（默认在最下横线）</span>
     </div>
     <div class="settings">
       <label>棋盘背景:
@@ -175,18 +175,16 @@
           <option value="#e6d7c3">木纹</option>
         </select>
       </label>
-      <label>蓝子颜色:
+      <label>电脑方棋颜色:
         <select id="blue-piece">
-          <option value="#2563eb" selected>蓝色</option>
+          <option value="#dc2626" selected>红色</option>
           <option value="#111111">黑色</option>
-          <option value="#dc2626">红色</option>
           <option value="#16a34a">绿色</option>
         </select>
       </label>
-      <label>黑子颜色:
+      <label>玩家方棋颜色:
         <select id="black-piece">
           <option value="#111111" selected>黑色</option>
-          <option value="#2563eb">蓝色</option>
           <option value="#dc2626">红色</option>
           <option value="#16a34a">绿色</option>
         </select>
@@ -232,15 +230,37 @@
   const history = [];
   const transpositionTable = new Map();
 
-  // 颜色设置
+  // 颜色设置和同步
   function updateColors(){
+    const blueColor = bluePieceSelect.value;
+    const blackColor = blackPieceSelect.value;
     document.documentElement.style.setProperty('--board-bg', boardBgSelect.value);
-    document.documentElement.style.setProperty('--blue-piece', bluePieceSelect.value);
-    document.documentElement.style.setProperty('--blue-piece-dark', darkenColor(bluePieceSelect.value, 0.7));
-    document.documentElement.style.setProperty('--black-piece', blackPieceSelect.value);
-    document.documentElement.style.setProperty('--black-piece-dark', darkenColor(blackPieceSelect.value, 0.7));
+    document.documentElement.style.setProperty('--blue-piece', blueColor);
+    document.documentElement.style.setProperty('--blue-piece-dark', darkenColor(blueColor, 0.7));
+    document.documentElement.style.setProperty('--black-piece', blackColor);
+    document.documentElement.style.setProperty('--black-piece-dark', darkenColor(blackColor, 0.7));
+
+    // 同步模式选项文本
+    const modeOptions = modeSel.options;
+    for(let i = 0; i < modeOptions.length; i++) {
+      if(modeOptions[i].value === 'blue-ai') {
+        modeOptions[i].text = `电脑执${getColorName(blueColor)}`;
+      } else if(modeOptions[i].value === 'black-ai') {
+        modeOptions[i].text = `电脑执${getColorName(blackColor)}`;
+      }
+    }
     draw();
   }
+
+  function getColorName(hex) {
+    const colors = {
+      '#dc2626': '红',
+      '#111111': '黑',
+      '#16a34a': '绿'
+    };
+    return colors[hex] || '未知';
+  }
+
   function darkenColor(hex, factor){
     hex = hex.replace('#', '');
     const r = parseInt(hex.slice(0,2), 16);
@@ -248,9 +268,25 @@
     const b = parseInt(hex.slice(4,6), 16);
     return `rgb(${Math.round(r*factor)},${Math.round(g*factor)},${Math.round(b*factor)})`;
   }
-  boardBgSelect.addEventListener('change', updateColors);
-  bluePieceSelect.addEventListener('change', updateColors);
-  blackPieceSelect.addEventListener('change', updateColors);
+
+  // 限制颜色选择
+  function restrictColors(){
+    const blueColor = bluePieceSelect.value;
+    const blackColor = blackPieceSelect.value;
+    const blueOptions = bluePieceSelect.options;
+    const blackOptions = blackPieceSelect.options;
+
+    for(let i = 0; i < blueOptions.length; i++) {
+      blueOptions[i].disabled = blueOptions[i].value === blackColor;
+    }
+    for(let i = 0; i < blackOptions.length; i++) {
+      blackOptions[i].disabled = blackOptions[i].value === blueColor;
+    }
+  }
+
+  boardBgSelect.addEventListener('change', () => { updateColors(); restrictColors(); });
+  bluePieceSelect.addEventListener('change', () => { updateColors(); restrictColors(); });
+  blackPieceSelect.addEventListener('change', () => { updateColors(); restrictColors(); });
 
   // 工具函数
   const inBoard = (x,y)=> x>=0 && y>=0 && x<GRID && y<GRID;
@@ -271,7 +307,7 @@
       board[0][x] = 'blue';
       board[GRID-1][x] = 'black';
     }
-    turn = firstPlayer || 'blue';
+    turn = firstPlayer || 'blue'; // Default to blue (computer) if no prompt
     selected = null;
     legalMoves = [];
     lastMove = null;
@@ -365,7 +401,7 @@
   // 状态文字
   function updateStatus(msg){
     if(msg){ statusEl.textContent = msg; return; }
-    const who = turn==='blue' ? '蓝子' : '黑子';
+    const who = turn==='blue' ? '电脑方' : '玩家方';
     statusEl.textContent = `当前回合：${who}${isAiTurn() ? '（电脑）' : '（玩家）'}`;
   }
 
@@ -413,7 +449,7 @@
   // 游戏结束提示
   function showGameOver(winner){
     gameOver = true;
-    modalMessage.innerHTML = `<h2>游戏结束！${winner}获胜！</h2>`;
+    modalMessage.innerHTML = `<h2>游戏结束！${winner === 'blue' ? '电脑方' : '玩家方'}获胜！</h2>`;
     modalButtons.innerHTML = `<button class="primary" onclick="modal.style.display='none'; showFirstPlayerPrompt()">重新开始</button>`;
     modal.style.display = 'flex';
   }
@@ -421,8 +457,8 @@
   function showFirstPlayerPrompt(){
     modalMessage.innerHTML = `<h2>选择先手方</h2><p>谁先下第一步棋？</p>`;
     modalButtons.innerHTML = `
-      <button class="primary" id="blue-first">蓝子先手</button>
-      <button class="primary" id="black-first">黑子先手</button>
+      <button class="primary" id="blue-first">电脑方先手</button>
+      <button class="primary" id="black-first">玩家方先手</button>
     `;
     modal.style.display = 'flex';
     document.getElementById('blue-first').addEventListener('click', () => startGame('blue'));
@@ -625,7 +661,7 @@
       const cnt = countPieces();
       if(cnt.blue <= 1 || cnt.black <= 1){
         draw();
-        showGameOver(cnt.blue <= 1 ? '黑子' : '蓝子');
+        showGameOver(cnt.blue <= 1 ? 'black' : 'blue');
         aiThinking = false;
         return;
       }
@@ -666,7 +702,7 @@
       const cnt = countPieces();
       if(cnt.blue <= 1 || cnt.black <= 1){
         draw();
-        showGameOver(cnt.blue <= 1 ? '黑子' : '蓝子');
+        showGameOver(cnt.blue <= 1 ? 'black' : 'blue');
         return;
       }
 
@@ -706,7 +742,8 @@
 
   // 启动
   updateColors();
-  init();
+  restrictColors();
+  init(); // Start immediately with default computer turn
 })();
 </script>
 </body>
