@@ -7,11 +7,11 @@
 <style>
   :root {
     --size: 640px;
-    --board-bg: #fff;
+    --board-bg: #ffffff;
     --blue-piece: #2563eb;
     --blue-piece-dark: #1e3a8a;
-    --black-piece: #111;
-    --black-piece-dark: #000;
+    --black-piece: #111111;
+    --black-piece-dark: #000000;
   }
   body {
     margin: 0;
@@ -167,9 +167,30 @@
       <span><span class="dot black"></span> 黑子（默认在最下横线）</span>
     </div>
     <div class="settings">
-      <label>棋盘背景: <input type="color" id="board-bg" value="#ffffff"></label>
-      <label>蓝子颜色: <input type="color" id="blue-piece" value="#2563eb"></label>
-      <label>黑子颜色: <input type="color" id="black-piece" value="#111111"></label>
+      <label>棋盘背景:
+        <select id="board-bg">
+          <option value="#ffffff" selected>白色</option>
+          <option value="#f0f0f0">浅灰</option>
+          <option value="#d4e4d4">浅绿</option>
+          <option value="#e6d7c3">木纹</option>
+        </select>
+      </label>
+      <label>蓝子颜色:
+        <select id="blue-piece">
+          <option value="#2563eb" selected>蓝色</option>
+          <option value="#111111">黑色</option>
+          <option value="#dc2626">红色</option>
+          <option value="#16a34a">绿色</option>
+        </select>
+      </label>
+      <label>黑子颜色:
+        <select id="black-piece">
+          <option value="#111111" selected>黑色</option>
+          <option value="#2563eb">蓝色</option>
+          <option value="#dc2626">红色</option>
+          <option value="#16a34a">绿色</option>
+        </select>
+      </label>
     </div>
   </div>
   <div id="modal" class="modal" style="display: none;">
@@ -202,22 +223,22 @@
   const modal = document.getElementById('modal');
   const modalMessage = document.getElementById('modal-message');
   const modalButtons = document.getElementById('modal-buttons');
-  const boardBgInput = document.getElementById('board-bg');
-  const bluePieceInput = document.getElementById('blue-piece');
-  const blackPieceInput = document.getElementById('black-piece');
+  const boardBgSelect = document.getElementById('board-bg');
+  const bluePieceSelect = document.getElementById('blue-piece');
+  const blackPieceSelect = document.getElementById('black-piece');
 
   // 状态
   let board, turn, selected=null, legalMoves=[], lastMove=null, aiThinking=false, gameOver=false;
   const history = [];
-  const transpositionTable = new Map(); // 置换表
+  const transpositionTable = new Map();
 
   // 颜色设置
   function updateColors(){
-    document.documentElement.style.setProperty('--board-bg', boardBgInput.value);
-    document.documentElement.style.setProperty('--blue-piece', bluePieceInput.value);
-    document.documentElement.style.setProperty('--blue-piece-dark', darkenColor(bluePieceInput.value, 0.7));
-    document.documentElement.style.setProperty('--black-piece', blackPieceInput.value);
-    document.documentElement.style.setProperty('--black-piece-dark', darkenColor(blackPieceInput.value, 0.7));
+    document.documentElement.style.setProperty('--board-bg', boardBgSelect.value);
+    document.documentElement.style.setProperty('--blue-piece', bluePieceSelect.value);
+    document.documentElement.style.setProperty('--blue-piece-dark', darkenColor(bluePieceSelect.value, 0.7));
+    document.documentElement.style.setProperty('--black-piece', blackPieceSelect.value);
+    document.documentElement.style.setProperty('--black-piece-dark', darkenColor(blackPieceSelect.value, 0.7));
     draw();
   }
   function darkenColor(hex, factor){
@@ -227,9 +248,9 @@
     const b = parseInt(hex.slice(4,6), 16);
     return `rgb(${Math.round(r*factor)},${Math.round(g*factor)},${Math.round(b*factor)})`;
   }
-  boardBgInput.addEventListener('input', updateColors);
-  bluePieceInput.addEventListener('input', updateColors);
-  blackPieceInput.addEventListener('input', updateColors);
+  boardBgSelect.addEventListener('change', updateColors);
+  bluePieceSelect.addEventListener('change', updateColors);
+  blackPieceSelect.addEventListener('change', updateColors);
 
   // 工具函数
   const inBoard = (x,y)=> x>=0 && y>=0 && x<GRID && y<GRID;
@@ -393,21 +414,22 @@
   function showGameOver(winner){
     gameOver = true;
     modalMessage.innerHTML = `<h2>游戏结束！${winner}获胜！</h2>`;
-    modalButtons.innerHTML = `<button onclick="closeModal();init()">重新开始</button>`;
+    modalButtons.innerHTML = `<button class="primary" onclick="showFirstPlayerPrompt()">重新开始</button>`;
     modal.style.display = 'flex';
   }
 
   function showFirstPlayerPrompt(){
     modalMessage.innerHTML = `<h2>选择先手方</h2><p>谁先下第一步棋？</p>`;
     modalButtons.innerHTML = `
-      <button onclick="closeModal();init('blue')">蓝子先手</button>
-      <button onclick="closeModal();init('black')">黑子先手</button>
+      <button class="primary" onclick="startGame('blue')">蓝子先手</button>
+      <button class="primary" onclick="startGame('black')">黑子先手</button>
     `;
     modal.style.display = 'flex';
   }
 
-  function closeModal(){
+  function startGame(firstPlayer){
     modal.style.display = 'none';
+    init(firstPlayer);
   }
 
   // AI 逻辑
@@ -443,10 +465,8 @@
 
     let score = 0;
 
-    // 1. 棋子数量差
     score += (aiPieces - oppPieces) * 1000;
 
-    // 2. 吃子机会（进攻）
     const aiMoves = allMovesFor(bd, aiColor);
     let aiCapturePotential = 0;
     let aiForceTrap = 0;
@@ -456,7 +476,6 @@
       tmp[move.from.y][move.from.x] = null;
       const caps = checkCapturesOn(tmp, aiColor, move.to.x, move.to.y);
       aiCapturePotential += caps;
-      // 检查是否迫使对手进入不利位置
       const oppMoves = allMovesFor(tmp, opponent);
       let canOppEscape = false;
       for(const oppMove of oppMoves){
@@ -466,9 +485,8 @@
       if(!canOppEscape && caps > 0) aiForceTrap += 1;
     }
     score += aiCapturePotential * 600;
-    score += aiForceTrap * 800; // 优先迫使对手无路可走
+    score += aiForceTrap * 800;
 
-    // 3. 防守：检测对手的吃子威胁
     const oppMoves = allMovesFor(bd, opponent);
     let oppCaptureThreat = 0;
     for(const move of oppMoves){
@@ -479,10 +497,8 @@
     }
     score -= oppCaptureThreat * 700;
 
-    // 4. 机动性
     score += aiMoves.length * 100;
 
-    // 5. 位置控制：控制关键线（中间行/列）
     const center = (GRID-1)/2;
     let keyLineControl = 0;
     for(let y=0;y<GRID;y++)for(let x=0;x<GRID;x++){
@@ -495,7 +511,7 @@
         score += dist * 10;
       }
     }
-    score += keyLineControl * 200; // 控制中间行/列
+    score += keyLineControl * 200;
 
     return score;
   }
@@ -512,7 +528,6 @@
 
     const currentColor = maximizing ? aiColor : (aiColor === 'blue' ? 'black' : 'blue');
     const moves = allMovesFor(bd, currentColor);
-    // 排序移动：优先考虑吃子和中心移动
     moves.sort((a,b) => {
       const aCaps = checkCapturesOn(applyMove(bd,a,currentColor),currentColor,a.to.x,a.to.y);
       const bCaps = checkCapturesOn(applyMove(bd,b,currentColor),currentColor,b.to.x,b.to.y);
@@ -551,9 +566,8 @@
     const moves = allMovesFor(board, color);
     if(!moves.length) return null;
 
-    // 迭代加深
     const startTime = performance.now();
-    const timeLimit = 1000; // 1秒限制
+    const timeLimit = 1000;
     const cnt = countPieces();
     const maxDepth = (cnt.blue + cnt.black <= 6) ? 6 : 5;
     let bestMoves = [];
@@ -580,7 +594,7 @@
       }
       if(currentBest){
         bestScore = currentScore;
-        bestMoves = bestMoves.slice(); // 保存当前深度最佳移动
+        bestMoves = bestMoves.slice();
       }
     }
 
@@ -624,7 +638,7 @@
   // 交互：点击
   canvas.addEventListener('click', (evt)=>{
     if(aiThinking || gameOver) return;
-    const rect = canvas.getBoundingRect();
+    const rect = canvas.getBoundingClientRect();
     const sx = (evt.clientX - rect.left) * (canvas.width/rect.width) / DPR;
     const sy = (evt.clientY - rect.top) * (canvas.height/rect.height) / DPR;
     const x = fromPx(sx), y = fromPx(sy);
@@ -689,6 +703,7 @@
   });
 
   // 启动
+  updateColors();
   init();
 })();
 </script>
