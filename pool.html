@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线桌球对战</title>
+    <style>
+        :root {
+            --table-color: #0a8f5a;
+            --table-border-color: #5c3b1e;
+            --pocket-color: #000;
+            --ball-size: 28px;
+            --cue-color: #d2b48c;
+            --ui-bg-color: #2c3e50;
+            --text-color: #ecf0f1;
+            --accent-color: #e74c3c;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            color: var(--text-color);
+        }
+        
+        .game-ui {
+            display: flex;
+            justify-content: space-around;
+            width: 1000px;
+            padding: 15px 25px;
+            background-color: var(--ui-bg-color);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        .player-info {
+            text-align: center;
+        }
+        
+        .player-info.active {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .player-info h2 {
+            margin: 0 0 10px 0;
+            font-size: 1.5em;
+        }
+
+        .player-balls {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            align-items: center;
+            height: 30px;
+        }
+
+        .ball-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5) inset;
+        }
+
+        .game-area {
+            position: relative;
+            width: 1000px;
+            height: 500px;
+            background-color: var(--table-border-color);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .table-surface {
+            width: 100%;
+            height: 100%;
+            background-color: var(--table-color);
+            position: relative;
+        }
+
+        .pocket {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: var(--pocket-color);
+            border-radius: 50%;
+        }
+
+        .pocket-tl { top: -25px; left: -25px; }
+        .pocket-tr { top: -25px; right: -25px; }
+        .pocket-bl { bottom: -25px; left: -25px; }
+        .pocket-br { bottom: -25px; right: -25px; }
+        .pocket-ml { top: 50%; left: -25px; transform: translateY(-50%); }
+        .pocket-mr { top: 50%; right: -25px; transform: translateY(-50%); }
+        
+        #gameCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
+
+        .power-control {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .power-control label {
+            font-size: 1.1em;
+            margin-right: 10px;
+        }
+
+        #powerSlider {
+            width: 300px;
+            cursor: pointer;
+        }
+
+        #message {
+            margin-top: 10px;
+            font-size: 1.2em;
+            color: var(--accent-color);
+            height: 20px;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>HTML5 桌球对战</h1>
+        
+        <div class="game-ui">
+            <div id="player1" class="player-info active">
+                <h2>玩家 1</h2>
+                <div id="player1-balls" class="player-balls"></div>
+            </div>
+            <div id="status" style="text-align:center;">
+                <h3>当前回合</h3>
+                <p id="turn-indicator">玩家 1</p>
+                <div id="message"></div>
+            </div>
+            <div id="player2" class="player-info">
+                <h2>玩家 2</h2>
+                <div id="player2-balls" class="player-balls"></div>
+            </div>
+        </div>
+
+        <div class="game-area">
+            <div class="table-surface">
+                <div class="pocket pocket-tl"></div>
+                <div class="pocket pocket-tr"></div>
+                <div class="pocket pocket-ml"></div>
+                <div class="pocket pocket-mr"></div>
+                <div class="pocket pocket-bl"></div>
+                <div class="pocket pocket-br"></div>
+                <canvas id="gameCanvas"></canvas>
+            </div>
+        </div>
+
+        <div class="power-control">
+            <label for="powerSlider">击球力度:</label>
+            <input type="range" id="powerSlider" min="1" max="100" value="50">
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Matter.js Aliases ---
+            const Engine = Matter.Engine,
+                Render = Matter.Render,
+                Runner = Matter.Runner,
+                Bodies = Matter.Bodies,
+                Composite = Matter.Composite,
+                Events = Matter.Events,
+                Vector = Matter.Vector,
+                Body = Matter.Body;
+
+            // --- Game Setup ---
+            const canvas = document.getElementById('gameCanvas');
+            const tableSurface = document.querySelector('.table-surface');
+            const ctx = canvas.getContext('2d');
+            
+            const tableWidth = tableSurface.clientWidth;
+            const tableHeight = tableSurface.clientHeight;
+            canvas.width = tableWidth;
+            canvas.height = tableHeight;
+            
+            const engine = Engine.create();
+            engine.world.gravity.y = 0; // No gravity in space-like pool game
+
+            const wallThickness = 50;
+            const ballRadius = 14;
+
+            // --- Walls ---
+            const walls = [
+                // Top walls
+                Bodies.rectangle(tableWidth / 4, -wallThickness / 2, tableWidth / 2 - 40, wallThickness, { isStatic: true }),
+                Bodies.rectangle(tableWidth * 3 / 4, -wallThickness / 2, tableWidth / 2 - 40, wallThickness, { isStatic: true }),
+                // Bottom walls
+                Bodies.rectangle(tableWidth / 4, tableHeight + wallThickness / 2, tableWidth / 2 - 40, wallThickness, { isStatic: true }),
+                Bodies.rectangle(tableWidth * 3 / 4, tableHeight + wallThickness / 2, tableWidth / 2 - 40, wallThickness, { isStatic: true }),
+                // Side walls
+                Bodies.rectangle(-wallThickness / 2, tableHeight / 2, wallThickness, tableHeight, { isStatic: true }),
+                Bodies.rectangle(tableWidth + wallThickness / 2, tableHeight / 2, wallThickness, tableHeight, { isStatic: true }),
+            ];
+            Composite.add(engine.world, walls);
+
+            // --- Pockets ---
+            const pocketRadius = 25;
+            const pockets = [
+                { x: 0, y: 0 }, { x: tableWidth, y: 0 },
+                { x: tableWidth / 2, y: -5 }, { x: tableWidth / 2, y: tableHeight+5 },
+                { x: 0, y: tableHeight }, { x: tableWidth, y: tableHeight }
+            ];
+
+            // --- Ball Definitions ---
+            const ballColors = {
+                0: '#ffffff', // Cue ball
+                1: '#ffd700', 2: '#0000ff', 3: '#ff0000', 4: '#800080', 5: '#ffa500', 6: '#008000', 7: '#800000',
+                8: '#000000',
+                9: '#ffd700', 10: '#0000ff', 11: '#ff0000', 12: '#800080', 13: '#ffa500', 14: '#008000', 15: '#800000'
+            };
+            
+            const ballProperties = {
+                restitution: 0.8, // Bounciness
+                friction: 0.02,
+                frictionAir: 0.015,
+                slop: 0.1,
+            };
+
+            let balls = [];
+            let ballsInPlay = [];
+
+            // --- Game State ---
+            let currentPlayer = 1;
+            let player1Balls = null; // 'solid' or 'striped'
+            let player2Balls = null;
+            let canShoot = true;
+            let firstHit = null;
+            let pottedThisTurn = [];
+            let foul = false;
+
+            function createBall(x, y, number, isStriped = false) {
+                const ball = Bodies.circle(x, y, ballRadius, ballProperties);
+                ball.label = 'ball';
+                ball.number = number;
+                ball.isStriped = isStriped;
+                ball.color = ballColors[number];
+                return ball;
+            }
+            
+            function setupBalls() {
+                balls.forEach(ball => Composite.remove(engine.world, ball));
+                balls = [];
+
+                // Cue ball
+                const cueBall = createBall(tableWidth / 4, tableHeight / 2, 0);
+                balls.push(cueBall);
+
+                // Triangle setup
+                const startX = tableWidth * 3 / 4;
+                const startY = tableHeight / 2;
+                const ballNumbers = [1, 10, 2, 8, 14, 3, 9, 15, 4, 11, 5, 12, 13, 6, 7];
+                let ballIndex = 0;
+                for (let i = 0; i < 5; i++) {
+                    for (let j = 0; j <= i; j++) {
+                        const x = startX + i * ballRadius * 1.8;
+                        const y = startY + (j * ballRadius * 2) - (i * ballRadius);
+                        const num = ballNumbers[ballIndex++];
+                        const isStriped = num > 8;
+                        balls.push(createBall(x, y, num, isStriped));
+                    }
+                }
+                Composite.add(engine.world, balls);
+                ballsInPlay = [...balls];
+            }
+
+
+            // --- Rendering ---
+            const powerSlider = document.getElementById('powerSlider');
+            const cue = {
+                start: { x: 0, y: 0 },
+                end: { x: 0, y: 0 },
+                visible: false,
+                maxLength: 200,
+            };
+            
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw balls
+                ballsInPlay.forEach(ball => {
+                    ctx.beginPath();
+                    ctx.arc(ball.position.x, ball.position.y, ballRadius, 0, Math.PI * 2);
+                    ctx.fillStyle = ball.color;
+                    ctx.fill();
+                    ctx.strokeStyle = ball.number === 0 ? '#333' : '#fff';
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+
+                    if (ball.isStriped) {
+                        ctx.beginPath();
+                        ctx.arc(ball.position.x, ball.position.y, ballRadius * 0.6, 0, Math.PI * 2);
+                        ctx.fillStyle = '#fff';
+                        ctx.fill();
+                    }
+
+                    if (ball.number > 0) {
+                        ctx.fillStyle = ball.isStriped ? '#000' : '#fff';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.font = 'bold 12px Arial';
+                        ctx.fillText(ball.number, ball.position.x, ball.position.y);
+                    }
+                });
+
+                // Draw cue
+                if (cue.visible && canShoot) {
+                    ctx.beginPath();
+                    ctx.moveTo(cue.start.x, cue.start.y);
+                    ctx.lineTo(cue.end.x, cue.end.y);
+                    ctx.strokeStyle = '#d2b48c';
+                    ctx.lineWidth = 5;
+                    ctx.stroke();
+                }
+
+                requestAnimationFrame(draw);
+            }
+            
+            // --- Game Logic ---
+            function checkBallInPocket() {
+                ballsInPlay.forEach(ball => {
+                    pockets.forEach(pocket => {
+                        const dist = Vector.magnitude(Vector.sub(ball.position, pocket));
+                        if (dist < pocketRadius) {
+                            handlePot(ball);
+                        }
+                    });
+                });
+            }
+
+            function handlePot(ball) {
+                pottedThisTurn.push(ball);
+                Composite.remove(engine.world, ball);
+                ballsInPlay = ballsInPlay.filter(b => b !== ball);
+
+                if (ball.number === 0) { // Cue ball potted
+                    foul = true;
+                    setMessage("Foul! 母球落袋!");
+                    resetCueBall();
+                } else if (ball.number === 8) {
+                    const playerBallsPotted = pottedThisTurn.filter(b => b.number !== 0 && b.number !== 8).length > 0;
+                    const isGameOver = (currentPlayer === 1 && player1Balls && document.getElementById('player1-balls').children.length === 7) ||
+                                       (currentPlayer === 2 && player2Balls && document.getElementById('player2-balls').children.length === 7);
+
+                    if (isGameOver) {
+                        setMessage(`玩家 ${currentPlayer} 获胜!`);
+                        endGame();
+                    } else {
+                        setMessage(`玩家 ${3 - currentPlayer} 获胜! (过早击入8号球)`);
+                        endGame();
+                    }
+                } else {
+                    updatePlayerScores(ball);
+                }
+            }
+
+            function updatePlayerScores(ball) {
+                const ballType = ball.number < 8 ? 'solid' : 'striped';
+                
+                if (!player1Balls && !player2Balls) { // Assign ball types
+                    if (currentPlayer === 1) {
+                        player1Balls = ballType;
+                        player2Balls = ballType === 'solid' ? 'striped' : 'solid';
+                    } else {
+                        player2Balls = ballType;
+                        player1Balls = ballType === 'solid' ? 'striped' : 'solid';
+                    }
+                     document.querySelector('#player1 h2').textContent += ` (${player1Balls === 'solid' ? '全色' : '花色'})`;
+                     document.querySelector('#player2 h2').textContent += ` (${player2Balls === 'solid' ? '全色' : '花色'})`;
+                }
+                
+                const targetPlayer = (player1Balls === ballType) ? 1 : 2;
+                const scoreBoard = document.getElementById(`player${targetPlayer}-balls`);
+                const ballIcon = document.createElement('div');
+                ballIcon.className = 'ball-icon';
+                ballIcon.style.backgroundColor = ball.color;
+                if (ball.isStriped) {
+                    ballIcon.style.border = '3px solid white';
+                    ballIcon.style.backgroundClip = 'content-box';
+                }
+                scoreBoard.appendChild(ballIcon);
+            }
+
+            function resetCueBall() {
+                setTimeout(() => {
+                    const cueBall = balls.find(b => b.number === 0);
+                    if (!ballsInPlay.includes(cueBall)) {
+                        Body.setPosition(cueBall, { x: tableWidth / 4, y: tableHeight / 2 });
+                        Body.setVelocity(cueBall, { x: 0, y: 0 });
+                        Body.setAngularVelocity(cueBall, 0);
+                        Composite.add(engine.world, cueBall);
+                        ballsInPlay.push(cueBall);
+                    }
+                }, 500);
+            }
+            
+            function switchPlayer() {
+                currentPlayer = (currentPlayer === 1) ? 2 : 1;
+                document.getElementById('turn-indicator').textContent = `玩家 ${currentPlayer}`;
+                document.getElementById('player1').classList.toggle('active');
+                document.getElementById('player2').classList.toggle('active');
+            }
+
+            function endTurn() {
+                const playerBallType = currentPlayer === 1 ? player1Balls : player2Balls;
+                let validPot = false;
+
+                if (pottedThisTurn.length > 0) {
+                     pottedThisTurn.forEach(p => {
+                         if (p.number !== 0) {
+                             const pottedType = p.number < 8 ? 'solid' : 'striped';
+                             if (playerBallType && pottedType === playerBallType) {
+                                 validPot = true;
+                             }
+                             if (!playerBallType && p.number !== 8) { // First pot after break
+                                 validPot = true;
+                             }
+                         }
+                    });
+                }
+                
+                if (foul) {
+                    setMessage("犯规! 交换回合。");
+                    switchPlayer();
+                } else if (!validPot && pottedThisTurn.length > 0) {
+                    setMessage("击入对方球! 交换回合。");
+                    switchPlayer();
+                } else if (pottedThisTurn.length === 0) {
+                    switchPlayer();
+                }
+
+                // Reset for next turn
+                canShoot = true;
+                foul = false;
+                firstHit = null;
+                pottedThisTurn = [];
+                setMessage("");
+            }
+
+            function isWorldSleeping() {
+                return ballsInPlay.every(ball => ball.speed < 0.1 && Math.abs(ball.angularSpeed) < 0.1);
+            }
+            
+            function setMessage(msg) {
+                document.getElementById('message').textContent = msg;
+            }
+
+            function endGame() {
+                canShoot = false;
+                cue.visible = false;
+                setTimeout(() => {
+                    alert('游戏结束! 点击确定重新开始。');
+                    resetGame();
+                }, 1000);
+            }
+            
+            function resetGame() {
+                player1Balls = null;
+                player2Balls = null;
+                document.getElementById('player1-balls').innerHTML = '';
+                document.getElementById('player2-balls').innerHTML = '';
+                document.querySelector('#player1 h2').textContent = '玩家 1';
+                document.querySelector('#player2 h2').textContent = '玩家 2';
+                currentPlayer = 1;
+                document.getElementById('player1').classList.add('active');
+                document.getElementById('player2').classList.remove('active');
+                setupBalls();
+                canShoot = true;
+                setMessage('');
+            }
+
+
+            // --- Event Listeners ---
+            canvas.addEventListener('mousemove', (e) => {
+                if (!canShoot) return;
+                const cueBall = balls.find(b => b.number === 0);
+                if (!cueBall) return;
+
+                const rect = canvas.getBoundingClientRect();
+                const mouse = {
+                    x: e.clientX - rect.left,
+                    y: e.clientY - rect.top,
+                };
+                
+                const angle = Math.atan2(mouse.y - cueBall.position.y, mouse.x - cueBall.position.x);
+                
+                const power = powerSlider.value / 100;
+                const length = power * cue.maxLength;
+
+                cue.start.x = cueBall.position.x + Math.cos(angle + Math.PI) * (ballRadius + 5);
+                cue.start.y = cueBall.position.y + Math.sin(angle + Math.PI) * (ballRadius + 5);
+                cue.end.x = cue.start.x + Math.cos(angle + Math.PI) * length;
+                cue.end.y = cue.start.y + Math.sin(angle + Math.PI) * length;
+
+                cue.visible = true;
+            });
+
+            canvas.addEventListener('click', (e) => {
+                if (!canShoot) return;
+                const cueBall = balls.find(b => b.number === 0);
+                if (!cueBall) return;
+
+                canShoot = false;
+                cue.visible = false;
+
+                const rect = canvas.getBoundingClientRect();
+                const mouse = {
+                    x: e.clientX - rect.left,
+                    y: e.clientY - rect.top,
+                };
+                
+                const forceMagnitude = powerSlider.value * 0.0005;
+                const angle = Math.atan2(mouse.y - cueBall.position.y, mouse.x - cueBall.position.x);
+                
+                const force = {
+                    x: Math.cos(angle) * forceMagnitude,
+                    y: Math.sin(angle) * forceMagnitude
+                };
+                
+                Body.applyForce(cueBall, cueBall.position, force);
+                
+                setTimeout(() => {
+                    let sleepCheck = setInterval(() => {
+                        if (isWorldSleeping()) {
+                            clearInterval(sleepCheck);
+                            endTurn();
+                        }
+                    }, 100);
+                }, 1000);
+            });
+            
+            Events.on(engine, 'beforeUpdate', () => {
+                checkBallInPocket();
+            });
+
+            Events.on(engine, 'collisionStart', (event) => {
+                if (canShoot) return;
+                const pairs = event.pairs;
+                pairs.forEach(pair => {
+                    const { bodyA, bodyB } = pair;
+                    if ( (bodyA.label === 'ball' && bodyB.label === 'ball') && !firstHit) {
+                         if(bodyA.number === 0 || bodyB.number === 0) {
+                             firstHit = bodyA.number === 0 ? bodyB : bodyA;
+                             
+                             if (player1Balls) { // Check for foul after ball types are set
+                                 const expectedType = currentPlayer === 1 ? player1Balls : player2Balls;
+                                 const hitType = firstHit.number < 8 ? 'solid' : 'striped';
+                                 if (firstHit.number !== 8 && expectedType !== hitType) {
+                                     foul = true;
+                                     setMessage("Foul! 击中对方球!");
+                                 }
+                             }
+                         }
+                    }
+                });
+            });
+
+            // --- Start Game ---
+            setupBalls();
+            const runner = Runner.create();
+            Runner.run(runner, engine);
+            draw();
+        });
+    </script>
+</body>
+</html>
