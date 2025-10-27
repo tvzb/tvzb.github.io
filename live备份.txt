@@ -221,13 +221,10 @@ cct4美洲,http://goo.bkpcp.top/mg/cctv4m
 黑龙江视,http://t.061899.xyz/tl/tl.php?id=hljws
 
 电影点播,#genre#
-祝愿蛇年大吉,http://dd.rihou.cc:555/mp4?id=lndjllll.mp4
-全年恭喜发财,http://dd.rihou.cc:555/mp4?id=2025a.mp4
-全粤音乐串烧,http://dd.rihou.cc:555/mp4?id=2025b.mp4
 射雕侠之大者,https://cdn7.ryplay7.com/20250131/10555_1dab6d8e/index.m3u8
 封神战火西岐,https://cdn7.ryplay7.com/20250131/10554_6e35735c/index.m3u8
 哪吒魔童闹海,https://svip.high21-playback.com/20250130/41326_717cc871/index.m3u8
-唐探------1900,https://cdn7.ryplay7.com/20250130/10553_df548ce7/index.m3u8
+唐探1900,https://cdn7.ryplay7.com/20250130/10553_df548ce7/index.m3u8
 大奉打更超清,https://137.175.34.88:11301/data6/jvods/hls/dhz/53/52359/25012919/1_264131_1616739/1920/index.m3u8?appId=kkdy&sign=6b99b4e09965d6d2a4ce1c2a9b58f64b&timestamp=1739601259&ref=2
 雄兵出击超清,https://v.cdnlz4.com/20231201/26186_1cd3ed6c/index.m3u8
 存亡之战超清,https://svip.high21-playback.com/20241213/40555_5eef5126/index.m3u8
