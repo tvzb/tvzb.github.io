@@ -95,23 +95,14 @@ CCTV-11,http://pa.kuangdeng.top:8081/hls/11/index.m3u8
 CCTV-14,http://pa.kuangdeng.top:8081/hls/14/index.m3u8
 CCTV-15,http://pa.kuangdeng.top:8081/hls/15/index.m3u8
 
-CCTV-1,https://iptv.catvod.com/live.php?id=CCTV1%E7%BB%BC%E5%90%88
-CCTV-2,https://iptv.catvod.com/live.php?id=CCTV2%E8%B4%A2%E7%BB%8F
-CCTV-3,https://iptv.catvod.com/live.php?id=CCTV3综艺
-CCTV-4,https://iptv.catvod.com/live.php?id=CCTV4%E6%AC%A7%E6%B4%B2
-CCTV-4,https://iptv.catvod.com/live.php?id=CCTV4%E7%BE%8E%E6%B4%B2
-CCTV-5,https://iptv.catvod.com/live.php?id=CCTV5%E4%BD%93%E8%82%B2
-CCTV-6,https://iptv.catvod.com/live.php?id=CCTV6电影
-CCTV-7,https://iptv.catvod.com/live.php?id=CCTV7%E5%9B%BD%E9%98%B2%E5%86%9B%E4%BA%8B
-CCTV-8,https://iptv.catvod.com/live.php?id=CCTV8%E7%94%B5%E8%A7%86%E5%89%A7
-CCTV-9,https://iptv.catvod.com/live.php?id=CCTV9%E7%BA%AA%E5%BD%95
-CCTV-10,https://iptv.catvod.com/live.php?id=CCTV10科教
-CCTV-11,https://iptv.catvod.com/live.php?id=CCTV11%E6%88%8F%E6%9B%B2
-CCTV-12,https://iptv.catvod.com/live.php?id=CCTV12社会与法
-CCTV-13,https://iptv.catvod.com/live.php?id=CCTV13%E6%96%B0%E9%97%BB
-CCTV-14,https://iptv.catvod.com/live.php?id=CCTV14少儿
-CCTV-15,https://iptv.catvod.com/live.php?id=CCTV15音乐
-CCTV-17,https://iptv.catvod.com/live.php?id=CCTV17%E5%86%9C%E4%B8%9A%E5%86%9C%E6%9D%91
+CCTV-1,https://iptv.catvod.com/live.php?id=CCTV-1%20%E7%BB%BC%E5%90%88
+CCTV-4,https://iptv.catvod.com/live.php?id=CCTV-4%20%E4%B8%AD%E6%96%87%E5%9B%BD%E9%99%85
+CCTV-5,https://iptv.catvod.com/live.php?id=CCTV-5%20%E4%BD%93%E8%82%B2
+CCTV-6,https://iptv.catvod.com/live.php?id=CCTV-6%20%E7%94%B5%E5%BD%B1
+CCTV-8,https://iptv.catvod.com/live.php?id=CCTV-8%20%E7%94%B5%E8%A7%86%E5%89%A7
+CCTV-11,https://iptv.catvod.com/live.php?id=CCTV-11%20%E6%88%8F%E6%9B%B2
+CCTV-12,https://iptv.catvod.com/live.php?id=CCTV-12%20%E7%A4%BE%E4%BC%9A%E4%B8%8E%E6%B3%95
+CCTV-15,https://iptv.catvod.com/live.php?id=CCTV-15%20%E9%9F%B3%E4%B9%90
 
 CCTV-2,http://124.88.238.50:82/hls/2/index.m3u8
 CCTV-4,http://124.88.238.50:82/hls/4/index.m3u8
