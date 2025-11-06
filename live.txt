@@ -46,22 +46,6 @@ CCTV-12,https://hyf.serv00.net/飞哥.php?id=13
 CCTV-13,https://hyf.serv00.net/飞哥.php?id=14
 CCTV-14,https://hyf.serv00.net/飞哥.php?id=15
 
-CCTV-1,https://60.191.56.186:8888/hls/1/index.m3u8
-CCTV-2,https://60.191.56.186:8888/hls/2/index.m3u8
-CCTV-3,https://60.191.56.186:8888/hls/3/index.m3u8
-CCTV-4,https://60.191.56.186:8888/hls/4/index.m3u8
-CCTV-5,https://60.191.56.186:8888/hls/5/index.m3u8
-CCTV-6,https://60.191.56.186:8888/hls/6/index.m3u8
-CCTV-7,https://60.191.56.186:8888/hls/7/index.m3u8
-CCTV-8,https://60.191.56.186:8888/hls/8/index.m3u8
-CCTV-9,https://60.191.56.186:8888/hls/9/index.m3u8
-CCTV-10,https://60.191.56.186:8888/hls/10/index.m3u8
-CCTV-11,https://60.191.56.186:8888/hls/11/index.m3u8
-CCTV-12,https://60.191.56.186:8888/hls/12/index.m3u8
-CCTV-13,https://60.191.56.186:8888/hls/13/index.m3u8
-CCTV-15,https://60.191.56.186:8888/hls/14/index.m3u8
-CCTV-16,https://60.191.56.186:8888/hls/16/index.m3u8
-
 CCTV-1,http://218.17.33.178:53290/tsfile/live/1001_1.m3u8
 CCTV-2,http://218.17.33.178:53290/tsfile/live/1002_1.m3u8
 CCTV-3,http://218.17.33.178:53290/tsfile/live/1003_1.m3u8
