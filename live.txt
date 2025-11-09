@@ -25,22 +25,6 @@ CCTV-11,http://pa.kuangdeng.top:8081/hls/11/index.m3u8
 CCTV-14,http://pa.kuangdeng.top:8081/hls/14/index.m3u8
 CCTV-15,http://pa.kuangdeng.top:8081/hls/15/index.m3u8
 
-CCTV-1,https://60.191.56.186:8888/hls/1/index.m3u8
-CCTV-2,https://60.191.56.186:8888/hls/2/index.m3u8
-CCTV-3,https://60.191.56.186:8888/hls/3/index.m3u8
-CCTV-4,https://60.191.56.186:8888/hls/4/index.m3u8
-CCTV-5,https://60.191.56.186:8888/hls/5/index.m3u8
-CCTV-6,https://60.191.56.186:8888/hls/6/index.m3u8
-CCTV-7,https://60.191.56.186:8888/hls/7/index.m3u8
-CCTV-8,https://60.191.56.186:8888/hls/8/index.m3u8
-CCTV-9,https://60.191.56.186:8888/hls/9/index.m3u8
-CCTV-10,https://60.191.56.186:8888/hls/10/index.m3u8
-CCTV-11,https://60.191.56.186:8888/hls/11/index.m3u8
-CCTV-12,https://60.191.56.186:8888/hls/12/index.m3u8
-CCTV-13,https://60.191.56.186:8888/hls/13/index.m3u8
-CCTV-15,https://60.191.56.186:8888/hls/14/index.m3u8
-CCTV-16,https://60.191.56.186:8888/hls/16/index.m3u8
-
 CCTV-1,https://iptv.catvod.com/live.php?id=CCTV-1%20%E7%BB%BC%E5%90%88
 CCTV-2,https://iptv.catvod.com/live.php?id=CCTV-2%20%E8%B4%A2%E7%BB%8F
 CCTV-3,https://iptv.catvod.com/live.php?id=CCTV-3%20%E7%BB%BC%E8%89%BA
@@ -56,6 +40,22 @@ CCTV-12,https://iptv.catvod.com/live.php?id=CCTV-12%20%E7%A4%BE%E4%BC%9A%E4%B8%8
 CCTV-13,https://iptv.catvod.com/live.php?id=CCTV-13%20%E6%96%B0%E9%97%BB
 CCTV-15,https://iptv.catvod.com/live.php?id=CCTV-15%20%E9%9F%B3%E4%B9%90
 CCTV-17,https://iptv.catvod.com/live.php?id=CCTV-17%20%E5%86%9C%E4%B8%9A%E5%86%9C%E6%9D%91
+
+CCTV-1,https://60.191.56.186:8888/hls/1/index.m3u8
+CCTV-2,https://60.191.56.186:8888/hls/2/index.m3u8
+CCTV-3,https://60.191.56.186:8888/hls/3/index.m3u8
+CCTV-4,https://60.191.56.186:8888/hls/4/index.m3u8
+CCTV-5,https://60.191.56.186:8888/hls/5/index.m3u8
+CCTV-6,https://60.191.56.186:8888/hls/6/index.m3u8
+CCTV-7,https://60.191.56.186:8888/hls/7/index.m3u8
+CCTV-8,https://60.191.56.186:8888/hls/8/index.m3u8
+CCTV-9,https://60.191.56.186:8888/hls/9/index.m3u8
+CCTV-10,https://60.191.56.186:8888/hls/10/index.m3u8
+CCTV-11,https://60.191.56.186:8888/hls/11/index.m3u8
+CCTV-12,https://60.191.56.186:8888/hls/12/index.m3u8
+CCTV-13,https://60.191.56.186:8888/hls/13/index.m3u8
+CCTV-15,https://60.191.56.186:8888/hls/14/index.m3u8
+CCTV-16,https://60.191.56.186:8888/hls/16/index.m3u8
 
 CCTV-1,http://218.17.33.178:53290/tsfile/live/1001_1.m3u8
 CCTV-2,http://218.17.33.178:53290/tsfile/live/1002_1.m3u8
