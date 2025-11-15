@@ -238,9 +238,6 @@ CCTV-17,https://iptv.catvod.com/live.php?id=CCTV-17%20%E5%86%9C%E4%B8%9A%E5%86%9
 吉林卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=jlws
 黑龙江视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=hljws
 
-短剧全集,#genre#
-娇妻难寻,https://www.dailymotion.com/cdn/manifest/video/x9tpgug.m3u8?sec=cAoHz37PtWHvHPmx54RnVguO3OwHtB426QVgEYVV9gxTO0rAB5KDkWdasqfVQQMBb841KXwedqIxxjuUO0sy0a98-b_7rfG075MJKqArkIoGglCpP96mGq_4GobQf9Ls&dmTs=885063&dmV1st=64e7ab79-1d60-4e38-9016-bf2fd7a97a7c
-
 明星电影,#genre#
 投名状,https://cdn13.yzzy-tv-cdn.com/20230128/9592_3d21d729/index.m3u8
 杀手之王,https://cdn10.yzzy-tv-cdn.com/20221023/2307_200a0670/index.m3u8
