@@ -14,6 +14,7 @@ CCTV12社会与法,https://60.191.56.186:8888/hls/12/index.m3u8
 CCTV13新闻,https://60.191.56.186:8888/hls/13/index.m3u8
 CCTV15音乐,https://60.191.56.186:8888/hls/14/index.m3u8
 CCTV16奥林匹克,https://60.191.56.186:8888/hls/16/index.m3u8
+
 CCTV1综合,http://pa.kuangdeng.top:8081/hls/1/index.m3u8
 CCTV2财经,http://pa.kuangdeng.top:8081/hls/2/index.m3u8
 CCTV3综艺,http://pa.kuangdeng.top:8081/hls/3/index.m3u8
