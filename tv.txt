@@ -24,7 +24,6 @@
     {"key": "新浪资源", "name": "新浪资源", "type": 1, "api": "https://api.xinlangapi.com/xinlangapi.php/provide/vod/", "playUrl": "https://xinlangjiexi.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
     {"key": "暴风资源", "name": "暴风资源", "type": 1, "api": "https://bfzyapi.com/api.php/provide/vod/", "playUrl": "https://bfzy.jiexi.bfzyapi.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
     {"key": "ikun资源", "name": "ikun资源", "type": 1, "api": "https://ikunzyapi.com/api.php/provide/vod/", "playUrl": "https://www.ikdmjx.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
-    {"key": "虎牙资源", "name": "虎牙资源", "type": 1, "api": "https://www.huyaapi.com/api.php/provide/vod/", "playUrl": "https://huyajx.com/play?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
     {"key": "豪华资源", "name": "豪华资源", "type": 1, "api": "https://hhzyapi.com/api.php/provide/vod/", "playUrl": "https://hhjiexi.com/play/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
     {"key": "天涯资源", "name": "天涯资源", "type": 1, "api": "https://ty.tyyszy5.com/api.php/provide/vod/", "playUrl": "https://tyjiexi.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
     {"key": "u酷资源", "name": "u酷资源", "type": 1, "api": "https://api.ukuapi.com/api.php/provide/vod/", "playUrl": "https://api.ukubf.com/m3u8/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
@@ -46,18 +45,19 @@
     {"key": "魔爪资源", "name": "魔爪资源", "type": 1, "api": "https://mozhuazy.com/api.php/provide/vod/", "playUrl": "https://mzm3u8jx.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
     {"key": "ok资源", "name": "ok资源", "type": 1, "api": "https://api.okzy.org/api.php/provide/vod/", "playUrl": "https://jiexi.okzy.me/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
     {"key": "红牛资源", "name": "红牛资源", "type": 1, "api": "https://www.hongniuzy2.com/api.php/provide/vod/", "playUrl": "https://www.hnjiexi.com/m3u8/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
+    // {"key": "虎牙资源", "name": "虎牙资源", "type": 1, "api": "https://www.huyaapi.com/api.php/provide/vod/", "playUrl": "https://huyajx.com/play?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
 
     // ======== 新增10个2025年最稳线路（避免你原配置全部失效）========
-    {"key": "影视TV", "name": "影视TV✨超稳", "type": 1, "api": "https://api.yingshi.tv/api.php/provide/vod/", "playUrl": "https://jiexi.yingshi.tv/jiexi.php?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
-    {"key": "子子影视", "name": "子子影视✨极速", "type": 1, "api": "https://www.ziziys.com/api.php/provide/vod/", "playUrl": "https://jiexi.ziziys.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
-    {"key": "爱佬资源", "name": "爱佬资源✨线路多", "type": 1, "api": "https://alzyapi.com/api.php/provide/vod/", "playUrl": "https://play.alazyapi.com/m3u8/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
-    {"key": "天空资源", "name": "天空资源✨强", "type": 1, "api": "https://tkzyapi.com/api.php/provide/vod/", "playUrl": "https://tkplayer.vip/player/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
-    {"key": "八戒资源", "name": "八戒资源✨全", "type": 1, "api": "https://api.bajiezy.cc/api.php/provide/vod/", "playUrl": "https://vip.bajiecaiji.com/m3u8.php?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
-    {"key": "酷玩资源", "name": "酷玩短剧✨强", "type": 1, "api": "https://www.kuplayzy.com/api.php/provide/vod/", "playUrl": "https://www.kuplayzy.com/jiexi/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
-    {"key": "NO视频", "name": "NO视频✨高清", "type": 1, "api": "https://www.ckzy.org/api.php/provide/vod/", "playUrl": "https://www.nosparse.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
-    {"key": "乐视资源", "name": "乐视资源✨超清", "type": 1, "api": "https://leshiapi.com/api.php/provide/vod/", "playUrl": "https://leshijiexi.com/m3u8/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
-    {"key": "drpy_南风", "name": "南风动漫✨神器", "type": 3, "api": "https://ghproxy.com/https://raw.githubusercontent.com/hamcous/SouthWind/main/drpy.js", "searchable": 1, "quickSearch": 1, "filterable": 1, "ext": "https://ghproxy.com/https://raw.githubusercontent.com/hamcous/SouthWind/main/ham.json"},
-    {"key": "聚合搜索", "name": "全网搜（备用）", "type": 3, "api": "csp_AppYSV2", "searchable": 1, "quickSearch": 1, "filterable": 1, "ext": "https://ghproxy.com/https://raw.githubusercontent.com/heroaku/TVboxo/main/appys.json"}
+    {"key": "影视TV", "name": "影视TV", "type": 1, "api": "https://api.yingshi.tv/api.php/provide/vod/", "playUrl": "https://jiexi.yingshi.tv/jiexi.php?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
+    {"key": "子子影视", "name": "子子影视", "type": 1, "api": "https://www.ziziys.com/api.php/provide/vod/", "playUrl": "https://jiexi.ziziys.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
+    {"key": "爱佬资源", "name": "爱佬资源", "type": 1, "api": "https://alzyapi.com/api.php/provide/vod/", "playUrl": "https://play.alazyapi.com/m3u8/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
+    {"key": "天空资源", "name": "天空资源", "type": 1, "api": "https://tkzyapi.com/api.php/provide/vod/", "playUrl": "https://tkplayer.vip/player/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
+    {"key": "八戒资源", "name": "八戒资源", "type": 1, "api": "https://api.bajiezy.cc/api.php/provide/vod/", "playUrl": "https://vip.bajiecaiji.com/m3u8.php?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
+    {"key": "酷玩资源", "name": "酷玩短剧", "type": 1, "api": "https://www.kuplayzy.com/api.php/provide/vod/", "playUrl": "https://www.kuplayzy.com/jiexi/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
+    {"key": "NO视频", "name": "NO视频", "type": 1, "api": "https://www.ckzy.org/api.php/provide/vod/", "playUrl": "https://www.nosparse.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
+    {"key": "乐视资源", "name": "乐视资源", "type": 1, "api": "https://leshiapi.com/api.php/provide/vod/", "playUrl": "https://leshijiexi.com/m3u8/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1},
+    {"key": "drpy_南风", "name": "南风动漫", "type": 3, "api": "https://ghproxy.com/https://raw.githubusercontent.com/hamcous/SouthWind/main/drpy.js", "searchable": 1, "quickSearch": 1, "filterable": 1, "ext": "https://ghproxy.com/https://raw.githubusercontent.com/hamcous/SouthWind/main/ham.json"},
+    {"key": "聚合搜索", "name": "全网搜", "type": 3, "api": "csp_AppYSV2", "searchable": 1, "quickSearch": 1, "filterable": 1, "ext": "https://ghproxy.com/https://raw.githubusercontent.com/heroaku/TVboxo/main/appys.json"}
 
   ],
 
