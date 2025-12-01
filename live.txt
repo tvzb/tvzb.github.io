@@ -124,10 +124,6 @@ CCTV3综艺,http://222.169.85.8:9901/tsfile/live/0003_1.m3u8
 CCTV10科教,http://222.169.85.8:9901/tsfile/live/0010_1.m3u8
 CCTV17农业农村,http://222.169.85.8:9901/tsfile/live/0007_1.m3u8
 
-CCTV7国防军事,http://125.125.225.212:9901/tsfile/live/0007_1.m3u8
-CCTV11戏曲,http://125.125.225.212:9901/tsfile/live/0011_1.m3u8
-CCTV15音乐,http://125.125.225.212:9901/tsfile/live/0015_1.m3u8
-
 CCTV1综合,https://iptv.catvod.com/live.php?id=CCTV-1%20%E7%BB%BC%E5%90%88
 CCTV2财经,https://iptv.catvod.com/live.php?id=CCTV-2%20%E8%B4%A2%E7%BB%8F
 CCTV3综艺,https://iptv.catvod.com/live.php?id=CCTV-3%20%E7%BB%BC%E8%89%BA
@@ -145,6 +141,30 @@ CCTV15音乐,https://iptv.catvod.com/live.php?id=CCTV-15%20%E9%9F%B3%E4%B9%90
 CCTV17农业农村,https://iptv.catvod.com/live.php?id=CCTV-17%20%E5%86%9C%E4%B8%9A%E5%86%9C%E6%9D%91
 
 卫视频道,#genre#
+江西卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=jxws
+北京卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=bjws
+东方卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=dfws
+浙江卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=zjws
+江苏卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=jsws
+湖南卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=hunws
+广东卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=gdws
+深圳卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=szws
+天津卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=tjws
+安徽卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=ahws
+山东卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=sdws
+辽宁卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=lnws
+河北卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=hbws
+河南卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=hnws
+四川卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=scws
+重庆卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=cqws
+贵州卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=gzws
+湖北卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=hubws
+广西卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=gxws
+东南卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=dnws
+海南卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=hinws
+青海卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=qhws
+吉林卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=jlws
+黑龙江视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=hljws
 
 江西卫视,http://goo.bkpcp.top/mg/jxws
 东方卫视,http://goo.bkpcp.top/mg/dfws
@@ -290,36 +310,6 @@ CCTV17农业农村,https://iptv.catvod.com/live.php?id=CCTV-17%20%E5%86%9C%E4%B8
 重庆卫视,http://222.169.85.8:9901/tsfile/live/0142_1.m3u8
 陕西卫视,http://222.169.85.8:9901/tsfile/live/0136_1.m3u8
 
-河北卫视,http://125.125.225.212:9901/tsfile/live/0117_1.m3u8
-河南卫视,http://125.125.225.212:9901/tsfile/live/0139_1.m3u8
-江西卫视,http://125.125.225.212:9901/tsfile/live/0138_1.m3u8
-深圳卫视,http://125.125.225.212:9901/tsfile/live/0126_1.m3u8
-
-
-江西卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=jxws
-北京卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=bjws
-东方卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=dfws
-浙江卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=zjws
-江苏卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=jsws
-湖南卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=hunws
-广东卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=gdws
-深圳卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=szws
-天津卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=tjws
-安徽卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=ahws
-山东卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=sdws
-辽宁卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=lnws
-河北卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=hbws
-河南卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=hnws
-四川卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=scws
-重庆卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=cqws
-贵州卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=gzws
-湖北卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=hubws
-广西卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=gxws
-东南卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=dnws
-海南卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=hinws
-青海卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=qhws
-吉林卫视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=jlws
-黑龙江视,http://cdn6.bkpcp.top/tl/tuiliu.php?id=hljws
 
 明星电影,#genre#
 投名状,https://cdn13.yzzy-tv-cdn.com/20230128/9592_3d21d729/index.m3u8
