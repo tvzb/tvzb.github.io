@@ -334,6 +334,33 @@ CCTV欧洲,http://m.061899.xyz/mg/cctv4o
 内蒙古视,http://m.061899.xyz/mg/nmgws
 黑龙江视,http://m.061899.xyz/mg/hljws
 
+国外频道,#genre#
+HBO,http://148.113.160.49:14187/
+HBO +,http://148.113.160.49:14193/
+HBO FANILY,http://148.113.160.49:14190/
+HBO POP,http://148.113.160.49:14180/
+HBO XTREME,http://148.113.160.49:14175/
+HBO MUNDL,http://148.113.160.49:14183/
+BBC NEW,https://vs-hls-push-ww-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_news_channel_hd/t=3840/v=pv14/b=5070016/main.m3u8
+ABC News Australia,https://abc-news-dmd-streams-1.akamaized.net/out/v1/701126012d044971b3fa89406a440133/index_5.m3u8
+BBC Earth,https://cbsn-dal.cbsnstream.cbsnews.com/out/v1/ffa98bbf7d2b4c038c229bd4d9122708/master.m3u8
+Ayush TV,http://95eryw39dwn4-hls-live.wmncdn.net/Ayushu/271ddf829afeece44d8732757fba1a66.sdp/index.m3u8
+Wion News,https://d7x8z4yuq42qn.cloudfront.net/index_7.m3u8
+FILM arts,http://148.113.160.49:14210
+索尼频道，http://148.113.160.49:14206
+CINEMAX,http://148.113.160.49:14200
+USA 电视,http://148.113.160.49:14133
+Megapix,http://148.113.160.49:14172
+Modo Viagem,http://148.113.160.49:14214
+华纳 - WBTV,http://148.113.160.49:14130
+环球国际频道,http://148.113.160.49:14135
+环球影视频道,http://148.113.160.49:14162
+TNT剧集频道,http://148.113.160.49:14138
+TNT电视,http://148.113.160.49:14141
+AMC米高梅电影,http://148.113.160.49:14207
+TELE CINE FUN,http://148.113.160.49:14155
+TELE CINE Action,http://148.113.160.49:14159
+SPACE,http://148.113.160.49:14170
 
 明星电影,#genre#
 投名状,https://cdn13.yzzy-tv-cdn.com/20230128/9592_3d21d729/index.m3u8
