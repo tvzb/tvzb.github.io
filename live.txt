@@ -14,6 +14,7 @@ CCTV-12社会与法,https://iptv.catvod.com/live.php?id=CCTV-12%20%E7%A4%BE%E4%B
 CCTV-13新闻,https://iptv.catvod.com/live.php?id=CCTV-13%20%E6%96%B0%E9%97%BB
 CCTV-14少儿,https://iptv.catvod.com/live.php?id=CCTV-14%20%E5%B0%91%E5%84%BF
 CCTV-15音乐,https://iptv.catvod.com/live.php?id=CCTV-15%20%E9%9F%B3%E4%B9%90
+CCTV-16奥林匹克,https://iptv.catvod.com/live.php?id=CCTV-16
 CCTV-17农业农村,https://iptv.catvod.com/live.php?id=CCTV-17%20%E5%86%9C%E4%B8%9A%E5%86%9C%E6%9D%91
 CCTV-欧洲,https://iptv.catvod.com/live.php?id=CCTV-4%20%E4%B8%AD%E6%96%87%E5%9B%BD%E9%99%85%20%E6%AC%A7%E6%B4%B2
 CCTV-美洲,https://iptv.catvod.com/live.php?id=CCTV-4%20%E4%B8%AD%E6%96%87%E5%9B%BD%E9%99%85%20%E7%BE%8E%E6%B4%B2
@@ -36,7 +37,6 @@ CCTV-12社会与法,https://iptv.catvod.com/live.php?id=CCTV-12
 CCTV-13新闻,https://iptv.catvod.com/live.php?id=CCTV-13
 CCTV-14少儿,https://iptv.catvod.com/live.php?id=CCTV-14
 CCTV-15音乐,https://iptv.catvod.com/live.php?id=CCTV-15
-CCTV-16奥林匹克,https://iptv.catvod.com/live.php?id=CCTV-16
 CCTV-17农业农村,https://iptv.catvod.com/live.php?id=CCTV-17
 
 CCTV-1综合,http://goo.bkpcp.top/mg/cctv1
