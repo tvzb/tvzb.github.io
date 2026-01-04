@@ -265,6 +265,21 @@ function switchPage(url) {
 if (history.length > 0) {
     showWord(history[currentIndex], false);
 }
+
+// ===== 根据当前页面自动选中下拉框 =====
+(function () {
+    const file = location.pathname.split("/").pop();
+    const select = document.getElementById("levelSelect");
+    if (!select) return;
+
+    for (const opt of select.options) {
+        if (opt.value === file) {
+            opt.selected = true;
+            break;
+        }
+    }
+})();
+    
 </script>
 </body>
 </html>
