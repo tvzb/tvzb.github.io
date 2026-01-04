@@ -23,7 +23,7 @@
             backdrop-filter: blur(10px);
         }
 
-        /* 新增：顶部导航栏 */
+        /* 顶部导航栏 */
         nav {
             background: linear-gradient(120deg, #4facfe 0%, #00f2fe 100%);
             padding: 18px 0;
@@ -37,9 +37,6 @@
             justify-content: center;
             flex-wrap: wrap;
             gap: 12px;
-        }
-        nav li {
-            display: inline-block;
         }
         nav a {
             display: block;
@@ -63,21 +60,25 @@
             box-shadow: 0 6px 15px rgba(231, 76, 60, 0.4);
         }
 
+        /* 修复：标题区背景改为透明，文字改为深色 */
         header {
-            color: white;
             padding: 40px 30px;
             text-align: center;
+            background: transparent; /* 移除渐变背景 */
         }
         header h1 {
             margin: 0;
             font-size: 32px;
             font-weight: 600;
+            color: #2c3e50; /* 改为深蓝色，清晰可见 */
         }
         header p {
             margin: 12px 0 0;
-            opacity: 0.9;
             font-size: 18px;
+            color: #555; /* 副标题也改为深灰色 */
+            opacity: 1;
         }
+
         .main {
             padding: 40px;
             display: grid;
@@ -230,7 +231,7 @@
 </head>
 <body>
     <div class="container">
-        <!-- 新增：统一导航栏 -->
+        <!-- 统一导航栏 -->
         <nav>
             <ul>
                 <li><a href="index.html">首页</a></li>
@@ -240,7 +241,7 @@
             </ul>
         </nav>
 
-        <!-- 原有 header（标题区）保留，但去掉背景色冲突 -->
+        <!-- 标题区（背景透明，文字深色） -->
         <header>
             <h1>多功能文本编辑工具</h1>
             <p>一行一记录 · 左右对比编辑 · 即时处理结果</p>
@@ -267,7 +268,6 @@
 
             <!-- 右侧：四个功能工具垂直排列 -->
             <div class="tools">
-                <!-- 1. 文字行去重 -->
                 <div class="tool-card">
                     <h3>文字行去重</h3>
                     <div class="tool-input">
@@ -276,7 +276,6 @@
                     <small>去除完全相同的重复行<br>保留首次出现顺序</small>
                 </div>
 
-                <!-- 2. 文字筛选 -->
                 <div class="tool-card">
                     <h3>文字筛选</h3>
                     <div class="tool-input">
@@ -286,7 +285,6 @@
                     <small>只保留包含该关键字的完整行<br>区分大小写</small>
                 </div>
 
-                <!-- 3. 文字替换 -->
                 <div class="tool-card">
                     <h3>文字替换</h3>
                     <div class="tool-input">
@@ -297,7 +295,6 @@
                     <small>每行独立替换，支持部分匹配</small>
                 </div>
 
-                <!-- 4. 文字排序 -->
                 <div class="tool-card">
                     <h3>文字排序</h3>
                     <div class="tool-input">
@@ -316,6 +313,7 @@
         </footer>
     </div>
 
+    <!-- 脚本部分不变 -->
     <script>
         function getLines() {
             const text = document.getElementById('inputText').value.trim();
