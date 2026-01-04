@@ -14,8 +14,8 @@
             color: #333;
         }
         .container {
-            max-width: 1100px;
-            margin: 30px auto;
+            max-width: 900px;
+            margin: 40px auto;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
@@ -69,44 +69,39 @@
             outline: none;
         }
 
-        /* 工具区：统一高度、整齐排列 */
+        /* 四个功能垂直一列排列 */
         .tools {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
             margin-bottom: 40px;
         }
         .tool-card {
             background: #f8f9ff;
             border-radius: 16px;
-            padding: 28px 24px;
+            padding: 32px 28px;
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
             transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 180px;
         }
         .tool-card:hover {
             transform: translateY(-6px);
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
         }
         .tool-card h3 {
-            margin: 0 0 20px;
+            margin: 0 0 24px;
             color: #4a5568;
-            font-size: 20px;
+            font-size: 22px;
             text-align: center;
         }
         .tool-input {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            flex: 1;
+            gap: 16px;
         }
         input[type="text"] {
-            padding: 14px;
+            padding: 16px;
             border: 2px solid #e0e0e0;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 16px;
             transition: border-color 0.3s;
         }
@@ -116,15 +111,14 @@
         }
         .btn-group {
             display: flex;
-            gap: 10px;
-            margin-top: auto;
+            gap: 14px;
         }
         .btn {
             flex: 1;
-            padding: 14px;
+            padding: 16px;
             border: none;
-            border-radius: 10px;
-            font-size: 16px;
+            border-radius: 12px;
+            font-size: 17px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
@@ -132,19 +126,19 @@
             color: white;
         }
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(79, 172, 254, 0.4);
         }
         .tool-card small {
-            margin-top: 12px;
+            margin-top: 16px;
             color: #888;
-            font-size: 13px;
+            font-size: 14px;
             text-align: center;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
         .result-area {
-            margin-top: 20px;
+            margin-top: 30px;
         }
         #outputText {
             width: 100%;
@@ -162,7 +156,7 @@
             text-align: center;
             margin-top: 20px;
             color: #666;
-            font-size: 15px;
+            font-size: 16px;
         }
         footer {
             text-align: center;
@@ -186,7 +180,7 @@
                 <textarea id="inputText" placeholder="请在此粘贴或输入需要处理的文本内容..."></textarea>
             </div>
 
-            <!-- 按你指定的顺序排列：去重 → 筛选 → 替换 → 排序 -->
+            <!-- 四个功能垂直从上到下依次排列 -->
             <div class="tools">
                 <!-- 1. 文字行去重 -->
                 <div class="tool-card">
@@ -239,7 +233,7 @@
 
             <div class="result-area">
                 <label for="outputText">处理结果</label>
-                <textarea id="outputText" readonly placeholder="处理后的结果将显示在这里，可全选复制..."></textarea>
+                <textarea id="outputText" readonly placeholder="处理后的结果将显示在这里，可全选后直接复制..."></textarea>
                 <div class="stats" id="stats"></div>
             </div>
         </div>
