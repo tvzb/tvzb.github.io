@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小学英语单词随机学习</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    background: #fff;
+    width: 95%;
+    max-width: 520px;
+    padding: 22px;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0,0,0,.2);
+    text-align: center;
+}
+
+select, button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background: #4facfe;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #3a9df4;
+}
+
+.word {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 18px 0 6px;
+}
+
+.phonetic {
+    color: #666;
+    margin-bottom: 6px;
+}
+
+.audio {
+    color: #4facfe;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-bottom: 10px;
+}
+
+.box {
+    background: #f6f6f6;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: left;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+.nav-btns {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.nav-btns button {
+    flex: 1;
+}
+
+.footer {
+    font-size: 12px;
+    color: #888;
+    margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+<div class="card">
+    <h1>📘 小学英语单词</h1>
+
+    <select onchange="switchPage(this.value)">
+        <option value="index.html" selected>小学单词1</option>
+        <option value="xx2.html">小学单词2</option>
+        <option value="xx3.html">小学单词3</option>
+    </select>
+
+    <button onclick="randomWord()">🎲 随机一个单词</button>
+
+    <div class="nav-btns">
+        <button onclick="prevWord()">⬅ 上一个</button>
+        <button onclick="nextWord()">下一个 ➡</button>
+    </div>
+
+    <div id="content" style="display:none;">
+        <div class="word" id="word"></div>
+        <div class="phonetic" id="phonetic"></div>
+        <div class="audio" onclick="playAudio()">🔊 播放美式发音</div>
+
+        <div class="box">
+            <div><span class="label">中文：</span><span id="meaning"></span></div>
+        </div>
+
+        <div class="box">
+            <div class="label">例句：</div>
+            <div id="sentenceEn"></div>
+            <div id="sentenceCn"></div>
+        </div>
+    </div>
+
+    <div class="footer">发音来自 dictionaryapi.dev</div>
+</div>
+
+<script>
+/* ================= 单词数据（你自行补充） ================= */
+const primaryWords = [
+{w:"snow",p:"/snəʊ/",m:"雪",se:"It snows today.",sc:"今天下雪。"},
+{w:"wind",p:"/wɪnd/",m:"风",se:"The wind is strong.",sc:"风很大。"},
+{w:"cloud",p:"/klaʊd/",m:"云",se:"The cloud is white.",sc:"云是白色的。"},
+{w:"sky",p:"/skaɪ/",m:"天空",se:"The sky is blue.",sc:"天空是蓝色的。"},
+{w:"river",p:"/ˈrɪvər/",m:"河流",se:"The river is long.",sc:"这条河很长。"},
+{w:"sea",p:"/siː/",m:"大海",se:"I see the sea.",sc:"我看到大海。"},
+{w:"mountain",p:"/ˈmaʊntən/",m:"山",se:"The mountain is high.",sc:"山很高。"},
+{w:"grass",p:"/ɡrɑːs/",m:"草",se:"The grass is green.",sc:"草是绿色的。"},
+{w:"leaf",p:"/liːf/",m:"叶子",se:"The leaf is small.",sc:"叶子很小。"},
+{w:"forest",p:"/ˈfɒrɪst/",m:"森林",se:"The forest is big.",sc:"森林很大。"},
+
+{w:"head",p:"/hed/",m:"头",se:"My head hurts.",sc:"我的头疼。"},
+{w:"eye",p:"/aɪ/",m:"眼睛",se:"I have two eyes.",sc:"我有两只眼睛。"},
+{w:"ear",p:"/ɪər/",m:"耳朵",se:"My ear is small.",sc:"我的耳朵很小。"},
+{w:"nose",p:"/nəʊz/",m:"鼻子",se:"My nose is cold.",sc:"我的鼻子很冷。"},
+{w:"mouth",p:"/maʊθ/",m:"嘴巴",se:"Open your mouth.",sc:"张开你的嘴。"},
+{w:"hand",p:"/hænd/",m:"手",se:"Wash your hands.",sc:"洗手。"},
+{w:"arm",p:"/ɑːm/",m:"胳膊",se:"My arm is long.",sc:"我的胳膊很长。"},
+{w:"leg",p:"/leɡ/",m:"腿",se:"My leg hurts.",sc:"我的腿疼。"},
+{w:"foot",p:"/fʊt/",m:"脚",se:"My foot is big.",sc:"我的脚很大。"},
+{w:"body",p:"/ˈbɒdi/",m:"身体",se:"My body is strong.",sc:"我的身体很强壮。"},
+
+{w:"shirt",p:"/ʃɜːt/",m:"衬衫",se:"This shirt is blue.",sc:"这件衬衫是蓝色的。"},
+{w:"coat",p:"/kəʊt/",m:"外套",se:"I wear a coat.",sc:"我穿外套。"},
+{w:"shoe",p:"/ʃuː/",m:"鞋",se:"My shoes are new.",sc:"我的鞋是新的。"},
+{w:"hat",p:"/hæt/",m:"帽子",se:"I like this hat.",sc:"我喜欢这顶帽子。"},
+{w:"dress",p:"/dres/",m:"连衣裙",se:"She wears a dress.",sc:"她穿着连衣裙。"},
+{w:"pants",p:"/pænts/",m:"裤子",se:"My pants are black.",sc:"我的裤子是黑色的。"},
+{w:"sock",p:"/sɒk/",m:"袜子",se:"These socks are warm.",sc:"这些袜子很暖。"},
+{w:"bag",p:"/bæɡ/",m:"书包；包",se:"My bag is heavy.",sc:"我的包很重。"},
+{w:"box",p:"/bɒks/",m:"盒子",se:"The box is big.",sc:"盒子很大。"},
+{w:"desk",p:"/desk/",m:"书桌",se:"The desk is clean.",sc:"书桌很干净。"},
+
+{w:"chair",p:"/tʃeər/",m:"椅子",se:"Sit on the chair.",sc:"坐在椅子上。"},
+{w:"door",p:"/dɔːr/",m:"门",se:"Close the door.",sc:"关门。"},
+{w:"window",p:"/ˈwɪndəʊ/",m:"窗户",se:"Open the window.",sc:"打开窗户。"},
+{w:"room",p:"/ruːm/",m:"房间",se:"This room is big.",sc:"这个房间很大。"},
+{w:"bed",p:"/bed/",m:"床",se:"I go to bed.",sc:"我去睡觉。"},
+{w:"table",p:"/ˈteɪbəl/",m:"桌子",se:"The table is round.",sc:"桌子是圆的。"},
+{w:"floor",p:"/flɔːr/",m:"地板",se:"The floor is clean.",sc:"地板很干净。"},
+{w:"wall",p:"/wɔːl/",m:"墙",se:"The wall is white.",sc:"墙是白色的。"},
+{w:"house",p:"/haʊs/",m:"房子",se:"This is my house.",sc:"这是我的房子。"},
+{w:"roommate",p:"/ˈruːmmeɪt/",m:"室友",se:"I like my roommate.",sc:"我喜欢我的室友。"},
+
+{w:"open",p:"/ˈəʊpən/",m:"打开",se:"Open the book.",sc:"打开书。"},
+{w:"close",p:"/kləʊz/",m:"关闭",se:"Close the door.",sc:"关门。"},
+{w:"clean",p:"/kliːn/",m:"干净的；打扫",se:"Clean the room.",sc:"打扫房间。"},
+{w:"dirty",p:"/ˈdɜːti/",m:"脏的",se:"The shoes are dirty.",sc:"鞋子很脏。"},
+{w:"help",p:"/help/",m:"帮助",se:"Help me please.",sc:"请帮帮我。"},
+{w:"love",p:"/lʌv/",m:"爱",se:"I love my family.",sc:"我爱我的家人。"},
+{w:"like",p:"/laɪk/",m:"喜欢",se:"I like apples.",sc:"我喜欢苹果。"},
+{w:"look",p:"/lʊk/",m:"看",se:"Look at me.",sc:"看着我。"},
+{w:"listen",p:"/ˈlɪsən/",m:"听",se:"Listen to me.",sc:"听我说。"},
+{w:"learn",p:"/lɜːn/",m:"学习",se:"I learn English.",sc:"我学英语。"}
+];
+
+/* ================= 学习状态 ================= */
+let audioObj = null;
+let history = JSON.parse(localStorage.getItem("wordHistory") || "[]");
+let currentIndex = history.length - 1;
+
+/* ================= 显示单词 ================= */
+function showWord(item, save = true) {
+    document.getElementById("content").style.display = "block";
+    document.getElementById("word").innerText = item.w;
+    document.getElementById("phonetic").innerText = item.p;
+    document.getElementById("meaning").innerText = item.m;
+    document.getElementById("sentenceEn").innerText = item.se;
+    document.getElementById("sentenceCn").innerText = item.sc;
+
+    if (save) {
+        history = history.slice(0, currentIndex + 1);
+        history.push(item);
+        currentIndex = history.length - 1;
+        localStorage.setItem("wordHistory", JSON.stringify(history));
+    }
+
+    audioObj = null;
+    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${item.w}`)
+        .then(r => r.json())
+        .then(d => {
+            const audioUrl = d[0]?.phonetics?.find(x => x.audio)?.audio;
+            if (audioUrl) {
+                audioObj = new Audio(audioUrl);
+                audioObj.play();
+            }
+        })
+        .catch(()=> audioObj=null);
+}
+
+/* ================= 随机（不连续重复） ================= */
+function randomWord() {
+    if (primaryWords.length === 0) return;
+
+    let item;
+    do {
+        item = primaryWords[Math.floor(Math.random() * primaryWords.length)];
+    } while (history[currentIndex]?.w === item.w && primaryWords.length > 1);
+
+    showWord(item);
+}
+
+/* ================= 上 / 下 ================= */
+function prevWord() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        showWord(history[currentIndex], false);
+    } else {
+        alert("已经是第一个了");
+    }
+}
+
+function nextWord() {
+    if (currentIndex < history.length - 1) {
+        currentIndex++;
+        showWord(history[currentIndex], false);
+    } else {
+        alert("已经是最后一个了");
+    }
+}
+
+/* ================= 其它 ================= */
+function playAudio() {
+    if (audioObj) audioObj.play();
+    else alert("暂无发音");
+}
+
+function switchPage(url) {
+    if (url) location.href = url;
+}
+
+/* ================= 页面恢复 ================= */
+if (history.length > 0) {
+    showWord(history[currentIndex], false);
+}
+</script>
+</body>
+</html>
