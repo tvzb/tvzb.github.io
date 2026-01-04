@@ -84,11 +84,6 @@
             align-items: start;
         }
 
-        .text-area {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
         label {
             display: block;
             margin-bottom: 10px;
@@ -211,7 +206,7 @@
             font-size: 14px;
         }
 
-        /* ============ 手机端优化：输入框 → 工具区 → 输出框 ============ */
+        /* ============ 手机端优化：输入框 → 工具区 → 输出框，全宽一致 ============ */
         @media (max-width: 960px) {
             .container {
                 margin: 10px;
@@ -227,35 +222,27 @@
                 display: flex;
                 flex-direction: column;
                 gap: 30px;
-                padding: 15px;
+                padding: 20px 15px; /* 与电脑端padding一致，但左右稍减 */
             }
 
-            /* 统一宽度容器：所有主要块宽度一致，与工具区对齐 */
-            .content-wrapper {
-                max-width: 500px;      /* 可根据需要微调，保持舒适阅读宽度 */
-                margin: 0 auto;        /* 水平居中 */
-                width: 100%;
-            }
-
-            /* 1. 输入区 */
-            .input-section {
-                order: 1;
-            }
-
-            /* 2. 工具区 */
-            .tools {
-                order: 2;
-            }
-
-            /* 3. 输出区 */
+            /* 所有主要区块全宽（利用手机屏幕宽度） */
+            .input-section,
+            .tools,
             .output-section {
-                order: 3;
+                width: 100%;
+                max-width: none;
+                margin: 0;
             }
+
+            /* 明确顺序 */
+            .input-section { order: 1; }
+            .tools { order: 2; }
+            .output-section { order: 3; }
 
             textarea {
                 height: 260px;
                 font-size: 16px;
-                padding: 14px;
+                padding: 16px;
             }
 
             nav a {
@@ -265,13 +252,13 @@
             }
 
             .tool-card {
-                padding: 18px;
+                padding: 20px;
             }
             .tool-card h3 {
-                font-size: 17px;
+                font-size: 18px;
             }
             .btn {
-                padding: 14px;
+                padding: 15px;
                 font-size: 16px;
             }
             .result-controls {
@@ -296,9 +283,8 @@
             .result-controls {
                 flex-direction: column;
             }
-            .content-wrapper {
-                max-width: 100%; /* 极小屏全宽利用空间 */
-                padding: 0 10px;
+            .main {
+                padding: 20px 10px;
             }
         }
     </style>
@@ -320,28 +306,14 @@
         </header>
 
         <div class="main">
-            <!-- 左侧文本区（电脑端左侧，手机端拆分） -->
-            <div class="text-area">
-                <!-- 输入部分 -->
-                <div class="input-section content-wrapper">
-                    <label for="inputText">输入文本（每行一条记录）</label>
-                    <textarea id="inputText" placeholder="请在此粘贴或输入需要处理的文本内容..."></textarea>
-                </div>
-
-                <!-- 输出部分 -->
-                <div class="output-section content-wrapper">
-                    <label for="outputText">处理结果</label>
-                    <textarea id="outputText" readonly placeholder="处理后的结果将显示在这里，可全选后复制..."></textarea>
-                    <div class="result-controls">
-                        <button class="btn" onclick="clearAll()">清除屏幕</button>
-                        <button class="btn" onclick="copyResult()">拷贝结果</button>
-                    </div>
-                    <div class="stats" id="stats">共 0 行（原 0 行）</div>
-                </div>
+            <!-- 输入区（手机端最上面） -->
+            <div class="input-section">
+                <label for="inputText">输入文本（每行一条记录）</label>
+                <textarea id="inputText" placeholder="请在此粘贴或输入需要处理的文本内容..."></textarea>
             </div>
 
-            <!-- 工具区（电脑端右侧，手机端中间） -->
-            <div class="tools content-wrapper">
+            <!-- 工具区（手机端中间） -->
+            <div class="tools">
                 <div class="tool-card">
                     <h3>文字行去重</h3>
                     <div class="tool-input">
@@ -379,6 +351,17 @@
                     </div>
                     <small>按Unicode排序<br>支持中英文数字混合</small>
                 </div>
+            </div>
+
+            <!-- 输出区（手机端最下面） -->
+            <div class="output-section">
+                <label for="outputText">处理结果</label>
+                <textarea id="outputText" readonly placeholder="处理后的结果将显示在这里，可全选后复制..."></textarea>
+                <div class="result-controls">
+                    <button class="btn" onclick="clearAll()">清除屏幕</button>
+                    <button class="btn" onclick="copyResult()">拷贝结果</button>
+                </div>
+                <div class="stats" id="stats">共 0 行（原 0 行）</div>
             </div>
         </div>
 
