@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本行关键字筛选工具</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        header {
+            background: #4a90e2;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        header p {
+            margin: 10px 0 0;
+            opacity: 0.9;
+            font-size: 16px;
+        }
+        .main {
+            padding: 40px;
+        }
+        .form-group {
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            resize: vertical;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        textarea:focus {
+            border-color: #4a90e2;
+            outline: none;
+        }
+        .keyword-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .keyword-input input {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+        button {
+            background: #4a90e2;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #357abd;
+        }
+        .result {
+            margin-top: 40px;
+        }
+        #output {
+            width: 100%;
+            height: 200px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            background: #f9f9f9;
+            white-space: pre-wrap;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #f0f0f0;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>文本行关键字筛选工具</h1>
+            <p>快速提取包含指定关键字的文本行（每行独立判断）</p>
+        </header>
+        <div class="main">
+            <div class="form-group">
+                <label for="input">输入文本（一行一条记录）</label>
+                <textarea id="input" placeholder="在此粘贴或输入需要筛选的文本内容..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>筛选条件</label>
+                <div class="keyword-input">
+                    <input type="text" id="keyword" placeholder="输入关键字（必填）">
+                    <button onclick="filterText()">开始筛选</button>
+                </div>
+                <p style="margin-top:10px; color:#666; font-size:14px;">只保留包含该关键字的完整行（区分大小写）</p>
+            </div>
+            <div class="result">
+                <label for="output">筛选结果</label>
+                <textarea id="output" readonly placeholder="筛选结果将显示在这里..."></textarea>
+            </div>
+        </div>
+        <footer>
+            © 2026 文本筛选工具 - 仅保留包含关键字的行
+        </footer>
+    </div>
+
+    <script>
+        function filterText() {
+            const inputText = document.getElementById('input').value;
+            const keyword = document.getElementById('keyword').value.trim();
+            const output = document.getElementById('output');
+
+            if (!keyword) {
+                alert('请输入关键字！');
+                output.value = '';
+                return;
+            }
+
+            if (!inputText) {
+                output.value = '';
+                return;
+            }
+
+            const lines = inputText.split(/\n/);
+            const filteredLines = lines.filter(line => line.includes(keyword));
+
+            output.value = filteredLines.join('\n');
+        }
+    </script>
+</body>
+</html>
