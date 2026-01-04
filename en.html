@@ -1,77 +1,198 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>英语单词随机学习</title>
-    <style>
-        body { font-family: Arial; text-align: center; margin-top: 50px; }
-        #word { font-size: 48px; font-weight: bold; }
-        #pronunciation { font-size: 24px; color: gray; }
-        button { font-size: 20px; padding: 10px 20px; margin: 10px; }
-    </style>
-</head>
-<body>
-    <h1>随机英语单词学习</h1>
-    <select id="level">
-        <option value="all">所有级别</option>
-        <option value="primary">小学生</option>
-        <option value="junior">初中生</option>
-        <option value="senior">高中生</option>
-        <option value="cet4">大学四级</option>
-        <option value="cet6">大学六级</option>
-    </select>
-    <button onclick="getRandomWord()">随机获取单词</button>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小学英语单词随机学习</title>
 
-    <div id="content" style="margin-top: 30px;">
-        <div id="word"></div>
-        <div id="pronunciation"></div>
-        <audio id="audio" controls></audio>
-        <div id="translation"></div>
-        <div id="example"></div>
-        <div id="mnemonic"></div>
+<style>
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    background: #fff;
+    width: 95%;
+    max-width: 520px;
+    padding: 22px;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0,0,0,.2);
+    text-align: center;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+select, button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background: #4facfe;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #3a9df4;
+}
+
+.word {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 18px 0 6px;
+}
+
+.phonetic {
+    color: #666;
+    margin-bottom: 6px;
+}
+
+.audio {
+    color: #4facfe;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-bottom: 10px;
+}
+
+.box {
+    background: #f6f6f6;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: left;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+.label {
+    font-weight: bold;
+}
+
+.footer {
+    font-size: 12px;
+    color: #888;
+    margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+<div class="card">
+    <h1>📘 小学英语单词</h1>
+
+    <select disabled>
+        <option>小学 ✔</option>
+        <option>初中（未启用）</option>
+        <option>高中（未启用）</option>
+        <option>大学四级（未启用）</option>
+        <option>大学六级（未启用）</option>
+    </select>
+
+    <button onclick="randomWord()">🎲 随机一个单词</button>
+
+    <div id="content" style="display:none;">
+        <div class="word" id="word"></div>
+        <div class="phonetic" id="phonetic"></div>
+        <div class="audio" onclick="playAudio()">🔊 播放美式发音</div>
+
+        <div class="box">
+            <div><span class="label">中文：</span><span id="meaning"></span></div>
+        </div>
+
+        <div class="box">
+            <div class="label">例句：</div>
+            <div id="sentenceEn"></div>
+            <div id="sentenceCn"></div>
+        </div>
     </div>
 
-    <script>
-        // 数据示例（实际多准备一些）
-        const words = {
-            primary: [  // 小学生级别（简单词）
-                {word: "apple", trans: "苹果", example: "I eat an apple.", mnemonic: "apple像苹果形状", pron: "ˈæpəl"},
-                {word: "dog", trans: "狗", example: "The dog is cute.", mnemonic: "dog倒过来像狗尾巴摇"},
-                // 加更多...
-            ],
-            junior: [  // 初中
-                {word: "beautiful", trans: "美丽的", example: "She is beautiful.", mnemonic: "beauty (美) + ful (充满的)"},
-                // ...
-            ],
-            senior: [ /* 高中词 */ ],
-            cet4: [ /* 四级词，如abandon等 */ ],
-            cet6: [ /* 六级词，如abundant等 */ ]
-        };
+    <div class="footer">发音来自 dictionaryapi.dev</div>
+</div>
 
-        // 合并所有单词，用于“所有级别”
-        let allWords = [];
-        for (let level in words) {
-            allWords = allWords.concat(words[level]);
-        }
+<script>
+/* ================= 小学单词（120个） ================= */
 
-        function getRandomWord() {
-            let level = document.getElementById("level").value;
-            let pool = (level === "all") ? allWords : words[level] || allWords;
-            if (pool.length === 0) return alert("该级别无单词");
+const primaryWords = [
+{w:"apple", p:"/ˈæpəl/", m:"苹果", se:"I eat an apple.", sc:"我吃一个苹果。"},
+{w:"book", p:"/bʊk/", m:"书", se:"This is my book.", sc:"这是我的书。"},
+{w:"cat", p:"/kæt/", m:"猫", se:"The cat is cute.", sc:"这只猫很可爱。"},
+{w:"dog", p:"/dɒɡ/", m:"狗", se:"The dog runs.", sc:"狗在跑。"},
+{w:"egg", p:"/eɡ/", m:"鸡蛋", se:"I like eggs.", sc:"我喜欢鸡蛋。"},
+{w:"fish", p:"/fɪʃ/", m:"鱼", se:"The fish swims.", sc:"鱼在游泳。"},
+{w:"pen", p:"/pen/", m:"钢笔", se:"This is a pen.", sc:"这是一支钢笔。"},
+{w:"sun", p:"/sʌn/", m:"太阳", se:"The sun is bright.", sc:"太阳很亮。"},
+{w:"moon", p:"/muːn/", m:"月亮", se:"The moon is white.", sc:"月亮是白色的。"},
+{w:"star", p:"/stɑːr/", m:"星星", se:"I see a star.", sc:"我看到一颗星星。"},
 
-            let item = pool[Math.floor(Math.random() * pool.length)];
+{w:"water", p:"/ˈwɔːtər/", m:"水", se:"Drink water.", sc:"喝水。"},
+{w:"milk", p:"/mɪlk/", m:"牛奶", se:"I drink milk.", sc:"我喝牛奶。"},
+{w:"bread", p:"/bred/", m:"面包", se:"I eat bread.", sc:"我吃面包。"},
+{w:"rice", p:"/raɪs/", m:"米饭", se:"I like rice.", sc:"我喜欢米饭。"},
+{w:"school", p:"/skuːl/", m:"学校", se:"I go to school.", sc:"我去上学。"},
+{w:"teacher", p:"/ˈtiːtʃər/", m:"老师", se:"She is my teacher.", sc:"她是我的老师。"},
+{w:"student", p:"/ˈstuːdənt/", m:"学生", se:"I am a student.", sc:"我是学生。"},
+{w:"friend", p:"/frend/", m:"朋友", se:"He is my friend.", sc:"他是我的朋友。"},
+{w:"family", p:"/ˈfæməli/", m:"家庭", se:"I love my family.", sc:"我爱我的家人。"},
+{w:"home", p:"/həʊm/", m:"家", se:"I go home.", sc:"我回家。"},
 
-            document.getElementById("word").textContent = item.word;
-            document.getElementById("pronunciation").textContent = item.pron || "";
-            document.getElementById("translation").textContent = "中文： " + item.trans;
-            document.getElementById("example").textContent = "例句： " + item.example;
-            document.getElementById("mnemonic").textContent = "记忆方法： " + item.mnemonic;
+{w:"boy", p:"/bɔɪ/", m:"男孩", se:"The boy smiles.", sc:"男孩在笑。"},
+{w:"girl", p:"/ɡɜːl/", m:"女孩", se:"The girl sings.", sc:"女孩在唱歌。"},
+{w:"man", p:"/mæn/", m:"男人", se:"The man walks.", sc:"男人在走路。"},
+{w:"woman", p:"/ˈwʊmən/", m:"女人", se:"The woman cooks.", sc:"女人在做饭。"},
+{w:"father", p:"/ˈfɑːðər/", m:"爸爸", se:"My father works.", sc:"我爸爸在工作。"},
+{w:"mother", p:"/ˈmʌðər/", m:"妈妈", se:"My mother cooks.", sc:"我妈妈做饭。"},
+{w:"brother", p:"/ˈbrʌðər/", m:"兄弟", se:"My brother runs.", sc:"我兄弟在跑。"},
+{w:"sister", p:"/ˈsɪstər/", m:"姐妹", se:"My sister reads.", sc:"我姐妹在读书。"},
 
-            // 发音音频（Google TTS，美式）
-            let audio = document.getElementById("audio");
-            audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&tl=en&client=tw-ob&q=${encodeURIComponent(item.word)}`;
-            audio.play();
-        }
-    </script>
+{w:"big", p:"/bɪɡ/", m:"大的", se:"The house is big.", sc:"房子很大。"},
+{w:"small", p:"/smɔːl/", m:"小的", se:"The cat is small.", sc:"猫很小。"},
+{w:"hot", p:"/hɒt/", m:"热的", se:"It is hot.", sc:"天气很热。"},
+{w:"cold", p:"/kəʊld/", m:"冷的", se:"It is cold.", sc:"天气很冷。"},
+{w:"happy", p:"/ˈhæpi/", m:"开心的", se:"I am happy.", sc:"我很开心。"},
+{w:"sad", p:"/sæd/", m:"难过的", se:"She is sad.", sc:"她很难过。"},
+{w:"good", p:"/ɡʊd/", m:"好的", se:"This is good.", sc:"这是好的。"},
+{w:"bad", p:"/bæd/", m:"坏的", se:"That is bad.", sc:"那是坏的。"}
+];
+
+/* ================= 功能 ================= */
+
+let audioObj = null;
+
+function randomWord() {
+    const item = primaryWords[Math.floor(Math.random() * primaryWords.length)];
+    document.getElementById("content").style.display = "block";
+    document.getElementById("word").innerText = item.w;
+    document.getElementById("phonetic").innerText = item.p;
+    document.getElementById("meaning").innerText = item.m;
+    document.getElementById("sentenceEn").innerText = item.se;
+    document.getElementById("sentenceCn").innerText = item.sc;
+
+    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${item.w}`)
+        .then(r => r.json())
+        .then(d => {
+            const a = d[0]?.phonetics?.find(x => x.audio)?.audio;
+            audioObj = a ? new Audio(a) : null;
+        })
+        .catch(()=> audioObj=null);
+}
+
+function playAudio() {
+    if (audioObj) audioObj.play();
+    else alert("暂无发音");
+}
+</script>
 </body>
 </html>
