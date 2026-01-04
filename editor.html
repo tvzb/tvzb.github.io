@@ -68,31 +68,40 @@
             box-shadow: 0 0 0 4px rgba(79, 172, 254, 0.2);
             outline: none;
         }
+
+        /* 工具区：统一高度、整齐排列 */
         .tools {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
             margin-bottom: 40px;
         }
         .tool-card {
             background: #f8f9ff;
             border-radius: 16px;
-            padding: 24px;
+            padding: 28px 24px;
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 180px;
         }
         .tool-card:hover {
             transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
         }
         .tool-card h3 {
-            margin: 0 0 16px;
+            margin: 0 0 20px;
             color: #4a5568;
             font-size: 20px;
+            text-align: center;
         }
         .tool-input {
             display: flex;
             flex-direction: column;
             gap: 12px;
+            flex: 1;
         }
         input[type="text"] {
             padding: 14px;
@@ -105,23 +114,35 @@
             border-color: #4facfe;
             outline: none;
         }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
         .btn {
-            padding: 14px 24px;
+            flex: 1;
+            padding: 14px;
             border: none;
             border-radius: 10px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-        }
-        .btn-primary {
             background: linear-gradient(120deg, #4facfe 0%, #00f2fe 100%);
             color: white;
         }
-        .btn-primary:hover {
+        .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
         }
+        .tool-card small {
+            margin-top: 12px;
+            color: #888;
+            font-size: 13px;
+            text-align: center;
+            line-height: 1.4;
+        }
+
         .result-area {
             margin-top: 20px;
         }
@@ -156,7 +177,7 @@
     <div class="container">
         <header>
             <h1>多功能文本编辑工具</h1>
-            <p>一行一记录，快速完成筛选、去重、替换、排序</p>
+            <p>一行一记录，快速完成去重、筛选、替换、排序</p>
         </header>
 
         <div class="main">
@@ -165,51 +186,60 @@
                 <textarea id="inputText" placeholder="请在此粘贴或输入需要处理的文本内容..."></textarea>
             </div>
 
+            <!-- 按你指定的顺序排列：去重 → 筛选 → 替换 → 排序 -->
             <div class="tools">
-                <!-- 文字筛选 -->
+                <!-- 1. 文字行去重 -->
+                <div class="tool-card">
+                    <h3>文字行去重</h3>
+                    <div class="tool-input">
+                        <div class="btn-group">
+                            <button class="btn" onclick="removeDuplicates()">立即去重</button>
+                        </div>
+                    </div>
+                    <small>去除完全相同的重复行<br>保留首次出现的顺序</small>
+                </div>
+
+                <!-- 2. 文字筛选 -->
                 <div class="tool-card">
                     <h3>文字筛选</h3>
                     <div class="tool-input">
                         <input type="text" id="filterKeyword" placeholder="输入要保留的关键字">
-                        <button class="btn btn-primary" onclick="filterLines()">筛选保留</button>
+                        <div class="btn-group">
+                            <button class="btn" onclick="filterLines()">筛选保留</button>
+                        </div>
                     </div>
-                    <small style="color:#888;">只保留包含该关键字的完整行（区分大小写）</small>
+                    <small>只保留包含该关键字的完整行<br>区分大小写</small>
                 </div>
 
-                <!-- 文字行去重 -->
-                <div class="tool-card">
-                    <h3>文字行去重</h3>
-                    <div class="tool-input">
-                        <button class="btn btn-primary" onclick="removeDuplicates()">去重</button>
-                    </div>
-                    <small style="color:#888;">去除完全相同的重复行，保留第一次出现的行</small>
-                </div>
-
-                <!-- 文字替换 -->
+                <!-- 3. 文字替换 -->
                 <div class="tool-card">
                     <h3>文字替换</h3>
                     <div class="tool-input">
                         <input type="text" id="replaceFrom" placeholder="要替换的内容">
                         <input type="text" id="replaceTo" placeholder="替换为（留空则删除）">
-                        <button class="btn btn-primary" onclick="replaceText()">替换</button>
+                        <div class="btn-group">
+                            <button class="btn" onclick="replaceText()">执行替换</button>
+                        </div>
                     </div>
-                    <small style="color:#888;">每行独立替换，支持部分匹配</small>
+                    <small>每行独立替换，支持部分匹配</small>
                 </div>
 
-                <!-- 文字排序 -->
+                <!-- 4. 文字排序 -->
                 <div class="tool-card">
                     <h3>文字排序</h3>
                     <div class="tool-input">
-                        <button class="btn btn-primary" onclick="sortLines('asc')">升序排序</button>
-                        <button class="btn btn-primary" style="margin-top:8px;" onclick="sortLines('desc')">降序排序</button>
+                        <div class="btn-group">
+                            <button class="btn" onclick="sortLines('asc')">升序排序</button>
+                            <button class="btn" onclick="sortLines('desc')">降序排序</button>
+                        </div>
                     </div>
-                    <small style="color:#888;">按Unicode码点排序（支持中英文数字混合）</small>
+                    <small>按Unicode排序<br>完美支持中英文数字混合</small>
                 </div>
             </div>
 
             <div class="result-area">
                 <label for="outputText">处理结果</label>
-                <textarea id="outputText" readonly placeholder="处理后的结果将显示在这里，点击全选后可直接复制..."></textarea>
+                <textarea id="outputText" readonly placeholder="处理后的结果将显示在这里，可全选复制..."></textarea>
                 <div class="stats" id="stats"></div>
             </div>
         </div>
@@ -221,8 +251,8 @@
 
     <script>
         function getLines() {
-            const text = document.getElementById('inputText').value;
-            if (!text.trim()) {
+            const text = document.getElementById('inputText').value.trim();
+            if (!text) {
                 alert('请输入文本内容！');
                 return null;
             }
@@ -231,9 +261,18 @@
 
         function updateOutput(lines) {
             const output = document.getElementById('outputText');
+            const originalCount = getLines() ? getLines().length : 0;
             output.value = lines.join('\n');
             document.getElementById('stats').textContent = 
-                `共 ${lines.length} 行（输入 ${getLines()?.length || 0} 行）`;
+                `共 ${lines.length} 行（原 ${originalCount} 行）`;
+        }
+
+        // 文字行去重
+        function removeDuplicates() {
+            const lines = getLines();
+            if (!lines) return;
+            const unique = [...new Set(lines)];
+            updateOutput(unique);
         }
 
         // 文字筛选
@@ -249,22 +288,14 @@
             updateOutput(filtered);
         }
 
-        // 文字行去重
-        function removeDuplicates() {
-            const lines = getLines();
-            if (!lines) return;
-            const unique = [...new Set(lines)]; // Set 会自动去重并保持首次出现顺序
-            updateOutput(unique);
-        }
-
         // 文字替换
         function replaceText() {
             const from = document.getElementById('replaceFrom').value;
-            const to = document.getElementById('replaceTo').value;
             if (!from) {
                 alert('请输入要替换的内容！');
                 return;
             }
+            const to = document.getElementById('replaceTo').value;
             const lines = getLines();
             if (!lines) return;
             const replaced = lines.map(line => line.split(from).join(to));
