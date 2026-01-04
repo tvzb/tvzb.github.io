@@ -75,7 +75,7 @@
             color: #555;
         }
 
-        /* 主内容区 */
+        /* 主内容区 - 电脑端左右布局 */
         .main {
             padding: 20px;
             display: grid;
@@ -211,7 +211,7 @@
             font-size: 14px;
         }
 
-        /* ============ 手机端关键优化：改为上下顺序 ============ */
+        /* ============ 手机端优化：输入框 → 工具区 → 输出框 ============ */
         @media (max-width: 960px) {
             .container {
                 margin: 10px;
@@ -224,35 +224,37 @@
                 font-size: 24px;
             }
             .main {
-                grid-template-columns: 1fr; /* 改为单列垂直布局 */
-                gap: 25px;
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
                 padding: 15px;
             }
 
-            /* 关键顺序控制：输入框 → 工具区 → 输出区 */
-            .main {
-                display: flex;
-                flex-direction: column;
+            /* 统一宽度容器：所有主要块宽度一致，与工具区对齐 */
+            .content-wrapper {
+                max-width: 500px;      /* 可根据需要微调，保持舒适阅读宽度 */
+                margin: 0 auto;        /* 水平居中 */
+                width: 100%;
             }
 
-            /* 1. 输入区最上面 */
-            .text-area > div:first-child {
+            /* 1. 输入区 */
+            .input-section {
                 order: 1;
             }
 
-            /* 2. 工具区第二 */
+            /* 2. 工具区 */
             .tools {
                 order: 2;
             }
 
-            /* 3. 输出区最后 */
-            .text-area > div:last-child {
+            /* 3. 输出区 */
+            .output-section {
                 order: 3;
             }
 
             textarea {
                 height: 260px;
-                font-size: 16px; /* 手机更易阅读 */
+                font-size: 16px;
                 padding: 14px;
             }
 
@@ -273,7 +275,7 @@
                 font-size: 16px;
             }
             .result-controls {
-                flex-direction: row; /* 手机也保持横向，按钮更大 */
+                flex-direction: row;
             }
         }
 
@@ -293,6 +295,10 @@
             }
             .result-controls {
                 flex-direction: column;
+            }
+            .content-wrapper {
+                max-width: 100%; /* 极小屏全宽利用空间 */
+                padding: 0 10px;
             }
         }
     </style>
@@ -314,14 +320,16 @@
         </header>
 
         <div class="main">
-            <!-- 左侧：输入 + 输出（手机端会拆开排序） -->
+            <!-- 左侧文本区（电脑端左侧，手机端拆分） -->
             <div class="text-area">
-                <div>
+                <!-- 输入部分 -->
+                <div class="input-section content-wrapper">
                     <label for="inputText">输入文本（每行一条记录）</label>
                     <textarea id="inputText" placeholder="请在此粘贴或输入需要处理的文本内容..."></textarea>
                 </div>
 
-                <div>
+                <!-- 输出部分 -->
+                <div class="output-section content-wrapper">
                     <label for="outputText">处理结果</label>
                     <textarea id="outputText" readonly placeholder="处理后的结果将显示在这里，可全选后复制..."></textarea>
                     <div class="result-controls">
@@ -332,8 +340,8 @@
                 </div>
             </div>
 
-            <!-- 工具区 -->
-            <div class="tools">
+            <!-- 工具区（电脑端右侧，手机端中间） -->
+            <div class="tools content-wrapper">
                 <div class="tool-card">
                     <h3>文字行去重</h3>
                     <div class="tool-input">
