@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>英语单词随机学习</title>
+    <style>
+        body { font-family: Arial; text-align: center; margin-top: 50px; }
+        #word { font-size: 48px; font-weight: bold; }
+        #pronunciation { font-size: 24px; color: gray; }
+        button { font-size: 20px; padding: 10px 20px; margin: 10px; }
+    </style>
+</head>
+<body>
+    <h1>随机英语单词学习</h1>
+    <select id="level">
+        <option value="all">所有级别</option>
+        <option value="primary">小学生</option>
+        <option value="junior">初中生</option>
+        <option value="senior">高中生</option>
+        <option value="cet4">大学四级</option>
+        <option value="cet6">大学六级</option>
+    </select>
+    <button onclick="getRandomWord()">随机获取单词</button>
+
+    <div id="content" style="margin-top: 30px;">
+        <div id="word"></div>
+        <div id="pronunciation"></div>
+        <audio id="audio" controls></audio>
+        <div id="translation"></div>
+        <div id="example"></div>
+        <div id="mnemonic"></div>
+    </div>
+
+    <script>
+        // 数据示例（实际多准备一些）
+        const words = {
+            primary: [  // 小学生级别（简单词）
+                {word: "apple", trans: "苹果", example: "I eat an apple.", mnemonic: "apple像苹果形状", pron: "ˈæpəl"},
+                {word: "dog", trans: "狗", example: "The dog is cute.", mnemonic: "dog倒过来像狗尾巴摇"},
+                // 加更多...
+            ],
+            junior: [  // 初中
+                {word: "beautiful", trans: "美丽的", example: "She is beautiful.", mnemonic: "beauty (美) + ful (充满的)"},
+                // ...
+            ],
+            senior: [ /* 高中词 */ ],
+            cet4: [ /* 四级词，如abandon等 */ ],
+            cet6: [ /* 六级词，如abundant等 */ ]
+        };
+
+        // 合并所有单词，用于“所有级别”
+        let allWords = [];
+        for (let level in words) {
+            allWords = allWords.concat(words[level]);
+        }
+
+        function getRandomWord() {
+            let level = document.getElementById("level").value;
+            let pool = (level === "all") ? allWords : words[level] || allWords;
+            if (pool.length === 0) return alert("该级别无单词");
+
+            let item = pool[Math.floor(Math.random() * pool.length)];
+
+            document.getElementById("word").textContent = item.word;
+            document.getElementById("pronunciation").textContent = item.pron || "";
+            document.getElementById("translation").textContent = "中文： " + item.trans;
+            document.getElementById("example").textContent = "例句： " + item.example;
+            document.getElementById("mnemonic").textContent = "记忆方法： " + item.mnemonic;
+
+            // 发音音频（Google TTS，美式）
+            let audio = document.getElementById("audio");
+            audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&tl=en&client=tw-ob&q=${encodeURIComponent(item.word)}`;
+            audio.play();
+        }
+    </script>
+</body>
+</html>
