@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小学英语单词随机学习</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    background: #fff;
+    width: 95%;
+    max-width: 520px;
+    padding: 22px;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0,0,0,.2);
+    text-align: center;
+}
+
+select, button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background: #4facfe;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #3a9df4;
+}
+
+.word {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 18px 0 6px;
+}
+
+.phonetic {
+    color: #666;
+    margin-bottom: 6px;
+}
+
+.audio {
+    color: #4facfe;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-bottom: 10px;
+}
+
+.box {
+    background: #f6f6f6;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: left;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+.nav-btns {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.nav-btns button {
+    flex: 1;
+}
+
+.footer {
+    font-size: 12px;
+    color: #888;
+    margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+<div class="card">
+    <h1>📘 小学英语单词</h1>
+
+    <select onchange="switchPage(this.value)">
+        <option value="index.html" selected>小学1</option>
+        <option value="xx2.html">小学2</option>
+        <option value="xx3.html">小学3</option>
+    </select>
+
+    <button onclick="randomWord()">🎲 随机一个单词</button>
+
+    <div class="nav-btns">
+        <button onclick="prevWord()">⬅ 上一个</button>
+        <button onclick="nextWord()">下一个 ➡</button>
+    </div>
+
+    <div id="content" style="display:none;">
+        <div class="word" id="word"></div>
+        <div class="phonetic" id="phonetic"></div>
+        <div class="audio" onclick="playAudio()">🔊 播放美式发音</div>
+
+        <div class="box">
+            <div><span class="label">中文：</span><span id="meaning"></span></div>
+        </div>
+
+        <div class="box">
+            <div class="label">例句：</div>
+            <div id="sentenceEn"></div>
+            <div id="sentenceCn"></div>
+        </div>
+    </div>
+
+    <div class="footer">发音来自 dictionaryapi.dev</div>
+</div>
+
+<script>
+/* ================= 单词数据（你自行补充） ================= */
+const primaryWords = [
+{w:"apple",p:"/ˈæpəl/",m:"苹果",se:"I eat an apple.",sc:"我吃一个苹果。"},
+{w:"book",p:"/bʊk/",m:"书",se:"This is my book.",sc:"这是我的书。"},
+{w:"cat",p:"/kæt/",m:"猫",se:"The cat is cute.",sc:"这只猫很可爱。"},
+{w:"dog",p:"/dɒɡ/",m:"狗",se:"The dog runs fast.",sc:"狗跑得很快。"},
+{w:"egg",p:"/eɡ/",m:"鸡蛋",se:"I like eggs.",sc:"我喜欢鸡蛋。"},
+{w:"fish",p:"/fɪʃ/",m:"鱼",se:"The fish swims.",sc:"鱼在游泳。"},
+{w:"pen",p:"/pen/",m:"钢笔",se:"This is a pen.",sc:"这是一支钢笔。"},
+{w:"sun",p:"/sʌn/",m:"太阳",se:"The sun is bright.",sc:"太阳很亮。"},
+{w:"moon",p:"/muːn/",m:"月亮",se:"The moon is white.",sc:"月亮是白色的。"},
+{w:"star",p:"/stɑːr/",m:"星星",se:"I see a star.",sc:"我看到一颗星星。"},
+
+{w:"water",p:"/ˈwɔːtər/",m:"水",se:"Drink some water.",sc:"喝点水。"},
+{w:"milk",p:"/mɪlk/",m:"牛奶",se:"I drink milk.",sc:"我喝牛奶。"},
+{w:"bread",p:"/bred/",m:"面包",se:"I eat bread.",sc:"我吃面包。"},
+{w:"rice",p:"/raɪs/",m:"米饭",se:"I like rice.",sc:"我喜欢米饭。"},
+{w:"cake",p:"/keɪk/",m:"蛋糕",se:"The cake is sweet.",sc:"蛋糕很甜。"},
+{w:"school",p:"/skuːl/",m:"学校",se:"I go to school.",sc:"我去上学。"},
+{w:"class",p:"/klɑːs/",m:"班级；课",se:"We have an English class.",sc:"我们上英语课。"},
+{w:"teacher",p:"/ˈtiːtʃər/",m:"老师",se:"She is my teacher.",sc:"她是我的老师。"},
+{w:"student",p:"/ˈstuːdənt/",m:"学生",se:"I am a student.",sc:"我是学生。"},
+{w:"friend",p:"/frend/",m:"朋友",se:"He is my friend.",sc:"他是我的朋友。"},
+
+{w:"family",p:"/ˈfæməli/",m:"家庭",se:"I love my family.",sc:"我爱我的家人。"},
+{w:"home",p:"/həʊm/",m:"家",se:"I go home.",sc:"我回家。"},
+{w:"father",p:"/ˈfɑːðər/",m:"爸爸",se:"My father works.",sc:"我爸爸在工作。"},
+{w:"mother",p:"/ˈmʌðər/",m:"妈妈",se:"My mother cooks.",sc:"我妈妈做饭。"},
+{w:"brother",p:"/ˈbrʌðər/",m:"兄弟",se:"My brother runs.",sc:"我兄弟在跑步。"},
+{w:"sister",p:"/ˈsɪstər/",m:"姐妹",se:"My sister reads.",sc:"我姐妹在读书。"},
+{w:"boy",p:"/bɔɪ/",m:"男孩",se:"The boy smiles.",sc:"男孩在笑。"},
+{w:"girl",p:"/ɡɜːl/",m:"女孩",se:"The girl sings.",sc:"女孩在唱歌。"},
+{w:"man",p:"/mæn/",m:"男人",se:"The man walks.",sc:"男人在走路。"},
+{w:"woman",p:"/ˈwʊmən/",m:"女人",se:"The woman cooks.",sc:"女人在做饭。"},
+
+{w:"big",p:"/bɪɡ/",m:"大的",se:"The house is big.",sc:"房子很大。"},
+{w:"small",p:"/smɔːl/",m:"小的",se:"The cat is small.",sc:"猫很小。"},
+{w:"long",p:"/lɒŋ/",m:"长的",se:"The road is long.",sc:"路很长。"},
+{w:"short",p:"/ʃɔːt/",m:"短的",se:"The ruler is short.",sc:"尺子很短。"},
+{w:"hot",p:"/hɒt/",m:"热的",se:"It is hot today.",sc:"今天很热。"},
+{w:"cold",p:"/kəʊld/",m:"冷的",se:"It is cold outside.",sc:"外面很冷。"},
+{w:"happy",p:"/ˈhæpi/",m:"开心的",se:"I am happy.",sc:"我很开心。"},
+{w:"sad",p:"/sæd/",m:"难过的",se:"She is sad.",sc:"她很难过。"},
+{w:"good",p:"/ɡʊd/",m:"好的",se:"This is good.",sc:"这是好的。"},
+{w:"bad",p:"/bæd/",m:"坏的",se:"That is bad.",sc:"那是坏的。"},
+
+{w:"day",p:"/deɪ/",m:"白天；天",se:"It is a sunny day.",sc:"今天是晴天。"},
+{w:"night",p:"/naɪt/",m:"夜晚",se:"Good night.",sc:"晚安。"},
+{w:"morning",p:"/ˈmɔːnɪŋ/",m:"早上",se:"Good morning.",sc:"早上好。"},
+{w:"afternoon",p:"/ˌɑːftəˈnuːn/",m:"下午",se:"Good afternoon.",sc:"下午好。"},
+{w:"evening",p:"/ˈiːvnɪŋ/",m:"晚上",se:"Good evening.",sc:"晚上好。"},
+{w:"today",p:"/təˈdeɪ/",m:"今天",se:"Today is Monday.",sc:"今天是星期一。"},
+{w:"tomorrow",p:"/təˈmɒrəʊ/",m:"明天",se:"See you tomorrow.",sc:"明天见。"},
+{w:"yesterday",p:"/ˈjestədeɪ/",m:"昨天",se:"Yesterday was fun.",sc:"昨天很有趣。"},
+
+{w:"go",p:"/ɡəʊ/",m:"去",se:"I go to school.",sc:"我去上学。"},
+{w:"come",p:"/kʌm/",m:"来",se:"Come here.",sc:"来这里。"},
+{w:"eat",p:"/iːt/",m:"吃",se:"I eat rice.",sc:"我吃米饭。"},
+{w:"drink",p:"/drɪŋk/",m:"喝",se:"Drink some milk.",sc:"喝点牛奶。"},
+{w:"run",p:"/rʌn/",m:"跑",se:"I run fast.",sc:"我跑得快。"},
+{w:"walk",p:"/wɔːk/",m:"走",se:"I walk home.",sc:"我走回家。"},
+{w:"read",p:"/riːd/",m:"读",se:"I read books.",sc:"我读书。"},
+{w:"write",p:"/raɪt/",m:"写",se:"I write words.",sc:"我写单词。"},
+{w:"see",p:"/siː/",m:"看见",se:"I see a bird.",sc:"我看到一只鸟。"},
+{w:"play",p:"/pleɪ/",m:"玩；踢",se:"I play football.",sc:"我踢足球。"},
+
+{w:"ball",p:"/bɔːl/",m:"球",se:"This is a ball.",sc:"这是一个球。"},
+{w:"toy",p:"/tɔɪ/",m:"玩具",se:"I like this toy.",sc:"我喜欢这个玩具。"},
+{w:"car",p:"/kɑːr/",m:"汽车",se:"The car is red.",sc:"汽车是红色的。"},
+{w:"bus",p:"/bʌs/",m:"公交车",se:"I take a bus.",sc:"我坐公交车。"},
+{w:"bike",p:"/baɪk/",m:"自行车",se:"I ride a bike.",sc:"我骑自行车。"},
+{w:"road",p:"/rəʊd/",m:"道路",se:"The road is long.",sc:"这条路很长。"},
+{w:"tree",p:"/triː/",m:"树",se:"The tree is tall.",sc:"树很高。"},
+{w:"flower",p:"/ˈflaʊər/",m:"花",se:"The flower is nice.",sc:"花很漂亮。"},
+{w:"bird",p:"/bɜːd/",m:"鸟",se:"The bird sings.",sc:"鸟在唱歌。"},
+{w:"rain",p:"/reɪn/",m:"雨",se:"It rains today.",sc:"今天下雨。"}
+];
+
+/* ================= 学习状态 ================= */
+let audioObj = null;
+let history = JSON.parse(localStorage.getItem("wordHistory") || "[]");
+let currentIndex = history.length - 1;
+
+/* ================= 显示单词 ================= */
+function showWord(item, save = true) {
+    document.getElementById("content").style.display = "block";
+    document.getElementById("word").innerText = item.w;
+    document.getElementById("phonetic").innerText = item.p;
+    document.getElementById("meaning").innerText = item.m;
+    document.getElementById("sentenceEn").innerText = item.se;
+    document.getElementById("sentenceCn").innerText = item.sc;
+
+    if (save) {
+        history = history.slice(0, currentIndex + 1);
+        history.push(item);
+        currentIndex = history.length - 1;
+        localStorage.setItem("wordHistory", JSON.stringify(history));
+    }
+
+    audioObj = null;
+    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${item.w}`)
+        .then(r => r.json())
+        .then(d => {
+            const audioUrl = d[0]?.phonetics?.find(x => x.audio)?.audio;
+            if (audioUrl) {
+                audioObj = new Audio(audioUrl);
+                audioObj.play();
+            }
+        })
+        .catch(()=> audioObj=null);
+}
+
+/* ================= 随机（不连续重复） ================= */
+function randomWord() {
+    if (primaryWords.length === 0) return;
+
+    let item;
+    do {
+        item = primaryWords[Math.floor(Math.random() * primaryWords.length)];
+    } while (history[currentIndex]?.w === item.w && primaryWords.length > 1);
+
+    showWord(item);
+}
+
+/* ================= 上 / 下 ================= */
+function prevWord() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        showWord(history[currentIndex], false);
+    } else {
+        alert("已经是第一个了");
+    }
+}
+
+function nextWord() {
+    if (currentIndex < history.length - 1) {
+        currentIndex++;
+        showWord(history[currentIndex], false);
+    } else {
+        alert("已经是最后一个了");
+    }
+}
+
+/* ================= 其它 ================= */
+function playAudio() {
+    if (audioObj) audioObj.play();
+    else alert("暂无发音");
+}
+
+function switchPage(url) {
+    if (url) location.href = url;
+}
+
+/* ================= 页面恢复 ================= */
+if (history.length > 0) {
+    showWord(history[currentIndex], false);
+}
+</script>
+</body>
+</html>
