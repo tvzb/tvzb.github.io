@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多功能文本编辑工具</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            max-width: 900px; /* 电脑端也控制一个舒适宽度 */
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        /* 顶部导航栏 */
+        nav {
+            background: linear-gradient(120deg, #4facfe 0%, #00f2fe 100%);
+            padding: 16px 0;
+            text-align: center;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        nav a {
+            display: block;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: all 0.3s;
+            min-width: 100px;
+        }
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-3px);
+        }
+        nav a.active {
+            background: #e74c3c;
+            box-shadow: 0 6px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        header {
+            padding: 30px 20px 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        header p {
+            margin: 10px 0 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        /* 主内容区：统一垂直布局 */
+        .main {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 17px;
+            color: #444;
+        }
+        textarea {
+            width: 100%;
+            height: 300px;
+            padding: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 14px;
+            font-size: 15px;
+            line-height: 1.6;
+            resize: vertical;
+            box-sizing: border-box;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        textarea:focus {
+            border-color: #4facfe;
+            box-shadow: 0 0 0 4px rgba(79, 172, 254, 0.2);
+            outline: none;
+        }
+        #outputText {
+            background: #f8f9ff;
+        }
+
+        /* 工具区：2行2列网格 */
+        .tools {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .tool-card {
+            background: #f8f9ff;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .tool-card:hover {
+            transform: translateY(-4px);
+        }
+        .tool-card h3 {
+            margin: 0 0 18px;
+            color: #4a5568;
+            font-size: 18px;
+            text-align: center;
+        }
+        .tool-input {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1;
+        }
+        input[type="text"] {
+            padding: 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+        }
+        input[type="text"]:focus {
+            border-color: #4facfe;
+            outline: none;
+        }
+        .btn {
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: linear-gradient(120deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+        }
+        .btn-full {
+            width: 100%;
+        }
+
+        .tool-card small {
+            margin-top: auto;
+            padding-top: 12px;
+            color: #888;
+            font-size: 13px;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        /* 输入区下方按钮 */
+        .input-controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .input-controls .btn {
+            flex: 1;
+            padding: 14px;
+        }
+
+        /* 输出区控制按钮 */
+        .result-controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .result-controls .btn {
+            flex: 1;
+            padding: 14px;
+        }
+
+        .stats {
+            text-align: center;
+            margin-top: 15px;
+            color: #666;
+            font-size: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: #f0f4f8;
+            color: #718096;
+            font-size: 14px;
+        }
+
+        /* ============ 手机端微调 ============ */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 16px;
+            }
+            header {
+                padding: 25px 15px 15px;
+            }
+            header h1 {
+                font-size: 24px;
+            }
+            .main {
+                padding: 15px;
+                gap: 25px;
+            }
+            textarea {
+                height: 260px;
+                font-size: 16px;
+            }
+            .tools {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+            .tool-card {
+                padding: 18px;
+            }
+            .input-controls,
+            .result-controls {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 22px;
+            }
+            textarea {
+                height: 220px;
+            }
+            nav a {
+                padding: 10px 14px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="index.html">首页-M3U↔TXT转换</a></li>
+                <li><a href="editor.html" class="active">文字处理</a></li>
+                <li><a href="szq.html">石子棋</a></li>
+                <li><a href="pool.html">桌球</a></li>
+            </ul>
+        </nav>
+
+        <header>
+            <h1>多功能文本编辑工具</h1>
+            <p>一行一记录 · 即时处理结果</p>
+        </header>
+
+        <div class="main">
+            <!-- 输入区 -->
+            <div class="input-section">
+                <label for="inputText">输入文本（每行一条记录）</label>
+                <textarea id="inputText" placeholder="请在此粘贴或输入需要处理的文本内容..."></textarea>
+                <div class="input-controls">
+                    <button class="btn" onclick="clearAll()">清除屏幕</button>
+                    <button class="btn" onclick="copyInput()">拷贝输入文字</button>
+                </div>
+            </div>
+
+            <!-- 功能处理区：2行2列（电脑端），手机端自动变单列 -->
+            <div class="tools">
+                <!-- 第一行：文字筛选 + 文字替换 -->
+                <div class="tool-card">
+                    <h3>文字筛选</h3>
+                    <div class="tool-input">
+                        <input type="text" id="filterKeyword" placeholder="输入要保留的关键字">
+                        <button class="btn btn-full" onclick="filterLines()">筛选保留</button>
+                    </div>
+                    <small>只保留包含该关键字的完整行<br>区分大小写</small>
+                </div>
+
+                <div class="tool-card">
+                    <h3>文字替换</h3>
+                    <div class="tool-input">
+                        <input type="text" id="replaceFrom" placeholder="要替换的内容">
+                        <input type="text" id="replaceTo" placeholder="替换为（留空则删除）">
+                        <button class="btn btn-full" onclick="replaceText()">执行替换</button>
+                    </div>
+                    <small>每行独立替换，支持部分匹配</small>
+                </div>
+
+                <!-- 第二行：文字去重 + 文字排序 -->
+                <div class="tool-card">
+                    <h3>文字行去重</h3>
+                    <div class="tool-input">
+                        <button class="btn btn-full" onclick="removeDuplicates()">立即去重</button>
+                    </div>
+                    <small>去除完全相同的重复行<br>保留首次出现顺序</small>
+                </div>
+
+                <div class="tool-card">
+                    <h3>文字排序</h3>
+                    <div class="tool-input">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <button class="btn" onclick="sortLines('asc')">升序排序</button>
+                            <button class="btn" onclick="sortLines('desc')">降序排序</button>
+                        </div>
+                    </div>
+                    <small>按Unicode排序<br>支持中英文数字混合</small>
+                </div>
+            </div>
+
+            <!-- 输出区 -->
+            <div class="output-section">
+                <label for="outputText">处理结果</label>
+                <textarea id="outputText" readonly placeholder="处理后的结果将显示在这里，可全选后复制..."></textarea>
+                <div class="result-controls">
+                    <button class="btn" onclick="copyResult()">拷贝结果</button>
+                </div>
+                <div class="stats" id="stats">共 0 行（原 0 行）</div>
+            </div>
+        </div>
+
+        <footer>
+            多功能文本编辑工具 © 2026 · 纯前端处理，数据不上传
+        </footer>
+    </div>
+
+    <script>
+        function getLines() {
+            const text = document.getElementById('inputText').value.trim();
+            if (!text) {
+                alert('请输入文本内容！');
+                return null;
+            }
+            return text.split(/\n/).filter(line => line.trim() !== '');
+        }
+
+        function updateOutput(lines) {
+            const output = document.getElementById('outputText');
+            const originalLines = getLines();
+            const originalCount = originalLines ? originalLines.length : 0;
+            output.value = lines.join('\n');
+            document.getElementById('stats').textContent = 
+                `共 ${lines.length} 行（原 ${originalCount} 行）`;
+        }
+
+        function removeDuplicates() {
+            const lines = getLines();
+            if (!lines) return;
+            const unique = [...new Set(lines)];
+            updateOutput(unique);
+        }
+
+        function filterLines() {
+            const keyword = document.getElementById('filterKeyword').value.trim();
+            if (!keyword) {
+                alert('请输入要保留的关键字！');
+                return;
+            }
+            const lines = getLines();
+            if (!lines) return;
+            const filtered = lines.filter(line => line.includes(keyword));
+            updateOutput(filtered);
+        }
+
+        function replaceText() {
+            const from = document.getElementById('replaceFrom').value;
+            if (!from) {
+                alert('请输入要替换的内容！');
+                return;
+            }
+            const to = document.getElementById('replaceTo').value;
+            const lines = getLines();
+            if (!lines) return;
+            const replaced = lines.map(line => line.split(from).join(to));
+            updateOutput(replaced);
+        }
+
+        function sortLines(order) {
+            const lines = getLines();
+            if (!lines) return;
+            const sorted = [...lines].sort((a, b) => {
+                return order === 'asc' ? a.localeCompare(b) : b.localeCompare(a);
+            });
+            updateOutput(sorted);
+        }
+
+        function clearAll() {
+            if (confirm('确定要清除输入和结果吗？')) {
+                document.getElementById('inputText').value = '';
+                document.getElementById('outputText').value = '';
+                document.getElementById('stats').textContent = '共 0 行（原 0 行）';
+                document.getElementById('filterKeyword').value = '';
+                document.getElementById('replaceFrom').value = '';
+                document.getElementById('replaceTo').value = '';
+            }
+        }
+
+        function copyResult() {
+            const output = document.getElementById('outputText');
+            if (!output.value.trim()) {
+                alert('结果区为空，无内容可复制！');
+                return;
+            }
+            output.select();
+            document.execCommand('copy');
+            alert('结果已复制到剪贴板！');
+        }
+
+        // 新增：拷贝输入框文字
+        function copyInput() {
+            const input = document.getElementById('inputText');
+            if (!input.value.trim()) {
+                alert('输入区为空，无内容可复制！');
+                return;
+            }
+            input.select();
+            document.execCommand('copy');
+            alert('输入文字已复制到剪贴板！');
+        }
+    </script>
+</body>
+</html>
