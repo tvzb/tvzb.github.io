@@ -14,7 +14,7 @@
             color: #333;
         }
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 40px auto;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
@@ -40,9 +40,15 @@
         }
         .main {
             padding: 40px;
+            display: grid;
+            grid-template-columns: 1fr 380px; /* 左侧文本区宽，右侧工具区固定380px */
+            gap: 40px;
+            align-items: start;
         }
-        .input-area {
-            margin-bottom: 40px;
+        .text-area {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
         }
         label {
             display: block;
@@ -51,9 +57,9 @@
             font-size: 18px;
             color: #444;
         }
-        #inputText {
+        textarea {
             width: 100%;
-            height: 280px;
+            height: 320px;
             padding: 18px;
             border: 2px solid #e0e0e0;
             border-radius: 14px;
@@ -63,62 +69,58 @@
             box-sizing: border-box;
             transition: border-color 0.3s, box-shadow 0.3s;
         }
-        #inputText:focus {
+        textarea:focus {
             border-color: #4facfe;
             box-shadow: 0 0 0 4px rgba(79, 172, 254, 0.2);
             outline: none;
         }
+        #outputText {
+            background: #f8f9ff;
+        }
 
-        /* 四个功能垂直一列排列 */
+        /* 右侧工具区 */
         .tools {
             display: flex;
             flex-direction: column;
-            gap: 28px;
-            margin-bottom: 40px;
+            gap: 24px;
         }
         .tool-card {
             background: #f8f9ff;
             border-radius: 16px;
-            padding: 32px 28px;
+            padding: 24px;
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
             transition: transform 0.3s, box-shadow 0.3s;
         }
         .tool-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-4px);
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
         }
         .tool-card h3 {
-            margin: 0 0 24px;
+            margin: 0 0 20px;
             color: #4a5568;
-            font-size: 22px;
+            font-size: 19px;
             text-align: center;
         }
         .tool-input {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
         }
         input[type="text"] {
-            padding: 16px;
+            padding: 14px;
             border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 16px;
-            transition: border-color 0.3s;
+            border-radius: 10px;
+            font-size: 15px;
         }
         input[type="text"]:focus {
             border-color: #4facfe;
             outline: none;
         }
-        .btn-group {
-            display: flex;
-            gap: 14px;
-        }
         .btn {
-            flex: 1;
-            padding: 16px;
+            padding: 14px;
             border: none;
-            border-radius: 12px;
-            font-size: 17px;
+            border-radius: 10px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
@@ -126,44 +128,61 @@
             color: white;
         }
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(79, 172, 254, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+        }
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .btn-full {
+            grid-column: span 2;
         }
         .tool-card small {
-            margin-top: 16px;
+            margin-top: 12px;
             color: #888;
-            font-size: 14px;
+            font-size: 13px;
             text-align: center;
-            line-height: 1.5;
+            line-height: 1.4;
+            display: block;
         }
 
-        .result-area {
-            margin-top: 30px;
+        /* 结果区额外按钮 */
+        .result-controls {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
         }
-        #outputText {
-            width: 100%;
-            height: 280px;
-            padding: 18px;
-            border: 2px solid #e0e0e0;
-            border-radius: 14px;
-            font-size: 16px;
-            line-height: 1.6;
-            background: #f8f9ff;
-            white-space: pre-wrap;
-            box-sizing: border-box;
+        .result-controls .btn {
+            flex: 1;
+            padding: 12px;
+            font-size: 15px;
         }
+
         .stats {
             text-align: center;
             margin-top: 20px;
             color: #666;
             font-size: 16px;
         }
+
+        @media (max-width: 960px) {
+            .main {
+                grid-template-columns: 1fr;
+            }
+            .tools {
+                order: -1; /* 手机端工具区放到最上面 */
+            }
+        }
+
         footer {
             text-align: center;
             padding: 25px;
             background: #f0f4f8;
             color: #718096;
             font-size: 14px;
+            margin-top: 40px;
         }
     </style>
 </head>
@@ -171,26 +190,37 @@
     <div class="container">
         <header>
             <h1>多功能文本编辑工具</h1>
-            <p>一行一记录，快速完成去重、筛选、替换、排序</p>
+            <p>一行一记录 · 左右对比编辑 · 即时处理结果</p>
         </header>
 
         <div class="main">
-            <div class="input-area">
-                <label for="inputText">输入文本（每行一条记录）</label>
-                <textarea id="inputText" placeholder="请在此粘贴或输入需要处理的文本内容..."></textarea>
+            <!-- 左侧：输入 + 输出 上下对比 -->
+            <div class="text-area">
+                <div>
+                    <label for="inputText">输入文本（每行一条记录）</label>
+                    <textarea id="inputText" placeholder="请在此粘贴或输入需要处理的文本内容..."></textarea>
+                </div>
+
+                <div>
+                    <label for="outputText">处理结果</label>
+                    <textarea id="outputText" readonly placeholder="处理后的结果将显示在这里，可全选后复制..."></textarea>
+                    <div class="result-controls">
+                        <button class="btn" onclick="clearAll()">清除屏幕</button>
+                        <button class="btn" onclick="copyResult()">拷贝结果</button>
+                    </div>
+                    <div class="stats" id="stats">共 0 行（原 0 行）</div>
+                </div>
             </div>
 
-            <!-- 四个功能垂直从上到下依次排列 -->
+            <!-- 右侧：四个功能工具垂直排列 -->
             <div class="tools">
                 <!-- 1. 文字行去重 -->
                 <div class="tool-card">
                     <h3>文字行去重</h3>
                     <div class="tool-input">
-                        <div class="btn-group">
-                            <button class="btn" onclick="removeDuplicates()">立即去重</button>
-                        </div>
+                        <button class="btn btn-full" onclick="removeDuplicates()">立即去重</button>
                     </div>
-                    <small>去除完全相同的重复行<br>保留首次出现的顺序</small>
+                    <small>去除完全相同的重复行<br>保留首次出现顺序</small>
                 </div>
 
                 <!-- 2. 文字筛选 -->
@@ -198,9 +228,7 @@
                     <h3>文字筛选</h3>
                     <div class="tool-input">
                         <input type="text" id="filterKeyword" placeholder="输入要保留的关键字">
-                        <div class="btn-group">
-                            <button class="btn" onclick="filterLines()">筛选保留</button>
-                        </div>
+                        <button class="btn btn-full" onclick="filterLines()">筛选保留</button>
                     </div>
                     <small>只保留包含该关键字的完整行<br>区分大小写</small>
                 </div>
@@ -211,9 +239,7 @@
                     <div class="tool-input">
                         <input type="text" id="replaceFrom" placeholder="要替换的内容">
                         <input type="text" id="replaceTo" placeholder="替换为（留空则删除）">
-                        <div class="btn-group">
-                            <button class="btn" onclick="replaceText()">执行替换</button>
-                        </div>
+                        <button class="btn btn-full" onclick="replaceText()">执行替换</button>
                     </div>
                     <small>每行独立替换，支持部分匹配</small>
                 </div>
@@ -227,14 +253,8 @@
                             <button class="btn" onclick="sortLines('desc')">降序排序</button>
                         </div>
                     </div>
-                    <small>按Unicode排序<br>完美支持中英文数字混合</small>
+                    <small>按Unicode排序<br>支持中英文数字混合</small>
                 </div>
-            </div>
-
-            <div class="result-area">
-                <label for="outputText">处理结果</label>
-                <textarea id="outputText" readonly placeholder="处理后的结果将显示在这里，可全选后直接复制..."></textarea>
-                <div class="stats" id="stats"></div>
             </div>
         </div>
 
@@ -255,7 +275,8 @@
 
         function updateOutput(lines) {
             const output = document.getElementById('outputText');
-            const originalCount = getLines() ? getLines().length : 0;
+            const originalLines = getLines();
+            const originalCount = originalLines ? originalLines.length : 0;
             output.value = lines.join('\n');
             document.getElementById('stats').textContent = 
                 `共 ${lines.length} 行（原 ${originalCount} 行）`;
@@ -304,6 +325,30 @@
                 return order === 'asc' ? a.localeCompare(b) : b.localeCompare(a);
             });
             updateOutput(sorted);
+        }
+
+        // 新增：清除屏幕
+        function clearAll() {
+            if (confirm('确定要清除输入和结果吗？')) {
+                document.getElementById('inputText').value = '';
+                document.getElementById('outputText').value = '';
+                document.getElementById('stats').textContent = '共 0 行（原 0 行）';
+                document.getElementById('filterKeyword').value = '';
+                document.getElementById('replaceFrom').value = '';
+                document.getElementById('replaceTo').value = '';
+            }
+        }
+
+        // 新增：拷贝结果
+        function copyResult() {
+            const output = document.getElementById('outputText');
+            if (!output.value.trim()) {
+                alert('结果区为空，无内容可复制！');
+                return;
+            }
+            output.select();
+            document.execCommand('copy');
+            alert('结果已复制到剪贴板！');
         }
     </script>
 </body>
