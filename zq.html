@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>在线 8 球 - 经典模拟器</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #game-container {
+            position: relative;
+            border: 15px solid #5d4037; /* 木质边框 */
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        }
+
+        canvas {
+            background-color: #2d7d32; /* 台球桌绿呢 */
+            cursor: crosshair;
+            display: block;
+        }
+
+        .hud {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .controls {
+            font-size: 0.9em;
+            color: #aaa;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>经典中式八球 / 美式普尔</h2>
+
+    <div id="game-container">
+        <canvas id="billiardCanvas" width="800" height="400"></canvas>
+    </div>
+
+    <div class="hud">
+        <div id="status">拖动鼠标击打白球</div>
+        <div class="controls">操作指南：按住鼠标左键并向后拉动控制力度，释放击球。</div>
+    </div>
+
+
+
+<script>
+    const canvas = document.getElementById('billiardCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // 物理参数
+    const friction = 0.985; // 摩擦力
+    const ballRadius = 10;
+    
+    // 球的数据结构
+    let cueBall = { x: 200, y: 200, vx: 0, vy: 0, color: '#ffffff' };
+    let balls = [
+        cueBall,
+        { x: 600, y: 200, vx: 0, vy: 0, color: '#fdd835' }, // 1号球
+        { x: 620, y: 190, vx: 0, vy: 0, color: '#1e88e5' }, // 2号球
+        { x: 620, y: 210, vx: 0, vy: 0, color: '#e53935' }, // 3号球
+        { x: 640, y: 180, vx: 0, vy: 0, color: '#8e24aa' }, // 4号球
+        { x: 640, y: 200, vx: 0, vy: 0, color: '#fb8c00' }, // 8号黑球
+        { x: 640, y: 220, vx: 0, vy: 0, color: '#43a047' }  // 6号球
+    ];
+
+    let isDragging = false;
+    let dragStart = { x: 0, y: 0 };
+    let mousePos = { x: 0, y: 0 };
+
+    // 绘制球袋
+    function drawPockets() {
+        ctx.fillStyle = '#000000';
+        const pockets = [
+            [0, 0], [400, 0], [800, 0],
+            [0, 400], [400, 400], [800, 400]
+        ];
+        pockets.forEach(p => {
+            ctx.beginPath();
+            ctx.arc(p[0], p[1], 20, 0, Math.PI * 2);
+            ctx.fill();
+        });
+    }
+
+    function drawBall(ball) {
+        ctx.beginPath();
+        ctx.arc(ball.x, ball.y, ballRadius, 0, Math.PI * 2);
+        ctx.fillStyle = ball.color;
+        ctx.fill();
+        // 增加高光效果
+        ctx.beginPath();
+        ctx.arc(ball.x - 3, ball.y - 3, 3, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,0.4)';
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    function update() {
+        balls.forEach(ball => {
+            // 移动
+            ball.x += ball.vx;
+            ball.y += ball.vy;
+
+            // 摩擦力
+            ball.vx *= friction;
+            ball.vy *= friction;
+
+            if (Math.abs(ball.vx) < 0.1) ball.vx = 0;
+            if (Math.abs(ball.vy) < 0.1) ball.vy = 0;
+
+            // 墙壁碰撞检测
+            if (ball.x + ballRadius > canvas.width || ball.x - ballRadius < 0) {
+                ball.vx *= -0.8; 
+                ball.x = ball.x < ballRadius ? ballRadius : canvas.width - ballRadius;
+            }
+            if (ball.y + ballRadius > canvas.height || ball.y - ballRadius < 0) {
+                ball.vy *= -0.8;
+                ball.y = ball.y < ballRadius ? ballRadius : canvas.height - ballRadius;
+            }
+        });
+
+        // 简单的球体间碰撞
+        for (let i = 0; i < balls.length; i++) {
+            for (let j = i + 1; j < balls.length; j++) {
+                let dx = balls[j].x - balls[i].x;
+                let dy = balls[j].y - balls[i].y;
+                let dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < ballRadius * 2) {
+                    // 简单的动量交换
+                    let tempVx = balls[i].vx;
+                    let tempVy = balls[i].vy;
+                    balls[i].vx = balls[j].vx;
+                    balls[i].vy = balls[j].vy;
+                    balls[j].vx = tempVx;
+                    balls[j].vy = tempVy;
+                }
+            }
+        }
+    }
+
+    function render() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // 绘制球台标志线 (D区)
+        ctx.strokeStyle = "rgba(255,255,255,0.2)";
+        ctx.beginPath();
+        ctx.moveTo(200, 0);
+        ctx.lineTo(200, 400);
+        ctx.stroke();
+
+        drawPockets();
+
+        balls.forEach(drawBall);
+
+        // 绘制瞄准线
+        if (isDragging) {
+            ctx.beginPath();
+            ctx.moveTo(cueBall.x, cueBall.y);
+            ctx.lineTo(cueBall.x - (mousePos.x - dragStart.x), cueBall.y - (mousePos.y - dragStart.y));
+            ctx.strokeStyle = "rgba(255,255,255,0.5)";
+            ctx.setLineDash([5, 5]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+
+        update();
+        requestAnimationFrame(render);
+    }
+
+    // 鼠标交互
+    canvas.addEventListener('mousedown', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        dragStart.x = e.clientX - rect.left;
+        dragStart.y = e.clientY - rect.top;
+        
+        // 只允许在白球静止时点击白球附近
+        let dist = Math.sqrt(Math.pow(dragStart.x - cueBall.x, 2) + Math.pow(dragStart.y - cueBall.y, 2));
+        if (dist < 30 && cueBall.vx === 0 && cueBall.vy === 0) {
+            isDragging = true;
+        }
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        mousePos.x = e.clientX - rect.left;
+        mousePos.y = e.clientY - rect.top;
+    });
+
+    window.addEventListener('mouseup', () => {
+        if (isDragging) {
+            let dx = mousePos.x - dragStart.x;
+            let dy = mousePos.y - dragStart.y;
+            
+            // 击球力度缩放
+            cueBall.vx = -dx * 0.15;
+            cueBall.vy = -dy * 0.15;
+            isDragging = false;
+        }
+    });
+
+    render();
+</script>
+</body>
+</html>
