@@ -1,20 +1,4 @@
 央视频道,#genre#
-CCTV-1综合,http://222.135.142.75:3283/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-2财经,http://222.135.142.75:3283/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-3综艺,http://222.135.142.75:3283/tsfile/live/0003_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-4中文国际,http://222.135.142.75:3283/tsfile/live/0004_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-5体育,http://222.135.142.75:3283/tsfile/live/0005_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-6电影,http://222.135.142.75:3283/tsfile/live/0006_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-7国防军事,http://222.135.142.75:3283/tsfile/live/0007_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-8电视剧,http://222.135.142.75:3283/tsfile/live/0008_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-9纪录,http://222.135.142.75:3283/tsfile/live/0009_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-10科教,http://222.135.142.75:3283/tsfile/live/0010_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-11戏曲,http://222.135.142.75:3283/tsfile/live/0011_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-12社会与法,http://222.135.142.75:3283/tsfile/live/0012_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-13新闻,http://222.135.142.75:3283/tsfile/live/0013_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-14少儿,http://222.135.142.75:3283/tsfile/live/0014_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-15音乐,http://222.135.142.75:3283/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0
-
 CCTV-1综合,http://goo.bkpcp.top/mg/cctv1
 CCTV-2财经,http://goo.bkpcp.top/mg/cctv2
 CCTV-3综艺,http://goo.bkpcp.top/mg/cctv3
@@ -52,6 +36,22 @@ CCTV-16奥林匹克,http://go.bkpcp.top/mg/cctv16
 CCTV-17农业农村,http://go.bkpcp.top/mg/cctv17
 CCTV-欧洲,http://go.bkpcp.top/mg/cctv4o
 CCTV-美洲,http://go.bkpcp.top/mg/cctv4m
+
+CCTV-1综合,http://222.135.142.75:3283/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-2财经,http://222.135.142.75:3283/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-3综艺,http://222.135.142.75:3283/tsfile/live/0003_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-4中文国际,http://222.135.142.75:3283/tsfile/live/0004_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-5体育,http://222.135.142.75:3283/tsfile/live/0005_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-6电影,http://222.135.142.75:3283/tsfile/live/0006_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-7国防军事,http://222.135.142.75:3283/tsfile/live/0007_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-8电视剧,http://222.135.142.75:3283/tsfile/live/0008_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-9纪录,http://222.135.142.75:3283/tsfile/live/0009_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-10科教,http://222.135.142.75:3283/tsfile/live/0010_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-11戏曲,http://222.135.142.75:3283/tsfile/live/0011_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-12社会与法,http://222.135.142.75:3283/tsfile/live/0012_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-13新闻,http://222.135.142.75:3283/tsfile/live/0013_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-14少儿,http://222.135.142.75:3283/tsfile/live/0014_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-15音乐,http://222.135.142.75:3283/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0
 
 CCTV-1综合,http://t.061899.xyz/tl/tl.php?id=cctv1
 CCTV-2财经,http://t.061899.xyz/tl/tl.php?id=cctv2
@@ -161,21 +161,6 @@ CCTV-17农业农村,https://iptv.catvod.com/live.php?id=CCTV-17
 
 卫视频道,#genre#
 
-江西卫视,https://iptv.catvod.com/live.php?id=%E6%B1%9F%E8%A5%BF%E5%8D%AB%E8%A7%86
-东方卫视,https://iptv.catvod.com/live.php?id=%E4%B8%9C%E6%96%B9%E5%8D%AB%E8%A7%86
-湖南卫视,https://iptv.catvod.com/live.php?id=%E6%B9%96%E5%8D%97%E5%8D%AB%E8%A7%86
-浙江卫视,https://iptv.catvod.com/live.php?id=%E6%B5%99%E6%B1%9F%E5%8D%AB%E8%A7%86
-江苏卫视,https://iptv.catvod.com/live.php?id=%E6%B1%9F%E8%8B%8F%E5%8D%AB%E8%A7%86
-广东卫视,https://iptv.catvod.com/live.php?id=%E5%B9%BF%E4%B8%9C%E5%8D%AB%E8%A7%86
-湖北卫视,https://iptv.catvod.com/live.php?id=%E6%B9%96%E5%8C%97%E5%8D%AB%E8%A7%86
-辽宁卫视,https://iptv.catvod.com/live.php?id=%E8%BE%BD%E5%AE%81%E5%8D%AB%E8%A7%86
-陕西卫视,https://iptv.catvod.com/live.php?id=%E9%99%95%E8%A5%BF%E5%8D%AB%E8%A7%86
-河南卫视,https://iptv.catvod.com/live.php?id=%E6%B2%B3%E5%8D%97%E5%8D%AB%E8%A7%86
-海南卫视,https://iptv.catvod.com/live.php?id=%E6%B5%B7%E5%8D%97%E5%8D%AB%E8%A7%86
-吉林卫视,https://iptv.catvod.com/live.php?id=%E5%90%89%E6%9E%97%E5%8D%AB%E8%A7%86
-青海卫视,https://iptv.catvod.com/live.php?id=%E9%9D%92%E6%B5%B7%E5%8D%AB%E8%A7%86
-内蒙古卫视,https://iptv.catvod.com/live.php?id=%E5%86%85%E8%92%99%E5%8F%A4%E5%8D%AB%E8%A7%86
-
 江西卫视,http://goo.bkpcp.top/mg/jxws
 东方卫视,http://goo.bkpcp.top/mg/dfws
 北京卫视,http://goo.bkpcp.top/mg/bjws
@@ -224,6 +209,21 @@ CCTV-17农业农村,https://iptv.catvod.com/live.php?id=CCTV-17
 海南卫视,http://go.bkpcp.top/mg/hinws
 陕西卫视,http://go.bkpcp.top/mg/sxws
 黑龙江视,http://go.bkpcp.top/mg/hljws
+
+江西卫视,https://iptv.catvod.com/live.php?id=%E6%B1%9F%E8%A5%BF%E5%8D%AB%E8%A7%86
+东方卫视,https://iptv.catvod.com/live.php?id=%E4%B8%9C%E6%96%B9%E5%8D%AB%E8%A7%86
+湖南卫视,https://iptv.catvod.com/live.php?id=%E6%B9%96%E5%8D%97%E5%8D%AB%E8%A7%86
+浙江卫视,https://iptv.catvod.com/live.php?id=%E6%B5%99%E6%B1%9F%E5%8D%AB%E8%A7%86
+江苏卫视,https://iptv.catvod.com/live.php?id=%E6%B1%9F%E8%8B%8F%E5%8D%AB%E8%A7%86
+广东卫视,https://iptv.catvod.com/live.php?id=%E5%B9%BF%E4%B8%9C%E5%8D%AB%E8%A7%86
+湖北卫视,https://iptv.catvod.com/live.php?id=%E6%B9%96%E5%8C%97%E5%8D%AB%E8%A7%86
+辽宁卫视,https://iptv.catvod.com/live.php?id=%E8%BE%BD%E5%AE%81%E5%8D%AB%E8%A7%86
+陕西卫视,https://iptv.catvod.com/live.php?id=%E9%99%95%E8%A5%BF%E5%8D%AB%E8%A7%86
+河南卫视,https://iptv.catvod.com/live.php?id=%E6%B2%B3%E5%8D%97%E5%8D%AB%E8%A7%86
+海南卫视,https://iptv.catvod.com/live.php?id=%E6%B5%B7%E5%8D%97%E5%8D%AB%E8%A7%86
+吉林卫视,https://iptv.catvod.com/live.php?id=%E5%90%89%E6%9E%97%E5%8D%AB%E8%A7%86
+青海卫视,https://iptv.catvod.com/live.php?id=%E9%9D%92%E6%B5%B7%E5%8D%AB%E8%A7%86
+内蒙古卫视,https://iptv.catvod.com/live.php?id=%E5%86%85%E8%92%99%E5%8F%A4%E5%8D%AB%E8%A7%86
 
 江西卫视,http://t.061899.xyz/tl/tl.php?id=jxws
 北京卫视,http://t.061899.xyz/tl/tl.php?id=bjws
