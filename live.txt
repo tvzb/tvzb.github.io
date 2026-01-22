@@ -17,19 +17,6 @@ CCTV-15音乐,http://38.75.136.137:98/gslb/dsdqca/chcymdyhd.m3u8?auth=test202510
 CCTV-16体育赛事,http://38.75.136.137:98/gslb/dsdqca/chcjtyyhd.m3u8?auth=test20251009
 CCTV-17农业农村,http://38.75.136.137:98/gslb/dsdqbv/cctv17hd.m3u8?auth=test20251009
 
-CCTV-1综合,http://23.237.228.134/live5/CCTV1.m3u8
-CCTV-2财经,http://23.237.228.134/live5/CCTV2.m3u8
-CCTV-3综艺,http://23.237.228.134/live5/CCTV3.m3u8
-CCTV-5体育,http://23.237.228.134/live5/CCTV5p.m3u8
-CCTV-7军事农业,http://23.237.228.134/live5/CCTV7.m3u8
-CCTV-8电视剧,http://23.237.228.134/live5/CCTV8.m3u8
-CCTV-9纪录,http://23.237.228.134/live5/CCTV9.m3u8
-CCTV-10科教,http://23.237.228.134/live5/CCTV10.m3u8
-CCTV-12社会与法,http://23.237.228.134/live3/CCTV12.m3u8
-CCTV-14少儿,http://23.237.228.134/live3/CCTV14.m3u8
-CCTV-15音乐,http://23.237.228.134/live3/CCTV15.m3u8
-CCTV-17农业农村,http://23.237.228.134/live3/CCTV17.m3u8
-
 CCTV-1综合,https://60.191.56.186:8888/hls/1/index.m3u8
 CCTV-2财经,https://60.191.56.186:8888/hls/2/index.m3u8
 CCTV-3综艺,https://60.191.56.186:8888/hls/3/index.m3u8
@@ -45,6 +32,19 @@ CCTV-12社会与法,https://60.191.56.186:8888/hls/12/index.m3u8
 CCTV-13新闻,https://60.191.56.186:8888/hls/13/index.m3u8
 CCTV-15音乐,https://60.191.56.186:8888/hls/14/index.m3u8
 CCTV-16奥林匹克,https://60.191.56.186:8888/hls/16/index.m3u8
+
+CCTV-1综合,http://23.237.228.134/live5/CCTV1.m3u8
+CCTV-2财经,http://23.237.228.134/live5/CCTV2.m3u8
+CCTV-3综艺,http://23.237.228.134/live5/CCTV3.m3u8
+CCTV-5体育,http://23.237.228.134/live5/CCTV5p.m3u8
+CCTV-7军事农业,http://23.237.228.134/live5/CCTV7.m3u8
+CCTV-8电视剧,http://23.237.228.134/live5/CCTV8.m3u8
+CCTV-9纪录,http://23.237.228.134/live5/CCTV9.m3u8
+CCTV-10科教,http://23.237.228.134/live5/CCTV10.m3u8
+CCTV-12社会与法,http://23.237.228.134/live3/CCTV12.m3u8
+CCTV-14少儿,http://23.237.228.134/live3/CCTV14.m3u8
+CCTV-15音乐,http://23.237.228.134/live3/CCTV15.m3u8
+CCTV-17农业农村,http://23.237.228.134/live3/CCTV17.m3u8
 
 CCTV-1综合,http://222.135.142.75:3283/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-2财经,http://222.135.142.75:3283/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0
