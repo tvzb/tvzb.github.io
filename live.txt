@@ -64,6 +64,19 @@ CCTV-15音乐,http://222.135.142.75:3283/tsfile/live/0015_1.m3u8?key=txiptv&play
 
 
 卫视频道,#genre#
+江西卫视,http://60.13.52.236:65500/newlive/live/hls/30/live.m3u8
+辽宁卫视,http://60.13.52.236:65500/newlive/live/hls/40/live.m3u8
+宁夏卫视,http://60.13.52.236:65500/newlive/live/hls/46/live.m3u8
+青海卫视,http://60.13.52.236:65500/newlive/live/hls/44/live.m3u8
+山东卫视,http://60.13.52.236:65500/newlive/live/hls/27/live.m3u8
+山西卫视,http://60.13.52.236:65500/newlive/live/hls/47/live.m3u8
+陕西卫视,http://60.13.52.236:65500/newlive/live/hls/38/live.m3u8
+四川卫视,http://60.13.52.236:65500/newlive/live/hls/36/live.m3u8
+深圳卫视,http://60.13.52.236:65500/newlive/live/hls/24/live.m3u8
+天津卫视,http://60.13.52.236:65500/newlive/live/hls/28/live.m3u8
+西藏卫视,http://60.13.52.236:65500/newlive/live/hls/45/live.m3u8
+云南卫视,http://60.13.52.236:65500/newlive/live/hls/43/live.m3u8
+
 江西卫视,http://38.75.136.137:98/gslb/dsdqpub/jxwshd.m3u8?auth=testpub
 北京卫视,http://38.75.136.137:98/gslb/dsdqbv/bjwshd.m3u8?auth=test20251009
 东方卫视,http://38.75.136.137:98/gslb/dsdqbv/dfwshd.m3u8?auth=test20251009
@@ -168,19 +181,6 @@ CCTV-15音乐,http://222.135.142.75:3283/tsfile/live/0015_1.m3u8?key=txiptv&play
 湖北卫视,https://60.191.56.186:8888/hls/48/index.m3u8
 辽宁卫视,https://60.191.56.186:8888/hls/49/index.m3u8
 黑龙江卫视,https://60.191.56.186:8888/hls/44/index.m3u8
-
-江西卫视,http://60.13.52.236:65500/newlive/live/hls/30/live.m3u8
-辽宁卫视,http://60.13.52.236:65500/newlive/live/hls/40/live.m3u8
-宁夏卫视,http://60.13.52.236:65500/newlive/live/hls/46/live.m3u8
-青海卫视,http://60.13.52.236:65500/newlive/live/hls/44/live.m3u8
-山东卫视,http://60.13.52.236:65500/newlive/live/hls/27/live.m3u8
-山西卫视,http://60.13.52.236:65500/newlive/live/hls/47/live.m3u8
-陕西卫视,http://60.13.52.236:65500/newlive/live/hls/38/live.m3u8
-四川卫视,http://60.13.52.236:65500/newlive/live/hls/36/live.m3u8
-深圳卫视,http://60.13.52.236:65500/newlive/live/hls/24/live.m3u8
-天津卫视,http://60.13.52.236:65500/newlive/live/hls/28/live.m3u8
-西藏卫视,http://60.13.52.236:65500/newlive/live/hls/45/live.m3u8
-云南卫视,http://60.13.52.236:65500/newlive/live/hls/43/live.m3u8
 
 国外频道,#genre#
 HBO,http://148.113.160.49:14187/
