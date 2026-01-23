@@ -1,0 +1,72 @@
+{
+  "lives": [
+    {
+      "name": "直播",
+      "type": 0,
+      "url": "https://tvzb.github.io/live.txt",
+      "categories": ["电影", "电视剧", "短剧", "综艺"]
+    }
+  ],
+
+  "sites": [
+    {
+      "key": "豆瓣热播",
+      "name": "豆瓣热播🔥",
+      "type": 3,
+      "api": "csp_Douban",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "categories": ["电影", "电视剧", "短剧", "综艺"]
+    },
+
+    {"key": "豆瓣资源", "name": "豆瓣资源", "type": 1, "api": "https://caiji.dbzy.tv/api.php/provide/vod/", "playUrl": "https://jiexi.dbzyz01.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "金鹰资源", "name": "金鹰资源", "type": 1, "api": "https://jyzyapi.com/provide/vod/", "playUrl": "https://hd.iapijy.com/play?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "新浪资源", "name": "新浪资源", "type": 1, "api": "https://api.xinlangapi.com/xinlangapi.php/provide/vod/", "playUrl": "https://xinlangjiexi.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "暴风资源", "name": "暴风资源", "type": 1, "api": "https://bfzyapi.com/api.php/provide/vod/", "playUrl": "https://bfzy.jiexi.bfzyapi.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "ikun资源", "name": "ikun资源", "type": 1, "api": "https://ikunzyapi.com/api.php/provide/vod/", "playUrl": "https://www.ikdmjx.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "豪华资源", "name": "豪华资源", "type": 1, "api": "https://hhzyapi.com/api.php/provide/vod/", "playUrl": "https://hhjiexi.com/play/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "天涯资源", "name": "天涯资源", "type": 1, "api": "https://ty.tyyszy5.com/api.php/provide/vod/", "playUrl": "https://tyjiexi.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "u酷资源", "name": "u酷资源", "type": 1, "api": "https://api.ukuapi.com/api.php/provide/vod/", "playUrl": "https://api.ukubf.com/m3u8/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "卧龙资源", "name": "卧龙资源", "type": 1, "api": "https://collect.wolongzy.cc/api.php/provide/vod/", "playUrl": "https://jx.wolongzy.net/m3u8.php?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "百度资源", "name": "百度资源", "type": 1, "api": "https://api.apibdzy.com/api.php/provide/vod/", "playUrl": "https://jx.jxbdzyw.com/m3u8/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "华为吧资源", "name": "华为吧资源", "type": 1, "api": "https://cjhwba.com/api.php/provide/vod/", "playUrl": "https://player.dphw8.com/player?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "速播资源", "name": "速播资源", "type": 1, "api": "https://subocaiji.com/api.php/provide/vod/", "playUrl": "https://subojiexi.com/play/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "极速资源", "name": "极速资源", "type": 1, "api": "https://jszyapi.com/api.php/provide/vod/", "playUrl": "https://jsjiexi.com/play/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "樱花资源", "name": "樱花资源", "type": 1, "api": "https://m3u8.apiyhzy.com/api.php/seacms/vod/", "playUrl": "https://jx.yhzybf.com/player/jx.php?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "非凡资源", "name": "非凡资源", "type": 1, "api": "http://api.ffzyapi.com/api.php/provide/vod/", "playUrl": "https://svip.ffzyplay.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "魔都资源", "name": "魔都资源", "type": 1, "api": "https://www.mdzyapi.com/api.php/provide/vod/", "playUrl": "https://jiexi.modujx01.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "光速资源", "name": "光速资源", "type": 1, "api": "https://api.guangsuapi.com/api.php/provide/vod/", "playUrl": "https://jiexi.guangsuapi.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "快车资源", "name": "快车资源", "type": 1, "api": "https://caiji.kuaichezy.org/api.php/provide/vod/", "playUrl": "https://jiexi.kuaichezy.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "量子资源", "name": "量子资源", "type": 1, "api": "https://cj.lziapi.com/api.php/provide/vod/", "playUrl": "https://lziplayer.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "360资源", "name": "360资源", "type": 1, "api": "https://360zy.com/api.php/provide/vod/", "playUrl": "https://www.360jiexi.com/player/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "如意资源", "name": "如意资源", "type": 1, "api": "https://cj.rycjapi.com/api.php/provide/vod/", "playUrl": "https://ryplayer.com?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "淘片资源", "name": "淘片资源", "type": 1, "api": "https://taopianapi.com/cjapi/sda/vod/", "playUrl": "https://taopianzy.com/play/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "黑木耳资源", "name": "黑木耳资源", "type": 1, "api": "https://json.heimuer.xyz/api.php/provide/vod", "playUrl": "https://hoplayer.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "魔爪资源", "name": "魔爪资源", "type": 1, "api": "https://mozhuazy.com/api.php/provide/vod/", "playUrl": "https://mzm3u8jx.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "ok资源", "name": "ok资源", "type": 1, "api": "https://api.okzy.org/api.php/provide/vod/", "playUrl": "https://jiexi.okzy.me/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "红牛资源", "name": "红牛资源", "type": 1, "api": "https://www.hongniuzy2.com/api.php/provide/vod/", "playUrl": "https://www.hnjiexi.com/m3u8/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+
+    {"key": "影视TV", "name": "影视TV", "type": 1, "api": "https://api.yingshi.tv/api.php/provide/vod/", "playUrl": "https://jiexi.yingshi.tv/jiexi.php?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "子子影视", "name": "子子影视", "type": 1, "api": "https://www.ziziys.com/api.php/provide/vod/", "playUrl": "https://jiexi.ziziys.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "爱佬资源", "name": "爱佬资源", "type": 1, "api": "https://alzyapi.com/api.php/provide/vod/", "playUrl": "https://play.alazyapi.com/m3u8/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "天空资源", "name": "天空资源", "type": 1, "api": "https://tkzyapi.com/api.php/provide/vod/", "playUrl": "https://tkplayer.vip/player/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "八戒资源", "name": "八戒资源", "type": 1, "api": "https://api.bajiezy.cc/api.php/provide/vod/", "playUrl": "https://vip.bajiecaiji.com/m3u8.php?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "酷玩资源", "name": "酷玩短剧", "type": 1, "api": "https://www.kuplayzy.com/api.php/provide/vod/", "playUrl": "https://www.kuplayzy.com/jiexi/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "NO视频", "name": "NO视频", "type": 1, "api": "https://www.ckzy.org/api.php/provide/vod/", "playUrl": "https://www.nosparse.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "乐视资源", "name": "乐视资源", "type": 1, "api": "https://leshiapi.com/api.php/provide/vod/", "playUrl": "https://leshijiexi.com/m3u8/?url=", "searchable": 1, "quickSearch": 1, "filterable": 1, "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "drpy_南风", "name": "南风动漫", "type": 3, "api": "https://ghproxy.com/https://raw.githubusercontent.com/hamcous/SouthWind/main/drpy.js", "searchable": 1, "quickSearch": 1, "filterable": 1, "ext": "https://ghproxy.com/https://raw.githubusercontent.com/hamcous/SouthWind/main/ham.json", "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"key": "聚合搜索", "name": "全网搜", "type": 3, "api": "csp_AppYSV2", "searchable": 1, "quickSearch": 1, "filterable": 1, "ext": "https://ghproxy.com/https://raw.githubusercontent.com/heroaku/TVboxo/main/appys.json", "categories": ["电影", "电视剧", "短剧", "综艺"]}
+  ],
+
+  "parses": [
+    {"name": "聚合", "type": 3, "url": "Demo", "categories": ["电影", "电视剧", "短剧", "综艺"]},
+    {"name": "Web", "type": 3, "url": "Web", "categories": ["电影", "电视剧", "短剧", "综艺"]}
+  ],
+
+  "flags": ["youku", "qq", "iqiyi", "m1905", "letv", "pptv", "sohu", "cntv", "bilibili"],
+
+  "wall": "https://img.rr.tv/cover/202411/201730473_1733043959.jpg",
+
+  "ads": ["mimg.0c1.cn", "www.googie.com", "www5.0c1.cn", "qq.com"]
+}
