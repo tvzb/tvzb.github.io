@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>一键命名 - CCTV频道规范工具</title>
+  <meta name="description" content="CCTV频道一键规范命名，自动添加中文频道名，删除多余尾注，纯前端处理。">
+  <meta name="keywords" content="CCTV命名,iptv频道整理,一键命名,播放源处理">
+  <style>
+    body {
+      font-family: Arial, 'Microsoft YaHei', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 15px auto;
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 18px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    nav {
+      background: linear-gradient(120deg, #4facfe 0%, #00f2fe 100%);
+      padding: 16px 0;
+      text-align: center;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    nav a {
+      display: block;
+      padding: 12px 22px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 30px;
+      transition: all 0.3s;
+      min-width: 100px;
+    }
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.4);
+      transform: translateY(-3px);
+    }
+    nav a.active {
+      background: #e74c3c;
+      box-shadow: 0 6px 15px rgba(231, 76, 60, 0.4);
+    }
+
+    .main-content {
+      padding: 25px 30px;
+      text-align: center;
+    }
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+    .subtitle {
+      color: #555;
+      margin-bottom: 25px;
+      font-size: 17px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 360px;
+      padding: 16px;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      font-family: Consolas, monospace;
+      font-size: 15px;
+      box-sizing: border-box;
+      margin-top: 10px;
+    }
+    textarea:focus {
+      border-color: #4facfe;
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(79, 172, 254, 0.2);
+    }
+    textarea[readonly] {
+      background-color: #f8f9ff;
+    }
+
+    .buttons {
+      margin: 25px 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+    .buttons button {
+      padding: 12px 22px;
+      background: linear-gradient(120deg, #4CAF50 0%, #45a049 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all 0.3s;
+      box-shadow: 0 6px 15px rgba(76, 175, 80, 0.3);
+      min-width: 160px;
+    }
+    .buttons button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(76, 175, 80, 0.4);
+    }
+
+    /* 结果区单独按钮 */
+    .result-actions {
+      margin: 15px 0 5px;
+      display: flex;
+      justify-content: center;
+    }
+    .result-actions button {
+      padding: 12px 26px;
+      background: linear-gradient(120deg, #3498db 0%, #2980b9 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(52, 152, 219, 0.35);
+      transition: all 0.3s;
+    }
+    .result-actions button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(52, 152, 219, 0.45);
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      background: #f0f4f8;
+      color: #718096;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      textarea {
+        height: 280px;
+        font-size: 16px;
+      }
+      .buttons {
+        flex-direction: column;
+      }
+      .buttons button {
+        width: 90%;
+      }
+      .result-actions button {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 导航栏 -->
+  <nav>
+    <ul>
+      <li><a href="editor.html">文字处理</a></li>
+      <li><a href="yjmm.html" class="active">一键命名</a></li>
+      <li><a href="index.html">M3U↔TXT转换</a></li>
+      <li><a href="szq.html">石子棋</a></li>
+    </ul>
+  </nav>
+
+  <div class="main-content">
+    <h1>CCTV 一键命名工具</h1>
+    <p class="subtitle">自动规范频道名 · 删除多余注释 · 纯前端处理</p>
+
+    <h3 style="text-align:left">原始内容：</h3>
+    <textarea id="input" placeholder="粘贴原始频道列表，每行：频道名,URL"></textarea>
+
+    <div class="buttons">
+      <button onclick="process()">一键规范</button>
+      <button onclick="clearAll()">清空</button>
+    </div>
+
+    <h3 style="text-align:left">处理后结果：</h3>
+    <textarea id="output" readonly></textarea>
+
+    <div class="result-actions">
+      <button onclick="copyResult()">拷贝结果</button>
+    </div>
+  </div>
+
+  <footer>
+    © 2026 All Rights Reserved · 本工具仅用于学习与测试
+  </footer>
+</div>
+
+<script>
+const cctvMap = {
+  "1": "综合",
+  "2": "财经",
+  "3": "综艺",
+  "4": "中文国际",
+  "5": "体育",
+  "6": "电影",
+  "7": "国防军事",
+  "8": "电视剧",
+  "9": "纪录",
+  "10": "科教",
+  "11": "戏曲",
+  "12": "社会与法",
+  "13": "新闻",
+  "14": "少儿",
+  "15": "音乐",
+  "16": "奥林匹克",
+  "17": "农业农村"
+};
+
+function process() {
+  const lines = input.value.split(/\r?\n/);
+  const out = [];
+
+  for (let line of lines) {
+    if (!line.trim()) continue;
+    line = line.split("$")[0];
+    line = line.replace(/^(CCTV-?)(\d+),http/i, (m, p, n) => {
+      return "CCTV-" + n + (cctvMap[n] || "") + ",http";
+    });
+    out.push(line.trim());
+  }
+  output.value = out.join("\n");
+}
+
+function clearAll() {
+  input.value = "";
+  output.value = "";
+}
+
+function copyResult() {
+  if (!output.value) return alert("没有内容可拷贝");
+  output.select();
+  document.execCommand("copy");
+  alert("结果已拷贝！");
+}
+</script>
+
+</body>
+</html>
