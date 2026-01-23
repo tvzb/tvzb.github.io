@@ -127,20 +127,22 @@
       color: #333;
       min-height: 24px;
     }
-    .board-wrap {
-      border: 1px solid #eceef5;
-      border-radius: 12px;
-      padding: 12px;
-      background: #fbfbfd;
-      margin: 15px auto;
-    }
-    canvas {
-      display: block;
-      margin: auto;
-      border-radius: 10px;
-      background: var(--board-bg, #ffffff);
-      touch-action: none;
-    }
+.board-wrap {
+  margin: 15px auto;
+  max-width: 100%;
+  overflow-x: auto;
+  text-align: center;
+  border: 1px solid #eceef5;
+  border-radius: 12px;
+  padding: 12px;
+  background: #fbfbfd;
+}
+
+canvas {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+}
     .legend {
       display: flex;
       justify-content: center;
@@ -349,29 +351,38 @@
       const DPR = Math.max(1, window.devicePixelRatio || 1);
 
       // 自适应画布大小
-      function resizeCanvas() {
-        const isMobile = window.innerWidth <= 768;
+function resizeCanvas() {
+  const isMobile = window.innerWidth <= 768;
+  if (isMobile) {
+    SIZE = Math.min(window.innerWidth - 20, window.innerHeight - 220);
+  } else {
+    SIZE = Math.min(window.innerWidth - 80, 660);
+  }
+  SIZE = Math.max(SIZE, 280);
 
-        if (isMobile) {
-          // 手机端：几乎铺满屏幕
-          SIZE = Math.min(window.innerWidth - 20, window.innerHeight - 220);
-        } else {
-          // 桌面端：保持原来的视觉
-          SIZE = Math.min(window.innerWidth - 80, 660);
-        }
+  CELL = (SIZE - PAD * 2) / (GRID - 1);
 
-        SIZE = Math.max(SIZE, 280); // 防止极端情况过小
+  canvas.width = Math.round(SIZE * DPR);
+  canvas.height = Math.round(SIZE * DPR);
+  canvas.style.width = SIZE + "px";
+  canvas.style.height = SIZE + "px";
 
-        CELL = (SIZE - PAD * 2) / (GRID - 1);
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
 
-        canvas.width  = Math.round(SIZE * DPR);
-        canvas.height = Math.round(SIZE * DPR);
-        canvas.style.width  = SIZE + "px";
-        canvas.style.height = SIZE + "px";
+  draw();
+}
 
-        ctx.setTransform(DPR, 0, 0, DPR, 0, 0); // ⚠️ 防止多次 scale 叠加
-        draw();
-      }
+canvas.addEventListener('click', (evt) => {
+  if (aiThinking || gameOver) return;
+  const rect = canvas.getBoundingClientRect();
+  const sx = (evt.clientX - rect.left) * DPR;
+  const sy = (evt.clientY - rect.top) * DPR;
+  const x = fromPx(sx / DPR);
+  const y = fromPx(sy / DPR);
+  if (!inBoard(x, y)) return;
+
+  // 你的点击逻辑代码继续
+});
       window.addEventListener('resize', resizeCanvas);
 
       // UI 元素
