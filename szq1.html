@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -266,10 +265,11 @@
     <!-- 统一导航栏 -->
     <nav>
       <ul>
-        <li><a href="index.html">M3U↔TXT转换</a></li>
-        <li><a href="editor.html">文字处理</a></li>
-        <li><a href="szq.html" class="active">石子棋</a></li>
-        <li><a href="pool.html">桌球</a></li>
+      <li><a href="index.html">文字处理</a></li>
+      <li><a href="yjmm.html">一键命名</a></li>
+      <li><a href="m2t.html">M3U↔TXT转换</a></li>
+      <li><a href="szq.html" class="active">石子棋</a></li>
+
       </ul>
     </nav>
 
@@ -300,10 +300,10 @@
         <div class="settings">
           <label>棋盘背景:
             <select id="board-bg">
-              <option value="#ffffff" selected>白色</option>
+              <option value="#e6d7c3" selected>木纹</option>
+              <option value="#ffffff">白色</option>
               <option value="#f0f0f0">浅灰</option>
               <option value="#d4e4d4">浅绿</option>
-              <option value="#e6d7c3">木纹</option>
             </select>
           </label>
           <label>电脑方棋颜色:
@@ -349,29 +349,30 @@
       const DPR = Math.max(1, window.devicePixelRatio || 1);
 
       // 自适应画布大小
-      function resizeCanvas() {
-     // 手机优先：尽量占满可用宽度，但留一点安全边距
-  const sideMargin = window.innerWidth <= 768 ? 16 : 40;           // 手机留小边距，桌面留大边距
-  const maxWidth = window.innerWidth - sideMargin * 2;
+function resizeCanvas() {
+  const isMobile = window.innerWidth <= 768;
 
-  // 限制最大合理尺寸（避免平板/大屏太夸张）
-  const reasonableMax = window.innerWidth <= 768 ? maxWidth : Math.min(maxWidth, 680);
+  if (isMobile) {
+    // 手机端：几乎铺满屏幕
+    SIZE = Math.min(window.innerWidth - 20, window.innerHeight - 220);
+  } else {
+    // 桌面端：保持原来的视觉
+    SIZE = Math.min(window.innerWidth - 80, 660);
+  }
 
-  SIZE = reasonableMax;
-  
-  // 计算单个格子大小（5×5交点 → 4个间隔）
+  SIZE = Math.max(SIZE, 280); // 防止极端情况过小
+
   CELL = (SIZE - PAD * 2) / (GRID - 1);
-  
-  // 画布像素尺寸（考虑设备像素比）
-  const pixelWidth = Math.round(SIZE * DPR);
-  canvas.width = pixelWidth;
-  canvas.height = pixelWidth;   // 保持正方形
-  canvas.style.width = SIZE + "px";
+
+  canvas.width  = Math.round(SIZE * DPR);
+  canvas.height = Math.round(SIZE * DPR);
+  canvas.style.width  = SIZE + "px";
   canvas.style.height = SIZE + "px";
 
-  ctx.scale(DPR, DPR);
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0); // ⚠️ 防止多次 scale 叠加
   draw();
 }
+
       window.addEventListener('resize', resizeCanvas);
 
       // UI 元素
