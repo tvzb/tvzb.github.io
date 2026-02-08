@@ -113,6 +113,24 @@ CCTV-欧洲,http://m.061899.xyz/mg/cctv4o
 
 
 央视频道,#genre#
+CCTV-1综合,http://23.237.228.134/live5/CCTV1.m3u8
+CCTV-2财经,http://23.237.228.134/live5/CCTV2.m3u8
+CCTV-3综艺,http://23.237.228.134/live5/CCTV3.m3u8
+CCTV-4中文国际,http://23.237.228.134/live5/CCTV4.m3u8
+CCTV-5体育,http://23.237.228.134/live5/CCTV5p.m3u8
+CCTV-6电影,http://23.237.228.134/live5/CCTV6.m3u8
+CCTV-7军事农业,http://23.237.228.134/live5/CCTV7.m3u8
+CCTV-8电视剧,http://23.237.228.134/live5/CCTV8.m3u8
+CCTV-9纪录,http://23.237.228.134/live5/CCTV9.m3u8
+CCTV-10科教,http://23.237.228.134/live5/CCTV10.m3u8
+CCTV-11戏曲,http://23.237.228.134/live5/CCTV11.m3u8
+CCTV-12社会与法,http://23.237.228.134/live3/CCTV12.m3u8
+CCTV-13新闻,http://23.237.228.134/live5/CCTV13.m3u8
+CCTV-14少儿,http://23.237.228.134/live3/CCTV14.m3u8
+CCTV-15音乐,http://23.237.228.134/live3/CCTV15.m3u8
+CCTV-16少儿,http://23.237.228.134/live5/CCTV16.m3u8
+CCTV-17农业农村,http://23.237.228.134/live3/CCTV17.m3u8
+
 CCTV-1综合,https://60.191.56.186:8888/hls/1/index.m3u8
 CCTV-2财经,https://60.191.56.186:8888/hls/2/index.m3u8
 CCTV-3综艺,https://60.191.56.186:8888/hls/3/index.m3u8
@@ -129,19 +147,6 @@ CCTV-13新闻,https://60.191.56.186:8888/hls/13/index.m3u8
 CCTV-15音乐,https://60.191.56.186:8888/hls/14/index.m3u8
 CCTV-16奥林匹克,https://60.191.56.186:8888/hls/16/index.m3u8
 CCTV-1综合,http://play.kankanlive.com/live/1698234869325962.m3u8
-
-CCTV-1综合,http://23.237.228.134/live5/CCTV1.m3u8
-CCTV-2财经,http://23.237.228.134/live5/CCTV2.m3u8
-CCTV-3综艺,http://23.237.228.134/live5/CCTV3.m3u8
-CCTV-5体育,http://23.237.228.134/live5/CCTV5p.m3u8
-CCTV-7军事农业,http://23.237.228.134/live5/CCTV7.m3u8
-CCTV-8电视剧,http://23.237.228.134/live5/CCTV8.m3u8
-CCTV-9纪录,http://23.237.228.134/live5/CCTV9.m3u8
-CCTV-10科教,http://23.237.228.134/live5/CCTV10.m3u8
-CCTV-12社会与法,http://23.237.228.134/live3/CCTV12.m3u8
-CCTV-14少儿,http://23.237.228.134/live3/CCTV14.m3u8
-CCTV-15音乐,http://23.237.228.134/live3/CCTV15.m3u8
-CCTV-17农业农村,http://23.237.228.134/live3/CCTV17.m3u8
 
 CCTV-1综合,http://222.135.142.75:3283/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-2财经,http://222.135.142.75:3283/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0
