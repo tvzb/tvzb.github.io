@@ -18,8 +18,22 @@ CCTV-16体育赛事,http://38.75.136.137:98/gslb/dsdqca/chcjtyyhd.m3u8?auth=test
 CCTV-17农业农村,http://38.75.136.137:98/gslb/dsdqbv/cctv17hd.m3u8?auth=test20251009
 
 CCTV-1综合,http://202.168.168.50:5000/tsfile/live/1000_1.m3u8
+CCTV-2财经,http://202.168.168.50:5000/tsfile/live/1001_1.m3u8
+CCTV-3综艺,http://202.168.168.50:5000/tsfile/live/1002_1.m3u8
+CCTV-4中文国际,http://202.168.168.50:5000/tsfile/live/1003_1.m3u8
 CCTV-5体育,http://202.168.168.50:5000/tsfile/live/1004_1.m3u8
-CCTV-16奥林匹克,http://202.168.168.50:5000/tsfile/live/1015_1.m3u8
+CCTV-6电影,http://202.168.168.50:5000/tsfile/live/1005_1.m3u8
+CCTV-7国防军事,http://202.168.168.50:5000/tsfile/live/1006_1.m3u8
+CCTV-8电视剧,http://202.168.168.50:5000/tsfile/live/1007_1.m3u8
+CCTV-9纪录,http://202.168.168.50:5000/tsfile/live/1009_1.m3u8
+CCTV-10科教,http://202.168.168.50:5000/tsfile/live/1010_1.m3u8
+CCTV-11戏曲,http://202.168.168.50:5000/tsfile/live/1011_1.m3u8
+CCTV-12社会与法,http://202.168.168.50:5000/tsfile/live/1012_1.m3u8
+CCTV-13新闻,http://202.168.168.50:5000/tsfile/live/1013_1.m3u8
+CCTV-14少儿,http://202.168.168.50:5000/tsfile/live/1014_1.m3u8
+CCTV-15音乐,http://202.168.168.50:5000/tsfile/live/1015_1.m3u8
+CCTV-16奥林匹克,http://202.168.168.50:5000/tsfile/live/1016_1.m3u8
+CCTV-17农业农村,http://202.168.168.50:5000/tsfile/live/1017_1.m3u8
 
 CCTV-1综合,https://60.191.56.186:8888/hls/1/index.m3u8
 CCTV-2财经,https://60.191.56.186:8888/hls/2/index.m3u8
