@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>一键命名 - CCTV频道规范工具</title>
+  <style>
+    body { font-family: Arial, 'Microsoft YaHei', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; color: #333; }
+    .container { max-width: 1100px; margin: 15px auto; background: rgba(255, 255, 255, 0.96); border-radius: 18px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); overflow: hidden; backdrop-filter: blur(10px); }
+    nav { background: linear-gradient(120deg, #4facfe 0%, #00f2fe 100%); padding: 16px 0; text-align: center; }
+    nav ul { list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+    nav a { display: block; padding: 12px 22px; background: rgba(255, 255, 255, 0.2); color: white; text-decoration: none; font-size: 16px; font-weight: 600; border-radius: 30px; transition: all 0.3s; min-width: 100px; }
+    nav a:hover { background: rgba(255, 255, 255, 0.4); transform: translateY(-3px); }
+    nav a.active { background: #e74c3c; box-shadow: 0 6px 15px rgba(231, 76, 60, 0.4); }
+    .main-content { padding: 25px 30px; text-align: center; }
+    h1 { color: #2c3e50; margin-bottom: 10px; font-size: 28px; }
+    .subtitle { color: #555; margin-bottom: 25px; font-size: 17px; }
+    textarea { width: 100%; height: 260px; padding: 16px; border: 2px solid #ddd; border-radius: 12px; font-family: Consolas, monospace; font-size: 15px; box-sizing: border-box; margin-top: 10px; }
+    .buttons { margin: 20px 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+    .buttons button { padding: 12px 22px; background: linear-gradient(120deg, #4CAF50 0%, #45a049 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: 600; transition: all 0.3s; min-width: 160px; }
+    .btn-gen { background: linear-gradient(120deg, #f39c12 0%, #e67e22 100%) !important; }
+    .generator-section { margin-top: 40px; padding: 25px; border: 2px dashed #e67e22; border-radius: 12px; background: #fffdf9; text-align: left; }
+    .gen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+    .gen-group { display: flex; flex-direction: column; }
+    .gen-group label { font-size: 13px; color: #666; margin-bottom: 5px; font-weight: bold; }
+    .gen-group input { padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px; }
+    footer { text-align: center; padding: 25px; background: #f0f4f8; color: #718096; font-size: 14px; }
+    @media (max-width: 768px) { .gen-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<div class="container">
+  <nav>
+    <ul>
+      <li><a href="index.html">文字处理</a></li>
+      <li><a href="yjmm.html" class="active">一键命名</a></li>
+      <li><a href="m2t.html">M3U↔TXT转换</a></li>
+      <li><a href="szq.html">石子棋</a></li>
+    </ul>
+  </nav>
+
+  <div class="main-content">
+    <h1>CCTV 一键命名工具</h1>
+    <p class="subtitle">自动规范频道名 · 删除多余注释 · 纯前端处理</p>
+    
+    <textarea id="input" placeholder="粘贴原始频道列表，每行：频道名,URL"></textarea>
+    <div class="buttons">
+      <button onclick="process()">一键规范</button>
+      <button onclick="clearAll()" style="background:#95a5a6">清空</button>
+    </div>
+
+    <div class="generator-section">
+      <h3 style="color:#e67e22; margin-top:0">智能直播源递增生成器 (CCTV 1-17)</h3>
+      <p style="font-size: 13px; color: #888; margin-bottom:15px;">输入任意两个频道（如 cctv6 和 cctv12），系统会自动计算 URL 中的数字和字母路径变化。</p>
+      
+      <div class="gen-grid">
+        <div class="gen-group">
+          <label>频道 A 示例</label>
+          <input type="text" id="source1" placeholder="CCTV-6,http://.../dsdqbv/cctv6hd.m3u8">
+        </div>
+        <div class="gen-group">
+          <label>频道 B 示例</label>
+          <input type="text" id="source2" placeholder="CCTV-12,http://.../dsdqca/cctv12hd.m3u8">
+        </div>
+      </div>
+      <div class="buttons" style="margin:0">
+        <button class="btn-gen" onclick="smartGenerate()">智能计算并生成 1-17 全系列</button>
+      </div>
+    </div>
+
+    <h3 style="text-align:left; margin-top:30px">处理后结果：</h3>
+    <textarea id="output" readonly></textarea>
+    <div class="result-actions" style="margin-top:10px; text-align:center">
+      <button onclick="copyResult()" style="padding: 12px 40px; background: #3498db; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">拷贝结果</button>
+    </div>
+  </div>
+  <footer>© 2026 All Rights Reserved</footer>
+</div>
+
+<script>
+const cctvConfig = [
+  { id: 1, name: "综合" }, { id: 2, name: "财经" }, { id: 3, name: "综艺" },
+  { id: 4, name: "中文国际" }, { id: 5, name: "体育" }, { id: 6, name: "电影" },
+  { id: 7, name: "国防军事" }, { id: 8, name: "电视剧" }, { id: 9, name: "纪录" },
+  { id: 10, name: "科教" }, { id: 11, name: "戏曲" }, { id: 12, name: "社会与法" },
+  { id: 13, name: "新闻" }, { id: 14, name: "少儿" }, { id: 15, name: "音乐" },
+  { id: 16, name: "奥林匹克" }, { id: 17, name: "农业农村" }
+];
+
+// 模糊抓取 ID 数字
+function extractId(s) {
+  const m = s.split(',')[0].match(/cctv-?(\d+)/i);
+  return m ? parseInt(m[1]) : null;
+}
+
+// 字母转数字（用于推算 dsdqbv 这种路径）
+function alphaToNum(s) {
+  let res = 0;
+  for (let i = 0; i < s.length; i++) {
+    res = res * 26 + (s.toLowerCase().charCodeAt(i) - 96);
+  }
+  return res;
+}
+function numToAlpha(n, len) {
+  let res = "";
+  while (n > 0) {
+    res = String.fromCharCode(((n - 1) % 26) + 97) + res;
+    n = Math.floor((n - 1) / 26);
+  }
+  return res.padStart(len, 'a');
+}
+
+function process() {
+  const map = {}; cctvConfig.forEach(c => map[c.id] = c.name);
+  const lines = document.getElementById('input').value.split(/\r?\n/);
+  const out = lines.map(l => {
+    if(!l.trim()) return "";
+    let parts = l.split(',');
+    let id = extractId(parts[0]);
+    return (id && map[id]) ? `CCTV-${id}${map[id]},${parts.slice(1).join(',')}` : l;
+  });
+  document.getElementById('output').value = out.filter(x => x).join('\n');
+}
+
+function smartGenerate() {
+  const s1 = document.getElementById('source1').value.trim();
+  const s2 = document.getElementById('source2').value.trim();
+  if (!s1 || !s2) return alert("请输入两个示例！");
+
+  const id1 = extractId(s1), id2 = extractId(s2);
+  if (id1 === null || id2 === null || id1 === id2) return alert("识别频道序号失败！");
+
+  const url1 = s1.split(',')[1], url2 = s2.split(',')[1];
+  // 核心：将 URL 拆分为 数字、字母、其他 三类块
+  const regex = /(\d+|[a-zA-Z]+|[^0-9a-zA-Z]+)/g;
+  const t1 = url1.match(regex), t2 = url2.match(regex);
+
+  if (t1.length !== t2.length) return alert("URL 结构差异过大，无法计算。");
+
+  let result = [];
+  cctvConfig.forEach(ch => {
+    let newUrl = t1.map((chunk, i) => {
+      const other = t2[i];
+      if (chunk === other) return chunk;
+
+      // 如果是数字块
+      if (/^\d+$/.test(chunk) && /^\d+$/.test(other)) {
+        const v1 = parseInt(chunk), v2 = parseInt(other);
+        const step = (v2 - v1) / (id2 - id1);
+        const val = Math.round(v1 + (ch.id - id1) * step);
+        return val.toString().padStart(chunk.length, '0');
+      }
+      // 如果是纯字母块（如 bv -> ca）
+      if (/^[a-zA-Z]+$/.test(chunk) && /^[a-zA-Z]+$/.test(other) && chunk.length === other.length) {
+        const v1 = alphaToNum(chunk), v2 = alphaToNum(other);
+        const step = (v2 - v1) / (id2 - id1);
+        const val = Math.round(v1 + (ch.id - id1) * step);
+        let res = numToAlpha(val, chunk.length);
+        return chunk[0] === chunk[0].toUpperCase() ? res.toUpperCase() : res;
+      }
+      return chunk;
+    }).join('');
+    result.push(`CCTV-${ch.id}${ch.name},${newUrl}`);
+  });
+
+  document.getElementById('output').value = result.join('\n');
+}
+
+function clearAll() {
+  document.querySelectorAll('textarea, input').forEach(i => i.value = "");
+}
+
+function copyResult() {
+  const o = document.getElementById('output');
+  if (!o.value) return alert("无内容");
+  o.select(); document.execCommand("copy"); alert("已拷贝");
+}
+</script>
+</body>
+</html>
