@@ -19,7 +19,7 @@
   "sites": [
     {
     "key": "drpy_推荐",
-    "name": "热播推荐（drpy）",
+    "name": "🔥热播推荐",
     "type": 3,
     "api": "drpy",
     "ext": "https://ghproxy.net/https://raw.githubusercontent.com/hjdhnx/dr_py/main/js/豆瓣.js" 
