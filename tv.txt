@@ -20,7 +20,7 @@
       "quickSearch": 1,
       "ext": "https://ghproxy.com/https://raw.githubusercontent.com/heroaku/TVboxo/main/appys.json"
     },
-    {
+    
     {"key": "金鹰资源", "name": "⚡金鹰资源", "type": 1, "api": "https://jyzyapi.com/provide/vod/", "playUrl": "https://hd.iapijy.com/play?url="},
     {"key": "新浪资源", "name": "⚡新浪资源", "type": 1, "api": "https://api.xinlangapi.com/xinlangapi.php/provide/vod/", "playUrl": "https://xinlangjiexi.com/?url="},
     {"key": "豪华资源", "name": "⚡豪华资源", "type": 1, "api": "https://hhzyapi.com/api.php/provide/vod/", "playUrl": "https://hhjiexi.com/play/?url="},
