@@ -1,0 +1,195 @@
+{
+  "spider": "https://ghproxy.net/https://raw.githubusercontent.com/gaotianliuyun/gao/master/lib/spider.jar",
+
+  "lives": [
+    {
+      "name": "自动直播",
+      "type": 0,
+      "url": "https://tvzb.github.io/live.txt",
+      "playerType": 1
+    }
+  ],
+
+  "sites": [
+    {
+      "key": "豆瓣热播",
+      "name": "豆瓣热播🔥",
+      "type": 3,
+      "api": "csp_Douban",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1
+    },
+    {
+      "key": "csp_AppYSV2",
+      "name": "全网聚合搜🔍",
+      "type": 3,
+      "api": "csp_AppYSV2",
+      "searchable": 1,
+      "quickSearch": 1,
+      "ext": "https://ghproxy.com/https://raw.githubusercontent.com/heroaku/TVboxo/main/appys.json"
+    },
+    {
+      "key": "金鹰资源",
+      "name": "🔵金鹰资源",
+      "type": 1,
+      "api": "https://jyzyapi.com/provide/vod/",
+      "playUrl": "https://hd.iapijy.com/play?url="
+    },
+    {
+      "key": "新浪资源",
+      "name": "🔵新浪资源",
+      "type": 1,
+      "api": "https://api.xinlangapi.com/xinlangapi.php/provide/vod/",
+      "playUrl": "https://xinlangjiexi.com/?url="
+    },
+    {
+      "key": "豪华资源",
+      "name": "🔵豪华资源",
+      "type": 1,
+      "api": "https://hhzyapi.com/api.php/provide/vod/",
+      "playUrl": "https://hhjiexi.com/play/?url="
+    },
+    {
+      "key": "U酷资源",
+      "name": "🔵U酷资源",
+      "type": 1,
+      "api": "https://api.ukuapi.com/api.php/provide/vod/",
+      "playUrl": "https://api.ukubf.com/m3u8/?url="
+    },
+    {
+      "key": "卧龙资源",
+      "name": "🔵卧龙资源",
+      "type": 1,
+      "api": "https://collect.wolongzy.cc/api.php/provide/vod/",
+      "playUrl": "https://jx.wolongzy.net/m3u8.php?url="
+    },
+    {
+      "key": "极速资源",
+      "name": "⚡极速资源",
+      "type": 1,
+      "api": "https://jszyapi.com/api.php/provide/vod/",
+      "playUrl": "https://jsjiexi.com/play/?url="
+    },
+    {
+      "key": "快车资源",
+      "name": "🚀快车资源",
+      "type": 1,
+      "api": "https://caiji.kuaichezy.org/api.php/provide/vod/",
+      "playUrl": "https://jiexi.kuaichezy.com/?url="
+    },
+    {
+      "key": "光速资源",
+      "name": "🚀光速资源",
+      "type": 1,
+      "api": "https://api.guangsuapi.com/api.php/provide/vod/",
+      "playUrl": "https://jiexi.guangsuapi.com/?url="
+    },
+    {
+      "key": "红牛资源",
+      "name": "🐂红牛资源",
+      "type": 1,
+      "api": "https://www.hongniuzy2.com/api.php/provide/vod/",
+      "playUrl": "https://www.hnjiexi.com/m3u8/?url="
+    },
+    {
+      "key": "量子资源",
+      "name": "⚛️量子资源",
+      "type": 1,
+      "api": "https://cj.lziapi.com/api.php/provide/vod/",
+      "playUrl": "https://lziplayer.com/?url="
+    },
+    {
+      "key": "非凡资源",
+      "name": "✨非凡资源",
+      "type": 1,
+      "api": "http://api.ffzyapi.com/api.php/provide/vod/",
+      "playUrl": "https://svip.ffzyplay.com/?url="
+    },
+    {
+      "key": "暴风资源",
+      "name": "🌀暴风资源",
+      "type": 1,
+      "api": "https://bfzyapi.com/api.php/provide/vod/",
+      "playUrl": "https://bfzy.jiexi.bfzyapi.com/?url="
+    },
+    {
+      "key": "ikun资源",
+      "name": "🐔ikun资源",
+      "type": 1,
+      "api": "https://ikunzyapi.com/api.php/provide/vod/",
+      "playUrl": "https://www.ikdmjx.com/?url="
+    },
+    {
+      "key": "索尼资源",
+      "name": "📸索尼资源",
+      "type": 1,
+      "api": "https://suoniapi.com/api.php/provide/vod/",
+      "playUrl": "https://www.snjiexi.com/play/?url="
+    },
+    {
+      "key": "樱花资源",
+      "name": "🌸樱花资源",
+      "type": 1,
+      "api": "https://m3u8.apiyhzy.com/api.php/seacms/vod/",
+      "playUrl": "https://jx.yhzybf.com/player/jx.php?url="
+    },
+    {
+      "key": "酷玩短剧",
+      "name": "🎭酷玩短剧",
+      "type": 1,
+      "api": "https://www.kuplayzy.com/api.php/provide/vod/",
+      "playUrl": "https://www.kuplayzy.com/jiexi/?url="
+    },
+    {
+      "key": "黑木耳",
+      "name": "🍄黑木耳资源",
+      "type": 1,
+      "api": "https://json.heimuer.xyz/api.php/provide/vod",
+      "playUrl": "https://hoplayer.com/?url="
+    }
+  ],
+
+  "parses": [
+    {
+      "name": "聚合解析",
+      "type": 3,
+      "url": "Demo"
+    },
+    {
+      "name": "Web解析",
+      "type": 3,
+      "url": "Web"
+    },
+    {
+      "name": "全能解析",
+      "type": 1,
+      "url": "https://jx.jsonplayer.com/player/?url=",
+      "header": {
+        "User-Agent": "Mozilla/5.0"
+      }
+    }
+  ],
+
+  "flags": [
+    "youku",
+    "qq",
+    "iqiyi",
+    "m1905",
+    "letv",
+    "pptv",
+    "sohu",
+    "cntv",
+    "bilibili",
+    "mgtv"
+  ],
+
+  "wall": "https://img.rr.tv/cover/202411/201730473_1733043959.jpg",
+
+  "ads": [
+    "mimg.0c1.cn",
+    "www.googie.com",
+    "ad.com",
+    "v.ad.com"
+  ]
+}
