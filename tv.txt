@@ -10,8 +10,6 @@
     }
   ],
   
-  "sites": [ 
-
 "sites": [
     {"key": "金鹰资源", "name": "⚡金鹰资源", "type": 1, "api": "https://jyzyapi.com/provide/vod/", "playUrl": "https://hd.iapijy.com/play?url=", "searchable": 1, "quickSearch": 1, "filterable": 0},
     {"key": "新浪资源", "name": "⚡新浪资源", "type": 1, "api": "https://api.xinlangapi.com/xinlangapi.php/provide/vod/", "playUrl": "https://xinlangjiexi.com/?url=", "searchable": 1, "quickSearch": 1, "filterable": 0},
