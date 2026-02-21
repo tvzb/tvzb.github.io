@@ -18,11 +18,12 @@
   
   "sites": [
     {
-    "key": "drpy_推荐",
-    "name": "🔥热播推荐",
-    "type": 3,
-    "api": "drpy",
-    "ext": "https://ghproxy.net/https://raw.githubusercontent.com/hjdhnx/dr_py/main/js/豆瓣.js" 
+     "key": "tian_tu",
+     "name": "天天推荐🔥",
+     "type": 3,
+     "api": "csp_TianTu",
+     "searchable": 0,  // 只用于首页推荐
+     "ext": ""  
     },
     {
       "key": "csp_AppYSV2",
