@@ -18,12 +18,13 @@
   
   "sites": [
     {
-     "key": "tian_tu",
-     "name": "天天推荐🔥",
-     "type": 3,
-     "api": "csp_TianTu",
-     "searchable": 0,  // 只用于首页推荐
-     "ext": ""  
+      "key": "豆瓣热播",
+      "name": "豆瓣热播🔥",
+      "type": 3,
+      "api": "csp_Douban",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1
     },
     {
       "key": "csp_AppYSV2",
