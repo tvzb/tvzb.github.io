@@ -18,13 +18,11 @@
   
   "sites": [
     {
-      "key": "豆瓣热播",
-      "name": "豆瓣热播🔥",
-      "type": 3,
-      "api": "csp_Douban",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1
+    "key": "drpy_推荐",
+    "name": "热播推荐（drpy）",
+    "type": 3,
+    "api": "drpy",
+    "ext": "https://ghproxy.net/https://raw.githubusercontent.com/hjdhnx/dr_py/main/js/豆瓣.js" 
     },
     {
       "key": "csp_AppYSV2",
