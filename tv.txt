@@ -67,7 +67,8 @@
     {"key": "八戒资源", "name": "八戒资源", "type": 1, "api": "https://api.bajiezy.cc/api.php/provide/vod/", "playUrl": "https://vip.bajiecaiji.com/m3u8.php?url="},
     {"key": "酷玩资源", "name": "酷玩短剧", "type": 1, "api": "https://www.kuplayzy.com/api.php/provide/vod/", "playUrl": "https://www.kuplayzy.com/jiexi/?url="},
     {"key": "NO视频", "name": "NO视频", "type": 1, "api": "https://www.ckzy.org/api.php/provide/vod/", "playUrl": "https://www.nosparse.com/?url="},
-    {"key": "乐视资源", "name": "乐视资源", "type": 1, "api": "https://leshiapi.com/api.php/provide/vod/", "playUrl": "https://leshijiexi.com/m3u8/?url="},
+    {"key": "乐视资源", "name": "乐视资源", "type": 1, "api": "https://leshiapi.com/api.php/provide/vod/", "playUrl": "https://leshijiexi.com/m3u8/?url="}
+],
 
   "parses": [
     {"name": "聚合解析", "type": 3, "url": "Demo"},
