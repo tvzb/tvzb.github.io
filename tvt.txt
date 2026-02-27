@@ -1,7 +1,9 @@
 {
-  "spider": "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/jar/catvod.jar",
-  "wallpaper": "http://饭太硬.top壁纸/api.php?get=1080",
+  "spider": "",
+
+  "wallpaper": "http://饭太硬.top/壁纸/api.php?get=1080",
   "logo": "https://static.饭太硬.com/logo.png",
+
   "lives": [
     {
       "name": "直播",
@@ -10,10 +12,11 @@
       "playerType": 1
     }
   ],
+
   "sites": [
     {
       "key": "csp_JP",
-      "name": "JP聚合",
+      "name": "聚合搜索",
       "type": 3,
       "api": "csp_JP",
       "searchable": 1,
@@ -31,13 +34,14 @@
     },
     {
       "key": "csp_Push",
-      "name": "推送",
+      "name": "推  送",
       "type": 3,
       "api": "csp_Push",
       "searchable": 0,
       "quickSearch": 0,
       "filter": false
     },
+
     {
       "key": "金鹰资源",
       "name": "金鹰资源",
@@ -429,26 +433,19 @@
       "filterable": 0
     }
   ],
+
   "parses": [
     {
       "name": "聚合解析1",
       "type": 3,
-      "url": "https://jx.饭太硬.com/api.php?url="
-    },
-    {
-      "name": "聚合解析2",
-      "type": 3,
-      "url": "http://www.饭太硬.com/jx/?url="
-    },
-    {
-      "name": "备用解析",
-      "type": 3,
-      "url": "https://api.m3u8.tv/jiexi/?url="
+      "url": "https://api.m3u8.tv/jx.php?url="
     }
   ],
+
   "header": {
     "Referer": "https://www.饭太硬.com",
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
   },
+
   "rules": []
 }
