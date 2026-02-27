@@ -34,7 +34,7 @@
     },
     {
       "key": "csp_Push",
-      "name": "推  送",
+      "name": "远程推送",
       "type": 3,
       "api": "csp_Push",
       "searchable": 0,
