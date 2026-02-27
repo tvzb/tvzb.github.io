@@ -50,7 +50,7 @@
       "playUrl": "https://hd.iapijy.com/play?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "新浪资源",
@@ -60,7 +60,7 @@
       "playUrl": "https://xinlangjiexi.com/?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "豪华资源",
@@ -70,7 +70,7 @@
       "playUrl": "https://hhjiexi.com/play/?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "卧龙资源",
@@ -80,7 +80,7 @@
       "playUrl": "https://jx.wolongzy.net/m3u8.php?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "速播资源",
@@ -90,7 +90,7 @@
       "playUrl": "https://subojiexi.com/play/?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "极速资源",
@@ -100,7 +100,7 @@
       "playUrl": "https://jsjiexi.com/play/?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "魔都资源",
@@ -110,7 +110,7 @@
       "playUrl": "https://jiexi.modujx01.com/?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "光速资源",
@@ -120,7 +120,7 @@
       "playUrl": "https://jiexi.guangsuapi.com/?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "红牛资源",
@@ -130,7 +130,7 @@
       "playUrl": "https://www.hnjiexi.com/m3u8/?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "暴风资源",
@@ -140,7 +140,7 @@
       "playUrl": "https://bfzy.jiexi.bfzyapi.com/?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "天涯资源",
@@ -150,7 +150,7 @@
       "playUrl": "https://tyjiexi.com/?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "百度资源",
@@ -160,7 +160,7 @@
       "playUrl": "https://jx.jxbdzyw.com/m3u8/?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "豆瓣资源",
@@ -170,7 +170,7 @@
       "playUrl": "https://jiexi.dbzyz01.com/?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "飞速资源",
@@ -179,7 +179,7 @@
       "api": "https://www.feisuzy.com/api.php/provide/vod/",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "快看资源",
@@ -188,7 +188,7 @@
       "api": "https://kuaikan-api.com/api.php/provide/vod/",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "虎牙资源",
@@ -197,7 +197,7 @@
       "api": "https://www.huyaapi.com/api.php/provide/vod/from/hym3u8",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "最大资源",
@@ -206,7 +206,7 @@
       "api": "http://zuidazy.me/api.php/provide/vod/",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "淘片资源",
@@ -215,7 +215,7 @@
       "api": "https://taopianapi.com/cjapi/mc/vod/json.html",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "无尽资源",
@@ -225,7 +225,7 @@
       "playUrl": "https://jx.wujinkk.com/dplayer/?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "索尼资源",
@@ -235,7 +235,7 @@
       "searchable": 1,
       "changeable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "优酷资源",
@@ -244,7 +244,7 @@
       "api": "https://api.ukuapi.com/api.php/provide/vod/",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "天堂资源",
@@ -253,7 +253,7 @@
       "api": "http://caiji.dyttzyapi.com/api.php/provide/vod/",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "茅台资源",
@@ -262,7 +262,7 @@
       "api": "https://caiji.maotaizy.cc/api.php/provide/vod/from/mtm3u8/",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "无线资源",
@@ -271,7 +271,7 @@
       "api": "https://api.wuxianzy.net/api.php/provide/vod/",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "蜂巢资源",
@@ -280,7 +280,7 @@
       "api": "https://api.fczy888.me/api.php/provide/vod",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "华为吧资源",
@@ -290,7 +290,7 @@
       "playUrl": "https://player.dphw8.com/player?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "樱花资源",
@@ -300,7 +300,7 @@
       "playUrl": "https://jx.yhzybf.com/player/jx.php?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "非凡资源",
@@ -310,7 +310,7 @@
       "playUrl": "https://svip.ffzyplay.com/?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "快车资源",
@@ -320,7 +320,7 @@
       "playUrl": "https://jiexi.kuaichezy.com/?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "量子资源",
@@ -330,7 +330,7 @@
       "playUrl": "https://lziplayer.com/?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "如意资源",
@@ -340,7 +340,7 @@
       "playUrl": "https://ryplayer.com?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "黑木耳资源",
@@ -350,7 +350,7 @@
       "playUrl": "https://hoplayer.com/?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "魔爪资源",
@@ -360,7 +360,7 @@
       "playUrl": "https://mzm3u8jx.com/?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "ok资源",
@@ -370,7 +370,7 @@
       "playUrl": "https://jiexi.okzy.me/?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "影视TV",
@@ -380,7 +380,7 @@
       "playUrl": "https://jiexi.yingshi.tv/jiexi.php?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "天空资源",
@@ -390,7 +390,7 @@
       "playUrl": "https://tkplayer.vip/player/?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "八戒资源",
@@ -400,7 +400,7 @@
       "playUrl": "https://vip.bajiecaiji.com/m3u8.php?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "酷玩资源",
@@ -410,7 +410,7 @@
       "playUrl": "https://www.kuplayzy.com/jiexi/?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "NO视频",
@@ -420,7 +420,7 @@
       "playUrl": "https://www.nosparse.com/?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     },
     {
       "key": "乐视资源",
@@ -430,7 +430,7 @@
       "playUrl": "https://leshijiexi.com/m3u8/?url=",
       "searchable": 1,
       "quickSearch": 1,
-      "filterable": 0
+      "categories": ["动作片", "剧情片", "喜剧片", "恐怖片", "短剧", "欧美剧", "国产剧", "日韩剧"],
     }
   ],
 
