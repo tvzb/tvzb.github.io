@@ -2,6 +2,16 @@
   "spider": "http://www.饭太硬.com/tv/lib/fty.jar",
   "wallpaper": "http://饭太硬.top壁纸/api.php?get=1080",
   "logo": "https://static.饭太硬.com/logo.png",
+
+  "lives": [
+    {
+      "name": "直播",
+      "type": 0,
+      "url": "https://tvzb.github.io/live.txt",
+      "playerType": 1
+    }
+  ],
+
   "sites": [
     {
       "key": "csp_JP",
