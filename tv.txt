@@ -73,8 +73,18 @@
       "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
     },
     {
+      "key": "量子资源",
+      "name": "⚡4量子资源",
+      "type": 1,
+      "api": "https://cj.lziapi.com/api.php/provide/vod/",
+      "playUrl": "https://lziplayer.com/?url=",
+      "searchable": 1,
+      "quickSearch": 1,
+      "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
+    },
+    {
       "key": "红牛资源",
-      "name": "⚡4红牛资源",
+      "name": "⚡5红牛资源",
       "type": 1,
       "api": "https://www.hongniuzy2.com/api.php/provide/vod/",
       "playUrl": "https://www.hnjiexi.com/m3u8/?url=",
@@ -84,7 +94,7 @@
     },
     {
       "key": "虎牙资源",
-      "name": "⚡5虎牙资源",
+      "name": "⚡6虎牙资源",
       "type": 1,
       "api": "https://www.huyaapi.com/api.php/provide/vod",
       "playUrl": "https://huyajx.com/play?url=",
@@ -94,7 +104,7 @@
     },
     {
       "key": "卧龙资源",
-      "name": "⚡6卧龙资源",
+      "name": "⚡卧龙资源",
       "type": 1,
       "api": "https://collect.wolongzy.cc/api.php/provide/vod/",
       "playUrl": " https://jx.wolongm3u8.com:65/m3u8.php?url=",
@@ -114,7 +124,7 @@
     },
     {
       "key": "最大资源",
-      "name": "⚡最大资源",
+      "name": "最大资源",
       "type": 1,
       "api": "http://zuidazy.me/api.php/provide/vod/",
       "playUrl": "https://jx.zuidplay.com/m3u8Player/?url=",
@@ -123,18 +133,8 @@
       "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
     },
     {
-      "key": "量子资源",
-      "name": "⚡量子资源",
-      "type": 1,
-      "api": "https://cj.lziapi.com/api.php/provide/vod/",
-      "playUrl": "https://lziplayer.com/?url=",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
-    },
-    {
       "key": "极速资源",
-      "name": "⚡极速资源",
+      "name": "极速资源",
       "type": 1,
       "api": "https://jszyapi.com/api.php/provide/vod/",
       "playUrl": "https://jsjiexi.com/play/?url=",
@@ -144,7 +144,7 @@
     },
     {
       "key": "索尼资源",
-      "name": "⚡索尼资源",
+      "name": "索尼资源",
       "type": 1,
       "api": "https://suoniapi.com/api.php/provide/vod/",
       "playUrl": "https://dxfbk.com/?url=",
@@ -155,7 +155,7 @@
     },
     {
       "key": "茅台资源",
-      "name": "⚡茅台资源",
+      "name": "茅台资源",
       "type": 1,
       "api": "https://caiji.maotaizy.cc/api.php/provide/vod/",
       "playUrl": "https://mtjiexi.cc:966/?url=",
