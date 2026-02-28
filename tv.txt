@@ -187,7 +187,7 @@
       "key": "金鹰资源",
       "name": "金鹰资源",
       "type": 1,
-      "api": "https://jyzyapi.com/provide/vod/",
+      "api": "https://jyzyapi.com/provide/vod/from/jinyingm3u8/at/json",
       "playUrl": "https://hd.iapijy.com/play?url=",
       "searchable": 1,
       "quickSearch": 1,
@@ -260,16 +260,6 @@
       "type": 1,
       "api": "https://api.wujinapi.me/api.php/provide/vod/",
       "playUrl": "https://jx.xllmcms.com/dplayer/?url=",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
-    },
-    {
-      "key": "U酷资源",
-      "name": "U酷资源",
-      "type": 1,
-      "api": "https://api.ukuapi88.com/api.php/provide/vod/",
-      "playUrl": "https://api.ukubf.com/m3u8/?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
