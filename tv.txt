@@ -44,7 +44,7 @@
 
     {
       "key": "暴风资源",
-      "name": "⚡暴风资源",
+      "name": "⚡1暴风资源",
       "type": 1,
       "api": "https://bfzyapi.com/api.php/provide/vod/",
       "playUrl": "https://vip.vipuuvip.com/?url=",
@@ -53,21 +53,51 @@
       "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
     },
     {
-      "key": "卧龙资源",
-      "name": "⚡卧龙资源",
+      "key": "红牛资源",
+      "name": "⚡2红牛资源",
       "type": 1,
-      "api": "https://collect.wolongzy.cc/api.php/provide/vod/",
-      "playUrl": " https://jx.wolongm3u8.com:65/m3u8.php?url=",
+      "api": "https://www.hongniuzy2.com/api.php/provide/vod/",
+      "playUrl": "https://www.hnjiexi.com/m3u8/?url=",
+      "searchable": 1,
+      "quickSearch": 1,
+      "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
+    },
+    {
+      "key": "百度资源",
+      "name": "⚡3百度资源",
+      "type": 1,
+      "api": "https://api.apibdzy.com/api.php/provide/vod/",
+      "playUrl": "https://jx.jxbdzyw.com/m3u8/?url=",
+      "searchable": 1,
+      "quickSearch": 1,
+      "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
+    },
+    {
+      "key": "虎牙资源",
+      "name": "⚡4虎牙资源",
+      "type": 1,
+      "api": "https://www.huyaapi.com/api.php/provide/vod",
+      "playUrl": "https://huyajx.com/play?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
     },
     {
       "key": "新浪资源",
-      "name": "⚡新浪资源",
+      "name": "⚡5新浪资源",
       "type": 1,
       "api": "https://api.xinlangapi.com/xinlangapi.php/provide/vod/",
       "playUrl": "https://www.xinlangjiexi.com/m3u8/?url=",
+      "searchable": 1,
+      "quickSearch": 1,
+      "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
+    },
+    {
+      "key": "卧龙资源",
+      "name": "⚡6卧龙资源",
+      "type": 1,
+      "api": "https://collect.wolongzy.cc/api.php/provide/vod/",
+      "playUrl": " https://jx.wolongm3u8.com:65/m3u8.php?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
@@ -93,16 +123,6 @@
       "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
     },
     {
-      "key": "虎牙资源",
-      "name": "⚡虎牙资源",
-      "type": 1,
-      "api": "https://www.huyaapi.com/api.php/provide/vod",
-      "playUrl": "https://huyajx.com/play?url=",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
-    },
-    {
       "key": "量子资源",
       "name": "⚡量子资源",
       "type": 1,
@@ -118,46 +138,6 @@
       "type": 1,
       "api": "https://jszyapi.com/api.php/provide/vod/",
       "playUrl": "https://jsjiexi.com/play/?url=",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
-    },
-    {
-      "key": "魔都资源",
-      "name": "⚡魔都资源",
-      "type": 1,
-      "api": "https://www.mdzyapi.com/api.php/provide/vod/",
-      "playUrl": "https://jiexi.moduzyjx.com/?url=",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
-    },
-    {
-      "key": "红牛资源",
-      "name": "⚡红牛资源",
-      "type": 1,
-      "api": "https://www.hongniuzy2.com/api.php/provide/vod/",
-      "playUrl": "https://www.hnjiexi.com/m3u8/?url=",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
-    },
-    {
-      "key": "百度资源",
-      "name": "⚡百度资源",
-      "type": 1,
-      "api": "https://api.apibdzy.com/api.php/provide/vod/",
-      "playUrl": "https://jx.jxbdzyw.com/m3u8/?url=",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
-    },
-    {
-      "key": "如意资源",
-      "name": "⚡如意资源",
-      "type": 1,
-      "api": "https://cj.rycjapi.com/api.php/provide/vod/",
-      "playUrl": "https://jx.ryiplayer.com?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
@@ -179,6 +159,26 @@
       "type": 1,
       "api": "https://caiji.maotaizy.cc/api.php/provide/vod/",
       "playUrl": "https://mtjiexi.cc:966/?url=",
+      "searchable": 1,
+      "quickSearch": 1,
+      "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
+    },
+    {
+      "key": "魔都资源",
+      "name": "魔都资源",
+      "type": 1,
+      "api": "https://www.mdzyapi.com/api.php/provide/vod/",
+      "playUrl": "https://jiexi.moduzyjx.com/?url=",
+      "searchable": 1,
+      "quickSearch": 1,
+      "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
+    },
+    {
+      "key": "如意资源",
+      "name": "如意资源",
+      "type": 1,
+      "api": "https://cj.rycjapi.com/api.php/provide/vod/",
+      "playUrl": "https://jx.ryiplayer.com?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
