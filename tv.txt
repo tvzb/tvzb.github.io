@@ -244,17 +244,6 @@
       "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
     },
     {
-      "key": "爱坤资源",
-      "name": "爱坤资源",
-      "type": 1,
-      "api": "https://ikunzyapi.com/api.php/provide/vod/",
-      "playUrl": "https://www.ikdmjx.com/?url=",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
-    },
-
-    {
       "key": "无尽资源",
       "name": "无尽资源",
       "type": 1,
