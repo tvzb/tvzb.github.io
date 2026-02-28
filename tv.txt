@@ -53,11 +53,11 @@
       "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
     },
     {
-      "key": "红牛资源",
-      "name": "⚡2红牛资源",
+      "key": "新浪资源",
+      "name": "⚡2新浪资源",
       "type": 1,
-      "api": "https://www.hongniuzy2.com/api.php/provide/vod/",
-      "playUrl": "https://www.hnjiexi.com/m3u8/?url=",
+      "api": "https://api.xinlangapi.com/xinlangapi.php/provide/vod/",
+      "playUrl": "https://www.xinlangjiexi.com/m3u8/?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
@@ -73,21 +73,21 @@
       "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
     },
     {
-      "key": "虎牙资源",
-      "name": "⚡4虎牙资源",
+      "key": "红牛资源",
+      "name": "⚡4红牛资源",
       "type": 1,
-      "api": "https://www.huyaapi.com/api.php/provide/vod",
-      "playUrl": "https://huyajx.com/play?url=",
+      "api": "https://www.hongniuzy2.com/api.php/provide/vod/",
+      "playUrl": "https://www.hnjiexi.com/m3u8/?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
     },
     {
-      "key": "新浪资源",
-      "name": "⚡5新浪资源",
+      "key": "虎牙资源",
+      "name": "⚡5虎牙资源",
       "type": 1,
-      "api": "https://api.xinlangapi.com/xinlangapi.php/provide/vod/",
-      "playUrl": "https://www.xinlangjiexi.com/m3u8/?url=",
+      "api": "https://www.huyaapi.com/api.php/provide/vod",
+      "playUrl": "https://huyajx.com/play?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
