@@ -139,24 +139,14 @@ CCTV-17农业农村,http://38.75.136.137:98/gslb/dsdqpub/cctv17hd.m3u8?auth=test
 宁夏卫视,http://153.0.171.163:85/tsfile/live/0112_1.m3u8?key=txiptv&playlive=1&authid=0
 
 待测频道,#genre#
-1CCTV1,http://110.83.236.70:59901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
-2CCTV1,http://123.113.101.206:85/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
 3CCTV1,http://61.143.15.139:59901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
 4CCTV1,http://222.85.43.173:19901/tsfile/live/54321_1.m3u8?key=txiptv&playlive=1&authid=0
-5CCTV1,http://42.225.117.174:11199/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
 6CCTV1,http://124.225.35.52:59901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
 7CCTV1,http://58.210.139.130:9901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
 8CCTV1,http://218.17.33.178:53290/tsfile/live/1001_1.m3u8?key=txiptv&playlive=1&authid=0
-9CCTV1,http://113.26.202.52:1299/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
 10CCTV1,http://123.164.227.26:52389/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
 11CCTV1,http://36.136.11.222:19902/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
 12CCTV1,http://36.136.11.230:19902/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
-13CCTV1,http://49.87.154.246:10091/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
-14CCTV1,http://110.248.147.20:53110/tsfile/live/faacts/1000_1.m3u8?key=txiptv&playlive=1&authid=0
 15CCTV1,http://182.37.41.46:8154/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
-16CCTV1,http://110.80.17.38:9999/tsfile/live/0001_1.m3u8?key=txiptv&playlive=0&authid=0
 17CCTV1,http://36.136.11.221:19902/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
-18CCTV1,http://59.175.10.163:7777/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
-19CCTV1,http://61.163.181.78:19901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
-20CCTV1,http://59.175.154.40:7777/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
-21CCTV1,http://183.62.76.246:60101/tsfile/live/0011_1.m3u8?key=txiptv&playlive=1&authid=0
+18CCTV1,http://183.62.76.246:60101/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
