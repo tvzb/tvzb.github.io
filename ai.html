@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>直播源规范化专家 - CCTV & 卫视</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --bg: #f8f9fa;
+        }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg); color: #333; line-height: 1.6; margin: 0; padding: 20px; }
+        .wrapper { max-width: 1000px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        h2 { text-align: center; color: var(--primary); margin-bottom: 5px; }
+        p.tip { text-align: center; color: #666; font-size: 0.9em; margin-bottom: 25px; }
+        
+        textarea { width: 100%; height: 250px; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-family: 'Consolas', monospace; font-size: 14px; box-sizing: border-box; transition: border-color 0.3s; }
+        textarea:focus { border-color: var(--primary); outline: none; }
+        
+        .ctrl-btns { display: flex; gap: 10px; justify-content: center; margin: 20px 0; }
+        button { padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+        .btn-main { background: var(--primary); color: white; }
+        .btn-main:hover { background: var(--secondary); transform: translateY(-1px); }
+        .btn-clear { background: #eee; color: #666; }
+        
+        .output-label { font-weight: bold; margin: 20px 0 10px; display: block; color: #555; }
+        #output { height: 350px; background-color: #f1f3f5; }
+        
+        footer { text-align: center; margin-top: 30px; color: #aaa; font-size: 0.8em; }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <h2>直播源一键规范工具</h2>
+    <p class="tip">支持多服务器自动补全、CCTV标准命名、卫视去杂质排序</p>
+
+    <textarea id="input" placeholder="请在这里粘贴原始地址，格式如：
+CCTV1,http://1.2.3.4:80/live.m3u8
+湖南卫视HD,http://5.6.7.8/abc.ts"></textarea>
+
+    <div class="ctrl-btns">
+        <button class="btn-main" onclick="processData()">开始智能处理</button>
+        <button class="btn-clear" onclick="clearAll()">清空</button>
+    </div>
+
+    <label class="output-label">处理后的标准列表：</label>
+    <textarea id="output" readonly placeholder="规范后的列表将出现在这里..."></textarea>
+    
+    <div style="text-align: center; margin-top: 15px;">
+        <button class="btn-main" style="background:#2ecc71" onclick="copyResult()">拷贝最终结果</button>
+    </div>
+</div>
+
+<footer>© 2026 LiveStream Formatter | 自动化补全技术</footer>
+
+<script>
+const cctvConfig = [
+    { id: 1, name: "综合" }, { id: 2, name: "财经" }, { id: 3, name: "综艺" },
+    { id: 4, name: "中文国际" }, { id: 5, name: "体育" }, { id: 6, name: "电影" },
+    { id: 7, name: "国防军事" }, { id: 8, name: "电视剧" }, { id: 9, name: "纪录" },
+    { id: 10, name: "科教" }, { id: 11, name: "戏曲" }, { id: 12, name: "社会与法" },
+    { id: 13, name: "新闻" }, { id: 14, name: "少儿" }, { id: 15, name: "音乐" },
+    { id: 16, name: "奥林匹克" }, { id: 17, name: "农业农村" }
+];
+
+const satelliteOrder = ["江西卫视", "北京卫视", "东方卫视", "湖南卫视", "浙江卫视", "江苏卫视", "辽宁卫视", "广东卫视", "深圳卫视"];
+
+// 提取服务器特征（用于区分不同线路）
+function getServerBase(url) {
+    try {
+        const u = new URL(url);
+        // 返回 协议+主机名+端口 以及 路径的第一层，用于更精准判断是否属于同一服务器
+        return u.protocol + "//" + u.host + u.pathname.substring(0, u.pathname.lastIndexOf('/'));
+    } catch(e) {
+        return url.split(',')[0]; // 兜底返回
+    }
+}
+
+function processData() {
+    const input = document.getElementById('input').value;
+    if (!input.trim()) return alert("请输入数据");
+
+    const lines = input.split(/\r?\n/).filter(l => l.includes(','));
+    
+    let cctvServers = {}; // 存放不同服务器的CCTV模板
+    let satelliteList = [];
+
+    lines.forEach(line => {
+        let [name, url] = line.split(',').map(s => s.trim());
+        if(!url) return;
+
+        // 识别 CCTV
+        const cctvMatch = name.match(/cctv-?(\d+)/i);
+        if (cctvMatch) {
+            const id = parseInt(cctvMatch[1]);
+            const base = getServerBase(url);
+            if (!cctvServers[base]) {
+                cctvServers[base] = { template: url, idSample: id, map: {} };
+            }
+            cctvServers[base].map[id] = url;
+        } 
+        // 识别卫视
+        else if (name.includes("卫视") || name.toLowerCase().includes("tv")) {
+            let cleanName = name.replace(/(HD|FHD|超清|高清|频道|标清)/gi, "").trim();
+            if (!cleanName.includes("卫视")) cleanName += "卫视";
+            
+            // 排序权重
+            let priority = 999;
+            for(let i=0; i<satelliteOrder.length; i++){
+                if(cleanName.includes(satelliteOrder[i].replace("卫视",""))){
+                    cleanName = satelliteOrder[i];
+                    priority = i;
+                    break;
+                }
+            }
+            satelliteList.push({ name: cleanName, url, priority });
+        }
+    });
+
+    let finalOutput = [];
+
+    // 1. 处理央视频道
+    finalOutput.push("央视频道,#genre#");
+    
+    const serverBases = Object.keys(cctvServers);
+    serverBases.forEach((base, index) => {
+        const server = cctvServers[base];
+        
+        cctvConfig.forEach(conf => {
+            let targetUrl = "";
+            // 如果原列表有，用原地址
+            if (server.map[conf.id]) {
+                targetUrl = server.map[conf.id];
+            } else {
+                // 否则尝试根据同服务器地址进行智能数字替换补全
+                const sampleUrl = server.map[server.idSample];
+                targetUrl = sampleUrl.replace(new RegExp(server.idSample, 'g'), conf.id);
+            }
+            finalOutput.push(`CCTV-${conf.id}${conf.name},${targetUrl}`);
+        });
+
+        // 不同服务器之间加空行（最后一个不加）
+        if (index < serverBases.length - 1) finalOutput.push("");
+    });
+
+    // 2. 处理卫视频道
+    finalOutput.push("\n卫视频道,#genre#");
+    satelliteList.sort((a, b) => {
+        if (a.priority !== b.priority) return a.priority - b.priority;
+        return a.name.localeCompare(b.name, 'zh-CN');
+    });
+
+    // 去重输出
+    const seenSat = new Set();
+    satelliteList.forEach(item => {
+        const key = `${item.name}${item.url}`;
+        if (!seenSat.has(key)) {
+            finalOutput.push(`${item.name},${item.url}`);
+            seenSat.add(key);
+        }
+    });
+
+    document.getElementById('output').value = finalOutput.join('\n');
+}
+
+function clearAll() {
+    document.getElementById('input').value = "";
+    document.getElementById('output').value = "";
+}
+
+function copyResult() {
+    const o = document.getElementById('output');
+    o.select();
+    document.execCommand("copy");
+    alert("结果已复制到剪贴板");
+}
+</script>
+
+</body>
+</html>
