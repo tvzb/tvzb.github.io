@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>直播源规范化专家 - CCTV & 卫视 (支持M3U导入)</title>
+  <title>直播源规范化专家 - CCTV & 卫视 (增强解析版)</title>
   <style>
     body { font-family: Arial, 'Microsoft YaHei', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; color: #333; }
     .container { max-width: 1100px; margin: 15px auto; background: rgba(255, 255, 255, 0.96); border-radius: 18px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); overflow: hidden; backdrop-filter: blur(10px); }
     
-    /* 统一导航栏 */
     nav { background: linear-gradient(120deg, #4facfe 0%, #00f2fe 100%); padding: 16px 0; text-align: center; }
     nav ul { list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
     nav a { display: block; padding: 12px 22px; background: rgba(255, 255, 255, 0.2); color: white; text-decoration: none; font-size: 16px; font-weight: 600; border-radius: 30px; transition: all 0.3s; min-width: 100px; }
@@ -19,27 +18,20 @@
     h1 { color: #2c3e50; margin-bottom: 10px; font-size: 28px; }
     .subtitle { color: #555; margin-bottom: 25px; font-size: 17px; }
     
-    .input-section { position: relative; }
-    textarea { width: 100%; height: 300px; padding: 16px; border: 2px solid #ddd; border-radius: 12px; font-family: Consolas, monospace; font-size: 14px; box-sizing: border-box; margin-top: 10px; transition: all 0.3s; }
+    textarea { width: 100%; height: 280px; padding: 16px; border: 2px solid #ddd; border-radius: 12px; font-family: Consolas, monospace; font-size: 14px; box-sizing: border-box; margin-top: 10px; transition: all 0.3s; }
     textarea:focus { border-color: #4facfe; outline: none; box-shadow: 0 0 10px rgba(79,172,254,0.2); }
     
     .buttons { margin: 20px 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
     .buttons button { padding: 12px 25px; background: linear-gradient(120deg, #4CAF50 0%, #45a049 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: 600; transition: all 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .buttons button:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
-    .btn-process { background: linear-gradient(120deg, #f39c12 0%, #e67e22 100%) !important; font-size: 17px !important; padding: 14px 40px !important; }
+    .btn-process { background: linear-gradient(120deg, #f39c12 0%, #e67e22 100%) !important; font-size: 17px !important; }
     .btn-clear { background: #95a5a6 !important; }
     .btn-copy { background: #3498db !important; }
 
     .tips-box { text-align: left; background: #fffdf0; border-left: 5px solid #f1c40f; padding: 15px; margin: 20px 0; border-radius: 4px; font-size: 14px; color: #7f8c8d; }
-    
     h3 { text-align: left; color: #2c3e50; margin-top: 30px; border-left: 4px solid #4facfe; padding-left: 10px; }
-    #output { background-color: #f8f9fa; color: #2c3e50; height: 400px; }
+    #output { background-color: #f8f9fa; height: 350px; }
 
     footer { text-align: center; padding: 25px; background: #f0f4f8; color: #718096; font-size: 14px; }
-    
-    @media (max-width: 768px) {
-      .buttons button { width: 100%; }
-    }
   </style>
 </head>
 <body>
@@ -56,38 +48,34 @@
 
   <div class="main-content">
     <h1>直播源一键规范工具</h1>
-    <p class="subtitle">支持 M3U/TXT 混合输入 · 自动识别 IP 服务器 · 智能补全 CCTV</p>
+    <p class="subtitle">支持 M3U 智能提取 · 自动识别 IP · 补全 CCTV 1-17</p>
 
     <div class="tips-box">
-      <strong>功能说明：</strong><br>
-      1. 自动转换：粘贴 M3U 格式内容会自动识别并转为处理格式。<br>
-      2. 智能分组：自动生成“央视频道”与“卫视频道”分组标志。<br>
-      3. 自动补全：同一 IP 下只要有一个 CCTV 频道，自动补全 CCTV1-17 全系列。<br>
-      4. 规范命名：自动去除“HD/FHD/超清”等后缀，统一按标准排序。
+      <strong>解析优化说明：</strong><br>
+      • 自动解析 M3U：精准提取 <code>#EXTINF</code> 结尾的频道名及其下方的播放链接。<br>
+      • 自动补全：若同一 IP 只有一个 CCTV 频道，将自动补全该源的全系列 CCTV。<br>
+      • 统一命名：自动去除“高清/HD”等后缀，并按“综合、财经...”顺序排列。
     </div>
     
-    <div class="input-section">
-      <textarea id="input" placeholder="请粘贴原始列表 (支持 M3U 格式或 TXT 格式)..."></textarea>
-    </div>
+    <textarea id="input" placeholder="粘贴 M3U 或 TXT 格式内容..."></textarea>
     
     <div class="buttons">
-      <button class="btn-process" onclick="handleSmartProcess()">一键规范并排序</button>
+      <button class="btn-process" onclick="handleSmartProcess()">一键规范并分组</button>
       <button class="btn-clear" onclick="clearAll()">清空屏幕</button>
     </div>
 
-    <h3>规范化结果：</h3>
-    <textarea id="output" readonly placeholder="处理后的结果将显示在这里..."></textarea>
+    <h3>规范化处理结果：</h3>
+    <textarea id="output" readonly placeholder="处理后的 TXT 格式结果..."></textarea>
     
     <div class="buttons">
-      <button class="btn-copy" onclick="copyResult()">拷贝最终结果</button>
+      <button class="btn-copy" onclick="copyResult()">拷贝结果</button>
     </div>
   </div>
 
-  <footer>© 2026 频道规范工具 · 纯前端安全处理</footer>
+  <footer>© 2026 频道规范工具 · 自动提取与智能补全</footer>
 </div>
 
 <script>
-// --- 核心配置 ---
 const cctvConfig = [
   { id: 1, name: "综合" }, { id: 2, name: "财经" }, { id: 3, name: "综艺" },
   { id: 4, name: "中文国际" }, { id: 5, name: "体育" }, { id: 6, name: "电影" },
@@ -99,54 +87,63 @@ const cctvConfig = [
 
 const topSatellites = ["江西卫视", "北京卫视", "东方卫视", "湖南卫视", "浙江卫视", "江苏卫视", "辽宁卫视", "广东卫视", "深圳卫视"];
 
-// --- 核心逻辑 ---
-
-// 1. 预处理：M3U 转 TXT 格式
+// --- 核心逻辑：精准提取 M3U 中的名称和链接 ---
 function preprocessM3U(rawInput) {
-  if (!rawInput.includes("#EXTM3U")) return rawInput; // 不是M3U则原样返回
+  if (!rawInput.includes("#EXTINF")) return rawInput;
 
-  const lines = rawInput.split('\n');
+  const lines = rawInput.split(/\r?\n/);
   let converted = [];
+  
   for (let i = 0; i < lines.length; i++) {
     let line = lines[i].trim();
+    
+    // 匹配 M3U 的信息行
     if (line.startsWith('#EXTINF:')) {
-      const parts = line.split(',');
-      const name = parts[parts.length - 1].trim();
+      // 提取最后一个逗号后的内容作为名称
+      const lastCommaIndex = line.lastIndexOf(',');
+      let name = (lastCommaIndex > -1) ? line.substring(lastCommaIndex + 1).trim() : "";
+      
+      // 向下查找第一个不以 # 开头的有效链接行
       let url = "";
       for (let j = i + 1; j < lines.length; j++) {
-        if (lines[j].trim() && !lines[j].trim().startsWith('#')) {
-          url = lines[j].trim();
-          i = j;
+        let nextLine = lines[j].trim();
+        if (nextLine === "") continue; // 跳过空行
+        if (!nextLine.startsWith('#')) {
+          url = nextLine;
+          i = j; // 移动指针，避免重复处理
           break;
         }
       }
-      if (name && url) converted.push(`${name},${url}`);
+      
+      if (name && url) {
+        converted.push(`${name},${url}`);
+      }
     }
   }
   return converted.join('\n');
 }
 
-// 2. 提取服务器特征
 function getServerKey(url) {
   try {
     const u = new URL(url);
-    // 提取协议+主机+端口+路径第一层
-    return u.protocol + "//" + u.host + u.pathname.substring(0, u.pathname.lastIndexOf('/'));
+    // 提取 IP/域名 + 端口 + 第一层目录，作为唯一线路特征
+    const pathParts = u.pathname.split('/');
+    const firstDir = pathParts.length > 1 ? pathParts[1] : "";
+    return `${u.protocol}//${u.host}/${firstDir}`;
   } catch(e) {
-    return url.split('/')[0] || "default";
+    return url.split('?')[0]; // 非标URL提取前段
   }
 }
 
-// 3. 主处理函数
 function handleSmartProcess() {
   let rawData = document.getElementById('input').value.trim();
-  if (!rawData) return alert("请先输入内容！");
+  if (!rawData) return alert("请输入内容！");
 
-  // 第一步：如果是M3U则转换
+  // 1. M3U 转换为 标准 TXT 键值对
   rawData = preprocessM3U(rawData);
 
-  const lines = rawData.split(/\r?\n/);
-  let cctvServers = {}; // 存储不同IP来源的CCTV
+  const lines = rawData.split('\n');
+  let cctvServers = {}; 
   let satelliteList = [];
   
   lines.forEach(line => {
@@ -155,7 +152,7 @@ function handleSmartProcess() {
     let url = urlParts.join(',').trim();
     let cleanName = name.trim();
 
-    // 识别 CCTV
+    // CCTV 识别与归类
     const cctvMatch = cleanName.match(/cctv-?(\d+)/i);
     if (cctvMatch) {
       const id = parseInt(cctvMatch[1]);
@@ -165,14 +162,12 @@ function handleSmartProcess() {
       }
       cctvServers[key].map[id] = url;
     } 
-    // 识别 卫视
+    // 卫视识别与清洗
     else if (cleanName.includes("卫视") || cleanName.toLowerCase().includes("tv")) {
-      // 清洗名称：去掉HD, FHD, 超清等
-      let baseName = cleanName.replace(/(HD|FHD|超清|高清|频道|标清|1080P|4K)/gi, "").trim();
+      let baseName = cleanName.replace(/(HD|FHD|超清|高清|频道|标清|1080P|4K|\[.*\])/gi, "").trim();
       if (!baseName.includes("卫视")) baseName += "卫视";
       
       let priority = 999;
-      // 匹配预设排序
       for (let i = 0; i < topSatellites.length; i++) {
         if (baseName.includes(topSatellites[i].replace("卫视",""))) {
           baseName = topSatellites[i];
@@ -180,46 +175,41 @@ function handleSmartProcess() {
           break;
         }
       }
-      satelliteList.push({ name: baseName, url: url, priority: priority });
+      satelliteList.push({ name: baseName, url, priority });
     }
   });
 
-  // 开始构建输出结果
   let finalResult = [];
 
-  // --- 央视部分 ---
+  // --- 生成央视分组 ---
   finalResult.push("央视频道,#genre#");
   const serverKeys = Object.keys(cctvServers);
   serverKeys.forEach((key, idx) => {
     const server = cctvServers[key];
     cctvConfig.forEach(conf => {
-      let finalUrl = "";
-      if (server.map[conf.id]) {
-        finalUrl = server.map[conf.id];
-      } else {
-        // 自动补全逻辑：替换URL中的频道数字
-        finalUrl = server.sampleUrl.replace(new RegExp(server.sampleId, 'g'), conf.id);
+      let targetUrl = server.map[conf.id];
+      if (!targetUrl) {
+        // 智能补全：在URL中搜索 ID 并替换
+        targetUrl = server.sampleUrl.replace(new RegExp(`(\\D)${server.sampleId}(\\D|\\.|$)`, 'g'), `$1${conf.id}$2`);
       }
-      finalResult.push(`CCTV-${conf.id}${conf.name},${finalUrl}`);
+      finalResult.push(`CCTV-${conf.id}${conf.name},${targetUrl}`);
     });
-    // 不同服务器来源加空行
-    if (idx < serverKeys.length - 1) finalResult.push("");
+    if (idx < serverKeys.length - 1) finalResult.push(""); // 线路间隔空行
   });
 
-  // --- 卫视部分 ---
+  // --- 生成卫视分组 ---
   finalResult.push("\n卫视频道,#genre#");
   satelliteList.sort((a, b) => {
     if (a.priority !== b.priority) return a.priority - b.priority;
     return a.name.localeCompare(b.name, 'zh-CN');
   });
 
-  // 卫视去重输出
   let seen = new Set();
   satelliteList.forEach(item => {
-    let uniqueKey = item.name + item.url;
-    if (!seen.has(uniqueKey)) {
+    let key = item.name + item.url;
+    if (!seen.has(key)) {
       finalResult.push(`${item.name},${item.url}`);
-      seen.add(uniqueKey);
+      seen.add(key);
     }
   });
 
@@ -227,18 +217,15 @@ function handleSmartProcess() {
 }
 
 function clearAll() {
-  if (confirm("确定要清空所有内容吗？")) {
-    document.getElementById('input').value = "";
-    document.getElementById('output').value = "";
-  }
+  document.getElementById('input').value = "";
+  document.getElementById('output').value = "";
 }
 
 function copyResult() {
   const output = document.getElementById('output');
-  if (!output.value) return;
   output.select();
   document.execCommand('copy');
-  alert("规范化结果已拷贝！");
+  alert("结果已成功拷贝！");
 }
 </script>
 </body>
