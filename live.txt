@@ -106,7 +106,6 @@ CCTV-12社会与法,http://58.210.139.130:9901/tsfile/live/0012_1.m3u8?key=txipt
 CCTV-13新闻,http://58.210.139.130:9901/tsfile/live/0013_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-14少儿,http://58.210.139.130:9901/tsfile/live/0014_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-15音乐,http://58.210.139.130:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-16奥林匹克,http://58.210.139.130:9901/tsfile/live/0016_1.m3u8?key=txiptv&playlive=1&authid=0
 
 CCTV-1综合,http://36.136.11.221:19902/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-2财经,http://36.136.11.221:19902/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0
@@ -228,43 +227,6 @@ CCTV-14少儿,http://120.76.248.139/live/bfgd/4200000073.m3u8
 CCTV-15音乐,http://120.76.248.139/live/bfgd/4200000074.m3u8
 CCTV-16奥林匹克,http://120.76.248.139/live/bfgd/4200000075.m3u8
 CCTV-17农业农村,http://120.76.248.139/live/bfgd/4200000076.m3u8
-
-CCTV-1综合,https://60.191.56.186:8888/hls/1/index.m3u8
-CCTV-2财经,https://60.191.56.186:8888/hls/2/index.m3u8
-CCTV-3综艺,https://60.191.56.186:8888/hls/3/index.m3u8
-CCTV-4中文国际,https://60.191.56.186:8888/hls/4/index.m3u8
-CCTV-5体育,https://60.191.56.186:8888/hls/5/index.m3u8
-CCTV-6电影,https://60.191.56.186:8888/hls/6/index.m3u8
-CCTV-7国防军事,https://60.191.56.186:8888/hls/7/index.m3u8
-CCTV-8电视剧,https://60.191.56.186:8888/hls/8/index.m3u8
-CCTV-9纪录,https://60.191.56.186:8888/hls/9/index.m3u8
-CCTV-10科教,https://60.191.56.186:8888/hls/10/index.m3u8
-CCTV-11戏曲,https://60.191.56.186:8888/hls/11/index.m3u8
-CCTV-12社会与法,https://60.191.56.186:8888/hls/12/index.m3u8
-CCTV-13新闻,https://60.191.56.186:8888/hls/13/index.m3u8
-CCTV-15音乐,https://60.191.56.186:8888/hls/14/index.m3u8
-CCTV-16奥林匹克,https://60.191.56.186:8888/hls/16/index.m3u8
-CCTV-1综合,http://play.kankanlive.com/live/1698234869325962.m3u8
-
-CCTV-1综合,http://m.061899.xyz/mg/cctv1
-CCTV-2财经,http://m.061899.xyz/mg/cctv2
-CCTV-3综艺,http://m.061899.xyz/mg/cctv3
-CCTV-4中文国际,http://m.061899.xyz/mg/cctv4
-CCTV-5体育,http://m.061899.xyz/mg/cctv5
-CCTV-6电影,http://m.061899.xyz/mg/cctv6
-CCTV-7国防军事,http://m.061899.xyz/mg/cctv7
-CCTV-8电视剧,http://m.061899.xyz/mg/cctv8
-CCTV-9纪录,http://m.061899.xyz/mg/cctv9
-CCTV-10科教,http://m.061899.xyz/mg/cctv10
-CCTV-11戏曲,http://m.061899.xyz/mg/cctv11
-CCTV-12社会与法,http://m.061899.xyz/mg/cctv12
-CCTV-13新闻,http://m.061899.xyz/mg/cctv13
-CCTV-14少儿,http://m.061899.xyz/mg/cctv14
-CCTV-15音乐,http://m.061899.xyz/mg/cctv15
-CCTV-16奥林匹克,http://m.061899.xyz/mg/cctv16
-CCTV-17农业农村,http://m.061899.xyz/mg/cctv17
-CCTV-美洲,http://m.061899.xyz/mg/cctv4m
-CCTV-欧洲,http://m.061899.xyz/mg/cctv4o
 
 卫视频道,#genre#
 江西卫视,http://61.143.15.139:59901/tsfile/live/0138_1.m3u8?key=txiptv&playlive=1&authid=0
@@ -435,7 +397,6 @@ CCTV-欧洲,http://m.061899.xyz/mg/cctv4o
 东方卫视,http://38.75.136.137:98/gslb/dsdqbv/dfwshd.m3u8?auth=test20251009
 湖南卫视,http://38.75.136.137:98/gslb/dsdqpub/hnwshd.m3u8?auth=testpub
 浙江卫视,http://38.75.136.137:98/gslb/dsdqpub/zjwshd.m3u8?auth=testpub
-江苏卫视,http://38.75.136.137:98/gslb/dsdqbv/jswshd.m3u8?auth=test20251009
 辽宁卫视,http://38.75.136.137:98/gslb/dsdqpub/lnwshd.m3u8?auth=testpub
 广东卫视,http://38.75.136.137:98/gslb/dsdqpub/gdwshd.m3u8?auth=testpub
 深圳卫视,http://38.75.136.137:98/gslb/dsdqpub/szwshd.m3u8?auth=testpub
@@ -454,18 +415,11 @@ CCTV-欧洲,http://m.061899.xyz/mg/cctv4o
 北京卫视,http://38.75.136.137:98/gslb/dsdqbv/bjwshd.m3u8?auth=test20251009
 浙江卫视,http://38.75.136.137:98/gslb/dsdqbv/dfwshd.m3u8?auth=test20251009
 安徽卫视,http://38.75.136.137:98/gslb/dsdqpub/ahwshd.m3u8?auth=testpub
-重庆卫视,http://38.75.136.137:98/gslb/dsdqca/cqwshd.m3u8?auth=test20251009
-东南卫视,http://38.75.136.137:98/gslb/dsdqca/dnwshd.m3u8?auth=test20251009
 甘肃卫视,http://38.75.136.137:98/gslb/dsdqpub/gswshd.m3u8?auth=testpub
-广西卫视,http://38.75.136.137:98/gslb/dsdqca/gxwshd.m3u8?auth=test20251009
 河北卫视,http://38.75.136.137:98/gslb/dsdqpub/hewshd.m3u8?auth=testpub
-湖南卫视,http://38.75.136.137:98/gslb/dsdqca/hnwshd.m3u8?auth=test20251009
-江苏卫视,http://38.75.136.137:98/gslb/dsdqca/jswshd.m3u8?auth=test20251009
-辽宁卫视,http://38.75.136.137:98/gslb/dsdqca/lnwshd.m3u8?auth=test20251009
 内蒙古卫视,http://38.75.136.137:98/gslb/dsdqpub/nmgws.m3u8?auth=testpub
 宁夏卫视,http://38.75.136.137:98/gslb/dsdqpub/nxws.m3u8?auth=testpub
 青海卫视,http://38.75.136.137:98/gslb/dsdqpub/qhws.m3u8?auth=testpub
-山东卫视,http://38.75.136.137:98/gslb/dsdqca/sdwshd.m3u8?auth=test20251009
 山西卫视,http://38.75.136.137:98/gslb/dsdqpub/sxwshd.m3u8?auth=testpub
 陕西卫视,http://38.75.136.137:98/gslb/dsdqpub/snwshd.m3u8?auth=testpub
 天津卫视,http://38.75.136.137:98/gslb/dsdqca/tjwshd.m3u8?auth=test20251009
@@ -483,8 +437,6 @@ CCTV-欧洲,http://m.061899.xyz/mg/cctv4o
 江苏卫视,http://183.62.76.246:60101/tsfile/live/0127_1.m3u8?key=txiptv&playlive=1&authid=0
 广东卫视,http://183.62.76.246:60101/tsfile/live/0125_1.m3u8?key=txiptv&playlive=1&authid=0
 
-江西卫视,https://60.191.56.186:8888/hls/50/index.m3u8
-北京卫视,https://60.191.56.186:8888/hls/34/index.m3u8
 东方卫视,https://60.191.56.186:8888/hls/30/index.m3u8
 湖南卫视,https://60.191.56.186:8888/hls/31/index.m3u8
 浙江卫视,https://60.191.56.186:8888/hls/17/index.m3u8
