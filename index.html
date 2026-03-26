@@ -3,199 +3,212 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>直播源规范化专家 - 动态差值推断版</title>
+  <title>直播源规范化专家 - 全能智能补齐版</title>
   <style>
-    body { font-family: Arial, 'Microsoft YaHei', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); min-height: 100vh; color: #333; }
+    body { font-family: Arial, 'Microsoft YaHei', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #2c3e50 0%, #4ca1af 100%); min-height: 100vh; color: #333; }
     .container { max-width: 1100px; margin: 15px auto; background: rgba(255, 255, 255, 0.98); border-radius: 18px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3); overflow: hidden; }
-    nav { background: #2c3e50; padding: 16px 0; text-align: center; color: white; font-weight: bold; font-size: 20px; }
-    .main-content { padding: 25px 30px; text-align: center; }
-    .subtitle { color: #666; margin-bottom: 20px; }
-    textarea { width: 100%; height: 280px; padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-family: 'Courier New', monospace; box-sizing: border-box; }
-    .buttons { margin: 20px 0; display: flex; justify-content: center; gap: 15px; }
-    button { padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-    .btn-process { background: #e67e22; color: white; font-size: 18px; }
-    .btn-process:hover { background: #d35400; }
-    .tips-box { text-align: left; background: #fffbe6; border-left: 5px solid #faad14; padding: 15px; margin-bottom: 20px; font-size: 14px; }
-    #output { background-color: #f4f7f6; height: 350px; }
-    footer { text-align: center; padding: 20px; color: #eee; font-size: 13px; }
+    nav { background: #1a252f; padding: 20px 0; text-align: center; color: white; font-weight: bold; font-size: 22px; letter-spacing: 2px; }
+    .main-content { padding: 25px 30px; }
+    .subtitle { text-align: center; color: #555; margin-bottom: 20px; font-size: 16px; }
+    textarea { width: 100%; height: 250px; padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-family: 'Consolas', monospace; font-size: 13px; box-sizing: border-box; transition: 0.3s; }
+    textarea:focus { border-color: #3498db; outline: none; box-shadow: 0 0 8px rgba(52,152,219,0.3); }
+    .buttons { margin: 20px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+    button { padding: 12px 30px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 16px; }
+    .btn-process { background: #f39c12; color: white; box-shadow: 0 4px 0 #d35400; }
+    .btn-process:hover { background: #e67e22; transform: translateY(2px); box-shadow: 0 2px 0 #d35400; }
+    .tips-box { background: #fffbe6; border-left: 5px solid #faad14; padding: 15px; margin-bottom: 20px; border-radius: 4px; }
+    .tips-box ul { margin: 5px 0 0 20px; padding: 0; font-size: 13px; color: #666; }
+    h3 { border-left: 5px solid #3498db; padding-left: 10px; color: #2c3e50; }
+    #output { background-color: #f8f9fa; height: 350px; }
+    footer { text-align: center; padding: 20px; color: rgba(255,255,255,0.7); font-size: 13px; }
   </style>
 </head>
 <body>
 <div class="container">
-  <nav>直播源智能动态比对工具 (无硬编码版)</nav>
+  <nav>CCTV & 卫视智能双重补齐工具</nav>
   <div class="main-content">
-    <p class="subtitle">根据已知频道差值推算未知频道 · 自动识别运营商编号规律</p>
+    <p class="subtitle">自动识别 ID 位数 · 差值逻辑推算 · 跨源镜像补全</p>
     <div class="tips-box">
-      <strong>动态推断逻辑：</strong><br>
-      1. 程序会扫描所有输入的直播源，寻找不同 IP 之间**相同频道**的编号对应关系。<br>
-      2. 比如：IP A 的江西是 0138，湖南是 0128；若 IP B 只有江西 0500，程序将自动推算 IP B 的湖南为 0490。<br>
-      3. <b>输入越多，推算越准。</b>请尽量同时粘贴多个不同来源的完整列表。
+      <strong>核心功能说明：</strong>
+      <ul>
+        <li><b>CCTV 补齐：</b>识别同一 IP 下的任意两个 CCTV 频道（如 3 和 6），自动生成 1-17 全频道，保持位数（如 0001-0017）。</li>
+        <li><b>卫视推断：</b>利用跨源差值（A源江西和湖南的距离），在只有江西的 B 源中推算出湖南。</li>
+        <li><b>去重分组：</b>自动按央视、卫视分组，并剔除重复的 URL。</li>
+      </ul>
     </div>
-    <textarea id="input" placeholder="请在此粘贴 M3U 或 TXT 格式的原始直播源内容..."></textarea>
+    <textarea id="input" placeholder="支持 M3U 或 TXT 格式..."></textarea>
     <div class="buttons">
-      <button class="btn-process" onclick="smartInference()">一键智能推断并规范</button>
-      <button class="btn-clear" style="background:#95a5a6; color:white;" onclick="document.getElementById('input').value=''">清空</button>
+      <button class="btn-process" onclick="mainProcess()">一键规范并智能补齐</button>
+      <button style="background:#95a5a6; color:white;" onclick="document.getElementById('input').value='';document.getElementById('output').value='';">清空</button>
     </div>
-    <h3>规范化后的结果：</h3>
+    <h3>规范化处理结果：</h3>
     <textarea id="output" readonly></textarea>
     <div class="buttons">
       <button style="background:#3498db; color:white;" onclick="copyResult()">拷贝结果</button>
     </div>
   </div>
-  <footer>© 2026 智能差值比对专家版</footer>
+  <footer>© 2026 频道规范专家版 · 智能差值比对增强</footer>
 </div>
 
 <script>
-// 标准化频道名称列表
-const targetCCTVs = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
-const targetSats = ["江西卫视", "北京卫视", "东方卫视", "湖南卫视", "浙江卫视", "江苏卫视", "辽宁卫视", "广东卫视", "深圳卫视", "山东卫视", "安徽卫视"];
+const cctvBase = [
+  {id:1, n:"综合"},{id:2, n:"财经"},{id:3, n:"综艺"},{id:4, n:"中文国际"},{id:5, n:"体育"},
+  {id:6, n:"电影"},{id:7, n:"国防军事"},{id:8, n:"电视剧"},{id:9, n:"纪录"},{id:10, n:"科教"},
+  {id:11, n:"戏曲"},{id:12, n:"社会与法"},{id:13, n:"新闻"},{id:14, n:"少儿"},{id:15, n:"音乐"},
+  {id:16, n:"奥林匹克"},{id:17, n:"农业农村"}
+];
+
+const satList = ["江西卫视", "北京卫视", "东方卫视", "湖南卫视", "浙江卫视", "江苏卫视", "辽宁卫视", "广东卫视", "深圳卫视", "安徽卫视", "山东卫视", "湖北卫视", "天津卫视"];
 
 function getHost(url) {
-    try { return new URL(url).host; } catch(e) { return url.split('/')[2] || url; }
+    try { return new URL(url).host; } catch(e) { return url.split('/')[2] || "unknown"; }
 }
 
-// 提取URL中的关键变动数字（通常是文件名里的数字）
-function extractId(url) {
-    const filename = url.split('/').pop().split('?')[0];
-    const match = filename.match(/\d+/);
-    return match ? { val: parseInt(match[0]), str: match[0], len: match[0].length } : null;
-}
-
-function smartInference() {
-    let input = document.getElementById('input').value.trim();
-    if (!input) return;
-
-    // 1. 解析输入
-    let channels = [];
-    const lines = input.split('\n');
-    lines.forEach(line => {
-        if (line.includes(',')) {
-            let [name, url] = line.split(',').map(s => s.trim());
-            channels.push({ name, url, host: getHost(url), idInfo: extractId(url) });
-        }
-    });
-
-    // 2. 建立知识库：记录每个频道在每个 Host 下的 ID
-    let hostMap = {}; // { host: { channelName: id } }
-    channels.forEach(ch => {
-        if (!hostMap[ch.host]) hostMap[ch.host] = { urls: {}, ids: {}, pattern: {} };
-        hostMap[ch.host].urls[ch.name] = ch.url;
-        if (ch.idInfo) {
-            hostMap[ch.host].ids[ch.name] = ch.idInfo.val;
-            hostMap[ch.host].pattern[ch.name] = ch.idInfo;
-        }
-    });
-
-    // 3. 计算 Host 间的偏移规律
-    // 寻找一个“基准 Host”（拥有频道最多的）
-    let hosts = Object.keys(hostMap);
-    let masterHost = hosts.reduce((a, b) => Object.keys(hostMap[a].ids).length > Object.keys(hostMap[b].ids).length ? a : b);
-
-    // 4. 开始智能补齐
-    let finalOutput = ["央视频道,#genre#"];
+// 提取URL文件名中的数字及其格式
+function parseUrlId(url, hintNum) {
+    const parts = url.split('/');
+    const filename = parts[parts.length - 1].split('?')[0];
+    const matches = filename.match(/\d+/g);
+    if (!matches) return null;
     
-    hosts.forEach(host => {
-        const currentIds = hostMap[host].ids;
-        const currentUrls = hostMap[host].urls;
-        
-        // 补齐 CCTV
-        targetCCTVs.forEach(num => {
-            let cName = `CCTV-${num}`;
-            // 找相似名称
-            let foundName = Object.keys(currentUrls).find(n => n.toUpperCase().includes(cName));
-            let url = foundName ? currentUrls[foundName] : null;
-
-            // 如果缺失，尝试差值推断
-            if (!url) {
-                url = inferUrl(host, cName, hostMap, masterHost);
-            }
-
-            if (url) {
-                // 规范化名称：从输入中找对应的后缀（如 综合、新闻）
-                let fullName = getCCTVFullName(num);
-                finalOutput.push(`${fullName},${url}`);
-            }
-        });
-
-        // 补齐 卫视
-        if (Object.keys(currentIds).some(n => n.includes("卫视"))) {
-            finalOutput.push(""); // 分隔不同服务器
-            finalOutput.push(`${host} 卫视组,#genre#`);
-            targetSats.forEach(sat => {
-                let foundName = Object.keys(currentUrls).find(n => n.includes(sat.replace("卫视","")));
-                let url = foundName ? currentUrls[foundName] : null;
-
-                if (!url) {
-                    url = inferUrl(host, sat, hostMap, masterHost);
-                }
-
-                if (url) finalOutput.push(`${sat},${url}`);
-            });
-        }
-        finalOutput.push("\n");
-    });
-
-    document.getElementById('output').value = finalOutput.join('\n').replace(/\n\n+/g, '\n\n');
-}
-
-// 核心推断函数
-function inferUrl(targetHost, targetChannel, hostMap, masterHost) {
-    const targetHostData = hostMap[targetHost];
-    
-    // 1. 寻找 targetHost 和其他 Host 共同拥有的频道作为“锚点”
-    let anchorChannel = null;
-    let otherHost = null;
-
-    for (let h of Object.keys(hostMap)) {
-        if (h === targetHost) continue;
-        // 找两个 host 都有的频道
-        anchorChannel = Object.keys(targetHostData.ids).find(name => hostMap[h].ids[name]);
-        if (anchorChannel) {
-            otherHost = h;
-            break;
+    // 寻找最匹配 hintNum 的那个数字
+    for (let m of matches) {
+        if (parseInt(m) === hintNum || matches.length === 1) {
+            return {
+                full: m,
+                val: parseInt(m),
+                len: m.length,
+                prefix: url.substring(0, url.lastIndexOf(m)),
+                suffix: url.substring(url.lastIndexOf(m) + m.length)
+            };
         }
     }
-
-    if (!anchorChannel || !otherHost) return null;
-
-    // 2. 计算偏移量
-    // 比如：在 masterHost 里，江西(100)和湖南(110)差 10
-    // 那么在当前 Host 里，江西(200)推算出的湖南就是 200 + (110 - 100)
-    const otherHostIds = hostMap[otherHost].ids;
-    
-    // 找到目标频道在 otherHost 里的 ID
-    let targetIdInOther = otherHostIds[targetChannel] || 
-                          otherHostIds[Object.keys(otherHostIds).find(n => n.includes(targetChannel.replace("卫视","")))];
-    
-    let anchorIdInOther = otherHostIds[anchorChannel];
-    let anchorIdInTarget = targetHostData.ids[anchorChannel];
-
-    if (targetIdInOther && anchorIdInOther && anchorIdInTarget) {
-        const offset = targetIdInOther - anchorIdInOther;
-        const inferredId = anchorIdInTarget + offset;
-        
-        // 3. 构建构造 URL
-        // 使用锚点频道的 URL 作为模板
-        const templateIdInfo = targetHostData.pattern[anchorChannel];
-        const templateUrl = targetHostData.urls[anchorChannel];
-        
-        const inferredIdStr = inferredId.toString().padStart(templateIdInfo.len, '0');
-        return templateUrl.replace(templateIdInfo.str, inferredIdStr);
-    }
-
     return null;
 }
 
-function getCCTVFullName(num) {
-    const names = {1:"综合",2:"财经",3:"综艺",4:"中文国际",5:"体育",6:"电影",7:"国防军事",8:"电视剧",9:"纪录",10:"科教",11:"戏曲",12:"社会与法",13:"新闻",14:"少儿",15:"音乐",16:"奥林匹克",17:"农业农村"};
-    return `CCTV-${num}${names[num]||''}`;
+function mainProcess() {
+    let rawStr = document.getElementById('input').value.trim();
+    if (!rawStr) return alert("请输入内容");
+
+    // 1. 解析原始数据
+    let channels = [];
+    let hostMap = {}; // { host: { cctv: {id: {url, pattern}}, sats: {name: {url, pattern}} } }
+    
+    // 处理 M3U
+    if (rawStr.includes("#EXTINF")) {
+        const lines = rawStr.split('\n');
+        for (let i=0; i<lines.length; i++) {
+            if (lines[i].includes("#EXTINF")) {
+                let name = lines[i].split(',')[1]?.trim();
+                let url = lines[i+1]?.trim();
+                if (name && url) rawStr += `\n${name},${url}`;
+            }
+        }
+    }
+
+    rawStr.split('\n').forEach(line => {
+        if (!line.includes(',')) return;
+        let [name, url] = line.split(',').map(s => s.trim());
+        const host = getHost(url);
+        if (!hostMap[host]) hostMap[host] = { cctv: {}, sats: {}, anyPattern: null };
+
+        const cctvMatch = name.match(/CCTV-?(\d+)/i);
+        if (cctvMatch) {
+            const id = parseInt(cctvMatch[1]);
+            const p = parseUrlId(url, id);
+            hostMap[host].cctv[id] = { url, p };
+            if (p) hostMap[host].anyPattern = p;
+        } else if (name.includes("卫视")) {
+            const sName = satList.find(s => name.includes(s.replace("卫视",""))) || name;
+            const p = parseUrlId(url, -1);
+            hostMap[host].sats[sName] = { url, p };
+            if (p) hostMap[host].anyPattern = p;
+        }
+    });
+
+    // 2. 跨源差值知识库
+    let satOffsets = {}; // { "湖南卫视": { ref: "江西卫视", offset: -10 } }
+    Object.values(hostMap).forEach(h => {
+        const presentSats = Object.keys(h.sats);
+        if (presentSats.length >= 2) {
+            const ref = presentSats[0];
+            presentSats.slice(1).forEach(curr => {
+                if (h.sats[curr].p && h.sats[ref].p) {
+                    satOffsets[curr] = { ref: ref, offset: h.sats[curr].p.val - h.sats[ref].p.val };
+                }
+            });
+        }
+    });
+
+    // 3. 生成结果
+    let result = [];
+    let seen = new Set();
+
+    // 先处理央视
+    result.push("央视频道,#genre#");
+    Object.keys(hostMap).forEach(host => {
+        const hData = hostMap[host];
+        const cctvIds = Object.keys(hData.cctv).map(Number);
+        
+        if (cctvIds.length >= 2 && hData.anyPattern) {
+            // 模式补齐 1-17
+            cctvBase.forEach(conf => {
+                let url = hData.cctv[conf.id]?.url;
+                if (!url) {
+                    const idStr = conf.id.toString().padStart(hData.anyPattern.len, '0');
+                    url = hData.anyPattern.prefix + idStr + hData.anyPattern.suffix;
+                }
+                const title = `CCTV-${conf.id}${conf.n}`;
+                if (!seen.has(title + url)) { result.push(`${title},${url}`); seen.add(title + url); }
+            });
+            result.push(""); 
+        } else {
+            // 没达到补齐条件，原样输出
+            cctvIds.sort((a,b)=>a-b).forEach(id => {
+                const conf = cctvBase.find(c => c.id === id);
+                const title = conf ? `CCTV-${id}${conf.n}` : `CCTV-${id}`;
+                result.push(`${title},${hData.cctv[id].url}`);
+            });
+        }
+    });
+
+    // 再处理卫视
+    result.push("卫视频道,#genre#");
+    Object.keys(hostMap).forEach(host => {
+        const hData = hostMap[host];
+        const hostSats = Object.keys(hData.sats);
+        if (hostSats.length === 0) return;
+
+        satList.forEach(sName => {
+            let url = hData.sats[sName]?.url;
+            
+            // 尝试通过差值推断补齐
+            if (!url) {
+                const offsetData = satOffsets[sName];
+                if (offsetData && hData.sats[offsetData.ref]) {
+                    const refInfo = hData.sats[offsetData.ref];
+                    const targetVal = refInfo.p.val + offsetData.offset;
+                    const targetIdStr = targetVal.toString().padStart(refInfo.p.len, '0');
+                    url = refInfo.p.prefix + targetIdStr + refInfo.p.suffix;
+                }
+            }
+
+            if (url && !seen.has(sName + url)) {
+                result.push(`${sName},${url}`);
+                seen.add(sName + url);
+            }
+        });
+        result.push("");
+    });
+
+    document.getElementById('output').value = result.join('\n').replace(/\n\n+/g, '\n\n');
 }
 
 function copyResult() {
-    const output = document.getElementById('output');
-    output.select();
+    const out = document.getElementById('output');
+    out.select();
     document.execCommand('copy');
-    alert("推断结果已复制！");
+    alert("规范化结果已拷贝！");
 }
 </script>
 </body>
