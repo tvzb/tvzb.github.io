@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>石子棋 - 在线博弈</title>
+  <style>
+    :root {
+      --blue-piece: #dc2626;
+      --blue-piece-dark: #7f1d1d;
+      --black-piece: #111111;
+      --black-piece-dark: #000000;
+    }
+    body {
+      font-family: Arial, 'Microsoft YaHei', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+      touch-action: manipulation;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 8px auto;
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 18px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    /* 统一导航栏 */
+    nav {
+      background: linear-gradient(120deg, #4facfe 0%, #00f2fe 100%);
+      padding: 14px 0;
+      text-align: center;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    nav a {
+      display: block;
+      padding: 10px 18px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 30px;
+      transition: all 0.3s;
+      min-width: 85px;
+    }
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+    }
+    nav a.active {
+      background: #e74c3c;
+      box-shadow: 0 6px 15px rgba(231, 76, 60, 0.4);
+    }
+
+    .main-content {
+      padding: 18px 15px;
+      text-align: center;
+    }
+    h1 {
+      color: #2c3e50;
+      margin: 0 0 8px;
+      font-size: 26px;
+      font-weight: 600;
+    }
+    .subtitle {
+      color: #555;
+      margin-bottom: 18px;
+      font-size: 15.5px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,.08);
+      padding: 18px 15px;
+    }
+    .head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    button, select {
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    button.primary {
+      background: #111;
+      color: #fff;
+      border-color: #111;
+    }
+    button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    #status {
+      margin: 12px 0;
+      font-size: 16.5px;
+      color: #222;
+      min-height: 28px;
+      font-weight: 500;
+    }
+
+    .board-wrap {
+      border: 1px solid #ddd;
+      border-radius: 14px;
+      padding: 10px;
+      background: #f8f8f8;
+      margin: 15px auto;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    }
+    canvas {
+      display: block;
+      margin: auto;
+      border-radius: 8px;
+      background: var(--board-bg, #f5e8c7);
+      touch-action: none;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin: 16px 0;
+      font-size: 15px;
+      color: #444;
+      flex-wrap: wrap;
+    }
+    .dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: inline-block;
+      border: 2px solid #0003;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    .blue { background: var(--blue-piece); border-color: var(--blue-piece-dark); }
+    .black { background: var(--black-piece); border-color: var(--black-piece-dark); }
+
+    .settings {
+      margin-top: 16px;
+      padding: 16px;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      font-size: 14.5px;
+      background: #fafafa;
+    }
+    .settings label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 28px 24px;
+      border-radius: 18px;
+      text-align: center;
+      max-width: 92%;
+      width: 380px;
+      box-shadow: 0 15px 35px rgba(0,0,0,.25);
+    }
+    .modal-content h2 {
+      margin: 0 0 18px;
+      font-size: 24px;
+      color: #111;
+    }
+
+    /* 手机端特别优化 */
+    @media (max-width: 768px) {
+      .container { margin: 6px; border-radius: 14px; }
+      .main-content { padding: 15px 10px; }
+      h1 { font-size: 23px; }
+      .board-wrap { padding: 8px; }
+      .settings { flex-direction: column; align-items: stretch; gap: 14px; }
+      .legend { gap: 18px; font-size: 14.5px; }
+      button, select { font-size: 14.5px; padding: 9px 14px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 导航栏保持不变 -->
+    <nav>
+      <ul>
+        <li><a href="index.html">智能处理</a></li>
+        <li><a href="wzcl.html">文字处理</a></li>
+        <li><a href="pdzl.html">频道整理</a></li>
+        <li><a href="m2t.html">M3U↔TXT转换</a></li>
+        <li><a href="#" class="active">石子棋</a></li>
+      </ul>
+    </nav>
+    
+    <div class="main-content">
+      <h1>石子棋（5×5交点）</h1>
+      <p class="subtitle">电脑 vs 玩家 · 纯前端 · 手机优化版</p>
+
+      <div class="card">
+        <div class="head">
+          <div class="controls">
+            <button id="restart" class="primary">重新开始</button>
+            <button id="undo">悔棋</button>
+            <select id="mode" title="对弈模式">
+              <option value="hvh">双人对战</option>
+              <option value="blue-ai" selected>电脑执红</option>
+              <option value="black-ai">电脑执黑</option>
+            </select>
+            <select id="difficulty" title="难度等级">
+              <option value="1" selected>容易</option>
+              <option value="2">中等</option>
+              <option value="3">难</option>
+              <option value="4">很难</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="status">请先选择先手方</div>
+
+        <div class="board-wrap">
+          <canvas id="board" aria-label="石子棋棋盘" role="img"></canvas>
+        </div>
+
+        <div class="legend">
+          <span><span class="dot blue"></span> <span id="blue-label">电脑方（红）</span></span>
+          <span><span class="dot black"></span> <span id="black-label">玩家方（黑）</span></span>
+        </div>
+
+        <div class="settings">
+          <label>棋盘背景:
+            <select id="board-bg">
+              <option value="#f5e8c7" selected>木纹浅黄</option>
+              <option value="#ffffff">白色</option>
+              <option value="#f0f0f0">浅灰</option>
+              <option value="#d4e4d4">浅绿</option>
+            </select>
+          </label>
+          <label>电脑方颜色:
+            <select id="blue-piece">
+              <option value="#dc2626" selected>红色</option>
+              <option value="#111111">黑色</option>
+              <option value="#16a34a">绿色</option>
+            </select>
+          </label>
+          <label>玩家方颜色:
+            <select id="black-piece">
+              <option value="#111111" selected>黑色</option>
+              <option value="#dc2626">红色</option>
+              <option value="#16a34a">绿色</option>
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <footer style="text-align:center;padding:20px;background:#f0f4f8;color:#718096;font-size:13.5px;">
+      石子棋 © 2026 · 纯前端实现 · 手机优化版
+    </footer>
+  </div>
+
+  <div id="modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <div id="modal-message"></div>
+      <div id="modal-buttons" style="margin-top:24px;"></div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      // ===== 参数 =====
+      const GRID = 5;
+      let CELL = 80;
+      let PAD = 40;
+      let SIZE = 500;
+
+      const canvas = document.getElementById('board');
+      const ctx = canvas.getContext('2d');
+      const DPR = Math.max(1, window.devicePixelRatio || 1);
+
+      // UI 元素
+      const modeSel = document.getElementById('mode');
+      const difficultySel = document.getElementById('difficulty');
+      const statusEl = document.getElementById('status');
+      const modal = document.getElementById('modal');
+      const modalMessage = document.getElementById('modal-message');
+      const modalButtons = document.getElementById('modal-buttons');
+      const boardBgSelect = document.getElementById('board-bg');
+      const bluePieceSelect = document.getElementById('blue-piece');
+      const blackPieceSelect = document.getElementById('black-piece');
+      const blueLabel = document.getElementById('blue-label');
+      const blackLabel = document.getElementById('black-label');
+
+      // 游戏状态
+      let board, turn, selected=null, legalMoves=[], lastMove=null, aiThinking=false, gameOver=false;
+      const history = [];
+      let currentDifficulty = 1; // 1:容易 2:中等 3:难 4:很难
+
+      // 自适应画布（重点优化手机端）
+      function resizeCanvas() {
+        const isMobile = window.innerWidth < 768;
+        const maxSize = isMobile 
+          ? Math.min(window.innerWidth - 30, window.innerHeight * 0.48) 
+          : Math.min(620, window.innerWidth - 80);
+
+        SIZE = maxSize;
+        PAD = isMobile ? 32 : 45;
+        CELL = (SIZE - PAD * 2) / (GRID - 1);
+
+        canvas.width = Math.round(SIZE * DPR);
+        canvas.height = Math.round(SIZE * DPR);
+        canvas.style.width = SIZE + "px";
+        canvas.style.height = SIZE + "px";
+        ctx.scale(DPR, DPR);
+        draw();
+      }
+      window.addEventListener('resize', resizeCanvas);
+
+      // 颜色相关
+      function updateColors(){
+        const blueColor = bluePieceSelect.value;
+        const blackColor = blackPieceSelect.value;
+        
+        document.documentElement.style.setProperty('--board-bg', boardBgSelect.value);
+        document.documentElement.style.setProperty('--blue-piece', blueColor);
+        document.documentElement.style.setProperty('--blue-piece-dark', darkenColor(blueColor, 0.75));
+        document.documentElement.style.setProperty('--black-piece', blackColor);
+        document.documentElement.style.setProperty('--black-piece-dark', darkenColor(blackColor, 0.75));
+
+        blueLabel.textContent = `电脑方（${getColorName(blueColor)}）`;
+        blackLabel.textContent = `玩家方（${getColorName(blackColor)}）`;
+
+        const modeOptions = modeSel.options;
+        modeOptions[1].text = `电脑执${getColorName(blueColor)}`;
+        modeOptions[2].text = `电脑执${getColorName(blackColor)}`;
+
+        draw();
+      }
+
+      function getColorName(hex) {
+        const map = {'#dc2626':'红', '#111111':'黑', '#16a34a':'绿'};
+        return map[hex] || '未知';
+      }
+
+      function darkenColor(hex, factor){
+        hex = hex.replace('#','');
+        const r = parseInt(hex.slice(0,2),16);
+        const g = parseInt(hex.slice(2,4),16);
+        const b = parseInt(hex.slice(4,6),16);
+        return `rgb(${Math.round(r*factor)},${Math.round(g*factor)},${Math.round(b*factor)})`;
+      }
+
+      function restrictColors(){
+        const blue = bluePieceSelect.value;
+        const black = blackPieceSelect.value;
+        Array.from(bluePieceSelect.options).forEach(o => o.disabled = o.value === black);
+        Array.from(blackPieceSelect.options).forEach(o => o.disabled = o.value === blue);
+      }
+
+      // 监听颜色变化
+      boardBgSelect.addEventListener('change', updateColors);
+      bluePieceSelect.addEventListener('change', () => { updateColors(); restrictColors(); });
+      blackPieceSelect.addEventListener('change', () => { updateColors(); restrictColors(); });
+      difficultySel.addEventListener('change', () => {
+        currentDifficulty = parseInt(difficultySel.value);
+      });
+
+      // 工具函数
+      const inBoard = (x,y) => x>=0 && y>=0 && x<GRID && y<GRID;
+      const get = (x,y) => board[y][x];
+      const set = (x,y,v) => board[y][x] = v;
+      const toPx = c => PAD + c * CELL;
+      const fromPx = p => Math.round((p - PAD) / CELL);
+      const neighbors = (x,y) => [{x:x+1,y},{x:x-1,y},{x,y:y+1},{x,y:y-1}].filter(p=>inBoard(p.x,p.y));
+
+      function cloneBoard(bd){ return bd.map(r => r.slice()); }
+
+      const isAiTurn = () => 
+        (modeSel.value==='blue-ai' && turn==='blue') || 
+        (modeSel.value==='black-ai' && turn==='black');
+
+      // 初始化棋盘
+      function init(firstPlayer = 'blue'){
+        board = Array.from({length:GRID},()=>Array(GRID).fill(null));
+        for(let x=0; x<GRID; x++){
+          board[0][x] = 'blue';
+          board[GRID-1][x] = 'black';
+        }
+        turn = firstPlayer;
+        selected = null;
+        legalMoves = [];
+        lastMove = null;
+        aiThinking = false;
+        gameOver = false;
+        history.length = 0;
+
+        draw();
+        updateStatus();
+        maybeAiMove();
+      }
+
+      // 绘制棋盘
+      function draw(){
+        ctx.clearRect(0,0,SIZE,SIZE);
+        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--board-bg') || '#f5e8c7';
+        ctx.fillRect(0,0,SIZE,SIZE);
+
+        // 棋盘线
+        ctx.strokeStyle = "#3c2f2f";
+        ctx.lineWidth = 3.5;
+        ctx.lineCap = "round";
+        for(let i=0; i<GRID; i++){
+          ctx.beginPath();
+          ctx.moveTo(toPx(0), toPx(i));
+          ctx.lineTo(toPx(GRID-1), toPx(i));
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.moveTo(toPx(i), toPx(0));
+          ctx.lineTo(toPx(i), toPx(GRID-1));
+          ctx.stroke();
+        }
+
+        // 高亮最后一步
+        if(lastMove){
+          ctx.fillStyle = "rgba(249, 115, 22, 0.25)";
+          [lastMove.from, lastMove.to].forEach(c => {
+            ctx.beginPath();
+            ctx.arc(toPx(c.x), toPx(c.y), 26, 0, Math.PI*2);
+            ctx.fill();
+          });
+        }
+
+        // 选中与可落子提示
+        if(selected && !gameOver){
+          ctx.fillStyle = "rgba(59, 130, 246, 0.3)";
+          ctx.beginPath();
+          ctx.arc(toPx(selected.x), toPx(selected.y), 28, 0, Math.PI*2);
+          ctx.fill();
+
+          ctx.fillStyle = "rgba(59, 130, 246, 0.22)";
+          legalMoves.forEach(p => {
+            ctx.beginPath();
+            ctx.arc(toPx(p.x), toPx(p.y), 16, 0, Math.PI*2);
+            ctx.fill();
+          });
+        }
+
+        // 绘制棋子
+        for(let y=0; y<GRID; y++){
+          for(let x=0; x<GRID; x++){
+            if(board[y][x]) drawStone(x, y, board[y][x]);
+          }
+        }
+      }
+
+      function drawStone(x, y, color){
+        const cx = toPx(x), cy = toPx(y);
+        const r = 21;
+
+        // 阴影
+        ctx.beginPath();
+        ctx.arc(cx+2, cy+3, r+2, 0, Math.PI*2);
+        ctx.fillStyle = "rgba(0,0,0,0.25)";
+        ctx.fill();
+
+        const mainColor = getComputedStyle(document.documentElement).getPropertyValue(`--${color}-piece`);
+        const darkColor = getComputedStyle(document.documentElement).getPropertyValue(`--${color}-piece-dark`);
+
+        const g = ctx.createRadialGradient(cx-7, cy-8, 5, cx, cy, r+3);
+        g.addColorStop(0, "#ffffff");
+        g.addColorStop(1, mainColor);
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, r+3, 0, Math.PI*2);
+        ctx.fillStyle = g;
+        ctx.fill();
+
+        ctx.lineWidth = 2.5;
+        ctx.strokeStyle = darkColor;
+        ctx.stroke();
+
+        // 高光
+        ctx.beginPath();
+        ctx.arc(cx-7, cy-7, 7, 0, Math.PI*2);
+        ctx.fillStyle = "rgba(255,255,255,0.65)";
+        ctx.fill();
+      }
+
+      function updateStatus(msg){
+        if(msg) {
+          statusEl.textContent = msg;
+          return;
+        }
+        const who = turn === 'blue' ? '电脑方' : '玩家方';
+        const thinking = isAiTurn() ? '（电脑思考中…）' : '（点击您的棋子移动）';
+        statusEl.textContent = `当前回合：${who} ${thinking}`;
+      }
+
+      // 吃子逻辑（保持原逻辑）
+      function checkCapturesOn(bd, current, afterX, afterY){
+        let captured = 0;
+        function checkLine(getCell, setCell){
+          const occ = [];
+          for(let i=0; i<GRID; i++){
+            const v = getCell(i);
+            if(v) occ.push({i, v});
+          }
+          if(occ.length !== 3) return 0;
+          const my = occ.filter(o=>o.v===current).length;
+          if(my !== 2) return 0;
+          occ.sort((a,b)=>a.i-b.i);
+          const pat = occ.map(o=>o.v);
+          if((pat[0]===current && pat[1]===current && pat[2]!==current) ||
+             (pat[0]!==current && pat[1]===current && pat[2]===current)){
+            const eatIndex = pat[0]!==current ? occ[0].i : occ[2].i;
+            if(getCell(eatIndex)){ setCell(eatIndex, null); return 1; }
+          }
+          return 0;
+        }
+        captured += checkLine(i=>bd[afterY][i], (i,v)=>bd[afterY][i]=v);
+        captured += checkLine(i=>bd[i][afterX], (i,v)=>bd[i][afterX]=v);
+        return captured;
+      }
+
+      function countPiecesOn(bd){
+        let blue=0, black=0;
+        for(let y=0;y<GRID;y++)for(let x=0;x<GRID;x++){
+          if(bd[y][x]==='blue') blue++;
+          else if(bd[y][x]==='black') black++;
+        }
+        return {blue, black};
+      }
+
+      function showGameOver(winner){
+        gameOver = true;
+        modalMessage.innerHTML = `<h2>游戏结束！<br>${winner === 'blue' ? '电脑方' : '玩家方'}获胜！</h2>`;
+        modalButtons.innerHTML = `<button class="primary" onclick="modal.style.display='none'; showFirstPlayerPrompt()">再来一局</button>`;
+        modal.style.display = 'flex';
+      }
+
+      function showFirstPlayerPrompt(){
+        modalMessage.innerHTML = `<h2>选择先手方</h2><p>谁先开始？</p>`;
+        modalButtons.innerHTML = `
+          <button class="primary" id="blue-first" style="margin:6px;">电脑方先手</button>
+          <button class="primary" id="black-first" style="margin:6px;">玩家方先手</button>
+        `;
+        modal.style.display = 'flex';
+
+        document.getElementById('blue-first').onclick = () => startGame('blue');
+        document.getElementById('black-first').onclick = () => startGame('black');
+      }
+
+      function startGame(firstPlayer){
+        modal.style.display = 'none';
+        init(firstPlayer);
+      }
+
+      // AI 难度映射
+      function getAIDepth(){
+        const depths = [3, 4, 5, 6]; // 容易→很难
+        return depths[currentDifficulty-1];
+      }
+
+      function getAITimeLimit(){
+        const limits = [800, 1200, 1800, 2500];
+        return limits[currentDifficulty-1];
+      }
+
+      // AI 移动逻辑（带难度）
+      function allMovesFor(bd, color){
+        const mv = [];
+        for(let y=0;y<GRID;y++)for(let x=0;x<GRID;x++){
+          if(bd[y][x]!==color) continue;
+          for(const p of neighbors(x,y)){
+            if(bd[p.y][p.x]===null) mv.push({from:{x,y},to:{x:p.x,y:p.y}});
+          }
+        }
+        return mv;
+      }
+
+      function applyMove(bd, move, color){
+        const newBd = cloneBoard(bd);
+        newBd[move.to.y][move.to.x] = color;
+        newBd[move.from.y][move.from.x] = null;
+        checkCapturesOn(newBd, color, move.to.x, move.to.y);
+        return newBd;
+      }
+
+      function evaluateBoard(bd, aiColor){
+        const opponent = aiColor === 'blue' ? 'black' : 'blue';
+        const cnt = countPiecesOn(bd);
+        if(cnt[opponent] <= 1) return 1000000;
+        if(cnt[aiColor] <= 1) return -1000000;
+
+        let score = (cnt[aiColor] - cnt[opponent]) * 1200;
+        score += allMovesFor(bd, aiColor).length * 90;
+        return score;
+      }
+
+      function minimax(bd, depth, alpha, beta, maximizing, aiColor, startTime, timeLimit){
+        if(performance.now() - startTime > timeLimit || depth <= 0) 
+          return evaluateBoard(bd, aiColor);
+
+        const currentColor = maximizing ? aiColor : (aiColor === 'blue' ? 'black' : 'blue');
+        const moves = allMovesFor(bd, currentColor);
+
+        if(maximizing){
+          let maxEval = -Infinity;
+          for(const move of moves){
+            const newBd = applyMove(bd, move, currentColor);
+            const evalScore = minimax(newBd, depth-1, alpha, beta, false, aiColor, startTime, timeLimit);
+            maxEval = Math.max(maxEval, evalScore);
+            alpha = Math.max(alpha, evalScore);
+            if(beta <= alpha) break;
+          }
+          return maxEval;
+        } else {
+          let minEval = Infinity;
+          for(const move of moves){
+            const newBd = applyMove(bd, move, currentColor);
+            const evalScore = minimax(newBd, depth-1, alpha, beta, true, aiColor, startTime, timeLimit);
+            minEval = Math.min(minEval, evalScore);
+            beta = Math.min(beta, evalScore);
+            if(beta <= alpha) break;
+          }
+          return minEval;
+        }
+      }
+
+      function aiPickMove(){
+        const color = turn;
+        const moves = allMovesFor(board, color);
+        if(!moves.length) return null;
+
+        const startTime = performance.now();
+        const timeLimit = getAITimeLimit();
+        let bestMove = moves[0];
+        let bestScore = -Infinity;
+        const depth = getAIDepth();
+
+        for(const move of moves){
+          const newBd = applyMove(board, move, color);
+          const score = minimax(newBd, depth, -Infinity, Infinity, false, color, startTime, timeLimit);
+          if(score > bestScore){
+            bestScore = score;
+            bestMove = move;
+          }
+        }
+        return bestMove;
+      }
+
+      function maybeAiMove(){
+        if(!isAiTurn() || gameOver || aiThinking) return;
+        aiThinking = true;
+        updateStatus('电脑思考中…');
+
+        setTimeout(() => {
+          const mv = aiPickMove();
+          if(!mv){
+            aiThinking = false;
+            showGameOver('black');
+            return;
+          }
+
+          history.push({board: cloneBoard(board), turn, lastMove});
+
+          set(mv.to.x, mv.to.y, turn);
+          set(mv.from.x, mv.from.y, null);
+          lastMove = {from: mv.from, to: mv.to};
+          checkCapturesOn(board, turn, mv.to.x, mv.to.y);
+
+          const cnt = countPiecesOn(board);
+          if(cnt.blue <= 1 || cnt.black <= 1){
+            draw();
+            showGameOver(cnt.blue <= 1 ? 'black' : 'blue');
+            aiThinking = false;
+            return;
+          }
+
+          turn = turn === 'blue' ? 'black' : 'blue';
+          aiThinking = false;
+          draw();
+          updateStatus();
+          maybeAiMove();
+        }, 280);
+      }
+
+      // 点击交互
+      canvas.addEventListener('click', (evt) => {
+        if(aiThinking || gameOver || isAiTurn()) return;
+
+        const rect = canvas.getBoundingClientRect();
+        const sx = (evt.clientX - rect.left) * (canvas.width / rect.width) / DPR;
+        const sy = (evt.clientY - rect.top) * (canvas.height / rect.height) / DPR;
+        const x = clamp(fromPx(sx), 0, GRID-1);
+        const y = clamp(fromPx(sy), 0, GRID-1);
+
+        if(!inBoard(x,y)) return;
+
+        const cell = get(x,y);
+
+        if(cell === turn){
+          selected = {x, y};
+          legalMoves = neighbors(x,y).filter(p => get(p.x, p.y) === null);
+          draw();
+          return;
+        }
+
+        if(selected && legalMoves.some(p => p.x===x && p.y===y)){
+          history.push({board: cloneBoard(board), turn, lastMove});
+
+          set(x, y, turn);
+          set(selected.x, selected.y, null);
+          lastMove = {from: selected, to: {x, y}};
+          checkCapturesOn(board, turn, x, y);
+
+          const cnt = countPiecesOn(board);
+          if(cnt.blue <= 1 || cnt.black <= 1){
+            draw();
+            showGameOver(cnt.blue <= 1 ? 'black' : 'blue');
+            return;
+          }
+
+          turn = turn === 'blue' ? 'black' : 'blue';
+          selected = null;
+          legalMoves = [];
+          draw();
+          updateStatus();
+          maybeAiMove();
+        } else {
+          selected = null;
+          legalMoves = [];
+          draw();
+        }
+      });
+
+      function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
+
+      // 控件绑定
+      document.getElementById('restart').addEventListener('click', showFirstPlayerPrompt);
+      document.getElementById('undo').addEventListener('click', () => {
+        if(aiThinking || history.length === 0 || gameOver) return;
+        const prev = history.pop();
+        board = prev.board;
+        turn = prev.turn;
+        lastMove = prev.lastMove;
+        selected = null;
+        legalMoves = [];
+        draw();
+        updateStatus('已悔棋一步');
+      });
+
+      modeSel.addEventListener('change', () => {
+        updateStatus();
+        maybeAiMove();
+      });
+
+      // 启动游戏
+      resizeCanvas();
+      updateColors();
+      restrictColors();
+      showFirstPlayerPrompt();   // 首次启动选择先手
+    })();
+  </script>
+</body>
+</html>
