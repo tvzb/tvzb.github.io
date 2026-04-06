@@ -3,57 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>石子棋 - 智能对弈</title>
+  <title>石子棋 - 经典博弈</title>
   <style>
     :root {
-      --blue-piece: #dc2626;
-      --blue-piece-dark: #7f1d1d;
-      --black-piece: #111111;
-      --black-piece-dark: #000000;
-      --board-bg: #e6d7c3;
+      --blue-piece: #e11d48;
+      --black-piece: #18181b;
+      --board-color: #dcb35c;
+      --line-color: #451a03;
     }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: -apple-system, system-ui, sans-serif;
       margin: 0;
-      padding: 0;
-      background: #f0f2f5;
-      min-height: 100vh;
-      color: #333;
+      background: #4a5568;
+      display: flex;
+      justify-content: center;
       touch-action: manipulation;
     }
     .container {
-      max-width: 800px;
-      margin: 0 auto;
-      background: #fff;
+      width: 100%;
+      max-width: 500px;
+      background: #f7fafc;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
     nav {
-      background: linear-gradient(120deg, #4facfe 0%, #00f2fe 100%);
-      padding: 10px 0;
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      padding: 12px 5px;
     }
     nav ul {
       list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
+      padding: 0; margin: 0;
+      display: flex; justify-content: center; gap: 8px;
     }
     nav a {
-      padding: 8px 12px;
+      padding: 6px 12px;
       background: rgba(255, 255, 255, 0.2);
       color: white;
       text-decoration: none;
       font-size: 13px;
-      font-weight: 600;
-      border-radius: 20px;
+      font-weight: bold;
+      border-radius: 15px;
     }
-    nav a.active { background: #e74c3c; }
+    nav a.active { background: #e11d48; }
 
-    .main-content {
+    .game-area {
       flex: 1;
       padding: 15px;
       display: flex;
@@ -61,67 +55,49 @@
       align-items: center;
     }
 
-    .game-header { text-align: center; margin-bottom: 10px; }
-    h1 { font-size: 20px; margin: 5px 0; color: #2c3e50; }
-    
     #status {
-      font-size: 14px;
+      margin: 10px 0;
       font-weight: bold;
-      padding: 8px 15px;
+      padding: 8px 20px;
       border-radius: 20px;
-      background: #f8f9fa;
-      margin-bottom: 10px;
-      color: #555;
-      border: 1px solid #eee;
+      background: #edf2f7;
+      border: 1px solid #cbd5e0;
     }
 
-    .board-container {
-      width: 100%;
-      max-width: 500px;
-      aspect-ratio: 1 / 1;
-      position: relative;
-      background: #dcb35c;
-      border: 4px solid #8b4513;
-      border-radius: 8px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    .board-wrapper {
+      width: 95vw;
+      height: 95vw;
+      max-width: 420px;
+      max-height: 420px;
+      background: var(--board-color);
+      border: 5px solid #8b4513;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
     }
-    canvas { width: 95%; height: 95%; cursor: pointer; }
+    canvas { width: 92%; height: 92%; }
 
-    .controls-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      width: 100%;
-      max-width: 500px;
+    .ui-panel {
+      width: 95%;
       margin-top: 15px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
-
     button, select {
       padding: 12px;
-      border-radius: 10px;
-      border: 1px solid #ddd;
-      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #cbd5e0;
+      background: white;
       font-size: 14px;
       font-weight: 600;
-      width: 100%;
     }
-    button.primary { background: #2c3e50; color: white; border: none; }
-    
-    .settings-panel {
-      width: 100%;
-      max-width: 500px;
-      margin-top: 15px;
-      padding: 10px;
-      background: #f9f9f9;
-      border-radius: 10px;
-      font-size: 12px;
-    }
-    .setting-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; }
-    
-    /* 弹窗 */
+    button.primary { background: #2d3748; color: white; border: none; }
+
+    /* 模态框 */
     .modal {
       position: fixed;
       inset: 0;
@@ -130,15 +106,13 @@
       align-items: center;
       justify-content: center;
       z-index: 100;
-      backdrop-filter: blur(4px);
     }
     .modal-content {
       background: white;
       padding: 25px;
       border-radius: 20px;
-      width: 85%;
-      max-width: 320px;
       text-align: center;
+      width: 80%;
     }
   </style>
 </head>
@@ -147,30 +121,26 @@
     <nav>
       <ul>
         <li><a href="#">智能处理</a></li>
-        <li><a href="#">文字处理</a></li>
+        <li><a href="#">频道整理</a></li>
         <li><a href="#" class="active">石子棋</a></li>
       </ul>
     </nav>
 
-    <div class="main-content">
-      <div class="game-header">
-        <h1>传统石子棋</h1>
-      </div>
-
-      <div id="status">载入中...</div>
-
-      <div class="board-container">
+    <div class="game-area">
+      <div id="status">正在准备...</div>
+      
+      <div class="board-wrapper">
         <canvas id="board"></canvas>
       </div>
 
-      <div class="controls-grid">
-        <button id="restart" class="primary">新对局</button>
+      <div class="ui-panel">
+        <button id="restart" class="primary">新局/选择先手</button>
         <button id="undo">悔棋</button>
         <select id="difficulty">
-          <option value="1">容易 (新手)</option>
-          <option value="2" selected>中等 (普通)</option>
-          <option value="4">困难 (专家)</option>
-          <option value="6">大师 (挑战)</option>
+          <option value="1">难度：容易</option>
+          <option value="3" selected>难度：中等</option>
+          <option value="5">难度：困难</option>
+          <option value="7">难度：大师</option>
         </select>
         <select id="mode">
           <option value="blue-ai">电脑执红</option>
@@ -178,24 +148,13 @@
           <option value="hvh">双人对战</option>
         </select>
       </div>
-
-      <div class="settings-panel">
-        <div class="setting-row">
-          <span>棋盘外观</span>
-          <select id="board-style" style="width: 60%">
-            <option value="#e6d7c3">复古木纹</option>
-            <option value="#ffffff">简约白色</option>
-            <option value="#d4e4d4">护眼绿色</option>
-          </select>
-        </div>
-      </div>
     </div>
   </div>
 
   <div id="modal" class="modal">
     <div class="modal-content">
-      <div id="modal-message"></div>
-      <div id="modal-buttons" style="margin-top:20px; display: flex; flex-direction: column; gap: 10px;"></div>
+      <div id="modal-msg"></div>
+      <div id="modal-btns" style="margin-top:20px; display:flex; flex-direction:column; gap:10px;"></div>
     </div>
   </div>
 
@@ -211,11 +170,10 @@
       const history = [];
 
       function resize() {
-        const container = document.querySelector('.board-container');
-        const side = container.clientWidth * 0.95;
-        SIZE = side;
-        PAD = SIZE * 0.1;
-        CELL = (SIZE - PAD * 2) / (GRID - 1);
+        const wrapper = document.querySelector('.board-wrapper');
+        SIZE = wrapper.clientWidth * 0.92;
+        CELL = SIZE / (GRID - 1);
+        PAD = 0; // 内部已有缩放
         canvas.width = SIZE * DPR;
         canvas.height = SIZE * DPR;
         canvas.style.width = SIZE + 'px';
@@ -224,65 +182,47 @@
         draw();
       }
 
-      function init(firstPlayer = 'blue') {
+      function init(firstPlayer) {
         board = Array.from({length:GRID},()=>Array(GRID).fill(null));
         for(let x=0; x<GRID; x++){
           board[0][x] = 'blue';
           board[GRID-1][x] = 'black';
         }
-        turn = firstPlayer;
-        selected = null;
-        legalMoves = [];
-        lastMove = null;
-        gameOver = false;
+        turn = firstPlayer || 'blue';
+        selected = null; legalMoves = []; lastMove = null; gameOver = false;
         history.length = 0;
-        updateStatus();
-        draw();
-        if(isAiTurn()) setTimeout(doAiMove, 500);
+        updateStatus(); draw();
+        if(isAiTurn()) setTimeout(doAiMove, 600);
       }
 
       function draw() {
         ctx.clearRect(0,0,SIZE,SIZE);
         
-        // 绘制格线
-        ctx.strokeStyle = "#333";
-        ctx.lineWidth = 1.5;
+        // 绘制棋盘线
+        ctx.strokeStyle = "#451a03";
+        ctx.lineWidth = 2;
         for(let i=0; i<GRID; i++){
-          // 横线
           ctx.beginPath();
-          ctx.moveTo(PAD, PAD + i*CELL);
-          ctx.lineTo(SIZE-PAD, PAD + i*CELL);
+          ctx.moveTo(i*CELL, 0); ctx.lineTo(i*CELL, SIZE);
           ctx.stroke();
-          // 纵线
           ctx.beginPath();
-          ctx.moveTo(PAD + i*CELL, PAD);
-          ctx.lineTo(PAD + i*CELL, SIZE-PAD);
+          ctx.moveTo(0, i*CELL); ctx.lineTo(SIZE, i*CELL);
           ctx.stroke();
         }
 
-        // 绘制最后落子高亮
+        // 高亮上一步
         if(lastMove) {
-          ctx.fillStyle = "rgba(255, 255, 255, 0.3)";
+          ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
           [lastMove.from, lastMove.to].forEach(p => {
-            ctx.beginPath();
-            ctx.arc(PAD + p.x*CELL, PAD + p.y*CELL, CELL*0.35, 0, Math.PI*2);
-            ctx.fill();
+            ctx.beginPath(); ctx.arc(p.x*CELL, p.y*CELL, CELL*0.3, 0, Math.PI*2); ctx.fill();
           });
         }
 
-        // 绘制选中提示
+        // 绘制合法移动
         if(selected) {
-          ctx.strokeStyle = "#4facfe";
-          ctx.lineWidth = 3;
-          ctx.beginPath();
-          ctx.arc(PAD + selected.x*CELL, PAD + selected.y*CELL, CELL*0.4, 0, Math.PI*2);
-          ctx.stroke();
-          
+          ctx.fillStyle = "rgba(66, 153, 225, 0.5)";
           legalMoves.forEach(p => {
-            ctx.fillStyle = "rgba(79, 172, 254, 0.4)";
-            ctx.beginPath();
-            ctx.arc(PAD + p.x*CELL, PAD + p.y*CELL, 8, 0, Math.PI*2);
-            ctx.fill();
+            ctx.beginPath(); ctx.arc(p.x*CELL, p.y*CELL, 10, 0, Math.PI*2); ctx.fill();
           });
         }
 
@@ -294,75 +234,76 @@
         }
       }
 
-      function drawStone(x, y, type) {
-        const cx = PAD + x*CELL;
-        const cy = PAD + y*CELL;
-        const r = CELL * 0.38;
-
-        // 阴影
-        ctx.shadowBlur = 5;
-        ctx.shadowColor = "rgba(0,0,0,0.3)";
-        ctx.shadowOffsetY = 3;
-
+      function drawStone(x, y, color) {
+        const cx = x*CELL, cy = y*CELL;
+        const r = CELL * 0.4;
+        
+        ctx.save();
+        ctx.shadowBlur = 8; ctx.shadowColor = "rgba(0,0,0,0.4)";
+        ctx.shadowOffsetY = 4;
+        
         const grad = ctx.createRadialGradient(cx-r*0.3, cy-r*0.3, r*0.1, cx, cy, r);
-        if(type === 'blue') {
-          grad.addColorStop(0, "#ff4d4d");
-          grad.addColorStop(1, "#8b0000");
+        if(color === 'blue') {
+          grad.addColorStop(0, "#ff6b6b"); grad.addColorStop(1, "#991b1b");
         } else {
-          grad.addColorStop(0, "#444");
-          grad.addColorStop(1, "#000");
+          grad.addColorStop(0, "#52525b"); grad.addColorStop(1, "#000000");
         }
-
+        
         ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.arc(cx, cy, r, 0, Math.PI*2);
-        ctx.fill();
-        
-        ctx.shadowBlur = 0;
-        ctx.shadowOffsetY = 0;
+        ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.fill();
+        ctx.restore();
+
+        if(selected && selected.x === x && selected.y === y) {
+          ctx.strokeStyle = "#4facfe"; ctx.lineWidth = 4;
+          ctx.beginPath(); ctx.arc(cx, cy, r+2, 0, Math.PI*2); ctx.stroke();
+        }
       }
 
-      // 核心逻辑
-      const inBoard = (x,y) => x>=0 && x<GRID && y>=0 && y<GRID;
-      const isAiTurn = () => (document.getElementById('mode').value === turn + '-ai');
-
-      function updateStatus() {
-        const status = document.getElementById('status');
-        if(gameOver) return;
-        const name = turn === 'blue' ? '红方' : '黑方';
-        status.innerText = isAiTurn() ? `🤖 电脑 (${name}) 思考中...` : `👤 轮到你了 (${name})`;
-        status.style.color = turn === 'blue' ? '#dc2626' : '#111';
-      }
-
-      // 吃子逻辑（石子棋典型：夹吃）
+      // 【核心修正】成二吃一算法
       function checkCaptures(bd, x, y, color) {
+        const opp = (color === 'blue') ? 'black' : 'blue';
         let captured = false;
-        const opp = color === 'blue' ? 'black' : 'blue';
+
+        // 检查 4 个方向
+        const dirs = [[1,0], [-1,0], [0,1], [0,-1]];
         
-        // 检查横向和纵向
-        [[1,0], [0,1]].forEach(([dx, dy]) => {
-          // 检查三个连续点的情况
-          for(let offset = -2; offset <= 0; offset++) {
-            let points = [];
-            for(let i=0; i<3; i++) {
-              let nx = x + (offset + i)*dx;
-              let ny = y + (offset + i)*dy;
-              if(inBoard(nx, ny)) points.push({x:nx, y:ny, v:bd[ny][nx]});
+        dirs.forEach(([dx, dy]) => {
+          // 定义：当前落子位置为 P0
+          // 检查 P0, P1(同色), P2(对手) 是否连成一线
+          const x1 = x + dx, y1 = y + dy;
+          const x2 = x + dx*2, y2 = y + dy*2;
+
+          if(inBoard(x2, y2)) {
+            if(bd[y1][x1] === color && bd[y2][x2] === opp) {
+              // 还需要确认这三点之间没有其他棋子干扰（在棋盘格点上逻辑已自洽）
+              bd[y2][x2] = null;
+              captured = true;
             }
-            if(points.length === 3) {
-              const vals = points.map(p => p.v);
-              // 模式：[我, 敌, 我] -> 敌方被吃
-              if(vals[0] === color && vals[2] === color && vals[1] === opp) {
-                bd[points[1].y][points[1].x] = null;
-                captured = true;
-              }
+          }
+          
+          // 检查 P-1(同色), P0, P1(对手)
+          const x_1 = x - dx, y_1 = y - dy;
+          if(inBoard(x_1, y_1) && inBoard(x1, y1)) {
+            if(bd[y_1][x_1] === color && bd[y1][x1] === opp) {
+              bd[y1][x1] = null;
+              captured = true;
             }
           }
         });
         return captured;
       }
 
-      // AI 算法
+      function inBoard(x,y) { return x>=0 && x<GRID && y>=0 && y<GRID; }
+      function isAiTurn() { return document.getElementById('mode').value === turn + '-ai'; }
+
+      function updateStatus() {
+        const el = document.getElementById('status');
+        if(gameOver) return;
+        const name = turn === 'blue' ? '红方' : '黑方';
+        el.innerText = isAiTurn() ? `🤖 电脑正在思考...` : `👤 轮到 ${name} 行棋`;
+        el.style.color = turn === 'blue' ? '#e11d48' : '#18181b';
+      }
+
       function getMoves(bd, color) {
         const moves = [];
         for(let y=0; y<GRID; y++){
@@ -370,9 +311,7 @@
             if(bd[y][x] === color) {
               [[0,1],[0,-1],[1,0],[-1,0]].forEach(([dx, dy]) => {
                 const nx = x+dx, ny = y+dy;
-                if(inBoard(nx, ny) && !bd[ny][nx]) {
-                  moves.push({from:{x,y}, to:{x:nx, y:ny}});
-                }
+                if(inBoard(nx, ny) && !bd[ny][nx]) moves.push({from:{x,y}, to:{x:nx, y:ny}});
               });
             }
           }
@@ -380,21 +319,20 @@
         return moves;
       }
 
+      // AI 算法 (Alpha-Beta)
       function evaluate(bd, aiColor) {
         let score = 0;
         const opp = aiColor === 'blue' ? 'black' : 'blue';
+        let myCount = 0, oppCount = 0;
         for(let y=0; y<GRID; y++){
           for(let x=0; x<GRID; x++){
-            if(bd[y][x] === aiColor) {
-              score += 100;
-              if(x>=1 && x<=3 && y>=1 && y<=3) score += 10; // 中心权重
-            } else if(bd[y][x] === opp) {
-              score -= 100;
-              if(x>=1 && x<=3 && y>=1 && y<=3) score -= 10;
-            }
+            if(bd[y][x] === aiColor) { myCount++; score += (x==2&&y==2?20:10); }
+            else if(bd[y][x] === opp) { oppCount++; score -= (x==2&&y==2?20:10); }
           }
         }
-        return score;
+        if(oppCount <= 1) return 10000;
+        if(myCount <= 1) return -10000;
+        return score + (myCount - oppCount) * 100;
       }
 
       function minimax(bd, depth, alpha, beta, isMax, aiColor) {
@@ -406,25 +344,21 @@
         if(isMax) {
           let v = -Infinity;
           for(const m of moves) {
-            const nextBd = bd.map(r => [...r]);
-            nextBd[m.to.y][m.to.x] = color;
-            nextBd[m.from.y][m.from.x] = null;
-            checkCaptures(nextBd, m.to.x, m.to.y, color);
-            v = Math.max(v, minimax(nextBd, depth-1, alpha, beta, false, aiColor));
-            alpha = Math.max(alpha, v);
-            if(beta <= alpha) break;
+            const nb = bd.map(r => [...r]);
+            nb[m.to.y][m.to.x] = color; nb[m.from.y][m.from.x] = null;
+            checkCaptures(nb, m.to.x, m.to.y, color);
+            v = Math.max(v, minimax(nb, depth-1, alpha, beta, false, aiColor));
+            alpha = Math.max(alpha, v); if(beta <= alpha) break;
           }
           return v;
         } else {
           let v = Infinity;
           for(const m of moves) {
-            const nextBd = bd.map(r => [...r]);
-            nextBd[m.to.y][m.to.x] = color;
-            nextBd[m.from.y][m.from.x] = null;
-            checkCaptures(nextBd, m.to.x, m.to.y, color);
-            v = Math.min(v, minimax(nextBd, depth-1, alpha, beta, true, aiColor));
-            beta = Math.min(beta, v);
-            if(beta <= alpha) break;
+            const nb = bd.map(r => [...r]);
+            nb[m.to.y][m.to.x] = color; nb[m.from.y][m.from.x] = null;
+            checkCaptures(nb, m.to.x, m.to.y, color);
+            v = Math.min(v, minimax(nb, depth-1, alpha, beta, true, aiColor));
+            beta = Math.min(beta, v); if(beta <= alpha) break;
           }
           return v;
         }
@@ -435,117 +369,91 @@
         aiThinking = true;
         const depth = parseInt(document.getElementById('difficulty').value);
         const moves = getMoves(board, turn);
-        
-        if(moves.length === 0) {
-          endGame(turn === 'blue' ? 'black' : 'blue');
-          return;
-        }
+        if(moves.length === 0) return endGame(turn === 'blue' ? 'black' : 'blue');
 
-        let bestMove = moves[Math.floor(Math.random()*moves.length)];
-        let bestVal = -Infinity;
-
-        // 模拟思考延迟
         setTimeout(() => {
+          let bestMove = moves[0], bestVal = -Infinity;
           for(const m of moves) {
-            const nextBd = board.map(r => [...r]);
-            nextBd[m.to.y][m.to.x] = turn;
-            nextBd[m.from.y][m.from.x] = null;
-            checkCaptures(nextBd, m.to.x, m.to.y, turn);
-            let v = minimax(nextBd, depth-1, -Infinity, Infinity, false, turn);
+            const nb = board.map(r => [...r]);
+            nb[m.to.y][m.to.x] = turn; nb[m.from.y][m.from.x] = null;
+            checkCaptures(nb, m.to.x, m.to.y, turn);
+            let v = minimax(nb, depth-1, -Infinity, Infinity, false, turn);
             if(v > bestVal) { bestVal = v; bestMove = m; }
           }
-
           executeMove(bestMove.from.x, bestMove.from.y, bestMove.to.x, bestMove.to.y);
           aiThinking = false;
-        }, 600);
+        }, 500);
       }
 
       function executeMove(fx, fy, tx, ty) {
         history.push({bd: board.map(r=>[...r]), turn, lastMove});
-        board[ty][tx] = turn;
-        board[fy][fx] = null;
+        board[ty][tx] = turn; board[fy][fx] = null;
         lastMove = {from:{x:fx, y:fy}, to:{x:tx, y:ty}};
         checkCaptures(board, tx, ty, turn);
         
-        // 胜负判定
-        const pCounts = {blue:0, black:0};
-        board.flat().forEach(v => { if(v) pCounts[v]++; });
-        
-        if(pCounts.blue <= 1) return endGame('black');
-        if(pCounts.black <= 1) return endGame('blue');
+        const counts = {blue:0, black:0};
+        board.flat().forEach(v => { if(v) counts[v]++; });
+        if(counts.blue <= 1) return endGame('black');
+        if(counts.black <= 1) return endGame('blue');
 
         turn = turn === 'blue' ? 'black' : 'blue';
-        draw();
-        updateStatus();
+        draw(); updateStatus();
         if(isAiTurn()) doAiMove();
       }
 
-      function endGame(winner) {
-        gameOver = true;
-        const msg = winner === 'blue' ? '红方获胜！' : '黑方获胜！';
-        document.getElementById('modal-message').innerHTML = `<h2>${msg}</h2>`;
-        document.getElementById('modal-buttons').innerHTML = `<button class="primary" onclick="location.reload()">再来一局</button>`;
+      function endGame(w) {
+        gameOver = true; draw();
+        const msg = w === 'blue' ? '红方大获全胜！' : '黑方大获全胜！';
+        document.getElementById('modal-msg').innerHTML = `<h2>游戏结束</h2><p>${msg}</p>`;
+        document.getElementById('modal-btns').innerHTML = `<button class="primary" onclick="location.reload()">再来一局</button>`;
         document.getElementById('modal').style.display = 'flex';
       }
 
-      // 事件监听
       canvas.addEventListener('click', e => {
         if(aiThinking || gameOver || isAiTurn()) return;
         const rect = canvas.getBoundingClientRect();
-        const x = Math.round((e.clientX - rect.left - PAD) / CELL);
-        const y = Math.round((e.clientY - rect.top - PAD) / CELL);
-
-        if(!inBoard(x, y)) return;
+        const x = Math.round((e.clientX - rect.left) / (rect.width / (GRID-1)));
+        const y = Math.round((e.clientY - rect.top) / (rect.height / (GRID-1)));
+        
+        if(!inBoard(x,y)) return;
 
         if(board[y][x] === turn) {
-          selected = {x, y};
-          legalMoves = [];
-          [[0,1],[0,-1],[1,0],[-1,0]].forEach(([dx, dy]) => {
-            if(inBoard(x+dx, y+dy) && !board[y+dy][x+dx]) legalMoves.push({x:x+dx, y:y+dy});
-          });
+          selected = {x,y};
+          legalMoves = getMoves(board, turn).filter(m => m.from.x === x && m.from.y === y).map(m => m.to);
         } else if(selected && legalMoves.some(p => p.x === x && p.y === y)) {
           executeMove(selected.x, selected.y, x, y);
-          selected = null;
-          legalMoves = [];
+          selected = null; legalMoves = [];
         } else {
           selected = null;
         }
         draw();
       });
 
-      document.getElementById('undo').onclick = () => {
-        if(history.length < 2 || aiThinking) return;
-        // 回退两步（AI一步+玩家一步）
-        let prev = history.pop();
-        if(isAiTurn()) prev = history.pop();
-        board = prev.bd;
-        turn = prev.turn;
-        lastMove = prev.lastMove;
-        draw();
-        updateStatus();
-      };
-
       document.getElementById('restart').onclick = () => {
-        document.getElementById('modal-message').innerHTML = `<h2>开始新游戏</h2><p>请选择先手方：</p>`;
-        document.getElementById('modal-buttons').innerHTML = `
-          <button class="primary" onclick="window.startGame('blue')">红方先手</button>
-          <button class="primary" onclick="window.startGame('black')">黑方先手</button>
+        document.getElementById('modal-msg').innerHTML = `<h2>设置新局</h2><p>请选择您的身份：</p>`;
+        document.getElementById('modal-btns').innerHTML = `
+          <button class="primary" onclick="window.start(true)">我执红 (先手)</button>
+          <button class="primary" onclick="window.start(false)">我执黑 (后手)</button>
         `;
         document.getElementById('modal').style.display = 'flex';
       };
 
-      window.startGame = (p) => {
+      window.start = (isBlue) => {
         document.getElementById('modal').style.display = 'none';
-        init(p);
+        document.getElementById('mode').value = isBlue ? 'black-ai' : 'blue-ai';
+        init('blue');
       };
 
-      document.getElementById('board-style').onchange = (e) => {
-        document.querySelector('.board-container').style.background = e.target.value;
+      document.getElementById('undo').onclick = () => {
+        if(history.length < (isAiTurn()?1:2) || aiThinking) return;
+        let prev = history.pop(); 
+        if(document.getElementById('mode').value.includes('ai')) prev = history.pop();
+        board = prev.bd; turn = prev.turn; lastMove = prev.lastMove;
+        draw(); updateStatus();
       };
 
       window.addEventListener('resize', resize);
-      resize();
-      init();
+      resize(); init();
     })();
   </script>
 </body>
