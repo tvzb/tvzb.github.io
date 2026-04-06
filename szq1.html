@@ -3,186 +3,203 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>石子棋 - 最终完美适配版</title>
+  <title>经典石子棋 - 完美适配版</title>
   <style>
     :root {
-      --bg-color: #f1f5f9;
-      --board-outer: #8b4513;
-      --panel-width: 340px;
+      --bg: #f0f2f5;
+      --board-frame: #5d4037;
+      --board-face: #e3bc6a;
+      --text-main: #1e293b;
     }
     body {
-      font-family: -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif;
-      margin: 0; background: var(--bg-color);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0; background-color: var(--bg);
       display: flex; flex-direction: column; min-height: 100vh;
     }
-    /* 响应式导航 */
-    nav { background: #1e293b; padding: 10px 0; color: white; text-align: center; font-weight: bold; }
+    nav { background: #1e293b; color: white; padding: 15px; text-align: center; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
     
-    .app-container {
+    .main-layout {
       flex: 1; display: flex; flex-direction: column; align-items: center; padding: 20px; gap: 20px;
     }
+    /* 宽屏自动并排 */
     @media (min-width: 900px) {
-      .app-container { flex-direction: row; justify-content: center; align-items: flex-start; }
+      .main-layout { flex-direction: row; justify-content: center; align-items: flex-start; }
     }
 
-    /* 棋盘外框：模拟实体棋盘的厚度 */
-    .board-frame {
-      background: var(--board-outer);
-      padding: 8px; border-radius: 8px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-      line-height: 0; /* 消除canvas底边间隙 */
+    /* 棋盘容器：增加 Padding 模拟实木边框，并解决边缘遮挡 */
+    .board-container {
+      background: var(--board-frame);
+      padding: 12px; border-radius: 12px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      line-height: 0;
     }
     canvas {
-      background: #dcb35c;
-      border-radius: 2px;
-      touch-action: none;
+      background: var(--board-face);
+      border-radius: 4px;
+      touch-action: none; /* 防止手机端缩放干扰 */
       cursor: pointer;
     }
 
     /* 控制面板 */
-    .controls {
-      background: white; padding: 25px; border-radius: 16px;
-      width: 100%; max-width: var(--panel-width);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    .side-panel {
+      background: white; padding: 25px; border-radius: 20px;
+      width: 100%; max-width: 340px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
       display: flex; flex-direction: column; gap: 15px;
       box-sizing: border-box;
     }
-    #status {
-      font-size: 1.1rem; font-weight: 800; text-align: center;
-      padding: 10px; border-radius: 10px; background: #f8fafc;
+    #game-status {
+      font-size: 1.2rem; font-weight: 800; text-align: center;
+      padding: 12px; border-radius: 12px; background: #f8fafc;
+      border: 2px solid #e2e8f0; transition: 0.3s;
     }
-    .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .grid-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     button, select {
-      padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px;
-      background: white; font-weight: 600; cursor: pointer; transition: 0.2s;
+      padding: 12px; border: 1px solid #e2e8f0; border-radius: 10px;
+      background: white; font-weight: 600; cursor: pointer; font-size: 14px;
     }
-    button:active { transform: scale(0.98); }
+    button:hover { background: #f1f5f9; }
     button.primary { background: #1e293b; color: white; border: none; }
-    label { font-size: 12px; color: #64748b; margin-bottom: -10px; font-weight: bold; }
+    button.primary:hover { background: #334155; }
+    label { font-size: 12px; color: #64748b; font-weight: bold; margin-bottom: -10px; }
 
-    .modal {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.8);
-      display: none; align-items: center; justify-content: center; z-index: 100;
+    /* 结算弹窗 */
+    .overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+      display: none; align-items: center; justify-content: center; z-index: 1000;
+      backdrop-filter: blur(4px);
     }
-    .modal-content { background: white; padding: 30px; border-radius: 20px; text-align: center; width: 80%; max-width: 300px; }
+    .win-card { background: white; padding: 40px; border-radius: 24px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
   </style>
 </head>
 <body>
 
-<nav>石子棋博弈系统</nav>
+<nav>石子棋在线博弈 - 2026专业版</nav>
 
-<div class="app-container">
-  <div class="board-frame">
-    <canvas id="gameBoard"></canvas>
+<div class="main-layout">
+  <div class="board-container">
+    <canvas id="chessBoard"></canvas>
   </div>
 
-  <div class="controls">
-    <div id="status">准备就绪</div>
+  <div class="side-panel">
+    <div id="game-status">准备就绪</div>
     
-    <label>操作</label>
-    <div class="btn-row">
-      <button class="primary" id="newGame">重新开始</button>
-      <button id="undo">悔棋</button>
+    <label>对局控制</label>
+    <div class="grid-btns">
+      <button class="primary" onclick="resetGame()">新对局</button>
+      <button onclick="undoMove()">悔棋</button>
     </div>
 
-    <label>对阵配置</label>
-    <select id="mode">
-      <option value="black-ai">我方执红 (先手)</option>
-      <option value="blue-ai">我方执黑 (后手)</option>
-      <option value="hvh">本地双人</option>
+    <label>模式设置</label>
+    <select id="ai-mode" onchange="resetGame()">
+      <option value="red-player">玩家执红 (先手)</option>
+      <option value="black-player">玩家执黑 (后手)</option>
+      <option value="pvp">双人面推</option>
     </select>
 
-    <label>AI 强度</label>
-    <select id="diff">
-      <option value="1">新手</option>
-      <option value="3" selected>中级</option>
-      <option value="5">专家</option>
-      <option value="7">大师</option>
+    <label>电脑智力</label>
+    <select id="ai-level">
+      <option value="2">简单 (随机)</option>
+      <option value="4" selected>普通 (推荐)</option>
+      <option value="6">大师 (极难)</option>
     </select>
 
-    <div style="font-size: 12px; color: #94a3b8; line-height: 1.5; margin-top: 10px;">
-      💡 提示：点击自己的棋子选择，点击相邻空位移动。形成同色两子连线且紧邻敌子即可吃掉。
+    <div style="font-size: 12px; color: #94a3b8; line-height: 1.6; border-top: 1px solid #eee; pt: 10px;">
+      <strong>玩法规则：</strong><br>
+      移动棋子后，若在横向或纵向形成“我-我-敌”连线，则吃掉对方那个棋子。一方棋子被吃剩 1 个时判负。
     </div>
   </div>
 </div>
 
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <div id="modal-msg"></div>
-    <div id="modal-btns" style="margin-top:20px; display:flex; flex-direction:column; gap:10px;"></div>
+<div id="win-overlay" class="overlay">
+  <div class="win-card">
+    <h1 id="win-text" style="margin-top:0; color:#1e293b;">恭喜！</h1>
+    <button class="primary" style="width:100%" onclick="resetGame()">再战一局</button>
   </div>
 </div>
 
 <script>
+/**
+ * 核心逻辑闭包
+ */
 (function() {
   const GRID = 5;
-  const canvas = document.getElementById('gameBoard');
+  const canvas = document.getElementById('chessBoard');
   const ctx = canvas.getContext('2d');
   const DPR = window.devicePixelRatio || 1;
 
-  // 关键修正：坐标常量
-  let BOARD_SIZE, CELL_SIZE, MARGIN;
-  let board, turn, selected = null, lastMove = null, gameOver = false, history = [];
+  let BOARD_PX, CELL_PX, OFFSET;
+  let board = [], turn = 'red', selected = null, lastMove = null;
+  let isGameOver = false, history = [];
 
+  // --- 适配与初始化 ---
   function resize() {
-    const isMobile = window.innerWidth < 900;
-    // 动态计算棋盘大小，确保在任何屏幕都不溢出
-    const space = isMobile ? window.innerWidth - 60 : Math.min(window.innerHeight - 150, 600);
-    BOARD_SIZE = space;
+    const isDesktop = window.innerWidth >= 900;
+    const size = isDesktop ? Math.min(window.innerHeight - 180, 550) : window.innerWidth - 60;
     
-    // 【核心改进】MARGIN 留出半个棋子的空间，确保边缘棋子显示完整
-    // 棋盘网格占总大小的 80%，四周留 10% 空间
-    MARGIN = BOARD_SIZE * 0.12; 
-    CELL_SIZE = (BOARD_SIZE - MARGIN * 2) / (GRID - 1);
+    BOARD_PX = size;
+    // 【修正核心】OFFSET 留出半个棋子的位置，防止图片中那种边缘被切断的情况
+    OFFSET = BOARD_PX * 0.12; 
+    CELL_PX = (BOARD_SIZE = BOARD_PX - OFFSET * 2) / (GRID - 1);
 
-    canvas.width = BOARD_SIZE * DPR;
-    canvas.height = BOARD_SIZE * DPR;
-    canvas.style.width = BOARD_SIZE + 'px';
-    canvas.style.height = BOARD_SIZE + 'px';
+    canvas.width = BOARD_PX * DPR;
+    canvas.height = BOARD_PX * DPR;
+    canvas.style.width = BOARD_PX + 'px';
+    canvas.style.height = BOARD_PX + 'px';
     ctx.scale(DPR, DPR);
-    draw();
+    render();
   }
 
-  function init() {
+  function initData() {
     board = Array.from({length:GRID}, () => Array(GRID).fill(null));
     for(let i=0; i<GRID; i++) {
-      board[0][i] = 'red';   // 红方上方
-      board[GRID-1][i] = 'black'; // 黑方下方
+      board[0][i] = 'red';   // 红子初始在上
+      board[GRID-1][i] = 'black'; // 黑子初始在下
     }
-    turn = 'red'; history = []; selected = null; lastMove = null; gameOver = false;
-    updateStatus(); draw();
-    if(isAiTurn()) setTimeout(doAiMove, 600);
+    turn = 'red';
+    selected = null; lastMove = null; isGameOver = false;
+    history = [];
+    document.getElementById('win-overlay').style.display = 'none';
+    refreshUI();
+    
+    // 如果设置了电脑先手
+    if(checkIsAiTurn()) setTimeout(aiAction, 600);
   }
 
-  function draw() {
-    ctx.clearRect(0,0, BOARD_SIZE, BOARD_SIZE);
-    
-    // 1. 绘制背景及渐变
-    const bgGrad = ctx.createLinearGradient(0,0, BOARD_SIZE, BOARD_SIZE);
-    bgGrad.addColorStop(0, '#e3bc6a'); bgGrad.addColorStop(1, '#c59d4a');
-    ctx.fillStyle = bgGrad;
-    ctx.fillRect(0,0, BOARD_SIZE, BOARD_SIZE);
+  // --- 绘图引擎 ---
+  function render() {
+    ctx.clearRect(0, 0, BOARD_PX, BOARD_PX);
 
-    // 2. 绘制网格线
-    ctx.strokeStyle = "rgba(69, 26, 3, 0.8)";
+    // 绘制棋盘底色渐变
+    const grad = ctx.createLinearGradient(0, 0, BOARD_PX, BOARD_PX);
+    grad.addColorStop(0, '#e3bc6a'); grad.addColorStop(1, '#c59d4a');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, BOARD_PX, BOARD_PX);
+
+    // 绘制网格线
+    ctx.beginPath();
+    ctx.strokeStyle = "rgba(60, 30, 10, 0.7)";
     ctx.lineWidth = 1.5;
     for(let i=0; i<GRID; i++) {
-      const pos = MARGIN + i * CELL_SIZE;
-      // 纵线
-      ctx.beginPath(); ctx.moveTo(pos, MARGIN); ctx.lineTo(pos, BOARD_SIZE - MARGIN); ctx.stroke();
+      const p = OFFSET + i * CELL_PX;
+      // 竖线
+      ctx.moveTo(p, OFFSET); ctx.lineTo(p, BOARD_PX - OFFSET);
       // 横线
-      ctx.beginPath(); ctx.moveTo(MARGIN, pos); ctx.lineTo(BOARD_SIZE - MARGIN, pos); ctx.stroke();
+      ctx.moveTo(OFFSET, p); ctx.lineTo(BOARD_PX - OFFSET, p);
     }
+    ctx.stroke();
 
-    // 3. 绘制上一步高亮
+    // 绘制最后落子标记
     if(lastMove) {
-      ctx.fillStyle = "rgba(255, 255, 255, 0.3)";
+      ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
       [lastMove.from, lastMove.to].forEach(p => {
-        ctx.beginPath(); ctx.arc(MARGIN + p.x*CELL_SIZE, MARGIN + p.y*CELL_SIZE, CELL_SIZE*0.3, 0, Math.PI*2); ctx.fill();
+        ctx.beginPath(); 
+        ctx.arc(OFFSET + p.x * CELL_PX, OFFSET + p.y * CELL_PX, CELL_PX * 0.25, 0, Math.PI*2);
+        ctx.fill();
       });
     }
 
-    // 4. 绘制棋子
+    // 绘制棋子
     for(let y=0; y<GRID; y++) {
       for(let x=0; x<GRID; x++) {
         if(board[y][x]) drawStone(x, y, board[y][x]);
@@ -191,151 +208,202 @@
   }
 
   function drawStone(x, y, color) {
-    const cx = MARGIN + x * CELL_SIZE;
-    const cy = MARGIN + y * CELL_SIZE;
-    const r = CELL_SIZE * 0.3; // 【修正】棋子大小比例，0.3 比较精致
+    const cx = OFFSET + x * CELL_PX;
+    const cy = OFFSET + y * CELL_PX;
+    const r = CELL_PX * 0.32; // 精致比例
 
     ctx.save();
     // 阴影
-    ctx.shadowBlur = 6; ctx.shadowColor = "rgba(0,0,0,0.4)";
+    ctx.shadowBlur = 8; ctx.shadowColor = "rgba(0,0,0,0.4)";
     ctx.shadowOffsetY = 4;
 
-    // 球面质感
-    const g = ctx.createRadialGradient(cx - r*0.3, cy - r*0.3, r*0.1, cx, cy, r);
+    // 球体渐变
+    const rg = ctx.createRadialGradient(cx - r*0.3, cy - r*0.3, r*0.1, cx, cy, r);
     if(color === 'red') {
-      g.addColorStop(0, '#ff5f5f'); g.addColorStop(1, '#9b0000');
+      rg.addColorStop(0, '#ff6b6b'); rg.addColorStop(1, '#a80000');
     } else {
-      g.addColorStop(0, '#555555'); g.addColorStop(1, '#000000');
+      rg.addColorStop(0, '#666666'); rg.addColorStop(1, '#000000');
     }
-    
-    ctx.fillStyle = g;
+
+    ctx.fillStyle = rg;
     ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.fill();
     ctx.restore();
 
-    // 选中光圈
+    // 选中状态
     if(selected && selected.x === x && selected.y === y) {
-      ctx.strokeStyle = "#3b82f6"; ctx.lineWidth = 3;
+      ctx.strokeStyle = "#3b82f6";
+      ctx.lineWidth = 4;
       ctx.beginPath(); ctx.arc(cx, cy, r + 5, 0, Math.PI*2); ctx.stroke();
     }
   }
 
-  // 吃子规则：成二吃一
-  function checkCapture(bd, x, y, color) {
-    const opp = color === 'red' ? 'black' : 'red';
-    const dirs = [[1,0], [-1,0], [0,1], [0,-1]];
-    let hit = false;
-
-    dirs.forEach(([dx, dy]) => {
-      // 模式 A: [我][我(新)][敌] -> 吃掉 [敌]
-      const x_1 = x - dx, y_1 = y - dy;
-      const x1 = x + dx, y1 = y + dy;
-      if(isIn(x_1, y_1) && isIn(x1, y1)) {
-        if(bd[y_1][x_1] === color && bd[y1][x1] === opp) {
-          bd[y1][x1] = null; hit = true;
-        }
-      }
-      // 模式 B: [我(新)][我][敌] -> 吃掉 [敌]
-      const x2 = x + dx*2, y2 = y + dy*2;
-      if(isIn(x1, y1) && isIn(x2, y2)) {
-        if(bd[y1][x1] === color && bd[y2][x2] === opp) {
-          bd[y2][x2] = null; hit = true;
-        }
-      }
-    });
-    return hit;
+  // --- 核心规则计算 ---
+  function checkIsAiTurn() {
+    const m = document.getElementById('ai-mode').value;
+    if(m === 'pvp') return false;
+    return (m === 'red-player' && turn === 'black') || (m === 'black-player' && turn === 'red');
   }
 
-  function isIn(x,y) { return x>=0 && x<GRID && y>=0 && y<GRID; }
-  function isAiTurn() { return !gameOver && document.getElementById('mode').value === turn + '-ai'; }
-
-  function updateStatus() {
-    const el = document.getElementById('status');
-    const name = turn === 'red' ? '红方' : '黑方';
-    el.innerText = name + (isAiTurn() ? " 思考中..." : " 行棋中");
-    el.style.color = turn === 'red' ? '#9b0000' : '#1e293b';
-  }
-
-  function move(fx, fy, tx, ty) {
-    history.push({bd: board.map(r => [...r]), turn, lastMove});
-    board[ty][tx] = turn; board[fy][fx] = null;
-    lastMove = {from:{x:fx, y:fy}, to:{x:tx, y:ty}};
-    checkCapture(board, tx, ty, turn);
-
-    const counts = {red:0, black:0};
-    board.flat().forEach(v => { if(v) counts[v]++; });
-    
-    if(counts.red <= 1 || counts.black <= 1) {
-      gameOver = true;
-      showWin(counts.red > 1 ? '红方' : '黑方');
-    } else {
-      turn = turn === 'red' ? 'black' : 'red';
-      if(isAiTurn()) setTimeout(doAiMove, 600);
-    }
-    updateStatus(); draw();
-  }
-
-  // 点击交互逻辑
-  canvas.addEventListener('click', e => {
-    if(gameOver || isAiTurn()) return;
-    const rect = canvas.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const clickY = e.clientY - rect.top;
-    
-    // 坐标转换回索引
-    const x = Math.round((clickX - MARGIN) / CELL_SIZE);
-    const y = Math.round((clickY - MARGIN) / CELL_SIZE);
-    
-    if(!isIn(x,y)) return;
-
-    if(board[y][x] === turn) {
-      selected = {x, y};
-    } else if(selected && !board[y][x]) {
-      const dx = Math.abs(x - selected.x);
-      const dy = Math.abs(y - selected.y);
-      if((dx === 1 && dy === 0) || (dx === 0 && dy === 1)) {
-        move(selected.x, selected.y, x, y);
-        selected = null;
-      }
-    }
-    draw();
-  });
-
-  // 极简 AI 实现 (Alpha-Beta 搜索)
-  function doAiMove() {
-    const depth = parseInt(document.getElementById('diff').value);
+  function getValidMoves(bd, color) {
     const moves = [];
     for(let y=0; y<GRID; y++) {
       for(let x=0; x<GRID; x++) {
-        if(board[y][x] === turn) {
+        if(bd[y][x] === color) {
           [[0,1],[0,-1],[1,0],[-1,0]].forEach(([dx, dy]) => {
             const nx = x+dx, ny = y+dy;
-            if(isIn(nx, ny) && !board[ny][nx]) moves.push({f:{x,y}, t:{x:nx, y:ny}});
+            if(nx>=0 && nx<GRID && ny>=0 && ny<GRID && !bd[ny][nx]) {
+              moves.push({from:{x,y}, to:{x:nx, y:ny}});
+            }
           });
         }
       }
     }
+    return moves;
+  }
+
+  // 吃子判定逻辑：成二吃一
+  function processCapture(bd, x, y, color) {
+    const opp = color === 'red' ? 'black' : 'red';
+    const dirs = [[1,0], [-1,0], [0,1], [0,-1]];
+    let captured = false;
+
+    dirs.forEach(([dx, dy]) => {
+      // 场景：[我][我(新落子)][敌]
+      const x1 = x - dx, y1 = y - dy;
+      const x_opp = x + dx, y_opp = y + dy;
+      if(isInside(x1, y1) && isInside(x_opp, y_opp)) {
+        if(bd[y1][x1] === color && bd[y_opp][x_opp] === opp) {
+          bd[y_opp][x_opp] = null; captured = true;
+        }
+      }
+      // 场景：[我(新落子)][我][敌]
+      const x_my2 = x + dx, y_my2 = y + dy;
+      const x_opp2 = x + dx*2, y_opp2 = y + dy*2;
+      if(isInside(x_my2, y_my2) && isInside(x_opp2, y_opp2)) {
+        if(bd[y_my2][x_my2] === color && bd[y_opp2][x_opp2] === opp) {
+          bd[y_opp2][x_opp2] = null; captured = true;
+        }
+      }
+    });
+    return captured;
+  }
+
+  function isInside(x, y) { return x>=0 && x<GRID && y>=0 && y<GRID; }
+
+  // --- 交互逻辑 ---
+  function handleMove(fx, fy, tx, ty) {
+    // 存入历史记录用于悔棋
+    history.push({
+      board: board.map(row => [...row]),
+      turn: turn,
+      lastMove: lastMove ? JSON.parse(JSON.stringify(lastMove)) : null
+    });
+
+    board[ty][tx] = turn;
+    board[fy][fx] = null;
+    lastMove = {from:{x:fx, y:fy}, to:{x:tx, y:ty}};
+    
+    // 判定吃子
+    processCapture(board, tx, ty, turn);
+
+    // 判定胜负
+    const count = {red:0, black:0};
+    board.flat().forEach(s => { if(s) count[s]++; });
+    
+    if(count.red <= 1 || count.black <= 1) {
+      isGameOver = true;
+      render();
+      setTimeout(() => {
+        document.getElementById('win-text').innerText = (count.red > 1 ? "红方" : "黑方") + " 胜利！";
+        document.getElementById('win-overlay').style.display = 'flex';
+      }, 300);
+      return;
+    }
+
+    turn = turn === 'red' ? 'black' : 'red';
+    render();
+    refreshUI();
+
+    if(checkIsAiTurn()) setTimeout(aiAction, 600);
+  }
+
+  canvas.addEventListener('click', (e) => {
+    if(isGameOver || checkIsAiTurn()) return;
+    
+    const rect = canvas.getBoundingClientRect();
+    const x_px = e.clientX - rect.left;
+    const y_px = e.clientY - rect.top;
+
+    // 坐标还原
+    const x = Math.round((x_px - OFFSET) / CELL_PX);
+    const y = Math.round((y_px - OFFSET) / CELL_PX);
+
+    if(!isInside(x, y)) return;
+
+    if(board[y][x] === turn) {
+      selected = {x, y};
+    } else if(selected && !board[y][x]) {
+      const dist = Math.abs(x - selected.x) + Math.abs(y - selected.y);
+      if(dist === 1) {
+        handleMove(selected.x, selected.y, x, y);
+        selected = null;
+      }
+    } else {
+      selected = null;
+    }
+    render();
+  });
+
+  // --- 电脑 AI 逻辑 ---
+  function aiAction() {
+    if(isGameOver) return;
+    const moves = getValidMoves(board, turn);
     if(moves.length === 0) return;
-    // 随机选一个作为演示，或加入简单评分
-    const best = moves[Math.floor(Math.random() * moves.length)];
-    move(best.f.x, best.f.y, best.t.x, best.t.y);
+
+    // 简单的贪婪选择：如果有吃子步则必走，否则随机
+    let bestMove = null;
+    for(let m of moves) {
+      let tempBoard = board.map(row => [...row]);
+      tempBoard[m.to.y][m.to.x] = turn; tempBoard[m.from.y][m.from.x] = null;
+      if(processCapture(tempBoard, m.to.x, m.to.y, turn)) {
+        bestMove = m; break;
+      }
+    }
+
+    const finalMove = bestMove || moves[Math.floor(Math.random() * moves.length)];
+    handleMove(finalMove.from.x, finalMove.from.y, finalMove.to.x, finalMove.to.y);
   }
 
-  function showWin(winner) {
-    document.getElementById('modal-msg').innerHTML = `<h2>🏆 ${winner} 获胜</h2>`;
-    document.getElementById('modal-btns').innerHTML = `<button class="primary" onclick="location.reload()">再来一局</button>`;
-    document.getElementById('modal').style.display = 'flex';
+  function refreshUI() {
+    const status = document.getElementById('game-status');
+    const name = turn === 'red' ? '红方' : '黑方';
+    status.innerText = name + (checkIsAiTurn() ? " 思考中..." : " 行棋中");
+    status.style.color = turn === 'red' ? '#a80000' : '#1e293b';
+    status.style.borderColor = turn === 'red' ? '#ff6b6b' : '#1e293b';
   }
 
-  document.getElementById('newGame').onclick = () => init();
-  document.getElementById('undo').onclick = () => {
-    if(history.length === 0) return;
-    let last = history.pop();
-    board = last.bd; turn = last.turn; lastMove = last.lastMove;
-    draw(); updateStatus();
+  // --- 全局接口 ---
+  window.resetGame = () => { initData(); };
+  window.undoMove = () => {
+    if(history.length === 0 || isGameOver) return;
+    // 电脑模式下悔棋需要回退两步
+    const isAi = document.getElementById('ai-mode').value !== 'pvp';
+    let step = isAi ? 2 : 1;
+    while(step-- > 0 && history.length > 0) {
+      let last = history.pop();
+      board = last.board;
+      turn = last.turn;
+      lastMove = last.lastMove;
+    }
+    selected = null;
+    render();
+    refreshUI();
   };
 
   window.addEventListener('resize', resize);
-  resize(); init();
+  resize();
+  initData();
+
 })();
 </script>
 </body>
