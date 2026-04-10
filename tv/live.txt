@@ -17,24 +17,6 @@ CCTV-15音乐,http://219.146.65.78:59901/tsfile/live/0015_1.m3u8?key=txiptv&play
 CCTV-16奥林匹克,http://219.146.65.78:59901/tsfile/live/0016_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-17农业农村,http://219.146.65.78:59901/tsfile/live/1005_1.m3u8?key=txiptv&playlive=1&authid=0
 
-CCTV-1综合,http://61.163.181.78:19901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-2财经,http://61.163.181.78:19901/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-3综艺,http://61.163.181.78:19901/tsfile/live/0003_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-4中文国际,http://61.163.181.78:19901/tsfile/live/0004_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-5体育,http://61.163.181.78:19901/tsfile/live/0005_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-6电影,http://61.163.181.78:19901/tsfile/live/0006_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-7国防军事,http://61.163.181.78:19901/tsfile/live/0007_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-8电视剧,http://61.163.181.78:19901/tsfile/live/0008_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-9纪录,http://61.163.181.78:19901/tsfile/live/0009_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-10科教,http://61.163.181.78:19901/tsfile/live/0010_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-11戏曲,http://61.163.181.78:19901/tsfile/live/0011_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-12社会与法,http://61.163.181.78:19901/tsfile/live/0012_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-13新闻,http://61.163.181.78:19901/tsfile/live/0013_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-14少儿,http://61.163.181.78:19901/tsfile/live/0014_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-15音乐,http://61.163.181.78:19901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-16奥林匹克,http://61.163.181.78:19901/tsfile/live/0016_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-17农业农村,http://61.163.181.78:19901/tsfile/live/0017_1.m3u8?key=txiptv&playlive=1&authid=0
-
 CCTV-1综合,http://183.62.76.246:60101/tsfile/live/0011_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-2财经,http://183.62.76.246:60101/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-3综艺,http://183.62.76.246:60101/tsfile/live/0003_1.m3u8?key=txiptv&playlive=1&authid=0
