@@ -133,24 +133,6 @@ CCTV-15音乐,http://74.91.26.218:82/live/cctv15hd.m3u8
 CCTV-16奥林匹克,http://74.91.26.218:82/live/cctv16hd.m3u8
 CCTV-17农业农村,http://74.91.26.218:82/live/cctv17hd.m3u8
 
-CCTV-1综合,http://120.76.248.139/live/bfgd/4200000060.m3u8
-CCTV-2财经,http://120.76.248.139/live/bfgd/4200000061.m3u8
-CCTV-3综艺,http://120.76.248.139/live/bfgd/4200000062.m3u8
-CCTV-4中文国际,http://120.76.248.139/live/bfgd/4200000063.m3u8
-CCTV-5体育,http://120.76.248.139/live/bfgd/4200000064.m3u8
-CCTV-6电影,http://120.76.248.139/live/bfgd/4200000065.m3u8
-CCTV-7国防军事,http://120.76.248.139/live/bfgd/4200000066.m3u8
-CCTV-8电视剧,http://120.76.248.139/live/bfgd/4200000067.m3u8
-CCTV-9纪录,http://120.76.248.139/live/bfgd/4200000068.m3u8
-CCTV-10科教,http://120.76.248.139/live/bfgd/4200000069.m3u8
-CCTV-11戏曲,http://120.76.248.139/live/bfgd/4200000070.m3u8
-CCTV-12社会与法,http://120.76.248.139/live/bfgd/4200000071.m3u8
-CCTV-13新闻,http://120.76.248.139/live/bfgd/4200000072.m3u8
-CCTV-14少儿,http://120.76.248.139/live/bfgd/4200000073.m3u8
-CCTV-15音乐,http://120.76.248.139/live/bfgd/4200000074.m3u8
-CCTV-16奥林匹克,http://120.76.248.139/live/bfgd/4200000075.m3u8
-CCTV-17农业农村,http://120.76.248.139/live/bfgd/4200000076.m3u8
-
 卫视频道,#genre#
 江西卫视,http://61.143.15.139:59901/tsfile/live/0138_1.m3u8?key=txiptv&playlive=1&authid=0
 北京卫视,http://61.143.15.139:59901/tsfile/live/0122_1.m3u8?key=txiptv&playlive=1&authid=0
