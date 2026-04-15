@@ -63,8 +63,8 @@
     "categories": ["短剧", "动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
   },
   {
-    "key": "百度云资源",
-    "name": "百度云资源",
+    "key": "百度资源",
+    "name": "百度资源",
     "type": 1,
     "api": "https://api.apibdzy.com/api.php/provide/vod/",
     "playUrl": "https://jx.jxbdzyw.com/m3u8/?url=",
