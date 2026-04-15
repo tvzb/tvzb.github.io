@@ -313,6 +313,26 @@
     "categories": ["短剧", "动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
   },
   {
+    "key": "非凡资源",
+    "name": "非凡资源",
+    "type": 1,
+    "api": "http://api.ffzyapi.com/api.php/provide/vod/",
+    "playUrl": "https://svip.ffzyplay.com/?url=",
+    "searchable": 1,
+    "quickSearch": 1,
+    "categories": ["短剧", "动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
+  },
+  {
+    "key": "金鹰资源",
+    "name": "金鹰资源",
+    "type": 1,
+    "api": "https://jyzyapi.com/provide/vod/from/jinyingm3u8/at/json",
+    "playUrl": "https://hd.iapijy.com/play?url=",
+    "searchable": 1,
+    "quickSearch": 1,
+    "categories": ["短剧", "动作片", "喜剧片", "恐怖片", "科幻片", "爱情片", "剧情片", "短剧", "欧美剧", "国产剧", "内地剧", "大陆剧", "日韩剧"]
+  },
+  {
     "key": "最大资源",
     "name": "最大资源",
     "type": 1,
