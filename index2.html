@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>直播源规范化专家 - CCTV & 卫视 (双源比对版)</title>
+  <title>直播源规范化专家 - CCTV & 卫视 (精简规范版)</title>
   <style>
     body { font-family: Arial, 'Microsoft YaHei', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; color: #333; }
     .container { max-width: 1100px; margin: 15px auto; background: rgba(255, 255, 255, 0.96); border-radius: 18px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); overflow: hidden; backdrop-filter: blur(10px); }
@@ -41,11 +41,12 @@
   </nav>
   <div class="main-content">
     <h1>直播源一键规范工具</h1>
-    <p class="subtitle">动态差值补齐 · 跨源镜像映射 · 自动分组去重</p>
+    <p class="subtitle">名称自动精简 · 跨源镜像映射 · 自动分组去重</p>
     <div class="tips-box">
-      <strong>智能补齐逻辑：</strong><br>
-      • <b>CCTV组：</b>识别同IP下任意两个CCTV的ID差值，自动补全1-17台并保持位数一致（如0003->0014）。<br>
-      • <b>卫视组：</b>自动从全篇识别不同卫视间的编号差值（如江西与湖南的距离），跨服务器推算补全缺失频道。
+      <strong>规范化说明：</strong><br>
+      • <b>名称净化：</b>自动剔除 HD, FHD, 标清, 超清等后缀。<br>
+      • <b>精准更名：</b>上海卫视→东方卫视，福建东南卫视→东南卫视。<br>
+      • <b>卫视过滤：</b>仅保留省名卫视及深圳卫视，删除各类杂牌、地级市卫视。
     </div>
     <textarea id="input" placeholder="粘贴 M3U 或 TXT 格式内容..."></textarea>
     <div class="buttons">
@@ -58,7 +59,7 @@
       <button class="btn-copy" onclick="copyResult()">拷贝结果</button>
     </div>
   </div>
-  <footer>© 2026 频道规范工具 · 差值比对增强版</footer>
+  <footer>© 2026 频道规范工具 · 自动命名增强版</footer>
 </div>
 
 <script>
@@ -71,12 +72,26 @@ const cctvConfig = [
   { id: 16, name: "奥林匹克" }, { id: 17, name: "农业农村" }
 ];
 
-const topSatellites = ["江西卫视", "北京卫视", "东方卫视", "湖南卫视", "浙江卫视", "江苏卫视", "辽宁卫视", "广东卫视", "深圳卫视", "山东卫视", "安徽卫视", "湖北卫视"];
+const prioritySatellites = ["江西卫视", "北京卫视", "东方卫视", "湖南卫视", "浙江卫视", "江苏卫视", "辽宁卫视"];
+// 省份前缀正则（包含四个自治区和直辖市简称）
+const provinceRegex = /^(北京|天津|上海|重庆|河北|山西|辽宁|吉林|黑龙江|江苏|浙江|安徽|福建|江西|山东|河南|湖北|湖南|广东|海南|四川|贵州|云南|陕西|甘肃|青海|内蒙古|广西|西藏|宁夏|新疆|兵团|东南|深圳|东方)卫视/;
 
-window.onload = function() {
-  const savedInput = localStorage.getItem('iptv_input');
-  if (savedInput) document.getElementById('input').value = savedInput;
-};
+function formatChannelName(name) {
+  let n = name.replace(/HD|FHD|标清|超清|高清|频道|\s|\[.*\]|\(.*\)/gi, "");
+  // 特殊更名逻辑
+  if (n === "上海卫视") return "东方卫视";
+  if (n === "福建东南卫视") return "东南卫视";
+  // 补齐后缀
+  if (n.includes("卫视") && !n.endsWith("卫视")) {
+      n = n.substring(0, n.indexOf("卫视") + 2);
+  }
+  return n;
+}
+
+function isValidSatellite(name) {
+  // 必须包含卫视，且必须符合省份/特定名称开头，或者是我们强制保留的深圳
+  return provinceRegex.test(name);
+}
 
 function getServerKey(url) {
   try {
@@ -85,14 +100,12 @@ function getServerKey(url) {
   } catch(e) { return url.substring(0, 30); }
 }
 
-// 提取文件名中的数字ID及其上下文
 function parseUrlInfo(url, channelNum) {
   const parts = url.split('/');
   const filename = parts[parts.length - 1].split('?')[0];
   const matches = filename.match(/\d+/g);
   if (!matches) return null;
-  // 尽量匹配包含频道数字的那个 ID
-  let target = matches.find(m => parseInt(m) === channelNum) || matches[0];
+  let target = matches.find(m => parseInt(m) === channelNum) || matches[matches.length - 1];
   return {
     val: parseInt(target),
     str: target,
@@ -106,7 +119,6 @@ function handleSmartProcess() {
   let rawData = document.getElementById('input').value.trim();
   if (!rawData) return alert("请输入内容！");
 
-  // 1. 数据预处理
   if (rawData.includes("#EXTINF")) {
     const lines = rawData.split(/\r?\n/);
     let converted = [];
@@ -121,14 +133,17 @@ function handleSmartProcess() {
   }
 
   const lines = rawData.split('\n');
-  let hostGroups = {}; // 按服务器IP分组
-  let globalOffsets = {}; // 全局跨源差值库
+  let hostGroups = {};
+  let globalOffsets = {};
+  let allDetectedSats = new Set();
 
-  // 2. 第一遍扫描：建立知识库
+  // 1. 扫描与清洗
   lines.forEach(line => {
     if (!line.includes(',')) return;
-    let [name, url] = line.split(',').map(s => s.trim());
+    let [rawName, url] = line.split(',').map(s => s.trim());
+    let name = formatChannelName(rawName);
     const host = getServerKey(url);
+    
     if (!hostGroups[host]) hostGroups[host] = { cctv: {}, sats: {}, masterPattern: null };
 
     const cctvMatch = name.match(/cctv-?(\d+)/i);
@@ -137,15 +152,15 @@ function handleSmartProcess() {
       const info = parseUrlInfo(url, id);
       hostGroups[host].cctv[id] = { url, info };
       if (!hostGroups[host].masterPattern) hostGroups[host].masterPattern = info;
-    } else if (name.includes("卫视")) {
-      let baseName = topSatellites.find(s => name.includes(s.replace("卫视",""))) || name;
+    } else if (name.includes("卫视") && isValidSatellite(name)) {
+      allDetectedSats.add(name);
       const info = parseUrlInfo(url, -1);
-      hostGroups[host].sats[baseName] = { url, info };
+      hostGroups[host].sats[name] = { url, info };
       if (!hostGroups[host].masterPattern) hostGroups[host].masterPattern = info;
     }
   });
 
-  // 3. 计算卫视间的差值规律 (例如: 湖南与江西的ID差)
+  // 2. 差值计算
   Object.values(hostGroups).forEach(group => {
     const sNames = Object.keys(group.sats);
     if (sNames.length >= 2) {
@@ -158,17 +173,19 @@ function handleSmartProcess() {
     }
   });
 
-  // 4. 第二遍扫描：智能生成与补齐
+  // 3. 排序逻辑
+  let otherSats = Array.from(allDetectedSats).filter(s => !prioritySatellites.includes(s));
+  otherSats.sort((a, b) => a.localeCompare(b, 'zh-CN'));
+  const finalSatOrder = [...prioritySatellites, ...otherSats];
+
+  // 4. 生成
   let finalResult = [];
   let seenEntries = new Set();
 
-  // 处理央视
   finalResult.push("央视频道,#genre#");
   Object.keys(hostGroups).forEach(host => {
     const group = hostGroups[host];
     const cctvIdsFound = Object.keys(group.cctv).map(Number);
-    
-    // 如果该IP有2个以上CCTV，启动1-17全补齐
     if (cctvIdsFound.length >= 2 && group.masterPattern) {
       cctvConfig.forEach(conf => {
         let url = group.cctv[conf.id]?.url;
@@ -184,7 +201,6 @@ function handleSmartProcess() {
       });
       finalResult.push("");
     } else {
-      // 不够两个，仅重命名输出
       cctvIdsFound.sort((a,b)=>a-b).forEach(id => {
         const conf = cctvConfig.find(c => c.id === id);
         const title = conf ? `CCTV-${id}${conf.name}` : `CCTV-${id}`;
@@ -193,15 +209,13 @@ function handleSmartProcess() {
     }
   });
 
-  // 处理卫视
   finalResult.push("卫视频道,#genre#");
   Object.keys(hostGroups).forEach(host => {
     const group = hostGroups[host];
     if (Object.keys(group.sats).length === 0) return;
 
-    topSatellites.forEach(sName => {
+    finalSatOrder.forEach(sName => {
       let url = group.sats[sName]?.url;
-      // 跨源推断逻辑
       if (!url) {
         const off = globalOffsets[sName];
         if (off && group.sats[off.refName]) {
