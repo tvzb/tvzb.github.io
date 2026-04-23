@@ -247,20 +247,42 @@
                     <small>只保留包含该关键字的完整行</small>
                 </div>
 
+        <div class="main">
+            <div class="input-section">
+                <label for="inputText">输入文本（每行一条记录）</label>
+                <textarea id="inputText" placeholder="请在此粘贴或输入需要处理的文本内容..." oninput="saveCache()"></textarea>
+                <div class="input-controls">
+                    <button class="btn" onclick="clearAll()">清除屏幕</button>
+                    <button class="btn" onclick="copyInput()">拷贝内容</button>
+                </div>
+            </div>
+
+            <div class="tools">
+                <div class="tool-card">
+                    <h3>文字筛选</h3>
+                    <div class="tool-input">
+                        <input type="text" id="filterKeyword" placeholder="输入要保留的关键字" oninput="saveCache()">
+                        <button class="btn btn-full" onclick="filterLines()">筛选保留</button>
+                    </div>
+                    <small>只保留包含该关键字的完整行</small>
+                </div>
+
+                <div class="tool-card">
+                    <h3>文字替换</h3>
+                    <div class="tool-input">
+                        <input type="text" id="replaceFrom" placeholder="要替换的内容" oninput="saveCache()">
+                        <input type="text" id="replaceTo" placeholder="替换为（留空则删除）" oninput="saveCache()">
+                        <button class="btn btn-full" onclick="replaceText()">执行替换</button>
+                    </div>
+                    <small>支持全文部分匹配替换</small>
+                </div>
+
                 <div class="tool-card">
                     <h3>文字行去重</h3>
                     <div class="tool-input">
                         <button class="btn btn-full" onclick="removeDuplicates()">立即去重</button>
                     </div>
                     <small>去除完全相同的重复行</small>
-                </div>
-
-                <div class="tool-card">
-                    <h3>服务器IP地址提取</h3>
-                    <div class="tool-input">
-                        <button class="btn btn-full" onclick="extractIPs()">提取唯一IP服务器</button>
-                    </div>
-                    <small>从URL中提取不同的IP:端口并自动去重</small>
                 </div>
 
                 <div class="tool-card">
@@ -275,13 +297,11 @@
                 </div>
 
                 <div class="tool-card">
-                    <h3>文字替换</h3>
+                    <h3>服务器IP地址提取</h3>
                     <div class="tool-input">
-                        <input type="text" id="replaceFrom" placeholder="要替换的内容" oninput="saveCache()">
-                        <input type="text" id="replaceTo" placeholder="替换为（留空则删除）" oninput="saveCache()">
-                        <button class="btn btn-full" onclick="replaceText()">执行替换</button>
+                        <button class="btn btn-full" onclick="extractIPs()">提取唯一IP服务器</button>
                     </div>
-                    <small>支持全文部分匹配替换</small>
+                    <small>从URL中提取不同的IP:端口并自动去重</small>
                 </div>
             </div>
 
