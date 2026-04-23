@@ -2,16 +2,22 @@
 CCTV-1综合,http://39.164.143.66:13994/tsfile/live/0001_1.m3u8?key=txiptv&playlive=0&authid=0
 CCTV-2财经,http://39.164.143.66:13994/tsfile/live/0002_1.m3u8?key=txiptv&playlive=0&authid=0
 CCTV-3综艺,http://39.164.143.66:13994/tsfile/live/0003_1.m3u8?key=txiptv&playlive=0&authid=0
+CCTV-4中文国际,http://39.164.143.66:13994/tsfile/live/0004_1.m3u8?key=txiptv&playlive=0&authid=0
 CCTV-5体育,http://39.164.143.66:13994/tsfile/live/0005_1.m3u8?key=txiptv&playlive=0&authid=0
 CCTV-6电影,http://39.164.143.66:13994/tsfile/live/0006_1.m3u8?key=txiptv&playlive=0&authid=0
 CCTV-7国防军事,http://39.164.143.66:13994/tsfile/live/0007_1.m3u8?key=txiptv&playlive=0&authid=0
 CCTV-8电视剧,http://39.164.143.66:13994/tsfile/live/0008_1.m3u8?key=txiptv&playlive=0&authid=0
-CCTV-9纪录,http://39.164.143.66:13994/tsfile/live/0011_3.m3u8?key=txiptv&playlive=0&authid=0
+CCTV-9纪录,http://39.164.143.66:13994/tsfile/live/0011_1.m3u8?key=txiptv&playlive=0&authid=0
 CCTV-10科教,http://39.164.143.66:13994/tsfile/live/0010_1.m3u8?key=txiptv&playlive=0&authid=0
 CCTV-11戏曲,http://39.164.143.66:13994/tsfile/live/0011_1.m3u8?key=txiptv&playlive=0&authid=0
 CCTV-12社会与法,http://39.164.143.66:13994/tsfile/live/0012_1.m3u8?key=txiptv&playlive=0&authid=0
 CCTV-13新闻,http://39.164.143.66:13994/tsfile/live/0013_1.m3u8?key=txiptv&playlive=0&authid=0
+CCTV-14少儿,http://39.164.143.66:13994/tsfile/live/0014_1.m3u8?key=txiptv&playlive=0&authid=0
+CCTV-15音乐,http://39.164.143.66:13994/tsfile/live/0015_1.m3u8?key=txiptv&playlive=0&authid=0
+CCTV-16奥林匹克,http://39.164.143.66:13994/tsfile/live/0016_1.m3u8?key=txiptv&playlive=0&authid=0
+CCTV-17农业农村,http://39.164.143.66:13994/tsfile/live/0017_1.m3u8?key=txiptv&playlive=0&authid=0
 
+CCTV-1综合,http://183.62.76.246:60101/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-2财经,http://183.62.76.246:60101/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-3综艺,http://183.62.76.246:60101/tsfile/live/0003_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-4中文国际,http://183.62.76.246:60101/tsfile/live/0004_1.m3u8?key=txiptv&playlive=1&authid=0
@@ -26,10 +32,26 @@ CCTV-12社会与法,http://183.62.76.246:60101/tsfile/live/0012_1.m3u8?key=txipt
 CCTV-13新闻,http://183.62.76.246:60101/tsfile/live/0013_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-14少儿,http://183.62.76.246:60101/tsfile/live/0014_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-15音乐,http://183.62.76.246:60101/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-16奥林匹克,http://183.62.76.246:60101/tsfile/live/0016_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-17农业农村,http://183.62.76.246:60101/tsfile/live/0017_1.m3u8?key=txiptv&playlive=1&authid=0
 
+CCTV-1综合,http://182.91.124.61:8801/tsfile/live/1041_1.m3u1?key=txiptv&playlive=0&authid=0
+CCTV-2财经,http://182.91.124.61:8801/tsfile/live/1041_1.m3u2?key=txiptv&playlive=0&authid=0
+CCTV-3综艺,http://182.91.124.61:8801/tsfile/live/1041_1.m3u3?key=txiptv&playlive=0&authid=0
+CCTV-4中文国际,http://182.91.124.61:8801/tsfile/live/1041_1.m3u4?key=txiptv&playlive=0&authid=0
 CCTV-5体育,http://182.91.124.61:8801/tsfile/live/1041_1.m3u8?key=txiptv&playlive=0&authid=0
 CCTV-6电影,http://182.91.124.61:8801/tsfile/live/1042_1.m3u8?key=txiptv&playlive=0&authid=0
+CCTV-7国防军事,http://182.91.124.61:8801/tsfile/live/1041_1.m3u7?key=txiptv&playlive=0&authid=0
 CCTV-8电视剧,http://182.91.124.61:8801/tsfile/live/1044_1.m3u8?key=txiptv&playlive=0&authid=0
+CCTV-9纪录,http://182.91.124.61:8801/tsfile/live/1041_1.m3u9?key=txiptv&playlive=0&authid=0
+CCTV-10科教,http://182.91.124.61:8801/tsfile/live/1041_1.m3u10?key=txiptv&playlive=0&authid=0
+CCTV-11戏曲,http://182.91.124.61:8801/tsfile/live/1041_1.m3u11?key=txiptv&playlive=0&authid=0
+CCTV-12社会与法,http://182.91.124.61:8801/tsfile/live/1041_1.m3u12?key=txiptv&playlive=0&authid=0
+CCTV-13新闻,http://182.91.124.61:8801/tsfile/live/1041_1.m3u13?key=txiptv&playlive=0&authid=0
+CCTV-14少儿,http://182.91.124.61:8801/tsfile/live/1041_1.m3u14?key=txiptv&playlive=0&authid=0
+CCTV-15音乐,http://182.91.124.61:8801/tsfile/live/1041_1.m3u15?key=txiptv&playlive=0&authid=0
+CCTV-16奥林匹克,http://182.91.124.61:8801/tsfile/live/1041_1.m3u16?key=txiptv&playlive=0&authid=0
+CCTV-17农业农村,http://182.91.124.61:8801/tsfile/live/1041_1.m3u17?key=txiptv&playlive=0&authid=0
 
 CCTV-1综合,http://58.210.139.130:9901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-2财经,http://58.210.139.130:9901/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0
@@ -40,11 +62,14 @@ CCTV-6电影,http://58.210.139.130:9901/tsfile/live/0006_1.m3u8?key=txiptv&playl
 CCTV-7国防军事,http://58.210.139.130:9901/tsfile/live/0007_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-8电视剧,http://58.210.139.130:9901/tsfile/live/0008_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-9纪录,http://58.210.139.130:9901/tsfile/live/0009_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-10科教,http://58.210.139.130:9901/tsfile/live/0010_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-11戏曲,http://58.210.139.130:9901/tsfile/live/0011_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-12社会与法,http://58.210.139.130:9901/tsfile/live/0012_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-13新闻,http://58.210.139.130:9901/tsfile/live/0013_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-14少儿,http://58.210.139.130:9901/tsfile/live/0014_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-15音乐,http://58.210.139.130:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-16奥林匹克,http://58.210.139.130:9901/tsfile/live/0016_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-17农业农村,http://58.210.139.130:9901/tsfile/live/0017_1.m3u8?key=txiptv&playlive=1&authid=0
 
 CCTV-1综合,http://61.184.46.85:9901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-2财经,http://61.184.46.85:9901/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0
@@ -85,8 +110,10 @@ CCTV-17农业农村,http://182.37.41.46:8154/tsfile/live/0019_1.m3u8?key=txiptv&
 CCTV-1综合,http://113.15.109.216:59901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-2财经,http://113.15.109.216:59901/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-3综艺,http://113.15.109.216:59901/tsfile/live/0003_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-4中文国际,http://113.15.109.216:59901/tsfile/live/0004_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-5体育,http://113.15.109.216:59901/tsfile/live/0005_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-6电影,http://113.15.109.216:59901/tsfile/live/0006_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-7国防军事,http://113.15.109.216:59901/tsfile/live/0007_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-8电视剧,http://113.15.109.216:59901/tsfile/live/0008_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-9纪录,http://113.15.109.216:59901/tsfile/live/0009_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-10科教,http://113.15.109.216:59901/tsfile/live/0010_1.m3u8?key=txiptv&playlive=1&authid=0
@@ -95,8 +122,14 @@ CCTV-12社会与法,http://113.15.109.216:59901/tsfile/live/0012_1.m3u8?key=txip
 CCTV-13新闻,http://113.15.109.216:59901/tsfile/live/0013_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-14少儿,http://113.15.109.216:59901/tsfile/live/0014_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-15音乐,http://113.15.109.216:59901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-16奥林匹克,http://113.15.109.216:59901/tsfile/live/0016_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-17农业农村,http://113.15.109.216:59901/tsfile/live/0017_1.m3u8?key=txiptv&playlive=1&authid=0
 
+CCTV-1综合,http://61.143.15.139:59901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-2财经,http://61.143.15.139:59901/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-3综艺,http://61.143.15.139:59901/tsfile/live/0003_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-4中文国际,http://61.143.15.139:59901/tsfile/live/0004_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-5体育,http://61.143.15.139:59901/tsfile/live/0005_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-6电影,http://61.143.15.139:59901/tsfile/live/0006_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-7国防军事,http://61.143.15.139:59901/tsfile/live/0007_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-8电视剧,http://61.143.15.139:59901/tsfile/live/0008_1.m3u8?key=txiptv&playlive=1&authid=0
@@ -108,38 +141,7 @@ CCTV-13新闻,http://61.143.15.139:59901/tsfile/live/0013_1.m3u8?key=txiptv&play
 CCTV-14少儿,http://61.143.15.139:59901/tsfile/live/0014_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-15音乐,http://61.143.15.139:59901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-16奥林匹克,http://61.143.15.139:59901/tsfile/live/0016_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-1综合,http://183.62.76.246:60101/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-1综合,http://61.143.15.139:59901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-2财经,http://61.143.15.139:59901/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0
-
-CCTV-1综合,http://38.75.136.137:98/gslb/dsdqpub/cctv1hd.m3u8?auth=testpub
-CCTV-2财经,http://38.75.136.137:98/gslb/dsdqpub/cctv2hd.m3u8?auth=testpub
-CCTV-3综艺,http://38.75.136.137:98/gslb/dsdqpub/cctv3hd.m3u8?auth=testpub
-CCTV-4中文国际,http://38.75.136.137:98/gslb/dsdqpub/cctv4hd.m3u8?auth=testpub
-CCTV-5体育,http://38.75.136.137:98/gslb/dsdqpub/cctv5hd.m3u8?auth=testpub
-CCTV-6电影,http://38.75.136.137:98/gslb/dsdqpub/cctv6hd.m3u8?auth=testpub
-CCTV-7国防军事,http://38.75.136.137:98/gslb/dsdqpub/cctv7hd.m3u8?auth=testpub
-CCTV-8电视剧,http://38.75.136.137:98/gslb/dsdqpub/cctv8hd.m3u8?auth=testpub
-CCTV-9纪录,http://38.75.136.137:98/gslb/dsdqpub/cctv9hd.m3u8?auth=testpub
-CCTV-10科教,http://38.75.136.137:98/gslb/dsdqpub/cctv10hd.m3u8?auth=testpub
-CCTV-11戏曲,http://38.75.136.137:98/gslb/dsdqpub/cctv11hd.m3u8?auth=testpub
-CCTV-12社会与法,http://38.75.136.137:98/gslb/dsdqpub/cctv12hd.m3u8?auth=testpub
-CCTV-13新闻,http://38.75.136.137:98/gslb/dsdqpub/cctv13hd.m3u8?auth=testpub
-CCTV-14少儿,http://38.75.136.137:98/gslb/dsdqpub/cctv14hd.m3u8?auth=testpub
-CCTV-15音乐,http://38.75.136.137:98/gslb/dsdqpub/cctv15hd.m3u8?auth=testpub
-CCTV-16奥林匹克,http://38.75.136.137:98/gslb/dsdqpub/cctv16hd.m3u8?auth=testpub
-CCTV-17农业农村,http://38.75.136.137:98/gslb/dsdqpub/cctv17hd.m3u8?auth=testpub
-
-CCTV-5体育,http://74.91.26.218:82/live/cctv5hd.m3u8
-CCTV-6电影,http://74.91.26.218:82/live/cctv6hd.m3u8
-CCTV-9纪录,http://74.91.26.218:82/live/cctv9hd.m3u8
-CCTV-10科教,http://74.91.26.218:82/live/cctv10hd.m3u8
-CCTV-12社会与法,http://74.91.26.218:82/live/cctv12hd.m3u8
-CCTV-13新闻,http://74.91.26.218:82/live/cctv13hd.m3u8
-CCTV-14少儿,http://74.91.26.218:82/live/cctv14hd.m3u8
-CCTV-15音乐,http://74.91.26.218:82/live/cctv15hd.m3u8
-CCTV-16奥林匹克,http://74.91.26.218:82/live/cctv16hd.m3u8
-CCTV-17农业农村,http://74.91.26.218:82/live/cctv17hd.m3u8
+CCTV-17农业农村,http://61.143.15.139:59901/tsfile/live/0017_1.m3u8?key=txiptv&playlive=1&authid=0
 
 CCTV-1综合,http://38.75.136.137:98/gslb/dsdqbv/cctv1hd.m3u8?auth=test20251009
 CCTV-2财经,http://38.75.136.137:98/gslb/dsdqbv/cctv2hd.m3u8?auth=test20251009
@@ -159,6 +161,24 @@ CCTV-15音乐,http://38.75.136.137:98/gslb/dsdqbv/cctv15hd.m3u8?auth=test2025100
 CCTV-16奥林匹克,http://38.75.136.137:98/gslb/dsdqbv/cctv16hd.m3u8?auth=test20251009
 CCTV-17农业农村,http://38.75.136.137:98/gslb/dsdqbv/cctv17hd.m3u8?auth=test20251009
 
+CCTV-1综合,http://74.91.26.218:82/live/cctv1hd.m3u8
+CCTV-2财经,http://74.91.26.218:82/live/cctv2hd.m3u8
+CCTV-3综艺,http://74.91.26.218:82/live/cctv3hd.m3u8
+CCTV-4中文国际,http://74.91.26.218:82/live/cctv4hd.m3u8
+CCTV-5体育,http://74.91.26.218:82/live/cctv5hd.m3u8
+CCTV-6电影,http://74.91.26.218:82/live/cctv6hd.m3u8
+CCTV-7国防军事,http://74.91.26.218:82/live/cctv7hd.m3u8
+CCTV-8电视剧,http://74.91.26.218:82/live/cctv8hd.m3u8
+CCTV-9纪录,http://74.91.26.218:82/live/cctv9hd.m3u8
+CCTV-10科教,http://74.91.26.218:82/live/cctv10hd.m3u8
+CCTV-11戏曲,http://74.91.26.218:82/live/cctv11hd.m3u8
+CCTV-12社会与法,http://74.91.26.218:82/live/cctv12hd.m3u8
+CCTV-13新闻,http://74.91.26.218:82/live/cctv13hd.m3u8
+CCTV-14少儿,http://74.91.26.218:82/live/cctv14hd.m3u8
+CCTV-15音乐,http://74.91.26.218:82/live/cctv15hd.m3u8
+CCTV-16奥林匹克,http://74.91.26.218:82/live/cctv16hd.m3u8
+CCTV-17农业农村,http://74.91.26.218:82/live/cctv17hd.m3u8
+
 CCTV-1综合,http://14.152.102.71:9901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-2财经,http://14.152.102.71:9901/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-3综艺,http://14.152.102.71:9901/tsfile/live/0003_1.m3u8?key=txiptv&playlive=1&authid=0
@@ -176,7 +196,6 @@ CCTV-14少儿,http://14.152.102.71:9901/tsfile/live/0014_1.m3u8?key=txiptv&playl
 CCTV-15音乐,http://14.152.102.71:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-16奥林匹克,http://14.152.102.71:9901/tsfile/live/0016_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-17农业农村,http://14.152.102.71:9901/tsfile/live/0017_1.m3u8?key=txiptv&playlive=1&authid=0
-
 
 卫视频道,#genre#
 江西卫视,http://61.143.15.139:59901/tsfile/live/0138_1.m3u8?key=txiptv&playlive=1&authid=0
@@ -221,6 +240,7 @@ CCTV-17农业农村,http://14.152.102.71:9901/tsfile/live/0017_1.m3u8?key=txiptv
 四川卫视,http://38.75.136.137:98/gslb/dsdqpub/scwshd.m3u8?auth=testpub
 天津卫视,http://38.75.136.137:98/gslb/dsdqpub/tjwshd.m3u8?auth=testpub
 云南卫视,http://38.75.136.137:98/gslb/dsdqpub/ynwshd.m3u8?auth=testpub
+
 东方卫视,http://120.76.248.139/live/bfgd/4200000093.m3u8
 河南卫视,http://120.76.248.139/live/bfgd/4200000339.m3u8
 深圳卫视,http://120.76.248.139/live/bfgd/4200000100.m3u8
