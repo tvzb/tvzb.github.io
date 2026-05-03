@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>江西省高中学生综合素质评价表 - 优化版</title>
+    <style>
+        /* 页面整体样式 */
+        body {
+            background-color: #f5f5f5;
+            font-family: "PingFang SC", "Microsoft YaHei", "SimHei", sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 40px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            background-color: #fff;
+            width: 820px;
+            padding: 50px 60px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+
+        /* 顶部标题 */
+        .header-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #1a1a1a;
+            margin-bottom: 30px;
+        }
+
+        /* 基础信息条 */
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 15px;
+            color: #444;
+        }
+
+        .info-item span {
+            border-bottom: 1px solid #333;
+            padding: 0 10px;
+            font-weight: 500;
+            min-width: 120px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* 表格通用样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; /* 固定布局，防止单元格被撑开 */
+            border: 2px solid #333;
+        }
+
+        td {
+            border: 1px solid #333;
+            padding: 12px 8px;
+            font-size: 14px;
+            vertical-align: middle;
+            word-wrap: break-word;
+        }
+
+        /* 标签栏（灰色背景项） */
+        .label {
+            background-color: #f9f9f9;
+            font-weight: 600;
+            color: #222;
+            width: 85px;
+            text-align: center;
+        }
+
+        /* 填写内容项 */
+        .content {
+            text-align: center;
+            color: #444;
+            font-weight: 400;
+        }
+
+        /* 模块大标题 */
+        .section-title {
+            background-color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+            height: 50px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        /* 头像区域修复 */
+        .photo-cell {
+            width: 140px;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .photo-cell img {
+            width: 130px;
+            height: 175px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* 职务情况行高 */
+        .duty-row {
+            height: 35px;
+        }
+
+        /* 自我陈述区域样式 */
+        .statement-container {
+            padding: 25px;
+            text-align: left;
+        }
+
+        .statement-hint {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .statement-text {
+            font-size: 15px;
+            line-height: 1.9;
+            text-indent: 2em;
+            color: #333;
+            text-align: justify;
+        }
+
+        /* 打印优化 */
+        @media print {
+            body { background: none; padding: 0; }
+            .container { box-shadow: none; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-title">江西省高中学生综合素质评价表</div>
+
+    <div class="info-bar">
+        <div class="info-item">设区市：<span>江西省赣州市</span></div>
+        <div class="info-item">县（市、区）：<span></span></div>
+        <div class="info-item">学校：<span>赣州中学</span></div>
+    </div>
+
+    <table>
+        <!-- 模块标题 -->
+        <tr>
+            <td colspan="7" class="section-title">一、个人基本信息和自我陈述</td>
+        </tr>
+
+        <!-- 第一行 -->
+        <tr>
+            <td class="label">姓名</td>
+            <td class="content">彭鹃</td>
+            <td class="label">性别</td>
+            <td class="content">女</td>
+            <td class="label">出生年月</td>
+            <td class="content">2008-03-14</td>
+            <!-- 注意此处 rowspan="4" 必须对应接下来的三行 -->
+            <td rowspan="4" class="photo-cell">
+                <img src="tx.jpg" alt="学生照片">
+            </td>
+        </tr>
+
+        <!-- 第二行 -->
+        <tr>
+            <td class="label">籍贯</td>
+            <td class="content">江西省赣州市于都县</td>
+            <td class="label">民族</td>
+            <td class="content">汉族</td>
+            <td class="label">政治面貌</td>
+            <td class="content">共青团员</td>
+        </tr>
+
+        <!-- 第三行 -->
+        <tr>
+            <td class="label">身份证号</td>
+            <td colspan="2" class="content">360731200803140041</td>
+            <td class="label">学籍号</td>
+            <td colspan="2" class="content">G360731200803140041</td>
+        </tr>
+
+        <!-- 第四行 -->
+        <tr>
+            <td class="label">家庭地址</td>
+            <td colspan="2" class="content" style="font-size: 12px;">江西省赣州市通天岩路19号华城山水人家</td>
+            <td class="label">联系电话</td>
+            <td colspan="2" class="content">13576698735</td>
+        </tr>
+
+        <!-- 任职情况标题行 -->
+        <tr>
+            <td rowspan="5" class="label">在班级、学生会、团委等任职情况</td>
+            <td colspan="3" class="label">起止时间</td>
+            <td colspan="3" class="label">担任职务</td>
+        </tr>
+        <tr class="duty-row"><td colspan="3"></td><td colspan="3"></td></tr>
+        <tr class="duty-row"><td colspan="3"></td><td colspan="3"></td></tr>
+        <tr class="duty-row"><td colspan="3"></td><td colspan="3"></td></tr>
+        <tr class="duty-row"><td colspan="3"></td><td colspan="3"></td></tr>
+
+        <!-- 自我陈述大单元格 -->
+        <tr>
+            <td colspan="7">
+                <div class="statement-container">
+                    <div class="statement-hint">
+                        <strong>个人自我陈述：</strong>(通过列举典型实例等方式，介绍个人的社会责任感、知识技能、个性特点与个人爱好等方面的突出表现以及个人专业志向、生涯规划等)
+                    </div>
+                    <div class="statement-text">
+                        高三这趟奇妙的旅程，眼看就要到站了。站在终点前回望，感觉像坐了一趟起伏不小的过山车，有冲上高处的畅快，也有跌入低谷的晕眩，但最终，车子稳稳地慢了下来，朝着前方既定的轨道滑去。我想，是时候给自己的行囊做个清点了。说起学习，我的状况大概可以概括为“中等偏上，但本可以更好”。这三个字里，藏着我高中生活最大的一份遗憾，或者说，最重要的一课。记得高一那会儿，凭着还不错的底子，学得不算费力，成绩也一直在前面。可到了高二，好像突然松懈了下来，觉得时间还多，被各种“好玩”的事情分了心... (此处省略部分文字以保持代码简洁，已保留结构)
+                        <br><br>
+                        美术是我从小到大的“老朋友”，铅笔划过纸张的沙沙声，色彩在笔下晕染的瞬间，能让我迅速安静下来。而AI，更像是一扇让我着迷的新世界大门。我希望大学能学习与人工智能相关的专业，不仅因为它是热门，更因为那份最初的好奇心... 带着这份不算完美但足够真实的自我认知，我准备好了，去签收下一段人生的快递。
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>
