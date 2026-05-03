@@ -6,56 +6,68 @@
     <title>江西省高中学生综合素质评价表</title>
     <style>
         body {
-            font-family: "Microsoft YaHei", "SimHei", sans-serif;
-            margin: 20px;
-            background: #f8f8f8;
+            margin: 0;
+            padding: 20px;
+            background: #f4f4f4;
+            font-family: "Microsoft YaHei", "SimSun", sans-serif;
         }
         .container {
-            max-width: 1100px;
+            max-width: 1150px;
             margin: 0 auto;
             background: white;
-            padding: 30px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            padding: 25px 30px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.15);
         }
         h1 {
             text-align: center;
-            margin-bottom: 5px;
+            font-size: 24px;
+            margin: 10px 0 20px 0;
         }
         .header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            font-size: 15px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 15px 0;
+            border: 2px solid #000;
         }
-        td, th {
+        td {
             border: 1px solid #000;
-            padding: 8px 10px;
-            vertical-align: middle;
+            padding: 6px 8px;
+            font-size: 14.5px;
+            line-height: 1.45;
+        }
+        .title {
+            background: #e8e8e8;
+            font-weight: bold;
+            text-align: center;
         }
         .photo {
-            width: 140px;
-            height: 180px;
-            border: 1px solid #ccc;
+            width: 145px;
+            height: 190px;
             text-align: center;
-            vertical-align: middle;
+            vertical-align: top;
+            padding: 5px;
         }
         .photo img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            border: 1px solid #666;
         }
-        .title {
-            background: #f0f0f0;
+        .self-title {
             font-weight: bold;
-            text-align: center;
+            padding: 8px 10px;
+            border: 1px solid #000;
+            background: #f9f9f9;
         }
-        .self-statement {
-            line-height: 1.8;
+        .content {
+            padding: 12px 15px;
+            line-height: 1.85;
             text-indent: 2em;
-            margin-top: 10px;
+            font-size: 14.8px;
         }
     </style>
 </head>
@@ -67,17 +79,21 @@
             设区市：江西省赣州市　　县（市、区）：　　　　　　学校：赣州中学
         </div>
 
+        <!-- 基本信息表格 -->
         <table>
             <tr>
-                <td colspan="6" class="title">一、个人基本信息和自我陈述</td>
+                <td colspan="7" class="title" style="font-size:16px;padding:10px;">一、个人基本信息和自我陈述</td>
             </tr>
             <tr>
-                <td width="80">姓名</td>
-                <td width="120">彭鹍</td>
-                <td width="60">性别</td>
-                <td width="60">女</td>
-                <td width="90">出生年月</td>
-                <td>2008-03-14</td>
+                <td width="70">姓名</td>
+                <td width="110">彭鹍</td>
+                <td width="55">性别</td>
+                <td width="55">女</td>
+                <td width="85">出生年月</td>
+                <td width="110">2008-03-14</td>
+                <td rowspan="4" class="photo">
+                    <img src="tx.jpg" alt="彭鹍">
+                </td>
             </tr>
             <tr>
                 <td>籍贯</td>
@@ -95,33 +111,41 @@
             </tr>
             <tr>
                 <td>家庭地址</td>
-                <td colspan="3">江西省赣州市通天岩路19号华城山水人家</td>
-                <td>联系电话</td>
-                <td>13576698735</td>
+                <td colspan="5">江西省赣州市通天岩路19号华城山水人家</td>
             </tr>
             <tr>
-                <td rowspan="4">在班级、学生会、团委等任职情况</td>
-                <td colspan="2" class="title">起止时间</td>
+                <td>联系电话</td>
+                <td colspan="6">13576698735</td>
+            </tr>
+            
+            <!-- 任职情况 -->
+            <tr>
+                <td rowspan="5">在班级、学生会、团委等任职情况</td>
+                <td colspan="3" class="title">起止时间</td>
                 <td colspan="3" class="title">担任职务</td>
             </tr>
-            <tr><td colspan="2"></td><td colspan="3"></td></tr>
-            <tr><td colspan="2"></td><td colspan="3"></td></tr>
-            <tr><td colspan="2"></td><td colspan="3"></td></tr>
-        </table>
-
-        <!-- 照片 -->
-        <table>
             <tr>
-                <td style="width: 780px; vertical-align: top;">
-                    <strong>个人自我陈述</strong>（通过列举典型实例等方式，介绍个人的社会责任感、知识技能、个性特点与个人爱好等方面的突出表现以及个人专业志向、生涯规划等）
-                </td>
-                <td class="photo">
-                    <img src="https://tvzb.github.io/1.jpg" alt="彭鹍照片" style="width:100%;height:100%;object-fit:cover;">
-                </td>
+                <td colspan="3"></td>
+                <td colspan="3"></td>
+            </tr>
+            <tr>
+                <td colspan="3"></td>
+                <td colspan="3"></td>
+            </tr>
+            <tr>
+                <td colspan="3"></td>
+                <td colspan="3"></td>
+            </tr>
+            <tr>
+                <td colspan="3"></td>
+                <td colspan="3"></td>
             </tr>
         </table>
 
-        <div class="self-statement">
+        <!-- 自我陈述 -->
+        <div class="self-title">个人自我陈述（通过列举典型实例等方式，介绍个人的社会责任感、知识技能、个性特点与个人爱好等方面的突出表现以及个人专业志向、生涯规划等）</div>
+        
+        <div class="content">
             高三这趟奇妙的旅程，眼看就要到站了。站在终点前回望，感觉像坐了一趟起伏不小的过山车，有冲上高处的畅快，也有跌入低谷的晕眩，但最终，车子稳稳地慢了下来，朝着前方既定的轨道滑去。我想，是时候给自己的行囊做个清点了。<br><br>
             
             说起学习，我的状况大概可以概括为“中等偏上，但本可以更好”。这“本可以”三个字里，藏着我高中生活最大的一份遗憾，或者说，最重要的一课。记得高一那会儿，凭着还不错的底子，学得不算费力，成绩也一直在前面。可到了高二，好像突然松懈了下来，觉得时间还多，被各种“好玩”的事情分了心。具体贪玩了什么，现在想想倒也不是什么出格的事，可能就是沉迷在画纸和耳机里的时间太多了些，对一道道习题、一张张试卷，少了那份必须“死磕”的专注。结果可想而知，成绩就像坐滑梯一样，不声不响地就溜了下来。那段时间，看着排名，心里是真不好受，有点慌，更多的是一种对自己“怎么就成这样了”的懊恼。<br><br>
