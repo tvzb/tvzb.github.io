@@ -1,3 +1,4 @@
+央视频道,#genre#
 CCTV-1综合,http://47.119.24.76:59093/608807420
 CCTV-1综合,http://38.75.136.137:98/gslb/dsdqpub/cctv1hd.m3u8?auth=testpub
 CCTV-1综合,http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv1hd
