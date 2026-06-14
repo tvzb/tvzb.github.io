@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>空调清洗 - 社区手气大舞台</title>
+    <style>
+        :root {
+            --primary-color: #d90429;
+            --panel-bg: #1e1e1e;
+            --stage-bg: #0f0f0f;
+            --text-color: #f8f9fa;
+            --accent-green: #2ec4b6;
+            --accent-gold: #ffb703;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #121212;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background-color: var(--panel-bg);
+            min-height: 100vh;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 { text-align: center; margin: 5px 0 15px 0; color: var(--accent-gold); font-size: 1.3rem; }
+        h3 { margin: 0 0 10px 0; color: var(--accent-green); font-size: 1.05rem; }
+
+        .page { display: none; flex-direction: column; width: 100%; }
+        .page.active { display: flex; }
+
+        .quick-config { background: rgba(255,255,255,0.04); border: 1px solid #333; border-radius: 10px; padding: 10px; margin-bottom: 12px; }
+        .config-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .config-row label { font-size: 0.85rem; color: #ccc; }
+
+        select, input[type="text"], input[type="number"] {
+            padding: 8px 10px; background: #2a2a2a; border: 1px solid #444; color: #fff; border-radius: 8px; font-weight: bold; font-size: 0.9rem; outline: none;
+        }
+        .inline-select { width: 160px; }
+        .inline-input { width: 100px; text-align: center; }
+
+        .status-bar { background: #17312e; border: 1px solid var(--accent-green); color: #99ffea; padding: 8px 12px; border-radius: 8px; text-align: center; font-size: 0.8rem; font-weight: bold; margin-bottom: 12px; }
+        .status-bar.alert { background: #3a1c21; border-color: var(--primary-color); color: #ff9999; }
+        .status-bar.gold { background: #3e3312; border-color: var(--accent-gold); color: #fff3c4; }
+
+        .stage-container { background: rgba(0,0,0,0.3); border: 1px solid #333; border-radius: 12px; padding: 12px; margin-bottom: 12px; }
+        
+        /* 骰子主舞台：改成垂直流，用来容纳不同行的骰子排队 */
+        .dice-stage {
+            display: flex; flex-direction: column; gap: 10px; min-height: 100px; padding: 12px 8px;
+            background: var(--stage-bg); border-radius: 10px; box-shadow: inset 0 0 25px rgba(0,0,0,0.85); perspective: 1000px;
+        }
+        
+        /* 动态骰子行：用来实现5颗、7颗、分两行逻辑 */
+        .dice-stage-row {
+            display: flex; flex-wrap: nowrap; justify-content: flex-start; align-items: center; gap: 10px;
+            background: rgba(255, 255, 255, 0.02); padding: 6px 10px; border-radius: 8px; border: 1px dashed #2a2a2a;
+        }
+        .dice-row-label {
+            font-size: 0.75rem; color: var(--accent-green); font-weight: bold; min-width: 55px; white-space: nowrap;
+        }
+
+        .stage-hint { color: var(--accent-green); font-size: 0.85rem; text-align: center; width: 100%; font-weight: bold; line-height: 1.4; padding: 20px 0; }
+
+        /* 3D骰子 */
+        .cube-container { width: 38px; height: 38px; position: relative; }
+        .cube { width: 100%; height: 100%; position: absolute; transform-style: preserve-3d; transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1); }
+        .cube-face {
+            position: absolute; width: 38px; height: 38px; background: linear-gradient(145deg, #ffffff, #e6e6e6); border-radius: 6px;
+            box-shadow: inset 0 0 4px rgba(0,0,0,0.2), 0 0 2px rgba(0,0,0,0.3); backface-visibility: hidden;
+            display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); padding: 3px; box-sizing: border-box; align-items: center; justify-items: center;
+        }
+        .face-1 { transform: rotateY(0deg) translateZ(19px); }
+        .face-2 { transform: rotateY(90deg) translateZ(19px); }
+        .face-3 { transform: rotateX(90deg) translateZ(19px); }
+        .face-4 { transform: rotateX(-90deg) translateZ(19px); }
+        .face-5 { transform: rotateY(-90deg) translateZ(19px); }
+        .face-6 { transform: rotateY(180deg) translateZ(19px); }
+        .pip { width: 5px; height: 5px; background-color: #222; border-radius: 50%; }
+        .face-1 .pip { width: 11px; height: 11px; background-color: #d90429; }
+        .face-4 .pip { background-color: #d90429; }
+        .pip.top-left { grid-area: 1 / 1; } .pip.top-right { grid-area: 1 / 3; }
+        .pip.center { grid-area: 2 / 2; }
+        .pip.bottom-left { grid-area: 3 / 1; } .pip.bottom-right { grid-area: 3 / 3; }
+
+        .action-zone { display: flex; gap: 8px; align-items: center; background: rgba(255,255,255,0.02); padding: 8px; border-radius: 10px; border: 1px solid #2a2a2a; margin-bottom: 12px; }
+        .roll-btn { background-color: var(--primary-color); color: white; padding: 10px; font-size: 1rem; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; flex: 1; }
+        .roll-btn:disabled { background-color: #444; color: #888; cursor: not-allowed; }
+
+        .next-step-btn { background: linear-gradient(90deg, #ffb703, #fb8500); color: #000; padding: 14px; font-size: 1.1rem; font-weight: bold; width: 100%; border-radius: 8px; border: none; cursor: pointer; margin-bottom: 12px; }
+        .try-again-btn { background-color: var(--accent-green); color: #fff; padding: 12px; font-size: 1rem; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; width: 100%; margin-bottom: 12px; display: none; }
+
+        .summary-box { background: rgba(46, 196, 182, 0.04); border: 1px dashed var(--accent-green); border-radius: 12px; padding: 14px; font-size: 0.9rem; }
+        .price-line { display: flex; justify-content: space-between; margin: 6px 0; padding-bottom: 4px; border-bottom: 1px dashed #3a3a3a; }
+        .final-line { font-size: 1.35rem; font-weight: bold; color: var(--accent-gold); margin-top: 10px; display: flex; justify-content: space-between; align-items: center; }
+        
+        .all-pips-container { display: flex; flex-direction: column; gap: 6px; min-height: 25px; border-bottom: 1px dashed #3a3a3a; padding-bottom: 8px; margin-bottom: 6px; }
+        .pip-row-line { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; background: rgba(255,255,255,0.02); padding: 4px 8px; border-radius: 6px; }
+        .pip-row-title { font-size: 0.8rem; color: var(--accent-green); font-weight: bold; }
+        .highlight-box { background: #1e40af; color: #fff; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; }
+
+        /* 页2 支付页 */
+        .pay-zone { background: linear-gradient(145deg, #2b2b2b, #1c1c1c); border: 2px dashed var(--accent-gold); border-radius: 12px; padding: 12px; margin-bottom: 12px; text-align: center; }
+        .qr-group { display: flex; justify-content: space-around; gap: 10px; margin-top: 8px; }
+        .qr-card { background: #fff; padding: 6px; border-radius: 8px; width: 46%; color: #000; font-size: 0.75rem; font-weight: bold; }
+        .qr-img { width: 100%; aspect-ratio: 1; object-fit: contain; margin-bottom: 4px; background: #f9f9f9; }
+
+        .form-group { margin-bottom: 10px; }
+        .form-group label { font-size: 0.8rem; display: block; margin-bottom: 4px; color: #ccc; }
+        .form-group input { width: 100%; }
+
+        input.input-error { border: 2px solid #d90429 !important; background: #3a1c21 !important; }
+        input.input-success { border: 2px solid #2ec4b6 !important; background: #17312e !important; }
+        .error-hint { font-size: 0.75rem; color: #d90429; margin-top: 3px; display: none; }
+
+        .back-btn { background: #444; color: #ccc; padding: 12px; border-radius: 8px; border: none; font-weight: bold; width: 100%; margin-top: 8px; font-size: 0.95rem; }
+        .snap-btn { background-color: #3b82f6; color: white; padding: 12px; width: 100%; border-radius: 8px; border: none; font-weight: bold; font-size: 1.05rem; margin-top: 10px; }
+        .copy-btn { background-color: var(--accent-gold); color: #000; padding: 12px; width: 100%; border-radius: 8px; border: none; font-weight: bold; font-size: 1rem; margin-top: 8px; display: none; }
+
+        #output-container { margin-top: 15px; text-align: center; display: none; background: #111; padding: 12px; border-radius: 12px; border: 2px solid var(--accent-gold); }
+        #output-image { max-width: 100%; border-radius: 6px; }
+
+        .price-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.75rem; }
+        .price-table th, .price-table td { border: 1px solid #3a3a3a; padding: 4px; text-align: center; }
+        .price-table th { background: rgba(46, 196, 182, 0.15); color: var(--accent-green); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🎲 空调清洗·社区手气大舞台</h1>
+
+    <div id="page-try" class="page active">
+        <div class="status-bar" id="try-status-bar">
+            ✨ 先试摇几把，看看能省多少清洗费！
+        </div>
+
+        <div class="quick-config">
+            <div class="config-row">
+                <label>选择空调机型：</label>
+                <select id="ac-type" class="inline-select" onchange="resetDiceStageToMode(isOfficialMode ? '正式' : '试玩')">
+                    <option value="wall">家庭挂机 (5颗/台)</option>
+                    <option value="cabinet">方形柜机 (10颗/台)</option>
+                    <option value="ceiling">吸顶天花机 (7颗/台)</option>
+                </select>
+            </div>
+            <div class="config-row">
+                <label>清洗空调台数：</label>
+                <input type="number" id="ac-total-count" class="inline-input" value="1" min="1" max="20" onchange="resetDiceStageToMode(isOfficialMode ? '正式' : '试玩')">
+            </div>
+        </div>
+
+        <div class="stage-container">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <h3 style="margin:0; color:var(--accent-gold); font-size: 0.95rem;" id="stage-title">🔮 模拟手气大舞台</h3>
+                <div style="font-size:0.8rem; color:#bbb;">
+                    已摇: <span id="current-count" style="font-weight:bold; color:var(--accent-green);">0</span> / <span id="target-max-display">5</span> 颗
+                </div>
+            </div>
+            <div class="dice-stage" id="dice-stage">
+                </div>
+        </div>
+
+        <div class="action-zone">
+            <label style="font-weight:bold; white-space:nowrap; font-size:0.85rem;">连摇：</label>
+            <select id="roll-num-select" style="width: 75px; padding:6px;">
+                <option value="1">1颗</option>
+                <option value="2">2颗</option>
+                <option value="3">3颗</option>
+                <option value="5" selected>5颗</option>
+            </select>
+            <button id="roll-btn" class="roll-btn" onclick="rollDice3D()">🎲 摇一摇！</button>
+        </div>
+
+        <button id="try-again-action-btn" class="try-again-btn" onclick="resetDiceStageToMode('试玩')">🔄 点此再次试玩</button>
+
+        <div class="summary-box" style="margin-bottom: 12px;">
+            <h3 style="margin-top:0; border-bottom: 1px solid var(--accent-green); padding-bottom:4px; font-size:0.9rem; text-align:center;" id="bill-title">📊 项目【模拟优惠账单】</h3>
+            <div class="price-line"><span>🛠️ 项目规格：</span><span id="log-ac-type-name">-</span></div>
+            <div style="margin: 6px 0 4px 0; font-size:0.8rem; color:#aaa;">🎲 减免点数落地流水：</div>
+            <div class="all-pips-container" id="all-pips-flow"></div>
+            <div class="price-line"><span>🎁 免减金额 (1点=1元)：</span><span id="log-discount-amount" style="color:var(--primary-color); font-weight:bold;">-0 元</span></div>
+            <div class="final-line" style="font-size:1.2rem;"><span>💵 预计到家实收尾款：</span><span id="log-final-price">- 元</span></div>
+        </div>
+
+        <button class="next-step-btn" id="go-to-pay-btn" onclick="switchToPayPage()">🔥 优惠太给力了，去付意向金正式摇！</button>
+
+        <table class="price-table">
+            <thead><tr><th>机型</th><th>1台</th><th>2台</th><th>3台+</th><th>单台骰子</th></tr></thead>
+            <tbody>
+                <tr><td>家庭挂机</td><td>120元</td><td>115元</td><td style="color:var(--accent-gold); font-weight:bold;">110元</td><td>5颗/台</td></tr>
+                <tr><td>方形柜机</td><td>260元</td><td>250元</td><td style="color:var(--accent-gold); font-weight:bold;">240元</td><td>10颗/台</td></tr>
+                <tr><td>吸顶天花</td><td>200元</td><td>190元</td><td style="color:var(--accent-gold); font-weight:bold;">180元</td><td>7颗/台</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="page-official" class="page">
+        <div class="status-bar alert" id="official-status-bar">
+            🔒 安全卡关：请完成下方5元意向金，激活【正式开摇减免】！
+        </div>
+
+        <div class="pay-zone">
+            <h3 style="color:var(--accent-gold); margin-bottom:2px; font-size:0.95rem;">📲 清洗空调意向登记</h3>
+            <p style="font-size:0.75rem; color:#ffb703; margin:0 0 6px 0; font-weight:bold;">⚠️ 科学对账提示：请在付款时【添加备注】填入后缀：<span id="hint-tail" style="text-decoration:underline;">-</span></p>
+            <div class="qr-group">
+                <div class="qr-card">
+                    <img src="https://tvzb.github.io/jia.jpg" class="qr-img">
+                    1. 加我微信
+                </div>
+                <div class="qr-card">
+                    <img src="https://tvzb.github.io/skm.jpg" class="qr-img">
+                    2. 扫码付5元意向金
+                </div>
+            </div>
+        </div>
+
+        <div class="config-panel" style="background:rgba(255,255,255,0.03); padding:12px; border-radius:12px; border:1px solid #333;">
+            <div class="form-group">
+                <label>客户姓名/称呼：</label>
+                <input type="text" id="cust-name" placeholder="例：李先生 / 张大妈" oninput="syncOfficialBill()">
+            </div>
+            <div class="form-group">
+                <label>联系电话 (上门核销唯一凭证)：</label>
+                <input type="text" id="cust-phone" placeholder="请输入11位手机号码" oninput="validatePhone()">
+                <div id="phone-hint" class="error-hint">⚠️ 请输入正确的11位手机号</div>
+            </div>
+            <div class="form-group">
+                <label>空调详细住址：</label>
+                <input type="text" id="cust-address" placeholder="例：幸福小区4-1-602" oninput="syncOfficialBill()">
+            </div>
+            <div class="config-row">
+                <label style="font-size:0.8rem;">意向金渠道：</label>
+                <select id="deposit-type" style="padding:5px; font-size:0.85rem;" onchange="syncOfficialBill()">
+                    <option value="线上收款码已付">线上收款码已付</option>
+                    <option value="微信私聊已转账">微信私聊已转账</option>
+                </select>
+            </div>
+            <div class="form-group" style="margin-top:6px;">
+                <label>期望上门时段：</label>
+                <input type="text" id="book-time" placeholder="例：本周六下午或工人提前电联" oninput="syncOfficialBill()">
+            </div>
+
+            <div style="background: rgba(0,0,0,0.4); padding: 6px; border-radius:8px; margin-top:8px; text-align:center; border:1px solid #444;">
+                <span style="font-size:0.75rem; color:#aaa;">🔒 本单唯一防伪校验对账指纹：</span><br>
+                <strong id="order-uuid" style="color:var(--accent-gold); font-family:monospace; font-size:1.1rem; letter-spacing:1px;">-</strong>
+            </div>
+        </div>
+
+        <button id="start-official-btn" class="next-step-btn" style="margin-top:12px;" onclick="activateOfficialRollMode()">➔ 已付完5元，正式开摇！(微信实收为准！)</button>
+
+        <div class="summary-box" id="official-bill-card" style="margin-top:12px; display:none; background: rgba(46,196,182,0.08); border-style:solid;">
+            <h3 style="margin-top:0; border-bottom: 1px solid var(--accent-green); padding-bottom:4px; text-align:center; color:var(--accent-gold);">📊 社区清洗正式电子存证</h3>
+            <div class="price-line"><span>👥 客户姓名：</span><span id="log-o-name" style="font-weight:bold; color:#fff;">-</span></div>
+            <div class="price-line"><span>📱 联系号码：</span><span id="log-o-phone">-</span></div>
+            <div class="price-line"><span>🏠 详细住址：</span><span id="log-o-address">-</span></div>
+            <div class="price-line"><span>📅 期望时段：</span><span id="log-o-time" style="color:var(--accent-green);">-</span></div>
+            <div class="price-line"><span>🛠️ 服务规格：</span><span id="log-o-actype">-</span></div>
+            <div class="price-line"><span>💰 意向定金：</span><span id="log-o-deposit" style="color:var(--accent-green);">-5 元</span></div>
+            <div style="margin: 4px 0; font-size:0.8rem; color:#ccc;">🎲 官方盲骰生效流水（已固化）：</div>
+            <div class="all-pips-container" id="all-o-pips-flow"></div>
+            <div class="price-line"><span>🎁 骰子立减金额：</span><span id="log-o-discount" style="color:var(--primary-color); font-weight:bold;">-0 元</span></div>
+            <div class="final-line"><span style="color:#fff;">💵 现场实收尾款：</span><span id="log-o-final">元</span></div>
+        </div>
+
+        <button id="copy-text-btn" class="copy-btn" onclick="copyUIDText()">📋 复制对账文本发微信客服</button>
+        <button id="snap-btn" class="snap-btn" style="display:none;" onclick="generateReceiptImage()">📸 生成防伪核销截图</button>
+        
+        <button class="back-btn" id="back-to-try-btn" onclick="switchToTryPage()">⬅ 返回上页继续试玩</button>
+    </div>
+
+    <div id="output-container">
+        <p style="color:var(--accent-gold); font-size:0.9rem; margin-top:0; margin-bottom:10px;">👇 电子核销凭证已生成！长按图片保存至手机 👇</p>
+        <img id="output-image" src="" alt="电子收据凭证">
+    </div>
+</div>
+
+<script>
+    var totalRolled = 0;       
+    var allHistoryPoints = [];  
+    var singleLimitPerAC = 5;    
+    var maxTargetDice = 5;      
+    var currentUUID = "";
+    var isPhoneValid = false; 
+    
+    var isOfficialMode = false;     
+    var isOfficialSettled = false;  
+
+    var priceMatrix = {
+        wall:    { name: "家庭挂机", price: { 1: 120, 2: 115, 3: 110 } }, 
+        cabinet: { name: "方形柜机", price: { 1: 260, 2: 250, 3: 240 } }, 
+        ceiling: { name: "吸顶天花机", price: { 1: 200, 2: 190, 3: 180 } }  
+    };
+    var diceLimitMatrix = { wall: 5, ceiling: 7, cabinet: 10 };
+
+    var diceStage = document.getElementById('dice-stage');
+    var rollBtn = document.getElementById('roll-btn');
+    var rollNumSelect = document.getElementById('roll-num-select');
+    var currentCountSpan = document.getElementById('current-count');
+    var targetMaxDisplay = document.getElementById('target-max-display');
+    var allPipsFlow = document.getElementById('all-pips-flow');
+    var acTypeSelect = document.getElementById('ac-type');
+    var acTotalCountInput = document.getElementById('ac-total-count');
+    var tryAgainActionBtn = document.getElementById('try-again-action-btn');
+    
+    var logDiscountAmount = document.getElementById('log-discount-amount');
+    var logFinalPrice = document.getElementById('log-final-price');
+    var logAcTypeName = document.getElementById('log-ac-type-name');
+    var snapBtn = document.getElementById('snap-btn');
+
+    var faceTransforms = {
+        1: { x: 0, y: 0 }, 2: { x: 0, y: -90 }, 3: { x: -90, y: 0 },
+        4: { x: 90, y: 0 }, 5: { x: 0, y: 90 }, 6: { x: 180, y: 0 }
+    };
+    var facePipsConfig = {
+        1: ['center'], 2: ['top-left', 'bottom-right'], 3: ['top-left', 'center', 'bottom-right'],
+        4: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
+        5: ['top-left', 'top-right', 'center', 'bottom-left', 'bottom-right'],
+        6: ['top-left', 'top-right', 'mid-left', 'mid-right', 'bottom-left', 'bottom-right']
+    };
+
+    makeNewUUID();
+    resetDiceStageToMode("试玩");
+
+    function switchToPayPage() {
+        document.getElementById('page-try').classList.remove('active');
+        document.getElementById('page-official').classList.add('active');
+        window.scrollTo(0,0);
+    }
+
+    function switchToTryPage() {
+        if(isOfficialMode) {
+            fullResetAll();
+            return;
+        }
+        document.getElementById('page-official').classList.remove('active');
+        document.getElementById('page-try').classList.add('active');
+        window.scrollTo(0,0);
+    }
+
+    function activateOfficialRollMode() {
+        var name = document.getElementById('cust-name').value.trim();
+        var phone = document.getElementById('cust-phone').value.trim();
+        var addr = document.getElementById('cust-address').value.trim();
+
+        if(!name || !phone || !addr || !isPhoneValid) {
+            alert("❌ 无法开启正式版！请完整填写姓名、手机号和地址。");
+            return;
+        }
+
+        isOfficialMode = true;
+        isOfficialSettled = false;
+        
+        document.getElementById('cust-name').disabled = true;
+        document.getElementById('cust-phone').disabled = true;
+        document.getElementById('cust-address').disabled = true;
+        document.getElementById('deposit-type').disabled = true;
+        document.getElementById('book-time').disabled = true;
+        document.getElementById('start-official-btn').style.display = "none";
+        
+        document.getElementById('back-to-try-btn').innerText = "🧹 清空本单，接待下一位街坊";
+
+        document.getElementById('try-status-bar').className = "status-bar gold";
+        document.getElementById('try-status-bar').innerHTML = "🎯 【正式盲骰模式已锁定】数据直接绑定对账防伪指纹！";
+        document.getElementById('stage-title').innerText = "🔥 官方盲盒对账舞台";
+        document.getElementById('bill-title').innerText = "📊 空调清洗服务【正式电子收据】";
+        document.getElementById('go-to-pay-btn').style.display = "none";
+
+        document.getElementById('page-official').classList.remove('active');
+        document.getElementById('page-try').classList.add('active');
+        
+        resetDiceStageToMode("正式");
+    }
+
+    // 核心重置逻辑：真正还原如新网页
+    function resetDiceStageToMode(type) {
+        totalRolled = 0;
+        allHistoryPoints = [];
+        currentCountSpan.innerText = '0';
+        tryAgainActionBtn.style.display = "none";
+        
+        // 重新算账基数
+        var acType = acTypeSelect.value;
+        var totalCount = parseInt(acTotalCountInput.value) || 1;
+        if (totalCount < 1) totalCount = 1;
+        var step = totalCount > 3 ? 3 : totalCount; 
+        singleLimitPerAC = diceLimitMatrix[acType];
+        maxTargetDice = singleLimitPerAC * totalCount; 
+        targetMaxDisplay.innerText = maxTargetDice;
+
+        // 彻底清空骰子展示区，生成干净的“分行”外壳
+        diceStage.innerHTML = '';
+        
+        // 根据“机型”和“台数”，预先在舞台里把“行”画出来
+        if(acType === 'cabinet') {
+            // 柜机：1台分2行，每行5颗
+            for(var i = 0; i < totalCount * 2; i++) {
+                var rowDom = document.createElement('div');
+                rowDom.className = 'dice-stage-row';
+                rowDom.id = 'dice-row-' + i;
+                
+                var labelDom = document.createElement('div');
+                labelDom.className = 'dice-row-label';
+                // 奇数行和偶数行做个标志
+                if(i % 2 === 0) {
+                    labelDom.innerText = '第 ' + (Math.floor(i/2) + 1) + ' 台(前)';
+                } else {
+                    labelDom.innerText = '第 ' + (Math.floor(i/2) + 1) + ' 台(后)';
+                }
+                rowDom.appendChild(labelDom);
+                diceStage.appendChild(rowDom);
+            }
+        } else {
+            // 挂机(5颗) 或 天花机(7颗) 一台一行
+            for(var i = 0; i < totalCount; i++) {
+                var rowDom = document.createElement('div');
+                rowDom.className = 'dice-stage-row';
+                rowDom.id = 'dice-row-' + i;
+                
+                var labelDom = document.createElement('div');
+                labelDom.className = 'dice-row-label';
+                labelDom.innerText = '第 ' + (i + 1) + ' 台';
+                rowDom.appendChild(labelDom);
+                diceStage.appendChild(rowDom);
+            }
+        }
+
+        // 如果全新刚进来没有点数，加个引导词
+        var hintStr = type === "正式" ? "💰 5元定金已收到！正式开摇生效中，点下方开摇！" : "🎁 点下方“摇一摇”试玩，看能摇到多大减免！";
+        var hintDiv = document.createElement('div');
+        hintDiv.className = 'stage-hint';
+        hintDiv.id = 'stage-hint-text';
+        hintDiv.innerText = hintStr;
+        diceStage.appendChild(hintDiv);
+        
+        rollBtn.disabled = false;
+        rollNumSelect.disabled = false;
+        acTypeSelect.disabled = isOfficialMode;
+        acTotalCountInput.disabled = isOfficialMode;
+
+        calculateBasePrice();
+    }
+
+    function validatePhone() {
+        var phoneInput = document.getElementById('cust-phone');
+        var phoneHint = document.getElementById('phone-hint');
+        var val = phoneInput.value.trim();
+        var isMobile = (val.startsWith('1') && val.length === 11 && /^\d+$/.test(val));
+
+        if (isMobile) {
+            phoneInput.className = "input-success";
+            phoneHint.style.display = "none";
+            isPhoneValid = true;
+        } else {
+            phoneInput.className = "input-error";
+            phoneHint.style.display = "block";
+            isPhoneValid = false;
+        }
+        syncOfficialBill();
+    }
+
+    function makeNewUUID() {
+        var chars = 'ABCDEFGHJKMNPQRSTWXYZ2345678'; 
+        var uuid = '';
+        for (var i = 0; i < 6; i++) {
+            uuid += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        currentUUID = "AC-" + uuid;
+        document.getElementById('order-uuid').innerText = currentUUID;
+        document.getElementById('hint-tail').innerText = uuid; 
+    }
+
+    function syncOfficialBill() {
+        var name = document.getElementById('cust-name').value.trim() || "-";
+        var phone = document.getElementById('cust-phone').value.trim() || "-";
+        var addr = document.getElementById('cust-address').value.trim() || "-";
+        var payType = document.getElementById('deposit-type').value;
+        var bTime = document.getElementById('book-time').value.trim() || "弹性上门";
+
+        document.getElementById('log-o-name').innerText = name;
+        document.getElementById('log-o-phone').innerText = phone;
+        document.getElementById('log-o-address').innerText = addr;
+        document.getElementById('log-o-deposit').innerText = "-5 元 (" + payType + ")";
+        document.getElementById('log-o-time').innerText = bTime;
+        
+        var type = acTypeSelect.value;
+        var totalCount = parseInt(acTotalCountInput.value) || 1;
+        var step = totalCount > 3 ? 3 : totalCount;
+        var unitPrice = priceMatrix[type].price[step];
+        document.getElementById('log-o-actype').innerText = priceMatrix[type].name + " (" + totalCount + "台，单价" + unitPrice + "元)";
+        
+        var discountAmount = allHistoryPoints.reduce((a, b) => a + b, 0);
+        var totalBasePrice = unitPrice * totalCount;
+        var finalPay = totalBasePrice - 5 - discountAmount;
+        if(finalPay < 0) finalPay = 0;
+        
+        document.getElementById('log-o-discount').innerText = '-' + discountAmount + ' 元';
+        document.getElementById('log-o-final').innerText = finalPay + ' 元';
+    }
+
+    function calculateBasePrice() {
+        var type = acTypeSelect.value;
+        var totalCount = parseInt(acTotalCountInput.value) || 1;
+        var step = totalCount > 3 ? 3 : totalCount; 
+        var unitPrice = priceMatrix[type].price[step];
+
+        logAcTypeName.innerText = priceMatrix[type].name + " (" + totalCount + "台，单价" + unitPrice + "元)";
+        var discountAmount = allHistoryPoints.reduce((a, b) => a + b, 0);
+        
+        logDiscountAmount.innerText = '-' + discountAmount + ' 元';
+        var finalPay = (unitPrice * totalCount) - 5 - discountAmount;
+        if (finalPay < 0) finalPay = 0; 
+        logFinalPrice.innerText = finalPay + ' 元';
+        
+        if(!isOfficialMode) {
+            renderPipsFlowUI('all-pips-flow');
+        } else {
+            syncOfficialBill();
+            renderPipsFlowUI('all-o-pips-flow');
+        }
+    }
+
+    function renderPipsFlowUI(targetDomId) {
+        var container = document.getElementById(targetDomId);
+        if(allHistoryPoints.length === 0) {
+            container.innerHTML = '<span style="color:#555; font-size:0.8rem;">暂无点数流水...</span>';
+            return;
+        }
+        container.innerHTML = '';
+        var totalACs = parseInt(acTotalCountInput.value) || 1;
+
+        for(var i = 0; i < totalACs; i++) {
+            var startIdx = i * singleLimitPerAC;
+            var endIdx = startIdx + singleLimitPerAC;
+            var slicePoints = allHistoryPoints.slice(startIdx, endIdx);
+            if(slicePoints.length === 0) break; 
+
+            var rowLine = document.createElement('div');
+            rowLine.className = 'pip-row-line';
+            var titleSpan = document.createElement('span');
+            titleSpan.className = 'pip-row-title';
+            titleSpan.innerText = '第 ' + (i + 1) + ' 台：';
+            rowLine.appendChild(titleSpan);
+
+            for(var j = 0; j < slicePoints.length; j++) {
+                var span = document.createElement('span');
+                span.className = 'highlight-box';
+                span.innerText = slicePoints[j] + '点';
+                rowLine.appendChild(span);
+            }
+            container.appendChild(rowLine);
+        }
+    }
+
+    function rollDice3D() {
+        if(isOfficialSettled) return;
+
+        var desiredRoll = parseInt(rollNumSelect.value) || 1; 
+        var remainingDices = maxTargetDice - totalRolled;
+        var numToRoll = Math.min(desiredRoll, remainingDices); 
+
+        if(numToRoll <= 0) return;
+
+        rollBtn.disabled = true;
+        rollNumSelect.disabled = true;
+        acTypeSelect.disabled = true;
+        acTotalCountInput.disabled = true;
+
+        // 移除文字引导提示
+        var hintTxt = document.getElementById('stage-hint-text');
+        if (hintTxt) hintTxt.remove();
+
+        var thisRoundPoints = [];
+        for (var i = 0; i < numToRoll; i++) {
+            var point = Math.floor(Math.random() * 6) + 1;
+            thisRoundPoints.push(point);
+        }
+
+        var acType = acTypeSelect.value;
+
+        // 逐颗生成骰子，根据它所处的序号推算出它该去哪个行(Row)
+        for (var j = 0; j < numToRoll; j++) {
+            var targetPoint = thisRoundPoints[j];
+            var absoluteIndex = totalRolled + j; // 这颗骰子在全局中的绝对序号（从0开始）
+
+            // 计算它属于哪一个行容器
+            var targetRowId = 0;
+            if(acType === 'cabinet') {
+                // 柜机每5颗换一行
+                targetRowId = Math.floor(absoluteIndex / 5);
+            } else {
+                // 挂机和天花机每台换一行
+                targetRowId = Math.floor(absoluteIndex / singleLimitPerAC);
+            }
+
+            var targetRowDom = document.getElementById('dice-row-' + targetRowId);
+
+            // 如果安全起见容器存在，往里丢骰子
+            if(targetRowDom) {
+                var cubeContainer = document.createElement('div');
+                cubeContainer.className = 'cube-container';
+                var cube = document.createElement('div');
+                cube.className = 'cube';
+
+                for (var f = 1; f <= 6; f++) {
+                    var face = document.createElement('div');
+                    face.className = 'cube-face face-' + f;
+                    var pipsArray = facePipsConfig[f];
+                    for (var p = 0; p < pipsArray.length; p++) {
+                        var pipDom = document.createElement('div');
+                        pipDom.className = 'pip ' + pipsArray[p];
+                        face.appendChild(pipDom);
+                    }
+                    cube.appendChild(face);
+                }
+                cubeContainer.appendChild(cube);
+                targetRowDom.appendChild(cubeContainer);
+
+                // 执行扭转动画
+                (function(c, p) {
+                    setTimeout(function() {
+                        var angles = faceTransforms[p];
+                        var randX = angles.x + (Math.floor(Math.random() * 2) + 3) * 360;
+                        var randY = angles.y + (Math.floor(Math.random() * 2) + 3) * 360;
+                        c.style.transform = 'rotateX(' + randX + 'deg) rotateY(' + randY + 'deg)';
+                    }, 30);
+                })(cube, targetPoint);
+            }
+
+            // 同步塞入全局总流水
+            allHistoryPoints.push(targetPoint);
+        }
+
+        setTimeout(function() {
+            totalRolled += numToRoll;
+            currentCountSpan.innerText = totalRolled;
+            calculateBasePrice();
+
+            if (totalRolled >= maxTargetDice) {
+                if(isOfficialMode) {
+                    endOfficialGame();
+                } else {
+                    rollBtn.disabled = true;
+                    tryAgainActionBtn.style.display = "block"; // 浮现完美刷新的试玩按钮
+                }
+            } else {
+                rollBtn.disabled = false;
+                rollNumSelect.disabled = false; 
+            }
+        }, 1050);
+    }
+
+    function endOfficialGame() {
+        isOfficialSettled = true;
+        rollBtn.disabled = true;
+        rollNumSelect.disabled = true;
+        
+        document.getElementById('page-try').classList.remove('active');
+        document.getElementById('page-official').classList.add('active');
+        
+        document.getElementById('official-bill-card').style.display = "block";
+        document.getElementById('copy-text-btn').style.display = "block";
+        snapBtn.style.display = 'block';
+        
+        window.scrollTo(0, 200);
+    }
+
+    function getNowFormatDate() {
+        var now = new Date();
+        return now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0') + ' ' + String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0') + ':' + String(now.getSeconds()).padStart(2, '0');
+    }
+
+    function copyUIDText() {
+        var name = document.getElementById('cust-name').value.trim();
+        var phone = document.getElementById('cust-phone').value.trim();
+        var addr = document.getElementById('cust-address').value.trim();
+        var typeName = priceMatrix[acTypeSelect.value].name;
+        var totalCount = acTotalCountInput.value;
+        
+        var textToCopy = "📌 【空调清洗·好运确认单】\n" +
+                         "👥 街坊姓名：" + name + "\n" +
+                         "📱 联系电话：" + phone + "\n" +
+                         "🏠 详细住址：" + addr + "\n" +
+                         "🛠️ 清洗规格：" + typeName + " (" + totalCount + "台)\n" +
+                         "🎁 正式减免：-" + allHistoryPoints.reduce((a,b)=>a+b,0) + "元\n" +
+                         "💵 实收尾款：" + document.getElementById('log-o-final').innerText + "\n" +
+                         "🔒 对账指纹：" + currentUUID + "\n" +
+                         "⏰ 核销时间：" + getNowFormatDate();
+        
+        navigator.clipboard.writeText(textToCopy).then(function() {
+            alert("✅ 对账文本已成功复制！快去发给客服微信核销吧。");
+        }, function() {
+            alert("复制失败，您的防伪码为：" + currentUUID);
+        });
+    }
+
+    function generateReceiptImage() {
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        canvas.width = 600;
+        var totalACs = parseInt(acTotalCountInput.value) || 1;
+        canvas.height = 800 + (totalACs * 35); 
+
+        ctx.fillStyle = '#1e1e1e';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = '#ffb703';
+        ctx.lineWidth = 6;
+        ctx.strokeRect(15, 15, canvas.width - 30, canvas.height - 30);
+
+        ctx.fillStyle = '#ffb703';
+        ctx.font = 'bold 24px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('🏆 空调清洗服务·官方手气凭证 🏆', canvas.width / 2, 65);
+
+        ctx.textAlign = 'left';
+        ctx.fillStyle = '#f8f9fa';
+        ctx.font = '18px sans-serif';
+
+        var startX = 50, startY = 130, lineHeight = 38;
+        ctx.fillText('👥 客户姓名：' + document.getElementById('cust-name').value.trim(), startX, startY);
+        ctx.fillText('📱 联系号码：' + document.getElementById('cust-phone').value.trim(), startX, startY + lineHeight);
+        ctx.fillText('🏠 详细住址：' + document.getElementById('cust-address').value.trim(), startX, startY + lineHeight * 2);
+        
+        ctx.fillStyle = '#2ec4b6';
+        ctx.fillText('📅 期望时段：' + (document.getElementById('book-time').value.trim() || "弹性上门"), startX, startY + lineHeight * 3);
+        
+        ctx.fillStyle = '#f8f9fa';
+        ctx.fillText('🛠 清洗规格：' + document.getElementById('log-o-actype').innerText, startX, startY + lineHeight * 4);
+        ctx.fillText('💰 意向定金：-5 元 (' + document.getElementById('deposit-type').value + ')', startX, startY + lineHeight * 5);
+        ctx.fillText('🎲 盲骰免减真实落地流水：', startX, startY + lineHeight * 6);
+        
+        ctx.font = 'bold 16px sans-serif';
+        var currentY = startY + lineHeight * 6 + 25;
+        for(var i = 0; i < totalACs; i++) {
+            var startIdx = i * singleLimitPerAC;
+            var endIdx = startIdx + singleLimitPerAC;
+            var slicePoints = allHistoryPoints.slice(startIdx, endIdx);
+            ctx.fillStyle = '#2ec4b6';
+            ctx.fillText('  第 ' + (i + 1) + ' 台 -> ', startX, currentY);
+            ctx.fillStyle = '#3b82f6';
+            ctx.fillText(slicePoints.join('点, ') + '点', startX + 110, currentY);
+            currentY += 32;
+        }
+
+        ctx.fillStyle = '#f8f9fa';
+        ctx.font = '18px sans-serif';
+        ctx.fillText('🎁 骰子总免减：' + document.getElementById('log-o-discount').innerText, startX, currentY + 15);
+
+        ctx.fillStyle = '#ffb703';
+        ctx.font = 'bold 28px sans-serif';
+        ctx.fillText('💵 现场应付尾款：' + document.getElementById('log-o-final').innerText, startX, currentY + 65);
+
+        ctx.fillStyle = '#444';
+        ctx.fillRect(35, canvas.height - 100, canvas.width - 70, 2);
+
+        ctx.fillStyle = '#888';
+        ctx.font = 'bold 16px monospace';
+        ctx.fillText('【对账防伪指纹】：' + currentUUID, startX, canvas.height - 70);
+        ctx.font = '13px monospace';
+        ctx.fillText('系统封账时间：' + getNowFormatDate(), startX, canvas.height - 42);
+
+        document.getElementById('output-image').src = canvas.toDataURL('image/png');
+        document.getElementById('output-container').style.display = 'block';
+        document.getElementById('output-container').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function fullResetAll() {
+        isOfficialMode = false;
+        isOfficialSettled = false;
+        isPhoneValid = false;
+        
+        document.getElementById('cust-name').disabled = false;
+        document.getElementById('cust-phone').disabled = false;
+        document.getElementById('cust-address').disabled = false;
+        document.getElementById('deposit-type').disabled = false;
+        document.getElementById('book-time').disabled = false;
+
+        document.getElementById('cust-name').value = "";
+        document.getElementById('cust-phone').value = "";
+        document.getElementById('cust-phone').className = "";
+        document.getElementById('phone-hint').style.display = "none";
+        document.getElementById('cust-address').value = "";
+        document.getElementById('book-time').value = "";
+
+        document.getElementById('try-status-bar').className = "status-bar";
+        document.getElementById('try-status-bar').innerHTML = "✨ 先试摇几把，看看能省多少清洗费！";
+        document.getElementById('stage-title').innerText = "🔮 模拟手气大舞台";
+        document.getElementById('bill-title').innerText = "📊 项目【模拟优惠账单】";
+        document.getElementById('go-to-pay-btn').style.display = "block";
+        
+        acTypeSelect.disabled = false;
+        acTotalCountInput.disabled = false;
+        document.getElementById('start-official-btn').style.display = "block";
+        document.getElementById('official-bill-card').style.display = "none";
+        document.getElementById('copy-text-btn').style.display = "none";
+        snapBtn.style.display = "none";
+        document.getElementById('output-container').style.display = "none";
+        document.getElementById('back-to-try-btn').innerText = "⬅ 返回上页继续试玩";
+
+        document.getElementById('page-official').classList.remove('active');
+        document.getElementById('page-try').classList.add('active');
+
+        makeNewUUID();
+        resetDiceStageToMode("试玩");
+    }
+</script>
+
+</body>
+</html>
