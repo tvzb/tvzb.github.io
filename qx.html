@@ -89,12 +89,19 @@
         .face-4 { transform: rotateX(-90deg) translateZ(19px); }
         .face-5 { transform: rotateY(-90deg) translateZ(19px); }
         .face-6 { transform: rotateY(180deg) translateZ(19px); }
+        
         .pip { width: 5px; height: 5px; background-color: #222; border-radius: 50%; }
         .face-1 .pip { width: 11px; height: 11px; background-color: #d90429; }
         .face-4 .pip { background-color: #d90429; }
-        .pip.top-left { grid-area: 1 / 1; } .pip.top-right { grid-area: 1 / 3; }
-        .pip.center { grid-area: 2 / 2; }
-        .pip.bottom-left { grid-area: 3 / 1; } .pip.bottom-right { grid-area: 3 / 3; }
+        
+        /* 经典骰子网格点绝对定位布局修复 */
+        .pip.top-left     { grid-area: 1 / 1; } 
+        .pip.top-right    { grid-area: 1 / 3; }
+        .pip.mid-left     { grid-area: 2 / 1; } 
+        .pip.mid-right    { grid-area: 2 / 3; }
+        .pip.center       { grid-area: 2 / 2; }
+        .pip.bottom-left  { grid-area: 3 / 1; } 
+        .pip.bottom-right { grid-area: 3 / 3; }
 
         .action-zone { display: flex; gap: 8px; align-items: center; background: rgba(255,255,255,0.02); padding: 8px; border-radius: 10px; border: 1px solid #2a2a2a; margin-bottom: 12px; }
         .roll-btn { background-color: var(--primary-color); color: white; padding: 10px; font-size: 1rem; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; flex: 1; }
@@ -141,9 +148,8 @@
 <body>
 
 <div class="container">
-    <h1>🎲 空调清洗 - 摇多少减多少</h1>
+    <h1>🎲 空调清洗·摇多少减多少</h1>
 
-    <!-- ==================== 页面 1：模拟试玩页 ==================== -->
     <div id="page-try" class="page active">
         <div class="status-bar" id="try-status-bar">
             ✨ 先试摇几把，看看能省多少清洗费！
@@ -172,8 +178,7 @@
                 </div>
             </div>
             <div class="dice-stage" id="dice-stage">
-                <!-- 内部动态按台分行 -->
-            </div>
+                </div>
         </div>
 
         <div class="action-zone">
@@ -210,7 +215,6 @@
         </table>
     </div>
 
-    <!-- ==================== 页面 2：支付锁单与资料录入页 ==================== -->
     <div id="page-official" class="page">
         <div class="status-bar alert" id="official-status-bar">
             🔒 安全卡关：请完成下方5元意向金，激活【正式开摇减免】！
@@ -273,8 +277,10 @@
             <div class="price-line"><span>📅 期望时段：</span><span id="log-o-time" style="color:var(--accent-green);">-</span></div>
             <div class="price-line"><span>🛠️ 服务规格：</span><span id="log-o-actype">-</span></div>
             <div class="price-line"><span>💰 意向定金：</span><span id="log-o-deposit">-5 元</span></div>
-            <div style="margin: 4px 0; font-size:0.8rem; color:#ccc;">🎲 官方盲骰生效流水（已固化）：</div>
+            
+            <div style="margin: 4px 0; font-size:0.8rem; color:#ccc;">🎲 官方盲骰免减分台落地流水：</div>
             <div class="all-pips-container" id="all-o-pips-flow"></div>
+            
             <div class="price-line"><span>🎁 骰子立减金额：</span><span id="log-o-discount" style="color:var(--primary-color); font-weight:bold;">-0 元</span></div>
             <div class="final-line"><span style="color:#fff;">💵 现场实收尾款：</span><span id="log-o-final">元</span></div>
         </div>
@@ -328,8 +334,12 @@
         1: { x: 0, y: 0 }, 2: { x: 0, y: -90 }, 3: { x: -90, y: 0 },
         4: { x: 90, y: 0 }, 5: { x: 0, y: 90 }, 6: { x: 180, y: 0 }
     };
+    
+    // 修复：6点骰子布局点阵分配，严格左右两列垂直排布布局
     var facePipsConfig = {
-        1: ['center'], 2: ['top-left', 'bottom-right'], 3: ['top-left', 'center', 'bottom-right'],
+        1: ['center'], 
+        2: ['top-left', 'bottom-right'], 
+        3: ['top-left', 'center', 'bottom-right'],
         4: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
         5: ['top-left', 'top-right', 'center', 'bottom-left', 'bottom-right'],
         6: ['top-left', 'top-right', 'mid-left', 'mid-right', 'bottom-left', 'bottom-right']
@@ -338,18 +348,17 @@
     makeNewUUID();
     resetDiceStageToMode("试玩");
 
-    // 防极端值Bug修复：过滤不合法的输入
     function sanitizeACCountInput() {
         var val = parseInt(acTotalCountInput.value);
         if (isNaN(val) || val < 1) {
             acTotalCountInput.value = 1;
         } else if (val > 50) {
-            acTotalCountInput.value = 50; // 设定一个合理安全天花板
+            acTotalCountInput.value = 50; 
         }
     }
 
     function switchToPayPage() {
-        syncOfficialBill(); // 确保进第二页前账目是最新的
+        syncOfficialBill(); 
         document.getElementById('page-try').classList.remove('active');
         document.getElementById('page-official').classList.add('active');
         window.scrollTo(0,0);
@@ -529,6 +538,7 @@
         if (finalPay < 0) finalPay = 0; 
         logFinalPrice.innerText = finalPay + ' 元';
         
+        // 修复：渲染方法现在同时管辖两页的流水视图
         if(!isOfficialMode) {
             renderPipsFlowUI('all-pips-flow');
         } else {
@@ -569,22 +579,18 @@
         }
     }
 
-    // 🔥 核心重构：科学修剪与智能分行阻断
     function rollDice3D() {
         if(isOfficialSettled) return;
 
         var desiredRoll = parseInt(rollNumSelect.value) || 1; 
         var acType = acTypeSelect.value;
         
-        // 1. 深度科学判定：算当前行还剩下几个坑位
-        var currentLineCapacity = (acType === 'cabinet') ? 5 : singleLimitPerAC; // 每行真正的容量上限
-        var currentLineOccupied = totalRolled % currentLineCapacity;           // 当前行已经塞了几个了
-        var currentLineRemains = currentLineCapacity - currentLineOccupied;    // 当前行还剩几个坑位
+        var currentLineCapacity = (acType === 'cabinet') ? 5 : singleLimitPerAC; 
+        var currentLineOccupied = totalRolled % currentLineCapacity;           
+        var currentLineRemains = currentLineCapacity - currentLineOccupied;    
 
-        // 2. 核心智能裁剪：本次连摇数量不能越过当前行的边界！
         var numToRoll = Math.min(desiredRoll, currentLineRemains);
 
-        // 如果算出来不需要摇（理论安全拦截），直接退出
         if(numToRoll <= 0) return;
 
         rollBtn.disabled = true;
@@ -601,7 +607,6 @@
             thisRoundPoints.push(point);
         }
 
-        // 3. 逐个扔进对应的行标签中
         for (var j = 0; j < numToRoll; j++) {
             var targetPoint = thisRoundPoints[j];
             var absoluteIndex = totalRolled + j; 
@@ -711,12 +716,15 @@
         });
     }
 
+    // 修复：深度优化 Canvas 图片排版算法，消除尾部不必要的巨幅留白 gap
     function generateReceiptImage() {
         var canvas = document.createElement('canvas');
         var ctx = canvas.getContext('2d');
         canvas.width = 600;
+        
         var totalACs = parseInt(acTotalCountInput.value) || 1;
-        canvas.height = 800 + (totalACs * 35); 
+        // 缩减基础高度预算，让整体更紧凑
+        canvas.height = 560 + (totalACs * 34); 
 
         ctx.fillStyle = '#1e1e1e';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -733,7 +741,7 @@
         ctx.fillStyle = '#f8f9fa';
         ctx.font = '18px sans-serif';
 
-        var startX = 50, startY = 130, lineHeight = 38;
+        var startX = 50, startY = 125, lineHeight = 36;
         ctx.fillText('👥 客户姓名：' + document.getElementById('cust-name').value.trim(), startX, startY);
         ctx.fillText('📱 联系号码：' + document.getElementById('cust-phone').value.trim(), startX, startY + lineHeight);
         ctx.fillText('🏠 详细住址：' + document.getElementById('cust-address').value.trim(), startX, startY + lineHeight * 2);
@@ -744,7 +752,7 @@
         ctx.fillStyle = '#f8f9fa';
         ctx.fillText('🛠 清洗规格：' + document.getElementById('log-o-actype').innerText, startX, startY + lineHeight * 4);
         ctx.fillText('💰 意向定金：-5 元 (' + document.getElementById('deposit-type').value + ')', startX, startY + lineHeight * 5);
-        ctx.fillText('🎲 盲骰免减真实落地流水：', startX, startY + lineHeight * 6);
+        ctx.fillText('🎲 盲骰免减分台落地流水：', startX, startY + lineHeight * 6);
         
         ctx.font = 'bold 16px sans-serif';
         var currentY = startY + lineHeight * 6 + 25;
@@ -756,25 +764,26 @@
             ctx.fillText('  第 ' + (i + 1) + ' 台 -> ', startX, currentY);
             ctx.fillStyle = '#3b82f6';
             ctx.fillText(slicePoints.join('点, ') + '点', startX + 110, currentY);
-            currentY += 32;
+            currentY += 30;
         }
 
         ctx.fillStyle = '#f8f9fa';
         ctx.font = '18px sans-serif';
-        ctx.fillText('🎁 骰子总免减：' + document.getElementById('log-o-discount').innerText, startX, currentY + 15);
+        ctx.fillText('🎁 骰子总免减：' + document.getElementById('log-o-discount').innerText, startX, currentY + 10);
 
         ctx.fillStyle = '#ffb703';
-        ctx.font = 'bold 28px sans-serif';
-        ctx.fillText('💵 现场应付尾款：' + document.getElementById('log-o-final').innerText, startX, currentY + 65);
+        ctx.font = 'bold 26px sans-serif';
+        ctx.fillText('💵 现场应付尾款：' + document.getElementById('log-o-final').innerText, startX, currentY + 50);
 
-        ctx.fillStyle = '#444';
-        ctx.fillRect(35, canvas.height - 100, canvas.width - 70, 2);
+        // 分割线与对账指纹紧密合拢
+        ctx.fillStyle = '#3a3a3a';
+        ctx.fillRect(35, currentY + 80, canvas.width - 70, 1.5);
 
         ctx.fillStyle = '#888';
         ctx.font = 'bold 16px monospace';
-        ctx.fillText('【对账防伪指纹】：' + currentUUID, startX, canvas.height - 70);
+        ctx.fillText('【对账防伪指纹】：' + currentUUID, startX, currentY + 115);
         ctx.font = '13px monospace';
-        ctx.fillText('系统封账时间：' + getNowFormatDate(), startX, canvas.height - 42);
+        ctx.fillText('系统封账时间：' + getNowFormatDate(), startX, currentY + 140);
 
         document.getElementById('output-image').src = canvas.toDataURL('image/png');
         document.getElementById('output-container').style.display = 'block';
