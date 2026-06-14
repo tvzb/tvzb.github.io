@@ -7,17 +7,23 @@
     <style>
         :root {
             --primary-color: #d90429;
-            --panel-bg: #222222;
-            --stage-bg: #141414;
+            --panel-bg: #1e1e1e;
+            --stage-bg: #0f0f0f;
             --text-color: #f8f9fa;
+            --accent-green: #2ec4b6;
+            --accent-gold: #ffb703;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             background-color: #121212;
             color: var(--text-color);
             margin: 0;
-            padding: 15px;
+            padding: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -26,17 +32,30 @@
 
         .container {
             background-color: var(--panel-bg);
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+            padding: 20px;
             width: 100%;
-            max-width: 900px;
+            max-width: 960px;
         }
 
-        h1 { text-align: center; margin-top: 0; color: #ffb703; font-size: 1.7rem; margin-bottom: 25px;}
-        h3 { margin: 10px 0; color: #2ec4b6; font-size: 1.1rem; }
+        h1 { 
+            text-align: center; 
+            margin-top: 0; 
+            color: var(--accent-gold); 
+            font-size: 1.6rem; 
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
 
-        /* 两栏布局：左边价目表和配置，右边收银和舞台 */
+        h3 { 
+            margin: 5px 0 12px 0; 
+            color: var(--accent-green); 
+            font-size: 1.1rem; 
+            font-weight: 600;
+        }
+
+        /* 核心响应式网格：默认手机单栏，PC端自动变双栏 */
         .main-layout {
             display: grid;
             grid-template-columns: 1fr;
@@ -44,66 +63,99 @@
         }
 
         @media (min-width: 768px) {
-            .main-layout { grid-template-columns: 320px 1fr; }
+            .main-layout { 
+                grid-template-columns: 340px 1fr; 
+            }
         }
 
-        /* 公开价目表常驻面板 */
+        /* 常驻公开价目表 */
         .price-board {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid #444;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid #333;
             border-radius: 12px;
             padding: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
+        
         .price-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            margin-top: 8px;
             font-size: 0.9rem;
         }
+        
         .price-table th, .price-table td {
-            border: 1px solid #444;
-            padding: 8px;
+            border: 1px solid #3a3a3a;
+            padding: 10px 6px;
             text-align: center;
         }
-        .price-table th { background: rgba(46, 196, 182, 0.15); color: #2ec4b6; }
-        .price-table td.highlight { color: #ffb703; font-weight: bold; }
+        
+        .price-table th { 
+            background: rgba(46, 196, 182, 0.15); 
+            color: var(--accent-green); 
+            font-weight: 600;
+        }
+        
+        .price-table td.highlight { 
+            color: var(--accent-gold); 
+            font-weight: bold; 
+        }
 
         /* 现场收银配置区 */
         .config-panel {
-            background: rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.04);
             border-radius: 12px;
             padding: 15px;
-            border: 1px solid #555;
+            border: 1px solid #3a3a3a;
             margin-top: 15px;
         }
+        
         .config-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
+        
         .config-row:last-child { margin-bottom: 0; }
         
+        .config-row label {
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        
         input[type="number"], select {
-            padding: 8px 12px;
-            background: #333;
-            border: 1px solid #555;
+            padding: 10px;
+            background: #2a2a2a;
+            border: 1px solid #444;
             color: #fff;
-            border-radius: 6px;
+            border-radius: 8px;
             font-weight: bold;
             font-size: 1rem;
-            width: 110px;
+            width: 130px;
             box-sizing: border-box;
+            outline: none;
+        }
+        
+        input[type="number"]:focus, select:focus {
+            border-color: var(--accent-green);
         }
 
-        /* 右侧：3D 舞台与收银台 */
+        /* 右侧：3D舞台与收银台 */
         .main-stage-area {
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
 
-        /* 3D 舞台 */
+        /* 3D 舞台大框 */
+        .stage-container {
+            background: rgba(0,0,0,0.3); 
+            border: 1px solid #333; 
+            border-radius: 12px;
+            padding: 15px;
+        }
+
         .dice-stage {
             display: flex;
             flex-wrap: wrap;
@@ -111,15 +163,16 @@
             align-items: center;
             gap: 20px;
             min-height: 120px;
-            padding: 20px;
+            padding: 15px 10px;
             background: var(--stage-bg);
-            border-radius: 15px;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.9);
+            border-radius: 10px;
+            box-shadow: inset 0 0 25px rgba(0,0,0,0.85);
             perspective: 1000px;
         }
-        .stage-hint { color: #666; font-size: 0.95rem; width: 100%; text-align: center;}
+        
+        .stage-hint { color: #666; font-size: 0.9rem; text-align: center; width: 100%; }
 
-        /* 3D骰子元件 */
+        /* 3D骰子高保真自适应尺寸 */
         .cube-container { width: 46px; height: 46px; position: relative; }
         .cube {
             width: 100%; height: 100%; position: absolute;
@@ -129,8 +182,8 @@
         .cube-face {
             position: absolute; width: 46px; height: 46px;
             background: linear-gradient(145deg, #ffffff, #e6e6e6);
-            border-radius: 10px;
-            box-shadow: inset 0 0 6px rgba(0,0,0,0.2), 0 0 2px rgba(0,0,0,0.3);
+            border-radius: 9px;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.2), 0 0 2px rgba(0,0,0,0.3);
             backface-visibility: hidden;
             display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr);
             padding: 4px; box-sizing: border-box; align-items: center; justify-items: center;
@@ -151,58 +204,109 @@
         .pip.mid-right { grid-area: 2 / 3; }
         .pip.bottom-left { grid-area: 3 / 1; } .pip.bottom-right { grid-area: 3 / 3; }
 
-        /* 快捷下注区 */
+        /* 控制动作区域 */
         .action-zone {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
+            background: rgba(255,255,255,0.02);
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #2a2a2a;
         }
+        
         .roll-btn {
-            background-color: var(--primary-color); color: white;
-            padding: 12px; font-size: 1.05rem; font-weight: bold;
-            border-radius: 8px; border: none; cursor: pointer;
-            box-shadow: 0 4px 15px rgba(217, 4, 41, 0.4); flex: 1;
+            background-color: var(--primary-color); 
+            color: white;
+            padding: 12px; 
+            font-size: 1.1rem; 
+            font-weight: bold;
+            border-radius: 8px; 
+            border: none; 
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(217, 4, 41, 0.35); 
+            flex: 1;
+            transition: transform 0.1s;
         }
-        .roll-btn:disabled { background-color: #555; box-shadow: none; cursor: not-allowed; }
+        .roll-btn:active { transform: scale(0.98); }
+        .roll-btn:disabled { background-color: #444; box-shadow: none; cursor: not-allowed; color: #888; }
 
         /* 实时收银明细大看板 */
         .summary-box {
-            background: rgba(46, 196, 182, 0.08);
-            border: 1px dashed #2ec4b6; border-radius: 12px; padding: 20px; text-align: left;
+            background: rgba(46, 196, 182, 0.06);
+            border: 1px dashed var(--accent-green); 
+            border-radius: 12px; 
+            padding: 18px; 
+            text-align: left;
         }
+        
+        /* 加强版的点数方块，手机端也能看清 */
+        .all-pips-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            min-height: 34px; 
+            border-bottom: 1px dashed #3a3a3a; 
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        
         .highlight-box {
-            display: inline-block; background: #2563eb; color: #fff;
-            padding: 3px 8px; margin: 3px 4px 3px 0; border-radius: 6px;
-            font-weight: bold; font-size: 0.9rem;
+            background: #1e40af; 
+            color: #fff;
+            padding: 5px 10px; 
+            border-radius: 6px;
+            font-weight: bold; 
+            font-size: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
             animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         @keyframes popIn { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
         .price-line {
-            display: flex; justify-content: space-between; font-size: 1.05rem;
-            margin: 8px 0; padding-bottom: 5px; border-bottom: 1px dashed #444;
+            display: flex; 
+            justify-content: space-between; 
+            font-size: 1.05rem;
+            margin: 10px 0; 
+            padding-bottom: 5px; 
+            border-bottom: 1px dashed #3a3a3a;
         }
+        
         .final-line {
-            font-size: 1.4rem; font-weight: bold; color: #ffb703;
-            margin-top: 15px; display: flex; justify-content: space-between;
+            font-size: 1.5rem; 
+            font-weight: bold; 
+            color: var(--accent-gold);
+            margin-top: 15px; 
+            display: flex; 
+            justify-content: space-between;
+            align-items: center;
         }
+        
         .reset-btn {
-            background-color: #2ec4b6; color: white; padding: 12px;
-            border-radius: 6px; border: none; width: 100%; margin-top: 15px;
-            font-weight: bold; cursor: pointer; font-size: 1rem;
+            background-color: var(--accent-green); 
+            color: white; 
+            padding: 14px;
+            border-radius: 8px; 
+            border: none; 
+            width: 100%; 
+            margin-top: 15px;
+            font-weight: bold; 
+            cursor: pointer; 
+            font-size: 1.1rem;
+            box-shadow: 0 4px 12px rgba(46, 196, 182, 0.3);
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🎲 空调清洗现场收银系统</h1>
+    <h1>🎲 空调清洗现场收银系统 (全端适配版)</h1>
     
     <div class="main-layout">
         
         <div class="left-panel">
             <div class="price-board">
-                <h3 style="margin-top:0; color:#ffb703; text-align:center;">📋 社区活动专享公示价</h3>
+                <h3 style="margin-top:0; color:var(--accent-gold); text-align:center;">📋 社区活动专享公示价</h3>
                 <table class="price-table">
                     <thead>
                         <tr><th>机型分类</th><th>1台</th><th>2台</th><th>3台+</th></tr>
@@ -213,7 +317,7 @@
                         <tr><td>吸顶天花机</td><td>200</td><td>190</td><td class="highlight">180/台</td></tr>
                     </tbody>
                 </table>
-                <p style="font-size:0.8rem; color:#aaa; margin: 8px 0 0 0; text-align:center;">※ 意向金单次仅需 5 元，摇数100%直接抵扣尾款</p>
+                <p style="font-size:0.8rem; color:#aaa; margin: 10px 0 0 0; text-align:center;">※ 意向金单次仅需 5 元，摇数100%直接抵扣尾款</p>
             </div>
 
             <div class="config-panel">
@@ -230,16 +334,15 @@
                     <label>该机型总台数：</label>
                     <input type="number" id="ac-total-count" value="1" min="1" max="20" onchange="calculateBasePrice()">
                 </div>
-                <p style="font-size:0.8rem; color:#888; margin:0;">(台数将自动触发左表对应的促销阶梯价)</p>
             </div>
         </div>
 
         <div class="main-stage-area">
             
-            <div class="summary-box" style="background: rgba(0,0,0,0.2); border: 1px solid #444; padding:15px;">
+            <div class="stage-container">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
                     <h3 style="margin:0;">🔮 街坊手气大舞台</h3>
-                    <div style="font-size:0.95rem; color:#ffb703;">
+                    <div style="font-size:0.95rem; color:var(--accent-gold);">
                         已落骰子: <span id="current-count" style="font-weight:bold;">0</span> / 10 颗
                     </div>
                 </div>
@@ -249,26 +352,28 @@
             </div>
 
             <div class="action-zone">
-                <label style="font-weight:bold; white-space:nowrap;">本手连摇：</label>
-                <select id="roll-num-select" style="width: 80px;">
-                    <option value="1">1 颗</option>
-                    <option value="2">2 颗</option>
-                    <option value="5">5 颗</option>
-                    <option value="10" selected>10 颗</option>
+                <label style="font-weight:bold; white-space:nowrap; font-size:0.95rem;">连摇：</label>
+                <select id="roll-num-select" style="width: 75px; padding:8px;">
+                    <option value="1">1颗</option>
+                    <option value="2">2颗</option>
+                    <option value="5">5颗</option>
+                    <option value="10" selected>10颗</option>
                 </select>
                 <button id="roll-btn" class="roll-btn" onclick="rollDice3D()">🎲 亲手按下，摇出好运！</button>
             </div>
 
             <div class="summary-box">
-                <h3 style="margin-top:0; border-bottom: 1px solid #2ec4b6; padding-bottom:5px; color:#2ec4b6;">📊 本台清洗单项收银台</h3>
+                <h3 style="margin-top:0; border-bottom: 1px solid var(--accent-green); padding-bottom:6px; color:var(--accent-green);">📊 本台清洗单项收银台</h3>
                 
                 <div class="price-line"><span>本台单价（已计阶梯优惠）：</span><span id="log-base-price">120 元</span></div>
-                <div class="price-line"><span>本次摇数意向金（扣减）：</span><span id="log-deposit" style="color:#2ec4b6;">-5 元</span></div>
+                <div class="price-line"><span>本次摇数意向金（扣减）：</span><span id="log-deposit" style="color:var(--accent-green);">-5 元</span></div>
                 
-                <div style="margin: 10px 0 5px 0; font-size:0.95rem;"><strong>当前10颗骰子已落地明细：</strong></div>
-                <div id="all-pips-flow" style="color: #666; min-height: 28px; font-size: 0.95rem; border-bottom:1px dashed #444; padding-bottom:8px;">暂无点数，等待街坊开摇...</div>
+                <div style="margin: 12px 0 6px 0; font-size:0.95rem; font-weight:500;"><strong>当前10颗骰子已落地明细：</strong></div>
+                <div class="all-pips-container" id="all-pips-flow">
+                    <span style="color:#555; font-size:0.9rem; padding-top:4px;">暂无点数，等待街坊开摇...</span>
+                </div>
                 
-                <div class="price-line" style="margin-top:10px;"><span>手气扣减金额（1点=1元）：</span><span id="log-discount-amount" style="color:#d90429;">-0 元</span></div>
+                <div class="price-line" style="border-bottom:none; margin-bottom:0;"><span>手气扣减金额（1点=1元）：</span><span id="log-discount-amount" style="color:var(--primary-color); font-weight:bold;">-0 元</span></div>
                 
                 <div class="final-line"><span>本台空调实收尾款：</span><span id="log-final-price">115 元</span></div>
                 
@@ -280,15 +385,15 @@
 </div>
 
 <script>
-    var totalRolled = 0;       // 当前此台空调已经落下的骰子总数
-    var allHistoryPoints = [];  // 这10个骰子的具体点数
-    var maxTargetDice = 10;     // 严格锁死10个骰子
+    var totalRolled = 0;       
+    var allHistoryPoints = [];  
+    var maxTargetDice = 10;     
     
-    // 三大主力机型的价格矩阵
+    // 价格矩阵（包含全新优化的天花机阶梯价）
     var priceMatrix = {
         wall:    { 1: 120, 2: 115, 3: 110 }, // 挂机
         cabinet: { 1: 260, 2: 250, 3: 240 }, // 柜机
-        ceiling: { 1: 200, 2: 190, 3: 180 }  // 天花机
+        ceiling: { 1: 200, 2: 190, 3: 180 }  // 天花机：1台200, 2台190, 3台及以上180
     };
 
     var diceStage = document.getElementById('dice-stage');
@@ -299,7 +404,6 @@
     var acTypeSelect = document.getElementById('ac-type');
     var acTotalCountInput = document.getElementById('ac-total-count');
     
-    // 账目表文本节点
     var logBasePrice = document.getElementById('log-base-price');
     var logDeposit = document.getElementById('log-deposit');
     var logDiscountAmount = document.getElementById('log-discount-amount');
@@ -318,35 +422,30 @@
         6: ['top-left', 'top-right', 'mid-left', 'mid-right', 'bottom-left', 'bottom-right']
     };
 
-    // 首次进入自动跑一次基础计费
     calculateBasePrice();
 
-    // 联动阶梯价算法
     function calculateBasePrice() {
         var type = acTypeSelect.value;
         var totalCount = parseInt(acTotalCountInput.value) || 1;
         if (totalCount < 1) totalCount = 1;
 
-        // 根据总台数，判定采用哪个价格阶梯
         var step = totalCount;
-        if (step > 3) step = 3; // 3台以上封顶享最大折扣
+        if (step > 3) step = 3; 
 
         var unitPrice = priceMatrix[type][step];
         logBasePrice.innerText = unitPrice + ' 元';
-        logDeposit.innerText = '-5 元'; // 每次洗一台固定对应一份5元意向金
+        logDeposit.innerText = '-5 元'; 
         
         updateFinalBox(0);
         autoAdjustSelect();
     }
 
-    // 防止单次选择的数量超过剩余所需的骰子数
     function autoAdjustSelect() {
         var remaining = maxTargetDice - totalRolled;
         var currentSelect = parseInt(rollNumSelect.value);
         if (currentSelect > remaining) {
             rollNumSelect.value = remaining;
         }
-        // 如果已经满了，禁用下拉
         if (remaining <= 0) {
             rollNumSelect.disabled = true;
         } else {
@@ -361,7 +460,6 @@
             return;
         }
 
-        // 临时锁死所有干扰控件
         rollBtn.disabled = true;
         rollNumSelect.disabled = true;
         acTypeSelect.disabled = true;
@@ -374,7 +472,6 @@
             allPipsFlow.innerHTML = '';
         }
 
-        // 1. 底层闭锁生成真随机点数
         var thisRoundPoints = [];
         for (var i = 0; i < numToRoll; i++) {
             var point = Math.floor(Math.random() * 6) + 1;
@@ -382,7 +479,6 @@
             allHistoryPoints.push(point);
         }
 
-        // 2. 舞台追加生成拟真圆点3D立方体
         for (var j = 0; j < numToRoll; j++) {
             var targetPoint = thisRoundPoints[j];
             var cubeContainer = document.createElement('div');
@@ -414,7 +510,6 @@
             })(cube, targetPoint);
         }
 
-        // 3. 1.05秒完全停稳后，同步看板数据
         setTimeout(function() {
             for (var k = 0; k < thisRoundPoints.length; k++) {
                 var span = document.createElement('span');
@@ -426,11 +521,9 @@
             totalRolled += numToRoll;
             currentCountSpan.innerText = totalRolled;
 
-            // 累计减免总额
             var discountAmount = allHistoryPoints.reduce((a, b) => a + b, 0);
             updateFinalBox(discountAmount);
 
-            // 判断是否刚好攒满10个
             if (totalRolled >= maxTargetDice) {
                 endGame();
             } else {
@@ -447,13 +540,12 @@
         var step = totalCount > 3 ? 3 : totalCount;
         
         var unitPrice = priceMatrix[type][step];
-        var deposit = 5; // 单台独立结算固定扣5元
+        var deposit = 5; 
 
         logDiscountAmount.innerText = '-' + discountAmount + ' 元';
         
-        // 单台最终尾款 = 单台阶梯单价 - 5元意向金 - 这10颗骰子总减免
         var finalPay = unitPrice - deposit - discountAmount;
-        if (finalPay < 0) finalPay = 0; // 最多免单，不能倒贴钱
+        if (finalPay < 0) finalPay = 0; 
         
         logFinalPrice.innerText = finalPay + ' 元';
     }
@@ -470,7 +562,7 @@
         currentCountSpan.innerText = '0';
         
         diceStage.innerHTML = '<div class="stage-hint" id="stage-hint">请在下方选择单次摇几颗，凑满10颗即止！</div>';
-        allPipsFlow.innerHTML = '暂无点数，等待街坊开摇...';
+        allPipsFlow.innerHTML = '<span style="color:#555; font-size:0.9rem; padding-top:4px;">暂无点数，等待街坊开摇...</span>';
         
         rollBtn.disabled = false;
         rollNumSelect.disabled = false;
