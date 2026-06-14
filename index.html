@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>空调清洗 - 社区手气大舞台</title>
+    <title>空调清洗 - 摇骰子大减免</title>
     <style>
         :root {
             --primary-color: #d90429;
@@ -131,11 +131,11 @@
 <body>
 
 <div class="container">
-    <h1>🎲 空调清洗·社区手气大舞台</h1>
+    <h1>🎲 空调清洗 - 摇骰子大减免</h1>
 
     <div id="page-try" class="page active">
         <div class="status-bar" id="try-status-bar">
-            ✨ 【免关注试玩】先摇几把，看看今天能省多少现场服务费！
+            ✨ 先摇几把，看看能省多少清洗费！
         </div>
 
         <div class="quick-config">
@@ -155,13 +155,13 @@
 
         <div class="stage-container">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <h3 style="margin:0; color:var(--accent-gold); font-size: 0.95rem;" id="stage-title">🔮 模拟手气大舞台</h3>
+                <h3 style="margin:0; color:var(--accent-gold); font-size: 0.95rem;" id="stage-title">🔮 摇一摇，低价洗空调</h3>
                 <div style="font-size:0.8rem; color:#bbb;">
                     已摇: <span id="current-count" style="font-weight:bold; color:var(--accent-green);">0</span> / <span id="target-max-display">5</span> 颗
                 </div>
             </div>
             <div class="dice-stage" id="dice-stage">
-                <div class="stage-hint" id="stage-hint">🎁 点下方“亲手开摇”试玩<br>看你能摇到多大减免！</div>
+                <div class="stage-hint" id="stage-hint">🎁 点下方“ 摇一摇”试玩<br>看你能摇到多大减免！</div>
             </div>
         </div>
 
@@ -173,10 +173,10 @@
                 <option value="3" selected>3颗</option>
                 <option value="5">5颗</option>
             </select>
-            <button id="roll-btn" class="roll-btn" onclick="rollDice3D()">🎲 亲手开摇，测试手气！</button>
+            <button id="roll-btn" class="roll-btn" onclick="rollDice3D()">🎲 摇一摇！</button>
         </div>
 
-        <button id="try-again-action-btn" class="try-again-btn" onclick="resetDiceStageToMode('试玩')">🔄 手气一般？点此再试玩一把！</button>
+        <button id="try-again-action-btn" class="try-again-btn" onclick="resetDiceStageToMode('试玩')">🔄 点此再试玩一把！</button>
 
         <div class="summary-box" style="margin-bottom: 12px;">
             <h3 style="margin-top:0; border-bottom: 1px solid var(--accent-green); padding-bottom:4px; font-size:0.9rem; text-align:center;" id="bill-title">📊 项目【模拟优惠账单】</h3>
@@ -207,12 +207,12 @@
         </div>
 
         <div class="pay-zone">
-            <h3 style="color:var(--accent-gold); margin-bottom:2px; font-size:0.95rem;">📲 社区好运意向登记区</h3>
+            <h3 style="color:var(--accent-gold); margin-bottom:2px; font-size:0.95rem;">📲 清洗空调意向登记</h3>
             <p style="font-size:0.75rem; color:#ffb703; margin:0 0 6px 0; font-weight:bold;">⚠️ 科学对账提示：请在付款时【添加备注】填入后缀：<span id="hint-tail" style="text-decoration:underline;">-</span></p>
             <div class="qr-group">
                 <div class="qr-card">
                     <img src="https://tvzb.github.io/jia.jpg" class="qr-img">
-                    1. 长按加微信
+                    1. 加我微信
                 </div>
                 <div class="qr-card">
                     <img src="https://tvzb.github.io/skm.jpg" class="qr-img">
@@ -233,7 +233,7 @@
             </div>
             <div class="form-group">
                 <label>清洗详细住址：</label>
-                <input type="text" id="cust-address" placeholder="例如：4号楼1单元602室" oninput="syncOfficialBill()">
+                <input type="text" id="cust-address" placeholder="例如：幸福小区4-1-602" oninput="syncOfficialBill()">
             </div>
             <div class="config-row">
                 <label style="font-size:0.8rem;">意向金渠道：</label>
@@ -243,7 +243,7 @@
                 </select>
             </div>
             <div class="form-group" style="margin-top:6px;">
-                <label>期望上门时段 (弹性弹性)：</label>
+                <label>期望上门时段：</label>
                 <input type="text" id="book-time" placeholder="例如：本周六下午或工人提前电联" oninput="syncOfficialBill()">
             </div>
 
@@ -253,10 +253,10 @@
             </div>
         </div>
 
-        <button id="start-official-btn" class="next-step-btn" style="margin-top:12px;" onclick="activateOfficialRollMode()">➔ 我已付清5元，去舞台正式开摇！</button>
+        <button id="start-official-btn" class="next-step-btn" style="margin-top:12px;" onclick="activateOfficialRollMode()">➔ 我已付清5元，正式开摇！</button>
 
         <div class="summary-box" id="official-bill-card" style="margin-top:12px; display:none; background: rgba(46,196,182,0.08); border-style:solid;">
-            <h3 style="margin-top:0; border-bottom: 1px solid var(--accent-green); padding-bottom:4px; text-align:center; color:var(--accent-gold);">📊 社区清洗正式电子存证</h3>
+            <h3 style="margin-top:0; border-bottom: 1px solid var(--accent-green); padding-bottom:4px; text-align:center; color:var(--accent-gold);">📊 空调清洗正式电子存证</h3>
             <div class="price-line"><span>👥 客户姓名：</span><span id="log-o-name" style="font-weight:bold; color:#fff;">-</span></div>
             <div class="price-line"><span>📱 联系号码：</span><span id="log-o-phone">-</span></div>
             <div class="price-line"><span>🏠 详细住址：</span><span id="log-o-address">-</span></div>
@@ -270,7 +270,7 @@
         </div>
 
         <button id="copy-text-btn" class="copy-btn" onclick="copyUIDText()">📋 复制对账文本发微信客服</button>
-        <button id="snap-btn" class="snap-btn" style="display:none;" onclick="generateReceiptImage()">📸 生成防伪核销截图（凭图再减10元）</button>
+        <button id="snap-btn" class="snap-btn" style="display:none;" onclick="generateReceiptImage()">📸 生成防伪核销截图</button>
         
         <button class="back-btn" id="back-to-try-btn" onclick="switchToTryPage()">⬅ 返回上页继续试玩</button>
     </div>
@@ -394,7 +394,7 @@
         if(type === "正式") {
             diceStage.innerHTML = '<div class="stage-hint" style="color:var(--accent-gold);">💰 5元定金已收到！正式抽奖生效中...<br>请点击下方按钮，决定最终优惠！</div>';
         } else {
-            diceStage.innerHTML = '<div class="stage-hint">🎁 点下方“亲手开摇”试玩<br>看你能摇到多大减免！</div>';
+            diceStage.innerHTML = '<div class="stage-hint">🎁 点下方“摇一摇”试玩<br>看你能摇到多大减免！</div>';
         }
         
         rollBtn.disabled = false;
@@ -738,8 +738,8 @@
 
         // UI全面还原为“试玩模式”
         document.getElementById('try-status-bar').className = "status-bar";
-        document.getElementById('try-status-bar').innerHTML = "✨ 【免关注试玩】先摇几把，看看今天能省多少现场服务费！";
-        document.getElementById('stage-title').innerText = "🔮 模拟手气大舞台";
+        document.getElementById('try-status-bar').innerHTML = "✨ 先摇几把，看看能省多少现场服务费！";
+        document.getElementById('stage-title').innerText = "🔮 摇一摇，低价洗空调";
         document.getElementById('bill-title').innerText = "📊 项目【模拟优惠账单】";
         document.getElementById('go-to-pay-btn').style.display = "block";
         
