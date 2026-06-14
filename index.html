@@ -65,7 +65,6 @@
             background: var(--stage-bg); border-radius: 10px; box-shadow: inset 0 0 25px rgba(0,0,0,0.85); perspective: 1000px;
         }
         
-        /* 修复：将 flex-wrap 改为 wrap，并加大间距，彻底杜绝手机端骰子重叠问题 */
         .dice-stage-row {
             display: flex; flex-wrap: wrap; justify-content: flex-start; align-items: center; gap: 12px;
             background: rgba(255, 255, 255, 0.02); padding: 10px 10px; border-radius: 8px; border: 1px dashed #2a2a2a;
@@ -91,7 +90,7 @@
         .face-5 { transform: rotateY(-90deg) translateZ(21px); }
         .face-6 { transform: rotateY(180deg) translateZ(21px); }
         
-        /* 修复：圆点极致粗大化，基础圆点从8px强化到10px，1点红心放大到20px */
+        /* 圆点大尺寸 */
         .pip { width: 10px; height: 10px; background-color: #111; border-radius: 50%; }
         .face-1 .pip { width: 20px; height: 20px; background-color: #d90429; }
         .face-4 .pip { background-color: #d90429; width: 9.5px; height: 9.5px; }
@@ -112,6 +111,12 @@
         .next-step-btn { background: linear-gradient(90deg, #ffb703, #fb8500); color: #000; padding: 14px; font-size: 1.1rem; font-weight: bold; width: 100%; border-radius: 8px; border: none; cursor: pointer; margin-bottom: 12px; }
         .try-again-btn { background-color: var(--accent-green); color: #fff; padding: 12px; font-size: 1rem; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; width: 100%; margin-bottom: 12px; display: none; }
 
+        /* 正式开摇完毕后原地插入的操控功能组 */
+        .official-result-zone { display: none; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+        .snap-btn { background-color: #3b82f6; color: white; padding: 13px; width: 100%; border-radius: 8px; border: none; font-weight: bold; font-size: 1.05rem; }
+        .copy-btn { background-color: var(--accent-gold); color: #000; padding: 13px; width: 100%; border-radius: 8px; border: none; font-weight: bold; font-size: 1rem; }
+        .reset-all-btn { background: #444; color: #ccc; padding: 12px; border-radius: 8px; border: none; font-weight: bold; width: 100%; font-size: 0.95rem; }
+
         .summary-box { background: rgba(46, 196, 182, 0.04); border: 1px dashed var(--accent-green); border-radius: 12px; padding: 14px; font-size: 0.9rem; }
         .price-line { display: flex; justify-content: space-between; margin: 6px 0; padding-bottom: 4px; border-bottom: 1px dashed #3a3a3a; }
         .final-line { font-size: 1.35rem; font-weight: bold; color: var(--accent-gold); margin-top: 10px; display: flex; justify-content: space-between; align-items: center; }
@@ -121,7 +126,7 @@
         .pip-row-title { font-size: 0.8rem; color: var(--accent-green); font-weight: bold; }
         .highlight-box { background: #1e40af; color: #fff; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; }
 
-        /* 页2 支付页 */
+        /* 页2 锁定诚意金资料输入页 */
         .pay-zone { background: linear-gradient(145deg, #2b2b2b, #1c1c1c); border: 2px dashed var(--accent-gold); border-radius: 12px; padding: 12px; margin-bottom: 12px; text-align: center; }
         .qr-group { display: flex; justify-content: space-around; gap: 10px; margin-top: 8px; }
         .qr-card { background: #fff; padding: 6px; border-radius: 8px; width: 46%; color: #000; font-size: 0.75rem; font-weight: bold; }
@@ -136,8 +141,6 @@
         .error-hint { font-size: 0.75rem; color: #d90429; margin-top: 3px; display: none; }
 
         .back-btn { background: #444; color: #ccc; padding: 12px; border-radius: 8px; border: none; font-weight: bold; width: 100%; margin-top: 8px; font-size: 0.95rem; }
-        .snap-btn { background-color: #3b82f6; color: white; padding: 12px; width: 100%; border-radius: 8px; border: none; font-weight: bold; font-size: 1.05rem; margin-top: 10px; }
-        .copy-btn { background-color: var(--accent-gold); color: #000; padding: 12px; width: 100%; border-radius: 8px; border: none; font-weight: bold; font-size: 1rem; margin-top: 8px; display: none; }
 
         #output-container { margin-top: 15px; text-align: center; display: none; background: #111; padding: 12px; border-radius: 12px; border: 2px solid var(--accent-gold); }
         #output-image { max-width: 100%; border-radius: 6px; }
@@ -152,7 +155,6 @@
 <div class="container">
     <h1>🎲 空调清洗·社区福利大舞台</h1>
 
-    <!-- ==================== 页面 1：模拟试玩页 ==================== -->
     <div id="page-try" class="page active">
         <div class="status-bar" id="try-status-bar">
             ✨ 随心试摇几把，算一算您的空调清洗能省多少钱！
@@ -181,11 +183,10 @@
                 </div>
             </div>
             <div class="dice-stage" id="dice-stage">
-                <!-- 内部动态按台分行 -->
-            </div>
+                </div>
         </div>
 
-        <div class="action-zone">
+        <div class="action-zone" id="roll-action-zone">
             <label style="font-weight:bold; white-space:nowrap; font-size:0.85rem;">连续投掷：</label>
             <select id="roll-num-select" style="width: 75px; padding:6px;">
                 <option value="1">1次</option>
@@ -198,8 +199,22 @@
 
         <button id="try-again-action-btn" class="try-again-btn" onclick="resetDiceStageToMode('试玩')">🔄 重新模拟手气</button>
 
+        <div class="official-result-zone" id="official-result-zone">
+            <button class="copy-btn" onclick="copyUIDText()">📋 复制核销文本发送给客服</button>
+            <button class="snap-btn" onclick="generateReceiptImage()">📸 生成防伪核销截图凭证</button>
+            <button class="reset-all-btn" onclick="fullResetAll()">🧹 清空数据，准备下一单服务</button>
+        </div>
+
         <div class="summary-box" style="margin-bottom: 12px;">
             <h3 style="margin-top:0; border-bottom: 1px solid var(--accent-green); padding-bottom:4px; font-size:0.9rem; text-align:center;" id="bill-title">📊 实时【试玩计算明细】</h3>
+            <div id="official-info-preview" style="display:none; background:rgba(0,0,0,0.2); padding:6px 10px; border-radius:6px; margin-bottom:8px; font-size:0.8rem; border:1px solid #333; line-height:1.4;">
+                <div style="color:var(--accent-gold); font-weight:bold; margin-bottom:2px;">🔒 预约单核心档案：</div>
+                <div>街坊姓名：<span id="p-o-name" style="color:#fff;">-</span> | 电话：<span id="p-o-phone" style="color:#fff;">-</span></div>
+                <div>服务地址：<span id="p-o-address" style="color:#fff;">-</span></div>
+                <div>预约时段：<span id="p-o-time" style="color:var(--accent-green); font-weight:bold;">-</span></div>
+                <div>防伪核销密匙：<span id="p-o-uuid" style="color:var(--accent-gold); font-family:monospace;">-</span></div>
+            </div>
+
             <div class="price-line"><span>🛠️ 服务规格：</span><span id="log-ac-type-name">-</span></div>
             <div style="margin: 6px 0 4px 0; font-size:0.8rem; color:#aaa;">🎲 减免点数落地流水：</div>
             <div class="all-pips-container" id="all-pips-flow"></div>
@@ -209,7 +224,7 @@
 
         <button class="next-step-btn" id="go-to-pay-btn" onclick="switchToPayPage()">🔥 手气太赞了，立即锁定名额去正式开摇！</button>
 
-        <table class="price-table">
+        <table class="price-table" id="price-rules-table">
             <thead><tr><th>清洗机型</th><th>清洗1台</th><th>清洗2台</th><th>3台及以上特惠</th><th>单台免费盲骰</th></tr></thead>
             <tbody>
                 <tr><td>家用挂机</td><td>120元</td><td>115元</td><td style="color:var(--accent-gold); font-weight:bold;">110元</td><td>可摇5次/台</td></tr>
@@ -219,7 +234,6 @@
         </table>
     </div>
 
-    <!-- ==================== 页面 2：资料录入页 ==================== -->
     <div id="page-official" class="page">
         <div class="status-bar alert" id="official-status-bar">
             🔒 安全锁单：请先支付5元上门诚意金，即可全面激活【正式盲骰减免】！
@@ -243,7 +257,7 @@
         <div class="config-panel" style="background:rgba(255,255,255,0.03); padding:12px; border-radius:12px; border:1px solid #333;">
             <div class="form-group">
                 <label>联系人姓名/称呼：</label>
-                <input type="text" id="cust-name" placeholder="例：陈先生 / 王阿姨" oninput="syncOfficialBill()">
+                <input type="text" id="cust-name" placeholder="例：陈先生 / 王阿姨" oninput="syncDataPreview()">
             </div>
             <div class="form-group">
                 <label>联系电话 (师傅上门核销的唯一凭证)：</label>
@@ -252,18 +266,18 @@
             </div>
             <div class="form-group">
                 <label>期望清洗的详细地址：</label>
-                <input type="text" id="cust-address" placeholder="例：幸福花园3栋2单元501室" oninput="syncOfficialBill()">
+                <input type="text" id="cust-address" placeholder="例：幸福花园3栋2单元501室" oninput="syncDataPreview()">
             </div>
             <div class="config-row">
                 <label style="font-size:0.8rem;">诚意金支付渠道：</label>
-                <select id="deposit-type" style="padding:5px; font-size:0.85rem;" onchange="syncOfficialBill()">
+                <select id="deposit-type" style="padding:5px; font-size:0.85rem;" onchange="syncDataPreview()">
                     <option value="线上收款码已付">线上收款码已付</option>
                     <option value="微信私聊已转账">微信私聊已转账</option>
                 </select>
             </div>
             <div class="form-group" style="margin-top:6px;">
                 <label>期望上门服务时段：</label>
-                <input type="text" id="book-time" placeholder="例：本周六下午或工人提前电话联系" oninput="syncOfficialBill()">
+                <input type="text" id="book-time" placeholder="例：本周六下午或工人提前电话联系" oninput="syncDataPreview()">
             </div>
 
             <div style="background: rgba(0,0,0,0.4); padding: 6px; border-radius:8px; margin-top:8px; text-align:center; border:1px solid #444;">
@@ -273,27 +287,8 @@
         </div>
 
         <button id="start-official-btn" class="next-step-btn" style="margin-top:12px;" onclick="activateOfficialRollMode()">➔ 已付完5元，正式开摇！(以微信实收为准)</button>
-
-        <div class="summary-box" id="official-bill-card" style="margin-top:12px; display:none; background: rgba(46,196,182,0.08); border-style:solid;">
-            <h3 style="margin-top:0; border-bottom: 1px solid var(--accent-green); padding-bottom:4px; text-align:center; color:var(--accent-gold);">📊 社区清洗服务·正式电子凭证</h3>
-            <div class="price-line"><span>👥 客户姓名：</span><span id="log-o-name" style="font-weight:bold; color:#fff;">-</span></div>
-            <div class="price-line"><span>📱 联系号码：</span><span id="log-o-phone">-</span></div>
-            <div class="price-line"><span>🏠 服务地址：</span><span id="log-o-address">-</span></div>
-            <div class="price-line"><span>📅 预约时段：</span><span id="log-o-time" style="color:var(--accent-green);">-</span></div>
-            <div class="price-line"><span>🛠️ 服务规格：</span><span id="log-o-actype">-</span></div>
-            <div class="price-line"><span>💰 上门诚意金：</span><span id="log-o-deposit">-5 元</span></div>
-            
-            <div style="margin: 4px 0; font-size:0.8rem; color:#ccc;">🎲 官方盲骰立减分台落地流水：</div>
-            <div class="all-pips-container" id="all-o-pips-flow"></div>
-            
-            <div class="price-line"><span>🎁 盲骰总立减金额：</span><span id="log-o-discount" style="color:var(--primary-color); font-weight:bold;">-0 元</span></div>
-            <div class="final-line"><span style="color:#fff;">💵 现场应付尾款：</span><span id="log-o-final">元</span></div>
-        </div>
-
-        <button id="copy-text-btn" class="copy-btn" onclick="copyUIDText()">📋 复制凭证文本发送给客服</button>
-        <button id="snap-btn" class="snap-btn" style="display:none;" onclick="generateReceiptImage()">📸 生成防伪核销截图凭证</button>
         
-        <button class="back-btn" id="back-to-try-btn" onclick="switchToTryPage()">⬅ 返回修改上门资料</button>
+        <button class="back-btn" onclick="switchToTryPageFromPay()">⬅ 返回重新修改规格台数</button>
     </div>
 
     <div id="output-container">
@@ -333,7 +328,6 @@
     var logDiscountAmount = document.getElementById('log-discount-amount');
     var logFinalPrice = document.getElementById('log-final-price');
     var logAcTypeName = document.getElementById('log-ac-type-name');
-    var snapBtn = document.getElementById('snap-btn');
 
     var faceTransforms = {
         1: { x: 0, y: 0 }, 2: { x: 0, y: -90 }, 3: { x: -90, y: 0 },
@@ -361,22 +355,31 @@
         }
     }
 
-    // 页面跳转
     function switchToPayPage() {
-        syncOfficialBill(); 
+        syncDataPreview(); 
         document.getElementById('page-try').classList.remove('active');
         document.getElementById('page-official').classList.add('active');
         window.scrollTo(0,0);
     }
 
-    function switchToTryPage() {
-        if(isOfficialMode) {
-            fullResetAll();
-            return;
-        }
+    function switchToTryPageFromPay() {
         document.getElementById('page-official').classList.remove('active');
         document.getElementById('page-try').classList.add('active');
         window.scrollTo(0,0);
+    }
+
+    // 同步备份预约数据到主页的预览卡片中
+    function syncDataPreview() {
+        var name = document.getElementById('cust-name').value.trim() || "未填写";
+        var phone = document.getElementById('cust-phone').value.trim() || "未填写";
+        var addr = document.getElementById('cust-address').value.trim() || "未填写";
+        var bTime = document.getElementById('book-time').value.trim() || "服从工人弹性排单";
+
+        document.getElementById('p-o-name').innerText = name;
+        document.getElementById('p-o-phone').innerText = phone;
+        document.getElementById('p-o-address').innerText = addr;
+        document.getElementById('p-o-time').innerText = bTime;
+        document.getElementById('p-o-uuid').innerText = currentUUID;
     }
 
     // 激活正式开摇
@@ -390,30 +393,33 @@
             return;
         }
 
-        // 清空一切试玩残留
+        // 强力清空以前试摇下的点数残留，保证绝对公平真实
         totalRolled = 0;
         allHistoryPoints = [];
         document.getElementById('all-pips-flow').innerHTML = "";
-        document.getElementById('all-o-pips-flow').innerHTML = "";
 
         isOfficialMode = true;
         isOfficialSettled = false;
         
-        document.getElementById('cust-name').disabled = true;
-        document.getElementById('cust-phone').disabled = true;
-        document.getElementById('cust-address').disabled = true;
-        document.getElementById('deposit-type').disabled = true;
-        document.getElementById('book-time').disabled = true;
-        document.getElementById('start-official-btn').style.display = "none";
-        
-        document.getElementById('back-to-try-btn').innerText = "🧹 清空数据，准备下一单服务";
+        // 彻底锁死参数配置
+        acTypeSelect.disabled = true;
+        acTotalCountInput.disabled = true;
 
+        // 切换抬头主题话术
         document.getElementById('try-status-bar').className = "status-bar gold";
-        document.getElementById('try-status-bar').innerHTML = "🎯 【正式盲骰模式已启动】数据将与核销密匙实时进行安全绑定！";
+        document.getElementById('try-status-bar').innerHTML = "🎯 【正式盲骰模式已启动】数据将与核销密匙实时进行安全核销！";
         document.getElementById('stage-title').innerText = "🔥 官方正式对账舞台";
         document.getElementById('bill-title').innerText = "📊 空调清洗服务【正式结算清单】";
+        
+        // 隐藏掉跳转按钮和底部的规则表
         document.getElementById('go-to-pay-btn').style.display = "none";
+        document.getElementById('price-rules-table').style.display = "none";
+        
+        // 展开信息预览卡
+        syncDataPreview();
+        document.getElementById('official-info-preview').style.display = "block";
 
+        // 原地切回主面板，准备无缝正式开摇
         document.getElementById('page-official').classList.remove('active');
         document.getElementById('page-try').classList.add('active');
         
@@ -427,6 +433,7 @@
         }
         currentCountSpan.innerText = totalRolled;
         tryAgainActionBtn.style.display = "none";
+        document.getElementById('official-result-zone').style.display = "none";
         
         var acType = acTypeSelect.value;
         var totalCount = parseInt(acTotalCountInput.value) || 1;
@@ -466,7 +473,7 @@
             }
         }
 
-        var hintStr = type === "正式" ? "💰 5元诚意金已收到！官方正式盲骰生效中，请在下方摇一摇！" : "🎁 随意点击下方“摇一摇”，提前测试今天的好运能减免多少！";
+        var hintStr = type === "正式" ? "💰 5元诚意金已锁定！官方正式盲骰生效中，请在下方摇一摇！" : "🎁 随意点击下方“摇一摇”，提前测试今天的好运能减免多少！";
         var hintDiv = document.createElement('div');
         hintDiv.className = 'stage-hint';
         hintDiv.id = 'stage-hint-text';
@@ -475,8 +482,7 @@
         
         rollBtn.disabled = false;
         rollNumSelect.disabled = false;
-        acTypeSelect.disabled = isOfficialMode;
-        acTotalCountInput.disabled = isOfficialMode;
+        document.getElementById('roll-action-zone').style.display = "flex";
 
         calculateBasePrice();
     }
@@ -496,7 +502,7 @@
             phoneHint.style.display = "block";
             isPhoneValid = false;
         }
-        syncOfficialBill();
+        syncDataPreview();
     }
 
     function makeNewUUID() {
@@ -510,34 +516,6 @@
         document.getElementById('hint-tail').innerText = uuid; 
     }
 
-    function syncOfficialBill() {
-        var name = document.getElementById('cust-name').value.trim() || "-";
-        var phone = document.getElementById('cust-phone').value.trim() || "-";
-        var addr = document.getElementById('cust-address').value.trim() || "-";
-        var payType = document.getElementById('deposit-type').value;
-        var bTime = document.getElementById('book-time').value.trim() || "服从工人弹性排单";
-
-        document.getElementById('log-o-name').innerText = name;
-        document.getElementById('log-o-phone').innerText = phone;
-        document.getElementById('log-o-address').innerText = addr;
-        document.getElementById('log-o-deposit').innerText = "-5 元 (" + payType + ")";
-        document.getElementById('log-o-time').innerText = bTime;
-        
-        var type = acTypeSelect.value;
-        var totalCount = parseInt(acTotalCountInput.value) || 1;
-        var step = totalCount > 3 ? 3 : totalCount;
-        var unitPrice = priceMatrix[type].price[step];
-        document.getElementById('log-o-actype').innerText = priceMatrix[type].name + " (" + totalCount + "台，特惠单价" + unitPrice + "元)";
-        
-        var discountAmount = allHistoryPoints.reduce((a, b) => a + b, 0);
-        var totalBasePrice = unitPrice * totalCount;
-        var finalPay = totalBasePrice - 5 - discountAmount;
-        if(finalPay < 0) finalPay = 0;
-        
-        document.getElementById('log-o-discount').innerText = '-' + discountAmount + ' 元';
-        document.getElementById('log-o-final').innerText = finalPay + ' 元';
-    }
-
     function calculateBasePrice() {
         var type = acTypeSelect.value;
         var totalCount = parseInt(acTotalCountInput.value) || 1;
@@ -548,16 +526,11 @@
         var discountAmount = allHistoryPoints.reduce((a, b) => a + b, 0);
         
         logDiscountAmount.innerText = '-' + discountAmount + ' 元';
-        var finalPay = (unitPrice * totalCount) - 5 - discountAmount;
+        var finalPay = (unitPrice * totalCount) - (isOfficialMode ? 5 : 0) - discountAmount;
         if (finalPay < 0) finalPay = 0; 
         logFinalPrice.innerText = finalPay + ' 元';
         
-        if(!isOfficialMode) {
-            renderPipsFlowUI('all-pips-flow');
-        } else {
-            syncOfficialBill();
-            renderPipsFlowUI('all-o-pips-flow');
-        }
+        renderPipsFlowUI('all-pips-flow');
     }
 
     function renderPipsFlowUI(targetDomId) {
@@ -608,8 +581,6 @@
 
         rollBtn.disabled = true;
         rollNumSelect.disabled = true;
-        acTypeSelect.disabled = true;
-        acTotalCountInput.disabled = true;
 
         var hintTxt = document.getElementById('stage-hint-text');
         if (hintTxt) hintTxt.remove();
@@ -673,7 +644,10 @@
 
             if (totalRolled >= maxTargetDice) {
                 if(isOfficialMode) {
-                    endOfficialGame();
+                    // 修复：正式摇完后就地呈现控制按钮组，画面和骰子完全保留不跳动！
+                    isOfficialSettled = true;
+                    document.getElementById('roll-action-zone').style.display = "none";
+                    document.getElementById('official-result-zone').style.display = "flex";
                 } else {
                     rollBtn.disabled = true;
                     tryAgainActionBtn.style.display = "block"; 
@@ -683,21 +657,6 @@
                 rollNumSelect.disabled = false; 
             }
         }, 1050);
-    }
-
-    function endOfficialGame() {
-        isOfficialSettled = true;
-        rollBtn.disabled = true;
-        rollNumSelect.disabled = true;
-        
-        document.getElementById('page-try').classList.remove('active');
-        document.getElementById('page-official').classList.add('active');
-        
-        document.getElementById('official-bill-card').style.display = "block";
-        document.getElementById('copy-text-btn').style.display = "block";
-        snapBtn.style.display = 'block';
-        
-        window.scrollTo(0, 200);
     }
 
     function getNowFormatDate() {
@@ -712,15 +671,15 @@
         var typeName = priceMatrix[acTypeSelect.value].name;
         var totalCount = acTotalCountInput.value;
         
-        var textToCopy = "📌 【空调清洗·好运确认单】\n" +
+        var textToCopy = "📌 【空调清洗·官方好运确认单】\n" +
                          "👥 街坊姓名：" + name + "\n" +
                          "📱 联系电话：" + phone + "\n" +
                          "🏠 服务地址：" + addr + "\n" +
                          "🛠️ 服务规格：" + typeName + " (" + totalCount + "台)\n" +
                          "🎁 正式减免：-" + allHistoryPoints.reduce((a,b)=>a+b,0) + "元\n" +
-                         "💵 现场尾款：" + document.getElementById('log-o-final').innerText + "\n" +
+                         "💵 现场应付尾款：" + logFinalPrice.innerText + "\n" +
                          "🔒 核销密匙：" + currentUUID + "\n" +
-                         "⏰ 核销时间：" + getNowFormatDate();
+                         "⏰ 封账时间：" + getNowFormatDate();
         
         navigator.clipboard.writeText(textToCopy).then(function() {
             alert("✅ 核销文本已成功复制！快去发送给微信客服完成锁定吧。");
@@ -761,7 +720,7 @@
         ctx.fillText('📅 预约时段：' + (document.getElementById('book-time').value.trim() || "工人弹性排单"), startX, startY + lineHeight * 3);
         
         ctx.fillStyle = '#f8f9fa';
-        ctx.fillText('🛠 清洗规格：' + document.getElementById('log-o-actype').innerText, startX, startY + lineHeight * 4);
+        ctx.fillText('🛠 清洗规格：' + logAcTypeName.innerText, startX, startY + lineHeight * 4);
         ctx.fillText('💰 上门诚意金：-5 元 (' + document.getElementById('deposit-type').value + ')', startX, startY + lineHeight * 5);
         ctx.fillText('🎲 盲骰立减分台落地流水：', startX, startY + lineHeight * 6);
         
@@ -780,11 +739,11 @@
 
         ctx.fillStyle = '#f8f9fa';
         ctx.font = '18px sans-serif';
-        ctx.fillText('🎁 盲骰总免减：' + document.getElementById('log-o-discount').innerText, startX, currentY + 10);
+        ctx.fillText('🎁 盲骰总免减：' + logDiscountAmount.innerText, startX, currentY + 10);
 
         ctx.fillStyle = '#ffb703';
         ctx.font = 'bold 26px sans-serif';
-        ctx.fillText('💵 现场应付尾款：' + document.getElementById('log-o-final').innerText, startX, currentY + 50);
+        ctx.fillText('💵 现场应付尾款：' + logFinalPrice.innerText, startX, currentY + 50);
 
         ctx.fillStyle = '#3a3a3a';
         ctx.fillRect(35, currentY + 80, canvas.width - 70, 1.5);
@@ -805,12 +764,6 @@
         isOfficialSettled = false;
         isPhoneValid = false;
         
-        document.getElementById('cust-name').disabled = false;
-        document.getElementById('cust-phone').disabled = false;
-        document.getElementById('cust-address').disabled = false;
-        document.getElementById('deposit-type').disabled = false;
-        document.getElementById('book-time').disabled = false;
-
         document.getElementById('cust-name').value = "";
         document.getElementById('cust-phone').value = "";
         document.getElementById('cust-phone').className = "";
@@ -822,16 +775,17 @@
         document.getElementById('try-status-bar').innerHTML = "✨ 随心试摇几把，算一算您的空调清洗能省多少钱！";
         document.getElementById('stage-title').innerText = "🔮 模拟手气大舞台";
         document.getElementById('bill-title').innerText = "📊 实时【试玩计算明细】";
-        document.getElementById('go-to-pay-btn').style.display = "block";
         
+        document.getElementById('go-to-pay-btn').style.display = "block";
+        document.getElementById('price-rules-table').style.display = "table";
+        document.getElementById('official-info-preview').style.display = "none";
+        document.getElementById('official-result-zone').style.display = "none";
+        document.getElementById('output-container').style.display = "none";
+
         acTypeSelect.disabled = false;
         acTotalCountInput.disabled = false;
+        
         document.getElementById('start-official-btn').style.display = "block";
-        document.getElementById('official-bill-card').style.display = "none";
-        document.getElementById('copy-text-btn').style.display = "none";
-        snapBtn.style.display = "none";
-        document.getElementById('output-container').style.display = "none";
-        document.getElementById('back-to-try-btn').innerText = "⬅ 返回修改上门资料";
 
         document.getElementById('page-official').classList.remove('active');
         document.getElementById('page-try').classList.add('active');
