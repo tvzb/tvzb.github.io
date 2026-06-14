@@ -58,25 +58,25 @@
         .status-bar.alert { background: #3a1c21; border-color: var(--primary-color); color: #ff9999; }
         .status-bar.gold { background: #3e3312; border-color: var(--accent-gold); color: #fff3c4; }
 
-        .stage-container { background: rgba(0,0,0,0.3); border: 1px solid #333; border-radius: 12px; padding: 12px; margin-bottom: 12px; }
+        /* 优化：大舞台和清单紧密贴合的统一视觉包裹大容器 */
+        .stage-and-bill-block { background: rgba(0,0,0,0.3); border: 1px solid #333; border-radius: 12px; padding: 12px; margin-bottom: 12px; }
         
         .dice-stage {
-            display: flex; flex-direction: column; gap: 10px; min-height: 100px; padding: 12px 8px;
+            display: flex; flex-direction: column; gap: 10px; min-height: 100px; padding: 12px 8px; margin-bottom: 12px;
             background: var(--stage-bg); border-radius: 10px; box-shadow: inset 0 0 25px rgba(0,0,0,0.85); perspective: 1000px;
         }
         
         .dice-stage-row {
-            display: flex; flex-wrap: wrap; justify-content: flex-start; align-items: center; gap: 12px;
-            background: rgba(255, 255, 255, 0.02); padding: 10px 10px; border-radius: 8px; border: 1px dashed #2a2a2a;
+            display: flex; flex-wrap: wrap; justify-content: flex-start; align-items: center;
+            background: rgba(255, 255, 255, 0.02); padding: 10px; border-radius: 8px; border: 1px dashed #2a2a2a;
         }
         .dice-row-label {
-            font-size: 0.75rem; color: var(--accent-green); font-weight: bold; min-width: 65px; white-space: nowrap;
+            font-size: 0.75rem; color: var(--accent-green); font-weight: bold; width: 100%; margin-bottom: 8px; white-space: nowrap;
         }
 
         .stage-hint { color: var(--accent-green); font-size: 0.85rem; text-align: center; width: 100%; font-weight: bold; line-height: 1.4; padding: 20px 0; }
 
-        /* 3D骰子外壳 */
-        .cube-container { width: 42px; height: 42px; position: relative; flex-shrink: 0; }
+        .cube-container { width: 42px; height: 42px; position: relative; flex-shrink: 0; margin: 0 10px 4px 0; }
         .cube { width: 100%; height: 100%; position: absolute; transform-style: preserve-3d; transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1); }
         .cube-face {
             position: absolute; width: 42px; height: 42px; background: linear-gradient(145deg, #ffffff, #e6e6e6); border-radius: 6px;
@@ -90,12 +90,10 @@
         .face-5 { transform: rotateY(-90deg) translateZ(21px); }
         .face-6 { transform: rotateY(180deg) translateZ(21px); }
         
-        /* 圆点大尺寸 */
         .pip { width: 10px; height: 10px; background-color: #111; border-radius: 50%; }
         .face-1 .pip { width: 20px; height: 20px; background-color: #d90429; }
         .face-4 .pip { background-color: #d90429; width: 9.5px; height: 9.5px; }
         
-        /* 经典骰子网格定位 */
         .pip.top-left     { grid-area: 1 / 1; } 
         .pip.top-right    { grid-area: 1 / 3; }
         .pip.mid-left     { grid-area: 2 / 1; } 
@@ -104,29 +102,41 @@
         .pip.bottom-left  { grid-area: 3 / 1; } 
         .pip.bottom-right { grid-area: 3 / 3; }
 
-        .action-zone { display: flex; gap: 8px; align-items: center; background: rgba(255,255,255,0.02); padding: 8px; border-radius: 10px; border: 1px solid #2a2a2a; margin-bottom: 12px; }
-        .roll-btn { background-color: var(--primary-color); color: white; padding: 10px; font-size: 1rem; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; flex: 1; }
-        .roll-btn:disabled { background-color: #444; color: #888; cursor: not-allowed; }
-
-        .next-step-btn { background: linear-gradient(90deg, #ffb703, #fb8500); color: #000; padding: 14px; font-size: 1.1rem; font-weight: bold; width: 100%; border-radius: 8px; border: none; cursor: pointer; margin-bottom: 12px; }
-        .try-again-btn { background-color: var(--accent-green); color: #fff; padding: 12px; font-size: 1rem; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; width: 100%; margin-bottom: 12px; display: none; }
-
-        /* 正式开摇完毕后原地插入的操控功能组 */
-        .official-result-zone { display: none; flex-direction: column; gap: 8px; margin-bottom: 12px; }
-        .snap-btn { background-color: #3b82f6; color: white; padding: 13px; width: 100%; border-radius: 8px; border: none; font-weight: bold; font-size: 1.05rem; }
-        .copy-btn { background-color: var(--accent-gold); color: #000; padding: 13px; width: 100%; border-radius: 8px; border: none; font-weight: bold; font-size: 1rem; }
-        .reset-all-btn { background: #444; color: #ccc; padding: 12px; border-radius: 8px; border: none; font-weight: bold; width: 100%; font-size: 0.95rem; }
-
-        .summary-box { background: rgba(46, 196, 182, 0.04); border: 1px dashed var(--accent-green); border-radius: 12px; padding: 14px; font-size: 0.9rem; }
+        /* 账单盒子包裹 */
+        .summary-box { background: rgba(46, 196, 182, 0.04); border: 1px dashed var(--accent-green); border-radius: 10px; padding: 12px; font-size: 0.9rem; }
         .price-line { display: flex; justify-content: space-between; margin: 6px 0; padding-bottom: 4px; border-bottom: 1px dashed #3a3a3a; }
-        .final-line { font-size: 1.35rem; font-weight: bold; color: var(--accent-gold); margin-top: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .final-line { font-size: 1.15rem; font-weight: bold; color: var(--accent-gold); margin-top: 10px; display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #444; padding-top: 8px; }
         
         .all-pips-container { display: flex; flex-direction: column; gap: 6px; min-height: 25px; border-bottom: 1px dashed #3a3a3a; padding-bottom: 8px; margin-bottom: 6px; }
         .pip-row-line { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; background: rgba(255,255,255,0.02); padding: 4px 8px; border-radius: 6px; }
         .pip-row-title { font-size: 0.8rem; color: var(--accent-green); font-weight: bold; }
         .highlight-box { background: #1e40af; color: #fff; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; }
 
-        /* 页2 锁定诚意金资料输入页 */
+        /* 控制按钮区域 */
+        .control-block { display: flex; flex-direction: column; margin-bottom: 12px; }
+        .action-zone { display: flex; gap: 8px; align-items: center; background: rgba(255,255,255,0.02); padding: 8px; border-radius: 10px; border: 1px solid #2a2a2a; }
+        .roll-btn { background-color: var(--primary-color); color: white; padding: 10px; font-size: 1rem; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; flex: 1; }
+        .roll-btn:disabled { background-color: #444; color: #888; cursor: not-allowed; }
+
+        /* 完美沉底：正式摇完后，作为整个页面的最终汇总触发键 */
+        .convert-final-btn { display: none; background: linear-gradient(90deg, #ffb703, #fb8500); color: #000; padding: 14px; font-size: 1.05rem; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; width: 100%; text-align: center; }
+
+        /* 修复：点击生成后，严格在“生成凭证和截图”按钮的正下方延展开来的三大组件 */
+        .official-result-zone { display: none; flex-direction: column; gap: 8px; margin-top: 10px; background: rgba(46, 196, 182, 0.08); border: 1px solid var(--accent-green); padding: 12px; border-radius: 12px; }
+        .snap-btn { background-color: #3b82f6; color: white; padding: 12px; width: 100%; border-radius: 8px; border: none; font-weight: bold; font-size: 1rem; }
+        .copy-btn { background-color: var(--accent-gold); color: #000; padding: 12px; width: 100%; border-radius: 8px; border: none; font-weight: bold; font-size: 1rem; }
+
+        /* 电子画布截图展示盒 */
+        #output-container { margin-top: 12px; text-align: center; display: none; background: #111; padding: 12px; border-radius: 12px; border: 2px solid var(--accent-gold); }
+        #output-image { max-width: 100%; border-radius: 6px; }
+
+        /* 彻底沉底的清空重置模块 */
+        .bottom-reset-zone { display: none; margin-top: 20px; margin-bottom: 10px; border-top: 1px dashed #333; padding-top: 15px; }
+        .reset-all-btn { background: #333; color: #999; padding: 11px; border-radius: 8px; border: 1px solid #444; font-weight: bold; width: 100%; font-size: 0.9rem; cursor: pointer; }
+
+        .next-step-btn { background: linear-gradient(90deg, #ffb703, #fb8500); color: #000; padding: 14px; font-size: 1.1rem; font-weight: bold; width: 100%; border-radius: 8px; border: none; cursor: pointer; margin-bottom: 12px; }
+        .try-again-btn { background-color: var(--accent-green); color: #fff; padding: 12px; font-size: 1rem; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; width: 100%; margin-bottom: 12px; display: none; }
+
         .pay-zone { background: linear-gradient(145deg, #2b2b2b, #1c1c1c); border: 2px dashed var(--accent-gold); border-radius: 12px; padding: 12px; margin-bottom: 12px; text-align: center; }
         .qr-group { display: flex; justify-content: space-around; gap: 10px; margin-top: 8px; }
         .qr-card { background: #fff; padding: 6px; border-radius: 8px; width: 46%; color: #000; font-size: 0.75rem; font-weight: bold; }
@@ -141,9 +151,6 @@
         .error-hint { font-size: 0.75rem; color: #d90429; margin-top: 3px; display: none; }
 
         .back-btn { background: #444; color: #ccc; padding: 12px; border-radius: 8px; border: none; font-weight: bold; width: 100%; margin-top: 8px; font-size: 0.95rem; }
-
-        #output-container { margin-top: 15px; text-align: center; display: none; background: #111; padding: 12px; border-radius: 12px; border: 2px solid var(--accent-gold); }
-        #output-image { max-width: 100%; border-radius: 6px; }
 
         .price-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.75rem; }
         .price-table th, .price-table td { border: 1px solid #3a3a3a; padding: 4px; text-align: center; }
@@ -175,52 +182,69 @@
             </div>
         </div>
 
-        <div class="stage-container">
+        <div class="stage-and-bill-block">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                 <h3 style="margin:0; color:var(--accent-gold); font-size: 0.95rem;" id="stage-title">🔮 模拟手气大舞台</h3>
                 <div style="font-size:0.8rem; color:#bbb;">
                     已摇次数: <span id="current-count" style="font-weight:bold; color:var(--accent-green);">0</span> / <span id="target-max-display">5</span> 次
                 </div>
             </div>
+            
             <div class="dice-stage" id="dice-stage">
                 </div>
+
+            <div class="summary-box">
+                <h3 style="margin-top:0; border-bottom: 1px solid var(--accent-green); padding-bottom:6px; font-size:0.9rem; text-align:center;" id="bill-title">📊 实时【试玩计算明细】</h3>
+                
+                <div id="official-info-preview" style="display:none; background:rgba(0,0,0,0.2); padding:6px 10px; border-radius:6px; margin-bottom:8px; font-size:0.8rem; border:1px solid #333; line-height:1.4;">
+                    <div style="color:var(--accent-gold); font-weight:bold; margin-bottom:2px;">🔒 预约单核心档案：</div>
+                    <div>街坊姓名：<span id="p-o-name" style="color:#fff;">-</span> | 电话：<span id="p-o-phone" style="color:#fff;">-</span></div>
+                    <div>服务地址：<span id="p-o-address" style="color:#fff;">-</span></div>
+                    <div>预约时段：<span id="p-o-time" style="color:var(--accent-green); font-weight:bold;">-</span></div>
+                    <div>防伪核销密匙：<span id="p-o-uuid" style="color:var(--accent-gold); font-family:monospace;">-</span></div>
+                </div>
+
+                <div class="price-line"><span>🛠️ 服务规格：</span><span id="log-ac-type-name">-</span></div>
+                <div style="margin: 6px 0 4px 0; font-size:0.8rem; color:#aaa;">🎲 减免点数落地流水：</div>
+                <div class="all-pips-container" id="all-pips-flow"></div>
+                <div class="price-line"><span>🎁 累计立减金额 (1点=1元)：</span><span id="log-discount-amount" style="color:var(--primary-color); font-weight:bold;">-0 元</span></div>
+                
+                <div class="final-line">
+                    <div style="font-size: 0.85rem; color:#bbb; font-weight: normal;" id="final-price-desc-line">预计尾款实收明细：</div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; width: 100%;">
+                        <span id="log-detail-format-title" style="font-size:1.05rem; color:#fff;">1台 家用挂机 实收尾款共计:</span>
+                        <span id="log-final-price" style="color:var(--accent-gold); font-size:1.35rem;">- 元</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="action-zone" id="roll-action-zone">
-            <label style="font-weight:bold; white-space:nowrap; font-size:0.85rem;">连续投掷：</label>
-            <select id="roll-num-select" style="width: 75px; padding:6px;">
-                <option value="1">1次</option>
-                <option value="2">2次</option>
-                <option value="3">3次</option>
-                <option value="5" selected>5次</option>
-            </select>
-            <button id="roll-btn" class="roll-btn" onclick="rollDice3D()">🎲 摇一摇碰手气！</button>
+        <div class="control-block">
+            <div class="action-zone" id="roll-action-zone">
+                <label id="roll-num-label" style="font-weight:bold; white-space:nowrap; font-size:0.85rem;">连续投掷：</label>
+                <select id="roll-num-select" style="width: 75px; padding:6px;">
+                    <option value="1">1次</option>
+                    <option value="2">2次</option>
+                    <option value="3">3次</option>
+                    <option value="5" selected>5次</option>
+                </select>
+                <button id="roll-btn" class="roll-btn" onclick="rollDice3D()">🎲 摇一摇碰手气！</button>
+            </div>
+            
+            <button id="convert-final-btn" class="convert-final-btn" onclick="userClickToRevealResults()">➔ 生成凭证和截图</button>
+
+            <div class="official-result-zone" id="official-result-zone">
+                <button class="copy-btn" onclick="copyUIDText()">📋 复制凭证文本（发送给客服）</button>
+                <button class="snap-btn" onclick="generateReceiptImage()">📸 生成防伪核销截图凭证</button>
+            </div>
+
+            <div id="output-container">
+                <p style="color:var(--accent-gold); font-size:0.85rem; margin-top:0; margin-bottom:10px;">👇 电子核销凭证已在下方安全生成！长按保存至相册 👇</p>
+                <img id="output-image" src="" alt="电子收据凭证">
+            </div>
         </div>
 
         <button id="try-again-action-btn" class="try-again-btn" onclick="resetDiceStageToMode('试玩')">🔄 重新模拟手气</button>
-
-        <div class="official-result-zone" id="official-result-zone">
-            <button class="copy-btn" onclick="copyUIDText()">📋 复制核销文本发送给客服</button>
-            <button class="snap-btn" onclick="generateReceiptImage()">📸 生成防伪核销截图凭证</button>
-            <button class="reset-all-btn" onclick="fullResetAll()">🧹 清空数据，准备下一单服务</button>
-        </div>
-
-        <div class="summary-box" style="margin-bottom: 12px;">
-            <h3 style="margin-top:0; border-bottom: 1px solid var(--accent-green); padding-bottom:4px; font-size:0.9rem; text-align:center;" id="bill-title">📊 实时【试玩计算明细】</h3>
-            <div id="official-info-preview" style="display:none; background:rgba(0,0,0,0.2); padding:6px 10px; border-radius:6px; margin-bottom:8px; font-size:0.8rem; border:1px solid #333; line-height:1.4;">
-                <div style="color:var(--accent-gold); font-weight:bold; margin-bottom:2px;">🔒 预约单核心档案：</div>
-                <div>街坊姓名：<span id="p-o-name" style="color:#fff;">-</span> | 电话：<span id="p-o-phone" style="color:#fff;">-</span></div>
-                <div>服务地址：<span id="p-o-address" style="color:#fff;">-</span></div>
-                <div>预约时段：<span id="p-o-time" style="color:var(--accent-green); font-weight:bold;">-</span></div>
-                <div>防伪核销密匙：<span id="p-o-uuid" style="color:var(--accent-gold); font-family:monospace;">-</span></div>
-            </div>
-
-            <div class="price-line"><span>🛠️ 服务规格：</span><span id="log-ac-type-name">-</span></div>
-            <div style="margin: 6px 0 4px 0; font-size:0.8rem; color:#aaa;">🎲 减免点数落地流水：</div>
-            <div class="all-pips-container" id="all-pips-flow"></div>
-            <div class="price-line"><span>🎁 累计立减金额 (1点=1元)：</span><span id="log-discount-amount" style="color:var(--primary-color); font-weight:bold;">-0 元</span></div>
-            <div class="final-line" style="font-size:1.2rem;"><span>💵 预计到家实收尾款：</span><span id="log-final-price">- 元</span></div>
-        </div>
 
         <button class="next-step-btn" id="go-to-pay-btn" onclick="switchToPayPage()">🔥 手气太赞了，立即锁定名额去正式开摇！</button>
 
@@ -232,6 +256,10 @@
                 <tr><td>吸顶天花机</td><td>200元</td><td>190元</td><td style="color:var(--accent-gold); font-weight:bold;">180元</td><td>可摇7次/台</td></tr>
             </tbody>
         </table>
+
+        <div class="bottom-reset-zone" id="bottom-reset-zone">
+            <button class="reset-all-btn" onclick="fullResetAll()">🧹 清空当前对账数据，准备登记下一单服务</button>
+        </div>
     </div>
 
     <div id="page-official" class="page">
@@ -286,14 +314,9 @@
             </div>
         </div>
 
-        <button id="start-official-btn" class="next-step-btn" style="margin-top:12px;" onclick="activateOfficialRollMode()">➔ 已付完5元，正式开摇！(以微信实收为准)</button>
+        <button id="start-official-btn" class="next-step-btn" style="margin-top:12px;" onclick="activateOfficialRollMode()">➔ 已付完5元，正式开摇！(支持灵活重选机型台数)</button>
         
         <button class="back-btn" onclick="switchToTryPageFromPay()">⬅ 返回重新修改规格台数</button>
-    </div>
-
-    <div id="output-container">
-        <p style="color:var(--accent-gold); font-size:0.9rem; margin-top:0; margin-bottom:10px;">👇 电子核销凭证已安全生成！长按图片保存至相册 👇</p>
-        <img id="output-image" src="" alt="电子收据凭证">
     </div>
 </div>
 
@@ -307,6 +330,7 @@
     
     var isOfficialMode = false;     
     var isOfficialSettled = false;  
+    var isFirstDiceCast = false; 
 
     var priceMatrix = {
         wall:    { name: "家用挂机", price: { 1: 120, 2: 115, 3: 110 } }, 
@@ -317,7 +341,9 @@
 
     var diceStage = document.getElementById('dice-stage');
     var rollBtn = document.getElementById('roll-btn');
+    var convertFinalBtn = document.getElementById('convert-final-btn');
     var rollNumSelect = document.getElementById('roll-num-select');
+    var rollNumLabel = document.getElementById('roll-num-label');
     var currentCountSpan = document.getElementById('current-count');
     var targetMaxDisplay = document.getElementById('target-max-display');
     var allPipsFlow = document.getElementById('all-pips-flow');
@@ -328,6 +354,7 @@
     var logDiscountAmount = document.getElementById('log-discount-amount');
     var logFinalPrice = document.getElementById('log-final-price');
     var logAcTypeName = document.getElementById('log-ac-type-name');
+    var logDetailFormatTitle = document.getElementById('log-detail-format-title');
 
     var faceTransforms = {
         1: { x: 0, y: 0 }, 2: { x: 0, y: -90 }, 3: { x: -90, y: 0 },
@@ -362,13 +389,6 @@
         window.scrollTo(0,0);
     }
 
-    function switchToTryPageFromPay() {
-        document.getElementById('page-official').classList.remove('active');
-        document.getElementById('page-try').classList.add('active');
-        window.scrollTo(0,0);
-    }
-
-    // 同步备份预约数据到主页的预览卡片中
     function syncDataPreview() {
         var name = document.getElementById('cust-name').value.trim() || "未填写";
         var phone = document.getElementById('cust-phone').value.trim() || "未填写";
@@ -382,7 +402,12 @@
         document.getElementById('p-o-uuid').innerText = currentUUID;
     }
 
-    // 激活正式开摇
+    function switchToTryPageFromPay() {
+        document.getElementById('page-official').classList.remove('active');
+        document.getElementById('page-try').classList.add('active');
+        window.scrollTo(0,0);
+    }
+
     function activateOfficialRollMode() {
         var name = document.getElementById('cust-name').value.trim();
         var phone = document.getElementById('cust-phone').value.trim();
@@ -393,33 +418,28 @@
             return;
         }
 
-        // 强力清空以前试摇下的点数残留，保证绝对公平真实
         totalRolled = 0;
         allHistoryPoints = [];
         document.getElementById('all-pips-flow').innerHTML = "";
 
         isOfficialMode = true;
         isOfficialSettled = false;
+        isFirstDiceCast = false; 
         
-        // 彻底锁死参数配置
-        acTypeSelect.disabled = true;
-        acTotalCountInput.disabled = true;
+        acTypeSelect.disabled = false;
+        acTotalCountInput.disabled = false;
 
-        // 切换抬头主题话术
         document.getElementById('try-status-bar').className = "status-bar gold";
-        document.getElementById('try-status-bar').innerHTML = "🎯 【正式盲骰模式已启动】数据将与核销密匙实时进行安全核销！";
+        document.getElementById('try-status-bar').innerHTML = "🎯 【正式盲骰模式已启动】支持重选规格，点击“摇一摇”后配置将安全封锁！";
         document.getElementById('stage-title').innerText = "🔥 官方正式对账舞台";
         document.getElementById('bill-title').innerText = "📊 空调清洗服务【正式结算清单】";
         
-        // 隐藏掉跳转按钮和底部的规则表
         document.getElementById('go-to-pay-btn').style.display = "none";
         document.getElementById('price-rules-table').style.display = "none";
         
-        // 展开信息预览卡
         syncDataPreview();
         document.getElementById('official-info-preview').style.display = "block";
 
-        // 原地切回主面板，准备无缝正式开摇
         document.getElementById('page-official').classList.remove('active');
         document.getElementById('page-try').classList.add('active');
         
@@ -433,7 +453,10 @@
         }
         currentCountSpan.innerText = totalRolled;
         tryAgainActionBtn.style.display = "none";
+        convertFinalBtn.style.display = "none";
         document.getElementById('official-result-zone').style.display = "none";
+        document.getElementById('bottom-reset-zone').style.display = "none";
+        document.getElementById('output-container').style.display = "none";
         
         var acType = acTypeSelect.value;
         var totalCount = parseInt(acTotalCountInput.value) || 1;
@@ -473,16 +496,17 @@
             }
         }
 
-        var hintStr = type === "正式" ? "💰 5元诚意金已锁定！官方正式盲骰生效中，请在下方摇一摇！" : "🎁 随意点击下方“摇一摇”，提前测试今天的好运能减免多少！";
+        var hintStr = type === "正式" ? "💰 5元诚意金已锁定！您可以调整上方规格，点击“摇一摇”即开启对账！" : "🎁 随意点击下方“摇一摇”，提前测试今天的好运能减免多少！";
         var hintDiv = document.createElement('div');
         hintDiv.className = 'stage-hint';
         hintDiv.id = 'stage-hint-text';
         hintDiv.innerText = hintStr;
         diceStage.appendChild(hintDiv);
         
+        rollBtn.style.display = "block";
         rollBtn.disabled = false;
-        rollNumSelect.disabled = false;
-        document.getElementById('roll-action-zone').style.display = "flex";
+        rollNumSelect.style.display = "block";
+        rollNumLabel.style.display = "block";
 
         calculateBasePrice();
     }
@@ -522,13 +546,17 @@
         var step = totalCount > 3 ? 3 : totalCount; 
         var unitPrice = priceMatrix[type].price[step];
 
-        logAcTypeName.innerText = priceMatrix[type].name + " (" + totalCount + "台，单价" + unitPrice + "元)";
-        var discountAmount = allHistoryPoints.reduce((a, b) => a + b, 0);
+        var typeName = priceMatrix[type].name;
+        logAcTypeName.innerText = typeName + " (" + totalCount + "台，单价" + unitPrice + "元)";
         
+        var discountAmount = allHistoryPoints.reduce((a, b) => a + b, 0);
         logDiscountAmount.innerText = '-' + discountAmount + ' 元';
+        
         var finalPay = (unitPrice * totalCount) - (isOfficialMode ? 5 : 0) - discountAmount;
         if (finalPay < 0) finalPay = 0; 
         logFinalPrice.innerText = finalPay + ' 元';
+        
+        logDetailFormatTitle.innerText = totalCount + "台 " + typeName + " 实收尾款共计:";
         
         renderPipsFlowUI('all-pips-flow');
     }
@@ -568,6 +596,13 @@
     function rollDice3D() {
         if(isOfficialSettled) return;
 
+        if(isOfficialMode && !isFirstDiceCast) {
+            isFirstDiceCast = true;
+            acTypeSelect.disabled = true;
+            acTotalCountInput.disabled = true;
+            document.getElementById('try-status-bar').innerHTML = "🔒 【盲骰数据已安全封锁锁死】正在进行全自动对账流转...";
+        }
+
         var desiredRoll = parseInt(rollNumSelect.value) || 1; 
         var acType = acTypeSelect.value;
         
@@ -576,7 +611,6 @@
         var currentLineRemains = currentLineCapacity - currentLineOccupied;    
 
         var numToRoll = Math.min(desiredRoll, currentLineRemains);
-
         if(numToRoll <= 0) return;
 
         rollBtn.disabled = true;
@@ -595,13 +629,7 @@
             var targetPoint = thisRoundPoints[j];
             var absoluteIndex = totalRolled + j; 
 
-            var targetRowId = 0;
-            if(acType === 'cabinet') {
-                targetRowId = Math.floor(absoluteIndex / 5);
-            } else {
-                targetRowId = Math.floor(absoluteIndex / singleLimitPerAC);
-            }
-
+            var targetRowId = (acType === 'cabinet') ? Math.floor(absoluteIndex / 5) : Math.floor(absoluteIndex / singleLimitPerAC);
             var targetRowDom = document.getElementById('dice-row-' + targetRowId);
 
             if(targetRowDom) {
@@ -644,10 +672,11 @@
 
             if (totalRolled >= maxTargetDice) {
                 if(isOfficialMode) {
-                    // 修复：正式摇完后就地呈现控制按钮组，画面和骰子完全保留不跳动！
                     isOfficialSettled = true;
+                    // 正式摇完后，立刻隐藏常驻投掷选择框
                     document.getElementById('roll-action-zone').style.display = "none";
-                    document.getElementById('official-result-zone').style.display = "flex";
+                    // 完美的延时：仅将“生成凭证和截图”大按钮在最下方顺滑出现
+                    convertFinalBtn.style.display = "block";
                 } else {
                     rollBtn.disabled = true;
                     tryAgainActionBtn.style.display = "block"; 
@@ -657,6 +686,23 @@
                 rollNumSelect.disabled = false; 
             }
         }, 1050);
+    }
+
+    // 核心重构：点击后上方页面稳如泰山，三个动作键及截图区域只在它正下方顺序延伸
+    function userClickToRevealResults() {
+        convertFinalBtn.disabled = true;
+        convertFinalBtn.innerText = "⚡ 官方对账核销凭证生成中...";
+        
+        // 1. 在按键正下方优雅释放出核销文本及截图操作按钮组件
+        document.getElementById('official-result-zone').style.display = "flex";
+        
+        // 2. 在下方同步渲染出防伪核销截图
+        generateReceiptImage();
+        
+        // 3. 将极其底层、清理环境的重置重置按钮在最底下释放
+        document.getElementById('bottom-reset-zone').style.display = "block";
+        
+        convertFinalBtn.innerText = "🔑 凭证核销链条已安全锁定";
     }
 
     function getNowFormatDate() {
@@ -677,7 +723,7 @@
                          "🏠 服务地址：" + addr + "\n" +
                          "🛠️ 服务规格：" + typeName + " (" + totalCount + "台)\n" +
                          "🎁 正式减免：-" + allHistoryPoints.reduce((a,b)=>a+b,0) + "元\n" +
-                         "💵 现场应付尾款：" + logFinalPrice.innerText + "\n" +
+                         "💵 最终结算：" + logDetailFormatTitle.innerText + logFinalPrice.innerText + "\n" +
                          "🔒 核销密匙：" + currentUUID + "\n" +
                          "⏰ 封账时间：" + getNowFormatDate();
         
@@ -742,8 +788,8 @@
         ctx.fillText('🎁 盲骰总免减：' + logDiscountAmount.innerText, startX, currentY + 10);
 
         ctx.fillStyle = '#ffb703';
-        ctx.font = 'bold 26px sans-serif';
-        ctx.fillText('💵 现场应付尾款：' + logFinalPrice.innerText, startX, currentY + 50);
+        ctx.font = 'bold 22px sans-serif';
+        ctx.fillText('💵 ' + logDetailFormatTitle.innerText + ' ' + logFinalPrice.innerText, startX, currentY + 50);
 
         ctx.fillStyle = '#3a3a3a';
         ctx.fillRect(35, currentY + 80, canvas.width - 70, 1.5);
@@ -756,6 +802,8 @@
 
         document.getElementById('output-image').src = canvas.toDataURL('image/png');
         document.getElementById('output-container').style.display = 'block';
+        
+        // 丝滑滚屏，让街坊自然看到新生成的截图
         document.getElementById('output-container').scrollIntoView({ behavior: 'smooth' });
     }
 
@@ -763,6 +811,7 @@
         isOfficialMode = false;
         isOfficialSettled = false;
         isPhoneValid = false;
+        isFirstDiceCast = false;
         
         document.getElementById('cust-name').value = "";
         document.getElementById('cust-phone').value = "";
@@ -776,15 +825,21 @@
         document.getElementById('stage-title').innerText = "🔮 模拟手气大舞台";
         document.getElementById('bill-title').innerText = "📊 实时【试玩计算明细】";
         
+        document.getElementById('roll-action-zone').style.display = "flex";
         document.getElementById('go-to-pay-btn').style.display = "block";
         document.getElementById('price-rules-table').style.display = "table";
         document.getElementById('official-info-preview').style.display = "none";
         document.getElementById('official-result-zone').style.display = "none";
         document.getElementById('output-container').style.display = "none";
+        document.getElementById('bottom-reset-zone').style.display = "none";
 
         acTypeSelect.disabled = false;
         acTotalCountInput.disabled = false;
         
+        convertFinalBtn.disabled = false;
+        convertFinalBtn.innerText = "➔ 生成凭证和截图";
+        convertFinalBtn.style.display = "none";
+
         document.getElementById('start-official-btn').style.display = "block";
 
         document.getElementById('page-official').classList.remove('active');
