@@ -65,9 +65,10 @@
             background: var(--stage-bg); border-radius: 10px; box-shadow: inset 0 0 25px rgba(0,0,0,0.85); perspective: 1000px;
         }
         
+        /* 修复：将 flex-wrap 改为 wrap，并加大间距，彻底杜绝手机端骰子重叠问题 */
         .dice-stage-row {
-            display: flex; flex-wrap: nowrap; justify-content: flex-start; align-items: center; gap: 12px;
-            background: rgba(255, 255, 255, 0.02); padding: 8px 10px; border-radius: 8px; border: 1px dashed #2a2a2a;
+            display: flex; flex-wrap: wrap; justify-content: flex-start; align-items: center; gap: 12px;
+            background: rgba(255, 255, 255, 0.02); padding: 10px 10px; border-radius: 8px; border: 1px dashed #2a2a2a;
         }
         .dice-row-label {
             font-size: 0.75rem; color: var(--accent-green); font-weight: bold; min-width: 65px; white-space: nowrap;
@@ -75,8 +76,8 @@
 
         .stage-hint { color: var(--accent-green); font-size: 0.85rem; text-align: center; width: 100%; font-weight: bold; line-height: 1.4; padding: 20px 0; }
 
-        /* 3D骰子与圆点放大修复 */
-        .cube-container { width: 42px; height: 42px; position: relative; }
+        /* 3D骰子外壳 */
+        .cube-container { width: 42px; height: 42px; position: relative; flex-shrink: 0; }
         .cube { width: 100%; height: 100%; position: absolute; transform-style: preserve-3d; transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1); }
         .cube-face {
             position: absolute; width: 42px; height: 42px; background: linear-gradient(145deg, #ffffff, #e6e6e6); border-radius: 6px;
@@ -90,12 +91,12 @@
         .face-5 { transform: rotateY(-90deg) translateZ(21px); }
         .face-6 { transform: rotateY(180deg) translateZ(21px); }
         
-        /* 放大圆点：基础点从5px放大至8px，1点红心放大至16px */
-        .pip { width: 8px; height: 8px; background-color: #222; border-radius: 50%; }
-        .face-1 .pip { width: 16px; height: 16px; background-color: #d90429; }
-        .face-4 .pip { background-color: #d90429; width: 7.5px; height: 7.5px; }
+        /* 修复：圆点极致粗大化，基础圆点从8px强化到10px，1点红心放大到20px */
+        .pip { width: 10px; height: 10px; background-color: #111; border-radius: 50%; }
+        .face-1 .pip { width: 20px; height: 20px; background-color: #d90429; }
+        .face-4 .pip { background-color: #d90429; width: 9.5px; height: 9.5px; }
         
-        /* 经典骰子网格点绝对定位布局 */
+        /* 经典骰子网格定位 */
         .pip.top-left     { grid-area: 1 / 1; } 
         .pip.top-right    { grid-area: 1 / 3; }
         .pip.mid-left     { grid-area: 2 / 1; } 
@@ -218,7 +219,7 @@
         </table>
     </div>
 
-    <!-- ==================== 页面 2：支付锁单与资料录入页 ==================== -->
+    <!-- ==================== 页面 2：资料录入页 ==================== -->
     <div id="page-official" class="page">
         <div class="status-bar alert" id="official-status-bar">
             🔒 安全锁单：请先支付5元上门诚意金，即可全面激活【正式盲骰减免】！
@@ -360,6 +361,7 @@
         }
     }
 
+    // 页面跳转
     function switchToPayPage() {
         syncOfficialBill(); 
         document.getElementById('page-try').classList.remove('active');
@@ -377,6 +379,7 @@
         window.scrollTo(0,0);
     }
 
+    // 激活正式开摇
     function activateOfficialRollMode() {
         var name = document.getElementById('cust-name').value.trim();
         var phone = document.getElementById('cust-phone').value.trim();
@@ -387,7 +390,7 @@
             return;
         }
 
-        // Bug修复：在切入正式开摇的前一瞬间，全面清空模拟阶段的所有流水和点数残留，保证绝对公平真实
+        // 清空一切试玩残留
         totalRolled = 0;
         allHistoryPoints = [];
         document.getElementById('all-pips-flow').innerHTML = "";
@@ -418,7 +421,6 @@
     }
 
     function resetDiceStageToMode(type) {
-        // 如果是正式模式，保持刚才清空的白板状态；非正式模式则初始化
         if(!isOfficialMode) {
             totalRolled = 0;
             allHistoryPoints = [];
