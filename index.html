@@ -135,7 +135,7 @@
 
     <div id="page-try" class="page active">
         <div class="status-bar" id="try-status-bar">
-            ✨ 先摇几把，看看能省多少清洗费！
+            ✨ 先试摇几把，看看能省多少清洗费！
         </div>
 
         <div class="quick-config">
@@ -176,7 +176,7 @@
             <button id="roll-btn" class="roll-btn" onclick="rollDice3D()">🎲 摇一摇！</button>
         </div>
 
-        <button id="try-again-action-btn" class="try-again-btn" onclick="resetDiceStageToMode('试玩')">🔄 点此再试玩一把！</button>
+        <button id="try-again-action-btn" class="try-again-btn" onclick="resetDiceStageToMode('试玩')">🔄 点此再次试玩！</button>
 
         <div class="summary-box" style="margin-bottom: 12px;">
             <h3 style="margin-top:0; border-bottom: 1px solid var(--accent-green); padding-bottom:4px; font-size:0.9rem; text-align:center;" id="bill-title">📊 项目【模拟优惠账单】</h3>
@@ -185,7 +185,7 @@
             <div class="all-pips-container" id="all-pips-flow">
                 <span style="color:#555; font-size:0.8rem;">暂无点数...</span>
             </div>
-            <div class="price-line"><span>🎁 手气免减金额 (1点=1元)：</span><span id="log-discount-amount" style="color:var(--primary-color); font-weight:bold;">-0 元</span></div>
+            <div class="price-line"><span>🎁 免减金额 (1点=1元)：</span><span id="log-discount-amount" style="color:var(--primary-color); font-weight:bold;">-0 元</span></div>
             <div class="final-line" style="font-size:1.2rem;"><span>💵 预计到家实收尾款：</span><span id="log-final-price">- 元</span></div>
         </div>
 
@@ -224,7 +224,7 @@
         <div class="config-panel" style="background:rgba(255,255,255,0.03); padding:12px; border-radius:12px; border:1px solid #333;">
             <div class="form-group">
                 <label>客户姓名/称呼：</label>
-                <input type="text" id="cust-name" placeholder="例如：张大妈 / 李先生" oninput="syncOfficialBill()">
+                <input type="text" id="cust-name" placeholder="例：李先生 / 张大妈" oninput="syncOfficialBill()">
             </div>
             <div class="form-group">
                 <label>联系电话 (上门核销唯一凭证)：</label>
@@ -232,8 +232,8 @@
                 <div id="phone-hint" class="error-hint">⚠️ 请输入正确的11位手机号</div>
             </div>
             <div class="form-group">
-                <label>清洗详细住址：</label>
-                <input type="text" id="cust-address" placeholder="例如：幸福小区4-1-602" oninput="syncOfficialBill()">
+                <label>空调详细住址：</label>
+                <input type="text" id="cust-address" placeholder="例：幸福小区4-1-602" oninput="syncOfficialBill()">
             </div>
             <div class="config-row">
                 <label style="font-size:0.8rem;">意向金渠道：</label>
@@ -253,10 +253,10 @@
             </div>
         </div>
 
-        <button id="start-official-btn" class="next-step-btn" style="margin-top:12px;" onclick="activateOfficialRollMode()">➔ 我已付清5元，正式开摇！</button>
+        <button id="start-official-btn" class="next-step-btn" style="margin-top:12px;" onclick="activateOfficialRollMode()">➔ 已付完5元，正式开摇！(微信实收为准！)</button>
 
         <div class="summary-box" id="official-bill-card" style="margin-top:12px; display:none; background: rgba(46,196,182,0.08); border-style:solid;">
-            <h3 style="margin-top:0; border-bottom: 1px solid var(--accent-green); padding-bottom:4px; text-align:center; color:var(--accent-gold);">📊 空调清洗正式电子存证</h3>
+            <h3 style="margin-top:0; border-bottom: 1px solid var(--accent-green); padding-bottom:4px; text-align:center; color:var(--accent-gold);">📊 清洗空调正式电子存证</h3>
             <div class="price-line"><span>👥 客户姓名：</span><span id="log-o-name" style="font-weight:bold; color:#fff;">-</span></div>
             <div class="price-line"><span>📱 联系手机：</span><span id="log-o-phone">-</span></div>
             <div class="price-line"><span>🏠 详细住址：</span><span id="log-o-address">-</span></div>
@@ -436,7 +436,7 @@
         var phone = document.getElementById('cust-phone').value.trim() || "-";
         var addr = document.getElementById('cust-address').value.trim() || "-";
         var payType = document.getElementById('deposit-type').value;
-        var bTime = document.getElementById('book-time').value.trim() || "电话联系";
+        var bTime = document.getElementById('book-time').value.trim() || "电知联系";
 
         document.getElementById('log-o-name').innerText = name;
         document.getElementById('log-o-phone').innerText = phone;
@@ -738,7 +738,7 @@
 
         // UI全面还原为“试玩模式”
         document.getElementById('try-status-bar').className = "status-bar";
-        document.getElementById('try-status-bar').innerHTML = "✨ 先摇几把，看看能省多少清洗费！";
+        document.getElementById('try-status-bar').innerHTML = "✨ 先摇几把，看看能省多少现场服务费！";
         document.getElementById('stage-title').innerText = "🔮 摇一摇，低价洗空调！";
         document.getElementById('bill-title').innerText = "📊 项目【模拟优惠账单】";
         document.getElementById('go-to-pay-btn').style.display = "block";
