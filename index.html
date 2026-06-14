@@ -2,8 +2,8 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>空调清洗 - 社区好运大舞台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>空调清洗 - 社区手气大舞台</title>
     <style>
         :root {
             --primary-color: #d90429;
@@ -14,429 +14,290 @@
             --accent-gold: #ffb703;
         }
 
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: #121212;
             color: var(--text-color);
             margin: 0;
-            padding: 10px;
+            padding: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             min-height: 100vh;
         }
 
         .container {
+            width: 100%;
+            max-width: 500px;
             background-color: var(--panel-bg);
-            border-radius: 16px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
-            padding: 20px;
-            width: 100%;
-            max-width: 1050px;
-        }
-
-        h1 { 
-            text-align: center; 
-            margin-top: 0; 
-            color: var(--accent-gold); 
-            font-size: 1.5rem; 
-            margin-bottom: 20px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-
-        h3 { 
-            margin: 5px 0 12px 0; 
-            color: var(--accent-green); 
-            font-size: 1.1rem; 
-            font-weight: 600;
-        }
-
-        .main-layout {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-
-        @media (min-width: 768px) {
-            .main-layout { grid-template-columns: 380px 1fr; }
-        }
-
-        /* 线上收款码组合 */
-        .pay-zone {
-            background: linear-gradient(145deg, #2b2b2b, #1c1c1c);
-            border: 2px dashed var(--accent-gold);
-            border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        .qr-group {
-            display: flex;
-            justify-content: space-around;
-            gap: 10px;
-            margin-top: 8px;
-        }
-        .qr-card {
-            background: #fff;
-            padding: 6px;
-            border-radius: 8px;
-            width: 46%;
-            color: #000;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-        .qr-img {
-            width: 100%;
-            aspect-ratio: 1;
-            object-fit: contain;
-            border: 1px solid #eee;
-            margin-bottom: 4px;
-            background: #f9f9f9;
-        }
-
-        .config-panel {
-            background: rgba(255,255,255,0.04);
-            border-radius: 12px;
+            min-height: 100vh;
             padding: 15px;
-            border: 1px solid #3a3a3a;
-        }
-        
-        .form-group { margin-bottom: 12px; }
-        .form-group label {
-            font-size: 0.85rem;
-            display: block;
-            margin-bottom: 4px;
-            color: #ccc;
-            font-weight: 500;
+            display: flex;
+            flex-direction: column;
         }
 
-        .config-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
+        h1 { text-align: center; margin: 5px 0 15px 0; color: var(--accent-gold); font-size: 1.3rem; }
+        h3 { margin: 0 0 10px 0; color: var(--accent-green); font-size: 1.05rem; }
+
+        .page { display: none; flex-direction: column; width: 100%; }
+        .page.active { display: flex; }
+
+        .quick-config { background: rgba(255,255,255,0.04); border: 1px solid #333; border-radius: 10px; padding: 10px; margin-bottom: 12px; }
+        .config-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .config-row label { font-size: 0.85rem; color: #ccc; }
+
+        select, input[type="text"], input[type="number"] {
+            padding: 8px 10px; background: #2a2a2a; border: 1px solid #444; color: #fff; border-radius: 8px; font-weight: bold; font-size: 0.9rem; outline: none;
         }
+        .inline-select { width: 160px; }
+        .inline-input { width: 100px; text-align: center; }
+
+        .status-bar { background: #17312e; border: 1px solid var(--accent-green); color: #99ffea; padding: 8px 12px; border-radius: 8px; text-align: center; font-size: 0.8rem; font-weight: bold; margin-bottom: 12px; }
+        .status-bar.alert { background: #3a1c21; border-color: var(--primary-color); color: #ff9999; }
+        .status-bar.gold { background: #3e3312; border-color: var(--accent-gold); color: #fff3c4; }
+
+        .stage-container { background: rgba(0,0,0,0.3); border: 1px solid #333; border-radius: 12px; padding: 12px; margin-bottom: 12px; }
+        .dice-stage {
+            display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; min-height: 100px; padding: 12px 6px;
+            background: var(--stage-bg); border-radius: 10px; box-shadow: inset 0 0 25px rgba(0,0,0,0.85); perspective: 1000px;
+        }
+        .stage-hint { color: var(--accent-green); font-size: 0.85rem; text-align: center; width: 100%; font-weight: bold; line-height: 1.4; }
+
+        /* 3D骰子 */
+        .cube-container { width: 40px; height: 40px; position: relative; }
+        .cube { width: 100%; height: 100%; position: absolute; transform-style: preserve-3d; transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1); }
+        .cube-face {
+            position: absolute; width: 40px; height: 40px; background: linear-gradient(145deg, #ffffff, #e6e6e6); border-radius: 6px;
+            box-shadow: inset 0 0 4px rgba(0,0,0,0.2), 0 0 2px rgba(0,0,0,0.3); backface-visibility: hidden;
+            display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); padding: 3px; box-sizing: border-box; align-items: center; justify-items: center;
+        }
+        .face-1 { transform: rotateY(0deg) translateZ(20px); }
+        .face-2 { transform: rotateY(90deg) translateZ(20px); }
+        .face-3 { transform: rotateX(90deg) translateZ(20px); }
+        .face-4 { transform: rotateX(-90deg) translateZ(20px); }
+        .face-5 { transform: rotateY(-90deg) translateZ(20px); }
+        .face-6 { transform: rotateY(180deg) translateZ(20px); }
+        .pip { width: 5px; height: 5px; background-color: #222; border-radius: 50%; }
+        .face-1 .pip { width: 11px; height: 11px; background-color: #d90429; }
+        .face-4 .pip { background-color: #d90429; }
+        .pip.top-left { grid-area: 1 / 1; } .pip.top-right { grid-area: 1 / 3; }
+        .pip.center { grid-area: 2 / 2; }
+        .pip.bottom-left { grid-area: 3 / 1; } .pip.bottom-right { grid-area: 3 / 3; }
+
+        .action-zone { display: flex; gap: 8px; align-items: center; background: rgba(255,255,255,0.02); padding: 8px; border-radius: 10px; border: 1px solid #2a2a2a; margin-bottom: 12px; }
+        .roll-btn { background-color: var(--primary-color); color: white; padding: 10px; font-size: 1rem; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; flex: 1; }
+        .roll-btn:disabled { background-color: #444; color: #888; cursor: not-allowed; }
+
+        .next-step-btn { background: linear-gradient(90deg, #ffb703, #fb8500); color: #000; padding: 14px; font-size: 1.1rem; font-weight: bold; width: 100%; border-radius: 8px; border: none; cursor: pointer; margin-bottom: 12px; }
+        .try-again-btn { background-color: var(--accent-green); color: #fff; padding: 10px; font-size: 0.95rem; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; width: 100%; margin-bottom: 12px; display: none; }
+
+        .summary-box { background: rgba(46, 196, 182, 0.04); border: 1px dashed var(--accent-green); border-radius: 12px; padding: 14px; font-size: 0.9rem; }
+        .price-line { display: flex; justify-content: space-between; margin: 6px 0; padding-bottom: 4px; border-bottom: 1px dashed #3a3a3a; }
+        .final-line { font-size: 1.35rem; font-weight: bold; color: var(--accent-gold); margin-top: 10px; display: flex; justify-content: space-between; align-items: center; }
         
-        input[type="number"], input[type="text"], select {
-            padding: 10px;
-            background: #2a2a2a;
-            border: 1px solid #444;
-            color: #fff;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 0.95rem;
-            width: 100%;
-            outline: none;
-        }
+        .all-pips-container { display: flex; flex-direction: column; gap: 6px; min-height: 25px; border-bottom: 1px dashed #3a3a3a; padding-bottom: 8px; margin-bottom: 6px; }
+        .pip-row-line { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; background: rgba(255,255,255,0.02); padding: 4px 8px; border-radius: 6px; }
+        .pip-row-title { font-size: 0.8rem; color: var(--accent-green); font-weight: bold; }
+        .highlight-box { background: #1e40af; color: #fff; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; }
+
+        /* 页2 支付页 */
+        .pay-zone { background: linear-gradient(145deg, #2b2b2b, #1c1c1c); border: 2px dashed var(--accent-gold); border-radius: 12px; padding: 12px; margin-bottom: 12px; text-align: center; }
+        .qr-group { display: flex; justify-content: space-around; gap: 10px; margin-top: 8px; }
+        .qr-card { background: #fff; padding: 6px; border-radius: 8px; width: 46%; color: #000; font-size: 0.75rem; font-weight: bold; }
+        .qr-img { width: 100%; aspect-ratio: 1; object-fit: contain; margin-bottom: 4px; background: #f9f9f9; }
+
+        .form-group { margin-bottom: 10px; }
+        .form-group label { font-size: 0.8rem; display: block; margin-bottom: 4px; color: #ccc; }
+        .form-group input { width: 100%; }
 
         input.input-error { border: 2px solid #d90429 !important; background: #3a1c21 !important; }
         input.input-success { border: 2px solid #2ec4b6 !important; background: #17312e !important; }
         .error-hint { font-size: 0.75rem; color: #d90429; margin-top: 3px; display: none; }
-        select.inline-select, input.inline-input { width: 150px; }
 
-        /* 顶端动态状态提示条 */
-        .lock-status-bar {
-            background: #17312e;
-            border: 1px solid var(--accent-green);
-            color: #99ffea;
-            padding: 10px;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 0.9rem;
-            font-weight: bold;
-            margin-bottom: 12px;
-            transition: all 0.3s;
-        }
+        .back-btn { background: #444; color: #ccc; padding: 12px; border-radius: 8px; border: none; font-weight: bold; width: 100%; margin-top: 8px; font-size: 0.95rem; }
+        .snap-btn { background-color: #3b82f6; color: white; padding: 12px; width: 100%; border-radius: 8px; border: none; font-weight: bold; font-size: 1.05rem; margin-top: 10px; }
+        .copy-btn { background-color: var(--accent-gold); color: #000; padding: 12px; width: 100%; border-radius: 8px; border: none; font-weight: bold; font-size: 1rem; margin-top: 8px; display: none; }
 
-        .main-stage-area { display: flex; flex-direction: column; gap: 20px; }
-        .stage-container {
-            background: rgba(0,0,0,0.3); 
-            border: 1px solid #333; 
-            border-radius: 12px;
-            padding: 15px;
-        }
+        #output-container { margin-top: 15px; text-align: center; display: none; background: #111; padding: 12px; border-radius: 12px; border: 2px solid var(--accent-gold); }
+        #output-image { max-width: 100%; border-radius: 6px; }
 
-        .dice-stage {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            min-height: 110px;
-            padding: 15px 10px;
-            background: var(--stage-bg);
-            border-radius: 10px;
-            box-shadow: inset 0 0 25px rgba(0,0,0,0.85);
-            perspective: 1000px;
-        }
-        .stage-hint { color: var(--accent-green); font-size: 0.95rem; text-align: center; width: 100%; font-weight: bold; }
-
-        /* 3D骰子 */
-        .cube-container { width: 44px; height: 44px; position: relative; }
-        .cube {
-            width: 100%; height: 100%; position: absolute;
-            transform-style: preserve-3d;
-            transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .cube-face {
-            position: absolute; width: 44px; height: 44px;
-            background: linear-gradient(145deg, #ffffff, #e6e6e6);
-            border-radius: 8px;
-            box-shadow: inset 0 0 5px rgba(0,0,0,0.2), 0 0 2px rgba(0,0,0,0.3);
-            backface-visibility: hidden;
-            display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr);
-            padding: 4px; box-sizing: border-box; align-items: center; justify-items: center;
-        }
-        .face-1 { transform: rotateY(0deg) translateZ(22px); }
-        .face-2 { transform: rotateY(90deg) translateZ(22px); }
-        .face-3 { transform: rotateX(90deg) translateZ(22px); }
-        .face-4 { transform: rotateX(-90deg) translateZ(22px); }
-        .face-5 { transform: rotateY(-90deg) translateZ(22px); }
-        .face-6 { transform: rotateY(180deg) translateZ(22px); }
-
-        .pip { width: 6px; height: 6px; background-color: #222; border-radius: 50%; }
-        .face-1 .pip { width: 13px; height: 13px; background-color: #d90429; }
-        .face-4 .pip { background-color: #d90429; }
-        .pip.top-left { grid-area: 1 / 1; } .pip.top-right { grid-area: 1 / 3; }
-        .pip.mid-left { grid-area: 2 / 1; } .pip.center { grid-area: 2 / 2; }
-        .pip.mid-right { grid-area: 2 / 3; }
-        .pip.bottom-left { grid-area: 3 / 1; } .pip.bottom-right { grid-area: 3 / 3; }
-
-        .action-zone {
-            display: flex; gap: 10px; align-items: center;
-            background: rgba(255,255,255,0.02); padding: 10px;
-            border-radius: 10px; border: 1px solid #2a2a2a;
-        }
-        
-        .roll-btn {
-            background-color: var(--primary-color); color: white;
-            padding: 12px; font-size: 1.1rem; font-weight: bold;
-            border-radius: 8px; border: none; cursor: pointer;
-            box-shadow: 0 4px 12px rgba(217, 4, 41, 0.35); flex: 1;
-        }
-        .roll-btn:disabled { background-color: #444; color: #888; cursor: not-allowed; box-shadow: none; }
-
-        /* 核心一键锁单按钮 */
-        .lock-order-btn {
-            background: linear-gradient(90deg, #ffb703, #fb8500); color: #000;
-            padding: 14px; font-size: 1.15rem; font-weight: bold; width: 100%;
-            border-radius: 8px; border: none; cursor: pointer; margin-top: 15px;
-            box-shadow: 0 4px 15px rgba(255, 183, 3, 0.4);
-            transition: all 0.2s;
-        }
-        .lock-order-btn:active { transform: scale(0.98); }
-
-        .summary-box {
-            background: rgba(46, 196, 182, 0.06);
-            border: 1px dashed var(--accent-green); border-radius: 12px; padding: 18px;
-        }
-        
-        .all-pips-container {
-            display: flex; flex-direction: column; gap: 8px; min-height: 34px; 
-            border-bottom: 1px dashed #3a3a3a; padding-bottom: 12px; margin-bottom: 10px;
-        }
-        
-        .pip-row-line {
-            display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
-            background: rgba(255,255,255,0.02); padding: 6px 10px; border-radius: 6px;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        .pip-row-title { font-size: 0.85rem; color: var(--accent-green); font-weight: bold; margin-right: 4px; }
-        .highlight-box { background: #1e40af; color: #fff; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 0.9rem; }
-
-        .price-line { display: flex; justify-content: space-between; font-size: 1.05rem; margin: 8px 0; padding-bottom: 5px; border-bottom: 1px dashed #3a3a3a; }
-        .final-line { font-size: 1.5rem; font-weight: bold; color: var(--accent-gold); margin-top: 15px; display: flex; justify-content: space-between; align-items: center; }
-        
-        .btn-group { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
-        .snap-btn { background-color: #3b82f6; color: white; padding: 14px; flex: 1; min-width: 160px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
-        .reset-btn { background-color: var(--accent-green); color: white; padding: 14px; flex: 1; min-width: 160px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
-
-        #output-container { margin-top: 20px; text-align: center; display: none; background: #111; padding: 15px; border-radius: 12px; border: 2px solid var(--accent-gold); }
-        #output-image { max-width: 100%; border-radius: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.8); }
-        
-        .copy-badge { background: var(--accent-gold); color: #000; padding: 10px; border-radius: 8px; font-size: 1rem; cursor: pointer; font-weight: bold; border: none; width: 100%; margin-top: 10px;}
-        
-        .price-board { background: rgba(255, 255, 255, 0.02); border: 1px solid #333; border-radius: 12px; padding: 15px; margin-top: 15px; }
-        .price-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 0.85rem; }
-        .price-table th, .price-table td { border: 1px solid #3a3a3a; padding: 6px 4px; text-align: center; }
+        .price-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.75rem; }
+        .price-table th, .price-table td { border: 1px solid #3a3a3a; padding: 4px; text-align: center; }
         .price-table th { background: rgba(46, 196, 182, 0.15); color: var(--accent-green); }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🎲 空调清洗全网社区手气裂变系统</h1>
-    
-    <div class="main-layout">
-        
-        <div class="left-panel">
-            
-            <div class="pay-zone">
-                <h3 style="color:var(--accent-gold); margin:0 0 5px 0;">📲 线上街坊「意向金」核销区</h3>
-                <p style="font-size:0.8rem; color:#bbb; margin:0 0 8px 0;">摇到大点数觉得划算？长按下方支付并锁定：</p>
-                <div class="qr-group">
-                    <div class="qr-card">
-                        <img src="https://tvzb.github.io/jia.jpg" alt="微信客服" class="qr-img">
-                        1. 长按加微信
-                    </div>
-                    <div class="qr-card">
-                        <img src="https://tvzb.github.io/skm.jpg" alt="自助收款" class="qr-img">
-                        2. 扫码付5元意向金
-                    </div>
-                </div>
-            </div>
+    <h1>🎲 空调清洗·社区手气大舞台</h1>
 
-            <div class="config-panel">
-                <div class="form-group">
-                    <label>街坊姓名/称呼：</label>
-                    <input type="text" id="cust-name" placeholder="例：张大妈 / 陈先生" oninput="syncBill()">
-                </div>
-                
-                <div class="form-group">
-                    <label>联系号码 (手机11位 / 座机7位)：</label>
-                    <input type="text" id="cust-phone" placeholder="请输入手机或固话号码" oninput="validatePhone()">
-                    <div id="phone-hint" class="error-hint">⚠️ 号码格式不正确</div>
-                </div>
-
-                <div class="form-group">
-                    <label>详细清洗住址：</label>
-                    <input type="text" id="cust-address" placeholder="例：3号楼2单元502室" oninput="syncBill()">
-                </div>
-
-                <div class="config-row">
-                    <label style="font-size: 0.85rem; color:#ccc;">意向金付过渠道：</label>
-                    <select id="deposit-type" class="inline-select" onchange="syncBill()">
-                        <option value="线上收款码支付">线上收款码支付</option>
-                        <option value="微信私聊转账">微信私聊转账</option>
-                        <option value="线下现金面对面">线下现金面对面</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>期望上门时段 (弹性弹性)：</label>
-                    <input type="text" id="book-time" placeholder="例：下周六下午左右" oninput="syncBill()">
-                </div>
-
-                <hr style="border-color: #333; margin: 12px 0;">
-
-                <div class="config-row">
-                    <label style="font-size: 0.85rem; color:#ccc;">选择空调机型：</label>
-                    <select id="ac-type" class="inline-select" onchange="calculateBasePrice()">
-                        <option value="wall">家庭挂机 (5颗/台)</option>
-                        <option value="cabinet">方形柜机 (10颗/台)</option>
-                        <option value="ceiling">吸顶天花机 (7颗/台)</option>
-                    </select>
-                </div>
-                <div class="config-row">
-                    <label style="font-size: 0.85rem; color:#ccc;">清洗空调台数：</label>
-                    <input type="number" id="ac-total-count" class="inline-input" value="1" min="1" max="20" onchange="calculateBasePrice()">
-                </div>
-
-                <div style="background: rgba(0,0,0,0.3); padding: 8px; border-radius:8px; margin-top:12px; border: 1px solid #444; text-align:center;">
-                    <div style="font-size:0.8rem; color:#aaa; margin-bottom: 2px;">
-                        🔒 本单专属防伪指纹校验码：
-                    </div>
-                    <strong id="order-uuid" style="color:var(--accent-gold); font-family:monospace; font-size:1.15rem; letter-spacing:1px;">-</strong>
-                    <button class="copy-badge" onclick="copyUID()">📋 复制对账文本发微信</button>
-                </div>
-            </div>
-
-            <div class="price-board">
-                <table class="price-table">
-                    <thead>
-                        <tr><th>机型</th><th>1台</th><th>2台</th><th>3台+</th><th>单台骰子</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>家庭挂机</td><td>120</td><td>115</td><td style="color:var(--accent-gold); font-weight:bold;">110</td><td>5 颗 / 台</td></tr>
-                        <tr><td>方形柜机</td><td>260</td><td>250</td><td style="color:var(--accent-gold); font-weight:bold;">240</td><td>10 颗 / 台</td></tr>
-                        <tr><td>吸顶天花机</td><td>200</td><td>190</td><td style="color:var(--accent-gold); font-weight:bold;">180</td><td>7 颗 / 台</td></tr>
-                    </tbody>
-                </table>
-            </div>
+    <div id="page-try" class="page active">
+        <div class="status-bar" id="try-status-bar">
+            ✨ 【免关注试玩】先摇几把，看看今天能省多少现场服务费！
         </div>
 
-        <div class="main-stage-area">
-            
-            <div class="lock-status-bar" id="lock-bar">
-                ✨ 试玩娱乐中：任何人点开都可以直接开始摇骰子！满意的点数可以点击下方锁定！
-            </div>
-
-            <div class="stage-container">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                    <h3 style="margin:0; color:var(--accent-gold);">🔮 街坊好运试玩舞台</h3>
-                    <div style="font-size:0.95rem; color:var(--text-color);">
-                        已摇骰子: <span id="current-count" style="font-weight:bold; color:var(--accent-green);">0</span> / <span id="target-max-display" style="font-weight:bold;">5</span> 颗
-                    </div>
-                </div>
-                <div class="dice-stage" id="dice-stage">
-                    <div class="stage-hint" id="stage-hint">手气好不好，直接按下方按钮开摇！</div>
-                </div>
-            </div>
-
-            <div class="action-zone">
-                <label style="font-weight:bold; white-space:nowrap; font-size:0.95rem;">连摇次数：</label>
-                <select id="roll-num-select" style="width: 85px; padding:8px;">
-                    <option value="1">1颗</option>
-                    <option value="2">2颗</option>
-                    <option value="3" selected>3颗</option>
-                    <option value="5">5颗</option>
-                    <option value="10">10颗</option>
+        <div class="quick-config">
+            <div class="config-row">
+                <label>选择空调机型：</label>
+                <select id="ac-type" class="inline-select" onchange="calculateBasePrice()">
+                    <option value="wall">家庭挂机 (5颗/台)</option>
+                    <option value="cabinet">方形柜机 (10颗/台)</option>
+                    <option value="ceiling">吸顶天花机 (7颗/台)</option>
                 </select>
-                <button id="roll-btn" class="roll-btn" onclick="rollDice3D()">🎲 亲手按下，摇出好运！</button>
             </div>
-
-            <button id="lock-order-action-btn" class="lock-order-btn" onclick="lockCurrentOrderPoints()">🔒 我摇得特别划算，付完5元点此锁定本单！</button>
-
-            <div class="summary-box" id="bill-card">
-                <h3 style="margin-top:0; border-bottom: 1px solid var(--accent-green); padding-bottom:6px; color:var(--accent-green); text-align:center;">📊 空调清洗现场电子收据存证</h3>
-                
-                <div class="price-line"><span>👥 客户姓名：</span><span id="log-cust-name" style="font-weight:bold; color:var(--accent-gold);">散客街坊</span></div>
-                <div class="price-line"><span>📱 联系号码：</span><span id="log-cust-phone" style="color:#fff;">-</span></div>
-                <div class="price-line"><span>🏠 详细住址：</span><span id="log-cust-address" style="color:#fff;">-</span></div>
-                <div class="price-line"><span>📅 期望时段：</span><span id="log-book-time" style="color:var(--accent-green); font-weight:bold;">-</span></div>
-                <div class="price-line"><span>🛠️ 服务机型：</span><span id="log-ac-type-name">家庭挂机</span></div>
-                <div class="price-line"><span>💰 活动定金：</span><span id="log-deposit-status" style="color:var(--accent-green);">-5 元</span></div>
-                
-                <div style="margin: 10px 0 4px 0; font-size:0.9rem; color:#aaa;">🎲 骰子免减落地流水（按台独立不混摇）：</div>
-                <div class="all-pips-container" id="all-pips-flow">
-                    <span style="color:#555; font-size:0.9rem; padding-top:4px;">暂无点数...</span>
-                </div>
-                
-                <div class="price-line" style="border-bottom:none; margin-bottom:0;"><span>🎁 摇数免减总额 (1点=1元)：</span><span id="log-discount-amount" style="color:var(--primary-color); font-weight:bold;">-0 元</span></div>
-                <div class="final-line"><span>💵 现场实收尾款：</span><span id="log-final-price">115 元</span></div>
+            <div class="config-row">
+                <label>清洗空调台数：</label>
+                <input type="number" id="ac-total-count" class="inline-input" value="1" min="1" max="20" onchange="calculateBasePrice()">
             </div>
-
-            <div class="btn-group">
-                <button id="snap-btn" class="snap-btn" onclick="generateReceiptImage()" style="display: none;">📸 生成防伪核销截图（发朋友圈立减10元）</button>
-                <button id="reset-btn" class="reset-btn" onclick="resetGame()" style="display: none;">结算完成 · 接待下一位</button>
-            </div>
-
-            <div id="output-container">
-                <p style="color:var(--accent-gold); font-size:0.95rem; margin-top:0; margin-bottom:10px;">👇 电子防伪凭证已生成！长按下方图片保存 👇</p>
-                <img id="output-image" src="" alt="电子收据凭证">
-            </div>
-
         </div>
+
+        <div class="stage-container">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <h3 style="margin:0; color:var(--accent-gold); font-size: 0.95rem;" id="stage-title">🔮 模拟手气大舞台</h3>
+                <div style="font-size:0.8rem; color:#bbb;">
+                    已摇: <span id="current-count" style="font-weight:bold; color:var(--accent-green);">0</span> / <span id="target-max-display">5</span> 颗
+                </div>
+            </div>
+            <div class="dice-stage" id="dice-stage">
+                <div class="stage-hint" id="stage-hint">🎁 点下方“亲手开摇”试玩<br>看你能摇到多大减免！</div>
+            </div>
+        </div>
+
+        <div class="action-zone">
+            <label style="font-weight:bold; white-space:nowrap; font-size:0.85rem;">连摇：</label>
+            <select id="roll-num-select" style="width: 75px; padding:6px;">
+                <option value="1">1颗</option>
+                <option value="2">2颗</option>
+                <option value="3" selected>3颗</option>
+                <option value="5">5颗</option>
+            </select>
+            <button id="roll-btn" class="roll-btn" onclick="rollDice3D()">🎲 亲手开摇，测试手气！</button>
+        </div>
+
+        <button id="try-again-action-btn" class="try-again-btn" onclick="resetDiceStageToMode('试玩')">🔄 手气一般？点此再试玩一把！</button>
+
+        <div class="summary-box" style="margin-bottom: 12px;">
+            <h3 style="margin-top:0; border-bottom: 1px solid var(--accent-green); padding-bottom:4px; font-size:0.9rem; text-align:center;" id="bill-title">📊 项目【模拟优惠账单】</h3>
+            <div class="price-line"><span>🛠️ 项目规格：</span><span id="log-ac-type-name">-</span></div>
+            <div style="margin: 6px 0 4px 0; font-size:0.8rem; color:#aaa;">🎲 减免点数落地流水：</div>
+            <div class="all-pips-container" id="all-pips-flow">
+                <span style="color:#555; font-size:0.8rem;">暂无点数...</span>
+            </div>
+            <div class="price-line"><span>🎁 手气免减金额 (1点=1元)：</span><span id="log-discount-amount" style="color:var(--primary-color); font-weight:bold;">-0 元</span></div>
+            <div class="final-line" style="font-size:1.2rem;"><span>💵 预计到家实收尾款：</span><span id="log-final-price">- 元</span></div>
+        </div>
+
+        <button class="next-step-btn" id="go-to-pay-btn" onclick="switchToPayPage()">🔥 优惠太给力了，去付意向金正式摇！</button>
+
+        <table class="price-table">
+            <thead><tr><th>机型</th><th>1台</th><th>2台</th><th>3台+</th><th>单台骰子</th></tr></thead>
+            <tbody>
+                <tr><td>家庭挂机</td><td>120元</td><td>115元</td><td style="color:var(--accent-gold); font-weight:bold;">110元</td><td>5颗/台</td></tr>
+                <tr><td>方形柜机</td><td>260元</td><td>250元</td><td style="color:var(--accent-gold); font-weight:bold;">240元</td><td>10颗/台</td></tr>
+                <tr><td>吸顶天花</td><td>200元</td><td>190元</td><td style="color:var(--accent-gold); font-weight:bold;">180元</td><td>7颗/台</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="page-official" class="page">
+        <div class="status-bar alert" id="official-status-bar">
+            🔒 安全卡关：请完成下方5元意向金，激活【正式开摇减免】！
+        </div>
+
+        <div class="pay-zone">
+            <h3 style="color:var(--accent-gold); margin-bottom:2px; font-size:0.95rem;">📲 社区好运意向登记区</h3>
+            <p style="font-size:0.75rem; color:#ffb703; margin:0 0 6px 0; font-weight:bold;">⚠️ 科学对账提示：请在付款时【添加备注】填入后缀：<span id="hint-tail" style="text-decoration:underline;">-</span></p>
+            <div class="qr-group">
+                <div class="qr-card">
+                    <img src="https://tvzb.github.io/jia.jpg" class="qr-img">
+                    1. 长按加微信
+                </div>
+                <div class="qr-card">
+                    <img src="https://tvzb.github.io/skm.jpg" class="qr-img">
+                    2. 扫码付5元意向金
+                </div>
+            </div>
+        </div>
+
+        <div class="config-panel" style="background:rgba(255,255,255,0.03); padding:12px; border-radius:12px; border:1px solid #333;">
+            <div class="form-group">
+                <label>街坊姓名/称呼：</label>
+                <input type="text" id="cust-name" placeholder="例如：张大妈 / 李先生" oninput="syncOfficialBill()">
+            </div>
+            <div class="form-group">
+                <label>联系电话 (上门核销唯一凭证)：</label>
+                <input type="text" id="cust-phone" placeholder="请输入11位手机号码" oninput="validatePhone()">
+                <div id="phone-hint" class="error-hint">⚠️ 请输入正确的11位手机号</div>
+            </div>
+            <div class="form-group">
+                <label>清洗详细住址：</label>
+                <input type="text" id="cust-address" placeholder="例如：4号楼1单元602室" oninput="syncOfficialBill()">
+            </div>
+            <div class="config-row">
+                <label style="font-size:0.8rem;">意向金渠道：</label>
+                <select id="deposit-type" style="padding:5px; font-size:0.85rem;" onchange="syncOfficialBill()">
+                    <option value="线上收款码已付">线上收款码已付</option>
+                    <option value="微信私聊已转账">微信私聊已转账</option>
+                </select>
+            </div>
+            <div class="form-group" style="margin-top:6px;">
+                <label>期望上门时段 (弹性弹性)：</label>
+                <input type="text" id="book-time" placeholder="例如：本周六下午或工人提前电联" oninput="syncOfficialBill()">
+            </div>
+
+            <div style="background: rgba(0,0,0,0.4); padding: 6px; border-radius:8px; margin-top:8px; text-align:center; border:1px solid #444;">
+                <span style="font-size:0.75rem; color:#aaa;">🔒 本单唯一防伪校验对账指纹：</span><br>
+                <strong id="order-uuid" style="color:var(--accent-gold); font-family:monospace; font-size:1.1rem; letter-spacing:1px;">-</strong>
+            </div>
+        </div>
+
+        <button id="start-official-btn" class="next-step-btn" style="margin-top:12px;" onclick="activateOfficialRollMode()">➔ 我已付清5元，去舞台正式开摇！</button>
+
+        <div class="summary-box" id="official-bill-card" style="margin-top:12px; display:none; background: rgba(46,196,182,0.08); border-style:solid;">
+            <h3 style="margin-top:0; border-bottom: 1px solid var(--accent-green); padding-bottom:4px; text-align:center; color:var(--accent-gold);">📊 社区清洗正式电子存证</h3>
+            <div class="price-line"><span>👥 客户姓名：</span><span id="log-o-name" style="font-weight:bold; color:#fff;">-</span></div>
+            <div class="price-line"><span>📱 联系号码：</span><span id="log-o-phone">-</span></div>
+            <div class="price-line"><span>🏠 详细住址：</span><span id="log-o-address">-</span></div>
+            <div class="price-line"><span>📅 期望时段：</span><span id="log-o-time" style="color:var(--accent-green);">-</span></div>
+            <div class="price-line"><span>🛠️ 服务规格：</span><span id="log-o-actype">-</span></div>
+            <div class="price-line"><span>💰 意向定金：</span><span id="log-o-deposit" style="color:var(--accent-green);">-5 元</span></div>
+            <div style="margin: 4px 0; font-size:0.8rem; color:#ccc;">🎲 官方盲骰生效流水（已固化）：</div>
+            <div class="all-pips-container" id="all-o-pips-flow"></div>
+            <div class="price-line"><span>🎁 骰子立减金额：</span><span id="log-o-discount" style="color:var(--primary-color); font-weight:bold;">-0 元</span></div>
+            <div class="final-line"><span style="color:#fff;">💵 现场实收尾款：</span><span id="log-o-final">元</span></div>
+        </div>
+
+        <button id="copy-text-btn" class="copy-btn" onclick="copyUIDText()">📋 复制对账文本发微信客服</button>
+        <button id="snap-btn" class="snap-btn" style="display:none;" onclick="generateReceiptImage()">📸 生成防伪核销截图（凭图再减10元）</button>
+        
+        <button class="back-btn" id="back-to-try-btn" onclick="switchToTryPage()">⬅ 返回上页继续试玩</button>
+    </div>
+
+    <div id="output-container">
+        <p style="color:var(--accent-gold); font-size:0.9rem; margin-top:0; margin-bottom:10px;">👇 电子核销凭证已生成！长按图片保存至手机 👇</p>
+        <img id="output-image" src="" alt="电子收据凭证">
     </div>
 </div>
 
 <script>
     var totalRolled = 0;       
     var allHistoryPoints = [];  
-    var singleLimitPerAC = 5; // 挂机默认改为5颗   
+    var singleLimitPerAC = 5;    
     var maxTargetDice = 5;      
     var currentUUID = "";
-    var isPhoneValid = true; 
-    var isLockedOrder = false; // 是否已经锁定本单
+    var isPhoneValid = false; 
     
+    var isOfficialMode = false;     
+    var isOfficialSettled = false;  
+
     var priceMatrix = {
         wall:    { name: "家庭挂机", price: { 1: 120, 2: 115, 3: 110 } }, 
         cabinet: { name: "方形柜机", price: { 1: 260, 2: 250, 3: 240 } }, 
         ceiling: { name: "吸顶天花机", price: { 1: 200, 2: 190, 3: 180 } }  
     };
-    var diceLimitMatrix = { wall: 5, ceiling: 7, cabinet: 10 }; // 挂机5，天花机7
+    var diceLimitMatrix = { wall: 5, ceiling: 7, cabinet: 10 };
 
     var diceStage = document.getElementById('dice-stage');
     var rollBtn = document.getElementById('roll-btn');
@@ -446,15 +307,12 @@
     var allPipsFlow = document.getElementById('all-pips-flow');
     var acTypeSelect = document.getElementById('ac-type');
     var acTotalCountInput = document.getElementById('ac-total-count');
+    var tryAgainActionBtn = document.getElementById('try-again-action-btn');
     
     var logDiscountAmount = document.getElementById('log-discount-amount');
     var logFinalPrice = document.getElementById('log-final-price');
-    var logCustName = document.getElementById('log-cust-name');
     var logAcTypeName = document.getElementById('log-ac-type-name');
-    var resetBtn = document.getElementById('reset-btn');
     var snapBtn = document.getElementById('snap-btn');
-    var lockBar = document.getElementById('lock-bar');
-    var lockOrderActionBtn = document.getElementById('lock-order-action-btn');
 
     var faceTransforms = {
         1: { x: 0, y: 0 }, 2: { x: 0, y: -90 }, 3: { x: -90, y: 0 },
@@ -467,70 +325,90 @@
         6: ['top-left', 'top-right', 'mid-left', 'mid-right', 'bottom-left', 'bottom-right']
     };
 
+    // 网页加载时生成防伪号
     makeNewUUID();
     calculateBasePrice();
 
-    // 核心安全优化：先摇后买的“一键收网锁定”机制
-    function lockCurrentOrderPoints() {
-        if(allHistoryPoints.length === 0) {
-            alert("❌ 您还没开摇呢，先去摇几个满意的点数再来锁定吧！");
+    function switchToPayPage() {
+        document.getElementById('page-try').classList.remove('active');
+        document.getElementById('page-official').classList.add('active');
+        window.scrollTo(0,0);
+    }
+
+    function switchToTryPage() {
+        if(isOfficialMode) {
+            // 如果已经是正式开摇完毕后点击重置，则执行全新重置流程
+            fullResetAll();
             return;
         }
+        document.getElementById('page-official').classList.remove('active');
+        document.getElementById('page-try').classList.add('active');
+        window.scrollTo(0,0);
+    }
+
+    // 只有资料合法才能过关去正式摇骰子
+    function activateOfficialRollMode() {
         var name = document.getElementById('cust-name').value.trim();
         var phone = document.getElementById('cust-phone').value.trim();
         var addr = document.getElementById('cust-address').value.trim();
 
         if(!name || !phone || !addr || !isPhoneValid) {
-            alert("❌ 锁定失败！为了生成上门清洗合同，必须完整、正确填写左侧的【姓名】、【电话】和【详细住址】！");
+            alert("❌ 无法开启正式版！必须完整、正确填写姓名、11位手机号码以及清晰住址，用于核对5元定金！");
             return;
         }
 
-        var confirmLock = confirm("📢 重要提示：点击确定后，本单的骰子点数将彻底【锁定上传】，不能继续加摇或重开，后台将以当前数据作为核销实收标准。您确认您已付5元意向金并要锁单吗？");
-        if(!confirmLock) return;
-
-        // 全面锁死，防止二次重洗重玩
-        isLockedOrder = true;
-        rollBtn.disabled = true;
-        rollNumSelect.disabled = true;
-        acTypeSelect.disabled = true;
-        acTotalCountInput.disabled = true;
-        lockOrderActionBtn.disabled = true;
-        lockOrderActionBtn.style.background = "#444";
-        lockOrderActionBtn.innerText = "🔒 本单数据已成功封账";
-
+        isOfficialMode = true;
+        isOfficialSettled = false;
+        
+        // 彻底死锁输入框，进场后不许私自偷改资料
         document.getElementById('cust-name').disabled = true;
         document.getElementById('cust-phone').disabled = true;
         document.getElementById('cust-address').disabled = true;
         document.getElementById('deposit-type').disabled = true;
         document.getElementById('book-time').disabled = true;
+        document.getElementById('start-official-btn').style.display = "none";
+        
+        // 按钮文字变成重置功能
+        document.getElementById('back-to-try-btn').innerText = "🧹 清空本单，接待下一位街坊";
 
-        lockBar.style.background = "#4338ca";
-        lockBar.style.borderColor = "var(--accent-gold)";
-        lockBar.style.color = "#fff";
-        lockBar.innerHTML = "🎉 本单点数成功锁死！已为您生成专属防伪单。请点击下方生成截图。";
+        // 第一页的UI彻底包装成高贵的“正式官方模式”
+        document.getElementById('try-status-bar').className = "status-bar gold";
+        document.getElementById('try-status-bar').innerHTML = "🎯 【正式盲骰模式已锁定开启】请在下方点击开摇，落地数据直接绑定指纹！";
+        document.getElementById('stage-title').innerText = "🔥 官方盲盒对账舞台";
+        document.getElementById('bill-title').innerText = "📊 空调清洗服务【正式电子收据】";
+        document.getElementById('go-to-pay-btn').style.display = "none";
 
-        snapBtn.style.display = 'block';
-        resetBtn.style.display = 'block';
-        alert("✅ 本单数据已被防伪核销校验锁成功绑定！");
+        // 返回第1页盲摇
+        document.getElementById('page-official').classList.remove('active');
+        document.getElementById('page-try').classList.add('active');
+        
+        resetDiceStageToMode("正式");
+    }
+
+    function resetDiceStageToMode(type) {
+        totalRolled = 0;
+        allHistoryPoints = [];
+        currentCountSpan.innerText = '0';
+        tryAgainActionBtn.style.display = "none";
+        
+        if(type === "正式") {
+            diceStage.innerHTML = '<div class="stage-hint" style="color:var(--accent-gold);">💰 5元定金已收到！正式抽奖生效中...<br>请点击下方按钮，决定最终优惠！</div>';
+        } else {
+            diceStage.innerHTML = '<div class="stage-hint">🎁 点下方“亲手开摇”试玩<br>看你能摇到多大减免！</div>';
+        }
+        
+        rollBtn.disabled = false;
+        rollNumSelect.disabled = false;
+        calculateBasePrice();
     }
 
     function validatePhone() {
         var phoneInput = document.getElementById('cust-phone');
         var phoneHint = document.getElementById('phone-hint');
         var val = phoneInput.value.trim();
-        
-        if(val === "") {
-            phoneInput.className = "";
-            phoneHint.style.display = "none";
-            isPhoneValid = true;
-            syncBill();
-            return;
-        }
-
         var isMobile = (val.startsWith('1') && val.length === 11 && /^\d+$/.test(val));
-        var isTelephone = (val.startsWith('8') && val.length === 7 && /^\d+$/.test(val));
 
-        if (isMobile || isTelephone) {
+        if (isMobile) {
             phoneInput.className = "input-success";
             phoneHint.style.display = "none";
             isPhoneValid = true;
@@ -539,116 +417,46 @@
             phoneHint.style.display = "block";
             isPhoneValid = false;
         }
-        syncBill();
+        syncOfficialBill();
     }
 
     function makeNewUUID() {
         var chars = 'ABCDEFGHJKMNPQRSTWXYZ2345678'; 
         var uuid = '';
-        for (var i = 0; i < 8; i++) {
+        for (var i = 0; i < 6; i++) {
             uuid += chars.charAt(Math.floor(Math.random() * chars.length));
         }
         currentUUID = "AC-" + uuid;
         document.getElementById('order-uuid').innerText = currentUUID;
+        document.getElementById('hint-tail').innerText = uuid; // 引导用户付款备注后缀
     }
 
-    function syncBill() {
-        var name = document.getElementById('cust-name').value.trim();
-        var phone = document.getElementById('cust-phone').value.trim();
-        var addr = document.getElementById('cust-address').value.trim();
+    function syncOfficialBill() {
+        var name = document.getElementById('cust-name').value.trim() || "-";
+        var phone = document.getElementById('cust-phone').value.trim() || "-";
+        var addr = document.getElementById('cust-address').value.trim() || "-";
         var payType = document.getElementById('deposit-type').value;
-        var bTime = document.getElementById('book-time').value.trim();
+        var bTime = document.getElementById('book-time').value.trim() || "弹性上门";
 
-        logCustName.innerText = name ? name : "散客街坊";
-        document.getElementById('log-cust-phone').innerText = phone ? phone : "-";
-        document.getElementById('log-cust-address').innerText = addr ? addr : "-";
-        document.getElementById('log-deposit-status').innerText = "-5 元 (" + payType + ")";
-        document.getElementById('log-book-time').innerText = bTime ? bTime : "-";
-    }
-
-    function renderPipsFlowUI() {
-        if(allHistoryPoints.length === 0) {
-            allPipsFlow.innerHTML = '<span style="color:#555; font-size:0.9rem; padding-top:4px;">暂无点数...</span>';
-            return;
-        }
-        allPipsFlow.innerHTML = '';
-        var totalACs = parseInt(acTotalCountInput.value) || 1;
-
-        for(var i = 0; i < totalACs; i++) {
-            var startIdx = i * singleLimitPerAC;
-            var endIdx = startIdx + singleLimitPerAC;
-            var slicePoints = allHistoryPoints.slice(startIdx, endIdx);
-
-            if(slicePoints.length === 0) break; 
-
-            var rowLine = document.createElement('div');
-            rowLine.className = 'pip-row-line';
-
-            var titleSpan = document.createElement('span');
-            titleSpan.className = 'pip-row-title';
-            titleSpan.innerText = '第 ' + (i + 1) + ' 台：';
-            rowLine.appendChild(titleSpan);
-
-            for(var j = 0; j < slicePoints.length; j++) {
-                var span = document.createElement('span');
-                span.className = 'highlight-box';
-                span.innerText = slicePoints[j] + '点';
-                rowLine.appendChild(span);
-            }
-            allPipsFlow.appendChild(rowLine);
-        }
-    }
-
-    function buildPipsTextForCopy() {
-        if(allHistoryPoints.length === 0) return "无";
-        var totalACs = parseInt(acTotalCountInput.value) || 1;
-        var textLines = [];
+        document.getElementById('log-o-name').innerText = name;
+        document.getElementById('log-o-phone').innerText = phone;
+        document.getElementById('log-o-address').innerText = addr;
+        document.getElementById('log-o-deposit').innerText = "-5 元 (" + payType + ")";
+        document.getElementById('log-o-time').innerText = bTime;
         
-        for(var i = 0; i < totalACs; i++) {
-            var startIdx = i * singleLimitPerAC;
-            var endIdx = startIdx + singleLimitPerAC;
-            var slicePoints = allHistoryPoints.slice(startIdx, endIdx);
-            if(slicePoints.length > 0) {
-                textLines.push("    └─第 " + (i + 1) + " 台：" + slicePoints.join('点, ') + '点');
-            }
-        }
-        return "\n" + textLines.join("\n");
-    }
-
-    function copyUID() {
-        if(!isPhoneValid) {
-            alert("❌ 号码格式还有错误，请修改正确后再导出！");
-            return;
-        }
-        var name = document.getElementById('cust-name').value.trim() || "未登记散客";
-        var phone = document.getElementById('cust-phone').value.trim() || "无";
-        var addr = document.getElementById('cust-address').value.trim() || "无";
-        var payType = document.getElementById('deposit-type').value;
-        var bTime = document.getElementById('book-time').value.trim() || "未约时间";
+        var type = acTypeSelect.value;
+        var totalCount = parseInt(acTotalCountInput.value) || 1;
+        var step = totalCount > 3 ? 3 : totalCount;
+        var unitPrice = priceMatrix[type].price[step];
+        document.getElementById('log-o-actype').innerText = priceMatrix[type].name + " (" + totalCount + "台，单价" + unitPrice + "元)";
         
-        var typeName = priceMatrix[acTypeSelect.value].name;
-        var totalCount = acTotalCountInput.value;
-        var discount = logDiscountAmount.innerText;
-        var finalPrice = logFinalPrice.innerText;
+        var discountAmount = allHistoryPoints.reduce((a, b) => a + b, 0);
+        var totalBasePrice = unitPrice * totalCount;
+        var finalPay = totalBasePrice - 5 - discountAmount;
+        if(finalPay < 0) finalPay = 0;
         
-        var textToCopy = "📌 【空调清洗·社区好运裂变单】\n" +
-                         "👥 客户姓名：" + name + "\n" +
-                         "📱 联系号码：" + phone + "\n" +
-                         "🏠 详细住址：" + addr + "\n" +
-                         "🛠️ 清洗机型：" + typeName + " (共 " + totalCount + " 台)\n" +
-                         "💰 意向状态：" + payType + " (已收5元)\n" +
-                         "📅 期望时段：" + bTime + "\n" +
-                         "🎲 骰子免减： " + buildPipsTextForCopy() + "\n" +
-                         "🎁 减免金额：" + discount + "\n" +
-                         "💵 实收尾款：" + finalPrice + "\n" +
-                         "🔒 防伪指纹：" + currentUUID + "\n" +
-                         "⏰ 对账时间：" + getNowFormatDate();
-        
-        navigator.clipboard.writeText(textToCopy).then(function() {
-            alert("✅ 对账文本已成功复制到剪贴板！可以直接发给客服微信。");
-        }, function() {
-            alert("复制失败，您的专属防伪指纹为：" + currentUUID);
-        });
+        document.getElementById('log-o-discount').innerText = '-' + discountAmount + ' 元';
+        document.getElementById('log-o-final').innerText = finalPay + ' 元';
     }
 
     function calculateBasePrice() {
@@ -663,36 +471,72 @@
         currentCountSpan.innerText = totalRolled;
         
         var unitPrice = priceMatrix[type].price[step];
-        logAcTypeName.innerText = priceMatrix[type].name + " (共 " + totalCount + " 台，折合单价" + unitPrice + "元)";
+        logAcTypeName.innerText = priceMatrix[type].name + " (" + totalCount + "台，单价" + unitPrice + "元)";
         
         var discountAmount = allHistoryPoints.reduce((a, b) => a + b, 0);
-        updateFinalBox(discountAmount);
-        renderPipsFlowUI();
+        
+        logDiscountAmount.innerText = '-' + discountAmount + ' 元';
+        var finalPay = (unitPrice * totalCount) - 5 - discountAmount;
+        if (finalPay < 0) finalPay = 0; 
+        logFinalPrice.innerText = finalPay + ' 元';
+        
+        if(!isOfficialMode) {
+            renderPipsFlowUI('all-pips-flow');
+        } else {
+            syncOfficialBill();
+            renderPipsFlowUI('all-o-pips-flow');
+        }
+    }
+
+    function renderPipsFlowUI(targetDomId) {
+        var container = document.getElementById(targetDomId);
+        if(allHistoryPoints.length === 0) {
+            container.innerHTML = '<span style="color:#555; font-size:0.8rem;">暂无点数流水...</span>';
+            return;
+        }
+        container.innerHTML = '';
+        var totalACs = parseInt(acTotalCountInput.value) || 1;
+
+        for(var i = 0; i < totalACs; i++) {
+            var startIdx = i * singleLimitPerAC;
+            var endIdx = startIdx + singleLimitPerAC;
+            var slicePoints = allHistoryPoints.slice(startIdx, endIdx);
+            if(slicePoints.length === 0) break; 
+
+            var rowLine = document.createElement('div');
+            rowLine.className = 'pip-row-line';
+            var titleSpan = document.createElement('span');
+            titleSpan.className = 'pip-row-title';
+            titleSpan.innerText = '第 ' + (i + 1) + ' 台：';
+            rowLine.appendChild(titleSpan);
+
+            for(var j = 0; j < slicePoints.length; j++) {
+                var span = document.createElement('span');
+                span.className = 'highlight-box';
+                span.innerText = slicePoints[j] + '点';
+                rowLine.appendChild(span);
+            }
+            container.appendChild(rowLine);
+        }
     }
 
     function rollDice3D() {
-        if(isLockedOrder) {
-            alert("🔒 本单已经全量锁定封账，无法继续加摇！如需重玩请点下方“结算完成”重置。");
-            return;
-        }
+        if(isOfficialSettled) return;
 
         var currentACUsed = totalRolled % singleLimitPerAC;               
         var currentACRemaining = singleLimitPerAC - currentACUsed;       
-
         var desiredRoll = parseInt(rollNumSelect.value) || 1; 
         var numToRoll = Math.min(desiredRoll, currentACRemaining); 
 
         if(numToRoll <= 0) {
             if(totalRolled >= maxTargetDice) {
-                alert("✨ 本单空调配额的骰子数量已全部摇完！如果对手气满意，请立刻填写左侧资料并点击【锁定本单】！");
+                if(isOfficialMode) endOfficialGame();
             }
             return;
         }
 
         rollBtn.disabled = true;
         rollNumSelect.disabled = true;
-        
-        // 只要一动骰子，机型选择立刻保护锁死，大妈不能摇到好点数再来改机型！
         acTypeSelect.disabled = true;
         acTotalCountInput.disabled = true;
 
@@ -740,30 +584,38 @@
         setTimeout(function() {
             totalRolled += numToRoll;
             currentCountSpan.innerText = totalRolled;
-            renderPipsFlowUI(); 
+            calculateBasePrice();
 
-            var discountAmount = allHistoryPoints.reduce((a, b) => a + b, 0);
-            updateFinalBox(discountAmount);
-
-            rollBtn.disabled = false;
-            rollNumSelect.disabled = false; 
+            if (totalRolled >= maxTargetDice) {
+                if(isOfficialMode) {
+                    endOfficialGame();
+                } else {
+                    // 针对试玩无弹窗优化：试玩结束直接显示“继续试玩”按钮
+                    rollBtn.disabled = true;
+                    tryAgainActionBtn.style.display = "block";
+                }
+            } else {
+                rollBtn.disabled = false;
+                rollNumSelect.disabled = false; 
+            }
         }, 1050);
     }
 
-    function updateFinalBox(discountAmount) {
-        var type = acTypeSelect.value;
-        var totalCount = parseInt(acTotalCountInput.value) || 1;
-        var step = totalCount > 3 ? 3 : totalCount;
+    // 正式模式全量摇满逻辑
+    function endOfficialGame() {
+        isOfficialSettled = true;
+        rollBtn.disabled = true;
+        rollNumSelect.disabled = true;
         
-        var unitPrice = priceMatrix[type].price[step];
-        var totalBasePrice = unitPrice * totalCount; 
-        var deposit = 5; 
-
-        logDiscountAmount.innerText = '-' + discountAmount + ' 元';
-        var finalPay = totalBasePrice - deposit - discountAmount;
-        if (finalPay < 0) finalPay = 0; 
+        // 自动切回第2页，展现已经激活的凭证下载功能
+        document.getElementById('page-try').classList.remove('active');
+        document.getElementById('page-official').classList.add('active');
         
-        logFinalPrice.innerText = finalPay + ' 元';
+        document.getElementById('official-bill-card').style.display = "block";
+        document.getElementById('copy-text-btn').style.display = "block";
+        snapBtn.style.display = 'block';
+        
+        window.scrollTo(0, 200);
     }
 
     function getNowFormatDate() {
@@ -771,13 +623,36 @@
         return now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0') + ' ' + String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0') + ':' + String(now.getSeconds()).padStart(2, '0');
     }
 
+    function copyUIDText() {
+        var name = document.getElementById('cust-name').value.trim();
+        var phone = document.getElementById('cust-phone').value.trim();
+        var addr = document.getElementById('cust-address').value.trim();
+        var typeName = priceMatrix[acTypeSelect.value].name;
+        var totalCount = acTotalCountInput.value;
+        
+        var textToCopy = "📌 【空调清洗·好运确认单】\n" +
+                         "👥 街坊姓名：" + name + "\n" +
+                         "📱 联系电话：" + phone + "\n" +
+                         "🏠 详细住址：" + addr + "\n" +
+                         "🛠️ 清洗规格：" + typeName + " (" + totalCount + "台)\n" +
+                         "🎁 正式减免：-" + allHistoryPoints.reduce((a,b)=>a+b,0) + "元\n" +
+                         "💵 实收尾款：" + document.getElementById('log-o-final').innerText + "\n" +
+                         "🔒 对账指纹：" + currentUUID + "\n" +
+                         "⏰ 核销时间：" + getNowFormatDate();
+        
+        navigator.clipboard.writeText(textToCopy).then(function() {
+            alert("✅ 对账文本已成功复制！快去发给客服微信核销吧。");
+        }, function() {
+            alert("复制失败，您的防伪码为：" + currentUUID);
+        });
+    }
+
     function generateReceiptImage() {
         var canvas = document.createElement('canvas');
         var ctx = canvas.getContext('2d');
         canvas.width = 600;
-        
         var totalACs = parseInt(acTotalCountInput.value) || 1;
-        canvas.height = 840 + (totalACs * 35); 
+        canvas.height = 800 + (totalACs * 35); 
 
         ctx.fillStyle = '#1e1e1e';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -788,32 +663,24 @@
         ctx.fillStyle = '#ffb703';
         ctx.font = 'bold 24px sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText('🏆 空调清洗服务·手气裂变凭证 🏆', canvas.width / 2, 65);
+        ctx.fillText('🏆 空调清洗服务·官方手气凭证 🏆', canvas.width / 2, 65);
 
         ctx.textAlign = 'left';
         ctx.fillStyle = '#f8f9fa';
         ctx.font = '18px sans-serif';
 
-        var startX = 50, startY = 130, lineHeight = 40;
-        var nameStr = document.getElementById('cust-name').value.trim();
-        var phoneStr = document.getElementById('cust-phone').value.trim();
-        var addrStr = document.getElementById('cust-address').value.trim();
-        var payType = document.getElementById('deposit-type').value;
-        var bTime = document.getElementById('book-time').value.trim() || "未约弹性时间";
-
-        ctx.fillText('👥 客户姓名：' + nameStr, startX, startY);
-        ctx.fillText('📱 联系号码：' + phoneStr, startX, startY + lineHeight);
-        ctx.fillText('🏠 详细住址：' + addrStr, startX, startY + lineHeight * 2);
+        var startX = 50, startY = 130, lineHeight = 38;
+        ctx.fillText('👥 客户姓名：' + document.getElementById('cust-name').value.trim(), startX, startY);
+        ctx.fillText('📱 联系号码：' + document.getElementById('cust-phone').value.trim(), startX, startY + lineHeight);
+        ctx.fillText('🏠 详细住址：' + document.getElementById('cust-address').value.trim(), startX, startY + lineHeight * 2);
         
         ctx.fillStyle = '#2ec4b6';
-        ctx.fillText('📅 期望时段：' + bTime, startX, startY + lineHeight * 3);
+        ctx.fillText('📅 期望时段：' + (document.getElementById('book-time').value.trim() || "弹性上门"), startX, startY + lineHeight * 3);
         
         ctx.fillStyle = '#f8f9fa';
-        ctx.font = '18px sans-serif';
-        ctx.fillText('🛠️ 服务机型：' + logAcTypeName.innerText, startX, startY + lineHeight * 4);
-        ctx.fillText('💰 意向定金：-5 元 (' + payType + ')', startX, startY + lineHeight * 5);
-
-        ctx.fillText('🎲 各台免减点数真实流水：', startX, startY + lineHeight * 6);
+        ctx.fillText('🛠 *服务规格：' + document.getElementById('log-o-actype').innerText, startX, startY + lineHeight * 4);
+        ctx.fillText('💰 *意向定金：-5 元 (' + document.getElementById('deposit-type').value + ')', startX, startY + lineHeight * 5);
+        ctx.fillText('🎲 *盲骰免减真实落地流水：', startX, startY + lineHeight * 6);
         
         ctx.font = 'bold 16px sans-serif';
         var currentY = startY + lineHeight * 6 + 25;
@@ -821,80 +688,40 @@
             var startIdx = i * singleLimitPerAC;
             var endIdx = startIdx + singleLimitPerAC;
             var slicePoints = allHistoryPoints.slice(startIdx, endIdx);
-            
             ctx.fillStyle = '#2ec4b6';
             ctx.fillText('  第 ' + (i + 1) + ' 台 -> ', startX, currentY);
             ctx.fillStyle = '#3b82f6';
-            var pStr = slicePoints.length > 0 ? (slicePoints.join('点, ') + '点') : '未摇满';
-            ctx.fillText(pStr, startX + 110, currentY);
+            ctx.fillText(slicePoints.join('点, ') + '点', startX + 110, currentY);
             currentY += 32;
         }
 
         ctx.fillStyle = '#f8f9fa';
         ctx.font = '18px sans-serif';
-        ctx.fillText('🎁 手气总免减：' + logDiscountAmount.innerText, startX, currentY + 15);
+        ctx.fillText('🎁 手气总免减：' + document.getElementById('log-o-discount').innerText, startX, currentY + 15);
 
         ctx.fillStyle = '#ffb703';
         ctx.font = 'bold 28px sans-serif';
-        ctx.fillText('💵 实际应付尾款：' + logFinalPrice.innerText, startX, currentY + 65);
-
-        // 完美的裂变文案直接写死上图！
-        ctx.fillStyle = 'rgba(46, 196, 182, 0.15)';
-        ctx.fillRect(35, currentY + 95, canvas.width - 70, 75);
-        ctx.strokeStyle = 'var(--accent-green)';
-        ctx.lineWidth = 1;
-        ctx.strokeRect(35, currentY + 95, canvas.width - 70, 75);
-        
-        ctx.fillStyle = '#2ec4b6';
-        ctx.font = 'bold 16px sans-serif';
-        ctx.fillText('📢 晒单额外减免大福利：', 50, currentY + 120);
-        ctx.fillStyle = '#fff';
-        ctx.font = '14px sans-serif';
-        ctx.fillText('将本张手气截图转发至朋友圈或抖音/快手，清洗工人上门时', 50, currentY + 143);
-        ctx.fillText('现场出示，尾款【额外再减免 10 元】现金！', 50, currentY + 162);
+        ctx.fillText('💵 现场应付尾款：' + document.getElementById('log-o-final').innerText, startX, currentY + 65);
 
         ctx.fillStyle = '#444';
-        ctx.fillRect(35, canvas.height - 120, canvas.width - 70, 2);
+        ctx.fillRect(35, canvas.height - 100, canvas.width - 70, 2);
 
         ctx.fillStyle = '#888';
         ctx.font = 'bold 16px monospace';
-        ctx.fillText('【核销防伪指纹】：' + currentUUID, startX, canvas.height - 85);
-        ctx.font = '14px monospace';
-        ctx.fillText('后台封账固化时间：' + getNowFormatDate(), startX, canvas.height - 55);
-        
-        ctx.fillStyle = '#d90429';
-        ctx.font = 'bold 12px sans-serif';
-        ctx.textAlign = 'right';
-        ctx.fillText('※ 截图防伪码不符、或无店主后台锁定对账记录一律作废', canvas.width - 50, canvas.height - 30);
+        ctx.fillText('【对账防伪指纹】：' + currentUUID, startX, canvas.height - 70);
+        ctx.font = '13px monospace';
+        ctx.fillText('系统封账时间：' + getNowFormatDate(), startX, canvas.height - 42);
 
         document.getElementById('output-image').src = canvas.toDataURL('image/png');
         document.getElementById('output-container').style.display = 'block';
         document.getElementById('output-container').scrollIntoView({ behavior: 'smooth' });
     }
 
-    function resetGame() {
-        totalRolled = 0;
-        allHistoryPoints = [];
-        currentCountSpan.innerText = '0';
-        isPhoneValid = true;
-        isLockedOrder = false; 
-        
-        lockOrderActionBtn.disabled = false;
-        lockOrderActionBtn.style.background = "linear-gradient(90deg, #ffb703, #fb8500)";
-        lockOrderActionBtn.innerText = "🔒 我摇得特别划算，付完5元点此锁定本单！";
-
-        lockBar.style.background = "#17312e";
-        lockBar.style.borderColor = "var(--accent-green)";
-        lockBar.style.color = "#99ffea";
-        lockBar.innerHTML = '✨ 试玩娱乐中：任何人点开都可以直接开始摇骰子！满意的点数可以点击下方锁定！';
-
-        diceStage.innerHTML = '<div class="stage-hint" id="stage-hint">手气好不好，直接按下方按钮开摇！</div>';
-        allPipsFlow.innerHTML = '<span style="color:#555; font-size:0.9rem; padding-top:4px;">暂无点数...</span>';
-        
-        rollBtn.disabled = false; 
-        rollNumSelect.disabled = false; 
-        acTypeSelect.disabled = false;
-        acTotalCountInput.disabled = false;
+    // 接待下一位街坊，完全清空重置到最初状态
+    function fullResetAll() {
+        isOfficialMode = false;
+        isOfficialSettled = false;
+        isPhoneValid = false;
         
         document.getElementById('cust-name').disabled = false;
         document.getElementById('cust-phone').disabled = false;
@@ -908,14 +735,28 @@
         document.getElementById('phone-hint').style.display = "none";
         document.getElementById('cust-address').value = "";
         document.getElementById('book-time').value = "";
+
+        // UI全面还原为“试玩模式”
+        document.getElementById('try-status-bar').className = "status-bar";
+        document.getElementById('try-status-bar').innerHTML = "✨ 【免关注试玩】先摇几把，看看今天能省多少现场服务费！";
+        document.getElementById('stage-title').innerText = "🔮 模拟手气大舞台";
+        document.getElementById('bill-title').innerText = "📊 项目【模拟优惠账单】";
+        document.getElementById('go-to-pay-btn').style.display = "block";
         
-        resetBtn.style.display = 'none';
-        snapBtn.style.display = 'none';
-        document.getElementById('output-container').style.display = 'none';
-        
+        acTypeSelect.disabled = false;
+        acTotalCountInput.disabled = false;
+        document.getElementById('start-official-btn').style.display = "block";
+        document.getElementById('official-bill-card').style.display = "none";
+        document.getElementById('copy-text-btn').style.display = "none";
+        snapBtn.style.display = "none";
+        document.getElementById('output-container').style.display = "none";
+        document.getElementById('back-to-try-btn').innerText = "⬅ 返回上页继续试玩";
+
+        document.getElementById('page-official').classList.remove('active');
+        document.getElementById('page-try').classList.add('active');
+
         makeNewUUID();
-        syncBill();
-        calculateBasePrice();
+        resetDiceStageToMode("试玩");
     }
 </script>
 
