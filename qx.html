@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>空调清洗 - 社区手气大舞台</title>
+    <title>空调清洗 - 摇多少减多少</title>
     <style>
         :root {
             --primary-color: #d90429;
@@ -60,19 +60,17 @@
 
         .stage-container { background: rgba(0,0,0,0.3); border: 1px solid #333; border-radius: 12px; padding: 12px; margin-bottom: 12px; }
         
-        /* 骰子主舞台：改成垂直流，用来容纳不同行的骰子排队 */
         .dice-stage {
             display: flex; flex-direction: column; gap: 10px; min-height: 100px; padding: 12px 8px;
             background: var(--stage-bg); border-radius: 10px; box-shadow: inset 0 0 25px rgba(0,0,0,0.85); perspective: 1000px;
         }
         
-        /* 动态骰子行：用来实现5颗、7颗、分两行逻辑 */
         .dice-stage-row {
             display: flex; flex-wrap: nowrap; justify-content: flex-start; align-items: center; gap: 10px;
             background: rgba(255, 255, 255, 0.02); padding: 6px 10px; border-radius: 8px; border: 1px dashed #2a2a2a;
         }
         .dice-row-label {
-            font-size: 0.75rem; color: var(--accent-green); font-weight: bold; min-width: 55px; white-space: nowrap;
+            font-size: 0.75rem; color: var(--accent-green); font-weight: bold; min-width: 65px; white-space: nowrap;
         }
 
         .stage-hint { color: var(--accent-green); font-size: 0.85rem; text-align: center; width: 100%; font-weight: bold; line-height: 1.4; padding: 20px 0; }
@@ -143,8 +141,9 @@
 <body>
 
 <div class="container">
-    <h1>🎲 空调清洗·社区手气大舞台</h1>
+    <h1>🎲 空调清洗 - 摇多少减多少</h1>
 
+    <!-- ==================== 页面 1：模拟试玩页 ==================== -->
     <div id="page-try" class="page active">
         <div class="status-bar" id="try-status-bar">
             ✨ 先试摇几把，看看能省多少清洗费！
@@ -161,7 +160,7 @@
             </div>
             <div class="config-row">
                 <label>清洗空调台数：</label>
-                <input type="number" id="ac-total-count" class="inline-input" value="1" min="1" max="20" onchange="resetDiceStageToMode(isOfficialMode ? '正式' : '试玩')">
+                <input type="number" id="ac-total-count" class="inline-input" value="1" min="1" max="20" oninput="sanitizeACCountInput()" onchange="resetDiceStageToMode(isOfficialMode ? '正式' : '试玩')">
             </div>
         </div>
 
@@ -173,7 +172,8 @@
                 </div>
             </div>
             <div class="dice-stage" id="dice-stage">
-                </div>
+                <!-- 内部动态按台分行 -->
+            </div>
         </div>
 
         <div class="action-zone">
@@ -210,6 +210,7 @@
         </table>
     </div>
 
+    <!-- ==================== 页面 2：支付锁单与资料录入页 ==================== -->
     <div id="page-official" class="page">
         <div class="status-bar alert" id="official-status-bar">
             🔒 安全卡关：请完成下方5元意向金，激活【正式开摇减免】！
@@ -271,7 +272,7 @@
             <div class="price-line"><span>🏠 详细住址：</span><span id="log-o-address">-</span></div>
             <div class="price-line"><span>📅 期望时段：</span><span id="log-o-time" style="color:var(--accent-green);">-</span></div>
             <div class="price-line"><span>🛠️ 服务规格：</span><span id="log-o-actype">-</span></div>
-            <div class="price-line"><span>💰 意向定金：</span><span id="log-o-deposit" style="color:var(--accent-green);">-5 元</span></div>
+            <div class="price-line"><span>💰 意向定金：</span><span id="log-o-deposit">-5 元</span></div>
             <div style="margin: 4px 0; font-size:0.8rem; color:#ccc;">🎲 官方盲骰生效流水（已固化）：</div>
             <div class="all-pips-container" id="all-o-pips-flow"></div>
             <div class="price-line"><span>🎁 骰子立减金额：</span><span id="log-o-discount" style="color:var(--primary-color); font-weight:bold;">-0 元</span></div>
@@ -337,7 +338,18 @@
     makeNewUUID();
     resetDiceStageToMode("试玩");
 
+    // 防极端值Bug修复：过滤不合法的输入
+    function sanitizeACCountInput() {
+        var val = parseInt(acTotalCountInput.value);
+        if (isNaN(val) || val < 1) {
+            acTotalCountInput.value = 1;
+        } else if (val > 50) {
+            acTotalCountInput.value = 50; // 设定一个合理安全天花板
+        }
+    }
+
     function switchToPayPage() {
+        syncOfficialBill(); // 确保进第二页前账目是最新的
         document.getElementById('page-try').classList.remove('active');
         document.getElementById('page-official').classList.add('active');
         window.scrollTo(0,0);
@@ -387,28 +399,21 @@
         resetDiceStageToMode("正式");
     }
 
-    // 核心重置逻辑：真正还原如新网页
     function resetDiceStageToMode(type) {
         totalRolled = 0;
         allHistoryPoints = [];
         currentCountSpan.innerText = '0';
         tryAgainActionBtn.style.display = "none";
         
-        // 重新算账基数
         var acType = acTypeSelect.value;
         var totalCount = parseInt(acTotalCountInput.value) || 1;
-        if (totalCount < 1) totalCount = 1;
-        var step = totalCount > 3 ? 3 : totalCount; 
         singleLimitPerAC = diceLimitMatrix[acType];
         maxTargetDice = singleLimitPerAC * totalCount; 
         targetMaxDisplay.innerText = maxTargetDice;
 
-        // 彻底清空骰子展示区，生成干净的“分行”外壳
         diceStage.innerHTML = '';
         
-        // 根据“机型”和“台数”，预先在舞台里把“行”画出来
         if(acType === 'cabinet') {
-            // 柜机：1台分2行，每行5颗
             for(var i = 0; i < totalCount * 2; i++) {
                 var rowDom = document.createElement('div');
                 rowDom.className = 'dice-stage-row';
@@ -416,7 +421,6 @@
                 
                 var labelDom = document.createElement('div');
                 labelDom.className = 'dice-row-label';
-                // 奇数行和偶数行做个标志
                 if(i % 2 === 0) {
                     labelDom.innerText = '第 ' + (Math.floor(i/2) + 1) + ' 台(前)';
                 } else {
@@ -426,7 +430,6 @@
                 diceStage.appendChild(rowDom);
             }
         } else {
-            // 挂机(5颗) 或 天花机(7颗) 一台一行
             for(var i = 0; i < totalCount; i++) {
                 var rowDom = document.createElement('div');
                 rowDom.className = 'dice-stage-row';
@@ -440,7 +443,6 @@
             }
         }
 
-        // 如果全新刚进来没有点数，加个引导词
         var hintStr = type === "正式" ? "💰 5元定金已收到！正式开摇生效中，点下方开摇！" : "🎁 点下方“摇一摇”试玩，看能摇到多大减免！";
         var hintDiv = document.createElement('div');
         hintDiv.className = 'stage-hint';
@@ -567,13 +569,22 @@
         }
     }
 
+    // 🔥 核心重构：科学修剪与智能分行阻断
     function rollDice3D() {
         if(isOfficialSettled) return;
 
         var desiredRoll = parseInt(rollNumSelect.value) || 1; 
-        var remainingDices = maxTargetDice - totalRolled;
-        var numToRoll = Math.min(desiredRoll, remainingDices); 
+        var acType = acTypeSelect.value;
+        
+        // 1. 深度科学判定：算当前行还剩下几个坑位
+        var currentLineCapacity = (acType === 'cabinet') ? 5 : singleLimitPerAC; // 每行真正的容量上限
+        var currentLineOccupied = totalRolled % currentLineCapacity;           // 当前行已经塞了几个了
+        var currentLineRemains = currentLineCapacity - currentLineOccupied;    // 当前行还剩几个坑位
 
+        // 2. 核心智能裁剪：本次连摇数量不能越过当前行的边界！
+        var numToRoll = Math.min(desiredRoll, currentLineRemains);
+
+        // 如果算出来不需要摇（理论安全拦截），直接退出
         if(numToRoll <= 0) return;
 
         rollBtn.disabled = true;
@@ -581,7 +592,6 @@
         acTypeSelect.disabled = true;
         acTotalCountInput.disabled = true;
 
-        // 移除文字引导提示
         var hintTxt = document.getElementById('stage-hint-text');
         if (hintTxt) hintTxt.remove();
 
@@ -591,26 +601,20 @@
             thisRoundPoints.push(point);
         }
 
-        var acType = acTypeSelect.value;
-
-        // 逐颗生成骰子，根据它所处的序号推算出它该去哪个行(Row)
+        // 3. 逐个扔进对应的行标签中
         for (var j = 0; j < numToRoll; j++) {
             var targetPoint = thisRoundPoints[j];
-            var absoluteIndex = totalRolled + j; // 这颗骰子在全局中的绝对序号（从0开始）
+            var absoluteIndex = totalRolled + j; 
 
-            // 计算它属于哪一个行容器
             var targetRowId = 0;
             if(acType === 'cabinet') {
-                // 柜机每5颗换一行
                 targetRowId = Math.floor(absoluteIndex / 5);
             } else {
-                // 挂机和天花机每台换一行
                 targetRowId = Math.floor(absoluteIndex / singleLimitPerAC);
             }
 
             var targetRowDom = document.getElementById('dice-row-' + targetRowId);
 
-            // 如果安全起见容器存在，往里丢骰子
             if(targetRowDom) {
                 var cubeContainer = document.createElement('div');
                 cubeContainer.className = 'cube-container';
@@ -631,7 +635,6 @@
                 cubeContainer.appendChild(cube);
                 targetRowDom.appendChild(cubeContainer);
 
-                // 执行扭转动画
                 (function(c, p) {
                     setTimeout(function() {
                         var angles = faceTransforms[p];
@@ -642,7 +645,6 @@
                 })(cube, targetPoint);
             }
 
-            // 同步塞入全局总流水
             allHistoryPoints.push(targetPoint);
         }
 
@@ -656,7 +658,7 @@
                     endOfficialGame();
                 } else {
                     rollBtn.disabled = true;
-                    tryAgainActionBtn.style.display = "block"; // 浮现完美刷新的试玩按钮
+                    tryAgainActionBtn.style.display = "block"; 
                 }
             } else {
                 rollBtn.disabled = false;
