@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D仿真摇骰子 - 实时追加看板版</title>
+    <style>
+        :root {
+            --primary-color: #d90429;
+            --panel-bg: #222222;
+            --stage-bg: #141414;
+            --text-color: #f8f9fa;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #121212;
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: var(--panel-bg);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            padding: 30px;
+            width: 100%;
+            max-width: 650px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #ffb703;
+            font-size: 1.8rem;
+        }
+
+        .status-bar {
+            background-color: rgba(0,0,0,0.4);
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            border: 1px solid #333;
+        }
+
+        /* 3D 骰子骰盅舞台（一直显示） */
+        .dice-stage {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 35px;
+            min-height: 150px;
+            padding: 30px 20px;
+            background: var(--stage-bg);
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.9), 0 5px 15px rgba(0,0,0,0.5);
+            perspective: 1000px;
+        }
+
+        .stage-hint {
+            color: #666;
+            font-size: 0.95rem;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* 3D骰子外壳 */
+        .cube-container {
+            width: 60px;
+            height: 60px;
+            position: relative;
+        }
+
+        /* 骰子立方体 */
+        .cube {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* 骰子六个面的基础样式（拟真实体） */
+        .cube-face {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(145deg, #ffffff, #e6e6e6);
+            border-radius: 14px;
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.2), 0 0 2px rgba(0,0,0,0.3);
+            backface-visibility: hidden;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            padding: 6px;
+            box-sizing: border-box;
+            align-items: center;
+            justify-items: center;
+        }
+
+        /* 3D 空间坐标转换 */
+        .face-1 { transform: rotateY(0deg) translateZ(30px); }
+        .face-2 { transform: rotateY(90deg) translateZ(30px); }
+        .face-3 { transform: rotateX(90deg) translateZ(30px); }
+        .face-4 { transform: rotateX(-90deg) translateZ(30px); }
+        .face-5 { transform: rotateY(-90deg) translateZ(30px); }
+        .face-6 { transform: rotateY(180deg) translateZ(30px); }
+
+        /* 拟真骰子圆点 */
+        .pip {
+            width: 10px;
+            height: 10px;
+            background-color: #222;
+            border-radius: 50%;
+            box-shadow: inset 1px 1px 2px rgba(0,0,0,0.6);
+        }
+
+        /* 1点和大红点，4点也是红点 */
+        .face-1 .pip {
+            width: 18px;
+            height: 18px;
+            background-color: #d90429;
+        }
+        .face-4 .pip {
+            background-color: #d90429;
+        }
+
+        /* 独立控制每个点在网格中的位置 */
+        .pip.top-left     { grid-area: 1 / 1; }
+        .pip.top-right    { grid-area: 1 / 3; }
+        .pip.mid-left     { grid-area: 2 / 1; }
+        .pip.center       { grid-area: 2 / 2; }
+        .pip.mid-right    { grid-area: 2 / 3; }
+        .pip.bottom-left  { grid-area: 3 / 1; }
+        .pip.bottom-right { grid-area: 3 / 3; }
+
+        /* 控制区域 */
+        .controls {
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        select, button {
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: bold;
+        }
+
+        select {
+            background-color: #3a3a3a;
+            color: white;
+            cursor: pointer;
+            border: 1px solid #555;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(217, 4, 41, 0.4);
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background-color: #555;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* 实时序列与结算面板（一直显示） */
+        .summary-box {
+            background: rgba(46, 196, 182, 0.08);
+            border: 1px dashed #2ec4b6;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .highlight-box {
+            display: inline-block;
+            background: #2563eb;
+            color: #fff;
+            padding: 4px 10px;
+            margin: 4px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1rem;
+            animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .reset-btn {
+            background-color: #2ec4b6;
+            box-shadow: 0 4px 12px rgba(46, 196, 182, 0.3);
+            width: 100%;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🎲 仿真3D摇骰子</h1>
+    
+    <div class="status-bar">
+        当前进度：<span id="current-count" style="color:#ffb703; font-weight:bold;">0</span> / 10 颗骰子
+    </div>
+
+    <div class="dice-stage" id="dice-stage">
+        <div class="stage-hint" id="stage-hint">请选择单次数量并点击“掷出骰子！”</div>
+    </div>
+
+    <div class="controls">
+        <label for="mode-select">本轮摇动数量：</label>
+        <select id="mode-select">
+            <option value="1">1 次摇 1 颗</option>
+            <option value="2">1 次摇 2 颗</option>
+            <option value="5">1 次摇 5 颗</option>
+            <option value="10" selected>1 次摇 10 颗</option>
+        </select>
+        <button id="roll-btn" onclick="rollDice3D()">掷出骰子！</button>
+    </div>
+
+    <div class="summary-box" id="summary-box">
+        <h2 id="summary-title" style="color: #ffb703; margin: 0 0 12px 0;">📊 序列明细看板</h2>
+        <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 5px;"><strong>当前已确定的点数明细：</strong></p>
+        <p id="all-pips-flow" style="min-height: 35px; margin: 0 0 15px 0; color: #888;">暂无数据，等待投掷...</p>
+        <p id="total-score" style="font-size: 1.5rem; font-weight:bold; color:#fff; margin: 5px 0;">当前累计总点数：0 分</p>
+        <button id="reset-btn" class="reset-btn" onclick="resetGame()" style="display: none;">再来一局</button>
+    </div>
+</div>
+
+<script>
+    var totalRolled = 0;      
+    var allHistoryPoints = []; 
+    var targetDiceCount = 10;
+
+    var diceStage = document.getElementById('dice-stage');
+    var modeSelect = document.getElementById('mode-select');
+    var rollBtn = document.getElementById('roll-btn');
+    var currentCountSpan = document.getElementById('current-count');
+    var summaryBox = document.getElementById('summary-box');
+    var summaryTitle = document.getElementById('summary-title');
+    var allPipsFlow = document.getElementById('all-pips-flow');
+    var totalScore = document.getElementById('total-score');
+    var resetBtn = document.getElementById('reset-btn');
+
+    // 3D面朝向角度映射
+    var faceTransforms = {
+        1: { x: 0,    y: 0 },
+        2: { x: 0,    y: -90 },
+        3: { x: -90,  y: 0 },
+        4: { x: 90,   y: 0 },
+        5: { x: 0,    y: 90 },
+        6: { x: 180,  y: 0 }
+    };
+
+    // 骰子圆点经典布局分布
+    var facePipsConfig = {
+        1: ['center'],
+        2: ['top-left', 'bottom-right'],
+        3: ['top-left', 'center', 'bottom-right'],
+        4: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
+        5: ['top-left', 'top-right', 'center', 'bottom-left', 'bottom-right'],
+        6: ['top-left', 'top-right', 'mid-left', 'mid-right', 'bottom-left', 'bottom-right']
+    };
+
+    function autoAdjustSelect() {
+        var selected = parseInt(modeSelect.value);
+        if (totalRolled + selected > targetDiceCount) {
+            modeSelect.value = targetDiceCount - totalRolled;
+        }
+    }
+
+    function rollDice3D() {
+        var numToRoll = parseInt(modeSelect.value);
+        if (totalRolled + numToRoll > targetDiceCount) {
+            alert("数量超出范围！");
+            return;
+        }
+
+        // 锁定控制
+        rollBtn.disabled = true;
+        modeSelect.disabled = true;
+
+        // 移除初始欢迎文字
+        var hint = document.getElementById('stage-hint');
+        if (hint) hint.remove();
+
+        // 如果是新开局的一声，清理占位符文本
+        if (totalRolled === 0) {
+            allPipsFlow.innerHTML = '';
+        }
+
+        // 1. 瞬间锁定随机点数
+        var thisRoundPoints = [];
+        for (var i = 0; i < numToRoll; i++) {
+            var point = Math.floor(Math.random() * 6) + 1;
+            thisRoundPoints.push(point);
+            allHistoryPoints.push(point);
+        }
+
+        // 2. 在舞台上【追加】3D实体骰子（之前摇出来的不动）
+        for (var j = 0; j < numToRoll; j++) {
+            var targetPoint = thisRoundPoints[j];
+            
+            var cubeContainer = document.createElement('div');
+            cubeContainer.className = 'cube-container';
+            
+            var cube = document.createElement('div');
+            cube.className = 'cube';
+
+            // 建立六个拟真圆点面
+            for (var f = 1; f <= 6; f++) {
+                var face = document.createElement('div');
+                face.className = 'cube-face face-' + f;
+                
+                var pipsArray = facePipsConfig[f];
+                for (var p = 0; p < pipsArray.length; p++) {
+                    var pipDom = document.createElement('div');
+                    pipDom.className = 'pip ' + pipsArray[p];
+                    face.appendChild(pipDom);
+                }
+                cube.appendChild(face);
+            }
+
+            cubeContainer.appendChild(cube);
+            diceStage.appendChild(cubeContainer);
+
+            // 触发翻滚物理动画
+            (function(c, p) {
+                setTimeout(function() {
+                    var angles = faceTransforms[p];
+                    var randX = angles.x + (Math.floor(Math.random() * 2) + 3) * 360;
+                    var randY = angles.y + (Math.floor(Math.random() * 2) + 3) * 360;
+                    c.style.transform = 'rotateX(' + randX + 'deg) rotateY(' + randY + 'deg)';
+                }, 50);
+            })(cube, targetPoint);
+        }
+
+        // 3. 【核心修改】当动画完全静止（1.05秒后），同步在面板中“追加”这一批点数标签
+        setTimeout(function() {
+            // 在原有的明细中追加生成对应的点数蓝色方块
+            for (var k = 0; k < thisRoundPoints.length; k++) {
+                var span = document.createElement('span');
+                span.className = 'highlight-box';
+                span.innerText = thisRoundPoints[k] + '点';
+                allPipsFlow.appendChild(span);
+            }
+
+            // 更新顶部计数和当前累计总得分
+            totalRolled += numToRoll;
+            currentCountSpan.innerText = totalRolled;
+
+            var currentSum = allHistoryPoints.reduce((a, b) => a + b, 0);
+            totalScore.innerText = '当前累计总点数：' + currentSum + ' 分';
+
+            // 解锁或封顶判断
+            if (totalRolled >= targetDiceCount) {
+                endGame(currentSum);
+            } else {
+                rollBtn.disabled = false;
+                modeSelect.disabled = false;
+                autoAdjustSelect();
+            }
+        }, 1050);
+    }
+
+    function endGame(finalSum) {
+        // 彻底结束，按钮全部封死
+        rollBtn.disabled = true;
+        modeSelect.disabled = true;
+
+        // 改变标题强化视觉
+        summaryTitle.innerHTML = '🏆 10颗骰子最终大结算';
+        totalScore.innerHTML = '总点数累计：<span style="font-size:2.2rem; color:#ffb703;">' + finalSum + '</span> 分 🎲';
+        
+        // 唤醒“再来一局”按钮
+        resetBtn.style.display = 'block';
+    }
+
+    function resetGame() {
+        totalRolled = 0;
+        allHistoryPoints = [];
+        currentCountSpan.innerText = '0';
+        
+        // 还原舞台
+        diceStage.innerHTML = '<div class="stage-hint" id="stage-hint">请选择单次数量并点击“掷出骰子！”</div>';
+        
+        // 还原下方明细框状态
+        summaryTitle.innerHTML = '📊 序列明细看板';
+        allPipsFlow.innerHTML = '暂无数据，等待投掷...';
+        totalScore.innerText = '当前累计总点数：0 分';
+        resetBtn.style.display = 'none';
+        
+        // 恢复可用控件
+        rollBtn.disabled = false;
+        modeSelect.disabled = false;
+        modeSelect.value = "10";
+    }
+</script>
+
+</body>
+</html>
