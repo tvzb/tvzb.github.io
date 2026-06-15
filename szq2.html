@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>石子棋 - 高级自适应对弈版</title>
+  <style>
+    :root {
+      --blue-piece: #dc2626;
+      --blue-piece-dark: #7f1d1d;
+      --black-piece: #111111;
+      --black-piece-dark: #000000;
+      --primary-color: #4f46e5;
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      color: #f8fafc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    /* 电脑端响应式双栏布局 */
+    @media (min-width: 992px) {
+      .container {
+        grid-template-columns: 280px 1fr;
+        align-items: start;
+      }
+      .side-panel {
+        grid-column: 1;
+        position: sticky;
+        top: 20px;
+      }
+      .game-panel {
+        grid-column: 2;
+      }
+      nav ul {
+        flex-direction: column !important;
+        align-items: stretch !important;
+      }
+    }
+
+    /* 现代悬浮岛导航栏 */
+    nav {
+      background: rgba(30, 41, 59, 0.7);
+      padding: 12px;
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    nav a {
+      display: block;
+      padding: 12px 18px;
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 12px;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    nav a:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    nav a.active {
+      background: var(--primary-color);
+      color: white;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    }
+
+    .main-card {
+      background: rgba(30, 41, 59, 0.7);
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      padding: 24px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin: 0 0 6px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(to right, #6366f1, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      color: #94a3b8;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    /* 状态指示器区 */
+    #status {
+      margin: 15px 0;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 12px;
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 14px;
+      border-left: 4px solid var(--primary-color);
+      color: #e2e8f0;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 顶部控制台按钮区 */
+    .controls {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    button, select {
+      padding: 10px 18px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #1e293b;
+      color: #f8fafc;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+    
+    button:hover:not(:disabled), select:hover {
+      background: #334155;
+    }
+
+    button.primary {
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+    button.primary:hover {
+      background: #4338ca;
+    }
+
+    button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* 棋盘包裹层 */
+    .board-wrap {
+      background: #0f172a;
+      border-radius: 20px;
+      padding: 12px;
+      display: inline-block;
+      box-shadow: inset 0 4px 12px rgba(0,0,0,0.5);
+      margin: 10px auto;
+    }
+
+    canvas {
+      display: block;
+      margin: auto;
+      border-radius: 12px;
+      touch-action: none;
+    }
+
+    /* 阵营标志区 */
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin: 16px 0;
+      font-size: 14px;
+      background: rgba(15, 23, 42, 0.4);
+      padding: 10px;
+      border-radius: 12px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      box-shadow: 0 0 6px rgba(0,0,0,0.5);
+    }
+    .blue { background: var(--blue-piece); }
+    .black { background: var(--black-piece); }
+
+    /* 下方自定义设置区 */
+    .settings {
+      margin-top: 20px;
+      padding: 16px;
+      background: rgba(15, 23, 42, 0.4);
+      border-radius: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      font-size: 13px;
+      text-align: left;
+    }
+    .settings label {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      color: #94a3b8;
+    }
+    .settings select {
+      width: 100%;
+      padding: 8px 12px;
+    }
+
+    /* 现代弹窗（替换原生 alert 与简陋的普通 div） */
+    .modal {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal.show {
+      opacity: 1; pointer-events: auto;
+    }
+    .modal-content {
+      background: #1e293b;
+      padding: 32px;
+      border-radius: 24px;
+      text-align: center;
+      max-width: 90%;
+      width: 380px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+    .modal.show .modal-content {
+      transform: scale(1);
+    }
+    .modal-content h2 {
+      margin: 0 0 12px;
+      font-size: 22px;
+      color: #fff;
+    }
+    .modal-content p {
+      color: #94a3b8;
+      margin: 0 0 24px;
+      font-size: 14px;
+    }
+    .modal-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    /* 移动端特殊样式覆盖优化 */
+    @media (max-width: 576px) {
+      body { padding: 0; }
+      .container { padding: 10px; gap: 12px; }
+      .main-card { padding: 16px; border-radius: 16px; }
+      button, select { padding: 10px 14px; font-size: 13px; border-radius: 10px; }
+      #status { font-size: 14px; padding: 10px; min-height: 40px; }
+      .legend { flex-direction: row; gap: 14px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="side-panel">
+      <nav>
+        <ul>
+          <li><a href="index.html">智能处理</a></li>
+          <li><a href="wzcl.html">文字处理</a></li>
+          <li><a href="pdzl.html">频道整理</a></li>
+          <li><a href="m2t.html">M3U↔TXT转换</a></li>
+          <li><a href="#" class="active">石子棋</a></li>
+        </ul>
+      </nav>
+    </div>
+    
+    <div class="game-panel">
+      <div class="main-card">
+        <h1>石子棋（4×4格 · 5×5交点）</h1>
+        <p class="subtitle">完美自适应 · 智能AI对战 / 双人同屏面面对战</p>
+
+        <div class="controls">
+          <button id="restart" class="primary">新对局 / 换手</button>
+          <button id="undo">悔棋</button>
+          <select id="mode" title="对弈模式">
+            <option value="hvh" selected>双人同屏对战</option>
+            <option value="blue-ai">电脑执红</option>
+            <option value="black-ai">电脑执黑</option>
+          </select>
+        </div>
+
+        <div id="status">正在加载棋盘...</div>
+
+        <div class="board-wrap">
+          <canvas id="board" aria-label="石子棋棋盘" role="img"></canvas>
+        </div>
+
+        <div class="legend">
+          <div class="legend-item">
+            <span class="dot blue"></span><span id="blue-label">红方</span>
+          </div>
+          <div class="legend-item">
+            <span class="dot black"></span><span id="black-label">黑方</span>
+          </div>
+        </div>
+
+        <div class="settings">
+          <label>棋盘底色
+            <select id="board-bg">
+              <option value="#e6d7c3" selected>古典木纹</option>
+              <option value="#ffffff">纯洁白</option>
+              <option value="#f0f0f0">雅致灰</option>
+              <option value="#d4e4d4">护眼绿</option>
+            </select>
+          </label>
+          <label>红方棋子颜色
+            <select id="blue-piece">
+              <option value="#dc2626" selected>烈焰红</option>
+              <option value="#111111">深邃黑</option>
+              <option value="#16a34a">翡翠绿</option>
+              <option value="#3b82f6">科技蓝</option>
+            </select>
+          </label>
+          <label>黑方棋子颜色
+            <select id="black-piece">
+              <option value="#111111" selected>深邃黑</option>
+              <option value="#dc2626">烈焰红</option>
+              <option value="#16a34a">翡翠绿</option>
+              <option value="#3b82f6">科技蓝</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <footer>
+        石子棋 © 2026 · 高级自适应纯前端版
+      </footer>
+    </div>
+  </div>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <div id="modal-message"></div>
+      <div id="modal-buttons" class="modal-buttons"></div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      // ===== 棋盘及自适应关键核心参数 ===== [cite: 60]
+      const GRID = 5; [cite: 60]
+      let CELL = 80; [cite: 60]
+      let PAD = 30; [cite: 60]
+      let SIZE = 400; [cite: 60]
+
+      const canvas = document.getElementById('board'); [cite: 61]
+      const ctx = canvas.getContext('2d'); [cite: 61]
+      const DPR = Math.max(1, window.devicePixelRatio || 1); [cite: 62]
+
+      // 精准的跨平台自适应画布缩放计算 [cite: 62]
+      function resizeCanvas() {
+        const padding = window.innerWidth < 576 ? 54 : 100;
+        const maxWidth = Math.min(window.innerWidth - padding, 500); [cite: 63]
+        SIZE = maxWidth; [cite: 63]
+        PAD = SIZE * 0.08; 
+        CELL = (SIZE - PAD * 2) / (GRID - 1); [cite: 64]
+
+        canvas.width = Math.round(SIZE * DPR); [cite: 64]
+        canvas.height = Math.round(SIZE * DPR); [cite: 64]
+        canvas.style.width = SIZE + "px"; [cite: 65]
+        canvas.style.height = SIZE + "px"; [cite: 65]
+        ctx.scale(DPR, DPR); [cite: 65]
+        draw(); [cite: 65]
+      }
+      window.addEventListener('resize', resizeCanvas); [cite: 66]
+
+      // 绑定 UI 元素 [cite: 66]
+      const modeSel = document.getElementById('mode'); [cite: 66]
+      const statusEl = document.getElementById('status'); [cite: 67]
+      const modal = document.getElementById('modal'); [cite: 67]
+      const modalMessage = document.getElementById('modal-message'); [cite: 67]
+      const modalButtons = document.getElementById('modal-buttons'); [cite: 68]
+      const boardBgSelect = document.getElementById('board-bg'); [cite: 68]
+      const bluePieceSelect = document.getElementById('blue-piece'); [cite: 68]
+      const blackPieceSelect = document.getElementById('black-piece'); [cite: 68]
+      const blueLabel = document.getElementById('blue-label'); [cite: 68]
+      const blackLabel = document.getElementById('black-label'); [cite: 68]
+
+      // 初始化核心运行状态变量 [cite: 69]
+      let board, turn, selected=null, legalMoves=[], lastMove=null, aiThinking=false, gameOver=false; [cite: 69]
+      const history = []; [cite: 69]
+
+      // 统一配色与文案状态机同步更新（彻底修复卡在“正在加载棋盘”的CSS变量时序错误问题）
+      function updateColors(){
+        const blueColor = bluePieceSelect.value; [cite: 70]
+        const blackColor = blackPieceSelect.value; [cite: 71]
+        
+        // 动态变更全局CSS值，提供丝滑换肤
+        document.documentElement.style.setProperty('--blue-piece', blueColor); [cite: 71]
+        document.documentElement.style.setProperty('--blue-piece-dark', darkenColor(blueColor, 0.6)); [cite: 71]
+        document.documentElement.style.setProperty('--black-piece', blackColor); [cite: 71]
+        document.documentElement.style.setProperty('--black-piece-dark', darkenColor(blackColor, 0.6)); [cite: 71]
+
+        const isHvH = modeSel.value === 'hvh';
+        blueLabel.textContent = (modeSel.value === 'blue-ai' ? '电脑' : '玩家一') + `（${getColorName(blueColor)}）`; [cite: 71, 72]
+        blackLabel.textContent = (modeSel.value === 'black-ai' ? '电脑' : '玩家二') + `（${getColorName(blackColor)}）`; [cite: 72]
+
+        const modeOptions = modeSel.options; [cite: 72]
+        modeOptions[1].text = `电脑执${getColorName(blueColor)}`; [cite: 72]
+        modeOptions[2].text = `电脑执${getColorName(blackColor)}`; [cite: 72]
+
+        draw(); [cite: 72]
+      }
+
+      function getColorName(hex) {
+        const map = {'#dc2626':'红', '#111111':'黑', '#16a34a':'绿', '#3b82f6':'蓝'}; [cite: 73]
+        return map[hex] || '自定义'; [cite: 74]
+      }
+
+      function darkenColor(hex, factor){
+        hex = hex.replace('#',''); [cite: 74]
+        const r = parseInt(hex.slice(0,2),16); [cite: 75]
+        const g = parseInt(hex.slice(2,4),16); [cite: 75]
+        const b = parseInt(hex.slice(4,6),16); [cite: 75]
+        return `rgb(${Math.round(r*factor)},${Math.round(g*factor)},${Math.round(b*factor)})`; [cite: 75]
+      }
+
+      function restrictColors(){
+        const blue = bluePieceSelect.value; [cite: 76]
+        const black = blackPieceSelect.value; [cite: 77]
+        Array.from(bluePieceSelect.options).forEach(o => o.disabled = o.value === black); [cite: 77]
+        Array.from(blackPieceSelect.options).forEach(o => o.disabled = o.value === blue); [cite: 77]
+      }
+
+      boardBgSelect.addEventListener('change', () => draw());
+      bluePieceSelect.addEventListener('change', () => { updateColors(); restrictColors(); }); [cite: 78]
+      blackPieceSelect.addEventListener('change', () => { updateColors(); restrictColors(); }); [cite: 79]
+
+      // 规则底层基础工具函数 [cite: 79]
+      const inBoard = (x,y)=> x>=0 && y>=0 && x<GRID && y<GRID; [cite: 79]
+      const get = (x,y)=> board[y][x]; [cite: 80]
+      const set = (x,y,v)=> board[y][x]=v; [cite: 80]
+      const toPx = c => PAD + c*CELL; [cite: 80]
+      const clamp = (v,min,max)=> Math.max(min,Math.min(max,v)); [cite: 81]
+      function fromPx(p){ return clamp(Math.round((p - PAD)/CELL), 0, GRID-1); } [cite: 81]
+      const neighbors = (x,y)=> [{x:x+1,y},{x:x-1,y},{x,y:y+1},{x,y:y-1}].filter(p=>inBoard(p.x,p.y)); [cite: 82]
+      const computeLegal = (x,y)=> neighbors(x,y).filter(p=> get(p.x,p.y)===null ); [cite: 82]
+      const cloneBoard = bd=> bd.map(r=>r.slice()); [cite: 83]
+      const isAiTurn = ()=> (modeSel.value==='blue-ai' && turn==='blue') || (modeSel.value==='black-ai' && turn==='black'); [cite: 83]
+
+      // 初始化游戏棋盘与数据 [cite: 84]
+      function init(firstPlayer = 'blue'){
+        board = Array.from({length:GRID},()=>Array(GRID).fill(null)); [cite: 84]
+        for(let x=0;x<GRID;x++){ [cite: 84]
+          board[0][x] = 'blue'; [cite: 85]
+          board[GRID-1][x] = 'black'; [cite: 85]
+        }
+        turn = firstPlayer; [cite: 86]
+        selected = null; [cite: 86]
+        legalMoves = []; [cite: 86]
+        lastMove = null; [cite: 86]
+        aiThinking = false; [cite: 87]
+        gameOver = false; [cite: 87]
+        history.length = 0; [cite: 87]
+        draw(); [cite: 87]
+        updateStatus(); [cite: 87]
+        maybeAiMove(); [cite: 87]
+      }
+
+      // 画布图形完美渲染层（包含3D球体质感和自适应光泽） [cite: 88]
+      function draw(){
+        if (!board) return;
+        ctx.clearRect(0,0,SIZE,SIZE); [cite: 88]
+        
+        // 渲染底板色
+        ctx.fillStyle = boardBgSelect.value || '#e6d7c3';
+        ctx.fillRect(0,0,SIZE,SIZE); [cite: 89]
+        
+        // 绘制交织线网格 [cite: 89]
+        ctx.strokeStyle = "rgba(15, 23, 42, 0.25)"; [cite: 89]
+        ctx.lineWidth = 2; [cite: 89]
+        for(let i=0;i<GRID;i++){ [cite: 89]
+          ctx.beginPath(); [cite: 90]
+          ctx.moveTo(toPx(0), toPx(i)); [cite: 90]
+          ctx.lineTo(toPx(GRID-1), toPx(i)); [cite: 90]
+          ctx.stroke(); [cite: 91]
+          ctx.beginPath(); [cite: 91]
+          ctx.moveTo(toPx(i), toPx(0)); [cite: 91]
+          ctx.lineTo(toPx(i), toPx(GRID-1)); [cite: 91]
+          ctx.stroke(); [cite: 91]
+        }
+
+        // 渲染落子轨迹步迹 [cite: 91]
+        if(lastMove){ [cite: 91]
+          ctx.fillStyle = "rgba(79, 70, 229, 0.18)"; [cite: 91]
+          for(const c of [lastMove.from, lastMove.to]){ [cite: 92]
+            ctx.beginPath(); [cite: 92]
+            ctx.arc(toPx(c.x), toPx(c.y), CELL*0.25, 0, Math.PI*2); [cite: 93]
+            ctx.fill(); [cite: 93]
+          }
+        }
+
+        // 选定高亮以及绿色可移动圆点提示 [cite: 93]
+        if(selected && !gameOver){ [cite: 93]
+          ctx.fillStyle = "rgba(99, 102, 241, 0.3)"; [cite: 93]
+          ctx.beginPath(); [cite: 94]
+          ctx.arc(toPx(selected.x), toPx(selected.y), CELL*0.35, 0, Math.PI*2); [cite: 94]
+          ctx.fill(); [cite: 94]
+          
+          ctx.fillStyle = "rgba(34, 197, 94, 0.4)"; [cite: 94]
+          for(const p of legalMoves){ [cite: 95]
+            ctx.beginPath(); [cite: 95]
+            ctx.arc(toPx(p.x), toPx(p.y), CELL*0.16, 0, Math.PI*2); [cite: 96]
+            ctx.fill(); [cite: 96]
+          }
+        }
+
+        // 遍历输出矩阵棋子 [cite: 96]
+        for(let y=0;y<GRID;y++)for(let x=0;x<GRID;x++){ [cite: 96]
+          const v = board[y][x]; [cite: 97]
+          if(v) drawStone(x,y,v); [cite: 97]
+        }
+      }
+
+      function drawStone(x,y,color){
+        const cx = toPx(x), cy = toPx(y); [cite: 97]
+        const r = CELL * 0.26; // 半径自适应 
+        
+        // 拟真立体落影 [cite: 98]
+        ctx.beginPath(); [cite: 98]
+        ctx.arc(cx, cy + 3, r, 0, Math.PI*2); [cite: 98]
+        ctx.fillStyle = "rgba(0,0,0,0.3)"; [cite: 99]
+        ctx.fill(); [cite: 99]
+
+        // 镜像圆弧亮泽渲染 [cite: 99]
+        const g = ctx.createRadialGradient(cx - r*0.3, cy - r*0.4, r*0.1, cx, cy, r); [cite: 99]
+        const mainColor = getComputedStyle(document.documentElement).getPropertyValue(`--${color}-piece`).trim(); [cite: 100]
+        const darkColor = getComputedStyle(document.documentElement).getPropertyValue(`--${color}-piece-dark`).trim(); [cite: 100]
+        g.addColorStop(0, lightenColor(mainColor, 1.3)); [cite: 100]
+        g.addColorStop(1, mainColor); [cite: 100]
+        
+        ctx.beginPath(); [cite: 100]
+        ctx.arc(cx, cy, r, 0, Math.PI*2); [cite: 100]
+        ctx.fillStyle = g; [cite: 101]
+        ctx.fill(); [cite: 101]
+        
+        ctx.lineWidth = 1.5; [cite: 101]
+        ctx.strokeStyle = darkColor; [cite: 101]
+        ctx.stroke(); [cite: 101]
+
+        // 顶部小球高光弧面 [cite: 101]
+        ctx.beginPath(); [cite: 101]
+        ctx.arc(cx - r*0.4, cy - r*0.4, r*0.25, 0, Math.PI*2); [cite: 101]
+        ctx.fillStyle = "rgba(255,255,255,0.45)"; [cite: 102]
+        ctx.fill(); [cite: 102]
+      }
+
+      function lightenColor(hex, factor){
+        hex = hex.trim().replace('#', ''); [cite: 101]
+        if(hex.length === 3) hex = hex.split('').map(c => c+c).join('');
+        const r = parseInt(hex.slice(0,2), 16); [cite: 102]
+        const g = parseInt(hex.slice(2,4), 16); [cite: 102]
+        const b = parseInt(hex.slice(4,6), 16); [cite: 102]
+        return `rgb(${Math.min(255, Math.round(r*factor))},${Math.min(255, Math.round(g*factor))},${Math.min(255, Math.round(b*factor))})`; [cite: 103]
+      }
+
+      // 智能回合状态机文本显示处理 [cite: 103]
+      function updateStatus(msg){
+        if(msg){ statusEl.textContent = msg; return; } [cite: 103]
+        const isHvH = modeSel.value === 'hvh'; [cite: 104]
+        let who = '';
+        if(turn === 'blue') {
+          who = isHvH ? '玩家一 (红方)' : '电脑方';
+        } else {
+          who = isHvH ? '玩家二 (黑方)' : '玩家方';
+        }
+        statusEl.textContent = `当前回合：${who} ${isAiTurn() ? '（思考中…）' : '（请点选棋子移动）'}`; [cite: 104, 105]
+      }
+
+      // ===== 完全保留的吃子规则核心逻辑算法 ===== [cite: 105]
+      function checkCapturesOn(bd, current, afterX, afterY){
+        let captured = 0; [cite: 105]
+        function checkLine(getCell,setCell){ [cite: 106]
+          const occ = []; [cite: 106]
+          for(let i=0;i<GRID;i++){ const v=getCell(i); [cite: 106]
+            if(v) occ.push({i,v}); } [cite: 107]
+          if(occ.length !== 3) return 0; [cite: 107]
+          const my = occ.filter(o=>o.v===current).length; [cite: 108]
+          if(my !== 2) return 0; [cite: 108]
+          occ.sort((a,b)=>a.i-b.i); [cite: 108]
+          const idxs = occ.map(o=>o.i); [cite: 108]
+          if(idxs[2]-idxs[0] !== 2) return 0; [cite: 108]
+          const pat = occ.map(o=>o.v); [cite: 109]
+          const ok = (pat[0]===current && pat[1]===current && pat[2]!==current) || [cite: 109]
+                     (pat[0]!==current && pat[1]===current && pat[2]===current); [cite: 109]
+          if(!ok) return 0; [cite: 110]
+          const eatIndex = pat[0]!==current ? idxs[0] : idxs[2]; [cite: 110]
+          if(getCell(eatIndex)){ setCell(eatIndex, null); return 1; } [cite: 110, 111]
+          return 0; [cite: 111]
+        }
+        captured += checkLine(i=>bd[afterY][i], (i,v)=> bd[afterY][i]=v); [cite: 112]
+        captured += checkLine(i=>bd[i][afterX], (i,v)=> bd[i][afterX]=v); [cite: 112]
+        return captured; [cite: 112]
+      }
+
+      function checkCaptures(afterX, afterY){ [cite: 113]
+        return checkCapturesOn(board, turn, afterX, afterY); [cite: 113, 114]
+      }
+
+      function countPiecesOn(bd){ [cite: 114]
+        let B=0,K=0; [cite: 114]
+        for(let y=0;y<GRID;y++)for(let x=0;x<GRID;x++){ [cite: 115]
+          const v=bd[y][x]; [cite: 115]
+          if(v==='blue') B++; [cite: 115]
+          else if(v==='black') K++; [cite: 116]
+        }
+        return {blue:B,black:K}; [cite: 116]
+      }
+
+      // 高级模糊浮层弹窗控制 [cite: 117]
+      function openModal() { modal.classList.add('show'); }
+      function closeModal() { modal.classList.remove('show'); }
+
+      function showGameOver(winner){
+        gameOver = true; [cite: 117]
+        const isHvH = modeSel.value === 'hvh';
+        let name = '';
+        if(winner === 'blue') name = isHvH ? '玩家一 (红方)' : '电脑方';
+        else name = isHvH ? '玩家二 (黑方)' : '玩家方';
+        
+        modalMessage.innerHTML = `<h2>对局结束</h2><p style="font-size:16px;color:#22c55e;font-weight:bold;">恭喜，${name} 斩获胜利！</p>`; [cite: 118]
+        modalButtons.innerHTML = `<button class="primary" onclick="closeModal(); showFirstPlayerPrompt()">再来一局</button>`; [cite: 118]
+        openModal(); [cite: 118]
+      }
+
+      function showFirstPlayerPrompt(){
+        const isHvH = modeSel.value === 'hvh'; [cite: 119]
+        modalMessage.innerHTML = `<h2>新局配置</h2><p>请选择执红先手的阵营：</p>`; [cite: 119]
+        modalButtons.innerHTML = `
+          <button class="primary" id="blue-first">${isHvH ? '玩家一 (红)' : '电脑方'} 先手</button>
+          <button class="primary" id="black-first">${isHvH ? '玩家二 (黑)' : '玩家方'} 先手</button>
+        `; [cite: 120]
+        openModal(); [cite: 121]
+        document.getElementById('blue-first').onclick = () => startGame('blue'); [cite: 122]
+        document.getElementById('black-first').onclick = () => startGame('black'); [cite: 122]
+      }
+
+      function startGame(firstPlayer){ [cite: 123]
+        closeModal(); [cite: 123]
+        init(firstPlayer); [cite: 123]
+      }
+
+      // ===== 完全保留的 AI 逻辑核心极小极大化博弈树算法 ===== [cite: 124]
+      function allMovesFor(bd, color){ [cite: 124]
+        const mv = []; [cite: 124]
+        for(let y=0;y<GRID;y++)for(let x=0;x<GRID;x++){ [cite: 125]
+          if(bd[y][x]!==color) continue; [cite: 125]
+          for(const p of neighbors(x,y)) if(bd[p.y][p.x]===null) mv.push({from:{x,y},to:{x:p.x,y:p.y}}); [cite: 125]
+        } [cite: 126]
+        return mv; [cite: 126]
+      }
+
+      function applyMove(bd, move, color){ [cite: 127]
+        const newBd = cloneBoard(bd); [cite: 127]
+        newBd[move.to.y][move.to.x] = color; [cite: 128]
+        newBd[move.from.y][move.from.x] = null; [cite: 128]
+        checkCapturesOn(newBd, color, move.to.x, move.to.y); [cite: 128]
+        return newBd; [cite: 128]
+      }
+
+      function evaluateBoard(bd, aiColor){ [cite: 130]
+        const opponent = aiColor === 'blue' ? 'black' : 'blue'; [cite: 130, 131]
+        const cnt = countPiecesOn(bd); [cite: 131]
+        const aiPieces = cnt[aiColor]; [cite: 131]
+        const oppPieces = cnt[opponent]; [cite: 131]
+        if(oppPieces <= 1) return 1000000; [cite: 131]
+        if(aiPieces <= 1) return -1000000; [cite: 132]
+        let score = (aiPieces - oppPieces) * 1000; [cite: 132]
+        const aiMoves = allMovesFor(bd, aiColor); [cite: 132]
+        score += aiMoves.length * 100; [cite: 133]
+        return score; [cite: 133]
+      }
+
+      function minimax(bd, depth, alpha, beta, maximizing, aiColor, timeLimit, startTime){ [cite: 134]
+        if(performance.now() - startTime > timeLimit || depth === 0) return evaluateBoard(bd, aiColor); [cite: 134]
+        const cnt = countPiecesOn(bd); [cite: 135]
+        if(cnt[aiColor] <= 1) return -1000000; [cite: 135]
+        if(cnt[aiColor === 'blue' ? 'black' : 'blue'] <= 1) return 1000000; [cite: 135]
+        const currentColor = maximizing ? aiColor : (aiColor === 'blue' ? 'black' : 'blue'); [cite: 136]
+        const moves = allMovesFor(bd, currentColor); [cite: 136]
+        if(maximizing){ [cite: 137]
+          let maxEval = -Infinity; [cite: 137]
+          for(const move of moves){ [cite: 138]
+            const newBd = applyMove(bd, move, currentColor); [cite: 138]
+            const evalScore = minimax(newBd, depth-1, alpha, beta, false, aiColor, timeLimit, startTime); [cite: 139]
+            maxEval = Math.max(maxEval, evalScore); [cite: 139]
+            alpha = Math.max(alpha, evalScore); [cite: 139]
+            if(beta <= alpha) break; [cite: 140]
+          }
+          return maxEval; [cite: 140]
+        } else { [cite: 141]
+          let minEval = Infinity; [cite: 141]
+          for(const move of moves){ [cite: 142]
+            const newBd = applyMove(bd, move, currentColor); [cite: 142]
+            const evalScore = minimax(newBd, depth-1, alpha, beta, true, aiColor, timeLimit, startTime); [cite: 143]
+            minEval = Math.min(minEval, evalScore); [cite: 143]
+            beta = Math.min(beta, evalScore); [cite: 144]
+            if(beta <= alpha) break; [cite: 144]
+          }
+          return minEval; [cite: 145]
+        }
+      }
+
+      function aiPickMove(){ [cite: 145]
+        const color = turn; [cite: 145]
+        const moves = allMovesFor(board, color); [cite: 146]
+        if(!moves.length) return null; [cite: 146]
+        const startTime = performance.now(); [cite: 146]
+        const timeLimit = 800; [cite: 146]
+        let bestMove = moves[0]; [cite: 146]
+        let bestScore = -Infinity; [cite: 147]
+        for(const move of moves){ [cite: 147]
+          const newBd = applyMove(board, move, color); [cite: 148]
+          const score = minimax(newBd, 4, -Infinity, Infinity, false, color, timeLimit, startTime); [cite: 148]
+          if(score > bestScore){ bestScore = score; bestMove = move; } [cite: 149, 150]
+        }
+        return bestMove; [cite: 150]
+      }
+
+      function maybeAiMove(){ [cite: 151]
+        if(!isAiTurn() || gameOver || aiThinking) return; [cite: 151]
+        aiThinking = true; [cite: 151]
+        updateStatus('电脑正深思熟虑中…'); [cite: 152]
+        setTimeout(()=>{ [cite: 152]
+          const mv = aiPickMove(); [cite: 152]
+          if(!mv){ [cite: 152]
+            aiThinking = false; [cite: 152]
+            showGameOver(turn === 'blue' ? 'black' : 'blue'); [cite: 153]
+            return; [cite: 153]
+          }
+          history.push({board: cloneBoard(board), turn, lastMove}); [cite: 152]
+          set(mv.to.x, mv.to.y, turn); [cite: 153]
+          set(mv.from.x, mv.from.y, null); [cite: 153]
+          lastMove = {from: mv.from, to: mv.to}; [cite: 153]
+          checkCaptures(mv.to.x, mv.to.y); [cite: 153]
+
+          const cnt = countPiecesOn(board); [cite: 153]
+          if(cnt.blue <= 1 || cnt.black <= 1){ [cite: 153]
+            draw(); [cite: 154]
+            showGameOver(cnt.blue <= 1 ? 'black' : 'blue'); [cite: 154]
+            aiThinking = false; [cite: 154]
+            return; [cite: 154]
+          }
+          turn = turn==='blue' ? 'black' : 'blue'; [cite: 154]
+          aiThinking = false; [cite: 154]
+          draw(); [cite: 154]
+          updateStatus(); [cite: 154]
+          maybeAiMove(); [cite: 155]
+        }, 400); [cite: 155]
+      }
+
+      // 用户高精度触点与点击点击逻辑重合区 [cite: 156]
+      canvas.addEventListener('click', (evt)=>{
+        if(aiThinking || gameOver) return; [cite: 156]
+        const rect = canvas.getBoundingClientRect(); [cite: 156]
+        const sx = (evt.clientX - rect.left) * (canvas.width / rect.width) / DPR; [cite: 156]
+        const sy = (evt.clientY - rect.top) * (canvas.height / rect.height) / DPR; [cite: 156]
+        const x = fromPx(sx), y = fromPx(sy); [cite: 156]
+        if(!inBoard(x,y)) return; [cite: 156]
+
+        const cell = get(x,y); [cite: 156]
+
+        if(cell === turn && !isAiTurn()){ [cite: 157]
+          selected = {x,y}; [cite: 157]
+          legalMoves = computeLegal(x,y); [cite: 157]
+          draw(); [cite: 157]
+          return; [cite: 157]
+        }
+
+        if(selected && legalMoves.some(p=>p.x===x && p.y===y)){ [cite: 157]
+          history.push({board: cloneBoard(board), turn, lastMove}); [cite: 157]
+          set(x,y, turn); [cite: 157]
+          set(selected.x, selected.y, null); [cite: 158]
+          lastMove = {from: selected, to: {x,y}}; [cite: 158]
+          checkCaptures(x,y); [cite: 158]
+
+          const cnt = countPiecesOn(board); [cite: 158]
+          if(cnt.blue <= 1 || cnt.black <= 1){ [cite: 158]
+            draw(); [cite: 158]
+            showGameOver(cnt.blue <= 1 ? 'black' : 'blue'); [cite: 158, 159]
+            return; [cite: 159]
+          }
+
+          turn = turn==='blue' ? 'black' : 'blue'; [cite: 159, 160]
+          selected = null; [cite: 160]
+          legalMoves = []; [cite: 160]
+          draw(); [cite: 160]
+          updateStatus(); [cite: 160]
+          maybeAiMove(); [cite: 160]
+        } else {
+          selected = null; [cite: 161]
+          legalMoves = []; [cite: 161]
+          draw(); [cite: 161]
+        }
+      });
+
+      // 控制台按键响应 [cite: 162]
+      document.getElementById('restart').addEventListener('click', showFirstPlayerPrompt); [cite: 162]
+      document.getElementById('undo').addEventListener('click', ()=>{ [cite: 163]
+        if(aiThinking || history.length === 0 || gameOver) return; [cite: 163]
+        
+        const isHvH = modeSel.value === 'hvh';
+        // 如果是AI模式，点一次悔棋应当连续回退2步（回退电脑的落子和玩家的落子），防止死循环
+        if (!isHvH && history.length >= 2) {
+          history.pop();
+          const prev = history.pop();
+          board = prev.board; [cite: 163]
+          turn = prev.turn; [cite: 163]
+          lastMove = prev.lastMove; [cite: 163]
+        } else {
+          const prev = history.pop();
+          board = prev.board; [cite: 163]
+          turn = prev.turn; [cite: 163]
+          lastMove = prev.lastMove; [cite: 163]
+        }
+        
+        selected = null; [cite: 163]
+        legalMoves = []; [cite: 163]
+        gameOver = false;
+        draw(); [cite: 163]
+        updateStatus(); [cite: 163]
+      });
+      
+      modeSel.addEventListener('change', ()=>{ updateColors(); updateStatus(); maybeAiMove(); }); [cite: 164]
+
+      // 程序流激活启动 [cite: 164]
+      resizeCanvas(); [cite: 164]
+      updateColors(); [cite: 164]
+      restrictColors(); [cite: 164]
+      showFirstPlayerPrompt(); [cite: 164]
+    })();
+  </script>
+</body>
+</html>
