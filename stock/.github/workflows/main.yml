@@ -1,0 +1,46 @@
+name: A-Share Stock Monitor
+
+on:
+  workflow_dispatch: # 允许手动点击运行
+  schedule:
+    - cron: '45 3 * * 1-5' # 北京时间中午 11:45 自动运行
+    - cron: '15 7 * * 1-5' # 北京时间下午 15:15 自动运行
+
+permissions:
+  contents: write # 必须赋予写权限，否则Actions无法把生成的网页推回仓库
+
+jobs:
+  run-monitor:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests efinance pandas
+
+    - name: Run Script
+      env:
+        TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+        TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+        CF_WORKER_URL: ${{ secrets.CF_WORKER_URL }}
+      run: |
+        python monitor.py
+
+    - name: Commit and Push changes
+      run: |
+        git config --local user.email "actions@github.com"
+        git config --local user.name "GitHub Actions"
+        if [ -d "docs" ]; then
+          git add docs/
+          git diff-index --quiet HEAD || git commit -m "自动更新复盘网页 [skip ci]"
+          git push
+        fi
