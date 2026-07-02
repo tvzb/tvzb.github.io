@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>照片墙展示</title>
+    <style>
+        /* 页面基础设置 */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        /* 响应式照片网格布局 */
+        .gallery {
+            display: grid;
+            /* 自动排列，每张照片最小宽度 250px */
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 单张照片的样式 */
+        .gallery img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover; /* 保证照片填满区域且不变形 */
+            border-radius: 12px; /* 圆角效果 */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 添加阴影 */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* 鼠标悬停时的浮动放大效果 */
+        .gallery img:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>我的照片库</h1>
+    
+    <div class="gallery" id="gallery-container"></div>
+
+    <script>
+        // --- 配置区域 ---
+        const totalPhotos = 18;       // 你的照片总数量
+        const folderName = 'baokao';  // 你的文件夹名称
+        // ---------------
+
+        const container = document.getElementById('gallery-container');
+
+        // 使用 for 循环自动生成照片标签
+        for (let i = 1; i <= totalPhotos; i++) {
+            // 创建 <img> 元素
+            const img = document.createElement('img');
+            
+            // 拼接图片路径，结果为：baokao/1.jpg, baokao/2.jpg...
+            img.src = `${folderName}/${i}.jpg`;
+            img.alt = `照片 ${i}`;
+            
+            // 容错处理：如果某张照片缺失，则隐藏该照片位置，避免出现破损图标
+            img.onerror = function() {
+                this.style.display = 'none';
+            };
+
+            // 将图片放入网页中
+            container.appendChild(img);
+        }
+    </script>
+</body>
+</html>
