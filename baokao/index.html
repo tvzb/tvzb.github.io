@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>照片墙展示</title>
     <style>
-        /* 页面基础设置 */
+        /* --- 页面基础设置 --- */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f4f9;
@@ -19,36 +19,91 @@
             margin-bottom: 30px;
         }
 
-        /* 响应式照片网格布局 */
+        /* --- 照片网格布局 --- */
         .gallery {
             display: grid;
-            /* 自动排列，每张照片最小宽度 250px */
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        /* 单张照片的样式 */
         .gallery img {
             width: 100%;
             height: 250px;
-            object-fit: cover; /* 保证照片填满区域且不变形 */
-            border-radius: 12px; /* 圆角效果 */
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 添加阴影 */
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer; /* 鼠标放上去变成小手，提示可以点击 */
         }
 
-        /* 鼠标悬停时的浮动放大效果 */
         .gallery img:hover {
             transform: translateY(-5px) scale(1.03);
             box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        /* --- 放大显示的遮罩层 (Lightbox) 样式 --- */
+        .lightbox {
+            display: none; /* 默认隐藏 */
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); /* 半透明黑色背景 */
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        /* 放大后的图片 */
+        .lightbox img {
+            max-width: 90%;
+            max-height: 75vh; /* 高度最多占屏幕的75% */
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            margin-bottom: 20px;
+        }
+
+        /* 关闭按钮 */
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #ccc;
+        }
+
+        /* 下载按钮 */
+        .download-btn {
+            padding: 10px 25px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: background-color 0.3s;
+        }
+
+        .download-btn:hover {
+            background-color: #218838;
         }
     </style>
 </head>
 <body>
 
-    <h1>截图显示</h1>
+    <h1>我的照片库</h1>
     
     <div class="gallery">
         <img src="1.jpg" alt="照片 1">
@@ -71,5 +126,43 @@
         <img src="18.jpg" alt="照片 18">
     </div>
 
+    <div id="lightbox" class="lightbox">
+        <span class="close-btn" id="close-btn">&times;</span>
+        <img id="lightbox-img" src="" alt="放大版照片">
+        <a id="download-btn" href="" download class="download-btn">⬇️ 下载原图</a>
+    </div>
+
+    <script>
+        // 获取所有需要的元素
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const downloadBtn = document.getElementById('download-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const galleryImages = document.querySelectorAll('.gallery img');
+
+        // 为相册里的每一张图片添加“点击”功能
+        galleryImages.forEach(img => {
+            img.addEventListener('click', function() {
+                // 1. 显示遮罩层
+                lightbox.style.display = 'flex';
+                // 2. 把遮罩层里的大图链接，替换成当前点击的这张图的链接
+                lightboxImg.src = this.src;
+                // 3. 把下载按钮的链接，也替换成这张图的链接
+                downloadBtn.href = this.src;
+            });
+        });
+
+        // 点击右上角的 "X" 关闭
+        closeBtn.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+        });
+
+        // 点击图片外部的黑色背景，也能快速关闭
+        lightbox.addEventListener('click', (event) => {
+            if (event.target === lightbox) {
+                lightbox.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
