@@ -48,35 +48,28 @@
 </head>
 <body>
 
-    <h1>我的照片库</h1>
+    <h1>截图显示</h1>
     
-    <div class="gallery" id="gallery-container"></div>
+    <div class="gallery">
+        <img src="baokao/1.jpg" alt="照片 1">
+        <img src="baokao/2.jpg" alt="照片 2">
+        <img src="baokao/3.jpg" alt="照片 3">
+        <img src="baokao/4.jpg" alt="照片 4">
+        <img src="baokao/5.jpg" alt="照片 5">
+        <img src="baokao/6.jpg" alt="照片 6">
+        <img src="baokao/7.jpg" alt="照片 7">
+        <img src="baokao/8.jpg" alt="照片 8">
+        <img src="baokao/9.jpg" alt="照片 9">
+        <img src="baokao/10.jpg" alt="照片 10">
+        <img src="baokao/11.jpg" alt="照片 11">
+        <img src="baokao/12.jpg" alt="照片 12">
+        <img src="baokao/13.jpg" alt="照片 13">
+        <img src="baokao/14.jpg" alt="照片 14">
+        <img src="baokao/15.jpg" alt="照片 15">
+        <img src="baokao/16.jpg" alt="照片 16">
+        <img src="baokao/17.jpg" alt="照片 17">
+        <img src="baokao/18.jpg" alt="照片 18">
+    </div>
 
-    <script>
-        // --- 配置区域 ---
-        const totalPhotos = 18;       // 你的照片总数量
-        const folderName = 'baokao';  // 你的文件夹名称
-        // ---------------
-
-        const container = document.getElementById('gallery-container');
-
-        // 使用 for 循环自动生成照片标签
-        for (let i = 1; i <= totalPhotos; i++) {
-            // 创建 <img> 元素
-            const img = document.createElement('img');
-            
-            // 拼接图片路径，结果为：baokao/1.jpg, baokao/2.jpg...
-            img.src = `${folderName}/${i}.jpg`;
-            img.alt = `照片 ${i}`;
-            
-            // 容错处理：如果某张照片缺失，则隐藏该照片位置，避免出现破损图标
-            img.onerror = function() {
-                this.style.display = 'none';
-            };
-
-            // 将图片放入网页中
-            container.appendChild(img);
-        }
-    </script>
 </body>
 </html>
