@@ -56,11 +56,11 @@
                             <table class="w-full text-left border-collapse">
                                 <thead>
                                     <tr class="bg-gray-100 text-xs font-bold text-gray-600 border-b border-gray-200">
-                                        <th class="p-3">ETF 代码 / 名称</th>
-                                        <th class="p-3">上午阈值 (9:30-11:30)</th>
-                                        <th class="p-3">下午阈值 (13:00-15:00)</th>
-                                        <th class="p-3">整日幅度</th>
-                                        <th class="p-3">本周累计</th>
+                                        <th class="p-3">ETF代码/名称</th>
+                                        <th class="p-3">上午(9:30-11:30)</th>
+                                        <th class="p-3">下午(13:00-15:00)</th>
+                                        <th class="p-3">整日</th>
+                                        <th class="p-3">本周</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-100 text-sm">
@@ -110,7 +110,7 @@
                 <section v-if="currentView === 'etf'" class="space-y-4">
                     <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-wrap gap-4 items-center">
                         <div class="flex-1 min-w-[180px]">
-                            <label class="block text-xs font-semibold text-gray-500 mb-1">选择 ETF 基金</label>
+                            <label class="block text-xs font-semibold text-gray-500 mb-1">选择ETF基金</label>
                             <select v-model="selectedEtf" class="w-full border border-gray-300 rounded-lg px-3 py-1.5 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 <option v-for="code in uniqueEtfCodes" :key="code" :value="code">
                                     {{ code }} - {{ getEtfName(code) }}
