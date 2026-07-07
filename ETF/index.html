@@ -66,51 +66,59 @@
                             </thead>
                             <tbody class="divide-y divide-gray-100 text-[15px]">
                                 <template v-for="item in filteredDateData" :key="item.etf_code + '_' + item.date">
-                                    <!-- ETF主数据行：整行可点击切换展开/折叠 -->
+                                    <!-- ETF主数据行：点击切换展开/折叠 -->
                                     <tr class="hover:bg-blue-50/40 transition-colors cursor-pointer" @click="toggleRow(item)">
-                                        <td class="p-3 font-bold text-gray-800 text-left sticky left-0 bg-white shadow-[1px_0_0_0_#f3f4f6] z-10">
-                                            <div class="flex items-center justify-between gap-3">
-                                                <div class="flex flex-col">
+                                        <td class="p-2 md:p-3 font-bold text-gray-800 text-left sticky left-0 bg-white shadow-[1px_0_0_0_#f3f4f6] z-10">
+                                            <div class="flex flex-col">
+                                                <!-- 修改点1：改用半角(条)，并且让展开箭头与文字紧密相邻，防止手机端错位 -->
+                                                <div class="flex items-center gap-1.5 flex-wrap">
                                                     <span class="text-slate-900 font-bold hover:text-blue-600 transition-colors">
-                                                        {{ item.etf_name }}（{{ getMonthlyCount(item.etf_code, item.date) }}条）
+                                                        {{ item.etf_name }}<span class="text-blue-600 font-semibold ml-0.5">({{ getMonthlyCount(item.etf_code, item.date) }}条)</span>
                                                     </span>
-                                                    <div class="flex items-center gap-2 mt-0.5">
-                                                        <span class="text-xs text-gray-400 font-normal">{{ item.etf_code }}</span>
-                                                        <span v-if="selectedDate === 'latest'" class="text-[10px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded">
-                                                            {{ item.date.slice(5) }}
-                                                        </span>
-                                                    </div>
+                                                    <!-- 展开/折叠指示小箭头紧跟在数量后 -->
+                                                    <i class="fa-solid text-[10px] text-gray-400 transition-transform duration-200" 
+                                                       :class="expandedRowKey === item.etf_code + '_' + item.date ? 'fa-chevron-down rotate-180 text-blue-500' : 'fa-chevron-right'"></i>
                                                 </div>
-                                                <!-- 展开/折叠的小箭头指示器 -->
-                                                <i class="fa-solid text-xs text-gray-400 transition-transform duration-200" 
-                                                   :class="expandedRowKey === item.etf_code + '_' + item.date ? 'fa-chevron-down rotate-180 text-blue-500' : 'fa-chevron-right'"></i>
+                                                <div class="flex items-center gap-2 mt-0.5">
+                                                    <span class="text-xs text-gray-400 font-normal font-mono">{{ item.etf_code }}</span>
+                                                    <span v-if="selectedDate === 'latest'" class="text-[10px] bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded font-mono">
+                                                        {{ item.date.slice(5) }}
+                                                    </span>
+                                                </div>
                                             </div>
                                         </td>
-                                        <td class="p-3 font-semibold" :class="getColorClass(item.am_status)">{{ item.am_status || '-' }}</td>
-                                        <td class="p-3 font-semibold" :class="getColorClass(item.pm_status)">{{ item.pm_status || '-' }}</td>
-                                        <td class="p-3 font-semibold" :class="getColorClass(item.day_status)">{{ item.day_status || '-' }}</td>
-                                        <td class="p-3 font-semibold" :class="getColorClass(item.week_status)">{{ item.week_status || '-' }}</td>
+                                        <td class="p-2 md:p-3 font-semibold" :class="getColorClass(item.am_status)">{{ item.am_status || '-' }}</td>
+                                        <td class="p-2 md:p-3 font-semibold" :class="getColorClass(item.pm_status)">{{ item.pm_status || '-' }}</td>
+                                        <td class="p-2 md:p-3 font-semibold" :class="getColorClass(item.day_status)">{{ item.day_status || '-' }}</td>
+                                        <td class="p-2 md:p-3 font-semibold" :class="getColorClass(item.week_status)">{{ item.week_status || '-' }}</td>
                                     </tr>
                                     
                                     <!-- 展开的当月历史明细详情行 -->
                                     <tr v-if="expandedRowKey === item.etf_code + '_' + item.date" class="bg-slate-50/60" @click.stop>
-                                        <td colspan="5" class="p-4 text-left border-t border-b border-gray-100">
+                                        <td colspan="5" class="p-3 text-left border-t border-b border-gray-100">
                                             <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-inner max-w-3xl">
-                                                <div class="text-xs font-bold text-slate-400 mb-2.5 flex items-center gap-1.5 uppercase tracking-wider">
-                                                    <i class="fa-solid fa-clock-rotate-left text-blue-500"></i> {{ item.etf_name }} · 当月触发历史详情 (由新到旧)
+                                                <div class="text-xs font-bold text-slate-400 mb-2 flex items-center gap-1.5 uppercase tracking-wider">
+                                                    <i class="fa-solid fa-clock-rotate-left text-blue-500"></i> {{ item.etf_name }} · 当月其他历史记录 (由新到旧)
                                                 </div>
                                                 <div class="space-y-2">
-                                                    <div v-for="detail in getMonthlyDetails(item.etf_code, item.date)" :key="detail.date" class="flex items-center text-sm border-b border-dashed border-gray-50 pb-1.5 last:border-0 last:pb-0">
-                                                        <!-- 日期显示（X月X日：） -->
-                                                        <span class="w-20 font-medium text-slate-500 font-sans shrink-0">{{ formatChineseDate(detail.date) }}：</span>
-                                                        <!-- 上、下、日、周明细拼接 -->
-                                                        <div class="flex items-center gap-1 flex-wrap">
-                                                            <template v-for="(part, pIdx) in getDetailParts(detail)" :key="pIdx">
-                                                                <span v-if="pIdx > 0" class="text-gray-200 mx-1">|</span>
-                                                                <span :class="part.cls" class="font-semibold font-mono text-[13px] px-1.5 py-0.5 rounded">{{ part.text }}</span>
-                                                            </template>
+                                                    <!-- 修改点3：如果剔除当前行数据后还有其他历史数据，循环输出 -->
+                                                    <template v-if="getMonthlyDetails(item.etf_code, item.date).length > 0">
+                                                        <div v-for="detail in getMonthlyDetails(item.etf_code, item.date)" :key="detail.date" class="flex items-center text-sm border-b border-dashed border-gray-50 pb-1.5 last:border-0 last:pb-0">
+                                                            <!-- 日期显示（X月X日：） -->
+                                                            <span class="w-18 font-medium text-slate-500 shrink-0">{{ formatChineseDate(detail.date) }}：</span>
+                                                            <!-- 上、下、日、周明细 -->
+                                                            <div class="flex items-center gap-1 flex-wrap">
+                                                                <template v-for="(part, pIdx) in getDetailParts(detail)" :key="pIdx">
+                                                                    <span v-if="pIdx > 0" class="text-gray-200 mx-1">|</span>
+                                                                    <span :class="part.cls" class="font-semibold font-mono text-[13px] px-1.5 py-0.5 rounded">{{ part.text }}</span>
+                                                                </template>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    </template>
+                                                    <!-- 修改点3提示：只有一天数据时，展开显示友好提示，不重复出现当天内容 -->
+                                                    <template v-else>
+                                                        <div class="text-xs text-gray-400 italic py-1">暂无当月其他历史触发记录</div>
+                                                    </template>
                                                 </div>
                                             </div>
                                         </td>
@@ -135,7 +143,7 @@
                 const loading = ref(true);
                 const allData = ref([]); 
                 const selectedDate = ref('latest');
-                const expandedRowKey = ref(null); // 用于记录当前哪个 ETF 的哪天记录处于展开状态
+                const expandedRowKey = ref(null); 
 
                 // 提取唯一日期供下拉框选择
                 const uniqueDates = computed(() => {
@@ -143,7 +151,6 @@
                     return [...new Set(dates)].sort((a, b) => b.localeCompare(a));
                 });
 
-                // 获取数据源
                 const fetchData = async () => {
                     try {
                         loading.value = true;
@@ -165,7 +172,7 @@
                     return parseFloat(str.replace(/[^0-9.-]/g, ''));
                 };
 
-                // 计算有效数据段数量
+                // 计算单行数据中实际有效触发的维度数量
                 const countData = (item) => {
                     return (item.am_status ? 1 : 0) + (item.pm_status ? 1 : 0) + (item.day_status ? 1 : 0) + (item.week_status ? 1 : 0);
                 };
@@ -178,7 +185,7 @@
                     return vals.length > 0 ? Math.max(...vals) : -9999;
                 };
 
-                // 默认展示最新200条核心逻辑（保持原排序规则不变）
+                // 核心过滤与多维排序
                 const filteredDateData = computed(() => {
                     let baseData = [];
                     if (selectedDate.value === 'latest') {
@@ -201,39 +208,38 @@
                     return validItems;
                 });
 
-                // 涨红跌绿样式控制
                 const getColorClass = (status) => {
                     if (!status || status === '-' || status === '--') return 'text-slate-300';
                     return status.includes('+') ? 'text-red-600' : 'text-green-600';
                 };
 
-                // 切换行展开/折叠状态
                 const toggleRow = (item) => {
                     const key = item.etf_code + '_' + item.date;
                     expandedRowKey.value = expandedRowKey.value === key ? null : key;
                 };
 
-                // 【核心新功能 1】动态计算该 ETF 在该数据行对应月份的累积触发条数
+                // 【修改点2】重构月累积条数统计：将该月份内所有天数的“各触发维度”数量进行累加求和
                 const getMonthlyCount = (etf_code, dateStr) => {
                     if (!dateStr) return 0;
-                    const month = dateStr.substring(0, 7); // 截取出 YYYY-MM
-                    return allData.value.filter(item => 
-                        item.etf_code === etf_code && 
-                        item.date.startsWith(month) && 
-                        countData(item) > 0
-                    ).length;
+                    const month = dateStr.substring(0, 7); // 截取 YYYY-MM
+                    let totalTriggers = 0;
+                    allData.value.forEach(item => {
+                        if (item.etf_code === etf_code && item.date.startsWith(month)) {
+                            totalTriggers += countData(item); // 累加每天触发的具体个数（如上午+全天+周线计为3条）
+                        }
+                    });
+                    return totalTriggers;
                 };
 
-                // 【核心新功能 2】获取该 ETF 在当月的所有触发历史记录，并按时间由新到旧排序
+                // 【修改点3】重构月历史明细：增加过滤条件 `item.date !== dateStr`，主动剔除当天的数据内容
                 const getMonthlyDetails = (etf_code, dateStr) => {
                     if (!dateStr) return [];
                     const month = dateStr.substring(0, 7);
                     return allData.value
-                        .filter(item => item.etf_code === etf_code && item.date.startsWith(month) && countData(item) > 0)
-                        .sort((a, b) => b.date.localeCompare(a.date)); // 时间由新到旧排序
+                        .filter(item => item.etf_code === etf_code && item.date.startsWith(month) && item.date !== dateStr && countData(item) > 0)
+                        .sort((a, b) => b.date.localeCompare(a.date)); // 由新到旧排序
                 };
 
-                // 格式化日期：将 "2026-07-08" 转换为 "7月8日"
                 const formatChineseDate = (dateStr) => {
                     if (!dateStr) return '';
                     const parts = dateStr.split('-');
@@ -243,7 +249,6 @@
                     return dateStr;
                 };
 
-                // 【精准格式化明细】按需求生成带有 "上/下/日/周" 前缀的多维状态，并自动裁切末尾空项
                 const getDetailParts = (detailItem) => {
                     const raw = [
                         { status: detailItem.am_status, prefix: '上' },
@@ -256,12 +261,10 @@
                         if (!r.status || r.status === '-' || r.status === '--') {
                             return { text: '--', cls: 'text-gray-300' };
                         }
-                        // 延续主表红绿配色，增强明细的可读性
                         const cls = r.status.includes('+') ? 'text-red-600 bg-red-50' : 'text-green-600 bg-green-50';
                         return { text: `${r.prefix}${r.status}`, cls };
                     });
                     
-                    // 裁切尾部连续的空白项（例如：上xxx | -- | 日xxx | --  自动裁剪为  上xxx | -- | 日xxx ）
                     while (parts.length > 0 && parts[parts.length - 1].text === '--') {
                         parts.pop();
                     }
