@@ -24,11 +24,15 @@
 
     <div id="app" v-cloak>
         <header class="bg-slate-800 text-white shadow-md sticky top-0 z-50">
-            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center gap-2 md:gap-4">
                 <h1 class="text-lg font-bold flex items-center gap-2">
-                    <i class="fa-solid fa-chart-line text-emerald-400"></i> ETF阈值监控系统
+                    <i class="fa-solid fa-chart-line text-emerald-400"></i> ETF涨跌幅阈值监控
                 </h1>
-                <span class="text-xs bg-emerald-600 px-2 py-1 rounded font-mono animate-pulse">● LIVE同步中</span>
+                <!-- 新增：联系方式（中间部分） -->
+                <div class="text-sm bg-slate-700/60 text-slate-200 px-3 py-1 rounded-full border border-slate-600 flex items-center gap-1.5">
+                    <i class="fa-solid fa-headset text-blue-400"></i> 股票定制，请联系 <span class="font-mono text-amber-400 font-bold">18507078300</span>
+                </div>
+                <span class="text-xs bg-emerald-600 px-2 py-1 rounded font-mono animate-pulse">● 交易日收盘自动同步</span>
             </div>
         </header>
 
