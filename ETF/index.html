@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A股ETF阈值监控看板</title>
+    <title>ETF阈值实时监控</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -24,16 +24,16 @@
 
     <div id="app" v-cloak>
         <header class="bg-slate-800 text-white shadow-md sticky top-0 z-50">
-            <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center gap-2 md:gap-4">
-                <h1 class="text-lg font-bold flex items-center gap-2">
-                    <i class="fa-solid fa-chart-line text-emerald-400"></i> ETF涨跌幅阈值监控
-                </h1>
-                <!-- 新增：联系方式（中间部分） -->
-                <div class="text-sm bg-slate-700/60 text-slate-200 px-3 py-1 rounded-full border border-slate-600 flex items-center gap-1.5">
-                    <i class="fa-solid fa-headset text-blue-400"></i> 股票定制，请联系 <span class="font-mono text-amber-400 font-bold">18507078300</span>
-                </div>
-                <span class="text-xs bg-emerald-600 px-2 py-1 rounded font-mono animate-pulse">● 交易日收盘自动同步</span>
-            </div>
+                        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+                <h1 class="text-lg font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-chart-line text-emerald-400"></i> ETF阈值实时监控
+                </h1>
+                <span class="text-xs bg-emerald-600 px-2 py-1 rounded font-mono animate-pulse">● live同步中...</span>
+            </div>
+
+我想在“ETF涨跌幅阈值监控”和“交易日上下午收盘自动同步中”中间添加我的联系方式“股票定制，请联系18507078300”
+
+请给出这段替换代码。
         </header>
 
         <main class="container mx-auto px-2 md:px-4 py-4 md:py-6 max-w-5xl">
@@ -49,7 +49,7 @@
                     <!-- 触发按钮 -->
                     <button @click.stop="toggleDropdown" class="w-full flex items-center justify-between border border-gray-300 rounded-lg px-4 py-2.5 bg-gray-50 text-sm font-semibold hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <span class="flex items-center gap-2">
-                            <span v-if="selectedDate === 'latest'">🔥 默认展示：最新200条触发记录</span>
+                            <span v-if="selectedDate === 'latest'">🔥 最新200条触发记录</span>
                             <span v-else>📅 指定日期：{{ selectedDate }}</span>
                         </span>
                         <i class="fa-solid fa-chevron-down text-gray-400 transition-transform duration-200" :class="{'rotate-180': showDropdown}"></i>
@@ -59,7 +59,7 @@
                     <div v-if="showDropdown" @click.stop class="absolute left-3 right-3 mt-2 bg-white border border-gray-200 rounded-xl shadow-xl z-50 p-4 max-w-sm mx-auto md:left-3 md:right-auto md:w-80">
                         <!-- 快速选项 -->
                         <button @click="selectLatest" class="w-full text-left px-3 py-2 text-sm font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg mb-3 flex items-center gap-2 transition-colors">
-                            🔥 展示最新200条触发记录
+                            🔥 最新200条触发记录
                         </button>
 
                         <div class="border-t border-gray-100 my-2 pt-2">
