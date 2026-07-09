@@ -40,12 +40,12 @@
 
             <div v-else class="space-y-4">
                 
-                <!-- 自定义高级日历下拉筛选器 -->
+                <!-- 🛠️ 改进点：自定义高级日历下拉筛选器 -->
                 <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 relative">
                     <!-- 触发按钮 -->
                     <button @click.stop="toggleDropdown" class="w-full flex items-center justify-between border border-gray-300 rounded-lg px-4 py-2.5 bg-gray-50 text-sm font-semibold hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <span class="flex items-center gap-2">
-                            <span v-if="selectedDate === 'latest'">🔥 最新触发记录 (今日)</span>
+                            <span v-if="selectedDate === 'latest'">🔥 最新200条触发记录</span>
                             <span v-else>📅 指定日期：{{ selectedDate }}</span>
                         </span>
                         <i class="fa-solid fa-chevron-down text-gray-400 transition-transform duration-200" :class="{'rotate-180': showDropdown}"></i>
@@ -55,7 +55,7 @@
                     <div v-if="showDropdown" @click.stop class="absolute left-3 right-3 mt-2 bg-white border border-gray-200 rounded-xl shadow-xl z-50 p-4 max-w-sm mx-auto md:left-3 md:right-auto md:w-80">
                         <!-- 快速选项 -->
                         <button @click="selectLatest" class="w-full text-left px-3 py-2 text-sm font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg mb-3 flex items-center gap-2 transition-colors">
-                            🔥 最新触发记录 (今日)
+                            🔥 最新200条触发记录
                         </button>
 
                         <div class="border-t border-gray-100 my-2 pt-2">
@@ -81,7 +81,10 @@
                                 <div v-for="blank in calendarBlanks" :key="'b-'+blank"></div>
                                 <!-- 真实天数 -->
                                 <div v-for="day in calendarDays" :key="'d-'+day.dateStr">
+                                    <!-- 前于起始日期：隐藏不显示 -->
                                     <div v-if="day.isBeforeStart" class="h-8"></div>
+                                    
+                                    <!-- 正常日期区间 -->
                                     <button v-else
                                         @click="day.hasData && selectDate(day.dateStr)"
                                         :disabled="!day.hasData"
@@ -189,7 +192,7 @@
                 // 日历组件专用的状态控制
                 const showDropdown = ref(false);
                 const currentYear = ref(new Date().getFullYear());
-                const currentMonth = ref(new Date().getMonth());
+                const currentMonth = ref(new Date().getMonth()); // 0-11
 
                 // 提取所有存在有效触发数据的唯一日期集合
                 const uniqueDatesSet = computed(() => {
@@ -199,20 +202,24 @@
                     return new Set(validDates);
                 });
 
+                // 获取全网数据的绝对“最早有数据日期”
                 const startDateLimit = computed(() => {
                     if (allData.value.length === 0) return '';
                     const sortedDates = [...uniqueDatesSet.value].sort((a, b) => a.localeCompare(b));
                     return sortedDates[0] || '';
                 });
 
+                // 获取全网数据的绝对“最新有数据日期”
                 const endDateLimit = computed(() => {
                     if (allData.value.length === 0) return '';
                     const sortedDates = [...uniqueDatesSet.value].sort((a, b) => b.localeCompare(a));
                     return sortedDates[0] || '';
                 });
 
+                // 切换下拉弹窗
                 const toggleDropdown = () => {
                     showDropdown.value = !showDropdown.value;
+                    // 打开时，默认将日历视图定位到当前选中的日期，或最新的日期
                     if (showDropdown.value) {
                         const targetDateStr = selectedDate.value === 'latest' ? endDateLimit.value : selectedDate.value;
                         if (targetDateStr) {
@@ -227,15 +234,25 @@
                 const selectLatest = () => { selectedDate.value = 'latest'; showDropdown.value = false; };
                 const selectDate = (dateStr) => { selectedDate.value = dateStr; showDropdown.value = false; };
 
+                // 月份翻页逻辑
                 const prevMonth = () => {
-                    if (currentMonth.value === 0) { currentMonth.value = 11; currentYear.value--; } 
-                    else { currentMonth.value--; }
+                    if (currentMonth.value === 0) {
+                        currentMonth.value = 11;
+                        currentYear.value--;
+                    } else {
+                        currentMonth.value--;
+                    }
                 };
                 const nextMonth = () => {
-                    if (currentMonth.value === 11) { currentMonth.value = 0; currentYear.value++; } 
-                    else { currentMonth.value++; }
+                    if (currentMonth.value === 11) {
+                        currentMonth.value = 0;
+                        currentYear.value++;
+                    } else {
+                        currentMonth.value++;
+                    }
                 };
 
+                // 控制月份翻页按钮的置灰可见性上限
                 const isPrevMonthDisabled = computed(() => {
                     if (!startDateLimit.value) return false;
                     const startLimitMonth = startDateLimit.value.substring(0, 7);
@@ -249,18 +266,31 @@
                     return currentViewMonth >= endLimitMonth;
                 });
 
+                // 计算日历第一天前面的星期空白格数
                 const calendarBlanks = computed(() => {
-                    return new Date(currentYear.value, currentMonth.value, 1).getDay();
+                    const firstDay = new Date(currentYear.value, currentMonth.value, 1);
+                    return firstDay.getDay();
                 });
 
+                // 构建当前月份的日历核心格点数据
                 const calendarDays = computed(() => {
                     const daysInMonth = new Date(currentYear.value, currentMonth.value + 1, 0).getDate();
                     const daysArray = [];
+
                     for (let d = 1; d <= daysInMonth; d++) {
                         const dateStr = `${currentYear.value}-${String(currentMonth.value + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+                        
+                        // 条件1：判定是否在“最早有数据日期”之前
                         const isBeforeStart = startDateLimit.value ? (dateStr < startDateLimit.value) : false;
+                        // 条件2：判定当天 API 接口中是否有可用数据触发记录
                         const hasData = uniqueDatesSet.value.has(dateStr);
-                        daysArray.push({ dayNum: d, dateStr, hasData, isBeforeStart });
+
+                        daysArray.push({
+                            dayNum: d,
+                            dateStr: dateStr,
+                            hasData: hasData,
+                            isBeforeStart: isBeforeStart
+                        });
                     }
                     return daysArray;
                 });
@@ -280,82 +310,49 @@
                     }
                 };
 
-                // 核心：安全解析带有 % 号的涨跌幅字符串为数值
-                const getVal = (str) => {
-                    if (!str || str === '--' || str === '-') return null;
-                    const num = parseFloat(str.replace(/[^0-9.-]/g, ''));
-                    return isNaN(num) ? null : num;
-                };
-
-                // 核心：获取半日最大涨跌幅（不分上下午，如果都有则取其中较大的值）
-                const getHalfVal = (item) => {
-                    const am = getVal(item.am_status);
-                    const pm = getVal(item.pm_status);
-                    if (am !== null && pm !== null) return Math.max(am, pm);
-                    if (am !== null) return am;
-                    if (pm !== null) return pm;
-                    return null;
+                const parseVal = (str) => {
+                    if (!str || str === '--' || str === '-') return -9999;
+                    return parseFloat(str.replace(/[^0-9.-]/g, ''));
                 };
 
                 const countData = (item) => {
                     return (item.am_status ? 1 : 0) + (item.pm_status ? 1 : 0) + (item.day_status ? 1 : 0) + (item.week_status ? 1 : 0);
                 };
 
+                const getMaxVal = (item) => {
+                    const vals = [item.am_status, item.pm_status, item.day_status, item.week_status]
+                        .filter(v => v)
+                        .map(v => parseVal(v));
+                    return vals.length > 0 ? Math.max(...vals) : -9999;
+                };
+
                 const filteredDateData = computed(() => {
                     let baseData = [];
                     if (selectedDate.value === 'latest') {
-                        // 过滤出全网最新的那天
-                        const latestDate = endDateLimit.value;
-                        baseData = allData.value.filter(item => item.date === latestDate);
+                        baseData = allData.value;
                     } else {
                         baseData = allData.value.filter(item => item.date === selectedDate.value);
                     }
 
-                    // 剔除四个指标全空的无效行
                     let validItems = baseData.filter(item => countData(item) > 0);
 
-                    // 🚀 全新梯队排序逻辑
                     validItems.sort((a, b) => {
-                        // 第 0 顺位：按日期降序（同一天的数据此项不起作用，只做兜底）
                         const dateDiff = b.date.localeCompare(a.date);
                         if (dateDiff !== 0) return dateDiff;
-
-                        // 第 1 顺位：有周涨幅的排前面，且涨幅由大到小（跌幅最大在后）
-                        const aWeek = getVal(a.week_status);
-                        const bWeek = getVal(b.week_status);
-                        if (aWeek !== null && bWeek !== null) {
-                            if (aWeek !== bWeek) return bWeek - aWeek;
-                        } else if (aWeek !== null) return -1;
-                        else if (bWeek !== null) return 1;
-
-                        // 第 2 顺位：其次排日涨幅（由大到小）
-                        const aDay = getVal(a.day_status);
-                        const bDay = getVal(b.day_status);
-                        if (aDay !== null && bDay !== null) {
-                            if (aDay !== bDay) return bDay - aDay;
-                        } else if (aDay !== null) return -1;
-                        else if (bDay !== null) return 1;
-
-                        // 第 3 顺位：最后排半日涨幅（不分上下午，由大到小）
-                        const aHalf = getHalfVal(a);
-                        const bHalf = getHalfVal(b);
-                        if (aHalf !== null && bHalf !== null) {
-                            if (aHalf !== bHalf) return bHalf - aHalf;
-                        } else if (aHalf !== null) return -1;
-                        else if (bHalf !== null) return 1;
-
-                        return 0; // 完全相同
+                        const countDiff = countData(b) - countData(a);
+                        if (countDiff !== 0) return countDiff;
+                        return getMaxVal(b) - getMaxVal(a);
                     });
 
+                    if (selectedDate.value === 'latest') {
+                        return validItems.slice(0, 200);
+                    }
                     return validItems;
                 });
 
-                // 优化了颜色的判定逻辑：避免 0% 被判定为上涨(红)或下跌(绿)
                 const getColorClass = (status) => {
                     if (!status || status === '-' || status === '--') return 'text-slate-300';
-                    if (status.includes('+')) return 'text-red-600';
-                    if (status.includes('-')) return 'text-green-600';
-                    return 'text-gray-500'; // 例如 0% 或者无符号数字
+                    return status.includes('+') ? 'text-red-600' : 'text-green-600';
                 };
 
                 const toggleRow = (item) => {
@@ -369,7 +366,7 @@
                     let totalTriggers = 0;
                     allData.value.forEach(item => {
                         if (item.etf_code === etf_code && item.date.startsWith(month)) {
-                            totalTriggers += countData(item) > 0 ? 1 : 0;
+                            totalTriggers += countData(item);
                         }
                     });
                     return totalTriggers;
@@ -404,10 +401,7 @@
                         if (!r.status || r.status === '-' || r.status === '--') {
                             return { text: '--', cls: 'text-gray-300' };
                         }
-                        let cls = 'text-gray-500 bg-gray-50'; // 针对 0%
-                        if (r.status.includes('+')) cls = 'text-red-600 bg-red-50';
-                        else if (r.status.includes('-')) cls = 'text-green-600 bg-green-50';
-                        
+                        const cls = r.status.includes('+') ? 'text-red-600 bg-red-50' : 'text-green-600 bg-green-50';
                         return { text: `${r.prefix}${r.status}`, cls };
                     });
                     
@@ -419,20 +413,41 @@
 
                 onMounted(() => {
                     fetchData();
+                    // 全局监听点击事件，点击空白处自动关闭下拉面板
                     window.addEventListener('click', closeDropdown);
                 });
 
                 onUnmounted(() => {
+                    // 组件销毁时移除监听器，避免内存泄漏
                     window.removeEventListener('click', closeDropdown);
                 });
 
                 return {
-                    loading, selectedDate, filteredDateData,
-                    getColorClass, expandedRowKey, toggleRow,
-                    getMonthlyCount, getMonthlyDetails, formatChineseDate, getDetailParts,
-                    showDropdown, currentYear, currentMonth, calendarBlanks, calendarDays,
-                    isPrevMonthDisabled, isNextMonthDisabled, toggleDropdown, closeDropdown,
-                    selectLatest, selectDate, prevMonth, nextMonth
+                    loading,
+                    selectedDate,
+                    filteredDateData,
+                    getColorClass,
+                    expandedRowKey,
+                    toggleRow,
+                    getMonthlyCount,
+                    getMonthlyDetails,
+                    formatChineseDate,
+                    getDetailParts,
+                    
+                    // 日历相关变量和方法
+                    showDropdown,
+                    currentYear,
+                    currentMonth,
+                    calendarBlanks,
+                    calendarDays,
+                    isPrevMonthDisabled,
+                    isNextMonthDisabled,
+                    toggleDropdown,
+                    closeDropdown,
+                    selectLatest,
+                    selectDate,
+                    prevMonth,
+                    nextMonth
                 };
             }
         }).mount('#app');
