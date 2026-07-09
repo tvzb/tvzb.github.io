@@ -39,7 +39,7 @@
                     <!-- 触发按钮 -->
                     <button @click.stop="toggleDropdown" class="w-full flex items-center justify-between border border-gray-300 rounded-lg px-4 py-2.5 bg-gray-50 text-sm font-semibold hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <span class="flex items-center gap-2">
-                            <span v-if="selectedDate === 'latest'">🔥 最新触发记录 (今日)</span>
+                            <span v-if="selectedDate === 'latest'">🔥 最新触发记录</span>
                             <span v-else>📅 指定日期：{{ selectedDate }}</span>
                         </span>
                         <i class="fa-solid fa-chevron-down text-gray-400 transition-transform duration-200" :class="{'rotate-180': showDropdown}"></i>
@@ -49,7 +49,7 @@
                     <div v-if="showDropdown" @click.stop class="absolute left-3 right-3 mt-2 bg-white border border-gray-200 rounded-xl shadow-xl z-50 p-4 max-w-sm mx-auto md:left-3 md:right-auto md:w-80">
                         <!-- 快速选项 -->
                         <button @click="selectLatest" class="w-full text-left px-3 py-2 text-sm font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg mb-3 flex items-center gap-2 transition-colors">
-                            🔥 最新触发记录 (今日)
+                            🔥 最新触发记录
                         </button>
 
                         <div class="border-t border-gray-100 my-2 pt-2">
