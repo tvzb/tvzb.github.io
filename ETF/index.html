@@ -4,14 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ETF涨跌幅实时监控</title>
-    <!-- 使用更稳定的 Tailwind 静态 CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <style>
         [v-cloak] { display: none; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* 隐藏滚动条但保留滚动功能 */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans">
@@ -39,7 +45,7 @@
                     <!-- 触发按钮 -->
                     <button @click.stop="toggleDropdown" class="w-full flex items-center justify-between border border-gray-300 rounded-lg px-4 py-2.5 bg-gray-50 text-sm font-semibold hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <span class="flex items-center gap-2">
-                            <span v-if="selectedDate === 'latest'">🔥 最新触发记录</span>
+                            <span v-if="selectedDate === 'latest'">🔥 最新触发记录 (今日)</span>
                             <span v-else>📅 指定日期：{{ selectedDate }}</span>
                         </span>
                         <i class="fa-solid fa-chevron-down text-gray-400 transition-transform duration-200" :class="{'rotate-180': showDropdown}"></i>
@@ -49,7 +55,7 @@
                     <div v-if="showDropdown" @click.stop class="absolute left-3 right-3 mt-2 bg-white border border-gray-200 rounded-xl shadow-xl z-50 p-4 max-w-sm mx-auto md:left-3 md:right-auto md:w-80">
                         <!-- 快速选项 -->
                         <button @click="selectLatest" class="w-full text-left px-3 py-2 text-sm font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg mb-3 flex items-center gap-2 transition-colors">
-                            🔥 最新触发记录
+                            🔥 最新触发记录 (今日)
                         </button>
 
                         <div class="border-t border-gray-100 my-2 pt-2">
@@ -112,9 +118,8 @@
                                         <td class="p-2 md:p-3 font-bold text-gray-800 text-left sticky left-0 bg-white shadow-[1px_0_0_0_#f3f4f6] z-10">
                                             <div class="flex flex-col">
                                                 <div class="flex items-center gap-1.5 flex-wrap">
-                                                    <!-- 🌟 重点：这里应用了新的 getMonthlyStats 方法 -->
                                                     <span class="text-slate-900 font-bold hover:text-blue-600 transition-colors">
-                                                        {{ item.etf_name }}<span class="text-blue-600 font-semibold ml-0.5 text-sm">({{ getMonthlyStats(item.etf_code, item.date) }})</span>
+                                                        {{ item.etf_name }}<span class="text-blue-600 font-semibold ml-0.5">({{ getMonthlyStats(item.etf_code, item.date) }})</span>
                                                     </span>
                                                     <i class="fa-solid text-[10px] text-gray-400 transition-transform duration-200" 
                                                        :class="expandedRowKey === item.etf_code + '_' + item.date ? 'fa-chevron-down rotate-180 text-blue-500' : 'fa-chevron-right'"></i>
@@ -181,10 +186,12 @@
                 const selectedDate = ref('latest');
                 const expandedRowKey = ref(null); 
 
+                // 日历组件专用的状态控制
                 const showDropdown = ref(false);
                 const currentYear = ref(new Date().getFullYear());
                 const currentMonth = ref(new Date().getMonth());
 
+                // 提取所有存在有效触发数据的唯一日期集合
                 const uniqueDatesSet = computed(() => {
                     const validDates = allData.value
                         .filter(item => (item.am_status || item.pm_status || item.day_status || item.week_status))
@@ -273,12 +280,14 @@
                     }
                 };
 
+                // 核心：安全解析带有 % 号的涨跌幅字符串为数值
                 const getVal = (str) => {
                     if (!str || str === '--' || str === '-') return null;
                     const num = parseFloat(str.replace(/[^0-9.-]/g, ''));
                     return isNaN(num) ? null : num;
                 };
 
+                // 核心：获取半日最大涨跌幅（不分上下午，如果都有则取其中较大的值）
                 const getHalfVal = (item) => {
                     const am = getVal(item.am_status);
                     const pm = getVal(item.pm_status);
@@ -295,18 +304,23 @@
                 const filteredDateData = computed(() => {
                     let baseData = [];
                     if (selectedDate.value === 'latest') {
+                        // 过滤出全网最新的那天
                         const latestDate = endDateLimit.value;
                         baseData = allData.value.filter(item => item.date === latestDate);
                     } else {
                         baseData = allData.value.filter(item => item.date === selectedDate.value);
                     }
 
+                    // 剔除四个指标全空的无效行
                     let validItems = baseData.filter(item => countData(item) > 0);
 
+                    // 🚀 全新梯队排序逻辑
                     validItems.sort((a, b) => {
+                        // 第 0 顺位：按日期降序（同一天的数据此项不起作用，只做兜底）
                         const dateDiff = b.date.localeCompare(a.date);
                         if (dateDiff !== 0) return dateDiff;
 
+                        // 第 1 顺位：有周涨幅的排前面，且涨幅由大到小（跌幅最大在后）
                         const aWeek = getVal(a.week_status);
                         const bWeek = getVal(b.week_status);
                         if (aWeek !== null && bWeek !== null) {
@@ -314,6 +328,7 @@
                         } else if (aWeek !== null) return -1;
                         else if (bWeek !== null) return 1;
 
+                        // 第 2 顺位：其次排日涨幅（由大到小）
                         const aDay = getVal(a.day_status);
                         const bDay = getVal(b.day_status);
                         if (aDay !== null && bDay !== null) {
@@ -321,6 +336,7 @@
                         } else if (aDay !== null) return -1;
                         else if (bDay !== null) return 1;
 
+                        // 第 3 顺位：最后排半日涨幅（不分上下午，由大到小）
                         const aHalf = getHalfVal(a);
                         const bHalf = getHalfVal(b);
                         if (aHalf !== null && bHalf !== null) {
@@ -328,17 +344,18 @@
                         } else if (aHalf !== null) return -1;
                         else if (bHalf !== null) return 1;
 
-                        return 0;
+                        return 0; // 完全相同
                     });
 
                     return validItems;
                 });
 
+                // 优化了颜色的判定逻辑：避免 0% 被判定为上涨(红)或下跌(绿)
                 const getColorClass = (status) => {
                     if (!status || status === '-' || status === '--') return 'text-slate-300';
                     if (status.includes('+')) return 'text-red-600';
                     if (status.includes('-')) return 'text-green-600';
-                    return 'text-gray-500';
+                    return 'text-gray-500'; // 例如 0% 或者无符号数字
                 };
 
                 const toggleRow = (item) => {
@@ -346,7 +363,7 @@
                     expandedRowKey.value = expandedRowKey.value === key ? null : key;
                 };
 
-                // 🌟 新增的统计方法：计算 ⬆ 和 ⬇
+                // 🚀 全新统计逻辑：精确计算当月内所有的上涨(⬆)和下跌(⬇)次数
                 const getMonthlyStats = (etf_code, dateStr) => {
                     if (!dateStr) return '⬆0⬇0';
                     const month = dateStr.substring(0, 7);
@@ -354,19 +371,21 @@
                     let downCount = 0;
 
                     allData.value.forEach(item => {
+                        // 只要是该 ETF 且是当月的数据，就去遍历它的四个时间段
                         if (item.etf_code === etf_code && item.date.startsWith(month)) {
                             const statuses = [item.am_status, item.pm_status, item.day_status, item.week_status];
                             statuses.forEach(status => {
                                 if (status && status !== '-' && status !== '--') {
                                     if (status.includes('+')) {
-                                        upCount++;
+                                        upCount++; // 包含 + 号算作上涨
                                     } else if (status.includes('-')) {
-                                        downCount++;
+                                        downCount++; // 包含 - 号算作下跌
                                     }
                                 }
                             });
                         }
                     });
+    
                     return `⬆${upCount}⬇${downCount}`;
                 };
 
@@ -399,7 +418,7 @@
                         if (!r.status || r.status === '-' || r.status === '--') {
                             return { text: '--', cls: 'text-gray-300' };
                         }
-                        let cls = 'text-gray-500 bg-gray-50';
+                        let cls = 'text-gray-500 bg-gray-50'; // 针对 0%
                         if (r.status.includes('+')) cls = 'text-red-600 bg-red-50';
                         else if (r.status.includes('-')) cls = 'text-green-600 bg-green-50';
                         
@@ -424,8 +443,7 @@
                 return {
                     loading, selectedDate, filteredDateData,
                     getColorClass, expandedRowKey, toggleRow,
-                    getMonthlyStats, // 🌟 暴露新的方法
-                    getMonthlyDetails, formatChineseDate, getDetailParts,
+                    getMonthlyStats, getMonthlyDetails, formatChineseDate, getDetailParts,
                     showDropdown, currentYear, currentMonth, calendarBlanks, calendarDays,
                     isPrevMonthDisabled, isNextMonthDisabled, toggleDropdown, closeDropdown,
                     selectLatest, selectDate, prevMonth, nextMonth
