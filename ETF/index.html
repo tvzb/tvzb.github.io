@@ -119,7 +119,7 @@
                                             <div class="flex flex-col">
                                                 <div class="flex items-center gap-1.5 flex-wrap">
                                                     <span class="text-slate-900 font-bold hover:text-blue-600 transition-colors">
-                                                        {{ item.etf_name }}<span class="text-blue-600 font-semibold ml-0.5">({{ getMonthlyStats(item.etf_code, item.date) }})</span>
+                                                        {{ item.etf_name }}<span class="text-blue-600 font-semibold ml-0.5">({{ getMonthlyCount(item.etf_code, item.date) }}条)</span>
                                                     </span>
                                                     <i class="fa-solid text-[10px] text-gray-400 transition-transform duration-200" 
                                                        :class="expandedRowKey === item.etf_code + '_' + item.date ? 'fa-chevron-down rotate-180 text-blue-500' : 'fa-chevron-right'"></i>
@@ -363,30 +363,16 @@
                     expandedRowKey.value = expandedRowKey.value === key ? null : key;
                 };
 
-                // 🚀 全新统计逻辑：精确计算当月内所有的上涨(⬆)和下跌(⬇)次数
-                const getMonthlyStats = (etf_code, dateStr) => {
-                    if (!dateStr) return '⬆0⬇0';
+                const getMonthlyCount = (etf_code, dateStr) => {
+                    if (!dateStr) return 0;
                     const month = dateStr.substring(0, 7);
-                    let upCount = 0;
-                    let downCount = 0;
-
+                    let totalTriggers = 0;
                     allData.value.forEach(item => {
-                        // 只要是该 ETF 且是当月的数据，就去遍历它的四个时间段
                         if (item.etf_code === etf_code && item.date.startsWith(month)) {
-                            const statuses = [item.am_status, item.pm_status, item.day_status, item.week_status];
-                            statuses.forEach(status => {
-                                if (status && status !== '-' && status !== '--') {
-                                    if (status.includes('+')) {
-                                        upCount++; // 包含 + 号算作上涨
-                                    } else if (status.includes('-')) {
-                                        downCount++; // 包含 - 号算作下跌
-                                    }
-                                }
-                            });
+                            totalTriggers += countData(item) > 0 ? 1 : 0;
                         }
                     });
-    
-                    return `⬆${upCount}⬇${downCount}`;
+                    return totalTriggers;
                 };
 
                 const getMonthlyDetails = (etf_code, dateStr) => {
@@ -443,7 +429,7 @@
                 return {
                     loading, selectedDate, filteredDateData,
                     getColorClass, expandedRowKey, toggleRow,
-                    getMonthlyStats, getMonthlyDetails, formatChineseDate, getDetailParts,
+                    getMonthlyCount, getMonthlyDetails, formatChineseDate, getDetailParts,
                     showDropdown, currentYear, currentMonth, calendarBlanks, calendarDays,
                     isPrevMonthDisabled, isNextMonthDisabled, toggleDropdown, closeDropdown,
                     selectLatest, selectDate, prevMonth, nextMonth
