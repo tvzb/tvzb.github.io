@@ -387,8 +387,14 @@
                         }
                     });
                     
-                    if (totalUp === 0 && totalDown === 0) return '(0条)';
-                    return `(⬆${totalUp}⬇${totalDown})`;
+                    if (totalUp === 0 && totalDown === 0) return '';
+                    
+                    let display = '(';
+                    if (totalUp > 0) display += `⬆${totalUp}`;
+                    if (totalDown > 0) display += `⬇${totalDown}`;
+                    display += ')';
+                    
+                    return display;
                 };
 
                 const getMonthlyDetails = (etf_code, dateStr) => {
