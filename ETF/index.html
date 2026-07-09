@@ -122,7 +122,7 @@
                                             <div class="flex flex-col">
                                                 <div class="flex items-center gap-1.5 flex-wrap">
                                                     <span class="text-slate-900 font-bold hover:text-blue-600 transition-colors">
-                                                        {{ item.etf_name }}<span class="text-blue-600 font-semibold ml-0.5">({{ getMonthlyCount(item.etf_code, item.date) }}条)</span>
+                                                        {{ item.etf_name }}<span class="text-blue-600 font-semibold ml-0.5">{{ getMonthlyCountDisplay(item.etf_code, item.date) }}</span>
                                                     </span>
                                                     <i class="fa-solid text-[10px] text-gray-400 transition-transform duration-200" 
                                                        :class="expandedRowKey === item.etf_code + '_' + item.date ? 'fa-chevron-down rotate-180 text-blue-500' : 'fa-chevron-right'"></i>
@@ -315,8 +315,21 @@
                     return parseFloat(str.replace(/[^0-9.-]/g, ''));
                 };
 
+                // 统计单条数据的涨跌
+                const countItemUpDown = (item) => {
+                    let up = 0, down = 0;
+                    [item.am_status, item.pm_status, item.day_status, item.week_status].forEach(status => {
+                        if (status && status !== '-' && status !== '--') {
+                            if (status.includes('+')) up++;
+                            else down++;
+                        }
+                    });
+                    return { up, down };
+                };
+
                 const countData = (item) => {
-                    return (item.am_status ? 1 : 0) + (item.pm_status ? 1 : 0) + (item.day_status ? 1 : 0) + (item.week_status ? 1 : 0);
+                    const { up, down } = countItemUpDown(item);
+                    return up + down;
                 };
 
                 const getMaxVal = (item) => {
@@ -360,16 +373,22 @@
                     expandedRowKey.value = expandedRowKey.value === key ? null : key;
                 };
 
-                const getMonthlyCount = (etf_code, dateStr) => {
-                    if (!dateStr) return 0;
+                // 修改后的统计逻辑：按月统计上涨和下跌的总数
+                const getMonthlyCountDisplay = (etf_code, dateStr) => {
+                    if (!dateStr) return '';
                     const month = dateStr.substring(0, 7);
-                    let totalTriggers = 0;
+                    let totalUp = 0;
+                    let totalDown = 0;
                     allData.value.forEach(item => {
                         if (item.etf_code === etf_code && item.date.startsWith(month)) {
-                            totalTriggers += countData(item);
+                            const { up, down } = countItemUpDown(item);
+                            totalUp += up;
+                            totalDown += down;
                         }
                     });
-                    return totalTriggers;
+                    
+                    if (totalUp === 0 && totalDown === 0) return '(0条)';
+                    return `(⬆${totalUp}⬇${totalDown})`;
                 };
 
                 const getMonthlyDetails = (etf_code, dateStr) => {
@@ -429,7 +448,7 @@
                     getColorClass,
                     expandedRowKey,
                     toggleRow,
-                    getMonthlyCount,
+                    getMonthlyCountDisplay,
                     getMonthlyDetails,
                     formatChineseDate,
                     getDetailParts,
