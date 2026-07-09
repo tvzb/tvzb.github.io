@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -20,7 +21,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans" @click="closeDropdown">
+<body class="bg-gray-50 text-gray-800 font-sans">
 
     <div id="app" v-cloak>
         <header class="bg-slate-800 text-white shadow-md sticky top-0 z-50">
@@ -180,7 +181,7 @@
     </div>
 
     <script>
-        const { createApp, ref, computed, onMounted } = Vue;
+        const { createApp, ref, computed, onMounted, onUnmounted } = Vue;
 
         createApp({
             setup() {
@@ -413,6 +414,13 @@
 
                 onMounted(() => {
                     fetchData();
+                    // 全局监听点击事件，点击空白处自动关闭下拉面板
+                    window.addEventListener('click', closeDropdown);
+                });
+
+                onUnmounted(() => {
+                    // 组件销毁时移除监听器，避免内存泄漏
+                    window.removeEventListener('click', closeDropdown);
                 });
 
                 return {
@@ -427,7 +435,7 @@
                     formatChineseDate,
                     getDetailParts,
                     
-                    // 日历新暴露的属性与方法
+                    // 日历相关变量和方法
                     showDropdown,
                     currentYear,
                     currentMonth,
