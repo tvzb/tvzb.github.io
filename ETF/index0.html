@@ -19,7 +19,7 @@
             scrollbar-width: none;
         }
 
-        /* 固定 ETF 名称列宽度 */
+        /* 🌟 新增：固定 ETF 名称列宽度 */
         .etf-name-column {
             width: 130px;
             min-width: 130px;
@@ -126,8 +126,8 @@
                                     <!-- ETF主数据行 -->
                                     <tr class="hover:bg-blue-50/40 transition-colors cursor-pointer" @click="toggleRow(item)">
                                         <td class="p-2 md:p-3 font-bold text-gray-800 text-left sticky left-0 bg-white shadow-[1px_0_0_0_#f3f4f6] z-10 etf-name-column">
+                                            <!-- 🌟 修改点：注入自适应样式逻辑 -->
                                             <div class="flex flex-col overflow-hidden">
-                                                <!-- 动态字体大小容器 -->
                                                 <div :style="getEtfNameStyle(item)" class="flex items-center whitespace-nowrap overflow-hidden">
                                                     <span class="text-slate-900 font-bold hover:text-blue-600 transition-colors">
                                                         {{ item.etf_name }}<span class="text-blue-600 font-semibold ml-0.5">{{ getMonthlyCountDisplay(item.etf_code, item.date) }}</span>
@@ -136,8 +136,8 @@
                                                        :class="expandedRowKey === item.etf_code + '_' + item.date ? 'fa-chevron-down rotate-180 text-blue-500' : 'fa-chevron-right'"></i>
                                                 </div>
                                                 <div class="flex items-center gap-2 mt-0.5">
-                                                    <span class="text-[11px] text-gray-400 font-normal font-mono">{{ item.etf_code }}</span>
-                                                    <span v-if="selectedDate === 'latest'" class="text-[9px] bg-blue-50 text-blue-600 px-1 py-0.5 rounded font-mono">
+                                                    <span class="text-xs text-gray-400 font-normal font-mono">{{ item.etf_code }}</span>
+                                                    <span v-if="selectedDate === 'latest'" class="text-[10px] bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded font-mono">
                                                         {{ item.date.slice(5) }}
                                                     </span>
                                                 </div>
@@ -225,21 +225,27 @@
                 });
 
                 // 切换下拉弹窗
-                const toggleDropdown = () => {
+                const toggleDropdown = (e) => {
+                    e.stopPropagation();
                     showDropdown.value = !showDropdown.value;
+                };
+
+                const closeDropdown = () => {
+                    showDropdown.value = false;
                 };
 
                 const selectLatest = () => {
                     selectedDate.value = 'latest';
-                    showDropdown.value = false;
+                    closeDropdown();
                 };
 
                 const selectDate = (dateStr) => {
                     selectedDate.value = dateStr;
-                    showDropdown.value = false;
+                    closeDropdown();
                 };
 
-                const prevMonth = () => {
+                const prevMonth = (e) => {
+                    e.stopPropagation();
                     if (currentMonth.value === 0) {
                         currentMonth.value = 11;
                         currentYear.value--;
@@ -248,7 +254,8 @@
                     }
                 };
 
-                const nextMonth = () => {
+                const nextMonth = (e) => {
+                    e.stopPropagation();
                     if (currentMonth.value === 11) {
                         currentMonth.value = 0;
                         currentYear.value++;
@@ -291,33 +298,85 @@
                     return days;
                 });
 
-                const filteredDateData = computed(() => {
-                    if (selectedDate.value === 'latest') {
-                        return allData.value.slice(0, 200);
+                const fetchData = async () => {
+                    try {
+                        loading.value = true;
+                        const response = await fetch('https://etf.hahagw.eu.org/');
+                        if (response.ok) {
+                            allData.value = await response.json();
+                        }
+                    } catch (error) {
+                        console.error('API 读取失败');
+                        allData.value = [];
+                    } finally {
+                        loading.value = false;
                     }
-                    return allData.value.filter(item => item.date === selectedDate.value);
+                };
+
+                const parseVal = (str) => {
+                    if (!str || str === '--' || str === '-') return -9999;
+                    return parseFloat(str.replace(/[^0-9.-]/g, ''));
+                };
+
+                // 统计单条数据的涨跌
+                const countItemUpDown = (item) => {
+                    let up = 0, down = 0;
+                    [item.am_status, item.pm_status, item.day_status, item.week_status].forEach(status => {
+                        if (status && status !== '-' && status !== '--') {
+                            if (status.includes('+')) up++;
+                            else down++;
+                        }
+                    });
+                    return { up, down };
+                };
+
+                const countData = (item) => {
+                    const { up, down } = countItemUpDown(item);
+                    return up + down;
+                };
+
+                // 获取指定状态字段的数值
+                const getStatusVal = (status) => {
+                    if (!status || status === '-' || status === '--') return -9999;
+                    return parseFloat(status.replace(/[^0-9.-]/g, ''));
+                };
+
+                // 获取数据的优先级等级和对应的最大涨幅
+                const getDataPriority = (item) => {
+                    const weekVal = getStatusVal(item.week_status);
+                    if (weekVal > -9999) return { priority: 1, maxVal: weekVal };
+                    const dayVal = getStatusVal(item.day_status);
+                    if (dayVal > -9999) return { priority: 2, maxVal: dayVal };
+                    const amVal = getStatusVal(item.am_status);
+                    const pmVal = getStatusVal(item.pm_status);
+                    const halfDayMax = Math.max(amVal, pmVal);
+                    if (halfDayMax > -9999) return { priority: 3, maxVal: halfDayMax };
+                    return { priority: 999, maxVal: -9999 };
+                };
+
+                const filteredDateData = computed(() => {
+                    let baseData = [];
+                    if (selectedDate.value === 'latest') {
+                        baseData = allData.value;
+                    } else {
+                        baseData = allData.value.filter(item => item.date === selectedDate.value);
+                    }
+                    let validItems = baseData.filter(item => countData(item) > 0);
+                    validItems.sort((a, b) => {
+                        const dateDiff = b.date.localeCompare(a.date);
+                        if (dateDiff !== 0) return dateDiff;
+                        const aPriority = getDataPriority(a);
+                        const bPriority = getDataPriority(b);
+                        if (aPriority.priority !== bPriority.priority) return aPriority.priority - bPriority.priority;
+                        return bPriority.maxVal - aPriority.maxVal;
+                    });
+                    if (selectedDate.value === 'latest') return validItems.slice(0, 200);
+                    return validItems;
                 });
 
-                const getMonthlyCountDisplay = (code, date) => {
-                    const monthStr = date.slice(0, 7);
-                    const count = allData.value.filter(d => d.etf_code === code && d.date.startsWith(monthStr)).length;
-                    return count > 1 ? `(⬆${count})` : '';
-                };
-
-                const getMonthlyDetails = (code, date) => {
-                    const monthStr = date.slice(0, 7);
-                    return allData.value
-                        .filter(d => d.etf_code === code && d.date.startsWith(monthStr) && d.date !== date)
-                        .sort((a, b) => b.date.localeCompare(a.date));
-                };
-
-                const getDetailParts = (detail) => {
-                    const parts = [];
-                    if (detail.am_status) parts.push({ text: `AM:${detail.am_status}`, cls: getColorClass(detail.am_status) });
-                    if (detail.pm_status) parts.push({ text: `PM:${detail.pm_status}`, cls: getColorClass(detail.pm_status) });
-                    if (detail.day_status) parts.push({ text: `DAY:${detail.day_status}`, cls: getColorClass(detail.day_status) });
-                    if (detail.week_status) parts.push({ text: `WK:${detail.week_status}`, cls: getColorClass(detail.week_status) });
-                    return parts;
+                const getColorClass = (status) => {
+                    if (!status || status === '-' || status === '--') return 'text-slate-300';
+                    return status.includes('+') ? 'text-red-600' : 'text-green-600';
                 };
 
                 const toggleRow = (item) => {
@@ -325,45 +384,70 @@
                     expandedRowKey.value = expandedRowKey.value === key ? null : key;
                 };
 
-                const getColorClass = (status) => {
-                    if (!status) return 'text-gray-300';
-                    if (status.includes('涨')) return 'text-red-500';
-                    if (status.includes('跌')) return 'text-emerald-500';
-                    return 'text-gray-600';
+                const getMonthlyCountDisplay = (etf_code, dateStr) => {
+                    if (!dateStr) return '';
+                    const month = dateStr.substring(0, 7);
+                    let totalUp = 0;
+                    let totalDown = 0;
+                    allData.value.forEach(item => {
+                        if (item.etf_code === etf_code && item.date.startsWith(month)) {
+                            const { up, down } = countItemUpDown(item);
+                            totalUp += up;
+                            totalDown += down;
+                        }
+                    });
+                    if (totalUp === 0 && totalDown === 0) return '';
+                    let display = '(';
+                    if (totalUp > 0) display += `⬆${totalUp}`;
+                    if (totalDown > 0) display += `⬇${totalDown}`;
+                    display += ')';
+                    return display;
+                };
+
+                const getMonthlyDetails = (etf_code, dateStr) => {
+                    if (!dateStr) return [];
+                    const month = dateStr.substring(0, 7);
+                    return allData.value
+                        .filter(item => item.etf_code === etf_code && item.date.startsWith(month) && item.date !== dateStr && countData(item) > 0)
+                        .sort((a, b) => b.date.localeCompare(a.date));
                 };
 
                 const formatChineseDate = (dateStr) => {
-                    const [y, m, d] = dateStr.split('-');
-                    return `${parseInt(m)}月${parseInt(d)}日`;
+                    if (!dateStr) return '';
+                    const parts = dateStr.split('-');
+                    if (parts.length === 3) return `${parseInt(parts[1], 10)}月${parseInt(parts[2], 10)}日`;
+                    return dateStr;
                 };
 
-                // 🌟 新增：计算 ETF 名称列的动态样式
+                const getDetailParts = (detailItem) => {
+                    const raw = [
+                        { status: detailItem.am_status, prefix: '上' },
+                        { status: detailItem.pm_status, prefix: '下' },
+                        { status: detailItem.day_status, prefix: '日' },
+                        { status: detailItem.week_status, prefix: '周' }
+                    ];
+                    const parts = raw.map(r => {
+                        if (!r.status || r.status === '-' || r.status === '--') return { text: '--', cls: 'text-gray-300' };
+                        const cls = r.status.includes('+') ? 'text-red-600 bg-red-50' : 'text-green-600 bg-green-50';
+                        return { text: `${r.prefix}${r.status}`, cls };
+                    });
+                    while (parts.length > 0 && parts[parts.length - 1].text === '--') parts.pop();
+                    return parts;
+                };
+
+                // 🌟 唯一新增逻辑：计算 ETF 名称列的动态字体样式
                 const getEtfNameStyle = (item) => {
                     const name = item.etf_name || '';
                     const count = getMonthlyCountDisplay(item.etf_code, item.date) || '';
-                    // 估算视觉长度：中文算 1.0，英文/符号/数字算 0.6，图标算 0.8
                     const fullText = name + count;
-                    let visualLength = 0.8; // 预留给图标的空间
-                    
+                    let visualLength = 0.8; // 预留图标空间
                     for (let i = 0; i < fullText.length; i++) {
                         const code = fullText.charCodeAt(i);
-                        if (code >= 0 && code <= 128) {
-                            visualLength += 0.58; // 英文、数字、括号
-                        } else {
-                            visualLength += 1.0;  // 中文字符
-                        }
+                        visualLength += (code >= 0 && code <= 128) ? 0.58 : 1.0;
                     }
-
-                    // 容器目标宽度（对应 .etf-name-column 的 130px 减去 padding）
-                    const targetWidth = 112; 
-                    
-                    // 计算字体大小：目标宽度 / 视觉长度
-                    // 这里的系数 1.05 是微调值，确保文字能撑满但不过于拥挤
+                    const targetWidth = 112; // 容器可用宽度
                     let fontSize = (targetWidth / visualLength) * 1.05;
-                    
-                    // 限制字体大小范围，防止极短文字太大或极长文字太小
                     fontSize = Math.max(10, Math.min(18, fontSize));
-
                     return {
                         fontSize: `${fontSize}px`,
                         width: `${targetWidth}px`,
@@ -373,58 +457,23 @@
                     };
                 };
 
-                const fetchData = async () => {
-                    try {
-                        // 优先尝试本地数据文件，如果失败则回退到远程 URL
-                        let response;
-                        try {
-                            response = await fetch('etf_trigger_history.json');
-                            if (!response.ok) throw new Error('Local file not found');
-                        } catch (e) {
-                            response = await fetch('https://raw.githubusercontent.com/669988/ETF/refs/heads/main/etf_trigger_history.json');
-                        }
-                        
-                        const data = await response.json();
-                        allData.value = data.sort((a, b) => b.date.localeCompare(a.date));
-                        
-                        // 初始化日历视图到最新数据所在月份
-                        if (allData.value.length > 0) {
-                            const latest = new Date(allData.value[0].date);
-                            currentYear.value = latest.getFullYear();
-                            currentMonth.value = latest.getMonth();
-                        }
-                    } catch (error) {
-                        console.error('数据加载失败:', error);
-                    } finally {
-                        loading.value = false;
-                    }
-                };
-
-                const handleClickOutside = (e) => {
-                    if (showDropdown.value) {
-                        showDropdown.value = false;
-                    }
-                };
-
                 onMounted(() => {
                     fetchData();
-                    window.addEventListener('click', handleClickOutside);
+                    window.addEventListener('click', closeDropdown);
                 });
 
                 onUnmounted(() => {
-                    window.removeEventListener('click', handleClickOutside);
+                    window.removeEventListener('click', closeDropdown);
                 });
 
                 return {
-                    loading, allData, selectedDate, expandedRowKey,
-                    showDropdown, currentYear, currentMonth,
-                    uniqueDatesSet, startDateLimit, endDateLimit,
-                    toggleDropdown, selectLatest, selectDate,
-                    prevMonth, nextMonth, isPrevMonthDisabled, isNextMonthDisabled,
-                    calendarBlanks, calendarDays,
-                    filteredDateData, getMonthlyCountDisplay, getMonthlyDetails,
-                    getDetailParts, toggleRow, getColorClass, formatChineseDate,
-                    getEtfNameStyle
+                    loading, selectedDate, filteredDateData, getColorClass,
+                    expandedRowKey, toggleRow, getMonthlyCountDisplay, getMonthlyDetails,
+                    formatChineseDate, getDetailParts,
+                    showDropdown, currentYear, currentMonth, calendarBlanks, calendarDays,
+                    isPrevMonthDisabled, isNextMonthDisabled, toggleDropdown, closeDropdown,
+                    selectLatest, selectDate, prevMonth, nextMonth,
+                    getEtfNameStyle // 🌟 导出新增方法
                 };
             }
         }).mount('#app');
