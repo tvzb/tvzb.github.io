@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>直播源规范化专家 - 旗舰测速版</title>
   <style>
-    /* 保持原有的炫酷 UI 样式不变 */
     :root {
       --primary: #4f46e5;
       --primary-hover: #4338ca;
@@ -148,7 +147,7 @@
           一键复制结果
         </button>
         <button class="btn-danger" style="flex:1;" onclick="triggerGitHubWorkflow()">
-          🚀 云端测速筛选(需配置)
+          🚀 云端测速筛选
         </button>
       </div>
     </div>
@@ -184,18 +183,14 @@ function cleanUrl(url) {
   return url.split('$')[0].split('#')[0].trim();
 }
 
-// 【新增功能】：判断是否为 IPv6 地址
 function isIpv6(url) {
   try {
     const u = new URL(url);
-    // IPv6 的特征是 host 带有多个冒号，或者被 [] 包裹
     if (u.hostname.includes('[') || u.hostname.includes(']')) return true;
-    // 如果没有括号，但有超过1个冒号（ipv4只有可能有1个端口冒号）
     const colonCount = (u.hostname.match(/:/g) || []).length;
     if (colonCount > 1) return true;
     return false;
   } catch(e) { 
-    // 如果URL不规范导致解析失败，保守退化处理
     return url.includes('[') || (url.match(/:/g) || []).length > 2; 
   }
 }
@@ -270,7 +265,6 @@ function handleSmartProcess() {
     let name = formatChannelName(rawName.trim());
     let url = cleanUrl(rawUrl.trim()); 
     
-    // 【核心拦截】：如果是 IPv6，直接抛弃
     if (isIpv6(url)) {
       filteredCount++;
       return; 
@@ -393,6 +387,13 @@ function copyResult() {
   showToast("🎉 结果已成功复制到剪贴板！");
 }
 
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.innerText = message;
+  toast.className = "show";
+  setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3500);
+}
+
 // 【真实对接 GitHub Actions】
 function triggerGitHubWorkflow() {
   const dataToTest = document.getElementById('output').value;
@@ -442,38 +443,6 @@ function triggerGitHubWorkflow() {
   .catch(error => {
     alert("网络请求失败: " + error);
   });
-}
-  
-  // 提示用户这需要后端配合
-  const confirmed = confirm("注意：纯前端网页无法直接跨域测速！\n此功能需要配置 GitHub Personal Access Token (PAT) 及对应的测速仓库 (Action)。\n\n是否查看如何配置的说明？");
-  
-  if (confirmed) {
-    alert("开发者指引：\n1. 请在 JS 代码中的 triggerGitHubWorkflow() 函数内填入你的 GITHUB_TOKEN。\n2. 使用 fetch API 发送 POST 请求到 https://api.github.com/repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches。\n3. 在 payload 的 client_payload 中将当前的文本传给服务器跑 Python 测速！");
-    
-    /* 实际请求代码骨架（供未来配置使用）：
-    fetch('https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/actions/workflows/speedtest.yml/dispatches', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/vnd.github.v3+json',
-        'Authorization': 'token YOUR_GITHUB_PAT_HERE', 
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        ref: 'main',
-        client_payload: { m3u_data: btoa(unescape(encodeURIComponent(dataToTest))) }
-      })
-    }).then(res => {
-      if(res.ok) showToast("测速任务已提交到 GitHub！请稍后查看仓库结果。");
-    });
-    */
-  }
-}
-
-function showToast(message) {
-  const toast = document.getElementById("toast");
-  toast.innerText = message;
-  toast.className = "show";
-  setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3500);
 }
 </script>
 </body>
