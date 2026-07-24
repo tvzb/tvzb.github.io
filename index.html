@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>直播源规范化专家 - 旗舰版</title>
+  <title>直播源智能处理专家</title>
   <style>
     :root {
       --primary: #4f46e5;
@@ -38,13 +38,50 @@
     }
 
     header {
-      padding: 30px;
+      padding: 30px 30px 15px 30px;
       text-align: center;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
     }
 
     h1 { margin: 0 0 10px 0; font-size: 28px; color: #111827; letter-spacing: 1px; }
     .subtitle { margin: 0; color: var(--text-muted); font-size: 15px; }
+
+    /* 恢复并美化的导航栏样式 */
+    nav { 
+      padding: 0 30px 20px 30px; 
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    nav ul { 
+      list-style: none; 
+      padding: 0; 
+      margin: 0; 
+      display: flex; 
+      justify-content: center; 
+      flex-wrap: wrap; 
+      gap: 12px; 
+    }
+    nav a { 
+      display: block; 
+      padding: 10px 20px; 
+      background: rgba(255, 255, 255, 0.5); 
+      color: var(--text-muted); 
+      text-decoration: none; 
+      font-size: 15px; 
+      font-weight: 600; 
+      border-radius: 12px; 
+      transition: all 0.3s ease; 
+      border: 1px solid transparent;
+    }
+    nav a:hover { 
+      background: rgba(255, 255, 255, 0.9); 
+      color: var(--primary);
+      transform: translateY(-2px);
+      border-color: rgba(79, 70, 229, 0.2);
+    }
+    nav a.active { 
+      background: var(--primary); 
+      color: white; 
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); 
+    }
 
     .tips-box { 
       margin: 20px 30px; 
@@ -120,7 +157,6 @@
     .btn-success { background: #10b981; color: white; box-shadow: 0 4px 6px rgba(16,185,129,0.2);}
     .btn-success:hover { background: #059669; transform: translateY(-2px); }
 
-    /* Toast 提示条 */
     #toast {
       visibility: hidden;
       min-width: 250px;
@@ -146,7 +182,6 @@
       bottom: 50px;
     }
 
-    /* 响应式设计：在小屏幕上变为上下排列 */
     @media (max-width: 900px) {
       .workspace { flex-direction: column; }
       textarea { height: 300px; }
@@ -160,6 +195,17 @@
     <h1>📺 直播源智能规范化专家</h1>
     <p class="subtitle">自动精简名称 · 剥离冗余参数 · 跨源镜像映射 · 智能分组去重</p>
   </header>
+
+  <!-- 恢复的导航栏 -->
+  <nav>
+    <ul>
+      <li><a href="#" class="active">智能处理</a></li>
+      <li><a href="wzcl.html">文字处理</a></li>
+      <li><a href="pdzl.html">频道整理</a></li>
+      <li><a href="m2t.html">M3U↔TXT转换</a></li>
+      <li><a href="szq.html">石子棋</a></li>
+    </ul>
+  </nav>
 
   <div class="tips-box">
     <strong>💡 处理规则升级：</strong><br>
@@ -201,7 +247,6 @@
 <div id="toast">复制成功！</div>
 
 <script>
-// CCTV 基础配置
 const cctvConfig = [
   { id: 1, name: "综合" }, { id: 2, name: "财经" }, { id: 3, name: "综艺" },
   { id: 4, name: "中文国际" }, { id: 5, name: "体育" }, { id: 6, name: "电影" },
@@ -211,7 +256,6 @@ const cctvConfig = [
   { id: 16, name: "奥林匹克" }, { id: 17, name: "农业农村" }
 ];
 
-// 【更新】严格按照用户提供的 32 个卫视排序
 const prioritySatellites = [
   "江西卫视", "东方卫视", "北京卫视", "浙江卫视", "江苏卫视", 
   "湖南卫视", "深圳卫视", "广东卫视", "四川卫视", "东南卫视", 
@@ -222,13 +266,10 @@ const prioritySatellites = [
   "新疆卫视", "西藏卫视"
 ];
 
-// 匹配卫视前缀正则
 const provinceRegex = /^(北京|天津|上海|重庆|河北|山西|辽宁|吉林|黑龙江|江苏|浙江|安徽|福建|江西|山东|河南|湖北|湖南|广东|海南|四川|贵州|云南|陕西|甘肃|青海|内蒙古|广西|西藏|宁夏|新疆|兵团|东南|深圳|东方)卫视/;
 
-// 核心功能：清理 URL 后缀干扰信息（如 $LR•11、# 等）
 function cleanUrl(url) {
   if (!url) return "";
-  // 用 $ 或 # 分割，只取第一部分，有效剔除所有 M3U8 附加信息
   return url.split('$')[0].split('#')[0].trim();
 }
 
@@ -275,7 +316,6 @@ function handleSmartProcess() {
     return;
   }
 
-  // M3U 转换为纯 TXT 格式，同时清理 URL
   if (rawData.includes("#EXTINF")) {
     const lines = rawData.split(/\r?\n/);
     let converted = [];
@@ -296,12 +336,11 @@ function handleSmartProcess() {
   let globalOffsets = {};
   let allDetectedSats = new Set();
 
-  // 1. 扫描与清洗
   lines.forEach(line => {
     if (!line.includes(',')) return;
     let [rawName, rawUrl] = line.split(',');
     let name = formatChannelName(rawName.trim());
-    let url = cleanUrl(rawUrl.trim()); // 强制清理 TXT 模式下的 URL
+    let url = cleanUrl(rawUrl.trim()); 
     
     const host = getServerKey(url);
     if (!hostGroups[host]) hostGroups[host] = { cctv: {}, sats: {}, masterPattern: null };
@@ -320,7 +359,6 @@ function handleSmartProcess() {
     }
   });
 
-  // 2. 差值计算
   Object.values(hostGroups).forEach(group => {
     const sNames = Object.keys(group.sats);
     if (sNames.length >= 2) {
@@ -333,16 +371,13 @@ function handleSmartProcess() {
     }
   });
 
-  // 3. 排序逻辑 (合并优先列表和未在列表内的其他卫视)
   let otherSats = Array.from(allDetectedSats).filter(s => !prioritySatellites.includes(s));
   otherSats.sort((a, b) => a.localeCompare(b, 'zh-CN'));
   const finalSatOrder = [...prioritySatellites, ...otherSats];
 
-  // 4. 生成结果
   let finalResult = [];
   let seenEntries = new Set();
 
-  // 生成央视
   finalResult.push("央视频道,#genre#");
   Object.keys(hostGroups).forEach(host => {
     const group = hostGroups[host];
@@ -373,7 +408,6 @@ function handleSmartProcess() {
     }
   });
 
-  // 生成卫视
   finalResult.push("卫视频道,#genre#");
   Object.keys(hostGroups).forEach(host => {
     const group = hostGroups[host];
@@ -398,7 +432,6 @@ function handleSmartProcess() {
     finalResult.push("");
   });
 
-  // 清除连续的空行，并输出
   const outputStr = finalResult.join('\n').replace(/\n\n+/g, '\n\n').trim();
   document.getElementById('output').value = outputStr;
   showToast("✅ 处理完成！请在右侧查看结果。");
@@ -421,7 +454,6 @@ function copyResult() {
   showToast("🎉 结果已成功复制到剪贴板！");
 }
 
-// 现代化的 Toast 提示条逻辑
 function showToast(message) {
   const toast = document.getElementById("toast");
   toast.innerText = message;
