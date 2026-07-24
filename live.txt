@@ -79,20 +79,6 @@ CCTV-13新闻,http://58.210.139.130:9901/tsfile/live/0013_1.m3u8?key=txiptv&play
 CCTV-14少儿,http://58.210.139.130:9901/tsfile/live/0014_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-15音乐,http://58.210.139.130:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0
 
-CCTV-1综合,http://222.169.85.8:9901/tsfile/live/0001_1.m3u8
-CCTV-2财经,http://222.169.85.8:9901/tsfile/live/0002_1.m3u8
-CCTV-3综艺,http://222.169.85.8:9901/tsfile/live/0003_1.m3u8
-CCTV-5体育,http://222.169.85.8:9901/tsfile/live/0005_1.m3u8
-CCTV-6电影,http://222.169.85.8:9901/tsfile/live/0006_1.m3u8
-CCTV-8电视剧,http://222.169.85.8:9901/tsfile/live/0008_1.m3u8
-CCTV-9纪录,http://222.169.85.8:9901/tsfile/live/0009_1.m3u8
-CCTV-11戏曲,http://222.169.85.8:9901/tsfile/live/0011_1.m3u8
-CCTV-12社会与法,http://222.169.85.8:9901/tsfile/live/0012_1.m3u8
-CCTV-13新闻,http://222.169.85.8:9901/tsfile/live/0013_1.m3u8
-CCTV-14少儿,http://222.169.85.8:9901/tsfile/live/0014_1.m3u8
-CCTV-15音乐,http://222.169.85.8:9901/tsfile/live/0015_1.m3u8
-CCTV-17农业农村,http://222.169.85.8:9901/tsfile/live/0017_1.m3u8
-
 CCTV-1综合,http://74.91.26.218:82/live/cctv1hd.m3u8
 CCTV-2财经,http://74.91.26.218:82/live/cctv2hd.m3u8
 CCTV-3综艺,http://74.91.26.218:82/live/cctv3hd.m3u8
