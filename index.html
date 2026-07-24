@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>直播源智能处理专家</title>
+  <title>直播源规范化专家 - 旗舰测速版</title>
   <style>
+    /* 保持原有的炫酷 UI 样式不变 */
     :root {
       --primary: #4f46e5;
       --primary-hover: #4338ca;
@@ -37,166 +38,72 @@
       flex-direction: column;
     }
 
-    header {
-      padding: 30px 30px 15px 30px;
-      text-align: center;
-    }
-
+    header { padding: 30px 30px 15px 30px; text-align: center; }
     h1 { margin: 0 0 10px 0; font-size: 28px; color: #111827; letter-spacing: 1px; }
     .subtitle { margin: 0; color: var(--text-muted); font-size: 15px; }
 
-    /* 恢复并美化的导航栏样式 */
-    nav { 
-      padding: 0 30px 20px 30px; 
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-    }
-    nav ul { 
-      list-style: none; 
-      padding: 0; 
-      margin: 0; 
-      display: flex; 
-      justify-content: center; 
-      flex-wrap: wrap; 
-      gap: 12px; 
-    }
+    nav { padding: 0 30px 20px 30px; border-bottom: 1px solid rgba(0,0,0,0.05); }
+    nav ul { list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
     nav a { 
-      display: block; 
-      padding: 10px 20px; 
-      background: rgba(255, 255, 255, 0.5); 
-      color: var(--text-muted); 
-      text-decoration: none; 
-      font-size: 15px; 
-      font-weight: 600; 
-      border-radius: 12px; 
-      transition: all 0.3s ease; 
-      border: 1px solid transparent;
+      display: block; padding: 10px 20px; background: rgba(255, 255, 255, 0.5); 
+      color: var(--text-muted); text-decoration: none; font-size: 15px; 
+      font-weight: 600; border-radius: 12px; transition: all 0.3s ease; border: 1px solid transparent;
     }
-    nav a:hover { 
-      background: rgba(255, 255, 255, 0.9); 
-      color: var(--primary);
-      transform: translateY(-2px);
-      border-color: rgba(79, 70, 229, 0.2);
-    }
-    nav a.active { 
-      background: var(--primary); 
-      color: white; 
-      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); 
-    }
+    nav a:hover { background: rgba(255, 255, 255, 0.9); color: var(--primary); transform: translateY(-2px); border-color: rgba(79, 70, 229, 0.2); }
+    nav a.active { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
 
     .tips-box { 
-      margin: 20px 30px; 
-      background: rgba(245, 158, 11, 0.1); 
-      border-left: 4px solid #f59e0b; 
-      padding: 15px 20px; 
-      border-radius: 8px; 
-      font-size: 14px; 
-      color: #b45309; 
-      line-height: 1.6;
+      margin: 20px 30px; background: rgba(245, 158, 11, 0.1); border-left: 4px solid #f59e0b; 
+      padding: 15px 20px; border-radius: 8px; font-size: 14px; color: #b45309; line-height: 1.6;
     }
 
-    .workspace {
-      display: flex;
-      gap: 20px;
-      padding: 0 30px 30px 30px;
-    }
-
-    .panel {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
+    .workspace { display: flex; gap: 20px; padding: 0 30px 30px 30px; }
+    .panel { flex: 1; display: flex; flex-direction: column; gap: 15px; }
     .panel h3 { margin: 0; font-size: 16px; color: #374151; display: flex; justify-content: space-between; align-items: center;}
     
     textarea { 
-      width: 100%; 
-      height: 450px; 
-      padding: 16px; 
-      border: 2px solid var(--border); 
-      border-radius: 12px; 
-      font-family: 'Consolas', 'Monaco', monospace; 
-      font-size: 14px; 
-      box-sizing: border-box; 
-      transition: all 0.3s ease; 
-      resize: vertical;
-      background: rgba(255,255,255,0.9);
-      line-height: 1.5;
+      width: 100%; height: 450px; padding: 16px; border: 2px solid var(--border); 
+      border-radius: 12px; font-family: 'Consolas', 'Monaco', monospace; 
+      font-size: 14px; box-sizing: border-box; transition: all 0.3s ease; resize: vertical;
+      background: rgba(255,255,255,0.9); line-height: 1.5;
     }
-    
-    textarea:focus { 
-      border-color: var(--primary); 
-      outline: none; 
-      box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); 
-    }
-    
+    textarea:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
     #output { background-color: #f8fafc; }
 
     .btn-group { display: flex; gap: 10px; }
-
     button { 
-      padding: 12px 24px; 
-      border: none; 
-      border-radius: 10px; 
-      cursor: pointer; 
-      font-size: 15px; 
-      font-weight: 600; 
-      transition: all 0.2s; 
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      padding: 12px 24px; border: none; border-radius: 10px; cursor: pointer; 
+      font-size: 15px; font-weight: 600; transition: all 0.2s; display: flex;
+      align-items: center; justify-content: center; gap: 8px;
     }
     
     .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 6px rgba(79,70,229,0.2); }
     .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
-    
     .btn-secondary { background: #e5e7eb; color: #4b5563; }
     .btn-secondary:hover { background: #d1d5db; }
-    
     .btn-success { background: #10b981; color: white; box-shadow: 0 4px 6px rgba(16,185,129,0.2);}
     .btn-success:hover { background: #059669; transform: translateY(-2px); }
+    .btn-danger { background: #e11d48; color: white; box-shadow: 0 4px 6px rgba(225,29,72,0.2);}
+    .btn-danger:hover { background: #be123c; transform: translateY(-2px); }
 
     #toast {
-      visibility: hidden;
-      min-width: 250px;
-      background-color: #333;
-      color: #fff;
-      text-align: center;
-      border-radius: 8px;
-      padding: 16px;
-      position: fixed;
-      z-index: 1000;
-      left: 50%;
-      bottom: 30px;
-      transform: translateX(-50%);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-      font-size: 15px;
-      opacity: 0;
-      transition: opacity 0.3s, visibility 0.3s, bottom 0.3s;
+      visibility: hidden; min-width: 250px; background-color: #333; color: #fff;
+      text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 1000;
+      left: 50%; bottom: 30px; transform: translateX(-50%); box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      font-size: 15px; opacity: 0; transition: opacity 0.3s, visibility 0.3s, bottom 0.3s;
     }
-
-    #toast.show {
-      visibility: visible;
-      opacity: 1;
-      bottom: 50px;
-    }
-
-    @media (max-width: 900px) {
-      .workspace { flex-direction: column; }
-      textarea { height: 300px; }
-    }
+    #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
+    @media (max-width: 900px) { .workspace { flex-direction: column; } textarea { height: 300px; } }
   </style>
 </head>
 <body>
 
 <div class="container">
   <header>
-    <h1>📺 直播源智能处理专家</h1>
-    <p class="subtitle">自动精简名称 · 剥离冗余参数 · 跨源镜像映射 · 智能分组去重</p>
+    <h1>📺 直播源智能规范化专家</h1>
+    <p class="subtitle">自动精简 · 剥离冗余 · 跨源镜像映射 · IPV6拦截 · 智能分组排序</p>
   </header>
 
-  <!-- 恢复的导航栏 -->
   <nav>
     <ul>
       <li><a href="#" class="active">智能处理</a></li>
@@ -207,6 +114,13 @@
     </ul>
   </nav>
 
+  <div class="tips-box">
+    <strong>💡 新增特性说明：</strong><br>
+    • <b>IPV6 终结者：</b>处理时会自动识别并丢弃所有 IPV6 地址，确保仅保留 IPV4。<br>
+    • <b>智能补缺引擎：</b>即使只提供两三个有效央视/卫视源，系统也能通过数字偏移量全自动推算出同服务器其他频道的源地址。<br>
+    • <b>云端测速对接：</b>预留了向 GitHub Actions 发送测速请求的接口。
+  </div>
+
   <div class="workspace">
     <!-- 左侧输入区 -->
     <div class="panel">
@@ -216,10 +130,10 @@
           <button class="btn-secondary" onclick="clearAll()">清空</button>
         </div>
       </h3>
-      <textarea id="input" placeholder="请在此处粘贴杂乱的 M3U 或 TXT 直播源内容..."></textarea>
+      <textarea id="input" placeholder="请在此处粘贴包含各路地方台、杂乱无章的直播源内容..."></textarea>
       <button class="btn-primary" onclick="handleSmartProcess()">
         <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-        一键智能清洗并分组
+        一键智能清洗、补齐并分组
       </button>
     </div>
 
@@ -228,17 +142,20 @@
       <h3>
         <span>📤 规范化结果 (TXT)</span>
       </h3>
-      <textarea id="output" readonly placeholder="处理后的标准 TXT 格式结果将在此显示..."></textarea>
-      <button class="btn-success" onclick="copyResult()">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
-        一键复制结果
-      </button>
+      <textarea id="output" readonly placeholder="处理后的纯净版 IPV4 标准源将在此显示..."></textarea>
+      <div class="btn-group">
+        <button class="btn-success" style="flex:1;" onclick="copyResult()">
+          一键复制结果
+        </button>
+        <button class="btn-danger" style="flex:1;" onclick="triggerGitHubWorkflow()">
+          🚀 云端测速筛选(需配置)
+        </button>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- 吐司提示 -->
-<div id="toast">复制成功！</div>
+<div id="toast">操作成功！</div>
 
 <script>
 const cctvConfig = [
@@ -265,6 +182,22 @@ const provinceRegex = /^(北京|天津|上海|重庆|河北|山西|辽宁|吉林
 function cleanUrl(url) {
   if (!url) return "";
   return url.split('$')[0].split('#')[0].trim();
+}
+
+// 【新增功能】：判断是否为 IPv6 地址
+function isIpv6(url) {
+  try {
+    const u = new URL(url);
+    // IPv6 的特征是 host 带有多个冒号，或者被 [] 包裹
+    if (u.hostname.includes('[') || u.hostname.includes(']')) return true;
+    // 如果没有括号，但有超过1个冒号（ipv4只有可能有1个端口冒号）
+    const colonCount = (u.hostname.match(/:/g) || []).length;
+    if (colonCount > 1) return true;
+    return false;
+  } catch(e) { 
+    // 如果URL不规范导致解析失败，保守退化处理
+    return url.includes('[') || (url.match(/:/g) || []).length > 2; 
+  }
 }
 
 function formatChannelName(name) {
@@ -329,12 +262,19 @@ function handleSmartProcess() {
   let hostGroups = {};
   let globalOffsets = {};
   let allDetectedSats = new Set();
+  let filteredCount = 0;
 
   lines.forEach(line => {
     if (!line.includes(',')) return;
     let [rawName, rawUrl] = line.split(',');
     let name = formatChannelName(rawName.trim());
     let url = cleanUrl(rawUrl.trim()); 
+    
+    // 【核心拦截】：如果是 IPv6，直接抛弃
+    if (isIpv6(url)) {
+      filteredCount++;
+      return; 
+    }
     
     const host = getServerKey(url);
     if (!hostGroups[host]) hostGroups[host] = { cctv: {}, sats: {}, masterPattern: null };
@@ -428,7 +368,12 @@ function handleSmartProcess() {
 
   const outputStr = finalResult.join('\n').replace(/\n\n+/g, '\n\n').trim();
   document.getElementById('output').value = outputStr;
-  showToast("✅ 处理完成！请在右侧查看结果。");
+  
+  if (filteredCount > 0) {
+    showToast(`✅ 处理完成！已成功拦截过滤 ${filteredCount} 个 IPV6 源。`);
+  } else {
+    showToast("✅ 处理完成！请在右侧查看结果。");
+  }
 }
 
 function clearAll() {
@@ -448,11 +393,44 @@ function copyResult() {
   showToast("🎉 结果已成功复制到剪贴板！");
 }
 
+// 【新增功能框架】：触发 GitHub Actions
+function triggerGitHubWorkflow() {
+  const dataToTest = document.getElementById('output').value;
+  if (!dataToTest) {
+    alert("请先生成需要测速的源！");
+    return;
+  }
+  
+  // 提示用户这需要后端配合
+  const confirmed = confirm("注意：纯前端网页无法直接跨域测速！\n此功能需要配置 GitHub Personal Access Token (PAT) 及对应的测速仓库 (Action)。\n\n是否查看如何配置的说明？");
+  
+  if (confirmed) {
+    alert("开发者指引：\n1. 请在 JS 代码中的 triggerGitHubWorkflow() 函数内填入你的 GITHUB_TOKEN。\n2. 使用 fetch API 发送 POST 请求到 https://api.github.com/repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches。\n3. 在 payload 的 client_payload 中将当前的文本传给服务器跑 Python 测速！");
+    
+    /* 实际请求代码骨架（供未来配置使用）：
+    fetch('https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/actions/workflows/speedtest.yml/dispatches', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/vnd.github.v3+json',
+        'Authorization': 'token YOUR_GITHUB_PAT_HERE', 
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        ref: 'main',
+        client_payload: { m3u_data: btoa(unescape(encodeURIComponent(dataToTest))) }
+      })
+    }).then(res => {
+      if(res.ok) showToast("测速任务已提交到 GitHub！请稍后查看仓库结果。");
+    });
+    */
+  }
+}
+
 function showToast(message) {
   const toast = document.getElementById("toast");
   toast.innerText = message;
   toast.className = "show";
-  setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+  setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3500);
 }
 </script>
 </body>
