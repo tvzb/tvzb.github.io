@@ -393,13 +393,56 @@ function copyResult() {
   showToast("🎉 结果已成功复制到剪贴板！");
 }
 
-// 【新增功能框架】：触发 GitHub Actions
+// 【真实对接 GitHub Actions】
 function triggerGitHubWorkflow() {
   const dataToTest = document.getElementById('output').value;
   if (!dataToTest) {
-    alert("请先生成需要测速的源！");
+    showToast("请先生成需要测速的源！");
     return;
   }
+
+  // ⚠️ 弹窗让用户输入 Token，这样最安全，防止你的 Token 被别人盗用
+  const token = prompt("请输入你的 GitHub Personal Access Token (PAT):");
+  if (!token) return;
+
+  // 请把下面的 YOUR_USERNAME 替换为你的 GitHub 账号名
+  // 请把 YOUR_REPO 替换为你的仓库名 (比如 iptv-speedtest)
+  const username = "tvzb"; 
+  const repo = "iptv-speedtest";
+  const workflowFile = "speedtest.yml"; // 上面创建的工作流文件名
+
+  const url = `https://api.github.com/repos/${username}/${repo}/actions/workflows/${workflowFile}/dispatches`;
+
+  showToast("正在向云端下发测速任务...");
+
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/vnd.github.v3+json',
+      'Authorization': `Bearer ${token}`, // 使用 Bearer 认证
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      ref: 'main', // 仓库的分支名，默认通常是 main
+      inputs: {
+        // 为了防止中文乱码和特殊符号报错，我们先转码再 Base64 编码
+        playlist: btoa(unescape(encodeURIComponent(dataToTest))) 
+      }
+    })
+  })
+  .then(response => {
+    if (response.ok) {
+      alert("🎉 测速任务已成功发送至 GitHub 云端！\n\nGitHub 服务器现在需要 1~3 分钟去连接测试每一个源。\n请稍后去你的 GitHub 仓库查看自动生成的 result.txt 文件！");
+    } else {
+      response.json().then(err => {
+        alert(`❌ 触发失败：\n${err.message}`);
+      });
+    }
+  })
+  .catch(error => {
+    alert("网络请求失败: " + error);
+  });
+}
   
   // 提示用户这需要后端配合
   const confirmed = confirm("注意：纯前端网页无法直接跨域测速！\n此功能需要配置 GitHub Personal Access Token (PAT) 及对应的测速仓库 (Action)。\n\n是否查看如何配置的说明？");
