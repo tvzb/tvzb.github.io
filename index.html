@@ -640,26 +640,33 @@ function startAutoPolling(btn) {
         const data = await res.json();
         if (data.workflow_runs && data.workflow_runs.length > 0) {
           const run = data.workflow_runs[0];
-          // 如果前两次探测（约 16 秒内）状态还没变，属于正常延迟。
-          // 当状态变为 completed，且已经过了一定时间，即可认定测速完成。
-          if (run.status === 'completed' && pollCount > 2) {
+          
+          if (run.status === 'completed' && pollCount > 1) {
             clearInterval(pollingInterval);
-            fetchFinalResult(btn);
+            // 延迟 2 秒再拉取，等待 git push 彻底写入 GitHub 数据库
+            setTimeout(() => fetchFinalResult(btn), 2000);
           }
         }
       }
     } catch (err) {
       console.log("状态查询失败", err);
     }
-  }, 8000); // 每 8 秒查一次
+  }, 15000); // 间隔改为 15 秒，防止触发 GitHub API 速率限制
 }
 
-// 静默拉取最终结果
+// 静默拉取最终结果 (绕过 CDN 缓存)
 function fetchFinalResult(btn) {
-  document.getElementById('finalResult').value = "✅ 测速完毕！正在拉取最终文件...";
-  const url = `https://raw.githubusercontent.com/tvzb/iptv-speedtest/main/iptv.txt?t=${new Date().getTime()}`;
+  document.getElementById('finalResult').value = "✅ 测速完毕！正在拉取最新文件...";
   
-  fetch(url)
+  // 改用 GitHub API 端点直接读取，并加上时间戳
+  const url = `https://api.github.com/repos/tvzb/iptv-speedtest/contents/iptv.txt?ref=main&t=${new Date().getTime()}`;
+  
+  fetch(url, {
+    headers: {
+      // 关键：告诉 GitHub API 直接返回未加工的纯文本内容，而不是 JSON
+      'Accept': 'application/vnd.github.v3.raw'
+    }
+  })
     .then(response => {
       if (!response.ok) throw new Error("结果尚未同步");
       return response.text();
