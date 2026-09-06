@@ -307,12 +307,8 @@
         <button class="btn-success" style="flex:1;" onclick="copyResult()">
           ✨ 复制结果
         </button>
-        <button class="btn-danger" style="flex:1;" onclick="triggerGitHubWorkflow()">
+        <button id="triggerBtn" class="btn-danger" style="flex:1;" onclick="triggerGitHubWorkflow()">
           🚀 云端测速筛选
-        </button>
-        <!-- 增加了 id 供轮询控制状态 -->
-        <button id="fetchResultBtn" class="btn-info" style="flex:1;" onclick="fetchSpeedtestResult()">
-          👀 获取测速结果
         </button>
       </div>
     </div>
@@ -576,7 +572,9 @@ function showToast(message) {
   setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3500);
 }
 
-// 【通过 Cloudflare Worker 安全对接 GitHub Actions】
+// ================= 云端测速与全自动状态探测逻辑 =================
+let pollingInterval = null;
+
 function triggerGitHubWorkflow() {
   const dataToTest = document.getElementById('output').value;
   if (!dataToTest) {
@@ -584,6 +582,7 @@ function triggerGitHubWorkflow() {
     return;
   }
 
+  // 密码框默认值置空，隐藏密码
   const password = prompt("请输入密码:");
   if (!password) {
     showToast("已取消操作！");
@@ -591,14 +590,16 @@ function triggerGitHubWorkflow() {
   }
 
   const workerUrl = "https://iptv.hahagw.eu.org"; 
-
-  showToast("正在通过云端节点下发测速任务...");
+  const btn = document.getElementById('triggerBtn');
+  
+  // 按钮置灰，准备请求
+  btn.classList.add('btn-disabled');
+  btn.disabled = true;
+  btn.innerHTML = '发送指令中...';
 
   fetch(workerUrl, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       password: password, 
       playlist: btoa(unescape(encodeURIComponent(dataToTest)))
@@ -607,99 +608,85 @@ function triggerGitHubWorkflow() {
   .then(response => response.json().then(data => ({ status: response.status, body: data })))
   .then(({ status, body }) => {
     if (status === 200) {
-      alert("🎉 测速任务已成功发送至 GitHub 云端！\n\n获取结果按钮将变为灰色，测速完毕后会自动恢复并提示您。");
-      // 延迟 3 秒开始探测 (给 GitHub 服务器一点响应时间来生成运行记录)
-      setTimeout(startPolling, 3000);
+      showToast("🎉 指令已发送，云端测速启动！");
+      startAutoPolling(btn);
     } else {
       alert(`❌ 触发失败：\n${body.error}`);
+      resetTriggerBtn(btn);
     }
   })
   .catch(error => {
     alert("网络请求失败: " + error);
+    resetTriggerBtn(btn);
   });
 }
 
-// ================= 工作流状态探测逻辑 =================
-let pollingInterval = null;
+// 自动轮询 GitHub 状态
+function startAutoPolling(btn) {
+  btn.innerHTML = '⏳ 云端测速中...';
+  document.getElementById('resultContainer').style.display = 'block';
+  document.getElementById('finalResult').value = "⏳ 已向云端发送测速请求！\n\n服务器正在逐个连接测试并自动剔除无效源，同名频道将按速度自动重排。\n通常需要 1~3 分钟，请保持此页面打开，测速完成后结果将自动显示在这里...";
+  document.getElementById('resultContainer').scrollIntoView({ behavior: 'smooth' });
 
-async function checkWorkflowStatus() {
-  const btn = document.getElementById('fetchResultBtn');
-  try {
-    const url = `https://api.github.com/repos/tvzb/iptv-speedtest/actions/workflows/speedtest.yml/runs?per_page=1`;
-    const response = await fetch(url);
-    if (response.ok) {
-      const data = await response.json();
-      if (data.workflow_runs && data.workflow_runs.length > 0) {
-        const latestRun = data.workflow_runs[0];
-        // 如果处于排队中或正在运行中
-        if (latestRun.status === 'in_progress' || latestRun.status === 'queued') {
-          btn.classList.add('btn-disabled');
-          btn.disabled = true;
-          btn.innerHTML = '⏳ 云端测速中...';
-          return true; // 正在运行
-        }
-      }
-    }
-  } catch (err) {
-    console.error("状态查询失败", err);
-  }
-  
-  // 运行结束或无任务时，恢复按钮
-  btn.classList.remove('btn-disabled');
-  btn.disabled = false;
-  btn.innerHTML = '👀 获取测速结果';
-  return false; // 未运行
-}
-
-function startPolling() {
+  let pollCount = 0;
   if (pollingInterval) clearInterval(pollingInterval);
-  checkWorkflowStatus(); // 立即查一次
   
   pollingInterval = setInterval(async () => {
-    const isRunning = await checkWorkflowStatus();
-    if (!isRunning) {
-      clearInterval(pollingInterval);
-      showToast("✅ 云端测速已完成！现在可以获取最新结果了。");
+    pollCount++;
+    try {
+      const url = `https://api.github.com/repos/tvzb/iptv-speedtest/actions/workflows/speedtest.yml/runs?per_page=1`;
+      const res = await fetch(url);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.workflow_runs && data.workflow_runs.length > 0) {
+          const run = data.workflow_runs[0];
+          // 如果前两次探测（约 16 秒内）状态还没变，属于正常延迟。
+          // 当状态变为 completed，且已经过了一定时间，即可认定测速完成。
+          if (run.status === 'completed' && pollCount > 2) {
+            clearInterval(pollingInterval);
+            fetchFinalResult(btn);
+          }
+        }
+      }
+    } catch (err) {
+      console.log("状态查询失败", err);
     }
-  }, 10000); // 每 10 秒探测一次
+  }, 8000); // 每 8 秒查一次
 }
 
-// 页面加载完成后，先静默查一次，防止用户刷新网页后按钮状态丢失
-document.addEventListener('DOMContentLoaded', checkWorkflowStatus);
-
-// 新增：获取云端生成的 iptv.txt 结果
-function fetchSpeedtestResult() {
-  showToast("正在尝试获取云端最新测速结果...");
-  
-  // 添加时间戳防止浏览器缓存
+// 静默拉取最终结果
+function fetchFinalResult(btn) {
+  document.getElementById('finalResult').value = "✅ 测速完毕！正在拉取最终文件...";
   const url = `https://raw.githubusercontent.com/tvzb/iptv-speedtest/main/iptv.txt?t=${new Date().getTime()}`;
   
   fetch(url)
     .then(response => {
-      if (!response.ok) {
-        throw new Error("结果可能还在生成中，或仓库并未公开 (Public)");
-      }
+      if (!response.ok) throw new Error("结果尚未同步");
       return response.text();
     })
     .then(text => {
-      document.getElementById('resultContainer').style.display = 'block';
       document.getElementById('finalResult').value = text;
-      showToast("✅ 获取成功！可在线浏览或点击下载。");
-      document.getElementById('resultContainer').scrollIntoView({ behavior: 'smooth' });
+      showToast("🎉 获取成功！测速结果已按频道排好序。");
+      resetTriggerBtn(btn);
     })
     .catch(err => {
-      alert("获取失败: " + err.message + "\n\n提示：请确认工作流已经运行完毕，并且该 GitHub 仓库必须是公开 (Public) 的，否则需要鉴权才能读取文件。");
+      document.getElementById('finalResult').value = "⚠️ 拉取失败，可能文件还在同步中，请稍后再试。";
+      resetTriggerBtn(btn);
     });
 }
 
-// 新增：下载结果为 iptv.txt 文件
+function resetTriggerBtn(btn) {
+  btn.classList.remove('btn-disabled');
+  btn.disabled = false;
+  btn.innerHTML = '🚀 云端测速筛选';
+}
+
 function downloadResult() {
   const text = document.getElementById('finalResult').value;
-  if (!text || text.includes("正在获取")) {
-    showToast("没有可下载的内容！");
+  if (!text || text.includes("正在")) {
+    showToast("当前没有可下载的有效内容！");
     return;
   }
-  
   const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
