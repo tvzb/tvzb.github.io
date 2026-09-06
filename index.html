@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>直播源智能处理专家</title>
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --bg-color: #f3f4f6;
+      --panel-bg: rgba(255, 255, 255, 0.85);
+      --text-main: #1f2937;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+    }
+    
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+      margin: 0; padding: 20px; 
+      background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+      min-height: 100vh; 
+      color: var(--text-main); 
+      box-sizing: border-box;
+    }
+    
+    .container { 
+      max-width: 1400px; 
+      margin: 0 auto; 
+      background: var(--panel-bg); 
+      border-radius: 20px; 
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); 
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      overflow: hidden; 
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+    }
+
+    header { padding: 30px 30px 15px 30px; text-align: center; }
+    h1 { margin: 0 0 10px 0; font-size: 28px; color: #111827; letter-spacing: 1px; }
+    .subtitle { margin: 0; color: var(--text-muted); font-size: 15px; }
+
+    nav { padding: 0 30px 20px 30px; border-bottom: 1px solid rgba(0,0,0,0.05); }
+    nav ul { list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+    nav a { 
+      display: block; padding: 10px 20px; background: rgba(255, 255, 255, 0.5); 
+      color: var(--text-muted); text-decoration: none; font-size: 15px; 
+      font-weight: 600; border-radius: 12px; transition: all 0.3s ease; border: 1px solid transparent;
+    }
+    nav a:hover { background: rgba(255, 255, 255, 0.9); color: var(--primary); transform: translateY(-2px); border-color: rgba(79, 70, 229, 0.2); }
+    nav a.active { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
+
+    .tips-box { 
+      margin: 20px 30px; background: rgba(245, 158, 11, 0.1); border-left: 4px solid #f59e0b; 
+      padding: 15px 20px; border-radius: 8px; font-size: 14px; color: #b45309; line-height: 1.6;
+    }
+
+    .workspace { display: flex; gap: 20px; padding: 0 30px 30px 30px; }
+    .panel { flex: 1; display: flex; flex-direction: column; gap: 15px; }
+    .panel h3 { margin: 0; font-size: 16px; color: #374151; display: flex; justify-content: space-between; align-items: center;}
+    
+    textarea { 
+      width: 100%; height: 450px; padding: 16px; border: 2px solid var(--border); 
+      border-radius: 12px; font-family: 'Consolas', 'Monaco', monospace; 
+      font-size: 14px; box-sizing: border-box; transition: all 0.3s ease; resize: vertical;
+      background: rgba(255,255,255,0.9); line-height: 1.5;
+    }
+    textarea:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
+    #output { background-color: #f8fafc; }
+
+    .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
+    button { 
+      padding: 12px 24px; border: none; border-radius: 10px; cursor: pointer; 
+      font-size: 15px; font-weight: 600; transition: all 0.2s; display: flex;
+      align-items: center; justify-content: center; gap: 8px;
+    }
+    
+    .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 6px rgba(79,70,229,0.2); }
+    .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
+    .btn-secondary { background: #e5e7eb; color: #4b5563; }
+    .btn-secondary:hover { background: #d1d5db; }
+    .btn-success { background: #10b981; color: white; box-shadow: 0 4px 6px rgba(16,185,129,0.2);}
+    .btn-success:hover { background: #059669; transform: translateY(-2px); }
+    .btn-danger { background: #e11d48; color: white; box-shadow: 0 4px 6px rgba(225,29,72,0.2);}
+    .btn-danger:hover { background: #be123c; transform: translateY(-2px); }
+    .btn-info { background: #0ea5e9; color: white; box-shadow: 0 4px 6px rgba(14,165,233,0.2);}
+    .btn-info:hover { background: #0284c7; transform: translateY(-2px); }
+
+    #toast {
+      visibility: hidden; min-width: 250px; background-color: #333; color: #fff;
+      text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 1000;
+      left: 50%; bottom: 30px; transform: translateX(-50%); box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      font-size: 15px; opacity: 0; transition: opacity 0.3s, visibility 0.3s, bottom 0.3s;
+    }
+    #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
+    @media (max-width: 900px) { .workspace { flex-direction: column; } textarea { height: 300px; } }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>📺 直播源智能处理专家</h1>
+    <p class="subtitle">自动精简 · 剥离冗余 · 跨源镜像映射 · IPV6拦截 · 智能分组排序</p>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#" class="active">智能处理</a></li>
+      <li><a href="wzcl.html">文字处理</a></li>
+      <li><a href="pdzl.html">频道整理</a></li>
+      <li><a href="m2t.html">M3U↔TXT转换</a></li>
+      <li><a href="szq.html">石子棋</a></li>
+    </ul>
+  </nav>
+
+  <div class="tips-box">
+    <strong>💡 新增特性说明：</strong><br>
+    • <b>IPV6 终结者：</b>处理时会自动识别并丢弃所有 IPV6 地址，确保仅保留 IPV4。<br>
+    • <b>智能补缺引擎：</b>即使只提供两三个有效央视/卫视源，系统也能通过数字偏移量全自动推算出同服务器其他频道的源地址。<br>
+    • <b>云端测速对接：</b>预留了向 GitHub Actions 发送测速请求的接口。
+  </div>
+
+  <div class="workspace">
+    <!-- 左侧输入区 -->
+    <div class="panel">
+      <h3>
+        <span>📥 数据输入 (M3U / TXT)</span>
+        <div class="btn-group">
+          <button class="btn-secondary" onclick="clearAll()">清空</button>
+        </div>
+      </h3>
+      <textarea id="input" placeholder="请在此处粘贴包含各路地方台、杂乱无章的直播源内容..."></textarea>
+      <button class="btn-primary" onclick="handleSmartProcess()">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        一键智能清洗、补齐并分组
+      </button>
+    </div>
+
+    <!-- 右侧输出区 -->
+    <div class="panel">
+      <h3>
+        <span>📤 规范化结果 (TXT)</span>
+      </h3>
+      <textarea id="output" readonly placeholder="处理后的纯净版 IPV4 标准源将在此显示..."></textarea>
+      <div class="btn-group">
+        <button class="btn-success" style="flex:1;" onclick="copyResult()">
+          复制结果
+        </button>
+        <button class="btn-danger" style="flex:1;" onclick="triggerGitHubWorkflow()">
+          🚀 云端测速筛选
+        </button>
+        <button class="btn-info" style="flex:1;" onclick="fetchSpeedtestResult()">
+          👀 获取测速结果
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 新增：测速结果展示区 (默认隐藏) -->
+<div class="container" id="resultContainer" style="display: none;">
+  <div class="workspace" style="padding-top: 30px;">
+    <div class="panel" style="width: 100%;">
+      <h3>
+        <span>🌟 云端测速最终结果 (iptv.txt)</span>
+        <div class="btn-group">
+          <button class="btn-success" onclick="downloadResult()">⬇️ 下载 iptv.txt</button>
+        </div>
+      </h3>
+      <textarea id="finalResult" readonly placeholder="正在获取云端测速结果..."></textarea>
+    </div>
+  </div>
+</div>
+
+<div id="toast">操作成功！</div>
+
+<script>
+const cctvConfig = [
+  { id: 1, name: "综合" }, { id: 2, name: "财经" }, { id: 3, name: "综艺" },
+  { id: 4, name: "中文国际" }, { id: 5, name: "体育" }, { id: 6, name: "电影" },
+  { id: 7, name: "国防军事" }, { id: 8, name: "电视剧" }, { id: 9, name: "纪录" },
+  { id: 10, name: "科教" }, { id: 11, name: "戏曲" }, { id: 12, name: "社会与法" },
+  { id: 13, name: "新闻" }, { id: 14, name: "少儿" }, { id: 15, name: "音乐" },
+  { id: 16, name: "奥林匹克" }, { id: 17, name: "农业农村" }
+];
+
+const prioritySatellites = [
+  "江西卫视", "东方卫视", "北京卫视", "浙江卫视", "江苏卫视", 
+  "湖南卫视", "深圳卫视", "广东卫视", "四川卫视", "东南卫视", 
+  "湖北卫视", "陕西卫视", "河南卫视", "河北卫视", "辽宁卫视", 
+  "重庆卫视", "吉林卫视", "安徽卫视", "贵州卫视", "广西卫视", 
+  "山东卫视", "天津卫视", "山西卫视", "黑龙江卫视", "海南卫视", 
+  "云南卫视", "甘肃卫视", "内蒙古卫视", "宁夏卫视", "青海卫视", 
+  "新疆卫视", "西藏卫视"
+];
+
+const provinceRegex = /^(北京|天津|上海|重庆|河北|山西|辽宁|吉林|黑龙江|江苏|浙江|安徽|福建|江西|山东|河南|湖北|湖南|广东|海南|四川|贵州|云南|陕西|甘肃|青海|内蒙古|广西|西藏|宁夏|新疆|兵团|东南|深圳|东方)卫视/;
+
+function cleanUrl(url) {
+  if (!url) return "";
+  return url.split('$')[0].split('#')[0].trim();
+}
+
+function isIpv6(url) {
+  try {
+    const u = new URL(url);
+    if (u.hostname.includes('[') || u.hostname.includes(']')) return true;
+    const colonCount = (u.hostname.match(/:/g) || []).length;
+    if (colonCount > 1) return true;
+    return false;
+  } catch(e) { 
+    return url.includes('[') || (url.match(/:/g) || []).length > 2; 
+  }
+}
+
+function formatChannelName(name) {
+  let n = name.replace(/HD|FHD|标清|超清|高清|频道|\s|\[.*\]|\(.*\)/gi, "");
+  if (n === "上海卫视") return "东方卫视";
+  if (n === "福建东南卫视") return "东南卫视";
+  if (n.includes("卫视") && !n.endsWith("卫视")) {
+      n = n.substring(0, n.indexOf("卫视") + 2);
+  }
+  return n;
+}
+
+function isValidSatellite(name) {
+  return provinceRegex.test(name);
+}
+
+function getServerKey(url) {
+  try {
+    const u = new URL(url);
+    return `${u.protocol}//${u.host}`;
+  } catch(e) { return url.substring(0, 30); }
+}
+
+function parseUrlInfo(url, channelNum) {
+  const parts = url.split('/');
+  const filename = parts[parts.length - 1].split('?')[0];
+  const matches = filename.match(/\d+/g);
+  if (!matches) return null;
+  let target = matches.find(m => parseInt(m) === channelNum) || matches[matches.length - 1];
+  return {
+    val: parseInt(target),
+    str: target,
+    len: target.length,
+    prefix: url.substring(0, url.lastIndexOf(target)),
+    suffix: url.substring(url.lastIndexOf(target) + target.length)
+  };
+}
+
+function handleSmartProcess() {
+  let rawData = document.getElementById('input').value.trim();
+  if (!rawData) {
+    showToast("请输入需要处理的直播源内容！");
+    return;
+  }
+
+  if (rawData.includes("#EXTINF")) {
+    const lines = rawData.split(/\r?\n/);
+    let converted = [];
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i].includes("#EXTINF")) {
+        let name = lines[i].split(',')[1]?.trim();
+        let url = lines[i+1]?.trim();
+        if (name && url) {
+          converted.push(`${name},${cleanUrl(url)}`);
+        }
+      }
+    }
+    rawData = converted.join('\n');
+  }
+
+  const lines = rawData.split('\n');
+  let hostGroups = {};
+  let globalOffsets = {};
+  let allDetectedSats = new Set();
+  let filteredCount = 0;
+
+  lines.forEach(line => {
+    if (!line.includes(',')) return;
+    let [rawName, rawUrl] = line.split(',');
+    let name = formatChannelName(rawName.trim());
+    let url = cleanUrl(rawUrl.trim()); 
+    
+    if (isIpv6(url)) {
+      filteredCount++;
+      return; 
+    }
+    
+    const host = getServerKey(url);
+    if (!hostGroups[host]) hostGroups[host] = { cctv: {}, sats: {}, masterPattern: null };
+
+    const cctvMatch = name.match(/cctv-?(\d+)/i);
+    if (cctvMatch) {
+      const id = parseInt(cctvMatch[1]);
+      const info = parseUrlInfo(url, id);
+      hostGroups[host].cctv[id] = { url, info };
+      if (!hostGroups[host].masterPattern && info) hostGroups[host].masterPattern = info;
+    } else if (name.includes("卫视") && isValidSatellite(name)) {
+      allDetectedSats.add(name);
+      const info = parseUrlInfo(url, -1);
+      hostGroups[host].sats[name] = { url, info };
+      if (!hostGroups[host].masterPattern && info) hostGroups[host].masterPattern = info;
+    }
+  });
+
+  Object.values(hostGroups).forEach(group => {
+    const sNames = Object.keys(group.sats);
+    if (sNames.length >= 2) {
+      const ref = sNames[0];
+      sNames.slice(1).forEach(curr => {
+        if (!globalOffsets[curr] && group.sats[curr].info && group.sats[ref].info) {
+          globalOffsets[curr] = { refName: ref, offset: group.sats[curr].info.val - group.sats[ref].info.val };
+        }
+      });
+    }
+  });
+
+  let otherSats = Array.from(allDetectedSats).filter(s => !prioritySatellites.includes(s));
+  otherSats.sort((a, b) => a.localeCompare(b, 'zh-CN'));
+  const finalSatOrder = [...prioritySatellites, ...otherSats];
+
+  let finalResult = [];
+  let seenEntries = new Set();
+
+  finalResult.push("央视频道,#genre#");
+  Object.keys(hostGroups).forEach(host => {
+    const group = hostGroups[host];
+    const cctvIdsFound = Object.keys(group.cctv).map(Number);
+    if (cctvIdsFound.length >= 2 && group.masterPattern) {
+      cctvConfig.forEach(conf => {
+        let url = group.cctv[conf.id]?.url;
+        if (!url) {
+          const newIdStr = conf.id.toString().padStart(group.masterPattern.len, '0');
+          url = group.masterPattern.prefix + newIdStr + group.masterPattern.suffix;
+        }
+        const title = `CCTV-${conf.id}${conf.name}`;
+        if (!seenEntries.has(title + url)) {
+          finalResult.push(`${title},${url}`);
+          seenEntries.add(title + url);
+        }
+      });
+      finalResult.push("");
+    } else {
+      cctvIdsFound.sort((a,b)=>a-b).forEach(id => {
+        const conf = cctvConfig.find(c => c.id === id);
+        const title = conf ? `CCTV-${id}${conf.name}` : `CCTV-${id}`;
+        if (!seenEntries.has(title + group.cctv[id].url)) {
+            finalResult.push(`${title},${group.cctv[id].url}`);
+            seenEntries.add(title + group.cctv[id].url);
+        }
+      });
+    }
+  });
+
+  finalResult.push("卫视频道,#genre#");
+  Object.keys(hostGroups).forEach(host => {
+    const group = hostGroups[host];
+    if (Object.keys(group.sats).length === 0) return;
+
+    finalSatOrder.forEach(sName => {
+      let url = group.sats[sName]?.url;
+      if (!url) {
+        const off = globalOffsets[sName];
+        if (off && group.sats[off.refName] && group.sats[off.refName].info) {
+          const refInfo = group.sats[off.refName].info;
+          const targetVal = refInfo.val + off.offset;
+          const targetIdStr = targetVal.toString().padStart(refInfo.len, '0');
+          url = refInfo.prefix + targetIdStr + refInfo.suffix;
+        }
+      }
+      if (url && !seenEntries.has(sName + url)) {
+        finalResult.push(`${sName},${url}`);
+        seenEntries.add(sName + url);
+      }
+    });
+    finalResult.push("");
+  });
+
+  const outputStr = finalResult.join('\n').replace(/\n\n+/g, '\n\n').trim();
+  document.getElementById('output').value = outputStr;
+  
+  if (filteredCount > 0) {
+    showToast(`✅ 处理完成！已成功拦截过滤 ${filteredCount} 个 IPV6 源。`);
+  } else {
+    showToast("✅ 处理完成！请在右侧查看结果。");
+  }
+}
+
+function clearAll() {
+  document.getElementById('input').value = "";
+  document.getElementById('output').value = "";
+  document.getElementById('resultContainer').style.display = "none";
+  showToast("已清空内容");
+}
+
+function copyResult() {
+  const output = document.getElementById('output');
+  if(!output.value) {
+    showToast("当前没有可复制的内容！");
+    return;
+  }
+  output.select();
+  document.execCommand('copy');
+  showToast("🎉 结果已成功复制到剪贴板！");
+}
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.innerText = message;
+  toast.className = "show";
+  setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3500);
+}
+
+// 【通过 Cloudflare Worker 安全对接 GitHub Actions】
+function triggerGitHubWorkflow() {
+  const dataToTest = document.getElementById('output').value;
+  if (!dataToTest) {
+    showToast("请先生成需要测速的源！");
+    return;
+  }
+
+  // 密码验证：此时不仅用来做前端校验，还会传给 Worker 进行鉴权
+  const password = prompt("请输入密码:", "tvzb");
+  if (!password) {
+    showToast("已取消操作！");
+    return;
+  }
+
+  // ⚠️ 替换为你刚刚创建好的 Cloudflare Worker 的完整 URL
+  const workerUrl = "https://iptvspeedtest.hahagw2016.workers.dev"; 
+
+  showToast("正在通过云端节点下发测速任务...");
+
+  fetch(workerUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      password: password, // 把密码发给后端验证
+      playlist: btoa(unescape(encodeURIComponent(dataToTest))) // 依然进行 base64 编码
+    })
+  })
+  .then(response => {
+    // 解析后端返回的 JSON 数据
+    return response.json().then(data => ({ status: response.status, body: data }));
+  })
+  .then(({ status, body }) => {
+    if (status === 200) {
+      alert("🎉 测速任务已成功发送至 GitHub 云端！\n\nGitHub 服务器现在需要 1~3 分钟去连接测试每一个源。\n稍后可以点击“获取测速结果”按钮查看！");
+    } else {
+      alert(`❌ 触发失败：\n${body.error}`);
+    }
+  })
+  .catch(error => {
+    alert("网络请求失败: " + error);
+  });
+}
+
+// 新增：获取云端生成的 iptv.txt 结果
+function fetchSpeedtestResult() {
+  showToast("正在尝试获取云端最新测速结果...");
+  
+  // 添加时间戳防止浏览器缓存
+  const url = `https://raw.githubusercontent.com/tvzb/iptv-speedtest/main/iptv.txt?t=${new Date().getTime()}`;
+  
+  fetch(url)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("结果可能还在生成中，或仓库并未公开 (Public)");
+      }
+      return response.text();
+    })
+    .then(text => {
+      document.getElementById('resultContainer').style.display = 'block';
+      document.getElementById('finalResult').value = text;
+      showToast("✅ 获取成功！可在线浏览或点击下载。");
+      // 滚动页面到结果区域
+      document.getElementById('resultContainer').scrollIntoView({ behavior: 'smooth' });
+    })
+    .catch(err => {
+      alert("获取失败: " + err.message + "\n\n提示：请确认工作流已经运行完毕，并且该 GitHub 仓库必须是公开 (Public) 的，否则需要鉴权才能读取文件。");
+    });
+}
+
+// 新增：下载结果为 iptv.txt 文件
+function downloadResult() {
+  const text = document.getElementById('finalResult').value;
+  if (!text || text.includes("正在获取")) {
+    showToast("没有可下载的内容！");
+    return;
+  }
+  
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'iptv.txt';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
