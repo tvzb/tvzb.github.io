@@ -584,7 +584,7 @@ function triggerGitHubWorkflow() {
     return;
   }
 
-  const password = prompt("请输入密码:", "tvzb");
+  const password = prompt("请输入密码:");
   if (!password) {
     showToast("已取消操作！");
     return;
