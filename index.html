@@ -260,7 +260,7 @@
 <div class="container">
   <header>
     <h1>📺 直播源智能处理专家</h1>
-    <p class="subtitle">自动精简 · 剥离冗余 · 跨源镜像映射 · IPV6 拦截 · 智能分组排序</p>
+    <p class="subtitle">自动精简 · 剥离冗余 · IPV6 拦截 · 智能分组排序</p>
   </header>
 
   <nav>
@@ -274,10 +274,10 @@
   </nav>
 
   <div class="tips-box">
-    <strong>💡 新增特性说明：</strong><br>
+    <strong>💡 功能说明：</strong><br>
     • <b>IPV6 终结者：</b>处理时会自动识别并丢弃所有 IPV6 地址，确保仅保留 IPV4。<br>
-    • <b>智能补缺引擎：</b>即使只提供两三个有效央视/卫视源，系统也能通过数字偏移量全自动推算出同服务器其他频道的源地址。<br>
-    • <b>云端测速对接：</b>预留了向 GitHub Actions 发送测速请求的接口。
+    • <b>智能分组排序：</b>自动按央视 / 卫视分组，卫视按优先列表排序，去除重复与冗余标记。<br>
+    • <b>云端测速对接：</b>支持向 GitHub Actions 发送测速请求。注意：列表过长可能触发 GitHub 输入大小限制（约 65KB），建议精简后再测速。
   </div>
 
   <div class="workspace">
@@ -293,7 +293,7 @@
       <textarea id="input" placeholder="请在此处粘贴包含各路地方台、杂乱无章的直播源内容..."></textarea>
       <button class="btn-primary" onclick="handleSmartProcess()">
         <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-        一键智能清洗、补齐并分组
+        一键智能清洗并分组
       </button>
     </div>
 
@@ -393,21 +393,6 @@ function getServerKey(url) {
   } catch(e) { return url.substring(0, 30); }
 }
 
-function parseUrlInfo(url, channelNum) {
-  const parts = url.split('/');
-  const filename = parts[parts.length - 1].split('?')[0];
-  const matches = filename.match(/\d+/g);
-  if (!matches) return null;
-  let target = matches.find(m => parseInt(m) === channelNum) || matches[matches.length - 1];
-  return {
-    val: parseInt(target),
-    str: target,
-    len: target.length,
-    prefix: url.substring(0, url.lastIndexOf(target)),
-    suffix: url.substring(url.lastIndexOf(target) + target.length)
-  };
-}
-
 function handleSmartProcess() {
   let rawData = document.getElementById('input').value.trim();
   if (!rawData) {
@@ -415,6 +400,7 @@ function handleSmartProcess() {
     return;
   }
 
+  // M3U 转 TXT
   if (rawData.includes("#EXTINF")) {
     const lines = rawData.split(/\r?\n/);
     let converted = [];
@@ -432,7 +418,6 @@ function handleSmartProcess() {
 
   const lines = rawData.split('\n');
   let hostGroups = {};
-  let globalOffsets = {};
   let allDetectedSats = new Set();
   let filteredCount = 0;
 
@@ -448,34 +433,19 @@ function handleSmartProcess() {
     }
     
     const host = getServerKey(url);
-    if (!hostGroups[host]) hostGroups[host] = { cctv: {}, sats: {}, masterPattern: null };
+    if (!hostGroups[host]) hostGroups[host] = { cctv: {}, sats: {} };
 
     const cctvMatch = name.match(/cctv-?(\d+)/i);
     if (cctvMatch) {
       const id = parseInt(cctvMatch[1]);
-      const info = parseUrlInfo(url, id);
-      hostGroups[host].cctv[id] = { url, info };
-      if (!hostGroups[host].masterPattern && info) hostGroups[host].masterPattern = info;
+      hostGroups[host].cctv[id] = { url };
     } else if (name.includes("卫视") && isValidSatellite(name)) {
       allDetectedSats.add(name);
-      const info = parseUrlInfo(url, -1);
-      hostGroups[host].sats[name] = { url, info };
-      if (!hostGroups[host].masterPattern && info) hostGroups[host].masterPattern = info;
+      hostGroups[host].sats[name] = { url };
     }
   });
 
-  Object.values(hostGroups).forEach(group => {
-    const sNames = Object.keys(group.sats);
-    if (sNames.length >= 2) {
-      const ref = sNames[0];
-      sNames.slice(1).forEach(curr => {
-        if (!globalOffsets[curr] && group.sats[curr].info && group.sats[ref].info) {
-          globalOffsets[curr] = { refName: ref, offset: group.sats[curr].info.val - group.sats[ref].info.val };
-        }
-      });
-    }
-  });
-
+  // 卫视排序：优先列表 + 其他按中文排序
   let otherSats = Array.from(allDetectedSats).filter(s => !prioritySatellites.includes(s));
   otherSats.sort((a, b) => a.localeCompare(b, 'zh-CN'));
   const finalSatOrder = [...prioritySatellites, ...otherSats];
@@ -483,52 +453,33 @@ function handleSmartProcess() {
   let finalResult = [];
   let seenEntries = new Set();
 
+  // 央视频道（仅保留已有源，不再自动补齐）
   finalResult.push("央视频道,#genre#");
   Object.keys(hostGroups).forEach(host => {
     const group = hostGroups[host];
-    const cctvIdsFound = Object.keys(group.cctv).map(Number);
-    if (cctvIdsFound.length >= 2 && group.masterPattern) {
-      cctvConfig.forEach(conf => {
-        let url = group.cctv[conf.id]?.url;
-        if (!url) {
-          const newIdStr = conf.id.toString().padStart(group.masterPattern.len, '0');
-          url = group.masterPattern.prefix + newIdStr + group.masterPattern.suffix;
-        }
-        const title = `CCTV-${conf.id}${conf.name}`;
-        if (!seenEntries.has(title + url)) {
-          finalResult.push(`${title},${url}`);
-          seenEntries.add(title + url);
-        }
-      });
-      finalResult.push("");
-    } else {
-      cctvIdsFound.sort((a,b)=>a-b).forEach(id => {
-        const conf = cctvConfig.find(c => c.id === id);
-        const title = conf ? `CCTV-${id}${conf.name}` : `CCTV-${id}`;
-        if (!seenEntries.has(title + group.cctv[id].url)) {
-            finalResult.push(`${title},${group.cctv[id].url}`);
-            seenEntries.add(title + group.cctv[id].url);
-        }
-      });
-    }
+    const cctvIdsFound = Object.keys(group.cctv).map(Number).sort((a,b)=>a-b);
+    if (cctvIdsFound.length === 0) return;
+
+    cctvIdsFound.forEach(id => {
+      const conf = cctvConfig.find(c => c.id === id);
+      const title = conf ? `CCTV-${id}${conf.name}` : `CCTV-${id}`;
+      const url = group.cctv[id].url;
+      if (!seenEntries.has(title + url)) {
+        finalResult.push(`${title},${url}`);
+        seenEntries.add(title + url);
+      }
+    });
+    finalResult.push("");
   });
 
+  // 卫视频道（仅保留已有源，不再自动补齐）
   finalResult.push("卫视频道,#genre#");
   Object.keys(hostGroups).forEach(host => {
     const group = hostGroups[host];
     if (Object.keys(group.sats).length === 0) return;
 
     finalSatOrder.forEach(sName => {
-      let url = group.sats[sName]?.url;
-      if (!url) {
-        const off = globalOffsets[sName];
-        if (off && group.sats[off.refName] && group.sats[off.refName].info) {
-          const refInfo = group.sats[off.refName].info;
-          const targetVal = refInfo.val + off.offset;
-          const targetIdStr = targetVal.toString().padStart(refInfo.len, '0');
-          url = refInfo.prefix + targetIdStr + refInfo.suffix;
-        }
-      }
+      const url = group.sats[sName]?.url;
       if (url && !seenEntries.has(sName + url)) {
         finalResult.push(`${sName},${url}`);
         seenEntries.add(sName + url);
@@ -551,6 +502,7 @@ function clearAll() {
   document.getElementById('input').value = "";
   document.getElementById('output').value = "";
   document.getElementById('resultContainer').style.display = "none";
+  document.getElementById('finalResult').value = "";
   showToast("已清空内容");
 }
 
@@ -582,6 +534,16 @@ function triggerGitHubWorkflow() {
     return;
   }
 
+  // 预检查大小，避免触发 GitHub inputs 限制（约 65KB）
+  const base64Data = btoa(unescape(encodeURIComponent(dataToTest)));
+  if (base64Data.length > 60000) {
+    const confirmMsg = `当前列表 Base64 后约 ${(base64Data.length/1024).toFixed(1)} KB，超过 GitHub workflow_dispatch 输入限制（约 65KB），很可能会失败。\n\n建议：先精简频道数量后再试。\n\n仍要继续发送吗？`;
+    if (!confirm(confirmMsg)) {
+      showToast("已取消操作！");
+      return;
+    }
+  }
+
   // 密码框默认值置空，隐藏密码
   const password = prompt("请输入密码:");
   if (!password) {
@@ -602,7 +564,7 @@ function triggerGitHubWorkflow() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       password: password, 
-      playlist: btoa(unescape(encodeURIComponent(dataToTest)))
+      playlist: base64Data
     })
   })
   .then(response => response.json().then(data => ({ status: response.status, body: data })))
@@ -611,7 +573,12 @@ function triggerGitHubWorkflow() {
       showToast("🎉 指令已发送，云端测速启动！");
       startAutoPolling(btn);
     } else {
-      alert(`❌ 触发失败：\n${body.error}`);
+      let errMsg = body.error || body.message || JSON.stringify(body);
+      // 友好处理常见错误
+      if (typeof errMsg === 'string' && (errMsg.includes('inputs are too large') || errMsg.includes('too large'))) {
+        errMsg = "GitHub API 拒绝：输入数据过大（inputs are too large）。\n\n原因：列表过长，超过 GitHub workflow_dispatch 约 65KB 限制。\n\n解决：请减少频道数量后重新处理再试。";
+      }
+      alert(`❌ 触发失败：\n${errMsg}`);
       resetTriggerBtn(btn);
     }
   })
@@ -625,7 +592,7 @@ function triggerGitHubWorkflow() {
 function startAutoPolling(btn) {
   btn.innerHTML = '⏳ 云端测速中...';
   document.getElementById('resultContainer').style.display = 'block';
-  document.getElementById('finalResult').value = "⏳ 已向云端发送测速请求！\n\n服务器正在逐个连接测试并自动剔除无效源，同名频道将按速度自动重排。\n通常需要 1~3 分钟，请保持此页面打开，测速完成后结果将自动显示在这里...";
+  document.getElementById('finalResult').value = "⏳ 已向云端发送测速请求！\n\n服务器正在逐个连接测试并自动剔除无效源，同名频道将按速度自动重排。\n通常需要 1~3 分钟，请保持此页面打开，测速完成后结果将自动下载并显示在这里...";
   document.getElementById('resultContainer').scrollIntoView({ behavior: 'smooth' });
 
   let pollCount = 0;
@@ -654,9 +621,9 @@ function startAutoPolling(btn) {
   }, 15000); // 间隔改为 15 秒，防止触发 GitHub API 速率限制
 }
 
-// 静默拉取最终结果 (绕过 CDN 缓存)
+// 静默拉取最终结果 (绕过 CDN 缓存)，并自动下载
 function fetchFinalResult(btn) {
-  document.getElementById('finalResult').value = "✅ 测速完毕！正在拉取最新文件...";
+  document.getElementById('finalResult').value = "✅ 测速完毕！正在拉取最新文件并自动下载...";
   
   // 改用 GitHub API 端点直接读取，并加上时间戳
   const url = `https://api.github.com/repos/tvzb/workflow/contents/iptv.txt?ref=main&t=${new Date().getTime()}`;
@@ -673,13 +640,28 @@ function fetchFinalResult(btn) {
     })
     .then(text => {
       document.getElementById('finalResult').value = text;
-      showToast("🎉 获取成功！测速结果已按频道排好序。");
+      showToast("🎉 获取成功！测速结果已自动下载。");
+      // 自动触发下载
+      autoDownloadTxt(text);
       resetTriggerBtn(btn);
     })
     .catch(err => {
-      document.getElementById('finalResult').value = "⚠️ 拉取失败，可能文件还在同步中，请稍后再试。";
+      document.getElementById('finalResult').value = "⚠️ 拉取失败，可能文件还在同步中，请稍后再试或手动点击下载按钮。";
       resetTriggerBtn(btn);
     });
+}
+
+function autoDownloadTxt(text) {
+  if (!text || text.includes("正在") || text.includes("失败")) return;
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'iptv.txt';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 function resetTriggerBtn(btn) {
@@ -690,19 +672,12 @@ function resetTriggerBtn(btn) {
 
 function downloadResult() {
   const text = document.getElementById('finalResult').value;
-  if (!text || text.includes("正在")) {
+  if (!text || text.includes("正在") || text.includes("失败")) {
     showToast("当前没有可下载的有效内容！");
     return;
   }
-  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'iptv.txt';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  autoDownloadTxt(text);
+  showToast("🎉 已开始下载 iptv.txt");
 }
 </script>
 </body>
