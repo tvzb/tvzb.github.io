@@ -634,7 +634,7 @@ function startAutoPolling(btn) {
   pollingInterval = setInterval(async () => {
     pollCount++;
     try {
-      const url = `https://api.github.com/repos/tvzb/iptv-speedtest/actions/workflows/speedtest.yml/runs?per_page=1`;
+      const url = `https://api.github.com/repos/tvzb/workflow/actions/workflows/speedtest.yml/runs?per_page=1`;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
@@ -659,7 +659,7 @@ function fetchFinalResult(btn) {
   document.getElementById('finalResult').value = "✅ 测速完毕！正在拉取最新文件...";
   
   // 改用 GitHub API 端点直接读取，并加上时间戳
-  const url = `https://api.github.com/repos/tvzb/iptv-speedtest/contents/iptv.txt?ref=main&t=${new Date().getTime()}`;
+  const url = `https://api.github.com/repos/tvzb/workflow/contents/iptv.txt?ref=main&t=${new Date().getTime()}`;
   
   fetch(url, {
     headers: {
