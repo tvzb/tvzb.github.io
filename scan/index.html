@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>快递小件流水线扫码预警器</title>
+  <!-- 引入备用条形码识别库（若浏览器无原生BarcodeDetector时生效） -->
+  <script src="https://unpkg.com/@zxing/library@latest"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #111;
+      color: #fff;
+      overflow: hidden;
+    }
+    /* 视频与绘制图层绝对重叠 */
+    #stage {
+      position: relative;
+      width: 100vw;
+      height: 60vh;
+      background: #000;
+    }
+    video, canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    /* 操作控制面板 */
+    #dashboard {
+      height: 40vh;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: #1c1c1e;
+    }
+    .input-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    input[type="text"] {
+      flex: 1;
+      padding: 10px 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #444;
+      background: #2c2c2e;
+      color: #fff;
+      outline: none;
+    }
+    button {
+      padding: 10px 16px;
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      background: #007aff;
+      color: #fff;
+      cursor: pointer;
+    }
+    button.stop { background: #ff3b30; }
+    .stats-card {
+      display: flex;
+      justify-content: space-around;
+      background: #2c2c2e;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .stat-item .num {
+      font-size: 24px;
+      font-weight: bold;
+      color: #30d158;
+    }
+    .stat-item .num.hit { color: #ff453a; }
+    .stat-item .label {
+      font-size: 12px;
+      color: #aaa;
+    }
+    #recentLog {
+      flex: 1;
+      overflow-y: auto;
+      background: #000;
+      padding: 8px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 13px;
+    }
+    .log-item { margin-bottom: 4px; }
+    .log-item.hit { color: #ff453a; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <!-- 视觉监控区 -->
+  <div id="stage">
+    <video id="video" playsinline autoplay muted></video>
+    <canvas id="overlay"></canvas>
+  </div>
+
+  <!-- 下方控制面板 -->
+  <div id="dashboard">
+    <div class="input-row">
+      <input type="text" id="targetTail" placeholder="监控尾号(多个用逗号隔开，如: 809,112)" />
+      <button id="btnToggle">启动相机</button>
+    </div>
+
+    <div class="stats-card">
+      <div class="stat-item">
+        <div class="num" id="totalCount">0</div>
+        <div class="label">识别总数</div>
+      </div>
+      <div class="stat-item">
+        <div class="num hit" id="hitCount">0</div>
+        <div class="label">命中目标件</div>
+      </div>
+      <div class="stat-item">
+        <button id="btnReset" style="background:#555; padding: 6px 12px;">重置计数</button>
+      </div>
+    </div>
+
+    <div id="recentLog">
+      <div class="log-item" style="color: #666;">系统就绪，输入目标尾号后点击“启动相机”...</div>
+    </div>
+  </div>
+
+  <script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('overlay');
+    const ctx = canvas.getContext('2d');
+    const btnToggle = document.getElementById('btnToggle');
+    const btnReset = document.getElementById('btnReset');
+    const targetInput = document.getElementById('targetTail');
+    const totalCountEl = document.getElementById('totalCount');
+    const hitCountEl = document.getElementById('hitCount');
+    const logBox = document.getElementById('recentLog');
+
+    let stream = null;
+    let isRunning = false;
+    let scanTimer = null;
+
+    // 统计与防重缓存 (条码号 -> 上次报警时间戳)
+    let totalDetected = 0;
+    let hitDetected = 0;
+    const historyMap = new Map();
+    const DEDUP_INTERVAL_MS = 3500; // 3.5秒内同一条码不重复报警
+
+    // Web Audio API 蜂鸣音（无需外部音频文件）
+    let audioCtx = null;
+    function playBeep(freq = 880, duration = 0.15) {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    }
+
+    // 适配多镜头，尽量获取后置微距/高清摄像头
+    async function startCamera() {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: { ideal: 'environment' },
+            width: { ideal: 1920 },
+            height: { ideal: 1080 }
+          }
+        });
+        video.srcObject = stream;
+        await video.play();
+        isRunning = true;
+        btnToggle.textContent = '停止监控';
+        btnToggle.classList.add('stop');
+        fitCanvas();
+        startDetectionLoop();
+      } catch (err) {
+        alert('无法启动摄像头：' + err.message + '\n请确认是否已使用 HTTPS 或 Localhost 打开。');
+      }
+    }
+
+    function stopCamera() {
+      isRunning = false;
+      if (scanTimer) cancelAnimationFrame(scanTimer);
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      btnToggle.textContent = '启动相机';
+      btnToggle.classList.remove('stop');
+    }
+
+    function fitCanvas() {
+      canvas.width = video.videoWidth || stage.clientWidth;
+      canvas.height = video.videoHeight || stage.clientHeight;
+    }
+
+    // 核心识别主循环
+    const hasNativeBarcodeDetector = 'BarcodeDetector' in window;
+    let nativeDetector = null;
+    let zxingReader = null;
+
+    if (hasNativeBarcodeDetector) {
+      nativeDetector = new BarcodeDetector({ formats: ['code_128', 'qr_code', 'ean_13', 'itf'] });
+    } else if (window.ZXing) {
+      zxingReader = new ZXing.BrowserMultiFormatReader();
+    }
+
+    async function detectFrame() {
+      if (!isRunning) return;
+
+      // 保持 Canvas 尺寸与视频像素同步
+      if (video.videoWidth && canvas.width !== video.videoWidth) {
+        fitCanvas();
+      }
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      let barcodes = [];
+
+      try {
+        if (nativeDetector) {
+          barcodes = await nativeDetector.detect(video);
+        } else if (zxingReader) {
+          // 降级方案：每次取当前帧检测
+          try {
+            const result = await zxingReader.decodeOnceFromVideoDevice(undefined, 'video');
+            if (result) {
+              barcodes = [{ rawValue: result.getText() }];
+            }
+          } catch (e) { /* 无码帧跳过 */ }
+        }
+      } catch (err) {
+        // 部分帧处理异常跳过
+      }
+
+      if (barcodes.length > 0) {
+        handleBarcodes(barcodes);
+      }
+
+      scanTimer = requestAnimationFrame(detectFrame);
+    }
+
+    function handleBarcodes(barcodes) {
+      const now = Date.now();
+      const targets = targetInput.value
+        .split(/[,，\s]+/)
+        .map(t => t.trim())
+        .filter(Boolean);
+
+      barcodes.forEach(code => {
+        const val = (code.rawValue || '').trim();
+        if (!val) return;
+
+        // 判断是否过冷却期（去重）
+        const lastSeen = historyMap.get(val) || 0;
+        const isCooldown = (now - lastSeen) < DEDUP_INTERVAL_MS;
+
+        // 是否命中尾号
+        const isHit = targets.some(tail => val.endsWith(tail));
+
+        // 绘制屏幕指示框（如果在原生 API 中包含 boundingBox）
+        if (code.boundingBox) {
+          ctx.lineWidth = 6;
+          ctx.strokeStyle = isHit ? '#ff3b30' : '#30d158';
+          ctx.strokeRect(
+            code.boundingBox.x,
+            code.boundingBox.y,
+            code.boundingBox.width,
+            code.boundingBox.height
+          );
+        }
+
+        // 仅在超出冷却期时触发统计与报警
+        if (!isCooldown) {
+          historyMap.set(val, now);
+          totalDetected++;
+          totalCountEl.textContent = totalDetected;
+
+          if (isHit) {
+            hitDetected++;
+            hitCountEl.textContent = hitDetected;
+            // 触发双声提示音与设备震动
+            playBeep(950, 0.15);
+            setTimeout(() => playBeep(1200, 0.2), 180);
+            if (navigator.vibrate) navigator.vibrate([150, 80, 150]);
+
+            appendLog(`[命中] ${val} (尾号: ${val.slice(-3)})`, true);
+          } else {
+            appendLog(`扫描: ${val}`);
+          }
+        }
+      });
+    }
+
+    function appendLog(msg, isHit = false) {
+      const el = document.createElement('div');
+      el.className = 'log-item' + (isHit ? ' hit' : '');
+      const time = new Date().toTimeString().slice(0, 8);
+      el.textContent = `${time} ${msg}`;
+      logBox.insertBefore(el, logBox.firstChild);
+      // 保持最多 30 条日志
+      if (logBox.children.length > 30) {
+        logBox.removeChild(logBox.lastChild);
+      }
+    }
+
+    function startDetectionLoop() {
+      scanTimer = requestAnimationFrame(detectFrame);
+    }
+
+    // 按钮事件绑定
+    btnToggle.addEventListener('click', () => {
+      // 浏览器要求用户交互后才能播放音频
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (isRunning) {
+        stopCamera();
+      } else {
+        startCamera();
+      }
+    });
+
+    btnReset.addEventListener('click', () => {
+      totalDetected = 0;
+      hitDetected = 0;
+      totalCountEl.textContent = '0';
+      hitCountEl.textContent = '0';
+      historyMap.clear();
+      logBox.innerHTML = '';
+      appendLog('计数与缓存已清空');
+    });
+  </script>
+</body>
+</html>
