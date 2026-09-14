@@ -3,25 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>快递小件流水线扫码预警器</title>
-  <!-- 引入备用条形码识别库（若浏览器无原生BarcodeDetector时生效） -->
-  <script src="https://unpkg.com/@zxing/library@latest"></script>
+  <title>流水线三段码尾号追踪器</title>
+  <!-- 引入 Tesseract.js 纯本地 WebAssembly OCR 引擎 -->
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #111;
+      background: #121212;
       color: #fff;
       overflow: hidden;
     }
-    /* 视频与绘制图层绝对重叠 */
     #stage {
       position: relative;
       width: 100vw;
-      height: 60vh;
+      height: 55vh;
       background: #000;
     }
-    video, canvas {
+    video, #overlay {
       position: absolute;
       top: 0;
       left: 0;
@@ -29,19 +28,17 @@
       height: 100%;
       object-fit: cover;
     }
-    /* 操作控制面板 */
     #dashboard {
-      height: 40vh;
+      height: 45vh;
       padding: 12px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
       background: #1c1c1e;
     }
     .input-row {
       display: flex;
       gap: 8px;
-      align-items: center;
     }
     input[type="text"] {
       flex: 1;
@@ -68,12 +65,12 @@
       display: flex;
       justify-content: space-around;
       background: #2c2c2e;
-      padding: 10px;
+      padding: 8px 10px;
       border-radius: 8px;
       text-align: center;
     }
     .stat-item .num {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: bold;
       color: #30d158;
     }
@@ -82,7 +79,7 @@
       font-size: 12px;
       color: #aaa;
     }
-    #recentLog {
+    #logBox {
       flex: 1;
       overflow-y: auto;
       background: #000;
@@ -93,72 +90,84 @@
     }
     .log-item { margin-bottom: 4px; }
     .log-item.hit { color: #ff453a; font-weight: bold; }
+    #statusBadge {
+      font-size: 12px;
+      color: #ff9f0a;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
 
-  <!-- 视觉监控区 -->
   <div id="stage">
     <video id="video" playsinline autoplay muted></video>
     <canvas id="overlay"></canvas>
   </div>
 
-  <!-- 下方控制面板 -->
   <div id="dashboard">
+    <div id="statusBadge">引擎就绪，请输入目标尾号并启动</div>
+    
     <div class="input-row">
-      <input type="text" id="targetTail" placeholder="监控尾号(多个用逗号隔开，如: 809,112)" />
+      <input type="text" id="targetTail" value="785" placeholder="监控三段码尾号(如: 785 或 785,112)" />
       <button id="btnToggle">启动相机</button>
     </div>
 
     <div class="stats-card">
       <div class="stat-item">
         <div class="num" id="totalCount">0</div>
-        <div class="label">识别总数</div>
+        <div class="label">扫码总件数</div>
       </div>
       <div class="stat-item">
         <div class="num hit" id="hitCount">0</div>
         <div class="label">命中目标件</div>
       </div>
       <div class="stat-item">
-        <button id="btnReset" style="background:#555; padding: 6px 12px;">重置计数</button>
+        <button id="btnReset" style="background:#555; padding: 4px 10px; font-size: 13px;">清零</button>
       </div>
     </div>
 
-    <div id="recentLog">
-      <div class="log-item" style="color: #666;">系统就绪，输入目标尾号后点击“启动相机”...</div>
+    <div id="logBox">
+      <div class="log-item" style="color: #666;">日志区：识别到的三段码将显示在此处...</div>
     </div>
   </div>
 
+  <!-- 离屏 Canvas，用于截取条码下方小区域图片进行 OCR -->
+  <canvas id="cropCanvas" style="display: none;"></canvas>
+
   <script>
     const video = document.getElementById('video');
-    const canvas = document.getElementById('overlay');
-    const ctx = canvas.getContext('2d');
+    const overlay = document.getElementById('overlay');
+    const ctx = overlay.getContext('2d');
+    const cropCanvas = document.getElementById('cropCanvas');
+    const cropCtx = cropCanvas.getContext('2d');
+
     const btnToggle = document.getElementById('btnToggle');
     const btnReset = document.getElementById('btnReset');
     const targetInput = document.getElementById('targetTail');
     const totalCountEl = document.getElementById('totalCount');
     const hitCountEl = document.getElementById('hitCount');
-    const logBox = document.getElementById('recentLog');
+    const logBox = document.getElementById('logBox');
+    const statusBadge = document.getElementById('statusBadge');
 
     let stream = null;
     let isRunning = false;
-    let scanTimer = null;
+    let isOcrBusy = false; // OCR 互斥锁，避免上一帧没算完就堆积
+    let ocrWorker = null;
 
-    // 统计与防重缓存 (条码号 -> 上次报警时间戳)
     let totalDetected = 0;
     let hitDetected = 0;
-    const historyMap = new Map();
-    const DEDUP_INTERVAL_MS = 3500; // 3.5秒内同一条码不重复报警
+    const historyMap = new Map(); // 单号去重缓存
+    const DEDUP_INTERVAL_MS = 4000; // 4秒内不重复报同一个单
 
-    // Web Audio API 蜂鸣音（无需外部音频文件）
+    // 1. 初始化 Web Audio 蜂鸣声
     let audioCtx = null;
-    function playBeep(freq = 880, duration = 0.15) {
+    function playBeep(freq = 920, duration = 0.18) {
       if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
-      osc.type = 'sine';
+      osc.type = 'square';
       osc.frequency.value = freq;
-      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.35, audioCtx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
       osc.connect(gain);
       gain.connect(audioCtx.destination);
@@ -166,9 +175,21 @@
       osc.stop(audioCtx.currentTime + duration);
     }
 
-    // 适配多镜头，尽量获取后置微距/高清摄像头
+    // 2. 初始化 Tesseract 纯数字+字母模式（极大提升识别速度）
+    async function initOcr() {
+      statusBadge.textContent = '正在加载 OCR 核心组件...';
+      ocrWorker = await Tesseract.createWorker('eng'); // 只载入英文/数字库，体积小速度快
+      await ocrWorker.setParameters({
+        tessedit_char_whitelist: '0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ', // 仅允许大写、数字与连字符
+      });
+      statusBadge.textContent = 'OCR 引擎就绪';
+    }
+
+    // 3. 启动相机
     async function startCamera() {
       try {
+        if (!ocrWorker) await initOcr();
+
         stream = await navigator.mediaDevices.getUserMedia({
           video: {
             facingMode: { ideal: 'environment' },
@@ -178,128 +199,145 @@
         });
         video.srcObject = stream;
         await video.play();
+
         isRunning = true;
-        btnToggle.textContent = '停止监控';
+        btnToggle.textContent = '停止';
         btnToggle.classList.add('stop');
-        fitCanvas();
-        startDetectionLoop();
+        statusBadge.textContent = '监控中：对准传送带面单';
+        loopDetection();
       } catch (err) {
-        alert('无法启动摄像头：' + err.message + '\n请确认是否已使用 HTTPS 或 Localhost 打开。');
+        alert('启动失败：' + err.message + '\n请确认已使用 HTTPS 协议访问！');
       }
     }
 
     function stopCamera() {
       isRunning = false;
-      if (scanTimer) cancelAnimationFrame(scanTimer);
-      if (stream) {
-        stream.getTracks().forEach(track => track.stop());
-      }
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (stream) stream.getTracks().forEach(t => t.stop());
+      ctx.clearRect(0, 0, overlay.width, overlay.height);
       btnToggle.textContent = '启动相机';
       btnToggle.classList.remove('stop');
+      statusBadge.textContent = '已停止';
     }
 
-    function fitCanvas() {
-      canvas.width = video.videoWidth || stage.clientWidth;
-      canvas.height = video.videoHeight || stage.clientHeight;
-    }
+    // 4. 主循环：条形码精准定位
+    const barcodeDetector = 'BarcodeDetector' in window 
+      ? new BarcodeDetector({ formats: ['code_128'] }) 
+      : null;
 
-    // 核心识别主循环
-    const hasNativeBarcodeDetector = 'BarcodeDetector' in window;
-    let nativeDetector = null;
-    let zxingReader = null;
-
-    if (hasNativeBarcodeDetector) {
-      nativeDetector = new BarcodeDetector({ formats: ['code_128', 'qr_code', 'ean_13', 'itf'] });
-    } else if (window.ZXing) {
-      zxingReader = new ZXing.BrowserMultiFormatReader();
-    }
-
-    async function detectFrame() {
+    async function loopDetection() {
       if (!isRunning) return;
 
-      // 保持 Canvas 尺寸与视频像素同步
-      if (video.videoWidth && canvas.width !== video.videoWidth) {
-        fitCanvas();
+      if (video.videoWidth && overlay.width !== video.videoWidth) {
+        overlay.width = video.videoWidth;
+        overlay.height = video.videoHeight;
       }
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, overlay.width, overlay.height);
 
-      let barcodes = [];
+      if (barcodeDetector && !isOcrBusy) {
+        try {
+          const codes = await barcodeDetector.detect(video);
+          for (const code of codes) {
+            const rawVal = code.rawValue || '';
+            const box = code.boundingBox;
+            if (!box) continue;
 
-      try {
-        if (nativeDetector) {
-          barcodes = await nativeDetector.detect(video);
-        } else if (zxingReader) {
-          // 降级方案：每次取当前帧检测
-          try {
-            const result = await zxingReader.decodeOnceFromVideoDevice(undefined, 'video');
-            if (result) {
-              barcodes = [{ rawValue: result.getText() }];
+            // 绘制条形码绿框
+            ctx.strokeStyle = '#30d158';
+            ctx.lineWidth = 4;
+            ctx.strokeRect(box.x, box.y, box.width, box.height);
+
+            // 核心推导：根据面单排版，三段码永远在条码正下方
+            // 高度约为条码高的一半，宽度基本与条形码同宽略宽
+            const roiX = Math.max(0, box.x - 10);
+            const roiY = box.y + box.height + 4; // 条码底部往下 4 像素开始
+            const roiW = box.width + 20;
+            const roiH = box.height * 0.75;      // 截取大字区域的高度
+
+            // 在屏幕上画出瞄准框（黄色框代表正在分析这排三段码）
+            ctx.strokeStyle = '#ffd60a';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(roiX, roiY, roiW, roiH);
+
+            // 检查该快递单号是否在去重缓存内
+            const now = Date.now();
+            const lastSeen = historyMap.get(rawVal) || 0;
+
+            if (now - lastSeen > DEDUP_INTERVAL_MS) {
+              // 触发局部 OCR
+              recognizeRoiText(rawVal, roiX, roiY, roiW, roiH);
+              break; // 每帧优先处理一个，避免争抢资源
             }
-          } catch (e) { /* 无码帧跳过 */ }
+          }
+        } catch (e) {
+          // 异常帧跳过
         }
-      } catch (err) {
-        // 部分帧处理异常跳过
       }
 
-      if (barcodes.length > 0) {
-        handleBarcodes(barcodes);
-      }
-
-      scanTimer = requestAnimationFrame(detectFrame);
+      requestAnimationFrame(loopDetection);
     }
 
-    function handleBarcodes(barcodes) {
+    // 5. 局部定向 OCR 截取与比对
+    async function recognizeRoiText(barcodeVal, rx, ry, rw, rh) {
+      isOcrBusy = true;
+      statusBadge.textContent = `抓取到条码[${barcodeVal.slice(-4)}]，正在识别三段码...`;
+
+      try {
+        // 设置离屏裁剪尺寸
+        cropCanvas.width = rw;
+        cropCanvas.height = rh;
+
+        // 局部图像二值化增强（黑白对比度提升，防反光）
+        cropCtx.drawImage(video, rx, ry, rw, rh, 0, 0, rw, rh);
+
+        // 调用 Tesseract 仅识别这一个小切片
+        const { data: { text } } = await ocrWorker.recognize(cropCanvas);
+        const cleanText = text.replace(/[\r\n\s]/g, '');
+
+        if (cleanText.length >= 3) {
+          handleMatching(barcodeVal, cleanText);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        isOcrBusy = false;
+        if (isRunning) statusBadge.textContent = '监控中：对准传送带面单';
+      }
+    }
+
+    // 6. 尾号比对与报警逻辑
+    function handleMatching(barcodeVal, ocrResult) {
       const now = Date.now();
+      historyMap.set(barcodeVal, now); // 标记此包裹已处理，防止短时间内狂报
+
+      totalDetected++;
+      totalCountEl.textContent = totalDetected;
+
+      // 提取三段码最后3位数字（匹配末尾可能带有的字母或数字）
+      // 如 552-T07-01-785 提取出 785
+      const numMatches = ocrResult.match(/\d{3}$/) || [ocrResult.slice(-3)];
+      const tailStr = numMatches[0];
+
       const targets = targetInput.value
         .split(/[,，\s]+/)
         .map(t => t.trim())
         .filter(Boolean);
 
-      barcodes.forEach(code => {
-        const val = (code.rawValue || '').trim();
-        if (!val) return;
+      const isHit = targets.some(target => ocrResult.includes(target));
 
-        // 判断是否过冷却期（去重）
-        const lastSeen = historyMap.get(val) || 0;
-        const isCooldown = (now - lastSeen) < DEDUP_INTERVAL_MS;
+      if (isHit) {
+        hitDetected++;
+        hitCountEl.textContent = hitDetected;
 
-        // 是否命中尾号
-        const isHit = targets.some(tail => val.endsWith(tail));
+        // 连续双声急促警报！
+        playBeep(1100, 0.12);
+        setTimeout(() => playBeep(1400, 0.2), 150);
+        if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
 
-        // 绘制屏幕指示框（如果在原生 API 中包含 boundingBox）
-        if (code.boundingBox) {
-          ctx.lineWidth = 6;
-          ctx.strokeStyle = isHit ? '#ff3b30' : '#30d158';
-          ctx.strokeRect(
-            code.boundingBox.x,
-            code.boundingBox.y,
-            code.boundingBox.width,
-            code.boundingBox.height
-          );
-        }
-
-        // 仅在超出冷却期时触发统计与报警
-        if (!isCooldown) {
-          historyMap.set(val, now);
-          totalDetected++;
-          totalCountEl.textContent = totalDetected;
-
-          if (isHit) {
-            hitDetected++;
-            hitCountEl.textContent = hitDetected;
-            // 触发双声提示音与设备震动
-            playBeep(950, 0.15);
-            setTimeout(() => playBeep(1200, 0.2), 180);
-            if (navigator.vibrate) navigator.vibrate([150, 80, 150]);
-
-            appendLog(`[命中] ${val} (尾号: ${val.slice(-3)})`, true);
-          } else {
-            appendLog(`扫描: ${val}`);
-          }
-        }
-      });
+        appendLog(`【命中】单号尾${barcodeVal.slice(-4)} | 三段码:${ocrResult} (尾号:${tailStr})`, true);
+      } else {
+        appendLog(`扫描: 单号尾${barcodeVal.slice(-4)} | 三段码:${ocrResult}`);
+      }
     }
 
     function appendLog(msg, isHit = false) {
@@ -308,25 +346,14 @@
       const time = new Date().toTimeString().slice(0, 8);
       el.textContent = `${time} ${msg}`;
       logBox.insertBefore(el, logBox.firstChild);
-      // 保持最多 30 条日志
-      if (logBox.children.length > 30) {
-        logBox.removeChild(logBox.lastChild);
-      }
+      if (logBox.children.length > 25) logBox.removeChild(logBox.lastChild);
     }
 
-    function startDetectionLoop() {
-      scanTimer = requestAnimationFrame(detectFrame);
-    }
-
-    // 按钮事件绑定
+    // 按钮事件
     btnToggle.addEventListener('click', () => {
-      // 浏览器要求用户交互后才能播放音频
       if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      if (isRunning) {
-        stopCamera();
-      } else {
-        startCamera();
-      }
+      if (isRunning) stopCamera();
+      else startCamera();
     });
 
     btnReset.addEventListener('click', () => {
@@ -336,7 +363,7 @@
       hitCountEl.textContent = '0';
       historyMap.clear();
       logBox.innerHTML = '';
-      appendLog('计数与缓存已清空');
+      appendLog('计数已重置');
     });
   </script>
 </body>
