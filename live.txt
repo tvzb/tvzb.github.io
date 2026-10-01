@@ -232,6 +232,21 @@ CCTV-16奥林匹克,https://cdn.qd.je/163189/cctv16
 CCTV-17农业农村,https://cdn.qd.je/163189/cctv17
 
 卫视频道,#genre#
+江西卫视,http://rihou.cc:555/tv/[mg]江西卫视
+北京卫视,http://rihou.cc:555/tv/[mg]北京卫视
+东方卫视,http://rihou.cc:555/tv/[mg]东方卫视
+湖南卫视,http://rihou.cc:555/tv/[mg]湖南卫视
+浙江卫视,http://rihou.cc:555/tv/[mg]浙江卫视
+江苏卫视,http://rihou.cc:555/tv/[mg]江苏卫视
+广东卫视,http://rihou.cc:555/tv/[mg]广东卫视
+深圳卫视,http://rihou.cc:555/tv/[mg]深圳卫视
+兵团卫视,http://rihou.cc:555/tv/[mg]兵团卫视
+海南卫视,http://rihou.cc:555/tv/[mg]海南卫视
+河南卫视,http://rihou.cc:555/tv/[mg]河南卫视
+黑龙江卫视,http://rihou.cc:555/tv/[mg]黑龙江视
+湖北卫视,http://rihou.cc:555/tv/[mg]湖北卫视
+山东卫视,http://rihou.cc:555/tv/[mg]山东卫视
+陕西卫视,http://rihou.cc:555/tv/[mg]陕西卫视
 
 江西卫视,http://63.141.230.178:82/gslb/zbdq5.m3u8?id=jxwshd
 广东卫视,http://63.141.230.178:82/gslb/zbdq5.m3u8?id=gdwshd
