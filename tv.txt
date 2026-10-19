@@ -90,67 +90,10 @@
       ]
     },
     {
-      "key": "极速资源",
-      "name": "极速",
-      "type": 1,
-      "api": "https://jszyapi.com/api.php/provide/vod/",
-      "playUrl": "",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": [
-        "动作片",
-        "喜剧片",
-        "科幻片",
-        "欧美剧",
-        "国产剧",
-        "日韩剧",
-        "动漫",
-        "短剧"
-      ]
-    },
-    {
       "key": "光速资源",
       "name": "光速",
       "type": 1,
       "api": "https://api.guangsuapi.com/api.php/provide/vod/",
-      "playUrl": "",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": [
-        "动作片",
-        "喜剧片",
-        "科幻片",
-        "欧美剧",
-        "国产剧",
-        "日韩剧",
-        "动漫",
-        "短剧"
-      ]
-    },
-    {
-      "key": "量子资源",
-      "name": "量子",
-      "type": 1,
-      "api": "https://cj.lziapi.com/api.php/provide/vod/",
-      "playUrl": "",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": [
-        "动作片",
-        "喜剧片",
-        "科幻片",
-        "欧美剧",
-        "国产剧",
-        "日韩剧",
-        "动漫",
-        "短剧"
-      ]
-    },
-    {
-      "key": "电影天堂",
-      "name": "电影天堂",
-      "type": 1,
-      "api": "http://caiji.dyttzyapi.com/api.php/provide/vod",
       "playUrl": "",
       "searchable": 1,
       "quickSearch": 1,
@@ -223,25 +166,6 @@
       ]
     },
     {
-      "key": "优质资源",
-      "name": "优质",
-      "type": 1,
-      "api": "https://api.yzzy-api.com/inc/apijson.php",
-      "playUrl": "",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": [
-        "动作片",
-        "喜剧片",
-        "科幻片",
-        "欧美剧",
-        "国产剧",
-        "日韩剧",
-        "动漫",
-        "短剧"
-      ]
-    },
-    {
       "key": "金鹰资源",
       "name": "金鹰",
       "type": 1,
@@ -299,25 +223,6 @@
       ]
     },
     {
-      "key": "非凡资源",
-      "name": "非凡",
-      "type": 1,
-      "api": "http://api.ffzyapi.com/api.php/provide/vod/",
-      "playUrl": "",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": [
-        "动作片",
-        "喜剧片",
-        "科幻片",
-        "欧美剧",
-        "国产剧",
-        "日韩剧",
-        "动漫",
-        "短剧"
-      ]
-    },
-    {
       "key": "暴风资源",
       "name": "暴风",
       "type": 1,
@@ -355,46 +260,8 @@
         "短剧"
       ]
     },
-    {
-      "key": "最大资源",
-      "name": "最大",
-      "type": 1,
-      "api": "https://api.zuidapi.com/api.php/provide/vod/",
-      "playUrl": "",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": [
-        "动作片",
-        "喜剧片",
-        "科幻片",
-        "欧美剧",
-        "国产剧",
-        "日韩剧",
-        "动漫",
-        "短剧"
-      ]
-    },
-    {
-      "key": "爱奇艺资源",
-      "name": "爱奇艺",
-      "type": 1,
-      "api": "https://iqiyizyapi.com/api.php/provide/vod/",
-      "playUrl": "",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": [
-        "动作片",
-        "喜剧片",
-        "科幻片",
-        "欧美剧",
-        "国产剧",
-        "日韩剧",
-        "动漫",
-        "短剧"
-      ]
-    }
-  ],
-  "parses": [
+
+"parses": [
     {
       "name": "💡智能嗅探",
       "type": 3,
