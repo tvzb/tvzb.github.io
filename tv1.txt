@@ -37,7 +37,7 @@
       "name": "非凡",
       "type": 1,
       "api": "http://api.ffzyapi.com/api.php/provide/vod/",
-      "playUrl": "",
+      "playUrl": "https://svip.ffzyplay.com/?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
@@ -47,7 +47,7 @@
       "name": "量子",
       "type": 1,
       "api": "https://cj.lziapi.com/api.php/provide/vod/",
-      "playUrl": "",
+      "playUrl": "https://lziplayer.com/?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
@@ -57,7 +57,7 @@
       "name": "暴风",
       "type": 1,
       "api": "https://bfzyapi.com/api.php/provide/vod/",
-      "playUrl": "",
+      "playUrl": "https://vip.vipuuvip.com/?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
@@ -67,7 +67,7 @@
       "name": "红牛",
       "type": 1,
       "api": "https://www.hongniuzy2.com/api.php/provide/vod/",
-      "playUrl": "",
+      "playUrl": "https://www.hnjiexi.com/m3u8/?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
@@ -77,7 +77,7 @@
       "name": "极速",
       "type": 1,
       "api": "https://jszyapi.com/api.php/provide/vod/",
-      "playUrl": "",
+      "playUrl": "https://jisuzyjx.com/play/?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
@@ -87,17 +87,7 @@
       "name": "光速",
       "type": 1,
       "api": "https://api.guangsuapi.com/api.php/provide/vod/",
-      "playUrl": "",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
-    },
-    {
-      "key": "最大资源",
-      "name": "最大",
-      "type": 1,
-      "api": "https://api.zuidapi.com/api.php/provide/vod/",
-      "playUrl": "",
+      "playUrl": "https://www.gszyv.com/m3u8/?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
@@ -106,8 +96,8 @@
       "key": "金鹰资源",
       "name": "金鹰",
       "type": 1,
-      "api": "https://jyzyapi.com/provide/vod/from/jinyingm3u8/at/json",
-      "playUrl": "",
+      "api": "https://jyzyapi.com/provide/vod/",
+      "playUrl": "https://hd.iapijy.com/play?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
@@ -117,7 +107,7 @@
       "name": "新浪",
       "type": 1,
       "api": "https://api.xinlangapi.com/xinlangapi.php/provide/vod/",
-      "playUrl": "",
+      "playUrl": "https://xljiexi.com/m3u8/?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
@@ -126,28 +116,8 @@
       "key": "优质资源",
       "name": "优质",
       "type": 1,
-      "api": "https://api.yzzy-api.com/inc/apijson.php",
-      "playUrl": "",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
-    },
-    {
-      "key": "快看资源",
-      "name": "快看",
-      "type": 1,
-      "api": "https://kuaikan-api.com/api.php/provide/vod/",
-      "playUrl": "",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
-    },
-    {
-      "key": "华为资源",
-      "name": "华为",
-      "type": 1,
-      "api": "https://cj.huaweiapi.com/api.php/provide/vod/",
-      "playUrl": "",
+      "api": "https://api.yyzy-tv.vip/inc/apijson.php",
+      "playUrl": "https://vip.zykbf.com/?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
@@ -156,28 +126,8 @@
       "key": "闪电资源",
       "name": "闪电",
       "type": 1,
-      "api": "https://sdzyapi.com/api.php/provide/vod/",
-      "playUrl": "",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
-    },
-    {
-      "key": "天空资源",
-      "name": "天空",
-      "type": 1,
-      "api": "https://m3u8.tiankongapi.com/api.php/provide/vod/from/tkm3u8/",
-      "playUrl": "",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
-    },
-    {
-      "key": "卧龙资源",
-      "name": "卧龙",
-      "type": 1,
-      "api": "https://collect.wolongzy.cc/api.php/provide/vod/",
-      "playUrl": "",
+      "api": "https://xsd.sdzyapi.com/api.php/provide/vod/",
+      "playUrl": "https://www.shankubf.com/m3u8/?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
@@ -187,7 +137,7 @@
       "name": "魔都",
       "type": 1,
       "api": "https://www.mdzyapi.com/api.php/provide/vod/",
-      "playUrl": "",
+      "playUrl": "https://www.modujiexi66.com/?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
@@ -196,8 +146,8 @@
       "key": "电影天堂",
       "name": "电影天堂",
       "type": 1,
-      "api": "http://caiji.dyttzyapi.com/api.php/provide/vod",
-      "playUrl": "",
+      "api": "http://caiji.dyttzyapi.com/api.php/provide/vod/",
+      "playUrl": "https://vod.dyttjiexi.com/?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
@@ -207,7 +157,7 @@
       "name": "豪华",
       "type": 1,
       "api": "https://hhzyapi.com/api.php/provide/vod/",
-      "playUrl": "",
+      "playUrl": "https://hhzyjiexi.com/play/?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
@@ -217,7 +167,7 @@
       "name": "无尽",
       "type": 1,
       "api": "https://api.wujinapi.me/api.php/provide/vod/",
-      "playUrl": "",
+      "playUrl": "https://jx.xllmcms.com/dplayer/?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
@@ -227,7 +177,7 @@
       "name": "速播",
       "type": 1,
       "api": "https://subocj.com/api.php/provide/vod/",
-      "playUrl": "",
+      "playUrl": "https://subojiexi.com/play/?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
@@ -237,7 +187,7 @@
       "name": "如意",
       "type": 1,
       "api": "https://cj.rycjapi.com/api.php/provide/vod/",
-      "playUrl": "",
+      "playUrl": "https://ruyiplayer.com?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
@@ -247,7 +197,7 @@
       "name": "虎牙",
       "type": 1,
       "api": "https://www.huyaapi.com/api.php/provide/vod/",
-      "playUrl": "",
+      "playUrl": "https://huyajx.com/play?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
@@ -257,17 +207,7 @@
       "name": "百度",
       "type": 1,
       "api": "https://api.apibdzy.com/api.php/provide/vod/",
-      "playUrl": "",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
-    },
-    {
-      "key": "爱奇艺资源",
-      "name": "爱奇艺",
-      "type": 1,
-      "api": "https://iqiyizyapi.com/api.php/provide/vod/",
-      "playUrl": "",
+      "playUrl": "https://jx.jxbdzyw.com/m3u8/?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
@@ -276,48 +216,8 @@
       "key": "U酷资源",
       "name": "U酷",
       "type": 1,
-      "api": "https://api.ukuapi.com/api.php/provide/vod/",
-      "playUrl": "",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
-    },
-    {
-      "key": "乐视资源",
-      "name": "乐视",
-      "type": 1,
-      "api": "https://leshiapi.com/api.php/provide/vod/",
-      "playUrl": "",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
-    },
-    {
-      "key": "步步高资源",
-      "name": "步步高",
-      "type": 1,
-      "api": "https://api.bbkzy.com/api.php/provide/vod/",
-      "playUrl": "",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
-    },
-    {
-      "key": "阿里资源",
-      "name": "阿里",
-      "type": 1,
-      "api": "https://alizy.net/api.php/provide/vod/",
-      "playUrl": "",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
-    },
-    {
-      "key": "奇虎资源",
-      "name": "奇虎",
-      "type": 1,
-      "api": "https://caiji.qhzyapi.com/api.php/provide/vod/",
-      "playUrl": "",
+      "api": "https://api.ukuapi88.com/api.php/provide/vod/",
+      "playUrl": "https://api.ukubf.com/m3u8/?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
@@ -327,47 +227,17 @@
       "name": "iKun",
       "type": 1,
       "api": "https://ikunzyapi.com/api.php/provide/vod/",
-      "playUrl": "",
+      "playUrl": "https://www.ikdmjx.com/?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
     },
     {
-      "key": "飘花资源",
-      "name": "飘花",
+      "key": "索尼资源",
+      "name": "索尼",
       "type": 1,
-      "api": "http://www.piaohua.com/api.php/provide/vod/",
-      "playUrl": "",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
-    },
-    {
-      "key": "影图资源",
-      "name": "影图",
-      "type": 1,
-      "api": "https://cj.vodimg.top/api.php/provide/vod/",
-      "playUrl": "",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
-    },
-    {
-      "key": "索尼新源",
-      "name": "索尼(新)",
-      "type": 1,
-      "api": "https://suoniapi.com/api.php/provide/vod/from/snm3u8/",
-      "playUrl": "",
-      "searchable": 1,
-      "quickSearch": 1,
-      "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
-    },
-    {
-      "key": "淘片新源",
-      "name": "淘片(新)",
-      "type": 1,
-      "api": "https://taopianapi.com/home/cjapi/as/mc10/vod/xml/",
-      "playUrl": "",
+      "api": "https://suoniapi.com/api.php/provide/vod/",
+      "playUrl": "https://dxfbk.com/?url=",
       "searchable": 1,
       "quickSearch": 1,
       "categories": ["动作片", "喜剧片", "科幻片", "欧美剧", "国产剧", "日韩剧", "动漫", "短剧"]
