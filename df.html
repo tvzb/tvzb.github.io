@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>万新集团物业 - 电费收据管理与打印系统</title>
+  <title>万新集团 - 电费收据管理与打印系统</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- html2canvas 优质图片渲染库 -->
@@ -106,7 +106,7 @@
         </div>
         <div>
           <div class="flex items-center space-x-2">
-            <h1 class="font-bold text-base sm:text-lg text-slate-900 tracking-tight">万新集团物业 · 电费收据管理与打印系统</h1>
+            <h1 class="font-bold text-base sm:text-lg text-slate-900 tracking-tight">万新集团 · 电费收据管理与打印系统</h1>
             <span class="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 font-semibold border border-slate-300">财务标准版</span>
           </div>
           <p class="text-xs text-slate-400">上下垂直居中 · 字体分层优化 · 月度独立页面 · 跨年自动结转 · 单张/批量图片高清导出</p>
@@ -430,7 +430,7 @@
         rateLoss: 0.05,
         feeRubbish: 4.00,
         feeStair: 3.00,
-        companyTitle: '万新集团物业'
+        companyTitle: '万新集团'
       },
       currentPeriodKey: '2026-10',
       periods: {
@@ -1039,9 +1039,9 @@
 
             <!-- 规范签名栏 -->
             <div class="flex justify-between items-center text-xs sm:text-sm text-slate-800 pt-1 px-1 receipt-tpl-font">
-              <div>收款人：<span class="inline-block border-b border-slate-700 w-24"></span></div>
-              <div>会计：<span class="inline-block border-b border-slate-700 w-24"></span></div>
-              <div>收款单位（盖章）：<span class="inline-block border-b border-slate-700 w-32"></span></div>
+              <div>收款人：<span class="font-mono text-slate-800 tracking-tighter">_________</span></div>
+              <div>会计：<span class="font-mono text-slate-800 tracking-tighter">_________</span></div>
+              <div>收款单位（盖章）：<span class="font-mono text-slate-800 tracking-tighter">____________</span></div>
             </div>
           </div>
         `;
@@ -1214,7 +1214,7 @@
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState, null, 2));
       const downloadAnchor = document.createElement('a');
       downloadAnchor.setAttribute("href", dataStr);
-      downloadAnchor.setAttribute("download", `万新集团物业电费台账备份_${new Date().toISOString().slice(0, 10)}.json`);
+      downloadAnchor.setAttribute("download", `万新集团电费台账备份_${new Date().toISOString().slice(0, 10)}.json`);
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();
