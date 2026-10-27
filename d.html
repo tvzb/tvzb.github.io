@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>万新集团物业 - 电费收据管理与打印系统</title>
+  <title> 万新集团住宅区 - 电费收据管理与打印系统</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- html2canvas 优质图片渲染库 -->
@@ -90,7 +90,7 @@
         </div>
         <div>
           <div class="flex items-center space-x-2">
-            <h1 class="font-bold text-base sm:text-lg text-slate-900 tracking-tight">万新集团物业 · 电费收据管理与打印系统</h1>
+            <h1 class="font-bold text-base sm:text-lg text-slate-900 tracking-tight"> 万新集团住宅区 · 电费收据管理与打印系统</h1>
             <span class="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 font-semibold border border-slate-300">财务标准版</span>
           </div>
           <p class="text-xs text-slate-400">标准单据排版 · 多月度自动结转跨年 · 高清图片批量导出 · A4 标准套打</p>
@@ -414,7 +414,7 @@
         rateLoss: 0.05,
         feeRubbish: 4.00,
         feeStair: 3.00,
-        companyTitle: '万新集团物业'
+        companyTitle: ' 万新集团住宅区'
       },
       currentPeriodKey: '2026-10',
       periods: {
@@ -932,7 +932,7 @@
             
             <!-- 顶部单位抬头与标准收款收据 -->
             <div class="text-center pb-2 mb-3">
-              <h2 class="text-2xl font-black tracking-widest text-slate-900 mb-1">万新集团物业</h2>
+              <h2 class="text-2xl font-black tracking-widest text-slate-900 mb-1"> 万新集团住宅区</h2>
               <div class="flex justify-center items-center">
                 <span class="text-xl font-black tracking-widest border-b-2 border-slate-900 pb-0.5 px-6">收款收据</span>
               </div>
@@ -1019,7 +1019,7 @@
             <div class="flex justify-between items-center text-xs sm:text-sm text-slate-800 pt-2 px-1">
               <div>收款人：___________</div>
               <div>会计：___________</div>
-              <div>收款单位：万新集团物业（盖章）</div>
+              <div>收款单位（盖章）： __________</div>
             </div>
           </div>
         `;
@@ -1046,7 +1046,7 @@
         const item = getCurPeriodList().find(r => r.id === id);
         const roomName = item ? item.room.replace(/\s+/g, '') : id;
         const owner = item ? item.name : '';
-        const fileName = `${cur.year}年${cur.month}月_万新集团物业电费收据_${roomName}_${owner}.png`;
+        const fileName = `${cur.year}年${cur.month}月_ 万新集团住宅区电费收据_${roomName}_${owner}.png`;
         
         link.download = fileName;
         link.href = canvas.toDataURL('image/png');
@@ -1192,7 +1192,7 @@
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState, null, 2));
       const downloadAnchor = document.createElement('a');
       downloadAnchor.setAttribute("href", dataStr);
-      downloadAnchor.setAttribute("download", `万新集团物业电费台账备份_${new Date().toISOString().slice(0, 10)}.json`);
+      downloadAnchor.setAttribute("download", ` 万新集团住宅区电费台账备份_${new Date().toISOString().slice(0, 10)}.json`);
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();
