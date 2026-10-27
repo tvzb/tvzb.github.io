@@ -265,11 +265,11 @@
       <!-- 控制与操作栏 -->
       <div class="no-print bg-white rounded-2xl p-4 shadow-sm border border-slate-200 flex flex-wrap justify-between items-center gap-3">
         <div class="flex items-center flex-wrap gap-2 sm:gap-3">
-          <button onclick="triggerPrintAll()" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs sm:text-sm font-bold shadow flex items-center gap-2 transition">
-            <span>🖨️</span> 一键批量打印当月收据 (标准 A4 排版)
-          </button>
           <button onclick="downloadAllReceiptImages()" id="btn-batch-download" class="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs sm:text-sm font-bold shadow flex items-center gap-2 transition">
             <span>🖼️</span> 一键批量生成并下载所有收据图片 (PNG)
+          </button>
+          <button onclick="triggerPrintAll()" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs sm:text-sm font-bold shadow flex items-center gap-2 transition">
+            <span>🖨️</span> 一键批量打印当月收据 (标准 A4 排版)
           </button>
         </div>
         <div class="flex items-center space-x-2 text-xs text-slate-500">
