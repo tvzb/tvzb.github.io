@@ -930,12 +930,9 @@
           <!-- 正式标准财务收据卡片 -->
           <div id="receipt-card-${item.id}" class="receipt-item-card bg-white border border-slate-900 rounded-lg p-7 max-w-3xl mx-auto receipt-font text-slate-900 shadow-md relative">
             
-            <!-- 顶部单位抬头与标准收款收据 -->
+            <!-- 顶部标准收款收据 -->
             <div class="text-center pb-2 mb-3">
-              <h2 class="text-2xl font-black tracking-widest text-slate-900 mb-1"> 万新集团住宅区</h2>
-              <div class="flex justify-center items-center">
-                <span class="text-xl font-black tracking-widest border-b-2 border-slate-900 pb-0.5 px-6">收款收据</span>
-              </div>
+              <h2 class="text-3xl font-black tracking-[0.25em] text-slate-900">收款收据</h2>
             </div>
 
             <!-- 住户信息与开票日期 -->
@@ -965,7 +962,7 @@
                 <!-- 基础电费 -->
                 <tr>
                   <td class="py-2 px-3 text-left">
-                    电费 (${item.curMeter} - ${item.lastMeter})
+                    电费 (本月 ${item.curMeter} - 上月 ${item.lastMeter})
                   </td>
                   <td class="py-2">度</td>
                   <td class="py-2 font-mono">${bill.validUsage}</td>
@@ -976,7 +973,7 @@
                 <!-- 损耗 -->
                 <tr>
                   <td class="py-2 px-3 text-left">
-                    损耗 (${item.curMeter} - ${item.lastMeter})
+                    损耗 (本月 ${item.curMeter} - 上月 ${item.lastMeter})
                   </td>
                   <td class="py-2">度</td>
                   <td class="py-2 font-mono">${bill.validUsage}</td>
