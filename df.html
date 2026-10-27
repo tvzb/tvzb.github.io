@@ -1064,11 +1064,11 @@
         backgroundColor: '#ffffff'
       }).then(canvas => {
         const link = document.createElement('a');
-        const cur = parsePeriodKey(appState.currentPeriodKey);
         const item = getCurPeriodList().find(r => r.id === id);
         const roomName = item ? item.room.replace(/\s+/g, '') : id;
-        const owner = item ? item.name : '';
-        const fileName = `${cur.year}年${cur.month}月_电费收据_${roomName}_${owner}.png`;
+        const owner = (item && item.name) ? item.name.replace(/\s+/g, '') : '未知用户';
+        // 命名格式：张三_1栋1-101_2026-10.png
+        const fileName = `${owner}_${roomName}_${appState.currentPeriodKey}.png`;
         
         link.download = fileName;
         link.href = canvas.toDataURL('image/png');
@@ -1092,8 +1092,6 @@
       const pFill = document.getElementById('batch-progress-fill');
       pBar.classList.remove('hidden');
 
-      const cur = parsePeriodKey(appState.currentPeriodKey);
-
       for (let i = 0; i < list.length; i++) {
         const item = list[i];
         pText.innerText = `${i + 1} / ${list.length}`;
@@ -1104,8 +1102,10 @@
           try {
             const canvas = await html2canvas(cardEl, { scale: 2.5, backgroundColor: '#ffffff' });
             const link = document.createElement('a');
-            const roomName = item.room.replace(/\s+/g, '');
-            link.download = `${cur.year}年${cur.month}月_收据_${roomName}_${item.name}.png`;
+            const roomName = item.room ? item.room.replace(/\s+/g, '') : item.id;
+            const owner = item.name ? item.name.replace(/\s+/g, '') : '未知用户';
+            // 命名格式：张三_1栋1-101_2026-10.png
+            link.download = `${owner}_${roomName}_${appState.currentPeriodKey}.png`;
             link.href = canvas.toDataURL('image/png');
             link.click();
             await new Promise(r => setTimeout(r, 350));
