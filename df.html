@@ -3,62 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>小区电费收据管理与打印系统</title>
+  <title>万新集团物业 - 电费收据管理与打印系统</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- html2canvas 用于收据直接截图并保存为图片 -->
+  <!-- html2canvas 优质图片渲染库 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;700;900&family=JetBrains+Mono:wght@500;700;800&display=swap');
 
     body {
       font-family: 'Noto Sans SC', system-ui, -apple-system, sans-serif;
     }
 
-    .font-receipt {
-      font-family: 'Noto Serif SC', 'Songti SC', SimSun, serif;
+    /* 原表预印内容字体：采用传统财务宋体/衬线体 */
+    .receipt-tpl-font {
+      font-family: 'Noto Serif SC', 'Songti SC', SimSun, 'STSong', serif;
     }
 
-    /* 经典收款印章特效 */
-    .receipt-seal {
-      position: absolute;
-      right: 28px;
-      bottom: 18px;
-      width: 104px;
-      height: 104px;
-      border: 3px solid rgba(220, 38, 38, 0.72);
-      border-radius: 50%;
-      color: rgba(220, 38, 38, 0.75);
-      font-size: 11px;
-      font-weight: 700;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transform: rotate(-14deg);
-      pointer-events: none;
-      box-shadow: inset 0 0 4px rgba(220, 38, 38, 0.3);
-      user-select: none;
+    /* 动态填入内容字体：采用清晰的现代黑体与专业等宽数字 */
+    .receipt-data-font {
+      font-family: 'Noto Sans SC', system-ui, sans-serif;
     }
 
-    .receipt-seal::before {
-      content: "★";
-      font-size: 18px;
-      margin-bottom: -2px;
-      color: rgba(220, 38, 38, 0.75);
+    .receipt-num-font {
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-variant-numeric: tabular-nums;
     }
 
-    /* 已缴费绿章印 */
-    .paid-seal {
-      border-color: rgba(16, 185, 129, 0.75);
-      color: rgba(16, 185, 129, 0.8);
+    /* 财务收据标准细线表格 */
+    .receipt-table {
+      border-collapse: collapse;
+      border: 1.5px solid #111827;
+      width: 100%;
     }
-    .paid-seal::before {
-      content: "✔";
-      color: rgba(16, 185, 129, 0.8);
+    .receipt-table th, .receipt-table td {
+      border: 1px solid #111827;
+      vertical-align: middle !important; /* 强制上下垂直居中 */
     }
 
-    /* 打印优化：仅保留收据卡片，自动分页与排版适配 */
+    /* 打印优化：A4 纸张出纸优化，高度缩小后更紧凑规整，绝不溢出分页 */
     @media print {
       body * {
         visibility: hidden !important;
@@ -81,20 +64,20 @@
       .receipt-item-card {
         page-break-inside: avoid;
         break-inside: avoid;
-        margin: 0 0 15mm 0 !important;
-        border: 1.5px solid #1e293b !important;
+        margin: 0 0 8mm 0 !important;
         box-shadow: none !important;
+        border: 1.5px solid #000 !important;
         width: 100% !important;
       }
     }
 
-    /* 滚动条美化 */
+    /* 滚动条细化 */
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: #f1f5f9;
+      background: #f8fafc;
     }
     ::-webkit-scrollbar-thumb {
       background: #cbd5e1;
@@ -107,44 +90,44 @@
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
 
-  <!-- 顶部轻量级提示框 (Toast) -->
-  <div id="toast" class="fixed top-5 right-5 z-50 transform transition-all duration-300 translate-y-[-120%] opacity-0 bg-slate-900 text-white px-4 py-2.5 rounded-lg shadow-xl text-sm flex items-center space-x-2 pointer-events-none">
+  <!-- 浮动通知 (Toast) -->
+  <div id="toast" class="fixed top-5 right-5 z-50 transform transition-all duration-300 translate-y-[-130%] opacity-0 bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-2xl text-sm flex items-center space-x-2 pointer-events-none">
     <span id="toast-icon">ℹ️</span>
-    <span id="toast-msg">通知消息</span>
+    <span id="toast-msg">通知信息</span>
   </div>
 
-  <!-- 顶部导航条 -->
+  <!-- 顶部系统导航栏 -->
   <header class="no-print bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap justify-between items-center gap-3">
       <!-- 品牌信息 -->
       <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-sky-500 text-white flex items-center justify-center font-black text-xl shadow-md">
+        <div class="w-10 h-10 rounded-xl bg-slate-900 text-amber-400 flex items-center justify-center font-black text-xl shadow-md border border-slate-700">
           ⚡
         </div>
         <div>
           <div class="flex items-center space-x-2">
-            <h1 class="font-bold text-base sm:text-lg text-slate-800 tracking-tight">小区电费收据管理与打印系统</h1>
-            <span class="text-xs px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 font-semibold border border-indigo-200">v2.5 专业版</span>
+            <h1 class="font-bold text-base sm:text-lg text-slate-900 tracking-tight">万新集团物业 · 电费收据管理与打印系统</h1>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 font-semibold border border-slate-300">财务标准版</span>
           </div>
-          <p class="text-xs text-slate-400">单月单页抄表 · 智能跨年递延 · 批量/单张收据图片生成 · 安全密码保护</p>
+          <p class="text-xs text-slate-400">上下垂直居中 · 字体分层优化 · 月度独立页面 · 跨年自动结转 · 单张/批量图片高清导出</p>
         </div>
       </div>
 
-      <!-- 快捷标签切换与管理员设置 -->
+      <!-- 标签切换与全局功能 -->
       <div class="flex items-center space-x-2 sm:space-x-3">
         <div class="bg-slate-100 p-1 rounded-xl flex items-center space-x-1 border border-slate-200">
-          <button onclick="switchTab('data')" id="nav-btn-data" class="px-3.5 py-1.5 rounded-lg font-medium text-xs sm:text-sm transition bg-white text-indigo-600 shadow-sm">
+          <button onclick="switchTab('data')" id="nav-btn-data" class="px-3.5 py-1.5 rounded-lg font-medium text-xs sm:text-sm transition bg-white text-slate-900 shadow-sm">
             📝 抄表录入 (当月)
           </button>
           <button onclick="switchTab('receipts')" id="nav-btn-receipts" class="px-3.5 py-1.5 rounded-lg font-medium text-xs sm:text-sm transition text-slate-600 hover:text-slate-900">
-            🧾 收据展台与导出
+            🧾 收据展示与打印
           </button>
         </div>
 
-        <button onclick="openConfigModal()" title="系统与单价设置" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-200 transition">
+        <button onclick="openConfigModal()" title="计费单价标准" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition">
           ⚙️
         </button>
-        <button onclick="openAuthModal('change_pwd')" title="修改管理密码" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-200 transition">
+        <button onclick="openAuthModal('change_pwd')" title="修改管理密码" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition">
           🔑
         </button>
       </div>
@@ -154,52 +137,52 @@
   <!-- 主体工作区 -->
   <main class="max-w-7xl w-full mx-auto p-3 sm:p-6 flex-1 flex flex-col space-y-4">
 
-    <!-- 顶部状态栏：账期控制面板与月度快速切换条 -->
+    <!-- 顶部状态栏：账期控制面板与月度快速切换 -->
     <div class="no-print bg-white rounded-2xl p-4 shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-4">
-      <!-- 账期切换器 -->
       <div class="flex items-center flex-wrap gap-2 sm:gap-3">
+        <!-- 月份切换按钮 -->
         <div class="flex items-center bg-slate-50 border border-slate-300 rounded-xl px-2 py-1 shadow-inner">
           <button onclick="navigateMonth(-1)" class="w-8 h-8 rounded-lg hover:bg-white text-slate-600 flex items-center justify-center font-bold text-base transition" title="上一月">
             ‹
           </button>
           <div class="px-3 py-1 text-center">
-            <span class="text-xs text-slate-400 block font-medium">当前账期页面</span>
-            <span id="current-month-display" class="text-base sm:text-lg font-black text-indigo-700 tracking-tight">2026年 10月</span>
+            <span class="text-xs text-slate-400 block font-medium">当前月份账期</span>
+            <span id="current-month-display" class="text-base sm:text-lg font-black text-slate-900 tracking-tight">2026年 10月</span>
           </div>
           <button onclick="navigateMonth(1)" class="w-8 h-8 rounded-lg hover:bg-white text-slate-600 flex items-center justify-center font-bold text-base transition" title="下一月">
             ›
           </button>
         </div>
 
-        <!-- 历史账期快捷下拉框 -->
-        <select id="month-selector" onchange="onSelectMonthChange(this.value)" class="bg-white border border-slate-300 text-xs sm:text-sm font-semibold rounded-xl px-3 py-2 text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        <!-- 历史账期快捷选择 -->
+        <select id="month-selector" onchange="onSelectMonthChange(this.value)" class="bg-white border border-slate-300 text-xs sm:text-sm font-semibold rounded-xl px-3 py-2 text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-900">
           <!-- 动态注入月份列表 -->
         </select>
 
-        <!-- 开启下月账期核心按钮 -->
-        <button onclick="handleNextMonthTransition()" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-medium text-xs sm:text-sm shadow-md shadow-indigo-100 flex items-center gap-1.5 transition">
+        <!-- 开启下月核心按钮 -->
+        <button onclick="handleNextMonthTransition()" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-medium text-xs sm:text-sm shadow-md flex items-center gap-1.5 transition">
           <span>✨ 开启下月新账期</span>
-          <span class="text-xs opacity-75">（满12月自动跨年）</span>
+          <span class="text-xs text-slate-300">（12月后自动跨年）</span>
         </button>
       </div>
 
-      <!-- 初始底册与快捷工具 -->
+      <!-- 快捷工具按钮组 -->
       <div class="flex items-center space-x-2">
-        <button onclick="openInitModal()" class="px-3 py-2 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-700 font-semibold text-xs sm:text-sm border border-sky-200 transition flex items-center gap-1">
+        <button onclick="openInitModal()" class="px-3 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 font-semibold text-xs sm:text-sm border border-amber-200 transition flex items-center gap-1">
           <span>📋</span> 初始化住户底册
         </button>
-        <button onclick="exportFullBackup()" class="px-2.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs border border-slate-200 transition" title="备份全量历史数据">
-          📥 备份
+        <button onclick="exportFullBackup()" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs border border-slate-200 transition" title="备份全量历史账期">
+          📥 备份数据
         </button>
-        <button onclick="document.getElementById('import-file-input').click()" class="px-2.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs border border-slate-200 transition" title="恢复 JSON 备份">
-          📤 还原
+        <button onclick="document.getElementById('import-file-input').click()" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs border border-slate-200 transition" title="导入 JSON 还原">
+          📤 还原数据
         </button>
         <input type="file" id="import-file-input" class="hidden" accept=".json" onchange="handleImportBackup(event)">
       </div>
     </div>
 
-    <!-- 当月经营与抄表指标看板 -->
-    <div class="no-print grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+    <!-- 当月抄表数据统计看板 -->
+    <div class="no-print grid grid-cols-2 sm:grid-cols-4 gap-3">
       <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm">
         <p class="text-xs text-slate-400 font-medium">总用电户数</p>
         <div class="flex items-baseline justify-between mt-1">
@@ -210,56 +193,41 @@
       <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm">
         <p class="text-xs text-slate-400 font-medium">已完成抄表</p>
         <div class="flex items-baseline justify-between mt-1">
-          <span id="stat-recorded-count" class="text-xl font-black text-indigo-600">0</span>
-          <span id="stat-recorded-rate" class="text-xs font-semibold text-indigo-500">0%</span>
+          <span id="stat-recorded-count" class="text-xl font-black text-slate-900">0</span>
+          <span id="stat-recorded-rate" class="text-xs font-semibold text-slate-500">0%</span>
         </div>
       </div>
       <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm">
         <p class="text-xs text-slate-400 font-medium">当月总用电量</p>
         <div class="flex items-baseline justify-between mt-1">
-          <span id="stat-total-usage" class="text-xl font-black text-amber-600">0</span>
+          <span id="stat-total-usage" class="text-xl font-black text-amber-700">0</span>
           <span class="text-xs text-slate-400">度</span>
         </div>
       </div>
       <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm">
-        <p class="text-xs text-slate-400 font-medium">当月应收总额</p>
+        <p class="text-xs text-slate-400 font-medium">当月应收总计</p>
         <div class="flex items-baseline justify-between mt-1">
-          <span id="stat-total-amount" class="text-xl font-black text-slate-800">¥0.00</span>
-        </div>
-      </div>
-      <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm">
-        <p class="text-xs text-slate-400 font-medium">当月实收金额</p>
-        <div class="flex items-baseline justify-between mt-1">
-          <span id="stat-paid-amount" class="text-xl font-black text-emerald-600">¥0.00</span>
-          <span id="stat-paid-rate" class="text-xs font-semibold text-emerald-600">0%</span>
-        </div>
-      </div>
-      <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm">
-        <p class="text-xs text-slate-400 font-medium">户均用电</p>
-        <div class="flex items-baseline justify-between mt-1">
-          <span id="stat-avg-usage" class="text-xl font-black text-sky-600">0</span>
-          <span class="text-xs text-slate-400">度/户</span>
+          <span id="stat-total-amount" class="text-xl font-black text-rose-700">¥0.00</span>
+          <span class="text-xs text-slate-400">应收</span>
         </div>
       </div>
     </div>
 
-    <!-- ==================== 视图 1：当月抄表录入表格 ==================== -->
+    <!-- ==================== 视图 1：抄表录入表格 ==================== -->
     <section id="view-data" class="space-y-4">
       <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-        <!-- 表格工具条 -->
+        <!-- 操作栏 -->
         <div class="p-3.5 sm:p-4 border-b border-slate-200 flex flex-wrap justify-between items-center gap-3 bg-slate-50/50">
           <div class="flex items-center space-x-2">
-            <button onclick="addSingleRow()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1 shadow-sm transition">
-              <span>+</span> 单独新增住户
+            <button onclick="addSingleRow()" class="px-3.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1 shadow-sm transition">
+              <span>+</span> 增加单户
             </button>
-            <span class="text-xs text-slate-400 hidden sm:inline">💡 支持在“本月读数”输入框按下 Enter(回车) 键直接跳至下一行</span>
+            <span class="text-xs text-slate-400 hidden sm:inline">💡 在“本月读数”输入框按下 Enter(回车) 键可直接切换到下一户，流水式录入更高效</span>
           </div>
 
-          <div class="flex items-center space-x-2">
-            <div class="relative">
-              <input type="text" id="search-input" oninput="renderTable()" placeholder="搜房号或姓名..." class="pl-8 pr-3 py-1.5 text-xs sm:text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500">
-              <span class="absolute left-2.5 top-2 text-slate-400 text-xs">🔍</span>
-            </div>
+          <div class="relative">
+            <input type="text" id="search-input" oninput="renderTable()" placeholder="搜房号(如1栋1-101)或用户..." class="pl-8 pr-3 py-1.5 text-xs sm:text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-1 focus:ring-slate-900 w-64">
+            <span class="absolute left-2.5 top-2 text-slate-400 text-xs">🔍</span>
           </div>
         </div>
 
@@ -267,15 +235,14 @@
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse text-xs sm:text-sm">
             <thead>
-              <tr class="bg-slate-100/75 text-slate-600 font-semibold border-b border-slate-200">
+              <tr class="bg-slate-100/80 text-slate-700 font-semibold border-b border-slate-200">
                 <th class="p-3 w-12 text-center">序号</th>
-                <th class="p-3 w-28">房号</th>
-                <th class="p-3 w-28">户主姓名</th>
-                <th class="p-3 w-28 text-slate-500">上月读数 (底数)</th>
-                <th class="p-3 w-32 font-bold text-indigo-700 bg-indigo-50/50">本月新读数 ⚡</th>
-                <th class="p-3 w-24 text-right">当月用电</th>
-                <th class="p-3 w-28 text-right font-bold text-slate-900">本月应收</th>
-                <th class="p-3 w-36 text-center">缴费状态</th>
+                <th class="p-3 w-40">房号 (x栋x-xx)</th>
+                <th class="p-3 w-28">用户</th>
+                <th class="p-3 w-32 text-slate-500">上月读数 (底数)</th>
+                <th class="p-3 w-36 font-bold text-slate-900 bg-amber-50/60">本月新读数 ⚡</th>
+                <th class="p-3 w-28 text-right">当月用电量</th>
+                <th class="p-3 w-32 text-right font-bold text-slate-900">当月应收金额</th>
                 <th class="p-3 w-32 text-center">操作</th>
               </tr>
             </thead>
@@ -288,40 +255,40 @@
         <div id="table-empty-box" class="hidden p-12 text-center">
           <p class="text-4xl mb-2">📋</p>
           <p class="text-sm font-semibold text-slate-600">当前账期尚无住户记录</p>
-          <p class="text-xs text-slate-400 mt-1">您可以点击右上角“初始化住户底册”快速生成或点击“单独新增住户”。</p>
+          <p class="text-xs text-slate-400 mt-1">请点击上方“初始化住户底册”快速生成名册，或点击“增加单户”。</p>
         </div>
       </div>
     </section>
 
-    <!-- ==================== 视图 2：收据展台、单张/批量下载与打印 ==================== -->
+    <!-- ==================== 视图 2：收据展台与导出 ==================== -->
     <section id="view-receipts" class="hidden space-y-4">
       <!-- 控制与操作栏 -->
       <div class="no-print bg-white rounded-2xl p-4 shadow-sm border border-slate-200 flex flex-wrap justify-between items-center gap-3">
         <div class="flex items-center flex-wrap gap-2 sm:gap-3">
-          <button onclick="triggerPrintAll()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow flex items-center gap-2 transition">
-            <span>🖨️</span> 一键批量打印当前月份收据 (标准 A4 排版)
+          <button onclick="triggerPrintAll()" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs sm:text-sm font-bold shadow flex items-center gap-2 transition">
+            <span>🖨️</span> 一键批量打印当月收据 (标准 A4 排版)
           </button>
-          <button onclick="downloadAllReceiptImages()" id="btn-batch-download" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow flex items-center gap-2 transition">
+          <button onclick="downloadAllReceiptImages()" id="btn-batch-download" class="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs sm:text-sm font-bold shadow flex items-center gap-2 transition">
             <span>🖼️</span> 一键批量生成并下载所有收据图片 (PNG)
           </button>
         </div>
         <div class="flex items-center space-x-2 text-xs text-slate-500">
-          <span>当前展台收据：<strong id="receipt-display-count" class="text-indigo-600 text-sm font-bold">0</strong> 户</span>
+          <span>当前显示：<strong id="receipt-display-count" class="text-slate-900 text-sm font-bold">0</strong> 份收据</span>
           <span class="text-slate-300">|</span>
-          <button onclick="renderReceiptCards(null)" class="text-indigo-600 hover:underline">查看全月收据</button>
+          <button onclick="renderReceiptCards(null)" class="text-slate-900 font-medium underline">显示全部住户</button>
         </div>
       </div>
 
       <!-- 批量图片导出进度指示条 -->
-      <div id="batch-progress-bar" class="hidden no-print bg-white p-3 rounded-xl border border-emerald-200 shadow-sm flex items-center space-x-3">
-        <div class="animate-spin text-emerald-600 text-base">⏳</div>
+      <div id="batch-progress-bar" class="hidden no-print bg-white p-3 rounded-xl border border-emerald-300 shadow-sm flex items-center space-x-3">
+        <div class="animate-spin text-emerald-700 text-base">⏳</div>
         <div class="flex-1">
           <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
-            <span>正在批量合成收据高清图片并下载...</span>
+            <span>正在批量合成高分辨率单户收据图片并下载...</span>
             <span id="batch-progress-text">0 / 0</span>
           </div>
           <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-            <div id="batch-progress-fill" class="bg-emerald-500 h-2 w-0 transition-all duration-200"></div>
+            <div id="batch-progress-fill" class="bg-emerald-600 h-2 w-0 transition-all duration-150"></div>
           </div>
         </div>
       </div>
@@ -333,30 +300,29 @@
     </section>
   </main>
 
-  <!-- 隐藏打印沙盒容器：用于精准控制打印只打印收据 -->
+  <!-- 隐藏打印沙盒容器：用于纯净打印 -->
   <div id="print-sandbox" class="hidden"></div>
 
-  <!-- ==================== 模态弹窗 1：初始数据与底册向导 ==================== -->
+  <!-- ==================== 模态弹窗 1：初始数据底册向导 ==================== -->
   <div id="modal-init" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b pb-3">
         <div>
-          <h3 class="text-lg font-bold text-slate-800">📋 初始化住户底册与起始账期</h3>
-          <p class="text-xs text-slate-400">建立房号底册后，每月抄表可直接在底册上累进更新</p>
+          <h3 class="text-lg font-bold text-slate-900">📋 初始化住户底册与起始月份</h3>
+          <p class="text-xs text-slate-500">房号统一使用“x栋x-xx”规范录入，起始表底自动作为当月抄表底数</p>
         </div>
         <button onclick="closeModal('modal-init')" class="text-slate-400 hover:text-slate-600 text-xl font-bold">×</button>
       </div>
 
-      <!-- 表单主体 -->
       <div class="space-y-3.5 text-xs sm:text-sm">
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block font-semibold text-slate-700 mb-1">起始年份</label>
-            <input type="number" id="init-start-year" value="2026" class="w-full border rounded-xl px-3 py-2 text-slate-800 focus:ring-1 focus:ring-indigo-500">
+            <input type="number" id="init-start-year" value="2026" class="w-full border rounded-xl px-3 py-2 text-slate-800 focus:ring-1 focus:ring-slate-900">
           </div>
           <div>
             <label class="block font-semibold text-slate-700 mb-1">起始月份</label>
-            <select id="init-start-month" class="w-full border rounded-xl px-3 py-2 text-slate-800 focus:ring-1 focus:ring-indigo-500">
+            <select id="init-start-month" class="w-full border rounded-xl px-3 py-2 text-slate-800 focus:ring-1 focus:ring-slate-900">
               <option value="1">1 月</option><option value="2">2 月</option>
               <option value="3">3 月</option><option value="4">4 月</option>
               <option value="5">5 月</option><option value="6">6 月</option>
@@ -369,21 +335,21 @@
 
         <div>
           <div class="flex justify-between items-center mb-1">
-            <label class="font-semibold text-slate-700">批量录入住户初始底表 (格式：房号 姓名 初始表底)</label>
-            <button onclick="fillInitSampleTemplate()" class="text-xs text-indigo-600 hover:underline">载入标准范例</button>
+            <label class="font-semibold text-slate-700">批量录入住户初始底表 (格式：房号 用户 初始表底)</label>
+            <button onclick="fillInitSampleTemplate()" class="text-xs text-amber-700 font-semibold hover:underline">填入示例数据</button>
           </div>
-          <textarea id="init-bulk-text" rows="7" placeholder="每行一户，空格或制表符隔开，例如：&#10;101 张建国 12500&#10;102 李玉华 8400&#10;201 王晓明 4300&#10;202 陈志强 15100" class="w-full border border-slate-300 rounded-xl p-3 text-xs font-mono focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
-          <p class="text-slate-400 text-xs mt-1">提示：系统将把此表底作为所选起始月份的【上月起始读数】。</p>
+          <textarea id="init-bulk-text" rows="7" placeholder="格式范例 (每行一户，空格隔开)：&#10;1栋1-101 张建国 12500&#10;1栋1-102 李玉华 8400&#10;1栋2-201 王晓明 4300&#10;2栋1-301 陈志强 15100" class="w-full border border-slate-300 rounded-xl p-3 text-xs font-mono focus:ring-2 focus:ring-slate-900 focus:outline-none"></textarea>
+          <p class="text-slate-400 text-xs mt-1">注：房号格式规范为：<strong>1栋1-101</strong>、<strong>2栋2-502</strong> 等。</p>
         </div>
 
-        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-amber-800 text-xs">
-          ⚠️ 注意：执行初始化需要验证管理员密码。若系统中已存在后续账期数据，重新初始化会重新对齐起始名册。
+        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-amber-900 text-xs">
+          ⚠️ 注意：执行初始化需要验证管理员密码（默认密码：<strong>123456</strong>）。
         </div>
       </div>
 
       <div class="flex justify-end space-x-2 pt-2 border-t">
         <button onclick="closeModal('modal-init')" class="px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 text-xs sm:text-sm font-medium">取消</button>
-        <button onclick="confirmInitialization()" class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm shadow">确认完成初始化</button>
+        <button onclick="confirmInitialization()" class="px-5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs sm:text-sm shadow">确认完成初始化</button>
       </div>
     </div>
   </div>
@@ -392,7 +358,7 @@
   <div id="modal-config" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4">
       <div class="flex justify-between items-center border-b pb-3">
-        <h3 class="text-lg font-bold text-slate-800">⚙️ 计费标准与杂费参数</h3>
+        <h3 class="text-lg font-bold text-slate-800">⚙️ 计费单价标准配置</h3>
         <button onclick="closeModal('modal-config')" class="text-slate-400 hover:text-slate-600 text-xl font-bold">×</button>
       </div>
 
@@ -402,7 +368,7 @@
           <input type="number" step="0.01" id="cfg-elec-rate" class="w-full border rounded-xl px-3 py-2">
         </div>
         <div>
-          <label class="block font-semibold text-slate-700 mb-1">变损线损单价 (元/度)</label>
+          <label class="block font-semibold text-slate-700 mb-1">损耗单价 (元/度)</label>
           <input type="number" step="0.01" id="cfg-loss-rate" class="w-full border rounded-xl px-3 py-2">
         </div>
         <div>
@@ -410,59 +376,52 @@
           <input type="number" step="0.5" id="cfg-rubbish-fee" class="w-full border rounded-xl px-3 py-2">
         </div>
         <div>
-          <label class="block font-semibold text-slate-700 mb-1">公摊楼道电费 (元/户/月)</label>
+          <label class="block font-semibold text-slate-700 mb-1">公共区域电费 (元/户/月)</label>
           <input type="number" step="0.5" id="cfg-stair-fee" class="w-full border rounded-xl px-3 py-2">
-        </div>
-        <div class="col-span-2">
-          <label class="block font-semibold text-slate-700 mb-1">收据印章开票单位抬头</label>
-          <input type="text" id="cfg-company-title" placeholder="如：阳光花园物业管理处" class="w-full border rounded-xl px-3 py-2">
         </div>
       </div>
 
       <div class="flex justify-end space-x-2 pt-2 border-t">
         <button onclick="closeModal('modal-config')" class="px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 text-xs sm:text-sm">取消</button>
-        <button onclick="saveRatesConfig()" class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm shadow">保存参数</button>
+        <button onclick="saveRatesConfig()" class="px-5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs sm:text-sm shadow">保存参数</button>
       </div>
     </div>
   </div>
 
-  <!-- ==================== 模态弹窗 3：管理员安全密码验证 / 修改 ==================== -->
+  <!-- ==================== 模态弹窗 3：管理员安全验证 / 修改 ==================== -->
   <div id="modal-auth" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4">
       <div class="text-center">
-        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto text-xl font-bold mb-2">
+        <div class="w-12 h-12 bg-slate-100 text-slate-800 rounded-2xl flex items-center justify-center mx-auto text-xl font-bold mb-2">
           🔐
         </div>
         <h3 id="auth-modal-title" class="text-base font-bold text-slate-800">管理员权限验证</h3>
-        <p id="auth-modal-desc" class="text-xs text-slate-400 mt-1">请输入管理员密码以授权敏感配置操作</p>
+        <p id="auth-modal-desc" class="text-xs text-slate-400 mt-1">请输入管理员密码继续</p>
       </div>
 
       <div class="space-y-3">
         <div id="auth-new-pwd-group" class="hidden">
           <label class="block text-xs font-semibold text-slate-600 mb-1">设置新密码</label>
-          <input type="password" id="auth-new-pwd-input" placeholder="输入 4 位以上新密码" class="w-full border rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500">
+          <input type="password" id="auth-new-pwd-input" placeholder="输入 4 位以上新密码" class="w-full border rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-slate-900">
         </div>
         <div>
           <label id="auth-pwd-label" class="block text-xs font-semibold text-slate-600 mb-1">管理员密码</label>
-          <input type="password" id="auth-pwd-input" placeholder="默认初始密码为 123456" class="w-full border rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500">
+          <input type="password" id="auth-pwd-input" placeholder="默认初始密码：123456" class="w-full border rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-slate-900">
         </div>
       </div>
 
       <div class="flex justify-end space-x-2 pt-2">
         <button onclick="closeModal('modal-auth')" class="px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 text-xs sm:text-sm">取消</button>
-        <button onclick="submitAuthModal()" class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm shadow">确定</button>
+        <button onclick="submitAuthModal()" class="px-5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs sm:text-sm shadow">确定</button>
       </div>
     </div>
   </div>
 
   <script>
     /**
-     * 系统数据核心结构
-     * 1. settings: 单价、公摊费、印章抬头、管理员密码哈希/明文
-     * 2. periods: { "2026-10": [ { id, room, name, lastMeter, curMeter, status: 'unpaid'|'wechat'|'alipay'|'cash' } ] }
-     * 3. currentPeriodKey: "2026-10"
+     * 系统状态数据核心结构
      */
-    const STORAGE_KEY = 'v_electricity_manager_v2';
+    const STORAGE_KEY = 'wanxin_electricity_manager_v3';
 
     let appState = {
       settings: {
@@ -471,36 +430,34 @@
         rateLoss: 0.05,
         feeRubbish: 4.00,
         feeStair: 3.00,
-        companyTitle: '小区物业服务中心'
+        companyTitle: '万新集团物业'
       },
       currentPeriodKey: '2026-10',
       periods: {
         '2026-10': [
-          { id: '101', room: '101', name: '张建国', lastMeter: 12500, curMeter: 12668, status: 'wechat' },
-          { id: '102', room: '102', name: '李玉华', lastMeter: 8400, curMeter: 8560, status: 'unpaid' },
-          { id: '201', room: '201', name: '王晓明', lastMeter: 4300, curMeter: 4425, status: 'alipay' },
-          { id: '202', room: '202', name: '陈志强', lastMeter: 15100, curMeter: 15285, status: 'unpaid' }
+          { id: '101', room: '1栋1-101', name: '张建国', lastMeter: 12500, curMeter: 12668 },
+          { id: '102', room: '1栋1-102', name: '李玉华', lastMeter: 8400, curMeter: 8560 },
+          { id: '201', room: '1栋2-201', name: '王晓明', lastMeter: 4300, curMeter: 4425 },
+          { id: '202', room: '2栋1-301', name: '陈志强', lastMeter: 15100, curMeter: 15285 }
         ]
       }
     };
 
-    // 暂存权限回调
     let pendingAuthCallback = null;
 
     // 页面初始化
     window.addEventListener('DOMContentLoaded', () => {
       loadStorage();
       syncUIWithPeriod();
-      // 支持按键回车自动跳下一行
       setupKeyboardNavigation();
     });
 
-    // 本地持久化保存与读取
+    // 本地持久化储存
     function saveStorage() {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
       } catch (e) {
-        showToast('保存到本地存储异常，请检查磁盘空间', '⚠️');
+        showToast('本地存储空间不足或保存失败', '⚠️');
       }
     }
 
@@ -513,24 +470,24 @@
             appState = parsed;
           }
         } catch (e) {
-          console.error('加载本地数据解析失败', e);
+          console.error('解析本地备份异常', e);
         }
       }
     }
 
-    // 简易通知 Toast
+    // 简短 Toast 提示
     function showToast(msg, icon = '✅') {
       const toast = document.getElementById('toast');
       const iconEl = document.getElementById('toast-icon');
       const msgEl = document.getElementById('toast-msg');
       iconEl.innerText = icon;
       msgEl.innerText = msg;
-      toast.classList.remove('translate-y-[-120%]', 'opacity-0');
+      toast.classList.remove('translate-y-[-130%]', 'opacity-0');
       toast.classList.add('translate-y-0', 'opacity-100');
       setTimeout(() => {
         toast.classList.remove('translate-y-0', 'opacity-100');
-        toast.classList.add('translate-y-[-120%]', 'opacity-0');
-      }, 2400);
+        toast.classList.add('translate-y-[-130%]', 'opacity-0');
+      }, 2500);
     }
 
     // 模态弹窗控制
@@ -541,8 +498,8 @@
       document.getElementById(id).classList.add('hidden');
     }
 
-    // 密码鉴权网关
-    function requireAuth(onSuccess, title = "管理员鉴权", desc = "此操作涉及账期与底册结构变更，请输入密码") {
+    // 管理员鉴权控制器
+    function requireAuth(onSuccess, title = "管理员鉴权", desc = "涉及账期或核心数据变更，请输入密码") {
       pendingAuthCallback = onSuccess;
       document.getElementById('auth-modal-title').innerText = title;
       document.getElementById('auth-modal-desc').innerText = desc;
@@ -555,7 +512,7 @@
     function openAuthModal(mode) {
       if (mode === 'change_pwd') {
         document.getElementById('auth-modal-title').innerText = '修改管理员密码';
-        document.getElementById('auth-modal-desc').innerText = '请输入当前密码及设置新密码';
+        document.getElementById('auth-modal-desc').innerText = '请输入原密码并设置新密码';
         document.getElementById('auth-new-pwd-group').classList.remove('hidden');
         document.getElementById('auth-pwd-label').innerText = '当前原密码';
         document.getElementById('auth-pwd-input').value = '';
@@ -568,7 +525,7 @@
     function submitAuthModal() {
       const pwd = document.getElementById('auth-pwd-input').value.trim();
       if (pwd !== appState.settings.adminPwd) {
-        showToast('密码错误，操作拒绝！', '❌');
+        showToast('密码错误，操作已拒绝！', '❌');
         return;
       }
 
@@ -592,9 +549,8 @@
       }
     }
 
-    // ==================== 账期逻辑管理与递延 ====================
+    // ==================== 账期流转与自动跨年 ====================
 
-    // 将 periodKey '2026-10' 解析为 { year: 2026, month: 10 }
     function parsePeriodKey(key) {
       const parts = key.split('-');
       return {
@@ -603,17 +559,14 @@
       };
     }
 
-    // 格式化为键名
     function formatPeriodKey(year, month) {
       return `${year}-${String(month).padStart(2, '0')}`;
     }
 
-    // 更新界面账期展示与下拉
     function syncUIWithPeriod() {
       const cur = parsePeriodKey(appState.currentPeriodKey);
       document.getElementById('current-month-display').innerText = `${cur.year}年 ${cur.month}月`;
 
-      // 填充下拉选项
       const selector = document.getElementById('month-selector');
       selector.innerHTML = '';
       const sortedKeys = Object.keys(appState.periods).sort();
@@ -630,7 +583,6 @@
       updateDashboardStats();
     }
 
-    // 账期前后切换
     function navigateMonth(step) {
       const keys = Object.keys(appState.periods).sort();
       const currentIndex = keys.indexOf(appState.currentPeriodKey);
@@ -645,7 +597,7 @@
           renderReceiptCards();
         }
       } else {
-        showToast(step > 0 ? '已经是最后一个账期了，点击“开启下月新账期”生成新月份！' : '已经是首个历史账期！', 'ℹ️');
+        showToast(step > 0 ? '已是最新账期，点击“开启下月新账期”生成新页面！' : '已到达最早历史账期！', 'ℹ️');
       }
     }
 
@@ -658,19 +610,14 @@
       }
     }
 
-    /**
-     * 核心业务：开启下月账期
-     * - 如果是12月，年份自动+1，月份变为1月
-     * - 继承名册：上月读数自动锁定为上期的“本月新读数”
-     * - 当月新读数预填为上月读数或空，方便直接键入
-     */
+    // 开启下月新账期：若12月则年份+1，且下月上期表底保留当月最新读数
     function handleNextMonthTransition() {
       const cur = parsePeriodKey(appState.currentPeriodKey);
       let nextYear = cur.year;
       let nextMonth = cur.month + 1;
       let isYearRolled = false;
 
-      // 12月后自动跨年
+      // 12月满后跨年
       if (nextMonth > 12) {
         nextYear += 1;
         nextMonth = 1;
@@ -679,7 +626,7 @@
 
       const nextPeriodKey = formatPeriodKey(nextYear, nextMonth);
 
-      // 如果目标月已存在，直接切换过去
+      // 若已存在直接切换
       if (appState.periods[nextPeriodKey]) {
         appState.currentPeriodKey = nextPeriodKey;
         saveStorage();
@@ -688,24 +635,21 @@
         return;
       }
 
-      // 确认创建下一月
       const curResidents = appState.periods[appState.currentPeriodKey] || [];
       const notice = isYearRolled
-        ? `确认迈入新年度？将自动结转到【${nextYear} 年 1 月】并保留最新抄表底数！`
-        : `确认开启【${nextYear} 年 ${nextMonth} 月】账期并自动结转住户表底？`;
+        ? `确认结转进入新年度？将自动递增为【${nextYear} 年 1 月】并保留最新抄表底数！`
+        : `确认开启【${nextYear} 年 ${nextMonth} 月】页面？上月读数将自动锁定为本期底数。`;
 
       if (confirm(notice)) {
-        // 数据结转与继承
+        // 下月数据结转
         const nextList = curResidents.map(item => {
-          // 下月上期底数 = 本月最新表数 (若本月未录则仍继承原有底数)
           const carryOverMeter = (item.curMeter && item.curMeter > 0) ? item.curMeter : item.lastMeter;
           return {
             id: item.id || Date.now().toString() + Math.random().toString().slice(2, 6),
             room: item.room,
             name: item.name,
             lastMeter: carryOverMeter,
-            curMeter: carryOverMeter, // 默认本月等于上月，录入新读数后变动
-            status: 'unpaid' // 新账期重置为未缴纳
+            curMeter: carryOverMeter // 默认等于上月底数，等待抄表
           };
         });
 
@@ -713,23 +657,23 @@
         appState.currentPeriodKey = nextPeriodKey;
         saveStorage();
         syncUIWithPeriod();
-        showToast(`新账期 ${nextYear}年${nextMonth}月 创建成功！所有表底已自动继承`, '🚀');
+        showToast(`新月份账期 ${nextYear}年${nextMonth}月 已创建！`, '🚀');
       }
     }
 
     // ==================== 初始底册向导 ====================
+
     function openInitModal() {
       openModal('modal-init');
     }
 
     function fillInitSampleTemplate() {
       const demo = [
-        '101 张建国 12500',
-        '102 李玉华 8400',
-        '201 王晓明 4300',
-        '202 陈志强 15100',
-        '301 刘阿姨 9210',
-        '302 赵德柱 6780'
+        '1栋1-101 张建国 12500',
+        '1栋1-102 李玉华 8400',
+        '1栋2-201 王晓明 4300',
+        '2栋1-301 陈志强 15100',
+        '2栋2-502 赵德柱 9820'
       ].join('\n');
       document.getElementById('init-bulk-text').value = demo;
     }
@@ -740,7 +684,7 @@
       const text = document.getElementById('init-bulk-text').value.trim();
 
       if (!text) {
-        showToast('请录入住户底册数据！', '⚠️');
+        showToast('请录入住户底表文本！', '⚠️');
         return;
       }
 
@@ -759,14 +703,13 @@
               room,
               name,
               lastMeter: meter,
-              curMeter: meter, // 初始时本月读数与上月一致，待抄表录入
-              status: 'unpaid'
+              curMeter: meter
             });
           }
         });
 
         if (rows.length === 0) {
-          showToast('无法解析住户行，请核对格式！', '❌');
+          showToast('无法解析有效住户，请核实格式！', '❌');
           return;
         }
 
@@ -776,11 +719,11 @@
         saveStorage();
         closeModal('modal-init');
         syncUIWithPeriod();
-        showToast(`成功初始化 ${rows.length} 户住户底册！`, '🎉');
-      }, '初始化名册授权', '请输入密码以覆盖/建立起始名册');
+        showToast(`已成功录入 ${rows.length} 户初始底册数据！`, '🎉');
+      }, '初始化名册授权', '请输入密码以覆盖并建立起始底册');
     }
 
-    // ==================== 抄表表格录入与计算 ====================
+    // ==================== 表格录入与计费核心 ====================
 
     function getCurPeriodList() {
       if (!appState.periods[appState.currentPeriodKey]) {
@@ -789,7 +732,6 @@
       return appState.periods[appState.currentPeriodKey];
     }
 
-    // 单户计算模型
     function calculateBill(item) {
       const last = parseFloat(item.lastMeter) || 0;
       const cur = parseFloat(item.curMeter) || 0;
@@ -800,7 +742,6 @@
       const fRubbish = appState.settings.feeRubbish;
       const fStair = appState.settings.feeStair;
 
-      // 如果本月读数小于上月，标记异常
       const isNegative = usage < 0;
       const validUsage = Math.max(0, usage);
 
@@ -809,23 +750,19 @@
       const costFixed = +(fRubbish + fStair).toFixed(2);
       const totalAmount = +(costElec + costLoss + costFixed).toFixed(2);
 
-      // 用电暴增预警 (超过300度或比平均突增)
-      const isSurge = validUsage >= 350;
-
       return {
         usage,
         validUsage,
         isNegative,
-        isSurge,
         costElec,
         costLoss,
-        costFixed,
+        costRubbish: fRubbish,
+        costStair: fStair,
         totalAmount,
         totalCn: numberToChineseAmount(totalAmount)
       };
     }
 
-    // 渲染当月表格
     function renderTable() {
       const list = getCurPeriodList();
       const tbody = document.getElementById('meter-table-body');
@@ -850,50 +787,34 @@
         const tr = document.createElement('tr');
         tr.className = 'hover:bg-slate-50/80 transition duration-150 border-b border-slate-100';
 
-        // 状态高亮
-        let statusBadge = '';
-        if (r.status === 'wechat') statusBadge = '<span class="px-2 py-0.5 rounded text-xs bg-emerald-100 text-emerald-700 font-semibold">微信已付</span>';
-        else if (r.status === 'alipay') statusBadge = '<span class="px-2 py-0.5 rounded text-xs bg-sky-100 text-sky-700 font-semibold">支付宝已付</span>';
-        else if (r.status === 'cash') statusBadge = '<span class="px-2 py-0.5 rounded text-xs bg-amber-100 text-amber-700 font-semibold">现金已结</span>';
-        else statusBadge = '<span class="px-2 py-0.5 rounded text-xs bg-rose-100 text-rose-700 font-semibold">未缴费</span>';
-
         tr.innerHTML = `
           <td class="p-3 text-center text-slate-400 font-mono text-xs">${idx + 1}</td>
           <td class="p-2">
-            <input type="text" value="${r.room || ''}" onchange="updateRowField('${r.id}', 'room', this.value)" class="w-24 border border-slate-200 rounded-lg px-2 py-1 text-xs sm:text-sm font-bold text-slate-800 bg-white">
+            <input type="text" value="${r.room || ''}" placeholder="如 1栋1-101" onchange="updateRowField('${r.id}', 'room', this.value)" class="w-36 border border-slate-200 rounded-lg px-2.5 py-1 text-xs sm:text-sm font-semibold text-slate-900 bg-white focus:outline-none focus:ring-1 focus:ring-slate-900">
           </td>
           <td class="p-2">
-            <input type="text" value="${r.name || ''}" onchange="updateRowField('${r.id}', 'name', this.value)" class="w-24 border border-slate-200 rounded-lg px-2 py-1 text-xs sm:text-sm text-slate-700 bg-white">
+            <input type="text" value="${r.name || ''}" placeholder="用户姓名" onchange="updateRowField('${r.id}', 'name', this.value)" class="w-24 border border-slate-200 rounded-lg px-2.5 py-1 text-xs sm:text-sm text-slate-800 bg-white focus:outline-none focus:ring-1 focus:ring-slate-900">
           </td>
           <td class="p-2">
-            <input type="number" step="any" value="${r.lastMeter}" onchange="updateRowField('${r.id}', 'lastMeter', this.value)" class="w-24 border border-slate-200 rounded-lg px-2 py-1 text-xs sm:text-sm text-slate-500 font-mono bg-slate-50">
+            <input type="number" step="any" value="${r.lastMeter}" onchange="updateRowField('${r.id}', 'lastMeter', this.value)" class="w-28 border border-slate-200 rounded-lg px-2.5 py-1 text-xs sm:text-sm text-slate-500 font-mono bg-slate-50">
           </td>
-          <td class="p-2 bg-indigo-50/40">
-            <div class="flex items-center space-x-1">
-              <input type="number" step="any" data-index="${idx}" value="${r.curMeter}" onchange="updateRowField('${r.id}', 'curMeter', this.value)" class="meter-input w-28 border-2 ${bill.isNegative ? 'border-rose-500 bg-rose-50 text-rose-700' : 'border-indigo-400 bg-white text-indigo-900'} rounded-lg px-2.5 py-1 text-xs sm:text-sm font-bold font-mono focus:outline-none focus:ring-2 focus:ring-indigo-600">
-              ${bill.isNegative ? '<span title="新表数小于底数，请核实！" class="text-rose-500 text-xs font-bold cursor-help">⚠️负值</span>' : ''}
-              ${bill.isSurge ? '<span title="用电量较大预警" class="text-amber-500 text-xs font-bold cursor-help">🔥突增</span>' : ''}
+          <td class="p-2 bg-amber-50/30">
+            <div class="flex items-center space-x-1.5">
+              <input type="number" step="any" data-index="${idx}" value="${r.curMeter}" onchange="updateRowField('${r.id}', 'curMeter', this.value)" class="meter-input w-32 border-2 ${bill.isNegative ? 'border-rose-500 bg-rose-50 text-rose-700' : 'border-slate-800 bg-white text-slate-900'} rounded-lg px-2.5 py-1 text-xs sm:text-sm font-bold font-mono focus:outline-none focus:ring-2 focus:ring-slate-900">
+              ${bill.isNegative ? '<span title="新读数小于底数！" class="text-rose-500 text-xs font-bold">⚠️负值</span>' : ''}
             </div>
           </td>
-          <td class="p-3 text-right font-mono font-bold ${bill.isNegative ? 'text-rose-500' : 'text-slate-700'}">
+          <td class="p-3 text-right font-mono font-bold ${bill.isNegative ? 'text-rose-600' : 'text-slate-800'}">
             ${bill.usage} <span class="text-xs font-normal text-slate-400">度</span>
           </td>
           <td class="p-3 text-right font-mono font-bold text-slate-900">
             ¥${bill.totalAmount.toFixed(2)}
           </td>
-          <td class="p-2 text-center">
-            <select onchange="updateRowField('${r.id}', 'status', this.value)" class="text-xs border rounded-lg px-2 py-1 font-medium bg-white focus:outline-none">
-              <option value="unpaid" ${r.status === 'unpaid' ? 'selected' : ''}>❌ 未缴费</option>
-              <option value="wechat" ${r.status === 'wechat' ? 'selected' : ''}>🟢 微信支付</option>
-              <option value="alipay" ${r.status === 'alipay' ? 'selected' : ''}>🔵 支付宝</option>
-              <option value="cash" ${r.status === 'cash' ? 'selected' : ''}>🟠 现金结算</option>
-            </select>
-          </td>
           <td class="p-2 text-center space-x-1 whitespace-nowrap">
-            <button onclick="previewAndPrintSingle('${r.id}')" class="px-2 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg text-xs font-semibold transition" title="单张预览与打印">
+            <button onclick="previewAndPrintSingle('${r.id}')" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-medium transition" title="单户收据展示">
               收据
             </button>
-            <button onclick="deleteRow('${r.id}')" class="p-1 hover:bg-rose-50 text-rose-500 rounded-lg text-xs transition" title="删除该行">
+            <button onclick="deleteRow('${r.id}')" class="p-1 hover:bg-rose-50 text-rose-500 rounded-lg text-xs transition" title="删除该户">
               🗑️
             </button>
           </td>
@@ -904,7 +825,6 @@
       updateDashboardStats();
     }
 
-    // 行编辑
     function updateRowField(id, field, val) {
       const list = getCurPeriodList();
       const row = list.find(r => r.id === id);
@@ -922,18 +842,16 @@
 
     function addSingleRow() {
       const list = getCurPeriodList();
-      const newId = Date.now().toString();
       list.push({
-        id: newId,
-        room: '',
+        id: Date.now().toString(),
+        room: '1栋1-101',
         name: '',
         lastMeter: 0,
-        curMeter: 0,
-        status: 'unpaid'
+        curMeter: 0
       });
       saveStorage();
       renderTable();
-      showToast('已追加新住户空行，请补充房号与表底', '➕');
+      showToast('已追加新住户空行，请填写房号与读数', '➕');
     }
 
     function deleteRow(id) {
@@ -942,11 +860,11 @@
         appState.periods[appState.currentPeriodKey] = list.filter(r => r.id !== id);
         saveStorage();
         renderTable();
-        showToast('已删除该行记录', '🗑️');
+        showToast('记录已移除', '🗑️');
       }
     }
 
-    // 键盘回车与上下键流转抄表
+    // 回车键顺序录入
     function setupKeyboardNavigation() {
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
@@ -959,50 +877,37 @@
               nextInput.focus();
               nextInput.select();
             } else {
-              showToast('已完成当前页所有住户表数录入！', '🎉');
+              showToast('当前页面所有住户表数已录入完成！', '🎉');
             }
           }
         }
       });
     }
 
-    // 统计大盘看板
     function updateDashboardStats() {
       const list = getCurPeriodList();
       let totalUsage = 0;
       let totalAmount = 0;
-      let paidAmount = 0;
       let recordedCount = 0;
-      let paidCount = 0;
 
       list.forEach(r => {
         const bill = calculateBill(r);
         if (bill.usage > 0) recordedCount++;
         totalUsage += bill.validUsage;
         totalAmount += bill.totalAmount;
-
-        if (r.status && r.status !== 'unpaid') {
-          paidCount++;
-          paidAmount += bill.totalAmount;
-        }
       });
 
       const totalCount = list.length;
       const recordedRate = totalCount ? Math.round((recordedCount / totalCount) * 100) : 0;
-      const paidRate = totalAmount > 0 ? Math.round((paidAmount / totalAmount) * 100) : 0;
-      const avgUsage = totalCount ? (totalUsage / totalCount).toFixed(1) : 0;
 
       document.getElementById('stat-total-count').innerText = totalCount;
       document.getElementById('stat-recorded-count').innerText = recordedCount;
       document.getElementById('stat-recorded-rate').innerText = `${recordedRate}%`;
       document.getElementById('stat-total-usage').innerText = totalUsage.toFixed(1);
       document.getElementById('stat-total-amount').innerText = `¥${totalAmount.toFixed(2)}`;
-      document.getElementById('stat-paid-amount').innerText = `¥${paidAmount.toFixed(2)}`;
-      document.getElementById('stat-paid-rate').innerText = `收缴率 ${paidRate}%`;
-      document.getElementById('stat-avg-usage').innerText = avgUsage;
     }
 
-    // ==================== 收据卡片构建与渲染 ====================
+    // ==================== 收据排版渲染（优化居中、字号分层） ====================
 
     function renderReceiptCards(specificId = null) {
       const container = document.getElementById('receipts-container');
@@ -1011,141 +916,132 @@
       const list = getCurPeriodList();
       const targetList = specificId ? list.filter(r => r.id === specificId) : list;
       const cur = parsePeriodKey(appState.currentPeriodKey);
+      const periodTag = `${cur.year}-${String(cur.month).padStart(2, '0')}`;
 
       document.getElementById('receipt-display-count').innerText = targetList.length;
 
       if (targetList.length === 0) {
-        container.innerHTML = '<div class="bg-white p-8 rounded-2xl text-center text-slate-400">暂无需要展示的收据</div>';
+        container.innerHTML = '<div class="bg-white p-8 rounded-2xl text-center text-slate-400">当前没有需要展示的收据数据</div>';
         return;
       }
 
       targetList.forEach(item => {
         const bill = calculateBill(item);
         const cardWrapper = document.createElement('div');
-        cardWrapper.className = 'receipt-card-wrapper relative';
+        cardWrapper.className = 'receipt-card-wrapper max-w-3xl mx-auto';
 
-        // 生成唯一卡片 DOM
         cardWrapper.innerHTML = `
-          <!-- 收据操作按钮（仅屏幕显示，导出或打印时排除） -->
-          <div class="no-print flex justify-end items-center space-x-2 mb-1.5 max-w-3xl mx-auto px-2">
-            <span class="text-xs text-slate-500 font-sans">住户：${item.room} - ${item.name}</span>
-            <button onclick="downloadSingleReceiptImage('${item.id}')" class="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg text-xs font-semibold flex items-center gap-1 border border-emerald-200 transition">
-              <span>🖼️</span> 下载高清图片 (PNG)
-            </button>
-            <button onclick="printSingleDirect('${item.id}')" class="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg text-xs font-semibold flex items-center gap-1 border border-indigo-200 transition">
-              <span>🖨️</span> 仅打印此张
-            </button>
+          <!-- 屏幕操作条 (不打印、不截图导出) -->
+          <div class="no-print flex justify-between items-center mb-1.5 px-2">
+            <span class="text-xs text-slate-500">房号：<strong class="text-slate-800 font-mono">${item.room || '未填'}</strong> (${item.name || '未填'})</span>
+            <div class="flex items-center space-x-2">
+              <button onclick="downloadSingleReceiptImage('${item.id}')" class="px-2.5 py-1 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-xs font-semibold flex items-center gap-1 shadow-sm transition">
+                <span>🖼️</span> 下载高清图片 (PNG)
+              </button>
+              <button onclick="printSingleDirect('${item.id}')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-900 text-white rounded-lg text-xs font-semibold flex items-center gap-1 shadow-sm transition">
+                <span>🖨️</span> 单独打印
+              </button>
+            </div>
           </div>
 
-          <!-- 正式收据卡片本体 -->
-          <div id="receipt-card-${item.id}" class="receipt-item-card bg-white border border-slate-800 rounded-xl p-6 sm:p-7 max-w-3xl mx-auto font-receipt text-slate-900 shadow-md relative overflow-hidden">
+          <!-- 正式标准财务收据卡片 -->
+          <div id="receipt-card-${item.id}" class="receipt-item-card bg-white border-2 border-slate-900 rounded-lg p-5 sm:p-6 max-w-3xl mx-auto text-slate-900 shadow-sm relative">
             
-            <!-- 印章图章效果 -->
-            <div class="receipt-seal ${item.status !== 'unpaid' ? 'paid-seal' : ''}">
-              <div class="text-[9px] scale-90">${appState.settings.companyTitle}</div>
-              <div class="font-black text-xs my-0.5 tracking-wider">${item.status !== 'unpaid' ? '款项已讫' : '财务结算章'}</div>
-              <div class="text-[8px] font-sans scale-75">${cur.year}.${cur.month}</div>
+            <!-- 顶部标准收款收据：大字居中、无下划线、字间距舒展 -->
+            <div class="text-center pb-2 mb-2">
+              <h2 class="text-3xl font-black tracking-[0.25em] text-slate-900 receipt-tpl-font">收款收据</h2>
             </div>
 
-            <!-- 收据抬头 -->
-            <div class="text-center pb-2 mb-3 border-b-2 border-slate-900">
-              <h2 class="text-2xl font-black tracking-widest text-slate-900">${appState.settings.companyTitle}</h2>
-              <div class="flex justify-between items-center mt-1">
-                <span class="text-xs font-sans text-slate-500 tracking-normal font-normal">（第二联：客户电费与物业杂费结算收执）</span>
-                <span class="text-lg font-black tracking-widest border-b border-slate-700 px-3">收款收据</span>
-                <span class="text-xs font-sans text-slate-500">账期：${cur.year}年${cur.month}月</span>
+            <!-- 住户信息与账期 -->
+            <div class="flex justify-between items-end text-sm mb-2 px-1">
+              <div class="flex items-baseline space-x-6">
+                <div>
+                  <span class="receipt-tpl-font text-slate-700">房号：</span>
+                  <span class="receipt-num-font font-bold text-base text-slate-900 underline decoration-slate-400 underline-offset-4">${item.room || '未填'}</span>
+                </div>
+                <div>
+                  <span class="receipt-tpl-font text-slate-700">用户：</span>
+                  <span class="receipt-data-font font-bold text-base text-slate-900 underline decoration-slate-400 underline-offset-4 px-1">${item.name || '未填'}</span>
+                </div>
               </div>
-            </div>
-
-            <!-- 住户抬头与开票日期 -->
-            <div class="flex justify-between items-center text-xs sm:text-sm font-sans mb-3 px-1">
               <div>
-                <span>房号：</span><strong class="text-base font-bold font-mono text-slate-900 mr-4">${item.room || '未填'}</strong>
-                <span>业主姓名：</span><strong class="text-sm font-bold underline decoration-slate-400 underline-offset-4 px-2">${item.name || '未填'}</strong>
-              </div>
-              <div class="text-right text-slate-600">
-                <span>开票日期：</span><span class="font-mono">${cur.year} 年 ${cur.month} 月 01 日</span>
+                <span class="receipt-tpl-font text-slate-700">账期：</span>
+                <span class="receipt-num-font font-bold text-base text-slate-900">${periodTag}</span>
               </div>
             </div>
 
-            <!-- 核心电费与杂费标准表格 -->
-            <table class="w-full border-collapse border border-slate-800 text-xs sm:text-sm text-center mb-3">
+            <!-- 核心财务表格：全格上下垂直居中，表头字大加粗，数据采用不同字体 -->
+            <table class="receipt-table text-sm text-center mb-3.5">
               <thead>
-                <tr class="bg-slate-100 font-sans font-bold text-slate-800">
-                  <th class="border border-slate-800 py-1.5 px-2 text-left">收费项目及计算说明</th>
-                  <th class="border border-slate-800 py-1.5 px-2 w-14">单位</th>
-                  <th class="border border-slate-800 py-1.5 px-2 w-20">用量/数量</th>
-                  <th class="border border-slate-800 py-1.5 px-2 w-20">单价(元)</th>
-                  <th class="border border-slate-800 py-1.5 px-2 w-28 text-right">金额 (元)</th>
-                  <th class="border border-slate-800 py-1.5 px-2 w-20">备注</th>
+                <tr class="bg-slate-50 font-black text-base text-slate-900 receipt-tpl-font">
+                  <th class="py-2.5 px-3 text-left">商品名称及规格</th>
+                  <th class="py-2.5 px-2 w-20">单位</th>
+                  <th class="py-2.5 px-2 w-24">数量</th>
+                  <th class="py-2.5 px-2 w-24">单价</th>
+                  <th class="py-2.5 px-3 w-36 text-right">金额 (元)</th>
                 </tr>
               </thead>
-              <tbody class="font-sans">
+              <tbody>
                 <!-- 基础电费 -->
                 <tr>
-                  <td class="border border-slate-800 py-1.5 px-2 text-left font-serif">
-                    本月用电量 (表数：${item.curMeter} - ${item.lastMeter})
+                  <td class="py-2 px-3 text-left">
+                    <span class="receipt-tpl-font font-medium">电费</span>
+                    <span class="receipt-num-font text-xs text-slate-600 ml-1">(${item.curMeter} - ${item.lastMeter})</span>
                   </td>
-                  <td class="border border-slate-800 py-1">度</td>
-                  <td class="border border-slate-800 py-1 font-mono font-bold">${bill.validUsage}</td>
-                  <td class="border border-slate-800 py-1 font-mono">${appState.settings.rateElec.toFixed(2)}</td>
-                  <td class="border border-slate-800 py-1 px-2 text-right font-mono font-bold">¥${bill.costElec.toFixed(2)}</td>
-                  <td class="border border-slate-800 py-1 text-slate-500 text-[11px]">当月抄表</td>
+                  <td class="py-2 receipt-tpl-font">度</td>
+                  <td class="py-2 receipt-num-font font-semibold text-slate-800">${bill.validUsage}</td>
+                  <td class="py-2 receipt-num-font text-slate-800">${appState.settings.rateElec.toFixed(2)}</td>
+                  <td class="py-2 px-3 text-right receipt-num-font font-bold text-slate-900">${bill.costElec.toFixed(2)}</td>
                 </tr>
 
-                <!-- 线损公摊 -->
+                <!-- 损耗 -->
                 <tr>
-                  <td class="border border-slate-800 py-1.5 px-2 text-left font-serif">
-                    变损及线路公摊损耗 (${bill.validUsage} 度)
+                  <td class="py-2 px-3 text-left">
+                    <span class="receipt-tpl-font font-medium">损耗</span>
+                    <span class="receipt-num-font text-xs text-slate-600 ml-1">(${item.curMeter} - ${item.lastMeter})</span>
                   </td>
-                  <td class="border border-slate-800 py-1">度</td>
-                  <td class="border border-slate-800 py-1 font-mono">${bill.validUsage}</td>
-                  <td class="border border-slate-800 py-1 font-mono">${appState.settings.rateLoss.toFixed(2)}</td>
-                  <td class="border border-slate-800 py-1 px-2 text-right font-mono font-bold">¥${bill.costLoss.toFixed(2)}</td>
-                  <td class="border border-slate-800 py-1 text-slate-500 text-[11px]">按度分摊</td>
+                  <td class="py-2 receipt-tpl-font">度</td>
+                  <td class="py-2 receipt-num-font font-semibold text-slate-800">${bill.validUsage}</td>
+                  <td class="py-2 receipt-num-font text-slate-800">${appState.settings.rateLoss.toFixed(2)}</td>
+                  <td class="py-2 px-3 text-right receipt-num-font font-bold text-slate-900">${bill.costLoss.toFixed(2)}</td>
                 </tr>
 
                 <!-- 垃圾清运费 -->
                 <tr>
-                  <td class="border border-slate-800 py-1.5 px-2 text-left font-serif">生活垃圾清运服务费</td>
-                  <td class="border border-slate-800 py-1">户/月</td>
-                  <td class="border border-slate-800 py-1 font-mono">1</td>
-                  <td class="border border-slate-800 py-1 font-mono">${appState.settings.feeRubbish.toFixed(2)}</td>
-                  <td class="border border-slate-800 py-1 px-2 text-right font-mono font-bold">¥${appState.settings.feeRubbish.toFixed(2)}</td>
-                  <td class="border border-slate-800 py-1 text-slate-500 text-[11px]">按月定额</td>
+                  <td class="py-2 px-3 text-left receipt-tpl-font font-medium">垃圾清运费</td>
+                  <td class="py-2 receipt-tpl-font">户/月</td>
+                  <td class="py-2 receipt-num-font font-semibold text-slate-800">1</td>
+                  <td class="py-2 receipt-num-font text-slate-800">${appState.settings.feeRubbish.toFixed(2)}</td>
+                  <td class="py-2 px-3 text-right receipt-num-font font-bold text-slate-900">${appState.settings.feeRubbish.toFixed(2)}</td>
                 </tr>
 
-                <!-- 公共楼道照明 -->
+                <!-- 公共区域电费 -->
                 <tr>
-                  <td class="border border-slate-800 py-1.5 px-2 text-left font-serif">公共区域及楼道照明用电</td>
-                  <td class="border border-slate-800 py-1">户/月</td>
-                  <td class="border border-slate-800 py-1 font-mono">1</td>
-                  <td class="border border-slate-800 py-1 font-mono">${appState.settings.feeStair.toFixed(2)}</td>
-                  <td class="border border-slate-800 py-1 px-2 text-right font-mono font-bold">¥${appState.settings.feeStair.toFixed(2)}</td>
-                  <td class="border border-slate-800 py-1 text-slate-500 text-[11px]">楼道均摊</td>
+                  <td class="py-2 px-3 text-left receipt-tpl-font font-medium">公共区域电费</td>
+                  <td class="py-2 receipt-tpl-font">户/月</td>
+                  <td class="py-2 receipt-num-font font-semibold text-slate-800">1</td>
+                  <td class="py-2 receipt-num-font text-slate-800">${appState.settings.feeStair.toFixed(2)}</td>
+                  <td class="py-2 px-3 text-right receipt-num-font font-bold text-slate-900">${appState.settings.feeStair.toFixed(2)}</td>
                 </tr>
 
-                <!-- 合计大写与小写金额行 -->
-                <tr class="bg-slate-50 font-bold">
-                  <td class="border border-slate-800 py-2 px-2 text-left font-serif">
-                    合计人民币 (大写)
-                  </td>
-                  <td colspan="3" class="border border-slate-800 py-2 px-3 text-left font-serif tracking-wider text-slate-900 text-sm">
+                <!-- 合计金额行：大写加粗，红色加粗金额以示明确区别 -->
+                <tr class="bg-slate-50/70">
+                  <td class="py-2.5 px-3 text-left receipt-tpl-font font-black text-slate-900">合计 (人民币大写)</td>
+                  <td colspan="3" class="py-2.5 px-3 text-left tracking-wider receipt-tpl-font font-black text-slate-900 text-sm">
                     ${bill.totalCn}
                   </td>
-                  <td colspan="2" class="border border-slate-800 py-2 px-2 text-right font-mono text-base font-black text-rose-600">
+                  <td class="py-2.5 px-3 text-right receipt-num-font font-black text-lg text-rose-600">
                     ¥ ${bill.totalAmount.toFixed(2)}
                   </td>
                 </tr>
               </tbody>
             </table>
 
-            <!-- 底部署名、支付凭证与落款 -->
-            <div class="flex justify-between items-center text-xs font-sans text-slate-600 mt-2 px-1">
-              <div>开票人：<span class="underline decoration-slate-400 px-2 font-serif">李会计</span></div>
-              <div>复核人：<span class="underline decoration-slate-400 px-2 font-serif">张主管</span></div>
-              <div>收款渠道：<strong class="text-slate-800">${item.status === 'unpaid' ? '待付款' : (item.status === 'wechat' ? '微信扫码支付' : (item.status === 'alipay' ? '支付宝扫码' : '现金收讫'))}</strong></div>
-              <div>交款人签字：______________</div>
+            <!-- 规范签名栏 -->
+            <div class="flex justify-between items-center text-xs sm:text-sm text-slate-800 pt-1 px-1 receipt-tpl-font">
+              <div>收款人：<span class="inline-block border-b border-slate-700 w-24"></span></div>
+              <div>会计：<span class="inline-block border-b border-slate-700 w-24"></span></div>
+              <div>收款单位（盖章）：<span class="font-bold">万新集团物业</span></div>
             </div>
           </div>
         `;
@@ -1154,24 +1050,25 @@
       });
     }
 
-    // ==================== html2canvas 单张与批量收据图片下载 ====================
+    // ==================== html2canvas 图片生成与下载 ====================
 
-    // 单张收据生成图片下载
     function downloadSingleReceiptImage(id) {
       const cardEl = document.getElementById(`receipt-card-${id}`);
       if (!cardEl) return;
 
-      showToast('正在生成收据高清图片...', '🎨');
+      showToast('正在生成正式收据高清图...', '🎨');
 
       html2canvas(cardEl, {
-        scale: 2, // 2倍高分辨率
+        scale: 2.5, // 2.5倍超清输出
         useCORS: true,
         backgroundColor: '#ffffff'
       }).then(canvas => {
         const link = document.createElement('a');
         const cur = parsePeriodKey(appState.currentPeriodKey);
         const item = getCurPeriodList().find(r => r.id === id);
-        const fileName = `${cur.year}年${cur.month}月_电费收据_${item ? item.room + '_' + item.name : id}.png`;
+        const roomName = item ? item.room.replace(/\s+/g, '') : id;
+        const owner = item ? item.name : '';
+        const fileName = `${cur.year}年${cur.month}月_电费收据_${roomName}_${owner}.png`;
         
         link.download = fileName;
         link.href = canvas.toDataURL('image/png');
@@ -1183,7 +1080,6 @@
       });
     }
 
-    // 一键批量生成并下载所有收据图片
     async function downloadAllReceiptImages() {
       const list = getCurPeriodList();
       if (list.length === 0) {
@@ -1191,7 +1087,6 @@
         return;
       }
 
-      // 显示进度条
       const pBar = document.getElementById('batch-progress-bar');
       const pText = document.getElementById('batch-progress-text');
       const pFill = document.getElementById('batch-progress-fill');
@@ -1207,12 +1102,12 @@
         const cardEl = document.getElementById(`receipt-card-${item.id}`);
         if (cardEl) {
           try {
-            const canvas = await html2canvas(cardEl, { scale: 2, backgroundColor: '#ffffff' });
+            const canvas = await html2canvas(cardEl, { scale: 2.5, backgroundColor: '#ffffff' });
             const link = document.createElement('a');
-            link.download = `${cur.year}年${cur.month}月_收据_${item.room}_${item.name}.png`;
+            const roomName = item.room.replace(/\s+/g, '');
+            link.download = `${cur.year}年${cur.month}月_收据_${roomName}_${item.name}.png`;
             link.href = canvas.toDataURL('image/png');
             link.click();
-            // 延时 300ms 避免浏览器并发下载拦截
             await new Promise(r => setTimeout(r, 350));
           } catch (e) {
             console.error('下载第 ' + i + ' 张失败', e);
@@ -1222,13 +1117,12 @@
 
       setTimeout(() => {
         pBar.classList.add('hidden');
-        showToast(`已完成当月全部 ${list.length} 户收据图片生成！`, '🎉');
-      }, 600);
+        showToast(`已完成当月全部 ${list.length} 份收据高清图片导出！`, '🎉');
+      }, 500);
     }
 
     // ==================== 打印控制 (单张 & 批量 A4) ====================
 
-    // 单张收据打印
     function printSingleDirect(id) {
       const cardEl = document.getElementById(`receipt-card-${id}`);
       if (!cardEl) return;
@@ -1241,16 +1135,14 @@
       window.print();
     }
 
-    // 在表格操作列点击收据跳转并打印
     function previewAndPrintSingle(id) {
       switchTab('receipts');
       renderReceiptCards(id);
       setTimeout(() => {
         printSingleDirect(id);
-      }, 200);
+      }, 150);
     }
 
-    // 一键批量打印当前月份所有收据
     function triggerPrintAll() {
       const list = getCurPeriodList();
       if (list.length === 0) {
@@ -1272,7 +1164,7 @@
       window.print();
     }
 
-    // ==================== 视图切换与单价配置 ====================
+    // ==================== 视图切换与配置管理 ====================
 
     function switchTab(tab) {
       const vData = document.getElementById('view-data');
@@ -1283,12 +1175,12 @@
       if (tab === 'data') {
         vData.classList.remove('hidden');
         vReceipts.classList.add('hidden');
-        btnData.className = 'px-3.5 py-1.5 rounded-lg font-medium text-xs sm:text-sm transition bg-white text-indigo-600 shadow-sm';
+        btnData.className = 'px-3.5 py-1.5 rounded-lg font-medium text-xs sm:text-sm transition bg-white text-slate-900 shadow-sm';
         btnReceipts.className = 'px-3.5 py-1.5 rounded-lg font-medium text-xs sm:text-sm transition text-slate-600 hover:text-slate-900';
       } else {
         vData.classList.add('hidden');
         vReceipts.classList.remove('hidden');
-        btnReceipts.className = 'px-3.5 py-1.5 rounded-lg font-medium text-xs sm:text-sm transition bg-white text-indigo-600 shadow-sm';
+        btnReceipts.className = 'px-3.5 py-1.5 rounded-lg font-medium text-xs sm:text-sm transition bg-white text-slate-900 shadow-sm';
         btnData.className = 'px-3.5 py-1.5 rounded-lg font-medium text-xs sm:text-sm transition text-slate-600 hover:text-slate-900';
         renderReceiptCards();
       }
@@ -1299,7 +1191,6 @@
       document.getElementById('cfg-loss-rate').value = appState.settings.rateLoss;
       document.getElementById('cfg-rubbish-fee').value = appState.settings.feeRubbish;
       document.getElementById('cfg-stair-fee').value = appState.settings.feeStair;
-      document.getElementById('cfg-company-title').value = appState.settings.companyTitle;
       openModal('modal-config');
     }
 
@@ -1309,26 +1200,25 @@
         appState.settings.rateLoss = parseFloat(document.getElementById('cfg-loss-rate').value) || 0.05;
         appState.settings.feeRubbish = parseFloat(document.getElementById('cfg-rubbish-fee').value) || 4.00;
         appState.settings.feeStair = parseFloat(document.getElementById('cfg-stair-fee').value) || 3.00;
-        appState.settings.companyTitle = document.getElementById('cfg-company-title').value.trim() || '小区物业服务中心';
 
         saveStorage();
         closeModal('modal-config');
         renderTable();
-        showToast('单价与印章配置已更新！', '✅');
-      }, '更新计费单价标准', '修改全盘计费标准需验证管理员密码');
+        showToast('收费标准已更新！', '✅');
+      }, '更新计费单价', '修改计费标准需验证管理员密码');
     }
 
-    // ==================== 数据备份与导入还原 ====================
+    // ==================== 数据备份与还原 ====================
 
     function exportFullBackup() {
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState, null, 2));
       const downloadAnchor = document.createElement('a');
       downloadAnchor.setAttribute("href", dataStr);
-      downloadAnchor.setAttribute("download", `小区电费全账期备份_${new Date().toISOString().slice(0, 10)}.json`);
+      downloadAnchor.setAttribute("download", `万新集团物业电费台账备份_${new Date().toISOString().slice(0, 10)}.json`);
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();
-      showToast('全量账期备份数据已导出！', '📥');
+      showToast('全量历史账期数据已备份导出！', '📥');
     }
 
     function handleImportBackup(e) {
@@ -1344,20 +1234,20 @@
               appState = parsed;
               saveStorage();
               syncUIWithPeriod();
-              showToast('备份还原成功！', '🎉');
+              showToast('备份文件还原成功！', '🎉');
             }, '还原数据备份', '导入数据将覆盖现有系统所有账期');
           } else {
-            showToast('JSON 结构不匹配，请确认为本系统备份文件！', '❌');
+            showToast('JSON 结构不匹配，请确认为有效备份文件！', '❌');
           }
         } catch (err) {
-          showToast('读取备份文件失败，非有效 JSON 格式', '❌');
+          showToast('读取备份文件失败，非标准 JSON 格式', '❌');
         }
       };
       reader.readAsText(file);
       e.target.value = '';
     }
 
-    // ==================== 工具函数：人民币金额转大写 ====================
+    // ==================== 大写金额转换 ====================
     function numberToChineseAmount(money) {
       const cnNums = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
       const cnIntRadice = ['', '拾', '佰', '仟'];
