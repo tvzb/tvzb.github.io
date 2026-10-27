@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> 万新集团住宅区 - 电费收据管理与打印系统</title>
+  <title>万新集团物业 - 电费收据管理与打印系统</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- html2canvas 优质图片渲染库 -->
@@ -15,7 +15,7 @@
       font-family: 'Noto Sans SC', system-ui, -apple-system, sans-serif;
     }
 
-    /* 正式财务单据衬线字体 */
+    /* 正式财务单据专用衬线字体 */
     .receipt-font {
       font-family: 'Noto Serif SC', 'Songti SC', SimSun, 'STSong', serif;
     }
@@ -25,7 +25,7 @@
       border: 1px solid #1f2937;
     }
 
-    /* 打印优化：标准 A4 出纸优化，过滤非打印元素 */
+    /* 打印优化：A4 纸张出纸优化，高度缩小后更紧凑规整，绝不溢出分页 */
     @media print {
       body * {
         visibility: hidden !important;
@@ -48,7 +48,7 @@
       .receipt-item-card {
         page-break-inside: avoid;
         break-inside: avoid;
-        margin: 0 0 12mm 0 !important;
+        margin: 0 0 8mm 0 !important;
         box-shadow: none !important;
         border: 1.5px solid #000 !important;
         width: 100% !important;
@@ -90,10 +90,10 @@
         </div>
         <div>
           <div class="flex items-center space-x-2">
-            <h1 class="font-bold text-base sm:text-lg text-slate-900 tracking-tight"> 万新集团住宅区 · 电费收据管理与打印系统</h1>
-            <span class="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 font-semibold border border-slate-300">财务标准版</span>
+            <h1 class="font-bold text-base sm:text-lg text-slate-900 tracking-tight">万新集团物业 · 电费收据管理与打印系统</h1>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 font-semibold border border-slate-300">标准版</span>
           </div>
-          <p class="text-xs text-slate-400">标准单据排版 · 多月度自动结转跨年 · 高清图片批量导出 · A4 标准套打</p>
+          <p class="text-xs text-slate-400">紧凑型财务单据 · 逐月独立页面 · 跨年自动结转 · 单张/批量图片高清导出</p>
         </div>
       </div>
 
@@ -221,7 +221,7 @@
             <thead>
               <tr class="bg-slate-100/80 text-slate-700 font-semibold border-b border-slate-200">
                 <th class="p-3 w-12 text-center">序号</th>
-                <th class="p-3 w-36">房号 (x栋x单元xxx)</th>
+                <th class="p-3 w-40">房号 (x栋x单元xxx)</th>
                 <th class="p-3 w-28">户主姓名</th>
                 <th class="p-3 w-32 text-slate-500">上月读数 (底数)</th>
                 <th class="p-3 w-36 font-bold text-slate-900 bg-amber-50/60">本月新读数 ⚡</th>
@@ -278,7 +278,7 @@
       </div>
 
       <!-- 收据卡片展示容器 -->
-      <div id="receipts-container" class="space-y-8">
+      <div id="receipts-container" class="space-y-6">
         <!-- 动态生成单户收据 -->
       </div>
     </section>
@@ -414,7 +414,7 @@
         rateLoss: 0.05,
         feeRubbish: 4.00,
         feeStair: 3.00,
-        companyTitle: ' 万新集团住宅区'
+        companyTitle: '万新集团物业'
       },
       currentPeriodKey: '2026-10',
       periods: {
@@ -891,7 +891,7 @@
       document.getElementById('stat-total-amount').innerText = `¥${totalAmount.toFixed(2)}`;
     }
 
-    // ==================== 收据排版渲染（正式财务规范） ====================
+    // ==================== 收据排版渲染（紧凑正规财务规范） ====================
 
     function renderReceiptCards(specificId = null) {
       const container = document.getElementById('receipts-container');
@@ -927,16 +927,16 @@
             </div>
           </div>
 
-          <!-- 正式标准财务收据卡片 -->
-          <div id="receipt-card-${item.id}" class="receipt-item-card bg-white border border-slate-900 rounded-lg p-7 max-w-3xl mx-auto receipt-font text-slate-900 shadow-md relative">
+          <!-- 正式标准财务收据卡片：内边距与留白已做紧凑优化 -->
+          <div id="receipt-card-${item.id}" class="receipt-item-card bg-white border border-slate-900 rounded-lg p-5 sm:p-6 max-w-3xl mx-auto receipt-font text-slate-900 shadow-md relative">
             
-            <!-- 顶部标准收款收据 -->
-            <div class="text-center pb-2 mb-3">
+            <!-- 顶部标准收款收据：大字居中、无下划线、字间距舒展 -->
+            <div class="text-center pb-1 mb-2">
               <h2 class="text-3xl font-black tracking-[0.25em] text-slate-900">收款收据</h2>
             </div>
 
-            <!-- 住户信息与开票日期 -->
-            <div class="flex justify-between items-end text-sm mb-2.5 px-0.5">
+            <!-- 住户信息与开票日期：紧凑行距 -->
+            <div class="flex justify-between items-end text-sm mb-2 px-0.5">
               <div class="space-x-4">
                 <span>房号：<strong class="text-base font-bold font-mono underline decoration-slate-400 underline-offset-4">${item.room || '未填'}</strong></span>
                 <span>户主姓名：<strong class="text-sm font-bold underline decoration-slate-400 underline-offset-4 px-1">${item.name || '未填'}</strong></span>
@@ -947,76 +947,76 @@
               </div>
             </div>
 
-            <!-- 核心财务表格（标准5列，无备注列） -->
-            <table class="receipt-table w-full border-collapse text-sm text-center mb-4">
+            <!-- 核心财务表格：各行 py-1.5 紧凑匀称排布 -->
+            <table class="receipt-table w-full border-collapse text-sm text-center mb-3">
               <thead>
                 <tr class="bg-slate-50 font-bold text-slate-900">
-                  <th class="py-2 px-3 text-left">商品名称及规格</th>
-                  <th class="py-2 px-2 w-20">单位</th>
-                  <th class="py-2 px-2 w-24">数量</th>
-                  <th class="py-2 px-2 w-24">单价</th>
-                  <th class="py-2 px-3 w-36 text-right">金额 (元)</th>
+                  <th class="py-1.5 px-3 text-left">商品名称及规格</th>
+                  <th class="py-1.5 px-2 w-20">单位</th>
+                  <th class="py-1.5 px-2 w-24">数量</th>
+                  <th class="py-1.5 px-2 w-24">单价</th>
+                  <th class="py-1.5 px-3 w-36 text-right">金额 (元)</th>
                 </tr>
               </thead>
               <tbody>
                 <!-- 基础电费 -->
                 <tr>
-                  <td class="py-2 px-3 text-left">
-                    电费 (本月 ${item.curMeter} - 上月 ${item.lastMeter})
+                  <td class="py-1.5 px-3 text-left">
+                    电费 (本月：${item.curMeter} - 上月：${item.lastMeter})
                   </td>
-                  <td class="py-2">度</td>
-                  <td class="py-2 font-mono">${bill.validUsage}</td>
-                  <td class="py-2 font-mono">${appState.settings.rateElec.toFixed(2)}</td>
-                  <td class="py-2 px-3 text-right font-mono font-semibold">${bill.costElec.toFixed(2)}</td>
+                  <td class="py-1.5">度</td>
+                  <td class="py-1.5 font-mono">${bill.validUsage}</td>
+                  <td class="py-1.5 font-mono">${appState.settings.rateElec.toFixed(2)}</td>
+                  <td class="py-1.5 px-3 text-right font-mono font-semibold">${bill.costElec.toFixed(2)}</td>
                 </tr>
 
                 <!-- 损耗 -->
                 <tr>
-                  <td class="py-2 px-3 text-left">
-                    损耗 (本月 ${item.curMeter} - 上月 ${item.lastMeter})
+                  <td class="py-1.5 px-3 text-left">
+                    损耗 (本月：${item.curMeter} - 上月：${item.lastMeter})
                   </td>
-                  <td class="py-2">度</td>
-                  <td class="py-2 font-mono">${bill.validUsage}</td>
-                  <td class="py-2 font-mono">${appState.settings.rateLoss.toFixed(2)}</td>
-                  <td class="py-2 px-3 text-right font-mono font-semibold">${bill.costLoss.toFixed(2)}</td>
+                  <td class="py-1.5">度</td>
+                  <td class="py-1.5 font-mono">${bill.validUsage}</td>
+                  <td class="py-1.5 font-mono">${appState.settings.rateLoss.toFixed(2)}</td>
+                  <td class="py-1.5 px-3 text-right font-mono font-semibold">${bill.costLoss.toFixed(2)}</td>
                 </tr>
 
                 <!-- 垃圾清运费 -->
                 <tr>
-                  <td class="py-2 px-3 text-left">垃圾清运费</td>
-                  <td class="py-2">月</td>
-                  <td class="py-2 font-mono">1</td>
-                  <td class="py-2 font-mono">${appState.settings.feeRubbish.toFixed(2)}</td>
-                  <td class="py-2 px-3 text-right font-mono font-semibold">${appState.settings.feeRubbish.toFixed(2)}</td>
+                  <td class="py-1.5 px-3 text-left">垃圾清运费</td>
+                  <td class="py-1.5">月</td>
+                  <td class="py-1.5 font-mono">1</td>
+                  <td class="py-1.5 font-mono">${appState.settings.feeRubbish.toFixed(2)}</td>
+                  <td class="py-1.5 px-3 text-right font-mono font-semibold">${appState.settings.feeRubbish.toFixed(2)}</td>
                 </tr>
 
                 <!-- 公共楼梯用电 -->
                 <tr>
-                  <td class="py-2 px-3 text-left">公共楼梯用电</td>
-                  <td class="py-2">月</td>
-                  <td class="py-2 font-mono">1</td>
-                  <td class="py-2 font-mono">${appState.settings.feeStair.toFixed(2)}</td>
-                  <td class="py-2 px-3 text-right font-mono font-semibold">${appState.settings.feeStair.toFixed(2)}</td>
+                  <td class="py-1.5 px-3 text-left">公共楼梯用电</td>
+                  <td class="py-1.5">月</td>
+                  <td class="py-1.5 font-mono">1</td>
+                  <td class="py-1.5 font-mono">${appState.settings.feeStair.toFixed(2)}</td>
+                  <td class="py-1.5 px-3 text-right font-mono font-semibold">${appState.settings.feeStair.toFixed(2)}</td>
                 </tr>
 
                 <!-- 合计金额行 -->
                 <tr class="font-bold bg-slate-50">
-                  <td class="py-2 px-3 text-left">合计 (人民币大写)</td>
-                  <td colspan="3" class="py-2 px-3 text-left tracking-wider text-slate-900 text-sm">
+                  <td class="py-1.5 px-3 text-left">合计 (人民币大写)</td>
+                  <td colspan="3" class="py-1.5 px-3 text-left tracking-wider text-slate-900 text-sm">
                     ${bill.totalCn}
                   </td>
-                  <td class="py-2 px-3 text-right font-mono text-base font-black text-slate-900">
+                  <td class="py-1.5 px-3 text-right font-mono text-base font-black text-slate-900">
                     ¥ ${bill.totalAmount.toFixed(2)}
                   </td>
                 </tr>
               </tbody>
             </table>
 
-            <!-- 规范签名栏：严格按照要求，无任何印章 -->
-            <div class="flex justify-between items-center text-xs sm:text-sm text-slate-800 pt-2 px-1">
+            <!-- 规范签名栏：收款单位为万新集团物业 -->
+            <div class="flex justify-between items-center text-xs sm:text-sm text-slate-800 pt-1 px-1">
               <div>收款人：___________</div>
               <div>会计：___________</div>
-              <div>收款单位（盖章）： __________</div>
+              <div>收款单位（盖章）：___________</div>
             </div>
           </div>
         `;
@@ -1043,7 +1043,7 @@
         const item = getCurPeriodList().find(r => r.id === id);
         const roomName = item ? item.room.replace(/\s+/g, '') : id;
         const owner = item ? item.name : '';
-        const fileName = `${cur.year}年${cur.month}月_ 万新集团住宅区电费收据_${roomName}_${owner}.png`;
+        const fileName = `${cur.year}年${cur.month}月_电费收据_${roomName}_${owner}.png`;
         
         link.download = fileName;
         link.href = canvas.toDataURL('image/png');
@@ -1189,7 +1189,7 @@
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState, null, 2));
       const downloadAnchor = document.createElement('a');
       downloadAnchor.setAttribute("href", dataStr);
-      downloadAnchor.setAttribute("download", ` 万新集团住宅区电费台账备份_${new Date().toISOString().slice(0, 10)}.json`);
+      downloadAnchor.setAttribute("download", `万新集团物业电费台账备份_${new Date().toISOString().slice(0, 10)}.json`);
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();
