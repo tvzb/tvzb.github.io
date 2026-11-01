@@ -7,9 +7,10 @@
   },
   "lives": [
     {
-      "name": "高清电视直播",
+      "name": "直播",
       "type": 0,
-      "url": "https://tvzb.github.io/IPTV/live.txt",
+      "url": "https://tvzb.github.io/live.txt",
+      "playerType": 1
     }
   ],
   "sites": [
