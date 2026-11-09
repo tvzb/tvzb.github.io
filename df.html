@@ -271,7 +271,7 @@
           </div>
 
           <div class="relative">
-            <input type="text" id="search-input" oninput="renderTable()" placeholder="搜房号(如1栋1单元101)或姓名..." class="pl-8 pr-3 py-1.5 text-xs sm:text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-1 focus:ring-slate-900 w-64">
+            <input type="text" id="search-input" oninput="renderTable()" placeholder="搜房号(如1栋1-101)或姓名..." class="pl-8 pr-3 py-1.5 text-xs sm:text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-1 focus:ring-slate-900 w-64">
             <span class="absolute left-2.5 top-2 text-slate-400 text-xs">🔍</span>
           </div>
         </div>
@@ -282,8 +282,8 @@
             <thead>
               <tr class="bg-slate-100/80 text-slate-700 font-semibold border-b border-slate-200">
                 <th class="p-3 w-12 text-center">序号</th>
-                <th class="p-3 w-40">房号 (x栋x单元xxx)</th>
-                <th class="p-3 w-28">户主姓名</th>
+                <th class="p-3 w-40">房号 (x栋x-xxx)</th>
+                <th class="p-3 w-28">姓名</th>
                 <th class="p-3 w-32 text-slate-500">上月读数 (底数)</th>
                 <th class="p-3 w-36 font-bold text-slate-900 bg-amber-50/60">本月新读数 ⚡</th>
                 <th class="p-3 w-28 text-right">当月用电量</th>
@@ -356,7 +356,7 @@
       <div class="flex justify-between items-center border-b pb-3">
         <div>
           <h3 class="text-lg font-bold text-slate-900">📋 初始化住户底册与起始月份</h3>
-          <p class="text-xs text-slate-500">房号统一使用“x栋x单元xxx”规范录入，起始表底自动作为当月抄表底数</p>
+          <p class="text-xs text-slate-500">房号统一使用“x栋x-xxx”规范录入，起始表底自动作为当月抄表底数</p>
         </div>
         <button onclick="closeModal('modal-init')" class="text-slate-400 hover:text-slate-600 text-xl font-bold">×</button>
       </div>
@@ -385,8 +385,8 @@
             <label class="font-semibold text-slate-700">批量录入住户初始底表 (格式：房号 姓名 初始表底)</label>
             <button onclick="fillInitSampleTemplate()" class="text-xs text-amber-700 font-semibold hover:underline">填入示例数据</button>
           </div>
-          <textarea id="init-bulk-text" rows="7" placeholder="格式范例 (每行一户，空格隔开)：&#10;1栋1单元101 张建国 12500&#10;1栋1单元102 李玉华 8400&#10;1栋2单元201 王晓明 4300&#10;2栋1单元301 陈志强 15100" class="w-full border border-slate-300 rounded-xl p-3 text-xs font-mono focus:ring-2 focus:ring-slate-900 focus:outline-none"></textarea>
-          <p class="text-slate-400 text-xs mt-1">注：房号请务必包含“栋”、“单元”及房间号，例如：<strong>1栋1单元101</strong>。</p>
+          <textarea id="init-bulk-text" rows="7" placeholder="格式范例 (每行一户，空格隔开)：&#10;1栋1-101 张建国 12500&#10;1栋1-102 李玉华 8400&#10;1栋2-201 王晓明 4300&#10;2栋1-301 陈志强 15100" class="w-full border border-slate-300 rounded-xl p-3 text-xs font-mono focus:ring-2 focus:ring-slate-900 focus:outline-none"></textarea>
+          <p class="text-slate-400 text-xs mt-1">注：房号请务必包含“栋”、“-”及房间号，例如：<strong>1栋1-101</strong>。</p>
         </div>
 
         <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-amber-900 text-xs">
@@ -442,7 +442,7 @@
           </label>
         </div>
         <label class="block text-xs font-semibold text-slate-700">收款单位（文字名称，可选）
-          <input id="cfg-company-name" type="text" maxlength="50" placeholder="例如：赣州市摩托车配件市场管理处" class="mt-1 w-full border rounded-xl px-3 py-2 text-sm font-normal">
+          <input id="cfg-company-name" type="text" maxlength="50" placeholder="例如：赣州市摩托车市场管理处" class="mt-1 w-full border rounded-xl px-3 py-2 text-sm font-normal">
         </label>
         <div class="rounded-xl bg-slate-50 border border-slate-200 p-3 space-y-2">
           <div class="flex flex-wrap items-center justify-between gap-2">
@@ -507,19 +507,19 @@
         rateLoss: 0.05,
         feeRubbish: 4.00,
         feeStair: 3.00,
-        companyTitle: '赣州市摩托车配件市场管理处',
+        companyTitle: '赣州市摩托车市场管理处',
         receiverName: '',
         accountantName: '',
-        companyName: '赣州市摩托车配件市场管理处',
+        companyName: '赣州市摩托车市场管理处',
         companyStampDataUrl: ''
       },
       currentPeriodKey: '2026-10',
       periods: {
         '2026-10': [
-          { id: '101', room: '1栋1单元101', name: '张建国', lastMeter: 1200, curMeter: 1266 },
-          { id: '102', room: '1栋1单元102', name: '李玉华', lastMeter: 1400, curMeter: 1560 },
-          { id: '201', room: '1栋2单元201', name: '王晓明', lastMeter: 1300, curMeter: 1425 },
-          { id: '202', room: '2栋1单元301', name: '陈志强', lastMeter: 100, curMeter: 152 }
+          { id: '101', room: '1栋1-101', name: '张建国', lastMeter: 1200, curMeter: 1266 },
+          { id: '102', room: '1栋1-102', name: '李玉华', lastMeter: 1400, curMeter: 1560 },
+          { id: '201', room: '1栋2-201', name: '王晓明', lastMeter: 1300, curMeter: 1425 },
+          { id: '202', room: '2栋1-301', name: '陈志强', lastMeter: 100, curMeter: 152 }
         ]
       }
     };
@@ -554,8 +554,8 @@
             appState = parsed;
             appState.settings = Object.assign({
               adminPwd: '123456', rateElec: 0.70, rateLoss: 0.05,
-              feeRubbish: 4.00, feeStair: 3.00, companyTitle: '赣州市摩托车配件市场管理处',
-              receiverName: '', accountantName: '', companyName: '赣州市摩托车配件市场管理处',
+              feeRubbish: 4.00, feeStair: 3.00, companyTitle: '赣州市摩托车市场管理处',
+              receiverName: '', accountantName: '', companyName: '赣州市摩托车市场管理处',
               companyStampDataUrl: ''
             }, parsed.settings || {});
           }
@@ -760,11 +760,11 @@
 
     function fillInitSampleTemplate() {
       const demo = [
-        '1栋1单元101 张建国 12500',
-        '1栋1单元102 李玉华 8400',
-        '1栋2单元201 王晓明 4300',
-        '2栋1单元301 陈志强 15100',
-        '2栋2单元502 赵德柱 9820'
+        '1栋1-101 张建国 12500',
+        '1栋1-102 李玉华 8400',
+        '1栋2-201 王晓明 4300',
+        '2栋1-301 陈志强 15100',
+        '2栋2-502 赵德柱 9820'
       ].join('\n');
       document.getElementById('init-bulk-text').value = demo;
     }
@@ -891,7 +891,7 @@
         tr.className = 'hover:bg-slate-50/80 transition duration-150 border-b border-slate-100';
         tr.innerHTML = `
           <td class="p-3 text-center text-slate-400 font-mono text-xs">${idx + 1}</td>
-          <td class="p-2"><input type="text" value="${room}" placeholder="x栋x单元xxx" onchange="updateRowField('${safeId}', 'room', this.value)" class="w-36 border border-slate-200 rounded-lg px-2.5 py-1 text-xs sm:text-sm font-semibold text-slate-900 bg-white"></td>
+          <td class="p-2"><input type="text" value="${room}" placeholder="x栋x-xxx" onchange="updateRowField('${safeId}', 'room', this.value)" class="w-36 border border-slate-200 rounded-lg px-2.5 py-1 text-xs sm:text-sm font-semibold text-slate-900 bg-white"></td>
           <td class="p-2"><input type="text" value="${name}" placeholder="姓名" onchange="updateRowField('${safeId}', 'name', this.value)" class="w-24 border border-slate-200 rounded-lg px-2.5 py-1 text-xs sm:text-sm text-slate-800 bg-white"></td>
           <td class="p-2"><input type="number" step="any" value="${Number(r.lastMeter) || 0}" onchange="updateRowField('${safeId}', 'lastMeter', this.value)" class="w-28 border border-slate-200 rounded-lg px-2.5 py-1 text-xs sm:text-sm text-slate-500 font-mono bg-slate-50"></td>
           <td class="p-2 bg-amber-50/30"><input type="number" step="any" data-index="${idx}" value="${Number(r.curMeter) || 0}" onchange="updateRowField('${safeId}', 'curMeter', this.value)" class="meter-input w-32 border-2 ${bill.isNegative ? 'border-rose-500 bg-rose-50 text-rose-700' : 'border-slate-800 bg-white text-slate-900'} rounded-lg px-2.5 py-1 text-xs sm:text-sm font-bold font-mono"></td>
@@ -916,9 +916,9 @@
           </div>
           <div class="grid grid-cols-2 gap-2.5">
             <label class="text-xs text-slate-500">房号
-              <input type="text" value="${room}" placeholder="如1栋1单元101" onchange="updateRowField('${safeId}','room',this.value)" autocomplete="off">
+              <input type="text" value="${room}" placeholder="如1栋1-101" onchange="updateRowField('${safeId}','room',this.value)" autocomplete="off">
             </label>
-            <label class="text-xs text-slate-500">户主姓名
+            <label class="text-xs text-slate-500">姓名
               <input type="text" value="${name}" placeholder="请输入姓名" onchange="updateRowField('${safeId}','name',this.value)" autocomplete="name">
             </label>
             <label class="text-xs text-slate-500">上期表底（度）
@@ -958,7 +958,7 @@
       const list = getCurPeriodList();
       list.push({
         id: Date.now().toString(),
-        room: '1栋1单元',
+        room: '1栋1-',
         name: '',
         lastMeter: 0,
         curMeter: 0,
@@ -1086,7 +1086,7 @@
             <div class="receipt-info flex justify-between items-end text-sm mb-2 px-0.5">
               <div class="space-x-4">
                 <span>房号：<strong class="text-base font-bold font-mono underline decoration-slate-400 underline-offset-4">${escapeHTML(item.room || '未填')}</strong></span>
-                <span>户主姓名：<strong class="text-sm font-bold underline decoration-slate-400 underline-offset-4 px-1">${escapeHTML(item.name || '未填')}</strong></span>
+                <span>姓名：<strong class="text-sm font-bold underline decoration-slate-400 underline-offset-4 px-1">${escapeHTML(item.name || '未填')}</strong></span>
               </div>
               <div class="text-sm">
                 <span>账期：</span>
@@ -1483,7 +1483,7 @@
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState, null, 2));
       const downloadAnchor = document.createElement('a');
       downloadAnchor.setAttribute("href", dataStr);
-      downloadAnchor.setAttribute("download", `赣州市摩托车配件市场管理处电费台账备份_${new Date().toISOString().slice(0, 10)}.json`);
+      downloadAnchor.setAttribute("download", `赣州市摩托车市场管理处电费台账备份_${new Date().toISOString().slice(0, 10)}.json`);
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();
@@ -1503,8 +1503,8 @@
               appState = parsed;
               appState.settings = Object.assign({
                 adminPwd: '123456', rateElec: 0.70, rateLoss: 0.05,
-                feeRubbish: 4.00, feeStair: 3.00, companyTitle: '赣州市摩托车配件市场管理处',
-                receiverName: '', accountantName: '', companyName: '赣州市摩托车配件市场管理处',
+                feeRubbish: 4.00, feeStair: 3.00, companyTitle: '赣州市摩托车市场管理处',
+                receiverName: '', accountantName: '', companyName: '赣州市摩托车市场管理处',
                 companyStampDataUrl: ''
               }, parsed.settings || {});
               saveStorage();
