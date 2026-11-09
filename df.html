@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>万新集团物业 - 电费收据管理与打印系统</title>
+  <title>电费收据管理与打印系统</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- html2canvas 优质图片渲染库 -->
@@ -151,7 +151,7 @@
         </div>
         <div>
           <div class="flex items-center space-x-2">
-            <h1 class="font-bold text-base sm:text-lg text-slate-900 tracking-tight">万新集团物业 · 电费收据管理与打印系统</h1>
+            <h1 class="font-bold text-base sm:text-lg text-slate-900 tracking-tight">电费收据管理与打印系统</h1>
             <span class="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 font-semibold border border-slate-300">标准版</span>
           </div>
           <p class="text-xs text-slate-400">紧凑型财务单据 · 逐月独立页面 · 跨年自动结转 · 单张/批量图片高清导出</p>
@@ -442,7 +442,7 @@
           </label>
         </div>
         <label class="block text-xs font-semibold text-slate-700">收款单位（文字名称，可选）
-          <input id="cfg-company-name" type="text" maxlength="50" placeholder="例如：万新集团物业" class="mt-1 w-full border rounded-xl px-3 py-2 text-sm font-normal">
+          <input id="cfg-company-name" type="text" maxlength="50" placeholder="例如：赣州市摩托车配件市场管理处" class="mt-1 w-full border rounded-xl px-3 py-2 text-sm font-normal">
         </label>
         <div class="rounded-xl bg-slate-50 border border-slate-200 p-3 space-y-2">
           <div class="flex flex-wrap items-center justify-between gap-2">
@@ -507,19 +507,19 @@
         rateLoss: 0.05,
         feeRubbish: 4.00,
         feeStair: 3.00,
-        companyTitle: '万新集团物业',
+        companyTitle: '赣州市摩托车配件市场管理处',
         receiverName: '',
         accountantName: '',
-        companyName: '万新集团物业',
+        companyName: '赣州市摩托车配件市场管理处',
         companyStampDataUrl: ''
       },
       currentPeriodKey: '2026-10',
       periods: {
         '2026-10': [
-          { id: '101', room: '1栋1单元101', name: '张建国', lastMeter: 12500, curMeter: 12668 },
-          { id: '102', room: '1栋1单元102', name: '李玉华', lastMeter: 8400, curMeter: 8560 },
-          { id: '201', room: '1栋2单元201', name: '王晓明', lastMeter: 4300, curMeter: 4425 },
-          { id: '202', room: '2栋1单元301', name: '陈志强', lastMeter: 15100, curMeter: 15285 }
+          { id: '101', room: '1栋1单元101', name: '张建国', lastMeter: 1200, curMeter: 1266 },
+          { id: '102', room: '1栋1单元102', name: '李玉华', lastMeter: 1400, curMeter: 1560 },
+          { id: '201', room: '1栋2单元201', name: '王晓明', lastMeter: 1300, curMeter: 1425 },
+          { id: '202', room: '2栋1单元301', name: '陈志强', lastMeter: 100, curMeter: 152 }
         ]
       }
     };
@@ -554,8 +554,8 @@
             appState = parsed;
             appState.settings = Object.assign({
               adminPwd: '123456', rateElec: 0.70, rateLoss: 0.05,
-              feeRubbish: 4.00, feeStair: 3.00, companyTitle: '万新集团物业',
-              receiverName: '', accountantName: '', companyName: '万新集团物业',
+              feeRubbish: 4.00, feeStair: 3.00, companyTitle: '赣州市摩托车配件市场管理处',
+              receiverName: '', accountantName: '', companyName: '赣州市摩托车配件市场管理处',
               companyStampDataUrl: ''
             }, parsed.settings || {});
           }
@@ -1483,7 +1483,7 @@
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState, null, 2));
       const downloadAnchor = document.createElement('a');
       downloadAnchor.setAttribute("href", dataStr);
-      downloadAnchor.setAttribute("download", `万新集团物业电费台账备份_${new Date().toISOString().slice(0, 10)}.json`);
+      downloadAnchor.setAttribute("download", `赣州市摩托车配件市场管理处电费台账备份_${new Date().toISOString().slice(0, 10)}.json`);
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();
@@ -1503,8 +1503,8 @@
               appState = parsed;
               appState.settings = Object.assign({
                 adminPwd: '123456', rateElec: 0.70, rateLoss: 0.05,
-                feeRubbish: 4.00, feeStair: 3.00, companyTitle: '万新集团物业',
-                receiverName: '', accountantName: '', companyName: '万新集团物业',
+                feeRubbish: 4.00, feeStair: 3.00, companyTitle: '赣州市摩托车配件市场管理处',
+                receiverName: '', accountantName: '', companyName: '赣州市摩托车配件市场管理处',
                 companyStampDataUrl: ''
               }, parsed.settings || {});
               saveStorage();
