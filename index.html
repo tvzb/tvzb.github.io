@@ -24,9 +24,9 @@
       <div>
         <span class="eyebrow">单链接合二为一 · 自动更新 · 宽带测速优选</span>
         <h1>装好 TVBox<br><em>全家人畅看全网影视</em></h1>
-        <p>无需繁琐配置，一个固定专属接口同时搞定「全网4K高清点播」与「央视卫视高清直播」。新用户注册即送 <b>10天全功能点播试用</b>。</p>
+        <p>无需繁琐配置，一个固定专属接口同时搞定「全网4K高清点播」与「央视卫视高清直播」。新用户注册即送 <b>10天「点播+全频道直播」全功能试用</b>。</p>
         <div class="actions">
-          <button id="heroTrialBtn" class="primary">免费注册领 10 天试用</button>
+          <button id="heroTrialBtn" class="primary">免费注册领 10 天全功能试用</button>
           <a class="secondary" href="#speedtest">测测我家连哪个源最快</a>
         </div>
       </div>
@@ -89,7 +89,7 @@
       <div id="siteList" class="site-grid"></div>
     </section>
 
-    <!-- 标准化会员套餐定价（砍掉定制直播，主推双享组合包） -->
+    <!-- 标准化会员套餐定价 -->
     <section id="plans" class="section">
       <div class="section-head">
         <div>
@@ -163,24 +163,27 @@
     © <span id="year"></span> TVBox 影音订阅中心 · 本站仅提供公开网络接口聚合测速与格式托管技术服务，不存储任何音视频文件。
   </footer>
 
-  <!-- 登录/注册弹窗 -->
+  <!-- 登录/注册弹窗（集成邮箱6位验证码防白嫖） -->
   <div id="authModal" class="modal hidden">
     <div class="modal-box">
       <button class="close" data-close="authModal">×</button>
-      <h2 id="authTitle">注册并领取 10 天免费试用</h2>
-      <p id="authSubtitle" class="muted" style="margin-bottom:14px;">仅支持 QQ、163、126、新浪、Outlook、Gmail 等常用邮箱注册</p>
+      <h2 id="authTitle">注册领 10 天全功能试用（含完整直播）</h2>
+      <p id="authSubtitle" class="muted" style="margin-bottom:14px;">仅支持 QQ、163、126、新浪、Outlook、Gmail 等常用实名邮箱</p>
       <form id="authForm">
         <label>常用邮箱
-          <input name="email" type="email" placeholder="例如：123456@qq.com" required>
+          <input id="authEmail" name="email" type="email" placeholder="例如：123456@qq.com" required>
         </label>
+        <div id="emailCodeBox">
+          <label>邮箱验证码
+            <div style="display:flex;gap:8px;margin-top:6px;">
+              <input id="emailCodeInput" name="code" type="text" maxlength="6" placeholder="6位数字验证码" style="margin-top:0;">
+              <button type="button" id="sendCodeBtn" class="secondary" style="white-space:nowrap;">发送验证码</button>
+            </div>
+          </label>
+        </div>
         <label>设置密码（至少8位）
           <input name="password" type="password" minlength="8" placeholder="请输入密码" required>
         </label>
-        <div id="captchaBox">
-          <label id="captchaLabel">人机验证：3 + 5 = ？
-            <input id="captchaInput" type="number" placeholder="请输入计算结果" required>
-          </label>
-        </div>
         <button id="authSubmitBtn" class="primary block" type="submit">立即注册并领取试用</button>
       </form>
       <p style="margin-top:12px;text-align:center;">
