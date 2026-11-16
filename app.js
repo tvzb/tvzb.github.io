@@ -1,4 +1,4 @@
-// ⚠️ 请将此处替换为你部署后的 Cloudflare Worker 域名（末尾不要加斜杠）
+// 已绑定你的自定义域名（末尾不加斜杠）
 const API_BASE = 'https://tvbox.hahagw.eu.org';
 
 // 与你的 tv.txt 对应的 21 个点播资源站列表（用于本地浏览器测速与排序）
@@ -28,7 +28,6 @@ const VOD_SITES = [
 
 let currentSites = [...VOD_SITES];
 let isRegisterMode = true;
-let captchaAnswer = 8;
 let selectedPlan = null;
 let selectedPayMethod = 'wechat';
 let pollTimer = null;
@@ -59,6 +58,55 @@ function bindEvents() {
     };
   });
 
+  // 发送邮箱验证码及 60 秒倒计时
+  document.getElementById('sendCodeBtn').onclick = async () => {
+    const email = document.getElementById('authEmail').value.trim();
+    const errEl = document.getElementById('authError');
+    const btn = document.getElementById('sendCodeBtn');
+    errEl.textContent = '';
+
+    if (!email) {
+      errEl.textContent = '请先输入您的常用邮箱';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = '发送中...';
+
+    try {
+      const res = await fetch(API_BASE + '/api/send-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        errEl.textContent = data.error || '发送失败';
+        btn.disabled = false;
+        btn.textContent = '发送验证码';
+        return;
+      }
+
+      alert(data.message);
+      let sec = 60;
+      btn.textContent = `${sec}s 后重发`;
+      const timer = setInterval(() => {
+        sec--;
+        if (sec <= 0) {
+          clearInterval(timer);
+          btn.disabled = false;
+          btn.textContent = '重新发送';
+        } else {
+          btn.textContent = `${sec}s 后重发`;
+        }
+      }, 1000);
+    } catch (e) {
+      errEl.textContent = '网络异常，请重试';
+      btn.disabled = false;
+      btn.textContent = '发送验证码';
+    }
+  };
+
   // 提交登录/注册表单
   document.getElementById('authForm').onsubmit = handleAuthSubmit;
 
@@ -85,7 +133,7 @@ function bindEvents() {
     btn.onclick = () => {
       const token = localStorage.getItem('tvbox_token');
       if (!token) {
-        alert('请先注册或登录账号后再购买会员（注册即送10天点播试用）！');
+        alert('请先注册或登录账号后再购买会员（注册即送10天全功能试用）！');
         openAuthModal(true);
         return;
       }
@@ -116,30 +164,23 @@ function bindEvents() {
   document.getElementById('submitOrderBtn').onclick = submitOrder;
 }
 
-// 刷新算术验证码
-function generateCaptcha() {
-  const a = Math.floor(1 + Math.random() * 9);
-  const b = Math.floor(1 + Math.random() * 9);
-  captchaAnswer = a + b;
-  document.getElementById('captchaLabel').innerHTML =
-    `人机验证：${a} + ${b} = ？<input id="captchaInput" type="number" placeholder="请输入计算结果" required>`;
-}
-
 function openAuthModal(registerMode) {
   isRegisterMode = registerMode;
   document.getElementById('authError').textContent = '';
+  const codeInput = document.getElementById('emailCodeInput');
   if (isRegisterMode) {
-    document.getElementById('authTitle').textContent = '注册并领取 10 天免费试用';
+    document.getElementById('authTitle').textContent = '注册领 10 天全功能试用（含完整直播）';
     document.getElementById('authSubtitle').classList.remove('hidden');
-    document.getElementById('captchaBox').classList.remove('hidden');
+    document.getElementById('emailCodeBox').classList.remove('hidden');
+    codeInput.required = true;
     document.getElementById('authSubmitBtn').textContent = '立即注册并领取试用';
     document.getElementById('authSwitchText').textContent = '已有账号？';
     document.getElementById('switchAuth').textContent = '点击登录';
-    generateCaptcha();
   } else {
     document.getElementById('authTitle').textContent = '会员登录';
     document.getElementById('authSubtitle').classList.add('hidden');
-    document.getElementById('captchaBox').classList.add('hidden');
+    document.getElementById('emailCodeBox').classList.add('hidden');
+    codeInput.required = false;
     document.getElementById('authSubmitBtn').textContent = '立即登录';
     document.getElementById('authSwitchText').textContent = '还没有账号？';
     document.getElementById('switchAuth').textContent = '免费注册领10天试用';
@@ -155,27 +196,18 @@ async function handleAuthSubmit(e) {
   const formData = new FormData(e.target);
   const email = formData.get('email');
   const password = formData.get('password');
-
-  if (isRegisterMode) {
-    const userAns = Number(document.getElementById('captchaInput').value);
-    if (userAns !== captchaAnswer) {
-      errEl.textContent = '算术验证码结果错误，请重新计算';
-      generateCaptcha();
-      return;
-    }
-  }
+  const code = formData.get('code');
 
   const endpoint = isRegisterMode ? '/api/register' : '/api/login';
   try {
     const res = await fetch(API_BASE + endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email, password, code })
     });
     const data = await res.json();
     if (!res.ok) {
       errEl.textContent = data.error || '操作失败';
-      if (isRegisterMode) generateCaptcha();
       return;
     }
 
