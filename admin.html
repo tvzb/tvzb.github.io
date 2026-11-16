@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>TVBox 后台管理</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: #0b0f19; }
+    .admin-wrap { max-width: 1200px; margin: 0 auto; padding: 24px; }
+    .admin-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 28px; padding-bottom: 16px; border-bottom: 1px solid var(--border);
+    }
+    .admin-header h1 { font-size: 1.5rem; }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px; margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 18px; text-align: center;
+    }
+    .stat-card .num { font-size: 1.8rem; font-weight: 700; color: var(--primary); }
+    .stat-card .label { color: var(--muted); font-size: 0.88rem; margin-top: 4px; }
+    .stat-card.pending .num { color: #f59e0b; }
+    .tabs { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+    .tab-btn {
+      padding: 8px 16px; border-radius: 8px; background: #1e293b; color: var(--muted);
+      border: 1px solid var(--border); cursor: pointer; font-weight: 600;
+    }
+    .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .panel-table { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid var(--border); }
+    th { color: var(--muted); font-weight: 600; font-size: 0.82rem; }
+    .status-pending { color: #f59e0b; }
+    .status-approved { color: var(--accent); }
+    .status-rejected { color: var(--danger); }
+    .action-btns { display: flex; gap: 6px; }
+    .btn-sm {
+      padding: 5px 10px; font-size: 0.8rem; border-radius: 6px; cursor: pointer; border: none; font-weight: 600;
+    }
+    .btn-approve { background: rgba(16,185,129,0.2); color: var(--accent); }
+    .btn-reject { background: rgba(239,68,68,0.2); color: var(--danger); }
+    .btn-extend { background: rgba(59,130,246,0.2); color: #60a5fa; }
+    .search-bar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+    .search-bar input {
+      flex: 1; min-width: 200px; padding: 10px 12px; background: #090d16;
+      border: 1px solid var(--border); border-radius: 8px; color: #fff;
+    }
+    .login-box {
+      max-width: 380px; margin: 100px auto; background: var(--card);
+      border: 1px solid var(--border); border-radius: 14px; padding: 32px;
+    }
+    .login-box h2 { text-align: center; margin-bottom: 20px; }
+    .hidden { display: none !important; }
+    .expire-active { color: var(--accent); }
+    .expire-dead { color: var(--danger); }
+    .msg { margin-top: 12px; text-align: center; font-size: 0.9rem; }
+    .msg.error { color: var(--danger); }
+    .msg.ok { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <!-- 登录页 -->
+  <div id="loginPage" class="login-box">
+    <h2>🔐 后台管理登录</h2>
+    <label>管理密码
+      <input id="adminPassword" type="password" placeholder="请输入 ADMIN_SECRET" autocomplete="current-password">
+    </label>
+    <button id="loginBtn" class="primary block" style="margin-top:16px;">登录</button>
+    <p id="loginMsg" class="msg"></p>
+  </div>
+
+  <!-- 管理主界面 -->
+  <div id="adminPage" class="admin-wrap hidden">
+    <div class="admin-header">
+      <h1>📺 TVBox 后台管理</h1>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <button id="refreshBtn" class="secondary">刷新数据</button>
+        <button id="logoutBtn" class="outline">退出登录</button>
+      </div>
+    </div>
+
+    <!-- 数据看板 -->
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card"><div class="num" id="statUsers">-</div><div class="label">总用户</div></div>
+      <div class="stat-card"><div class="num" id="statActiveVod">-</div><div class="label">点播有效</div></div>
+      <div class="stat-card"><div class="num" id="statActiveLive">-</div><div class="label">直播有效</div></div>
+      <div class="stat-card pending"><div class="num" id="statPending">-</div><div class="label">待审核订单</div></div>
+      <div class="stat-card"><div class="num" id="statToday">-</div><div class="label">今日订单</div></div>
+      <div class="stat-card"><div class="num" id="statOrders">-</div><div class="label">总订单</div></div>
+    </div>
+
+    <!-- 选项卡 -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="orders">订单管理</button>
+      <button class="tab-btn" data-tab="users">用户管理</button>
+    </div>
+
+    <!-- 订单面板 -->
+    <div id="panelOrders" class="panel panel-table">
+      <div class="tabs" style="margin-bottom:12px;">
+        <button class="tab-btn active order-filter" data-status="">全部</button>
+        <button class="tab-btn order-filter" data-status="pending">待审核</button>
+        <button class="tab-btn order-filter" data-status="approved">已开通</button>
+        <button class="tab-btn order-filter" data-status="rejected">已驳回</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>订单号</th>
+            <th>用户邮箱</th>
+            <th>套餐</th>
+            <th>金额</th>
+            <th>支付方式</th>
+            <th>尾号</th>
+            <th>状态</th>
+            <th>时间</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="ordersBody"></tbody>
+      </table>
+    </div>
+
+    <!-- 用户面板 -->
+    <div id="panelUsers" class="panel panel-table hidden">
+      <div class="search-bar">
+        <input id="userSearch" type="text" placeholder="输入邮箱关键词搜索...">
+        <button id="searchUserBtn" class="primary">搜索</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>邮箱</th>
+            <th>点播到期</th>
+            <th>直播到期</th>
+            <th>注册IP</th>
+            <th>注册时间</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="usersBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 延长会员弹窗 -->
+  <div id="extendModal" class="modal hidden">
+    <div class="modal-box">
+      <button class="close" data-close="extendModal">×</button>
+      <h2>延长会员时长</h2>
+      <p class="muted" id="extendEmail" style="margin-bottom:12px;"></p>
+      <label>增加点播天数
+        <input id="extendVodDays" type="number" min="0" value="0" placeholder="0 表示不增加">
+      </label>
+      <label>增加直播天数
+        <input id="extendLiveDays" type="number" min="0" value="0" placeholder="0 表示不增加">
+      </label>
+      <button id="confirmExtendBtn" class="primary block">确认延长</button>
+      <p id="extendMsg" class="msg"></p>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
