@@ -1,5 +1,5 @@
 // ⚠️ 请将此处替换为你部署后的 Cloudflare Worker 域名（末尾不要加斜杠）
-const API_BASE = 'https://tvbox.hahagw2016.workers.dev';
+const API_BASE = 'https://tvbox.hahagw.eu.org';
 
 // 与你的 tv.txt 对应的 21 个点播资源站列表（用于本地浏览器测速与排序）
 const VOD_SITES = [
