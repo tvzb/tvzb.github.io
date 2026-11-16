@@ -1,4 +1,4 @@
-// 已绑定你的自定义域名（末尾不加斜杠）
+// ⚠️ 请将此处替换为你部署后的 Cloudflare Worker 域名（末尾不要加斜杠）
 const API_BASE = 'https://tvbox.hahagw.eu.org';
 
 // 与你的 tv.txt 对应的 21 个点播资源站列表（用于本地浏览器测速与排序）
@@ -31,6 +31,8 @@ let isRegisterMode = true;
 let selectedPlan = null;
 let selectedPayMethod = 'wechat';
 let pollTimer = null;
+let codeCooldown = 0;
+let codeTimer = null;
 
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('year').textContent = new Date().getFullYear();
@@ -58,57 +60,11 @@ function bindEvents() {
     };
   });
 
-  // 发送邮箱验证码及 60 秒倒计时
-  document.getElementById('sendCodeBtn').onclick = async () => {
-    const email = document.getElementById('authEmail').value.trim();
-    const errEl = document.getElementById('authError');
-    const btn = document.getElementById('sendCodeBtn');
-    errEl.textContent = '';
-
-    if (!email) {
-      errEl.textContent = '请先输入您的常用邮箱';
-      return;
-    }
-
-    btn.disabled = true;
-    btn.textContent = '发送中...';
-
-    try {
-      const res = await fetch(API_BASE + '/api/send-code', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        errEl.textContent = data.error || '发送失败';
-        btn.disabled = false;
-        btn.textContent = '发送验证码';
-        return;
-      }
-
-      alert(data.message);
-      let sec = 60;
-      btn.textContent = `${sec}s 后重发`;
-      const timer = setInterval(() => {
-        sec--;
-        if (sec <= 0) {
-          clearInterval(timer);
-          btn.disabled = false;
-          btn.textContent = '重新发送';
-        } else {
-          btn.textContent = `${sec}s 后重发`;
-        }
-      }, 1000);
-    } catch (e) {
-      errEl.textContent = '网络异常，请重试';
-      btn.disabled = false;
-      btn.textContent = '发送验证码';
-    }
-  };
-
   // 提交登录/注册表单
   document.getElementById('authForm').onsubmit = handleAuthSubmit;
+
+  // 发送验证码
+  document.getElementById('sendCodeBtn').onclick = sendEmailCode;
 
   // 退出登录
   document.getElementById('logout').onclick = () => {
@@ -133,7 +89,7 @@ function bindEvents() {
     btn.onclick = () => {
       const token = localStorage.getItem('tvbox_token');
       if (!token) {
-        alert('请先注册或登录账号后再购买会员（注册即送10天全功能试用）！');
+        alert('请先注册或登录账号后再购买会员（注册即送10天点播试用）！');
         openAuthModal(true);
         return;
       }
@@ -167,25 +123,76 @@ function bindEvents() {
 function openAuthModal(registerMode) {
   isRegisterMode = registerMode;
   document.getElementById('authError').textContent = '';
-  const codeInput = document.getElementById('emailCodeInput');
+  document.getElementById('emailCode').value = '';
+
   if (isRegisterMode) {
-    document.getElementById('authTitle').textContent = '注册领 10 天全功能试用（含完整直播）';
+    document.getElementById('authTitle').textContent = '注册并领取 10 天免费试用';
     document.getElementById('authSubtitle').classList.remove('hidden');
-    document.getElementById('emailCodeBox').classList.remove('hidden');
-    codeInput.required = true;
+    document.getElementById('codeRow').classList.remove('hidden');
     document.getElementById('authSubmitBtn').textContent = '立即注册并领取试用';
     document.getElementById('authSwitchText').textContent = '已有账号？';
     document.getElementById('switchAuth').textContent = '点击登录';
   } else {
     document.getElementById('authTitle').textContent = '会员登录';
     document.getElementById('authSubtitle').classList.add('hidden');
-    document.getElementById('emailCodeBox').classList.add('hidden');
-    codeInput.required = false;
+    document.getElementById('codeRow').classList.add('hidden');
     document.getElementById('authSubmitBtn').textContent = '立即登录';
     document.getElementById('authSwitchText').textContent = '还没有账号？';
     document.getElementById('switchAuth').textContent = '免费注册领10天试用';
   }
   document.getElementById('authModal').classList.remove('hidden');
+}
+
+async function sendEmailCode() {
+  const email = document.querySelector('#authForm input[name="email"]').value.trim();
+  const errEl = document.getElementById('authError');
+  errEl.textContent = '';
+
+  if (!email) {
+    errEl.textContent = '请先填写邮箱地址';
+    return;
+  }
+
+  if (codeCooldown > 0) return;
+
+  const btn = document.getElementById('sendCodeBtn');
+  btn.disabled = true;
+  btn.textContent = '发送中...';
+
+  try {
+    const res = await fetch(API_BASE + '/api/send-code', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      errEl.textContent = data.error || '发送失败';
+      btn.disabled = false;
+      btn.textContent = '获取验证码';
+      return;
+    }
+
+    // 倒计时
+    codeCooldown = 60;
+    btn.textContent = `${codeCooldown}s 后重发`;
+    codeTimer = setInterval(() => {
+      codeCooldown--;
+      if (codeCooldown <= 0) {
+        clearInterval(codeTimer);
+        btn.disabled = false;
+        btn.textContent = '获取验证码';
+      } else {
+        btn.textContent = `${codeCooldown}s 后重发`;
+      }
+    }, 1000);
+
+    alert(data.message || '验证码已发送');
+  } catch (e) {
+    errEl.textContent = '网络请求失败，请稍后再试';
+    btn.disabled = false;
+    btn.textContent = '获取验证码';
+  }
 }
 
 async function handleAuthSubmit(e) {
@@ -196,14 +203,18 @@ async function handleAuthSubmit(e) {
   const formData = new FormData(e.target);
   const email = formData.get('email');
   const password = formData.get('password');
-  const code = formData.get('code');
+  const code = formData.get('code') || '';
 
   const endpoint = isRegisterMode ? '/api/register' : '/api/login';
+  const body = isRegisterMode
+    ? { email, password, code }
+    : { email, password };
+
   try {
     const res = await fetch(API_BASE + endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password, code })
+      body: JSON.stringify(body)
     });
     const data = await res.json();
     if (!res.ok) {
@@ -244,33 +255,45 @@ function renderAccountDashboard(user, orders) {
   const now = Date.now();
   const vodActive = user.vod_expire_at > now;
   const liveActive = user.live_expire_at > now;
-  const subUrl = `${API_BASE}/sub?token=${user.token}`;
+
+  // 分离的专属地址
+  const vodUrl = user.vodSubUrl || `${API_BASE}/sub/vod?token=${user.token}`;
+  const liveUrl = user.liveSubUrl || `${API_BASE}/sub/live?token=${user.token}`;
 
   document.getElementById('accountInfo').innerHTML = `
     <div class="sub-url-box">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
         <div>
-          <strong style="font-size:1.05rem;">🔑 您的专属 TVBox 配置接口（一客一码，切勿外传）</strong>
-          <p class="muted" style="margin-top:4px;">填入 TVBox「配置地址」即可同时加载点播与直播，有效期自动同步。</p>
+          <strong style="font-size:1.05rem;">🔑 您的专属订阅地址（一客一码，切勿外传）</strong>
+          <p class="muted" style="margin-top:4px;">点播与直播已完全分离，只展示您当前拥有权限的地址。请分别填入 TVBox 对应位置。</p>
         </div>
-        <button class="primary" onclick="copyText('${subUrl}', this)">一键复制专属地址</button>
       </div>
-      <code>${subUrl}</code>
-    </div>
-    <div>
-      <span class="muted">点播会员状态</span>
-      <div style="margin-top:6px;">
-        ${vodActive
-          ? `<span class="badge active">生效中</span> <span class="muted">到期：${formatDate(user.vod_expire_at)}</span>`
-          : `<span class="badge expired">未开通 / 已到期</span>`}
+
+      <div class="sub-item" style="margin-top:14px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+          <div>
+            <b>📺 点播订阅地址</b>
+            <span class="badge ${vodActive ? 'active' : 'expired'}" style="margin-left:8px;">
+              ${vodActive ? '生效中 · 到期 ' + formatDate(user.vod_expire_at) : '未开通 / 已到期'}
+            </span>
+          </div>
+          ${vodActive ? `<button class="primary" onclick="copyText('${vodUrl}', this)">一键复制点播地址</button>` : ''}
+        </div>
+        ${vodActive ? `<code>${vodUrl}</code>` : '<p class="muted" style="margin-top:6px;">开通点播会员后即可获得专属点播接口</p>'}
       </div>
-    </div>
-    <div>
-      <span class="muted">直播会员状态</span>
-      <div style="margin-top:6px;">
-        ${liveActive
-          ? `<span class="badge active">生效中</span> <span class="muted">到期：${formatDate(user.live_expire_at)}</span>`
-          : `<span class="badge expired">免费体验版 (10台)</span>`}
+
+      <div class="sub-item" style="margin-top:16px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+          <div>
+            <b>📡 直播订阅地址</b>
+            <span class="badge ${liveActive ? 'active' : 'expired'}" style="margin-left:8px;">
+              ${liveActive ? '生效中 · 到期 ' + formatDate(user.live_expire_at) : '免费体验版 (10台)'}
+            </span>
+          </div>
+          <button class="primary" onclick="copyText('${liveUrl}', this)">一键复制直播地址</button>
+        </div>
+        <code>${liveUrl}</code>
+        <p class="muted" style="margin-top:6px;font-size:0.85rem;">提示：直播地址仅限 TVBox 客户端使用，浏览器直接打开会显示提示信息，防止源地址泄露。</p>
       </div>
     </div>
   `;
@@ -287,7 +310,7 @@ function renderAccountDashboard(user, orders) {
   }
 
   // 渲染订单列表
-  if (orders.length > 0) {
+  if (orders && orders.length > 0) {
     document.getElementById('orders').innerHTML = orders.map(o => {
       const statusMap = {
         pending: '<span style="color:#f59e0b;">⏳ 审核中（约1-3分钟）</span>',
@@ -299,6 +322,8 @@ function renderAccountDashboard(user, orders) {
         <span>${statusMap[o.status] || o.status}</span>
       </div>`;
     }).join('');
+  } else {
+    document.getElementById('orders').innerHTML = '暂无订单记录';
   }
 }
 
@@ -330,12 +355,19 @@ async function runSpeedTest() {
   btn.disabled = true;
   btn.textContent = '⏳ 正在测速中...';
 
+  // 优先使用本地浏览器测速（更贴近用户真实网络）
+  // 测速目标改为资源站首页，尽量模拟连接延迟
   const tasks = currentSites.map(async (site) => {
     const start = performance.now();
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 3500);
+    const timer = setTimeout(() => controller.abort(), 4000);
     try {
-      await fetch(site.pingUrl, { mode: 'no-cors', cache: 'no-store', signal: controller.signal });
+      // 使用 no-cors 避免 CORS 拦截，只能测连接时间
+      await fetch(site.pingUrl, {
+        mode: 'no-cors',
+        cache: 'no-store',
+        signal: controller.signal
+      });
       clearTimeout(timer);
       site.latency = Math.round(performance.now() - start);
     } catch (e) {
@@ -441,6 +473,17 @@ async function submitOrder() {
 
 function copyText(text, btn) {
   navigator.clipboard.writeText(text).then(() => {
+    const old = btn.textContent;
+    btn.textContent = '✅ 已复制';
+    setTimeout(() => btn.textContent = old, 2000);
+  }).catch(() => {
+    // 降级方案
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
     const old = btn.textContent;
     btn.textContent = '✅ 已复制';
     setTimeout(() => btn.textContent = old, 2000);

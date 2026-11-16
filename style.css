@@ -151,15 +151,22 @@ code {
 /* 会员中心面板 */
 .account-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 20px;
 }
 .sub-url-box {
-  grid-column: 1 / -1;
   background: #0d1422;
   border: 1px solid var(--primary);
   border-radius: 10px;
   padding: 18px;
+}
+.sub-item {
+  padding: 12px 0;
+  border-top: 1px dashed var(--border);
+}
+.sub-item:first-of-type {
+  border-top: none;
+  padding-top: 0;
 }
 .badge {
   display: inline-block;
@@ -302,6 +309,9 @@ input {
 input:focus { outline: none; border-color: var(--primary); }
 .error { color: var(--danger); font-size: 0.88rem; margin-top: 10px; }
 
+/* 验证码行 */
+.code-row { margin-top: 14px; }
+
 /* 支付弹窗二维码 */
 .pay-summary {
   background: #090d16;
@@ -324,6 +334,7 @@ input:focus { outline: none; border-color: var(--primary); }
 .qr-tab.active { background: var(--primary); color: #fff; }
 
 @media (max-width: 768px) {
-  .hero, .cards, .account-grid { grid-template-columns: 1fr; }
+  .hero, .cards { grid-template-columns: 1fr; }
   nav a { display: none; }
+  .hero h1 { font-size: 1.9rem; }
 }
