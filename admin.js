@@ -2,7 +2,9 @@ const API_BASE = 'https://tvbox.hahagw.eu.org';
 
 let adminToken = sessionStorage.getItem('tvbox_admin_token') || '';
 let currentOrderStatus = '';
+let currentTicketStatus = '';
 let extendTargetEmail = '';
+let currentReplyTicketNo = '';
 
 document.addEventListener('DOMContentLoaded', () => {
   if (adminToken) {
@@ -13,9 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.getElementById('loginBtn').onclick = doLogin;
-  document.getElementById('adminPassword').onkeydown = (e) => {
-    if (e.key === 'Enter') doLogin();
-  };
+  document.getElementById('adminPassword').onkeydown = (e) => { if (e.key === 'Enter') doLogin(); };
   document.getElementById('logoutBtn').onclick = () => {
     sessionStorage.removeItem('tvbox_admin_token');
     adminToken = '';
@@ -23,18 +23,24 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   document.getElementById('refreshBtn').onclick = loadAll;
 
+  // 主选项卡切换
   document.querySelectorAll('.tab-btn[data-tab]').forEach(btn => {
     btn.onclick = () => {
       document.querySelectorAll('.tab-btn[data-tab]').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const tab = btn.dataset.tab;
-      document.getElementById('panelOrders').classList.toggle('hidden', tab !== 'orders');
-      document.getElementById('panelUsers').classList.toggle('hidden', tab !== 'users');
-      if (tab === 'users') loadUsers();
+      ['orders', 'users', 'tickets', 'coupons'].forEach(t => {
+        const cap = t.charAt(0).toUpperCase() + t.slice(1);
+        document.getElementById('panel' + cap).classList.toggle('hidden', tab !== t);
+      });
       if (tab === 'orders') loadOrders();
+      if (tab === 'users') loadUsers();
+      if (tab === 'tickets') loadTickets();
+      if (tab === 'coupons') loadCoupons();
     };
   });
 
+  // 订单筛选与搜索
   document.querySelectorAll('.order-filter').forEach(btn => {
     btn.onclick = () => {
       document.querySelectorAll('.order-filter').forEach(b => b.classList.remove('active'));
@@ -43,16 +49,43 @@ document.addEventListener('DOMContentLoaded', () => {
       loadOrders();
     };
   });
+  document.getElementById('searchOrderBtn').onclick = loadOrders;
+  document.getElementById('orderSearch').onkeydown = (e) => { if (e.key === 'Enter') loadOrders(); };
 
+  // 用户搜索
   document.getElementById('searchUserBtn').onclick = () => loadUsers(document.getElementById('userSearch').value.trim());
   document.getElementById('userSearch').onkeydown = (e) => {
     if (e.key === 'Enter') loadUsers(document.getElementById('userSearch').value.trim());
   };
 
-  document.getElementById('confirmExtendBtn').onclick = doExtend;
+  // 工单筛选
+  document.querySelectorAll('.ticket-filter').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('.ticket-filter').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentTicketStatus = btn.dataset.status;
+      loadTickets();
+    };
+  });
+
+  // 弹窗关闭
   document.querySelectorAll('.close').forEach(btn => {
     btn.onclick = () => document.getElementById(btn.dataset.close).classList.add('hidden');
   });
+
+  document.getElementById('confirmExtendBtn').onclick = doExtend;
+  document.getElementById('confirmReplyBtn').onclick = doReplyTicket;
+  document.getElementById('openCreateCouponBtn').onclick = () => {
+    document.getElementById('couponCreateMsg').textContent = '';
+    document.getElementById('createCouponModal').classList.remove('hidden');
+  };
+  document.getElementById('confirmCreateCouponBtn').onclick = doCreateCoupon;
+
+  document.getElementById('triggerWfBtn').onclick = () => {
+    document.getElementById('wfMsg').textContent = '';
+    document.getElementById('workflowModal').classList.remove('hidden');
+  };
+  document.getElementById('confirmTriggerWfBtn').onclick = doTriggerWorkflow;
 });
 
 function showLogin() {
@@ -70,12 +103,7 @@ async function doLogin() {
   const msg = document.getElementById('loginMsg');
   msg.textContent = '';
   msg.className = 'msg';
-
-  if (!password) {
-    msg.textContent = '请输入密码';
-    msg.classList.add('error');
-    return;
-  }
+  if (!password) { msg.textContent = '请输入密码'; msg.classList.add('error'); return; }
 
   try {
     const res = await fetch(API_BASE + '/api/admin/login', {
@@ -84,11 +112,7 @@ async function doLogin() {
       body: JSON.stringify({ password })
     });
     const data = await res.json();
-    if (!res.ok) {
-      msg.textContent = data.error || '登录失败';
-      msg.classList.add('error');
-      return;
-    }
+    if (!res.ok) { msg.textContent = data.error || '登录失败'; msg.classList.add('error'); return; }
     adminToken = data.token;
     sessionStorage.setItem('tvbox_admin_token', adminToken);
     showAdmin();
@@ -102,9 +126,19 @@ async function doLogin() {
 function authHeaders() {
   return {
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + adminToken,
-    'X-Admin-Secret': adminToken
+    'Authorization': 'Bearer ' + adminToken
   };
+}
+
+async function apiFetch(path, options = {}) {
+  const res = await fetch(API_BASE + path, { ...options, headers: authHeaders() });
+  if (res.status === 403) {
+    sessionStorage.removeItem('tvbox_admin_token');
+    adminToken = '';
+    showLogin();
+    throw new Error('登录已过期');
+  }
+  return res;
 }
 
 async function loadAll() {
@@ -113,12 +147,7 @@ async function loadAll() {
 
 async function loadStats() {
   try {
-    const res = await fetch(API_BASE + '/api/admin/stats', { headers: authHeaders() });
-    if (res.status === 403) {
-      sessionStorage.removeItem('tvbox_admin_token');
-      showLogin();
-      return;
-    }
+    const res = await apiFetch('/api/admin/stats');
     const data = await res.json();
     if (!data.ok) return;
     const s = data.stats;
@@ -126,16 +155,22 @@ async function loadStats() {
     document.getElementById('statActiveVod').textContent = s.activeVodUsers;
     document.getElementById('statActiveLive').textContent = s.activeLiveUsers;
     document.getElementById('statPending').textContent = s.pendingOrders;
+    document.getElementById('statOpenTickets').textContent = s.openTickets ?? 0;
     document.getElementById('statToday').textContent = s.todayOrders;
-    document.getElementById('statOrders').textContent = s.totalOrders;
+    document.getElementById('statRevenue').textContent = '¥' + (s.totalRevenue ?? 0);
   } catch (e) {}
 }
 
+// ================= 1. 订单管理与详情 =================
 async function loadOrders() {
   try {
-    let url = API_BASE + '/api/admin/orders';
-    if (currentOrderStatus) url += '?status=' + currentOrderStatus;
-    const res = await fetch(url, { headers: authHeaders() });
+    const params = new URLSearchParams();
+    if (currentOrderStatus) params.set('status', currentOrderStatus);
+    const q = document.getElementById('orderSearch').value.trim();
+    if (q) params.set('q', q);
+    const qs = params.toString() ? '?' + params.toString() : '';
+
+    const res = await apiFetch('/api/admin/orders' + qs);
     const data = await res.json();
     const tbody = document.getElementById('ordersBody');
     if (!data.orders || data.orders.length === 0) {
@@ -143,96 +178,177 @@ async function loadOrders() {
       return;
     }
     tbody.innerHTML = data.orders.map(o => {
-      const statusClass = 'status-' + o.status;
       const statusText = { pending: '待审核', approved: '已开通', rejected: '已驳回' }[o.status] || o.status;
-      const time = formatTime(o.created_at);
-      let actions = '-';
+      const couponHtml = o.coupon_code ? `<br><span class="muted" style="font-size:0.75rem;">券:${escapeHtml(o.coupon_code)} (-¥${o.discount_amount || 0})</span>` : '';
+      let actions = `<button class="btn-sm btn-detail" onclick="openOrderDetail('${o.order_no}')">详情</button>`;
       if (o.status === 'pending') {
         actions = `
-          <div class="action-btns">
-            <button class="btn-sm btn-approve" onclick="approveOrder('${o.order_no}')">开通</button>
-            <button class="btn-sm btn-reject" onclick="rejectOrder('${o.order_no}')">驳回</button>
-          </div>`;
+          <button class="btn-sm btn-approve" onclick="approveOrder('${o.order_no}')">开通</button>
+          <button class="btn-sm btn-reject" onclick="rejectOrder('${o.order_no}')">驳回</button>
+          ${actions}`;
       }
       return `<tr>
-        <td><code style="font-size:0.8rem;">${o.order_no}</code></td>
-        <td>${o.email}</td>
-        <td>${o.plan_name}</td>
-        <td>¥${o.amount}</td>
-        <td>${o.pay_method}</td>
-        <td>${o.pay_last6}</td>
-        <td class="${statusClass}">${statusText}</td>
-        <td>${time}</td>
-        <td>${actions}</td>
+        <td><code style="font-size:0.78rem;margin:0;padding:2px 6px;">${escapeHtml(o.order_no)}</code></td>
+        <td>${escapeHtml(o.email)}</td>
+        <td>${escapeHtml(o.plan_name)}</td>
+        <td><b>¥${o.amount}</b>${couponHtml}</td>
+        <td>${escapeHtml(o.pay_method)}</td>
+        <td>${escapeHtml(o.pay_last6)}</td>
+        <td class="status-${o.status}">${statusText}</td>
+        <td>${formatTime(o.created_at)}</td>
+        <td><div class="action-btns">${actions}</div></td>
       </tr>`;
     }).join('');
+  } catch (e) {}
+}
+
+async function openOrderDetail(orderNo) {
+  const modal = document.getElementById('orderDetailModal');
+  const body = document.getElementById('orderDetailBody');
+  body.innerHTML = '加载中...';
+  modal.classList.remove('hidden');
+  try {
+    const res = await apiFetch('/api/admin/order/detail?orderNo=' + encodeURIComponent(orderNo));
+    const data = await res.json();
+    if (!data.ok) { body.innerHTML = data.error || '加载失败'; return; }
+    const o = data.order;
+    const u = data.user || {};
+    body.innerHTML = `
+      <div class="detail-kv">
+        <b>订单编号</b><span>${escapeHtml(o.order_no)}</span>
+        <b>用户邮箱</b><span>${escapeHtml(o.email)} (UID: ${o.user_id})</span>
+        <b>购买套餐</b><span>${escapeHtml(o.plan_name)} (${escapeHtml(o.plan_code)})</span>
+        <b>价格明细</b><span>原价 ¥${o.original_amount || o.amount} | 优惠 -¥${o.discount_amount || 0} (${escapeHtml(o.coupon_code || '无')}) | <b>实付 ¥${o.amount}</b></span>
+        <b>支付凭证</b><span>${escapeHtml(o.pay_method)} · 尾号 <b>${escapeHtml(o.pay_last6)}</b></span>
+        <b>当前状态</b><span class="status-${o.status}">${o.status}</span>
+        <b>下单时间</b><span>${formatFullTime(o.created_at)}</span>
+        <b>处理时间</b><span>${o.handled_at ? formatFullTime(o.handled_at) : '未处理'}</span>
+        <b>处理备注</b><span>${escapeHtml(o.admin_note || '-')}</span>
+        <b>用户当前权益</b><span>点播至 ${formatDate(u.vod_expire_at)} / 直播至 ${formatDate(u.live_expire_at)}</span>
+      </div>
+    `;
   } catch (e) {
-    document.getElementById('ordersBody').innerHTML = '<tr><td colspan="9">加载失败</td></tr>';
+    body.innerHTML = '加载失败';
   }
 }
 
 async function approveOrder(orderNo) {
-  if (!confirm('确认开通此订单的会员权益？')) return;
-  try {
-    const res = await fetch(API_BASE + '/api/admin/order/approve', {
-      method: 'POST',
-      headers: authHeaders(),
-      body: JSON.stringify({ orderNo })
-    });
-    const data = await res.json();
-    alert(data.message || data.error);
-    loadAll();
-  } catch (e) {
-    alert('操作失败');
-  }
+  if (!confirm('确认已收到款项并开通此订单？')) return;
+  const res = await apiFetch('/api/admin/order/approve', { method: 'POST', body: JSON.stringify({ orderNo }) });
+  const data = await res.json();
+  alert(data.message || data.error);
+  loadAll();
 }
 
 async function rejectOrder(orderNo) {
-  if (!confirm('确认驳回此订单？')) return;
-  try {
-    const res = await fetch(API_BASE + '/api/admin/order/reject', {
-      method: 'POST',
-      headers: authHeaders(),
-      body: JSON.stringify({ orderNo })
-    });
-    const data = await res.json();
-    alert(data.message || data.error);
-    loadAll();
-  } catch (e) {
-    alert('操作失败');
-  }
+  const note = prompt('请输入驳回原因（可选）：', '未核实到对应尾号账单');
+  if (note === null) return;
+  const res = await apiFetch('/api/admin/order/reject', { method: 'POST', body: JSON.stringify({ orderNo, note }) });
+  const data = await res.json();
+  alert(data.message || data.error);
+  loadAll();
 }
 
+// ================= 2. 会员管理与深度详情 =================
 async function loadUsers(q = '') {
   try {
-    let url = API_BASE + '/api/admin/users';
-    if (q) url += '?q=' + encodeURIComponent(q);
-    const res = await fetch(url, { headers: authHeaders() });
+    let path = '/api/admin/users';
+    if (q) path += '?q=' + encodeURIComponent(q);
+    const res = await apiFetch(path);
     const data = await res.json();
     const tbody = document.getElementById('usersBody');
     if (!data.users || data.users.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#94a3b8;">暂无用户</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#94a3b8;">暂无用户</td></tr>';
       return;
     }
     const now = Date.now();
     tbody.innerHTML = data.users.map(u => {
       const vodCls = u.vod_expire_at > now ? 'expire-active' : 'expire-dead';
       const liveCls = u.live_expire_at > now ? 'expire-active' : 'expire-dead';
+      const stateHtml = u.is_banned ? '<span class="status-rejected">已封禁</span>' : '<span class="status-approved">正常</span>';
       return `<tr>
         <td>${u.id}</td>
-        <td>${u.email}</td>
+        <td>${escapeHtml(u.email)}</td>
         <td class="${vodCls}">${formatDate(u.vod_expire_at)}</td>
         <td class="${liveCls}">${formatDate(u.live_expire_at)}</td>
-        <td>${u.register_ip || '-'}</td>
-        <td>${formatTime(u.created_at)}</td>
+        <td>${stateHtml}</td>
+        <td>${escapeHtml(u.register_ip || '-')}</td>
+        <td>${u.last_active_at ? formatTime(u.last_active_at) : '-'}</td>
         <td>
-          <button class="btn-sm btn-extend" onclick="openExtend('${u.email}')">延长</button>
+          <div class="action-btns">
+            <button class="btn-sm btn-detail" onclick="openUserDetail(${u.id})">详情</button>
+            <button class="btn-sm btn-extend" onclick="openExtend('${escapeHtml(u.email)}')">延长</button>
+          </div>
         </td>
       </tr>`;
     }).join('');
+  } catch (e) {}
+}
+
+async function openUserDetail(userId) {
+  const modal = document.getElementById('userDetailModal');
+  const body = document.getElementById('userDetailBody');
+  body.innerHTML = '加载中...';
+  modal.classList.remove('hidden');
+
+  try {
+    const res = await apiFetch('/api/admin/user/detail?id=' + userId);
+    const data = await res.json();
+    if (!data.ok) { body.innerHTML = data.error || '加载失败'; return; }
+    const u = data.user;
+    const ipWarn = data.ip24hCount >= 5 ? `<span style="color:#ef4444;font-weight:700;">${data.ip24hCount} 个 (疑似共享!)</span>` : `${data.ip24hCount} 个`;
+
+    const ordersHtml = (data.orders || []).length
+      ? data.orders.map(o => `<div class="mini-row"><span>${escapeHtml(o.order_no)} · ${escapeHtml(o.plan_name)} (¥${o.amount})</span><span class="status-${o.status}">${o.status}</span></div>`).join('')
+      : '<div class="muted">无订单记录</div>';
+
+    const logsHtml = (data.recentLogs || []).length
+      ? data.recentLogs.map(l => `<div class="mini-row"><span>${escapeHtml(l.ip)} (${escapeHtml(l.region || '-')}) · ${escapeHtml(l.endpoint)}</span><span class="muted">${formatTime(l.created_at)}</span></div>`).join('')
+      : '<div class="muted">暂无订阅拉取记录</div>';
+
+    body.innerHTML = `
+      <div class="detail-kv">
+        <b>用户 ID / 邮箱</b><span>#${u.id} · ${escapeHtml(u.email)}</span>
+        <b>专属 Token</b><span><code style="margin:0;padding:2px 6px;">${escapeHtml(u.token)}</code> <button class="btn-sm btn-reject" style="margin-left:8px;" onclick="resetUserToken(${u.id})">重置 Token</button></span>
+        <b>点播 / 直播到期</b><span>点播：${formatDate(u.vod_expire_at)} &nbsp;|&nbsp; 直播：${formatDate(u.live_expire_at)}</span>
+        <b>注册 IP / 24h IP数</b><span>${escapeHtml(u.register_ip || '-')} &nbsp;|&nbsp; 近24h活跃IP：${ipWarn}</span>
+        <b>注册时间</b><span>${formatFullTime(u.created_at)}</span>
+      </div>
+
+      <label>账号状态与管理员备注
+        <div style="display:flex;gap:10px;align-items:center;margin-top:6px;">
+          <select id="editUserBanned" style="width:140px;margin-top:0;">
+            <option value="0" ${!u.is_banned ? 'selected' : ''}>正常启用</option>
+            <option value="1" ${u.is_banned ? 'selected' : ''}>封禁暂停</option>
+          </select>
+          <input id="editUserNote" type="text" value="${escapeHtml(u.admin_note || '')}" placeholder="填写内部备注..." style="flex:1;margin-top:0;">
+          <button class="primary" style="padding:8px 14px;" onclick="saveUserStatus(${u.id})">保存</button>
+        </div>
+      </label>
+
+      <div style="margin-top:14px;"><b>历史订单 (${data.orders.length})</b><div class="mini-list">${ordersHtml}</div></div>
+      <div style="margin-top:12px;"><b>最近订阅拉取日志 (${data.recentLogs.length})</b><div class="mini-list">${logsHtml}</div></div>
+    `;
   } catch (e) {
-    document.getElementById('usersBody').innerHTML = '<tr><td colspan="7">加载失败</td></tr>';
+    body.innerHTML = '加载失败';
   }
+}
+
+async function saveUserStatus(userId) {
+  const isBanned = document.getElementById('editUserBanned').value === '1';
+  const adminNote = document.getElementById('editUserNote').value.trim();
+  const res = await apiFetch('/api/admin/user/update', { method: 'POST', body: JSON.stringify({ id: userId, isBanned, adminNote }) });
+  const data = await res.json();
+  alert(data.message || data.error);
+  loadUsers(document.getElementById('userSearch').value.trim());
+}
+
+async function resetUserToken(userId) {
+  if (!confirm('确认重置该用户的专属 Token？重置后对方旧的订阅链接会立即失效！')) return;
+  const res = await apiFetch('/api/admin/user/reset-token', { method: 'POST', body: JSON.stringify({ id: userId }) });
+  const data = await res.json();
+  alert(data.message || data.error);
+  openUserDetail(userId);
 }
 
 function openExtend(email) {
@@ -250,46 +366,192 @@ async function doExtend() {
   const msg = document.getElementById('extendMsg');
   msg.textContent = '';
   msg.className = 'msg';
+  if (vodDays <= 0 && liveDays <= 0) { msg.textContent = '请至少填写一个天数'; msg.classList.add('error'); return; }
 
-  if (vodDays <= 0 && liveDays <= 0) {
-    msg.textContent = '请至少填写一个天数';
-    msg.classList.add('error');
-    return;
-  }
+  const res = await apiFetch('/api/admin/user/extend', {
+    method: 'POST',
+    body: JSON.stringify({ email: extendTargetEmail, vodDays, liveDays })
+  });
+  const data = await res.json();
+  if (!res.ok) { msg.textContent = data.error || '操作失败'; msg.classList.add('error'); return; }
+  msg.textContent = data.message || '成功';
+  msg.classList.add('ok');
+  setTimeout(() => {
+    document.getElementById('extendModal').classList.add('hidden');
+    loadUsers(document.getElementById('userSearch').value.trim());
+    loadStats();
+  }, 700);
+}
 
+// ================= 3. 客服工单管理 =================
+async function loadTickets() {
   try {
-    const res = await fetch(API_BASE + '/api/admin/user/extend', {
-      method: 'POST',
-      headers: authHeaders(),
-      body: JSON.stringify({ email: extendTargetEmail, vodDays, liveDays })
-    });
+    let path = '/api/admin/tickets';
+    if (currentTicketStatus) path += '?status=' + currentTicketStatus;
+    const res = await apiFetch(path);
     const data = await res.json();
-    if (!res.ok) {
-      msg.textContent = data.error || '操作失败';
-      msg.classList.add('error');
+    const tbody = document.getElementById('ticketsBody');
+    if (!data.tickets || data.tickets.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#94a3b8;">暂无工单</td></tr>';
       return;
     }
-    msg.textContent = data.message || '成功';
-    msg.classList.add('ok');
-    setTimeout(() => {
-      document.getElementById('extendModal').classList.add('hidden');
-      loadUsers(document.getElementById('userSearch').value.trim());
-      loadStats();
-    }, 800);
-  } catch (e) {
-    msg.textContent = '网络错误';
-    msg.classList.add('error');
-  }
+    const stText = { open: '待回复', replied: '已回复', closed: '已关闭' };
+    tbody.innerHTML = data.tickets.map(t => `<tr>
+      <td><code style="font-size:0.78rem;margin:0;padding:2px 6px;">${escapeHtml(t.ticket_no)}</code></td>
+      <td>${escapeHtml(t.email)}</td>
+      <td>${escapeHtml(t.category)}</td>
+      <td style="max-width:260px;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(t.subject)}</td>
+      <td class="status-${t.status}">${stText[t.status] || t.status}</td>
+      <td>${formatTime(t.created_at)}</td>
+      <td><button class="btn-sm btn-extend" onclick='openReplyTicket(${JSON.stringify(t).replace(/'/g, "&#39;")})'>查看 / 回复</button></td>
+    </tr>`).join('');
+  } catch (e) {}
+}
+
+function openReplyTicket(ticket) {
+  currentReplyTicketNo = ticket.ticket_no;
+  document.getElementById('ticketDetailInfo').innerHTML = `
+    <b>工单号</b><span>${escapeHtml(ticket.ticket_no)}</span>
+    <b>提交用户</b><span>${escapeHtml(ticket.email)}</span>
+    <b>分类 / 标题</b><span>[${escapeHtml(ticket.category)}] ${escapeHtml(ticket.subject)}</span>
+    <b>用户描述</b><span style="white-space:pre-wrap;">${escapeHtml(ticket.content)}</span>
+  `;
+  document.getElementById('adminReplyText').value = ticket.admin_reply || '';
+  document.getElementById('adminTicketStatus').value = ticket.status === 'closed' ? 'closed' : 'replied';
+  document.getElementById('replyMsg').textContent = '';
+  document.getElementById('replyTicketModal').classList.remove('hidden');
+}
+
+async function doReplyTicket() {
+  const reply = document.getElementById('adminReplyText').value.trim();
+  const status = document.getElementById('adminTicketStatus').value;
+  const msg = document.getElementById('replyMsg');
+  msg.textContent = '';
+  msg.className = 'msg';
+  if (!reply && status === 'replied') { msg.textContent = '请输入回复内容'; msg.classList.add('error'); return; }
+
+  const res = await apiFetch('/api/admin/ticket/reply', {
+    method: 'POST',
+    body: JSON.stringify({ ticketNo: currentReplyTicketNo, reply, status })
+  });
+  const data = await res.json();
+  if (!res.ok) { msg.textContent = data.error || '提交失败'; msg.classList.add('error'); return; }
+  msg.textContent = data.message || '回复成功';
+  msg.classList.add('ok');
+  setTimeout(() => {
+    document.getElementById('replyTicketModal').classList.add('hidden');
+    loadTickets();
+    loadStats();
+  }, 600);
+}
+
+// ================= 4. 优惠码管理 =================
+async function loadCoupons() {
+  try {
+    const res = await apiFetch('/api/admin/coupons');
+    const data = await res.json();
+    const tbody = document.getElementById('couponsBody');
+    if (!data.coupons || data.coupons.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#94a3b8;">暂无优惠码，点击右上角创建</td></tr>';
+      return;
+    }
+    const scopeMap = { all: '全部套餐', combo: '仅全能包', vod: '仅点播', live: '仅直播' };
+    tbody.innerHTML = data.coupons.map(c => {
+      const desc = c.type === 'fixed' ? `立减 ¥${c.value}` : `${(c.value / 10).toFixed(1)} 折`;
+      const limit = c.max_uses > 0 ? `${c.used_count} / ${c.max_uses}` : `${c.used_count} / 不限`;
+      const exp = c.expires_at > 0 ? formatDate(c.expires_at) : '长期有效';
+      const st = c.enabled ? '<span class="status-approved">启用中</span>' : '<span class="status-rejected">已停用</span>';
+      return `<tr>
+        <td><code style="margin:0;padding:2px 6px;">${escapeHtml(c.code)}</code></td>
+        <td><b>${desc}</b>${c.min_amount > 0 ? ` (满¥${c.min_amount})` : ''}</td>
+        <td>${scopeMap[c.plan_scope] || c.plan_scope}</td>
+        <td>${limit}</td>
+        <td>${exp}</td>
+        <td>${st}</td>
+        <td>${escapeHtml(c.note || '-')}</td>
+        <td>
+          <div class="action-btns">
+            <button class="btn-sm btn-extend" onclick="toggleCoupon(${c.id}, ${c.enabled ? 0 : 1})">${c.enabled ? '停用' : '启用'}</button>
+            <button class="btn-sm btn-reject" onclick="deleteCoupon(${c.id})">删除</button>
+          </div>
+        </td>
+      </tr>`;
+    }).join('');
+  } catch (e) {}
+}
+
+async function doCreateCoupon() {
+  const msg = document.getElementById('couponCreateMsg');
+  msg.textContent = '';
+  msg.className = 'msg';
+  const payload = {
+    code: document.getElementById('cpCode').value.trim().toUpperCase(),
+    type: document.getElementById('cpType').value,
+    value: Number(document.getElementById('cpValue').value),
+    planScope: document.getElementById('cpScope').value,
+    minAmount: Number(document.getElementById('cpMin').value) || 0,
+    maxUses: Number(document.getElementById('cpMaxUses').value) || 0,
+    expireDays: Number(document.getElementById('cpExpireDays').value) || 0,
+    note: document.getElementById('cpNote').value.trim()
+  };
+
+  const res = await apiFetch('/api/admin/coupon/create', { method: 'POST', body: JSON.stringify(payload) });
+  const data = await res.json();
+  if (!res.ok) { msg.textContent = data.error || '创建失败'; msg.classList.add('error'); return; }
+  msg.textContent = data.message || '创建成功';
+  msg.classList.add('ok');
+  setTimeout(() => {
+    document.getElementById('createCouponModal').classList.add('hidden');
+    loadCoupons();
+  }, 600);
+}
+
+async function toggleCoupon(id, enabled) {
+  await apiFetch('/api/admin/coupon/toggle', { method: 'POST', body: JSON.stringify({ id, enabled: Boolean(enabled) }) });
+  loadCoupons();
+}
+
+async function deleteCoupon(id) {
+  if (!confirm('确认删除此优惠码？')) return;
+  await apiFetch('/api/admin/coupon/delete', { method: 'POST', body: JSON.stringify({ id }) });
+  loadCoupons();
+}
+
+// ================= 5. 一键触发采集工作流 =================
+async function doTriggerWorkflow() {
+  const msg = document.getElementById('wfMsg');
+  msg.textContent = '正在请求 GitHub Actions...';
+  msg.className = 'msg';
+  const payload = {
+    collect_threshold: document.getElementById('wfCollectThreshold').value,
+    resume_checkpoint: document.getElementById('wfResume').value,
+    search_pages: document.getElementById('wfPages').value
+  };
+  const res = await apiFetch('/api/admin/trigger-workflow', { method: 'POST', body: JSON.stringify(payload) });
+  const data = await res.json();
+  if (!res.ok) { msg.textContent = data.error || '触发失败'; msg.classList.add('error'); return; }
+  msg.textContent = data.message || '触发成功！';
+  msg.classList.add('ok');
 }
 
 function formatDate(ts) {
   if (!ts || ts <= 0) return '未开通';
   const d = new Date(ts);
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
 function formatTime(ts) {
   if (!ts) return '-';
   const d = new Date(ts);
-  return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+  return `${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+}
+
+function formatFullTime(ts) {
+  if (!ts) return '-';
+  const d = new Date(ts);
+  return `${formatDate(ts)} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:${String(d.getSeconds()).padStart(2, '0')}`;
+}
+
+function escapeHtml(str) {
+  return String(str || '').replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s]));
 }
