@@ -34,6 +34,7 @@ let selectedPlan = null;
 let appliedCoupon = null;
 let selectedPayMethod = 'wechat';
 let pollTimer = null;
+let currentTrialDays = 7;
 let codeCooldown = 0;
 let codeTimer = null;
 
@@ -41,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('year').textContent = new Date().getFullYear();
   renderSiteList();
   bindEvents();
+  loadPublicConfigAndSites();
   loadChannelSummary();
   checkLoginState();
 });
@@ -96,7 +98,7 @@ function bindEvents() {
     btn.onclick = () => {
       const token = localStorage.getItem('tvbox_token');
       if (!token) {
-        alert('请先注册或登录账号后再购买会员（注册即送 5 天点播+直播全功能试用）！');
+        alert(`请先注册或登录账号后再购买会员（注册即送 ${currentTrialDays} 天点播+直播全功能试用）！`);
         openAuthModal(true);
         return;
       }
@@ -127,6 +129,33 @@ function bindEvents() {
   });
 
   document.getElementById('submitOrderBtn').onclick = submitOrder;
+
+  // 前台公共客服工单入口（未登录引导登录，已登录直接打开工单弹窗）
+  const openTicketOrAuth = () => {
+    const token = localStorage.getItem('tvbox_token');
+    if (!token) {
+      alert('请先登录或注册账号后再提交客服工单，方便我们在个人中心回复您！');
+      openAuthModal(false);
+      return;
+    }
+    document.getElementById('ticketSubject').value = '';
+    document.getElementById('ticketContent').value = '';
+    document.getElementById('ticketMsg').textContent = '';
+    document.getElementById('ticketModal').classList.remove('hidden');
+  };
+  document.getElementById('publicTicketBtn')?.addEventListener('click', openTicketOrAuth);
+  document.getElementById('publicTicketBtn2')?.addEventListener('click', openTicketOrAuth);
+  document.getElementById('fabSupportBtn')?.addEventListener('click', openTicketOrAuth);
+
+  // 忘记密码
+  document.getElementById('openResetPwd')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('authModal').classList.add('hidden');
+    document.getElementById('resetMsg').textContent = '';
+    document.getElementById('resetModal').classList.remove('hidden');
+  });
+  document.getElementById('sendResetCodeBtn')?.addEventListener('click', sendResetCode);
+  document.getElementById('confirmResetPwdBtn')?.addEventListener('click', confirmResetPassword);
 
   // 工单弹窗
   document.getElementById('openTicketModalBtn').onclick = () => {
@@ -205,7 +234,7 @@ function openAuthModal(registerMode) {
   document.getElementById('emailCode').value = '';
 
   if (isRegisterMode) {
-    document.getElementById('authTitle').textContent = '注册并领取 5 天全功能免费试用';
+    document.getElementById('authTitle').textContent = `注册并领取 ${currentTrialDays} 天全功能免费试用`;
     document.getElementById('authSubtitle').classList.remove('hidden');
     document.getElementById('codeRow').classList.remove('hidden');
     document.getElementById('authSubmitBtn').textContent = '立即注册并领取试用';
@@ -217,7 +246,7 @@ function openAuthModal(registerMode) {
     document.getElementById('codeRow').classList.add('hidden');
     document.getElementById('authSubmitBtn').textContent = '立即登录';
     document.getElementById('authSwitchText').textContent = '还没有账号？';
-    document.getElementById('switchAuth').textContent = '免费注册领5天试用';
+    document.getElementById('switchAuth').textContent = `免费注册领${currentTrialDays}天试用`;
   }
   document.getElementById('authModal').classList.remove('hidden');
 }
@@ -259,7 +288,7 @@ async function sendEmailCode() {
         btn.textContent = `${codeCooldown}s 后重发`;
       }
     }, 1000);
-    alert(data.message || '验证码已发送');
+    alert((data.message || '验证码已发送') + '\n\n提示：如 1 分钟未在收件箱看到，请务必查看「垃圾邮件 / 广告邮件」箱！');
   } catch (e) {
     errEl.textContent = '网络请求失败，请稍后再试';
     btn.disabled = false;
@@ -334,8 +363,8 @@ function renderAccountDashboard(user, orders, tickets) {
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
           <div>
             <b>🚀 一键全能聚合地址（推荐直接填这个）</b>
-            <span class="badge ${vodActive ? 'active' : 'expired'}" style="margin-left:6px;">点播: ${vodActive ? formatDate(user.vod_expire_at) : '未开通'}</span>
-            <span class="badge ${liveActive ? 'active' : 'expired'}" style="margin-left:6px;">直播: ${liveActive ? formatDate(user.live_expire_at) : '免费10台'}</span>
+            <span class="badge ${vodActive ? 'active' : 'expired'}" style="margin-left:6px;">点播: ${vodActive ? formatDate(user.vod_expire_at) + ' (剩' + daysLeft(user.vod_expire_at) + '天)' : '未开通'}</span>
+            <span class="badge ${liveActive ? 'active' : 'expired'}" style="margin-left:6px;">直播: ${liveActive ? formatDate(user.live_expire_at) + ' (剩' + daysLeft(user.live_expire_at) + '天)' : '免费体验版'}</span>
           </div>
           <button class="primary" onclick="copyText('${allUrl}', this)">一键复制聚合地址</button>
         </div>
@@ -797,4 +826,115 @@ function formatDate(ts) {
 
 function escapeHtml(str) {
   return String(str || '').replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s]));
+}
+
+// ================= 动态同步后端公开配置与点播站点列表 =================
+async function loadPublicConfigAndSites() {
+  try {
+    const r = await fetch(API_BASE + '/api/public-config');
+    if (r.ok) {
+      const cfg = await r.json();
+      if (cfg.freeLiveUrl) {
+        const el = document.getElementById('freeLiveUrl');
+        if (el) el.textContent = cfg.freeLiveUrl;
+      }
+      if (cfg.trialDays !== undefined && cfg.trialDays !== null) {
+        currentTrialDays = Number(cfg.trialDays);
+        document.querySelectorAll('.js-trial-days').forEach(el => { el.textContent = String(currentTrialDays); });
+        const loginBtn = document.getElementById('loginOpen');
+        if (loginBtn && !localStorage.getItem('tvbox_token')) {
+          loginBtn.textContent = currentTrialDays > 0 ? `登录 / 领${currentTrialDays}天试用` : '会员登录 / 注册';
+        }
+      }
+      const tvBtn = document.getElementById('tvApkDownloadBtn');
+      if (tvBtn) {
+        if (cfg.tvApkUrl) {
+          tvBtn.href = cfg.tvApkUrl;
+          tvBtn.textContent = '⬇️ 立即下载电视版 APK';
+        } else {
+          tvBtn.href = '#support';
+          tvBtn.removeAttribute('target');
+          tvBtn.textContent = '联系客服获取电视版 APK';
+        }
+      }
+      const mobBtn = document.getElementById('mobileApkDownloadBtn');
+      if (mobBtn) {
+        if (cfg.mobileApkUrl) {
+          mobBtn.href = cfg.mobileApkUrl;
+          mobBtn.textContent = '⬇️ 立即下载手机版 APK';
+        } else {
+          mobBtn.href = '#support';
+          mobBtn.removeAttribute('target');
+          mobBtn.textContent = '联系客服获取手机版 APK';
+        }
+      }
+      if (cfg.downloadNote) {
+        const noteEl = document.getElementById('downloadNoteText');
+        if (noteEl) noteEl.textContent = '💡 ' + cfg.downloadNote;
+      }
+    }
+  } catch (e) {}
+
+  try {
+    const r2 = await fetch(API_BASE + '/api/vod-sites');
+    if (r2.ok) {
+      const d = await r2.json();
+      if (Array.isArray(d.sites) && d.sites.length > 0) {
+        currentSites = d.sites.map(s => ({ ...s, status: 'idle', speedMBs: 0, latency: undefined }));
+        const btn = document.getElementById('startSpeedTest');
+        if (btn) btn.textContent = `⚡ 开始真实拉流测速 (${currentSites.length}站)`;
+        renderSiteList();
+      }
+    }
+  } catch (e) {}
+}
+
+function daysLeft(ts) {
+  return Math.max(1, Math.ceil((ts - Date.now()) / (24 * 3600 * 1000)));
+}
+
+async function sendResetCode() {
+  const email = document.getElementById('resetEmail').value.trim();
+  const msg = document.getElementById('resetMsg');
+  if (!email) { msg.textContent = '请先输入注册邮箱'; msg.style.color = '#ef4444'; return; }
+  const btn = document.getElementById('sendResetCodeBtn');
+  btn.disabled = true;
+  btn.textContent = '发送中...';
+  try {
+    const res = await fetch(API_BASE + '/api/send-reset-code', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    const data = await res.json();
+    msg.textContent = data.message || data.error;
+    msg.style.color = res.ok ? '#10b981' : '#ef4444';
+  } catch (e) {
+    msg.textContent = '网络请求失败';
+    msg.style.color = '#ef4444';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '发送验证码';
+  }
+}
+
+async function confirmResetPassword() {
+  const email = document.getElementById('resetEmail').value.trim();
+  const code = document.getElementById('resetCode').value.trim();
+  const newPassword = document.getElementById('resetNewPwd').value;
+  const msg = document.getElementById('resetMsg');
+  const res = await fetch(API_BASE + '/api/reset-password', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, code, newPassword })
+  });
+  const data = await res.json();
+  msg.textContent = data.message || data.error;
+  msg.style.color = res.ok ? '#10b981' : '#ef4444';
+  if (res.ok) {
+    setTimeout(() => {
+      document.getElementById('resetModal').classList.add('hidden');
+      openAuthModal(false);
+    }, 1000);
+  }
 }

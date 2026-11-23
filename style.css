@@ -467,3 +467,29 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
   .hero h1 { font-size: 1.9rem; }
   .summary-search { width: 100%; }
 }
+
+/* 右下角悬浮客服按钮 */
+.fab-support {
+  position: fixed;
+  right: 22px;
+  bottom: 24px;
+  z-index: 900;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 999px;
+  padding: 10px 18px;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.45);
+  font-size: 0.9rem;
+}
+.fab-support:hover { background: var(--primary-hover); transform: translateY(-2px); }
+
+.spam-tip {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #fde68a;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}

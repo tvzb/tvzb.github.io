@@ -70,6 +70,29 @@
     .mini-row { display: flex; justify-content: space-between; gap: 8px; padding: 5px 0; border-bottom: 1px dashed var(--border); }
     .mini-row:last-child { border-bottom: none; }
     .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .cfg-group-card {
+      background: #090d16; border: 1px solid var(--border); border-radius: 10px;
+      padding: 14px; margin-bottom: 14px;
+    }
+    .cfg-group-head {
+      display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;
+      margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px dashed var(--border);
+    }
+    .chip-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+    .ch-chip {
+      display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px;
+      background: #1e293b; border: 1px solid var(--border); border-radius: 99px; font-size: 0.82rem;
+    }
+    .ch-chip button {
+      background: transparent; color: #f87171; padding: 0 2px; font-size: 0.9rem; line-height: 1;
+    }
+    .add-ch-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .add-ch-row input { flex: 1; min-width: 180px; margin-top: 0; padding: 7px 10px; font-size: 0.86rem; }
+    .preview-box {
+      background: #090d16; border: 1px solid var(--border); border-radius: 8px;
+      padding: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.8rem; max-height: 300px; overflow: auto; white-space: pre; color: #cbd5e1; margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -111,6 +134,9 @@
       <button class="tab-btn" data-tab="users">👤 会员管理</button>
       <button class="tab-btn" data-tab="tickets">📩 客服工单</button>
       <button class="tab-btn" data-tab="coupons">🏷️ 优惠码管理</button>
+      <button class="tab-btn" data-tab="livecfg">📡 live.txt 采集配置</button>
+      <button class="tab-btn" data-tab="testcfg">🧪 test.txt 体验源配置</button>
+      <button class="tab-btn" data-tab="settings">⚙️ 站点与下载设置</button>
     </div>
 
     <!-- 1. 订单面板 -->
@@ -211,6 +237,92 @@
         </thead>
         <tbody id="couponsBody"></tbody>
       </table>
+    </div>
+
+    <!-- 5. live.txt 采集频道配置面板 -->
+    <div id="panelLivecfg" class="panel hidden">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+        <div>
+          <h3 style="margin-bottom:4px;">📡 live.txt 采集分类与频道管理</h3>
+          <span class="muted">可自由增删分类和频道名称，保存后同步至 Cloudflare KV，下次运行采集工作流自动按此列表采集。</span>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button id="addLiveGroupBtn" class="secondary">+ 新增频道分类</button>
+          <button id="saveLiveCfgBtn" class="primary">💾 保存采集配置到 KV</button>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px;padding:12px;background:#090d16;border-radius:8px;border:1px solid var(--border);">
+        <span class="muted">自用版（tvzb.github.io/live.txt）卫视频道置顶台：</span>
+        <input id="selfTopSatInput" type="text" value="江西卫视" style="width:160px;margin-top:0;padding:6px 10px;">
+        <span id="liveCfgSummary" class="muted" style="margin-left:auto;"></span>
+      </div>
+
+      <div id="liveGroupsContainer">加载中...</div>
+      <p id="liveCfgMsg" class="msg"></p>
+    </div>
+
+    <!-- 6. test.txt 体验源配置面板 -->
+    <div id="panelTestcfg" class="panel hidden">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+        <div>
+          <h3 style="margin-bottom:4px;">🧪 test.txt 免费体验源配置</h3>
+          <span class="muted">自定义体验版包含的频道分类、频道数量、频道名称，以及每个频道只保留前 N 个最流畅直播源。</span>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button id="addTestGroupBtn" class="secondary">+ 新增体验分类</button>
+          <button id="previewTestTxtBtn" class="secondary">👁️ 实时预览 test.txt</button>
+          <button id="saveTestCfgBtn" class="primary">💾 保存 test.txt 配置到 KV</button>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:16px;padding:12px;background:#090d16;border-radius:8px;border:1px solid var(--border);">
+        <label style="margin:0;display:flex;align-items:center;gap:8px;color:#e2e8f0;">
+          <b>每频道保留直播源前 N 个地址：</b>
+          <input id="testMaxPerCh" type="number" min="1" max="50" value="5" style="width:90px;margin-top:0;padding:6px 10px;">
+        </label>
+        <span class="muted">例如某频道在 live.txt 有 20 条源，设为 5 则只保留最流畅的前 5 条，后 15 条不加入。</span>
+        <span id="testCfgSummary" class="muted" style="margin-left:auto;"></span>
+      </div>
+
+      <div id="testGroupsContainer">加载中...</div>
+      <p id="testCfgMsg" class="msg"></p>
+
+      <div id="testPreviewWrap" class="hidden" style="margin-top:16px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <b>实时预览结果（基于当前 KV 中的 live.txt）</b>
+          <span id="testPreviewMeta" class="muted"></span>
+        </div>
+        <div id="testPreviewBox" class="preview-box"></div>
+      </div>
+    </div>
+
+    <!-- 7. 站点运营与客户端下载链接设置 -->
+    <div id="panelSettings" class="panel hidden">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+        <div>
+          <h3 style="margin-bottom:4px;">⚙️ 站点运营与客户端下载设置</h3>
+          <span class="muted">在此设置新用户注册免费试用天数（默认 7 天）及官网预留的 TVBox 安装包下载链接，保存后立即全站生效。</span>
+        </div>
+        <button id="saveSiteSettingsBtn" class="primary">💾 保存站点设置</button>
+      </div>
+
+      <div class="form-grid-2">
+        <label>新用户注册免费试用天数（默认 7 天，填 0 则关闭试用）
+          <input id="setTrialDays" type="number" min="0" max="365" value="7">
+        </label>
+        <label>下载区块底部提示说明
+          <input id="setDownloadNote" type="text" placeholder="如：提取码 8888，若链接失效请提交工单">
+        </label>
+      </div>
+
+      <label>TVBox 电视版安装包下载链接（支持网盘分享链接或直链 URL）
+        <input id="setTvApkUrl" type="url" placeholder="https://...">
+      </label>
+      <label>TVBox 手机版安装包下载链接（选填）
+        <input id="setMobileApkUrl" type="url" placeholder="https://...">
+      </label>
+      <p id="siteSettingsMsg" class="msg"></p>
     </div>
   </div>
 

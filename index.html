@@ -15,7 +15,8 @@
       <a href="#speedtest">宽带测速</a>
       <a href="#plans">会员方案</a>
       <a href="#help">安装教程</a>
-      <button id="loginOpen" class="outline">登录 / 领5天试用</button>
+      <a href="#support">客服工单</a>
+      <button id="loginOpen" class="outline">登录 / 领<span class="js-trial-days">7</span>天试用</button>
     </nav>
   </header>
 
@@ -25,15 +26,15 @@
       <div>
         <span class="eyebrow">一链全能聚合 · 家庭宽带实测 · 代理防泄露云端托管</span>
         <h1>装好 TVBox<br><em>全家人畅看全网影视</em></h1>
-        <p>无需繁琐配置，一个专属聚合接口同时搞定「21 站 4K 高清点播」与「央视卫视高清直播」。新用户注册即送 <b>5 天点播 + 全频道直播全功能试用</b>。</p>
+        <p>无需繁琐配置，一个专属聚合接口同时搞定「21 站 4K 高清点播」与「央视卫视高清直播」。新用户注册即送 <b><span class="js-trial-days">7</span> 天点播 + 全频道直播全功能试用</b>。</p>
         <div class="actions">
-          <button id="heroTrialBtn" class="primary">免费注册领 5 天全功能试用</button>
+          <button id="heroTrialBtn" class="primary">免费注册领 <span class="js-trial-days">7</span> 天全功能试用</button>
           <a class="secondary" href="#speedtest">用我家宽带测测哪个源最快</a>
         </div>
       </div>
       <div class="hero-card">
         <div class="screen">TVBox <span>云端专属配置引擎 V2</span></div>
-        <div class="stat"><b>test.txt 免费体验</b><span>永久免费直播源 · 5央+5卫同步维护</span></div>
+        <div class="stat"><b>免费体验直连代理</b><span>国内直连免翻墙 · 无需注册即可体验</span></div>
         <div class="stat"><b>21 个高速采集站</b><span>真实视频切片拉流 · 按自家宽带自动排序</span></div>
         <div class="stat"><b>一客一码安全代理</b><span>全能包单地址直填 · 有效期内云端自动更新</span></div>
       </div>
@@ -72,13 +73,13 @@
           <span class="eyebrow">FREE LIVE PREVIEW</span>
           <h2>永久免费直播源（无需注册）</h2>
         </div>
-        <span class="muted">随工作流自动同步更新至本站根目录</span>
+        <span class="muted">通过云端安全代理分发 · 国内直连稳定且防恶意爬取</span>
       </div>
       <div class="panel free">
         <div>
           <h3>精选 5 个央视频道 + 5 个热门卫视频道</h3>
           <p>直接填入 TVBox 直播地址栏即可观看，长期免费开放测试画质与切台速度。</p>
-          <code id="freeLiveUrl">https://tvzb.github.io/test.txt</code>
+          <code id="freeLiveUrl">https://tvbox.hahagw.eu.org/sub/free-live</code>
         </div>
         <button class="primary" data-copy-id="freeLiveUrl">复制免费直播地址</button>
       </div>
@@ -213,33 +214,97 @@
       </div>
     </section>
 
-    <!-- 新手小白三步安装指南 -->
+    <!-- TVBox 下载、安装与订阅导入全攻略 -->
     <section id="help" class="section">
       <div class="section-head">
         <div>
-          <span class="eyebrow">USER GUIDE</span>
-          <h2>三步完成电视安装（小白必看）</h2>
+          <span class="eyebrow">DOWNLOAD &amp; SETUP GUIDE</span>
+          <h2>TVBox 下载、安装与订阅导入全攻略</h2>
         </div>
+        <span class="muted">覆盖电视 / 盒子 / 投影仪 / 手机，小白 3 分钟轻松上手</span>
       </div>
+
+      <!-- 预留客户端下载卡片区（链接可在后台「站点设置」随时更新） -->
+      <div class="cards" style="margin-bottom:22px;">
+        <article class="price">
+          <div>
+            <span class="tag hot">📺 电视 / 盒子 / 投影仪</span>
+            <h3>TVBox 电视版 (APK)</h3>
+            <p>适配 Android 5.0 及以上智能电视、当贝/小米/腾讯盒子及家用投影仪，支持遥控器操控与手机扫码推送配置。</p>
+          </div>
+          <a id="tvApkDownloadBtn" class="primary block" href="#support" target="_blank" rel="noopener">获取电视版安装包</a>
+        </article>
+
+        <article class="price">
+          <div>
+            <span class="tag">📱 安卓手机 / 平板</span>
+            <h3>TVBox 手机版 (APK)</h3>
+            <p>适配安卓手机与平板横竖屏触控播放，可直接在手机上先测速试看，满意后再给家里电视安装。</p>
+          </div>
+          <a id="mobileApkDownloadBtn" class="secondary block" href="#support" target="_blank" rel="noopener">获取手机版安装包</a>
+        </article>
+
+        <article class="price">
+          <div>
+            <span class="tag">🍎 苹果 iPhone / Apple TV</span>
+            <h3>iOS / tvOS 观看说明</h3>
+            <p>苹果设备可使用 App Store 中的兼容壳应用（如 APTV、VidHub 等支持 M3U/TXT 直播源的播放器）导入独立直播地址观看。</p>
+          </div>
+          <a class="outline block" href="#support">咨询客服配置方法</a>
+        </article>
+      </div>
+      <p id="downloadNoteText" class="muted" style="margin-bottom:18px;font-size:0.86rem;">💡 下载链接可在后台随时更新；如遇网盘链接失效，请点击下方「提交客服工单」获取最新纯净安装包。</p>
+
       <div class="faq">
         <details open>
-          <summary>第一步：如何在电视上安装 TVBox 软件？</summary>
-          <p>在电脑或手机下载纯净版 TVBox 安装包（APK 文件），拷入 U 盘后插到电视 USB 接口，打开电视自带的「文件管理器」点击安装包完成安装即可。部分电视需在设置中开启「允许安装未知来源应用」。</p>
+          <summary>第一步：如何把 TVBox 安装到电视上？（U 盘安装 &amp; 免 U 盘推送）</summary>
+          <p>
+            <b>方法 A（U 盘安装，最通用）</b>：用电脑下载 TVBox 电视版 <code>.apk</code> 文件拷入 U 盘根目录，插到电视背面 USB 接口，打开电视自带的「媒体中心 / 文件管理器」找到安装包点击安装即可。<br>
+            <b>方法 B（免 U 盘手机推送）</b>：电视应用商店先装一个「甲壳虫 ADB」或「当贝助手 / 悟空遥控器」，手机与电视连同一个 Wi-Fi，即可直接把手机下载的 APK 推送到电视安装。<br>
+            <b>常见电视避坑</b>：小米/红米电视需在「设置 → 账号与安全」开启允许安装未知来源；华为智慧屏需先关闭「纯净模式」；海信/TCL 若隐藏了 APK 文件，可把后缀临时改成 <code>.apk1</code> 或用「聚好看/欢视助手」安装。
+          </p>
         </details>
         <details open>
-          <summary>第二步：如何把我的专属配置链接填进电视？（推荐手机扫码推送）</summary>
-          <p>1. 打开电视上的 TVBox，点击右上角「设置」→「配置地址」。<br>
-             2. <b>最省事的方法</b>：用手机微信或浏览器扫描电视屏幕上的二维码，在手机网页上粘贴本网站会员中心复制的<b>「一键全能聚合地址」</b>，点击推送，电视端会自动填入！<br>
-             3. 点击「确定」后返回首页，等待 2 秒加载完成即可同时畅看点播与高清直播。</p>
+          <summary>第二步：如何把专属订阅链接导入 TVBox？（强烈推荐手机扫码推送）</summary>
+          <p>
+            1. 打开电视上的 TVBox，点击右上角 <b>「设置」→「配置地址」</b>。<br>
+            2. <b>最省事方法（不用遥控器敲网址）</b>：用手机微信或浏览器扫描电视屏幕左侧的二维码，手机打开推送页面后，粘贴本网站会员中心复制的 <b>「🚀 一键全能聚合地址」</b>，点击「推送」，电视输入框会自动填好！<br>
+            3. 用遥控器点击 <b>「确定」</b> 返回首页，等待 2~3 秒加载完成，即可同时看到全网点播首页与左侧「直播」入口。
+          </p>
         </details>
         <details>
-          <summary>第三步：续费或重新测速排序后，电视上需要重新填地址吗？</summary>
-          <p><b>完全不需要！</b>您的专属链接终身不变。无论您是到期续费，还是在网页上重新测速调整了资源站顺序，只需在电视上完全退出 TVBox 再重新打开，最新配置就会自动生效。</p>
+          <summary>第三步：只看免费体验直播（或纯直播会员）怎么导入？</summary>
+          <p>
+            1. 若填写本页的<b>免费体验地址</b>（<code>https://tvbox.hahagw.eu.org/sub/free-live</code>）：在 TVBox「设置 → <b>直播地址</b>」栏填入即可；或者把 <code>https://tvbox.hahagw.eu.org/sub/free</code> 填入「配置地址」栏。<br>
+            2. 若已开通会员，直接把「一键全能聚合地址」填入「配置地址」栏即可，点播和直播都会自动带出来，无需重复填写。
+          </p>
         </details>
         <details>
-          <summary>为什么在电脑或手机浏览器直接打开订阅地址会提示不可用？</summary>
-          <p>为保障付费会员权益、防止源地址被恶意爬取与外泄，所有专属订阅与直播源均经云端安全代理，仅限 TVBox 及正规电视播放器客户端加载，请勿直接在浏览器访问。</p>
+          <summary>第四步：播放卡顿、黑屏或重新测速排序后怎么处理？</summary>
+          <p>
+            1. <b>点播换源与测速</b>：在本站连家中 Wi-Fi 跑一次「家庭宽带真实拉流测速」并点「保存为我的专属排序」，电视上<b>完全退出 TVBox 再重新打开</b>，最快的线路就会自动排在最前面。<br>
+            2. <b>直播换源与解码</b>：看直播若某条线缓冲，按遥控器<b>确认键 / 菜单键</b>可秒切同频道其他高速备用源；如出现有声无画或画面撕裂，在 TVBox「设置 → 播放器」切换 <b>IJK / EXO 播放器</b> 以及 <b>硬解 / 软解</b> 即可解决。<br>
+            3. <b>为什么浏览器直接打开订阅链接看不到内容？</b>所有付费与免费代理地址均限制仅 TVBox 播放器客户端加载，防止被恶意抓取，直接填入电视即可正常使用。
+          </p>
         </details>
+      </div>
+    </section>
+
+    <!-- 独立可见的售后与客服工单入口（未登录也能直接看到） -->
+    <section id="support" class="section">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">CUSTOMER SUPPORT</span>
+          <h2>售后支持与在线客服工单</h2>
+        </div>
+        <button id="publicTicketBtn" class="primary">💬 提交客服工单</button>
+      </div>
+      <div class="panel free">
+        <div>
+          <h3>遇到安装配置、充值核账或线路播放问题？</h3>
+          <p class="muted" style="margin-top:6px;">登录后即可提交在线工单并实时查看管理员回复；人工核账与工单处理时段为每日 08:30–23:30，夜间提交次日早第一时间处理。</p>
+        </div>
+        <button id="publicTicketBtn2" class="secondary">查看 / 提交我的工单</button>
       </div>
     </section>
   </main>
@@ -252,7 +317,7 @@
   <div id="authModal" class="modal hidden">
     <div class="modal-box">
       <button class="close" data-close="authModal">×</button>
-      <h2 id="authTitle">注册并领取 5 天全功能免费试用</h2>
+      <h2 id="authTitle">注册并领取 7 天全功能免费试用</h2>
       <p id="authSubtitle" class="muted" style="margin-bottom:14px;">仅支持 QQ、163、126、新浪、Outlook、Gmail、iCloud 等常用邮箱注册</p>
       <form id="authForm">
         <label>常用邮箱
@@ -268,12 +333,13 @@
               <button type="button" id="sendCodeBtn" class="secondary" style="white-space:nowrap;">获取验证码</button>
             </div>
           </label>
+          <p class="spam-tip">📮 提示：验证码邮件可能被 QQ / 163 / Gmail 等邮箱误判进<b>「垃圾邮件」</b>或<b>「广告邮件」</b>箱，如 1 分钟未收到请务必先翻看垃圾箱！</p>
         </div>
         <button id="authSubmitBtn" class="primary block" type="submit">立即注册并领取试用</button>
       </form>
-      <p style="margin-top:12px;text-align:center;">
-        <span id="authSwitchText">已有账号？</span>
-        <a href="#" id="switchAuth">点击登录</a>
+      <p style="margin-top:12px;text-align:center;display:flex;justify-content:center;gap:14px;flex-wrap:wrap;">
+        <span><span id="authSwitchText">已有账号？</span> <a href="#" id="switchAuth">点击登录</a></span>
+        <a href="#" id="openResetPwd" style="color:var(--muted);">忘记密码？</a>
       </p>
       <p id="authError" class="error"></p>
     </div>
@@ -334,6 +400,34 @@
       <p id="ticketMsg" class="muted" style="margin-top:8px;text-align:center;"></p>
     </div>
   </div>
+
+
+  <!-- 忘记密码 / 邮箱重置密码弹窗 -->
+  <div id="resetModal" class="modal hidden">
+    <div class="modal-box">
+      <button class="close" data-close="resetModal">×</button>
+      <h2>重置账号密码</h2>
+      <p class="muted" style="margin-bottom:12px;">通过注册邮箱获取 6 位验证码即可自助重设密码</p>
+      <label>注册邮箱
+        <input id="resetEmail" type="email" placeholder="请输入注册时的邮箱">
+      </label>
+      <label>邮箱验证码
+        <div style="display:flex;gap:10px;margin-top:6px;">
+          <input id="resetCode" type="text" maxlength="6" placeholder="6位验证码" style="flex:1;margin-top:0;">
+          <button type="button" id="sendResetCodeBtn" class="secondary" style="white-space:nowrap;">发送验证码</button>
+        </div>
+      </label>
+      <p class="spam-tip">📮 提示：如 1 分钟内收件箱未看到邮件，请检查邮箱的<b>「垃圾邮件 / 广告箱」</b>。</p>
+      <label>新密码（至少8位）
+        <input id="resetNewPwd" type="password" minlength="8" placeholder="请输入新密码">
+      </label>
+      <button id="confirmResetPwdBtn" class="primary block">确认重置密码</button>
+      <p id="resetMsg" class="muted" style="margin-top:10px;text-align:center;"></p>
+    </div>
+  </div>
+
+  <!-- 右下角悬浮客服快捷入口 -->
+  <button id="fabSupportBtn" class="fab-support" title="在线客服工单">💬 客服</button>
 
   <script src="app.js"></script>
 </body>
