@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=5.0, user-scalable=yes">
   <title>TVBox 运营管理后台 V2</title>
   <link rel="stylesheet" href="style.css">
   <style>
@@ -93,6 +93,21 @@
       padding: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size: 0.8rem; max-height: 300px; overflow: auto; white-space: pre; color: #cbd5e1; margin-top: 10px;
     }
+    .panel { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+    .pricing-row-card {
+      background: #090d16; border: 1px solid var(--border); border-radius: 10px;
+      padding: 12px; margin-bottom: 10px;
+    }
+    .pricing-grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
+    .pricing-grid-4 label { margin-top: 4px; font-size: 0.78rem; }
+    .pricing-grid-4 input, .pricing-grid-4 select { padding: 7px 9px; font-size: 0.84rem; margin-top: 4px; }
+    .tier-row {
+      display: grid; grid-template-columns: 95px 95px 105px 1fr 64px; gap: 8px; align-items: end;
+      background: #090d16; border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin-bottom: 8px;
+    }
+    .tier-row label { margin-top: 0; font-size: 0.76rem; }
+    .tier-row input { padding: 6px 8px; font-size: 0.84rem; margin-top: 4px; }
+    @media (max-width: 720px) { .tier-row { grid-template-columns: 1fr 1fr; } }
   </style>
 </head>
 <body>
@@ -134,6 +149,7 @@
       <button class="tab-btn" data-tab="users">👤 会员管理</button>
       <button class="tab-btn" data-tab="tickets">📩 客服工单</button>
       <button class="tab-btn" data-tab="coupons">🏷️ 优惠码管理</button>
+      <button class="tab-btn" data-tab="pricing">💰 套餐与早鸟折扣</button>
       <button class="tab-btn" data-tab="livecfg">📡 live.txt 采集配置</button>
       <button class="tab-btn" data-tab="testcfg">🧪 test.txt 体验源配置</button>
       <button class="tab-btn" data-tab="settings">⚙️ 站点与下载设置</button>
@@ -295,6 +311,57 @@
         </div>
         <div id="testPreviewBox" class="preview-box"></div>
       </div>
+    </div>
+
+    <!-- 6.5 动态会员套餐与阶梯早鸟折扣配置 -->
+    <div id="panelPricing" class="panel hidden">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+        <div>
+          <h3 style="margin-bottom:4px;">💰 会员套餐价格与阶梯早鸟折扣管理</h3>
+          <span class="muted">全站套餐价格、天数与前 N 名阶梯特惠（如前100名6折、101~200名7折）均可在此实时调整并保存至 KV。</span>
+        </div>
+        <button id="savePricingBtn" class="primary">💾 保存全部套餐与早鸟配置</button>
+      </div>
+
+      <!-- 阶梯早鸟折扣设置 -->
+      <div style="background:#0d1424;border:1px solid rgba(245,158,11,0.4);border-radius:12px;padding:16px;margin-bottom:20px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px;">
+          <div>
+            <b style="color:#fbbf24;font-size:1rem;">🔥 阶梯早鸟特惠活动（前 N 名特惠）</b>
+            <div id="ebLiveStatusText" class="muted" style="font-size:0.82rem;margin-top:2px;">加载当前名额状态...</div>
+          </div>
+          <button id="addTierBtn" class="secondary" style="padding:6px 12px;font-size:0.84rem;">+ 新增折扣阶梯</button>
+        </div>
+
+        <div class="pricing-grid-4" style="margin-bottom:12px;">
+          <label>活动总开关
+            <select id="ebEnabled">
+              <option value="true">开启早鸟阶梯折扣</option>
+              <option value="false">关闭（按原价销售）</option>
+            </select>
+          </label>
+          <label>活动展示标题
+            <input id="ebTitleInput" type="text" value="创始会员限时阶梯特惠">
+          </label>
+          <label>名额统计口径
+            <select id="ebCountMode">
+              <option value="paid_users">按已开通付费会员数（推荐）</option>
+              <option value="all_users">按总注册用户数</option>
+              <option value="approved_orders">按已通过订单总数</option>
+            </select>
+          </label>
+        </div>
+
+        <div id="tiersContainer"></div>
+      </div>
+
+      <!-- 会员套餐列表 -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <b>📦 会员套餐列表（点播 / 直播 / 全能包）</b>
+        <button id="addPlanBtn" class="secondary" style="padding:6px 12px;font-size:0.84rem;">+ 新增套餐</button>
+      </div>
+      <div id="plansEditorContainer"></div>
+      <p id="pricingMsg" class="msg"></p>
     </div>
 
     <!-- 7. 站点运营与客户端下载链接设置 -->

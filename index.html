@@ -1,324 +1,357 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=5.0, user-scalable=yes">
   <meta name="description" content="TVBox 高速点播与高清直播源订阅中心，支持家庭宽带真实拉流测速、云端专属排序与实时频道状态监测">
   <title>TVBox 影音订阅中心 · 告别电视套娃收费</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <a class="brand" href="#home">📺 TVBox 影音订阅中心</a>
-    <nav>
-      <a href="#live-status">频道状态</a>
-      <a href="#speedtest">宽带测速</a>
-      <a href="#plans">会员方案</a>
-      <a href="#help">安装教程</a>
-      <a href="#support">客服工单</a>
-      <button id="loginOpen" class="outline">登录 / 领<span class="js-trial-days">7</span>天试用</button>
-    </nav>
+  <!-- 顶部导航栏（简洁清爽，登录后仅展示小头像图标） -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#home" data-nav="home">
+        <span class="brand-logo">📺</span>
+        <span class="brand-text">TVBox 影音</span>
+      </a>
+
+      <!-- 电脑端分栏导航 -->
+      <nav class="desktop-nav" aria-label="主导航">
+        <button type="button" class="nav-pill active" data-nav="home">首页与套餐</button>
+        <button type="button" class="nav-pill" data-nav="channels">频道状态</button>
+        <button type="button" class="nav-pill" data-nav="speed">宽带测速</button>
+        <button type="button" class="nav-pill" data-nav="guide">下载教程</button>
+        <button type="button" class="nav-pill" data-nav="mine">我的与客服</button>
+      </nav>
+
+      <!-- 右侧：深浅主题切换 + 登录按钮 / 登录后紧凑头像 -->
+      <div class="topbar-actions">
+        <button type="button" id="themeToggleBtn" class="icon-btn" title="切换深色/浅色主题" aria-label="切换主题">☀️</button>
+        <button type="button" id="loginOpen" class="cta-pill">登录 / 领<span class="js-trial-days">7</span>天</button>
+        <button type="button" id="userAvatarBtn" class="avatar-btn hidden" title="进入个人中心">
+          <span id="headerAvatarIcon">🎬</span>
+          <span class="avatar-dot"></span>
+        </button>
+      </div>
+    </div>
   </header>
 
-  <main>
-    <!-- 首屏展示 -->
-    <section id="home" class="hero">
-      <div>
-        <span class="eyebrow">一链全能聚合 · 家庭宽带实测 · 代理防泄露云端托管</span>
-        <h1>装好 TVBox<br><em>全家人畅看全网影视</em></h1>
-        <p>无需繁琐配置，一个专属聚合接口同时搞定「21 站 4K 高清点播」与「央视卫视高清直播」。新用户注册即送 <b><span class="js-trial-days">7</span> 天点播 + 全频道直播全功能试用</b>。</p>
-        <div class="actions">
-          <button id="heroTrialBtn" class="primary">免费注册领 <span class="js-trial-days">7</span> 天全功能试用</button>
-          <a class="secondary" href="#speedtest">用我家宽带测测哪个源最快</a>
-        </div>
-      </div>
-      <div class="hero-card">
-        <div class="screen">TVBox <span>云端专属配置引擎 V2</span></div>
-        <div class="stat"><b>免费体验直连代理</b><span>国内直连免翻墙 · 无需注册即可体验</span></div>
-        <div class="stat"><b>21 个高速采集站</b><span>真实视频切片拉流 · 按自家宽带自动排序</span></div>
-        <div class="stat"><b>一客一码安全代理</b><span>全能包单地址直填 · 有效期内云端自动更新</span></div>
-      </div>
-    </section>
-
-    <!-- 会员专属控制台（登录后自动展开） -->
-    <section id="account" class="section hidden">
-      <div class="section-head">
-        <div>
-          <span class="eyebrow">MY SUBSCRIPTION</span>
-          <h2>我的专属配置中心</h2>
-        </div>
-        <button id="logout" class="outline">退出登录</button>
-      </div>
-      <div id="accountInfo" class="panel account-grid"></div>
-
-      <div class="two-col-grid" style="margin-top:24px;">
-        <div>
-          <h3 style="margin-bottom:12px;">我的订单记录</h3>
-          <div id="orders" class="panel">暂无订单记录</div>
-        </div>
-        <div>
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-            <h3>我的客服工单</h3>
-            <button id="openTicketModalBtn" class="secondary" style="padding:6px 12px;font-size:0.85rem;">+ 提交工单</button>
+  <main class="app-main">
+    <!-- ==================== 视图 1：首页 & 套餐（高转化首屏） ==================== -->
+    <section id="view-home" class="tab-view active">
+      <!-- 紧凑极光首屏 -->
+      <div class="hero-banner">
+        <div class="hero-content">
+          <span class="hero-badge">⚡ 4K 点播 + 49台央卫视直播 · 一链搞定</span>
+          <h1>装好 TVBox<br><em>全家畅看全网影视</em></h1>
+          <p class="hero-desc">告别各大平台套娃会员，一个专属接口同时搞定高速去广告点播与高清直播，云端自动维护永不折腾。</p>
+          <div class="hero-cta-row">
+            <button type="button" id="heroTrialBtn" class="btn-primary btn-glow">🎁 免费领 <span class="js-trial-days">7</span> 天全功能试用</button>
+            <button type="button" class="btn-glass" data-nav="speed">⚡ 测我家宽带</button>
           </div>
-          <div id="userTickets" class="panel">暂无工单记录</div>
         </div>
-      </div>
-    </section>
-
-    <!-- 永久免费直播体验钩子 -->
-    <section class="section">
-      <div class="section-head">
-        <div>
-          <span class="eyebrow">FREE LIVE PREVIEW</span>
-          <h2>永久免费直播源（无需注册）</h2>
-        </div>
-        <span class="muted">通过云端安全代理分发 · 国内直连稳定且防恶意爬取</span>
-      </div>
-      <div class="panel free">
-        <div>
-          <h3>精选 5 个央视频道 + 5 个热门卫视频道</h3>
-          <p>直接填入 TVBox 直播地址栏即可观看，长期免费开放测试画质与切台速度。</p>
-          <code id="freeLiveUrl">https://tvbox.hahagw.eu.org/sub/free-live</code>
-        </div>
-        <button class="primary" data-copy-id="freeLiveUrl">复制免费直播地址</button>
-      </div>
-    </section>
-
-    <!-- 实时频道汇总看板（同步工作流 channel_summary.json） -->
-    <section id="live-status" class="section">
-      <div class="section-head">
-        <div>
-          <span class="eyebrow">LIVE CHANNEL MONITOR</span>
-          <h2>直播源实时监测与频道汇总</h2>
-        </div>
-        <span id="summaryUpdatedAt" class="muted">正在加载最新测速汇总...</span>
-      </div>
-
-      <div class="kpi-strip" id="summaryKpis">
-        <div class="kpi-card"><div class="kpi-num" id="kpiChannels">-</div><div class="kpi-label">在线有效频道</div></div>
-        <div class="kpi-card"><div class="kpi-num" id="kpiStreams">-</div><div class="kpi-label">流畅有效源总数</div></div>
-        <div class="kpi-card"><div class="kpi-num" id="kpiHd">-</div><div class="kpi-label">高清/1080P 源</div></div>
-        <div class="kpi-card"><div class="kpi-num" id="kpiSpeed">-</div><div class="kpi-label">平均首选稳态速度</div></div>
-        <div class="kpi-card"><div class="kpi-num" id="kpiTtfb">-</div><div class="kpi-label">平均首包延迟</div></div>
-      </div>
-
-      <div class="panel" style="margin-top:16px;">
-        <div class="summary-toolbar">
-          <div class="summary-tabs">
-            <button type="button" class="tab-pill active" data-group="all">全部频道</button>
-            <button type="button" class="tab-pill" data-group="央视频道">央视频道</button>
-            <button type="button" class="tab-pill" data-group="卫视频道">卫视频道</button>
+        <!-- 紧凑 2x2 实时核心数据条（手机端仅占极小高度） -->
+        <div class="mini-kpi-grid" data-nav="channels" title="点击查看全部频道明细">
+          <div class="mini-kpi">
+            <div class="mini-kpi-val" id="homeKpiCh">49/49</div>
+            <div class="mini-kpi-lbl">在线频道</div>
           </div>
-          <input id="channelSearch" type="text" placeholder="搜索频道名称，如 CCTV-5 / 湖南卫视..." class="summary-search">
+          <div class="mini-kpi">
+            <div class="mini-kpi-val" id="homeKpiStreams">-</div>
+            <div class="mini-kpi-lbl">流畅有效源</div>
+          </div>
+          <div class="mini-kpi">
+            <div class="mini-kpi-val" id="homeKpiHd">-</div>
+            <div class="mini-kpi-lbl">1080P 高清</div>
+          </div>
+          <div class="mini-kpi">
+            <div class="mini-kpi-val" id="homeKpiSpeed">-</div>
+            <div class="mini-kpi-lbl">平均首选速</div>
+          </div>
         </div>
-        <div class="summary-table-wrap">
-          <table class="summary-table">
-            <thead>
-              <tr>
-                <th>分类</th>
-                <th>频道名称</th>
-                <th>有效源数</th>
-                <th>首选规格 / 档位 / 码率比</th>
-                <th>稳态速度</th>
-                <th>首包延迟</th>
-              </tr>
-            </thead>
-            <tbody id="summaryTableBody">
-              <tr><td colspan="6" style="text-align:center;color:#94a3b8;">正在读取最新频道汇总数据...</td></tr>
-            </tbody>
-          </table>
+      </div>
+
+      <!-- 动态早鸟阶梯特惠横幅（后台可随时配置开关、区间与折扣） -->
+      <div id="earlyBirdBanner" class="eb-banner hidden">
+        <div class="eb-top">
+          <div class="eb-title-wrap">
+            <span class="eb-fire">🔥</span>
+            <div>
+              <div class="eb-title" id="ebTitle">创始会员限时阶梯特惠</div>
+              <div class="eb-sub" id="ebSub">当前正在加载特惠名额...</div>
+            </div>
+          </div>
+          <span class="eb-tag" id="ebDiscountBadge">限时特惠</span>
+        </div>
+        <div class="eb-progress-track">
+          <div class="eb-progress-fill" id="ebProgressFill" style="width: 25%;"></div>
+        </div>
+        <div class="eb-tiers-row" id="ebTiersRow"></div>
+      </div>
+
+      <!-- 会员套餐区（完全由后台动态下发） -->
+      <div class="block-head" id="plansAnchor">
+        <div>
+          <h2>选择会员方案</h2>
+          <p class="muted-sm">支持微信 / 支付宝扫码 · 叠加优惠码再减</p>
+        </div>
+        <div class="seg-tabs" id="planCategoryTabs">
+          <button type="button" class="seg-btn active" data-cat="combo">🔥 全能双享</button>
+          <button type="button" class="seg-btn" data-cat="vod">📺 纯点播</button>
+          <button type="button" class="seg-btn" data-cat="live">📡 纯直播</button>
+          <button type="button" class="seg-btn" data-cat="all">全部</button>
+        </div>
+      </div>
+
+      <div id="dynamicPlansGrid" class="plans-grid">
+        <div class="card muted-sm" style="text-align:center;">正在加载最新会员套餐...</div>
+      </div>
+
+      <!-- 紧凑永久免费体验条 -->
+      <div class="free-strip">
+        <div class="free-strip-info">
+          <div class="free-strip-title">🆓 永久免费直播体验源（国内直连免翻墙）</div>
+          <code id="freeLiveUrl" class="inline-code">https://tvbox.hahagw.eu.org/sub/free-live</code>
+        </div>
+        <button type="button" class="btn-secondary btn-sm-pad" data-copy-id="freeLiveUrl">一键复制</button>
+      </div>
+    </section>
+
+    <!-- ==================== 视图 2：实时频道监测 ==================== -->
+    <section id="view-channels" class="tab-view">
+      <div class="block-head">
+        <div>
+          <h2>直播源实时监测</h2>
+          <p id="summaryUpdatedAt" class="muted-sm">正在同步最新测速数据...</p>
+        </div>
+      </div>
+
+      <!-- 手机端 2x2 紧凑卡片（彻底告别 5 个超大竖条占满整屏） -->
+      <div class="compact-kpi-4">
+        <div class="ckpi"><div class="ckpi-num" id="kpiChannels">-</div><div class="ckpi-lbl">在线频道</div></div>
+        <div class="ckpi"><div class="ckpi-num" id="kpiStreams">-</div><div class="ckpi-lbl">有效源总数</div></div>
+        <div class="ckpi"><div class="ckpi-num" id="kpiHd">-</div><div class="ckpi-lbl">高清/1080P</div></div>
+        <div class="ckpi"><div class="ckpi-num" id="kpiSpeed">-</div><div class="ckpi-lbl">首选均速</div></div>
+      </div>
+
+      <div class="card" style="margin-top:14px;">
+        <div class="filter-bar">
+          <div class="seg-tabs">
+            <button type="button" class="seg-btn active ch-grp-btn" data-group="all">全部</button>
+            <button type="button" class="seg-btn ch-grp-btn" data-group="央视频道">央视</button>
+            <button type="button" class="seg-btn ch-grp-btn" data-group="卫视频道">卫视</button>
+          </div>
+          <input id="channelSearch" type="text" class="search-input" placeholder="搜索频道，如 CCTV-5 / 湖南卫视...">
+        </div>
+
+        <div id="channelListContainer" class="channel-list">
+          <div class="muted-sm" style="text-align:center;padding:24px 0;">正在读取最新频道汇总...</div>
         </div>
       </div>
     </section>
 
-    <!-- 核心差异化功能：家庭宽带真实拉流测速与专属排序 -->
-    <section id="speedtest" class="section">
-      <div class="section-head">
+    <!-- ==================== 视图 3：家庭宽带真实拉流测速 ==================== -->
+    <section id="view-speed" class="tab-view">
+      <div class="block-head">
         <div>
-          <span class="eyebrow">REAL PLAYBACK SPEED TEST</span>
-          <h2>家庭宽带真实播放测速与专属排序</h2>
-        </div>
-        <div class="inline-actions">
-          <button id="startSpeedTest" class="primary">⚡ 开始真实拉流测速 (21站)</button>
-          <button id="saveCustomOrder" class="secondary">💾 保存为我的专属排序</button>
+          <h2>家庭宽带真实拉流测速</h2>
+          <p class="muted-sm">连家中 Wi-Fi 实测 21 站下载速率，保存后电视重启即按最快排序</p>
         </div>
       </div>
 
-      <p class="muted" style="margin-bottom:14px;">
-        测速会直接使用<b>您当前连接的家庭宽带</b>，向各资源站视频 CDN 拉取真实影片切片并计算下载速率（MB/s）与起播延迟。不同地区与运营商（电信/联通/移动）结果差异明显，建议在<b>连接家中 Wi-Fi</b> 时测速并保存，电视重启 TVBox 即可优先使用最快的线路。
-      </p>
-
-      <div class="speed-toolbar">
-        <div class="speed-options">
-          <label><input type="checkbox" id="optTagRank" checked> 在电视端名称前标记测速序号（如 <code>01丨非凡</code>）</label>
-          <label><input type="checkbox" id="optShowSpeed"> 同时显示测速带宽（如 <code>[6.8M/s]</code>）</label>
-          <label><input type="checkbox" id="optHideFailed" checked> 保存时隐藏测速超时/不可用站点</label>
-        </div>
-        <span id="speedModeBadge" class="muted" style="font-size:13px;">就绪 · 等待测速</span>
+      <div class="speed-action-bar">
+        <button type="button" id="startSpeedTest" class="btn-primary">⚡ 开始拉流测速</button>
+        <button type="button" id="saveCustomOrder" class="btn-secondary">💾 保存我的排序</button>
       </div>
 
-      <div id="speedProgressWrap" class="speed-progress-wrap hidden">
-        <div style="display:flex;justify-content:space-between;font-size:13px;">
-          <span id="speedStatusText">正在获取最新影片切片样本...</span>
+      <div class="speed-opts-bar">
+        <label><input type="checkbox" id="optTagRank" checked> 名称标序号(01丨)</label>
+        <label><input type="checkbox" id="optShowSpeed"> 显示测速(M/s)</label>
+        <label><input type="checkbox" id="optHideFailed" checked> 隐藏超时站</label>
+        <span id="speedModeBadge" class="muted-sm" style="margin-left:auto;">就绪</span>
+      </div>
+
+      <div id="speedProgressWrap" class="progress-wrap hidden">
+        <div class="progress-meta">
+          <span id="speedStatusText">准备测速...</span>
           <span id="speedCountText">0 / 21</span>
         </div>
-        <div class="speed-progress-bar">
-          <div id="speedProgressFill" class="speed-progress-fill"></div>
-        </div>
+        <div class="eb-progress-track"><div id="speedProgressFill" class="eb-progress-fill" style="width:0%"></div></div>
       </div>
 
       <div id="siteList" class="site-grid"></div>
     </section>
 
-    <!-- 标准化会员套餐定价 -->
-    <section id="plans" class="section">
-      <div class="section-head">
+    <!-- ==================== 视图 4：TVBox 下载与安装导入全攻略 ==================== -->
+    <section id="view-guide" class="tab-view">
+      <div class="block-head">
         <div>
-          <span class="eyebrow">MEMBERSHIP PLANS</span>
-          <h2>选择适合您的会员方案</h2>
+          <h2>下载与安装教程</h2>
+          <p class="muted-sm">电视 / 盒子 / 投影仪 / 手机 3 分钟轻松搞定</p>
         </div>
-        <span class="muted">支持微信 / 支付宝扫码 · 支持输入优惠码立减</span>
       </div>
 
-      <div class="cards">
-        <article class="price">
-          <span class="tag">纯点播专享</span>
-          <h3>点播会员</h3>
-          <p>包含全部 21 个高速去广告影视点播接口（附赠 10 台基础免费直播）</p>
-          <div class="plan-btns">
-            <button class="outline order-btn" data-plan="vod_180" data-title="点播半年会员 (180天)" data-price="28.8">半年 ¥28.8</button>
-            <button class="primary order-btn" data-plan="vod_365" data-title="点播全年会员 (365天)" data-price="38.8">全年 ¥38.8</button>
-          </div>
-        </article>
-
-        <article class="price featured">
-          <span class="tag hot">🔥 90% 家庭首选 · 一个地址全搞定</span>
-          <h3>点播 + 直播全能包</h3>
-          <p>一链全能聚合！含全部 4K 点播源 + 完整央视/卫视高清直播，云端自动维护</p>
-          <div class="plan-btns">
-            <button class="outline order-btn" data-plan="combo_180" data-title="全能双享半年包 (点播+直播)" data-price="45.8">半年 ¥45.8</button>
-            <button class="primary order-btn" data-plan="combo_365" data-title="全能双享全年包 (点播+直播)" data-price="58.8">全年 ¥58.8</button>
-          </div>
-        </article>
-
-        <article class="price">
-          <span class="tag">纯直播专享</span>
-          <h3>高清直播会员</h3>
-          <p>包含完整 49 个央视与省级卫视频道，台标防乱窜校验 + 稳态测速自动剔除失效源</p>
-          <div class="plan-btns">
-            <button class="outline order-btn" data-plan="live_180" data-title="直播半年会员 (180天)" data-price="28.8">半年 ¥28.8</button>
-            <button class="primary order-btn" data-plan="live_365" data-title="直播全年会员 (365天)" data-price="38.8">全年 ¥38.8</button>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- TVBox 下载、安装与订阅导入全攻略 -->
-    <section id="help" class="section">
-      <div class="section-head">
-        <div>
-          <span class="eyebrow">DOWNLOAD &amp; SETUP GUIDE</span>
-          <h2>TVBox 下载、安装与订阅导入全攻略</h2>
-        </div>
-        <span class="muted">覆盖电视 / 盒子 / 投影仪 / 手机，小白 3 分钟轻松上手</span>
-      </div>
-
-      <!-- 预留客户端下载卡片区（链接可在后台「站点设置」随时更新） -->
-      <div class="cards" style="margin-bottom:22px;">
-        <article class="price">
-          <div>
-            <span class="tag hot">📺 电视 / 盒子 / 投影仪</span>
+      <div class="dl-grid">
+        <div class="dl-card">
+          <div class="dl-icon">📺</div>
+          <div class="dl-body">
             <h3>TVBox 电视版 (APK)</h3>
-            <p>适配 Android 5.0 及以上智能电视、当贝/小米/腾讯盒子及家用投影仪，支持遥控器操控与手机扫码推送配置。</p>
+            <p class="muted-sm">安卓电视 / 盒子 / 投影仪，支持手机扫码推送</p>
           </div>
-          <a id="tvApkDownloadBtn" class="primary block" href="#support" target="_blank" rel="noopener">获取电视版安装包</a>
-        </article>
+          <a id="tvApkDownloadBtn" class="btn-primary btn-sm-pad" href="#mine" target="_blank" rel="noopener">获取电视版</a>
+        </div>
 
-        <article class="price">
-          <div>
-            <span class="tag">📱 安卓手机 / 平板</span>
+        <div class="dl-card">
+          <div class="dl-icon">📱</div>
+          <div class="dl-body">
             <h3>TVBox 手机版 (APK)</h3>
-            <p>适配安卓手机与平板横竖屏触控播放，可直接在手机上先测速试看，满意后再给家里电视安装。</p>
+            <p class="muted-sm">安卓手机 / 平板触控播放，先试看再装电视</p>
           </div>
-          <a id="mobileApkDownloadBtn" class="secondary block" href="#support" target="_blank" rel="noopener">获取手机版安装包</a>
-        </article>
+          <a id="mobileApkDownloadBtn" class="btn-secondary btn-sm-pad" href="#mine" target="_blank" rel="noopener">获取手机版</a>
+        </div>
 
-        <article class="price">
-          <div>
-            <span class="tag">🍎 苹果 iPhone / Apple TV</span>
-            <h3>iOS / tvOS 观看说明</h3>
-            <p>苹果设备可使用 App Store 中的兼容壳应用（如 APTV、VidHub 等支持 M3U/TXT 直播源的播放器）导入独立直播地址观看。</p>
+        <div class="dl-card">
+          <div class="dl-icon">🍎</div>
+          <div class="dl-body">
+            <h3>iPhone / Apple TV</h3>
+            <p class="muted-sm">可用 App Store 的 APTV 等播放器导入独立直播地址</p>
           </div>
-          <a class="outline block" href="#support">咨询客服配置方法</a>
-        </article>
+          <button type="button" class="btn-outline btn-sm-pad" data-open-ticket="true">问客服</button>
+        </div>
       </div>
-      <p id="downloadNoteText" class="muted" style="margin-bottom:18px;font-size:0.86rem;">💡 下载链接可在后台随时更新；如遇网盘链接失效，请点击下方「提交客服工单」获取最新纯净安装包。</p>
+      <p id="downloadNoteText" class="muted-sm" style="margin:10px 0 16px;">💡 下载链接由后台实时维护；如遇失效请点「我的 → 提交工单」获取最新安装包。</p>
 
-      <div class="faq">
+      <div class="faq-list">
         <details open>
-          <summary>第一步：如何把 TVBox 安装到电视上？（U 盘安装 &amp; 免 U 盘推送）</summary>
+          <summary>第一步：把 TVBox 安装到电视（U 盘 / 手机免 U 盘推送）</summary>
           <p>
-            <b>方法 A（U 盘安装，最通用）</b>：用电脑下载 TVBox 电视版 <code>.apk</code> 文件拷入 U 盘根目录，插到电视背面 USB 接口，打开电视自带的「媒体中心 / 文件管理器」找到安装包点击安装即可。<br>
-            <b>方法 B（免 U 盘手机推送）</b>：电视应用商店先装一个「甲壳虫 ADB」或「当贝助手 / 悟空遥控器」，手机与电视连同一个 Wi-Fi，即可直接把手机下载的 APK 推送到电视安装。<br>
-            <b>常见电视避坑</b>：小米/红米电视需在「设置 → 账号与安全」开启允许安装未知来源；华为智慧屏需先关闭「纯净模式」；海信/TCL 若隐藏了 APK 文件，可把后缀临时改成 <code>.apk1</code> 或用「聚好看/欢视助手」安装。
+            <b>U 盘安装</b>：下载电视版 <code>.apk</code> 拷入 U 盘根目录插电视 USB，在「文件管理器」中点击安装。<br>
+            <b>免 U 盘推送</b>：电视应用商店装「甲壳虫 ADB / 当贝助手」，手机与电视连同一 Wi-Fi 直接推送安装。<br>
+            <b>品牌避坑</b>：小米需在「账号与安全」允许未知来源；华为需关闭「纯净模式」；海信/TCL 可用「聚好看/欢视助手」安装。
           </p>
         </details>
         <details open>
-          <summary>第二步：如何把专属订阅链接导入 TVBox？（强烈推荐手机扫码推送）</summary>
+          <summary>第二步：手机扫码推送导入专属订阅（最省事，不用遥控器打字）</summary>
           <p>
-            1. 打开电视上的 TVBox，点击右上角 <b>「设置」→「配置地址」</b>。<br>
-            2. <b>最省事方法（不用遥控器敲网址）</b>：用手机微信或浏览器扫描电视屏幕左侧的二维码，手机打开推送页面后，粘贴本网站会员中心复制的 <b>「🚀 一键全能聚合地址」</b>，点击「推送」，电视输入框会自动填好！<br>
-            3. 用遥控器点击 <b>「确定」</b> 返回首页，等待 2~3 秒加载完成，即可同时看到全网点播首页与左侧「直播」入口。
+            1. 打开 TVBox 点击右上角 <b>「设置」→「配置地址」</b>。<br>
+            2. 手机微信或浏览器扫描电视屏幕二维码，粘贴本站在「我的」页面复制的 <b>「🚀 一键全能聚合地址」</b>，点击推送。<br>
+            3. 电视自动填入后点 <b>「确定」</b> 返回首页，2 秒即可畅看点播与高清直播。
           </p>
         </details>
         <details>
-          <summary>第三步：只看免费体验直播（或纯直播会员）怎么导入？</summary>
+          <summary>第三步：免费体验直播源怎么单独填入？</summary>
           <p>
-            1. 若填写本页的<b>免费体验地址</b>（<code>https://tvbox.hahagw.eu.org/sub/free-live</code>）：在 TVBox「设置 → <b>直播地址</b>」栏填入即可；或者把 <code>https://tvbox.hahagw.eu.org/sub/free</code> 填入「配置地址」栏。<br>
-            2. 若已开通会员，直接把「一键全能聚合地址」填入「配置地址」栏即可，点播和直播都会自动带出来，无需重复填写。
+            将免费直连代理地址 <code>https://tvbox.hahagw.eu.org/sub/free-live</code> 填入 TVBox 的「设置 → <b>直播地址</b>」栏即可；或把 <code>https://tvbox.hahagw.eu.org/sub/free</code> 填入「配置地址」栏。
           </p>
         </details>
         <details>
-          <summary>第四步：播放卡顿、黑屏或重新测速排序后怎么处理？</summary>
+          <summary>第四步：播卡顿 / 黑屏 / 换源 / 重新测速后如何生效？</summary>
           <p>
-            1. <b>点播换源与测速</b>：在本站连家中 Wi-Fi 跑一次「家庭宽带真实拉流测速」并点「保存为我的专属排序」，电视上<b>完全退出 TVBox 再重新打开</b>，最快的线路就会自动排在最前面。<br>
-            2. <b>直播换源与解码</b>：看直播若某条线缓冲，按遥控器<b>确认键 / 菜单键</b>可秒切同频道其他高速备用源；如出现有声无画或画面撕裂，在 TVBox「设置 → 播放器」切换 <b>IJK / EXO 播放器</b> 以及 <b>硬解 / 软解</b> 即可解决。<br>
-            3. <b>为什么浏览器直接打开订阅链接看不到内容？</b>所有付费与免费代理地址均限制仅 TVBox 播放器客户端加载，防止被恶意抓取，直接填入电视即可正常使用。
+            看直播按遥控器<b>确认键</b>可秒切同频道备用高速源；若出现有声无画，在「设置 → 播放器」切换 <b>IJK / EXO</b> 及 <b>硬解 / 软解</b>。网页重新测速保存排序后，在电视端<b>彻底退出 TVBox 重启</b>即可自动更新，无需重填地址。
           </p>
         </details>
       </div>
     </section>
 
-    <!-- 独立可见的售后与客服工单入口（未登录也能直接看到） -->
-    <section id="support" class="section">
-      <div class="section-head">
-        <div>
-          <span class="eyebrow">CUSTOMER SUPPORT</span>
-          <h2>售后支持与在线客服工单</h2>
+    <!-- ==================== 视图 5：个人中心 & 头像设置 & 客服工单 ==================== -->
+    <section id="view-mine" class="tab-view">
+      <!-- 未登录态 -->
+      <div id="mineGuestCard" class="card guest-box">
+        <div style="font-size:2.6rem;margin-bottom:8px;">🎬</div>
+        <h2>登录查看您的专属订阅</h2>
+        <p class="muted-sm" style="margin:8px 0 18px;">新用户注册即送 <b><span class="js-trial-days">7</span> 天点播 + 全频道直播</b>全功能体验，支持自定义头像与专属测速排序。</p>
+        <div class="hero-cta-row" style="justify-content:center;">
+          <button type="button" id="mineRegisterBtn" class="btn-primary">免费注册领试用</button>
+          <button type="button" id="mineLoginBtn" class="btn-secondary">已有账号登录</button>
         </div>
-        <button id="publicTicketBtn" class="primary">💬 提交客服工单</button>
       </div>
-      <div class="panel free">
-        <div>
-          <h3>遇到安装配置、充值核账或线路播放问题？</h3>
-          <p class="muted" style="margin-top:6px;">登录后即可提交在线工单并实时查看管理员回复；人工核账与工单处理时段为每日 08:30–23:30，夜间提交次日早第一时间处理。</p>
+
+      <!-- 已登录态 -->
+      <div id="mineAuthedWrap" class="hidden">
+        <!-- 紧凑个人资料卡片（头像选择 + 邮箱 + 退出） -->
+        <div class="card profile-card">
+          <div class="profile-left">
+            <button type="button" id="openAvatarPickerBtn" class="profile-avatar-lg" title="点击更换头像">
+              <span id="profileAvatarIcon">🎬</span>
+              <span class="avatar-edit-tag">换头像</span>
+            </button>
+            <div>
+              <div class="profile-email" id="profileEmailText">-</div>
+              <div class="profile-badges" id="profileBadges"></div>
+            </div>
+          </div>
+          <button type="button" id="logout" class="btn-outline btn-sm-pad">退出</button>
         </div>
-        <button id="publicTicketBtn2" class="secondary">查看 / 提交我的工单</button>
+
+        <!-- 专属订阅地址区 -->
+        <div id="accountInfo" class="card" style="margin-top:14px;"></div>
+
+        <!-- 订单记录 & 客服工单 -->
+        <div class="mine-two-col">
+          <div class="card">
+            <div class="card-head-row">
+              <h3>📦 我的订单记录</h3>
+              <button type="button" class="btn-outline btn-xs" data-nav="home">续费 / 升级</button>
+            </div>
+            <div id="orders" class="list-stack muted-sm">暂无订单记录</div>
+          </div>
+
+          <div class="card">
+            <div class="card-head-row">
+              <h3>💬 我的客服工单</h3>
+              <button type="button" id="openTicketModalBtn" class="btn-primary btn-xs">+ 提交工单</button>
+            </div>
+            <div id="userTickets" class="list-stack muted-sm">暂无工单记录</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 公共售后提示（无论是否登录都能直接提交/了解时段） -->
+      <div class="card" style="margin-top:14px;">
+        <div class="card-head-row">
+          <div>
+            <h3>🛠️ 售后与人工核账说明</h3>
+            <p class="muted-sm" style="margin-top:4px;">人工核账与工单回复时段：每日 <b>08:30–23:30</b>（约 1–3 分钟开通），夜间订单次日早第一时间处理。</p>
+          </div>
+          <button type="button" class="btn-secondary btn-sm-pad" data-open-ticket="true">联系客服</button>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer>
-    © <span id="year"></span> TVBox 影音订阅中心 · 本站仅提供公开网络接口聚合测速与格式托管技术服务，不存储任何音视频文件。遇到问题可登录后在「我的客服工单」反馈。
+  <footer class="site-footer">
+    © <span id="year"></span> TVBox 影音订阅中心 · 仅提供公开网络接口聚合测速与配置托管技术服务，不存储任何音视频文件。
   </footer>
+
+  <!-- 手机端原生 App 风格底部 5 Tab 导航栏 -->
+  <nav class="mobile-bottom-nav" aria-label="移动端导航">
+    <button type="button" class="mnav-item active" data-nav="home"><span class="mnav-ico">🏠</span><span>首页</span></button>
+    <button type="button" class="mnav-item" data-nav="channels"><span class="mnav-ico">📡</span><span>频道</span></button>
+    <button type="button" class="mnav-item" data-nav="speed"><span class="mnav-ico">⚡</span><span>测速</span></button>
+    <button type="button" class="mnav-item" data-nav="guide"><span class="mnav-ico">📖</span><span>教程</span></button>
+    <button type="button" class="mnav-item" data-nav="mine"><span class="mnav-ico" id="bottomMineIcon">👤</span><span>我的</span></button>
+  </nav>
+
+  <!-- 轻提示 Toast 容器 -->
+  <div id="toastBox" class="toast hidden"></div>
+
+  <!-- 头像选择弹窗（12 款精选头像 Icon） -->
+  <div id="avatarModal" class="modal hidden">
+    <div class="modal-box">
+      <button type="button" class="close" data-close="avatarModal">×</button>
+      <h2>选择您的专属头像</h2>
+      <p class="muted-sm" style="margin-top:4px;">头像会显示在顶部导航栏，清爽不占空间</p>
+      <div id="avatarGrid" class="avatar-grid"></div>
+    </div>
+  </div>
 
   <!-- 登录/注册弹窗 -->
   <div id="authModal" class="modal hidden">
     <div class="modal-box">
-      <button class="close" data-close="authModal">×</button>
+      <button type="button" class="close" data-close="authModal">×</button>
       <h2 id="authTitle">注册并领取 7 天全功能免费试用</h2>
-      <p id="authSubtitle" class="muted" style="margin-bottom:14px;">仅支持 QQ、163、126、新浪、Outlook、Gmail、iCloud 等常用邮箱注册</p>
+      <p id="authSubtitle" class="muted-sm" style="margin:6px 0 12px;">支持 QQ、163、126、新浪、Outlook、Gmail、iCloud 等常用邮箱</p>
       <form id="authForm">
         <label>常用邮箱
           <input name="email" type="email" placeholder="例如：123456@qq.com" required>
@@ -328,16 +361,16 @@
         </label>
         <div id="codeRow" class="code-row">
           <label>邮箱验证码
-            <div style="display:flex;gap:10px;margin-top:6px;">
+            <div style="display:flex;gap:8px;margin-top:6px;">
               <input name="code" id="emailCode" type="text" maxlength="6" placeholder="6位数字验证码" style="flex:1;margin-top:0;">
-              <button type="button" id="sendCodeBtn" class="secondary" style="white-space:nowrap;">获取验证码</button>
+              <button type="button" id="sendCodeBtn" class="btn-secondary" style="white-space:nowrap;">获取验证码</button>
             </div>
           </label>
-          <p class="spam-tip">📮 提示：验证码邮件可能被 QQ / 163 / Gmail 等邮箱误判进<b>「垃圾邮件」</b>或<b>「广告邮件」</b>箱，如 1 分钟未收到请务必先翻看垃圾箱！</p>
+          <p class="spam-tip">📮 提示：验证码邮件可能被 QQ / 163 / Gmail 等邮箱误判进<b>「垃圾邮件 / 广告箱」</b>，如 1 分钟未收到请务必先翻看垃圾箱！</p>
         </div>
-        <button id="authSubmitBtn" class="primary block" type="submit">立即注册并领取试用</button>
+        <button id="authSubmitBtn" class="btn-primary block" type="submit">立即注册并领取试用</button>
       </form>
-      <p style="margin-top:12px;text-align:center;display:flex;justify-content:center;gap:14px;flex-wrap:wrap;">
+      <p style="margin-top:14px;text-align:center;display:flex;justify-content:center;gap:16px;flex-wrap:wrap;font-size:0.88rem;">
         <span><span id="authSwitchText">已有账号？</span> <a href="#" id="switchAuth">点击登录</a></span>
         <a href="#" id="openResetPwd" style="color:var(--muted);">忘记密码？</a>
       </p>
@@ -345,20 +378,44 @@
     </div>
   </div>
 
-  <!-- 扫码支付与优惠码/订单后6位提交弹窗 -->
+  <!-- 忘记密码弹窗 -->
+  <div id="resetModal" class="modal hidden">
+    <div class="modal-box">
+      <button type="button" class="close" data-close="resetModal">×</button>
+      <h2>重置账号密码</h2>
+      <p class="muted-sm" style="margin:6px 0 12px;">通过注册邮箱获取 6 位验证码即可自助重设密码</p>
+      <label>注册邮箱
+        <input id="resetEmail" type="email" placeholder="请输入注册时的邮箱">
+      </label>
+      <label>邮箱验证码
+        <div style="display:flex;gap:8px;margin-top:6px;">
+          <input id="resetCode" type="text" maxlength="6" placeholder="6位验证码" style="flex:1;margin-top:0;">
+          <button type="button" id="sendResetCodeBtn" class="btn-secondary" style="white-space:nowrap;">发送验证码</button>
+        </div>
+      </label>
+      <p class="spam-tip">📮 提示：如 1 分钟内收件箱未看到邮件，请检查邮箱的<b>「垃圾邮件 / 广告箱」</b>。</p>
+      <label>新密码（至少8位）
+        <input id="resetNewPwd" type="password" minlength="8" placeholder="请输入新密码">
+      </label>
+      <button type="button" id="confirmResetPwdBtn" class="btn-primary block">确认重置密码</button>
+      <p id="resetMsg" class="muted-sm" style="margin-top:10px;text-align:center;"></p>
+    </div>
+  </div>
+
+  <!-- 扫码支付弹窗 -->
   <div id="paymentModal" class="modal hidden">
     <div class="modal-box">
-      <button class="close" data-close="paymentModal">×</button>
+      <button type="button" class="close" data-close="paymentModal">×</button>
       <h2>扫码支付并提交订单后 6 位</h2>
       <div id="paymentDetails" class="pay-summary"></div>
 
-      <label>优惠码（选填）
+      <label>优惠码（选填，可叠加早鸟折扣）
         <div style="display:flex;gap:8px;margin-top:6px;">
           <input id="couponInput" type="text" placeholder="如有优惠码请在此输入" style="flex:1;margin-top:0;text-transform:uppercase;">
-          <button type="button" id="verifyCouponBtn" class="secondary" style="white-space:nowrap;">核验优惠</button>
+          <button type="button" id="verifyCouponBtn" class="btn-secondary" style="white-space:nowrap;">核验</button>
         </div>
       </label>
-      <p id="couponMsg" class="muted" style="margin-top:6px;font-size:0.84rem;"></p>
+      <p id="couponMsg" class="muted-sm" style="margin-top:6px;"></p>
 
       <div class="qr-box">
         <img id="qrImage" src="wechat_qr.png" alt="请使用手机扫码支付">
@@ -368,19 +425,19 @@
         </div>
       </div>
 
-      <label>请输入支付账单「订单号后 6 位数字」
+      <label>支付账单「订单号后 6 位数字」
         <input id="payLast6" type="text" maxlength="6" pattern="\d{6}" placeholder="例如：890123（请查看账单详情）" required>
       </label>
-      <button id="submitOrderBtn" class="primary block">我已完成支付，提交审核</button>
-      <p class="muted" style="margin-top:8px;font-size:0.8rem;text-align:center;">人工核账时段：08:30–23:30 约 1–3 分钟开通，夜间订单次日早第一时间处理</p>
-      <p id="payStatusMsg" class="muted" style="margin-top:8px;text-align:center;"></p>
+      <button type="button" id="submitOrderBtn" class="btn-primary block">我已完成支付，提交审核</button>
+      <p class="muted-sm" style="margin-top:8px;text-align:center;">人工核账时段：08:30–23:30 约 1–3 分钟开通，夜间订单次日早第一时间处理</p>
+      <p id="payStatusMsg" class="muted-sm" style="margin-top:8px;text-align:center;"></p>
     </div>
   </div>
 
   <!-- 提交客服工单弹窗 -->
   <div id="ticketModal" class="modal hidden">
     <div class="modal-box">
-      <button class="close" data-close="ticketModal">×</button>
+      <button type="button" class="close" data-close="ticketModal">×</button>
       <h2>提交客服工单</h2>
       <label>问题分类
         <select id="ticketCategory">
@@ -394,40 +451,12 @@
         <input id="ticketSubject" type="text" maxlength="80" placeholder="例如：电视端加载提示错误 / 订单核实">
       </label>
       <label>详细描述
-        <textarea id="ticketContent" rows="4" maxlength="1000" placeholder="请尽量说明您的设备型号、网络运营商或订单号..."></textarea>
+        <textarea id="ticketContent" rows="4" maxlength="1000" placeholder="请说明您的设备型号、网络运营商或订单号..."></textarea>
       </label>
-      <button id="submitTicketBtn" class="primary block">提交工单</button>
-      <p id="ticketMsg" class="muted" style="margin-top:8px;text-align:center;"></p>
+      <button type="button" id="submitTicketBtn" class="btn-primary block">提交工单</button>
+      <p id="ticketMsg" class="muted-sm" style="margin-top:8px;text-align:center;"></p>
     </div>
   </div>
-
-
-  <!-- 忘记密码 / 邮箱重置密码弹窗 -->
-  <div id="resetModal" class="modal hidden">
-    <div class="modal-box">
-      <button class="close" data-close="resetModal">×</button>
-      <h2>重置账号密码</h2>
-      <p class="muted" style="margin-bottom:12px;">通过注册邮箱获取 6 位验证码即可自助重设密码</p>
-      <label>注册邮箱
-        <input id="resetEmail" type="email" placeholder="请输入注册时的邮箱">
-      </label>
-      <label>邮箱验证码
-        <div style="display:flex;gap:10px;margin-top:6px;">
-          <input id="resetCode" type="text" maxlength="6" placeholder="6位验证码" style="flex:1;margin-top:0;">
-          <button type="button" id="sendResetCodeBtn" class="secondary" style="white-space:nowrap;">发送验证码</button>
-        </div>
-      </label>
-      <p class="spam-tip">📮 提示：如 1 分钟内收件箱未看到邮件，请检查邮箱的<b>「垃圾邮件 / 广告箱」</b>。</p>
-      <label>新密码（至少8位）
-        <input id="resetNewPwd" type="password" minlength="8" placeholder="请输入新密码">
-      </label>
-      <button id="confirmResetPwdBtn" class="primary block">确认重置密码</button>
-      <p id="resetMsg" class="muted" style="margin-top:10px;text-align:center;"></p>
-    </div>
-  </div>
-
-  <!-- 右下角悬浮客服快捷入口 -->
-  <button id="fabSupportBtn" class="fab-support" title="在线客服工单">💬 客服</button>
 
   <script src="app.js"></script>
 </body>

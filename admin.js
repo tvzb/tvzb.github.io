@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.tab-btn[data-tab]').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const tab = btn.dataset.tab;
-      ['orders', 'users', 'tickets', 'coupons', 'livecfg', 'testcfg', 'settings'].forEach(t => {
+      ['orders', 'users', 'tickets', 'coupons', 'pricing', 'livecfg', 'testcfg', 'settings'].forEach(t => {
         const cap = t.charAt(0).toUpperCase() + t.slice(1);
         document.getElementById('panel' + cap).classList.toggle('hidden', tab !== t);
       });
@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (tab === 'coupons') loadCoupons();
       if (tab === 'livecfg' || tab === 'testcfg') loadChannelConfig();
       if (tab === 'settings') loadSiteSettings();
+      if (tab === 'pricing') loadPricingConfig();
     };
   });
 
@@ -95,6 +96,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('saveTestCfgBtn')?.addEventListener('click', () => saveChannelConfig('testCfgMsg'));
   document.getElementById('previewTestTxtBtn')?.addEventListener('click', previewTestTxt);
   document.getElementById('saveSiteSettingsBtn')?.addEventListener('click', saveSiteSettings);
+  document.getElementById('addTierBtn')?.addEventListener('click', addEarlyBirdTier);
+  document.getElementById('addPlanBtn')?.addEventListener('click', addNewPlanRow);
+  document.getElementById('savePricingBtn')?.addEventListener('click', savePricingConfig);
 });
 
 function showLogin() {
@@ -788,6 +792,159 @@ async function saveSiteSettings() {
     if (!res.ok) { msg.textContent = data.error || '保存失败'; msg.classList.add('error'); return; }
     msg.textContent = data.message || '保存成功！';
     msg.classList.add('ok');
+  } catch (e) {
+    msg.textContent = '网络错误';
+    msg.classList.add('error');
+  }
+}
+
+// ================= 8. 动态套餐与阶梯早鸟折扣管理 =================
+let pricingState = null;
+
+async function loadPricingConfig() {
+  try {
+    const res = await apiFetch('/api/admin/pricing-config');
+    const data = await res.json();
+    if (!data.ok) return;
+    pricingState = data.config;
+    const st = data.earlyBirdState;
+    const statusEl = document.getElementById('ebLiveStatusText');
+    if (statusEl && st) {
+      statusEl.textContent = st.active && st.tier
+        ? `当前已统计人数/单数：${st.currentCount} | 下一位第 ${st.nextRank} 名 → 生效中：${st.tier.label || (st.discountPercent/10)+'折'}（本档剩余 ${st.remainingInTier} 席）`
+        : `当前已统计人数/单数：${st.currentCount} | 当前无生效早鸟折扣（按原价展示）`;
+    }
+    document.getElementById('ebEnabled').value = pricingState.early_bird?.enabled ? 'true' : 'false';
+    document.getElementById('ebTitleInput').value = pricingState.early_bird?.title || '创始会员限时阶梯特惠';
+    document.getElementById('ebCountMode').value = pricingState.early_bird?.count_mode || 'paid_users';
+    renderTiersEditor();
+    renderPlansEditor();
+  } catch (e) {}
+}
+
+function renderTiersEditor() {
+  const box = document.getElementById('tiersContainer');
+  const tiers = pricingState?.early_bird?.tiers || [];
+  if (tiers.length === 0) {
+    box.innerHTML = '<div class="muted">暂无阶梯区间，点击右上角「+ 新增折扣阶梯」添加（例如 1~100 名 60% 即 6 折）。</div>';
+    return;
+  }
+  box.innerHTML = tiers.map((t, idx) => `
+    <div class="tier-row">
+      <label>起始名次<input type="number" min="1" value="${t.min_rank}" onchange="updateTierField(${idx}, 'min_rank', this.value)"></label>
+      <label>截止名次<input type="number" min="1" value="${t.max_rank}" onchange="updateTierField(${idx}, 'max_rank', this.value)"></label>
+      <label>折扣(%)如60=6折<input type="number" min="10" max="100" value="${t.discount_percent}" onchange="updateTierField(${idx}, 'discount_percent', this.value)"></label>
+      <label>展示文案<input type="text" value="${escapeHtml(t.label || '')}" placeholder="如：前 100 名尊享 6 折" onchange="updateTierField(${idx}, 'label', this.value)"></label>
+      <button type="button" class="btn-sm btn-reject" style="height:34px;" onclick="removeTier(${idx})">删除</button>
+    </div>
+  `).join('');
+}
+
+function updateTierField(idx, key, val) {
+  if (!pricingState?.early_bird?.tiers?.[idx]) return;
+  pricingState.early_bird.tiers[idx][key] = key === 'label' ? val : Number(val);
+}
+
+function addEarlyBirdTier() {
+  if (!pricingState) return;
+  if (!pricingState.early_bird) pricingState.early_bird = { enabled: true, title: '创始会员限时阶梯特惠', count_mode: 'paid_users', tiers: [] };
+  const tiers = pricingState.early_bird.tiers;
+  const lastMax = tiers.length > 0 ? Number(tiers[tiers.length - 1].max_rank || 0) : 0;
+  const minR = lastMax + 1;
+  const maxR = lastMax + 100;
+  tiers.push({ min_rank: minR, max_rank: maxR, discount_percent: 80, label: `第 ${minR}~${maxR} 名尊享 8 折` });
+  renderTiersEditor();
+}
+
+function removeTier(idx) {
+  pricingState.early_bird.tiers.splice(idx, 1);
+  renderTiersEditor();
+}
+
+function renderPlansEditor() {
+  const box = document.getElementById('plansEditorContainer');
+  const plans = pricingState?.plans || [];
+  box.innerHTML = plans.map((p, idx) => `
+    <div class="pricing-row-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px;flex-wrap:wrap;">
+        <b>#${idx + 1} ${escapeHtml(p.name)} <code style="margin:0;padding:1px 6px;font-size:0.75rem;">${escapeHtml(p.code)}</code></b>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <label style="margin:0;display:inline-flex;align-items:center;gap:4px;"><input type="checkbox" style="width:auto;margin:0;" ${p.featured ? 'checked' : ''} onchange="updatePlanField(${idx}, 'featured', this.checked)"> 主推高亮</label>
+          <label style="margin:0;display:inline-flex;align-items:center;gap:4px;"><input type="checkbox" style="width:auto;margin:0;" ${p.enabled !== false ? 'checked' : ''} onchange="updatePlanField(${idx}, 'enabled', this.checked)"> 上架启用</label>
+          <button type="button" class="btn-sm btn-reject" onclick="removePlanRow(${idx})">删除</button>
+        </div>
+      </div>
+      <div class="pricing-grid-4">
+        <label>套餐代码(唯一)<input type="text" value="${escapeHtml(p.code)}" onchange="updatePlanField(${idx}, 'code', this.value)"></label>
+        <label>套餐名称<input type="text" value="${escapeHtml(p.name)}" onchange="updatePlanField(${idx}, 'name', this.value)"></label>
+        <label>所属分类
+          <select onchange="updatePlanField(${idx}, 'category', this.value)">
+            <option value="combo" ${p.category === 'combo' ? 'selected' : ''}>全能双享包</option>
+            <option value="vod" ${p.category === 'vod' ? 'selected' : ''}>纯点播</option>
+            <option value="live" ${p.category === 'live' ? 'selected' : ''}>纯直播</option>
+          </select>
+        </label>
+        <label>原价 (元)<input type="number" step="0.1" min="0.1" value="${p.price}" onchange="updatePlanField(${idx}, 'price', Number(this.value))"></label>
+        <label>点播天数<input type="number" min="0" value="${p.vodDays}" onchange="updatePlanField(${idx}, 'vodDays', Number(this.value))"></label>
+        <label>直播天数<input type="number" min="0" value="${p.liveDays}" onchange="updatePlanField(${idx}, 'liveDays', Number(this.value))"></label>
+        <label>角标文案<input type="text" value="${escapeHtml(p.tag || '')}" onchange="updatePlanField(${idx}, 'tag', this.value)"></label>
+        <label>排序权重<input type="number" value="${p.sort || (idx + 1)}" onchange="updatePlanField(${idx}, 'sort', Number(this.value))"></label>
+      </div>
+      <label style="margin-top:6px;font-size:0.78rem;">套餐简介
+        <input type="text" value="${escapeHtml(p.desc || '')}" style="padding:7px 9px;font-size:0.84rem;margin-top:4px;" onchange="updatePlanField(${idx}, 'desc', this.value)">
+      </label>
+    </div>
+  `).join('');
+}
+
+function updatePlanField(idx, key, val) {
+  if (!pricingState?.plans?.[idx]) return;
+  pricingState.plans[idx][key] = val;
+}
+
+function addNewPlanRow() {
+  if (!pricingState) return;
+  const n = pricingState.plans.length + 1;
+  pricingState.plans.push({
+    code: 'custom_' + Date.now().toString().slice(-4),
+    name: '新自定义套餐',
+    category: 'combo',
+    desc: '点播 + 直播尊享权益',
+    price: 19.9,
+    vodDays: 90,
+    liveDays: 90,
+    tag: '限时季卡',
+    featured: false,
+    enabled: true,
+    sort: n
+  });
+  renderPlansEditor();
+}
+
+function removePlanRow(idx) {
+  if (!confirm('确认删除此套餐？')) return;
+  pricingState.plans.splice(idx, 1);
+  renderPlansEditor();
+}
+
+async function savePricingConfig() {
+  if (!pricingState) return;
+  pricingState.early_bird = {
+    enabled: document.getElementById('ebEnabled').value === 'true',
+    title: document.getElementById('ebTitleInput').value.trim() || '创始会员限时阶梯特惠',
+    count_mode: document.getElementById('ebCountMode').value,
+    tiers: pricingState.early_bird?.tiers || []
+  };
+  const msg = document.getElementById('pricingMsg');
+  msg.textContent = '正在保存至 Cloudflare KV...';
+  msg.className = 'msg';
+  try {
+    const res = await apiFetch('/api/admin/pricing-config', { method: 'POST', body: JSON.stringify(pricingState) });
+    const data = await res.json();
+    if (!res.ok) { msg.textContent = data.error || '保存失败'; msg.classList.add('error'); return; }
+    msg.textContent = data.message || '保存成功！';
+    msg.classList.add('ok');
+    loadPricingConfig();
   } catch (e) {
     msg.textContent = '网络错误';
     msg.classList.add('error');
