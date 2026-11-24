@@ -620,6 +620,10 @@ async function loadChannelConfig() {
     if (!channelCfgState.live_groups) channelCfgState.live_groups = {};
     if (!channelCfgState.test_config) channelCfgState.test_config = { max_per_channel: 5, groups: {} };
     if (!channelCfgState.test_config.groups) channelCfgState.test_config.groups = {};
+    for (const g of Object.keys(channelCfgState.live_groups)) {
+      channelCfgState.live_groups[g] = sortLiveGroupChannels(g, channelCfgState.live_groups[g]);
+    }
+    syncTestGroupsOrderFromLive();
     renderLiveGroupsEditor();
     renderTestGroupsEditor();
   } catch (e) {}
@@ -645,15 +649,131 @@ function renderTestGroupsEditor() {
   document.getElementById('testGroupsContainer').innerHTML = renderGroupCardsHtml(groups, 'test');
 }
 
+
+// 标准 CCTV-1~17 固定顺序 & 32 省级卫视 CVB 收视率标准顺序（含深圳卫视）
+const STD_CCTV_ORDER = [
+  'CCTV-1 综合', 'CCTV-2 财经', 'CCTV-3 综艺', 'CCTV-4 中文国际',
+  'CCTV-5 体育', 'CCTV-6 电影', 'CCTV-7 国防军事', 'CCTV-8 电视剧',
+  'CCTV-9 纪录', 'CCTV-10 科教', 'CCTV-11 戏曲', 'CCTV-12 社会与法',
+  'CCTV-13 新闻', 'CCTV-14 少儿', 'CCTV-15 音乐', 'CCTV-16 奥林匹克',
+  'CCTV-17 农业农村'
+];
+
+const STD_SATELLITE_ORDER = [
+  '湖南卫视', '浙江卫视', '东方卫视', '江苏卫视', '北京卫视',
+  '山东卫视', '广东卫视', '安徽卫视', '深圳卫视', '辽宁卫视',
+  '湖北卫视', '天津卫视', '四川卫视', '河南卫视',
+  '黑龙江卫视', '江西卫视', '东南卫视', '河北卫视', '重庆卫视',
+  '贵州卫视', '广西卫视', '吉林卫视', '云南卫视', '陕西卫视',
+  '山西卫视', '内蒙古卫视', '海南卫视', '甘肃卫视', '青海卫视',
+  '宁夏卫视', '新疆卫视', '西藏卫视'
+];
+
+function getCctvFixedNum(name) {
+  const m = String(name || '').match(/^CCTV[-\s]?0?(\d{1,2})(?!\d|\+|K)/i);
+  if (!m) return -1;
+  const n = Number(m[1]);
+  return (n >= 1 && n <= 17) ? n : -1;
+}
+
+function getSatRatingIdx(name) {
+  const clean = String(name || '').trim();
+  const idx = STD_SATELLITE_ORDER.indexOf(clean);
+  if (idx >= 0) return idx;
+  return STD_SATELLITE_ORDER.findIndex(s => clean.includes(s.replace('卫视', '')) && clean.includes('卫视'));
+}
+
+function isFixedOrderChannel(gName, chName) {
+  if (gName === '央视频道') return getCctvFixedNum(chName) >= 1;
+  if (gName === '卫视频道') return getSatRatingIdx(chName) >= 0;
+  return false;
+}
+
+function sortLiveGroupChannels(gName, list) {
+  const arr = [...new Set((list || []).map(x => String(x || '').trim()).filter(Boolean))];
+  if (gName === '央视频道') {
+    const fixed = arr.filter(c => getCctvFixedNum(c) >= 1).sort((a, b) => getCctvFixedNum(a) - getCctvFixedNum(b));
+    const extras = arr.filter(c => getCctvFixedNum(c) < 1);
+    return [...fixed, ...extras];
+  }
+  if (gName === '卫视频道') {
+    const fixed = arr.filter(c => getSatRatingIdx(c) >= 0).sort((a, b) => getSatRatingIdx(a) - getSatRatingIdx(b));
+    const extras = arr.filter(c => getSatRatingIdx(c) < 0);
+    return [...fixed, ...extras];
+  }
+  return arr;
+}
+
+function syncTestGroupsOrderFromLive() {
+  if (!channelCfgState?.test_config?.groups) return;
+  const liveGroups = channelCfgState.live_groups || {};
+  const allLiveFlat = Object.values(liveGroups).flat();
+  for (const [gName, chList] of Object.entries(channelCfgState.test_config.groups)) {
+    const refOrder = Array.isArray(liveGroups[gName]) ? liveGroups[gName] : allLiveFlat;
+    const rankMap = new Map(refOrder.map((c, i) => [c, i]));
+    channelCfgState.test_config.groups[gName] = [...new Set(chList)].sort((a, b) => {
+      const ia = rankMap.has(a) ? rankMap.get(a) : 99999;
+      const ib = rankMap.has(b) ? rankMap.get(b) : 99999;
+      return ia - ib;
+    });
+  }
+}
+
+let dragState = null;
+function onChipDragStart(e, gIdx, cIdx) {
+  dragState = { gIdx, cIdx };
+  e.currentTarget.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+}
+function onChipDragEnd(e) {
+  e.currentTarget.classList.remove('dragging');
+  document.querySelectorAll('.ch-chip.drag-over').forEach(el => el.classList.remove('drag-over'));
+  dragState = null;
+}
+function onChipDragOver(e, gIdx, cIdx) {
+  if (!dragState || dragState.gIdx !== gIdx || dragState.cIdx === cIdx) return;
+  const gName = Object.keys(channelCfgState.live_groups)[gIdx];
+  const chName = channelCfgState.live_groups[gName][cIdx];
+  if (isFixedOrderChannel(gName, chName)) return;
+  e.preventDefault();
+  e.currentTarget.classList.add('drag-over');
+}
+function onChipDragLeave(e) {
+  e.currentTarget.classList.remove('drag-over');
+}
+function onChipDrop(e, gIdx, targetIdx) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  if (!dragState || dragState.gIdx !== gIdx || dragState.cIdx === targetIdx) return;
+  const gName = Object.keys(channelCfgState.live_groups)[gIdx];
+  const list = channelCfgState.live_groups[gName];
+  if (isFixedOrderChannel(gName, list[targetIdx])) return;
+  const [moved] = list.splice(dragState.cIdx, 1);
+  list.splice(targetIdx, 0, moved);
+  channelCfgState.live_groups[gName] = sortLiveGroupChannels(gName, list);
+  syncTestGroupsOrderFromLive();
+  renderLiveGroupsEditor();
+  renderTestGroupsEditor();
+}
+
 let openTestPickerGroups = new Set();
 
 function renderGroupCardsHtml(groupsObj, mode) {
   const entries = Object.entries(groupsObj);
   if (entries.length === 0) return '<p class="muted">暂无频道分类，请点击右上角新增分类。</p>';
   return entries.map(([gName, chList], gIdx) => {
-    const chips = chList.map((ch, cIdx) => `
-      <span class="ch-chip">${escapeHtml(ch)} <button type="button" title="删除频道" onclick="removeChannelItem('${mode}', ${gIdx}, ${cIdx})">×</button></span>
-    `).join('');
+    const chips = chList.map((ch, cIdx) => {
+      const canDrag = (mode === 'live') && !isFixedOrderChannel(gName, ch);
+      if (canDrag) {
+        return `<span class="ch-chip draggable" draggable="true" title="按住拖动可自由排序"
+          ondragstart="onChipDragStart(event, ${gIdx}, ${cIdx})"
+          ondragend="onChipDragEnd(event)"
+          ondragover="onChipDragOver(event, ${gIdx}, ${cIdx})"
+          ondragleave="onChipDragLeave(event)"
+          ondrop="onChipDrop(event, ${gIdx}, ${cIdx})"><span class="drag-handle">⋮⋮</span>${escapeHtml(ch)} <button type="button" title="删除频道" onclick="removeChannelItem('${mode}', ${gIdx}, ${cIdx})">×</button></span>`;
+      }
+      return `<span class="ch-chip">${escapeHtml(ch)} <button type="button" title="删除频道" onclick="removeChannelItem('${mode}', ${gIdx}, ${cIdx})">×</button></span>`;
+    }).join('');
 
     if (mode === 'test') {
       const liveGroups = channelCfgState?.live_groups || {};
@@ -725,6 +845,7 @@ function pickChannelIntoTest(gIdx, chName) {
   const gName = Object.keys(obj)[gIdx];
   if (!gName || !Array.isArray(obj[gName])) return;
   if (!obj[gName].includes(chName)) obj[gName].push(chName);
+  syncTestGroupsOrderFromLive();
   renderTestGroupsEditor();
 }
 
@@ -781,6 +902,11 @@ function addChannelItems(mode, gIdx) {
   for (const ch of items) {
     if (!obj[gName].includes(ch)) obj[gName].push(ch);
   }
+  if (mode === 'live') {
+    obj[gName] = sortLiveGroupChannels(gName, obj[gName]);
+    syncTestGroupsOrderFromLive();
+    renderTestGroupsEditor();
+  }
   input.value = '';
   rerenderMode(mode);
 }
@@ -789,11 +915,16 @@ function removeChannelItem(mode, gIdx, cIdx) {
   const obj = getTargetGroupsObj(mode);
   const gName = Object.keys(obj)[gIdx];
   obj[gName].splice(cIdx, 1);
+  if (mode === 'test') syncTestGroupsOrderFromLive();
   rerenderMode(mode);
 }
 
 async function saveChannelConfig(msgElId) {
   if (!channelCfgState) return;
+  for (const g of Object.keys(channelCfgState.live_groups || {})) {
+    channelCfgState.live_groups[g] = sortLiveGroupChannels(g, channelCfgState.live_groups[g]);
+  }
+  syncTestGroupsOrderFromLive();
   channelCfgState.self_top_satellite = document.getElementById('selfTopSatInput').value.trim() || '江西卫视';
   channelCfgState.test_config.max_per_channel = Math.max(1, Math.min(Number(document.getElementById('testMaxPerCh').value) || 5, 50));
 

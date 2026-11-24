@@ -130,6 +130,11 @@
     }
     .ch-chip-cand:hover { background: rgba(59, 130, 246, 0.22); border-color: var(--primary); }
     .ch-chip-cand .plus-sign { color: #34d399; font-weight: 800; font-size: 0.95rem; line-height: 1; }
+    .ch-chip.draggable { cursor: grab; border-color: rgba(59, 130, 246, 0.45); }
+    .ch-chip.draggable:active { cursor: grabbing; }
+    .ch-chip.dragging { opacity: 0.4; }
+    .ch-chip.drag-over { border-color: #34d399; background: rgba(16, 185, 129, 0.2); }
+    .drag-handle { color: #64748b; font-size: 0.78rem; margin-right: 2px; user-select: none; }
   </style>
 </head>
 <body>
