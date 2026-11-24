@@ -645,6 +645,8 @@ function renderTestGroupsEditor() {
   document.getElementById('testGroupsContainer').innerHTML = renderGroupCardsHtml(groups, 'test');
 }
 
+let openTestPickerGroups = new Set();
+
 function renderGroupCardsHtml(groupsObj, mode) {
   const entries = Object.entries(groupsObj);
   if (entries.length === 0) return '<p class="muted">暂无频道分类，请点击右上角新增分类。</p>';
@@ -652,6 +654,44 @@ function renderGroupCardsHtml(groupsObj, mode) {
     const chips = chList.map((ch, cIdx) => `
       <span class="ch-chip">${escapeHtml(ch)} <button type="button" title="删除频道" onclick="removeChannelItem('${mode}', ${gIdx}, ${cIdx})">×</button></span>
     `).join('');
+
+    if (mode === 'test') {
+      const liveGroups = channelCfgState?.live_groups || {};
+      const sameGroupPool = Array.isArray(liveGroups[gName]) ? liveGroups[gName] : Object.values(liveGroups).flat();
+      const remaining = [...new Set(sameGroupPool)].filter(ch => !chList.includes(ch));
+      const isOpen = openTestPickerGroups.has(gName);
+      const pickerHtml = isOpen ? `
+        <div class="test-picker-panel">
+          <div class="test-picker-head">
+            <span>从标准 live.txt「${escapeHtml(gName)}」中点击 <b>+</b> 添加（剩余可选 ${remaining.length} 个）：</span>
+            <button type="button" class="btn-sm btn-detail" onclick="toggleTestPicker(${gIdx})">收起</button>
+          </div>
+          <div class="chip-list" style="margin-bottom:0;">
+            ${remaining.length > 0
+              ? remaining.map(ch => `<button type="button" class="ch-chip-cand" onclick="pickChannelIntoTest(${gIdx}, '${escapeHtml(ch).replace(/'/g, "\'")}')">${escapeHtml(ch)} <span class="plus-sign">+</span></button>`).join('')
+              : '<span class="muted">该分类下标准 live.txt 的全部频道均已添加完毕</span>'}
+          </div>
+        </div>
+      ` : '';
+
+      return `
+        <div class="cfg-group-card">
+          <div class="cfg-group-head">
+            <div><b>${escapeHtml(gName)}</b><span class="muted" style="margin-left:8px;font-size:0.82rem;">(${chList.length} 个频道)</span></div>
+            <div class="action-btns">
+              <button type="button" class="btn-sm btn-detail" onclick="renameConfigGroup('${mode}', ${gIdx})">重命名分类</button>
+              <button type="button" class="btn-sm btn-reject" onclick="deleteConfigGroup('${mode}', ${gIdx})">删除分类</button>
+            </div>
+          </div>
+          <div class="chip-list" style="margin-bottom:0;">
+            ${chips}
+            <button type="button" class="ch-chip-add-trigger" onclick="toggleTestPicker(${gIdx})">${isOpen ? '收起候选' : '+ 添加频道'}</button>
+          </div>
+          ${pickerHtml}
+        </div>
+      `;
+    }
+
     return `
       <div class="cfg-group-card">
         <div class="cfg-group-head">
@@ -669,6 +709,23 @@ function renderGroupCardsHtml(groupsObj, mode) {
       </div>
     `;
   }).join('');
+}
+
+function toggleTestPicker(gIdx) {
+  const keys = Object.keys(channelCfgState?.test_config?.groups || {});
+  const gName = keys[gIdx];
+  if (!gName) return;
+  if (openTestPickerGroups.has(gName)) openTestPickerGroups.delete(gName);
+  else openTestPickerGroups.add(gName);
+  renderTestGroupsEditor();
+}
+
+function pickChannelIntoTest(gIdx, chName) {
+  const obj = channelCfgState?.test_config?.groups || {};
+  const gName = Object.keys(obj)[gIdx];
+  if (!gName || !Array.isArray(obj[gName])) return;
+  if (!obj[gName].includes(chName)) obj[gName].push(chName);
+  renderTestGroupsEditor();
 }
 
 function getTargetGroupsObj(mode) {

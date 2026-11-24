@@ -110,6 +110,26 @@
     .tier-row label { margin-top: 0; font-size: 0.76rem; }
     .tier-row input { padding: 6px 8px; font-size: 0.84rem; margin-top: 4px; }
     @media (max-width: 720px) { .tier-row { grid-template-columns: 1fr 1fr; } }
+    .ch-chip-add-trigger {
+      display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px;
+      background: rgba(16, 185, 129, 0.16); color: #34d399; border: 1px dashed rgba(16, 185, 129, 0.55);
+      border-radius: 99px; font-size: 0.82rem; font-weight: 600; cursor: pointer;
+    }
+    .ch-chip-add-trigger:hover { background: rgba(16, 185, 129, 0.28); }
+    .test-picker-panel {
+      margin-top: 10px; padding: 12px; background: #111827; border: 1px solid rgba(59, 130, 246, 0.35);
+      border-radius: 10px;
+    }
+    .test-picker-head {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 0.82rem; color: var(--muted);
+    }
+    .ch-chip-cand {
+      display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px;
+      background: #1e293b; border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 99px;
+      font-size: 0.82rem; color: #e2e8f0; cursor: pointer;
+    }
+    .ch-chip-cand:hover { background: rgba(59, 130, 246, 0.22); border-color: var(--primary); }
+    .ch-chip-cand .plus-sign { color: #34d399; font-weight: 800; font-size: 0.95rem; line-height: 1; }
   </style>
 </head>
 <body>
