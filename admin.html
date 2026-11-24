@@ -211,15 +211,19 @@
 
     <!-- 3. 客服工单面板 -->
     <div id="panelTickets" class="panel panel-table hidden">
-      <div class="tabs" style="margin-bottom:12px;">
-        <button class="tab-btn active ticket-filter" data-status="">全部工单</button>
-        <button class="tab-btn ticket-filter" data-status="open">待回复</button>
-        <button class="tab-btn ticket-filter" data-status="replied">已回复</button>
-        <button class="tab-btn ticket-filter" data-status="closed">已关闭</button>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+        <div class="tabs" style="margin-bottom:0;">
+          <button class="tab-btn active ticket-filter" data-status="">全部工单</button>
+          <button class="tab-btn ticket-filter" data-status="open">待回复</button>
+          <button class="tab-btn ticket-filter" data-status="replied">已回复</button>
+          <button class="tab-btn ticket-filter" data-status="closed">已关闭</button>
+        </div>
+        <button id="adminBatchDelTicketsBtn" class="btn-sm btn-reject" style="padding:8px 14px;font-size:0.84rem;">🗑️ 一键批量删除选中工单</button>
       </div>
       <table>
         <thead>
           <tr>
+            <th style="width:36px;"><input type="checkbox" id="adminTicketSelectAll" style="width:auto;margin:0;"></th>
             <th>工单号</th>
             <th>用户邮箱</th>
             <th>分类</th>
@@ -271,9 +275,12 @@
       </div>
 
       <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:14px;padding:12px;background:#090d16;border-radius:8px;border:1px solid var(--border);">
-        <label style="margin:0;display:flex;align-items:center;gap:8px;color:#e2e8f0;">
-          <input id="vodMaskNamesToggle" type="checkbox" checked style="width:auto;margin:0;">
-          <b>对外隐藏真实平台名称（脱敏防泄密模式，强烈推荐开启）</b>
+        <label style="margin:0;display:flex;align-items:center;gap:10px;color:#e2e8f0;flex-wrap:wrap;">
+          <b>前台与 TVBox 资源平台名称展示：</b>
+          <select id="vodMaskNamesToggle" style="width:auto;margin-top:0;padding:6px 12px;">
+            <option value="false" selected>显示真实资源平台名称（默认）</option>
+            <option value="true">隐藏真实名称（显示脱敏代号防泄密）</option>
+          </select>
         </label>
         <span id="vodSitesSummary" class="muted" style="margin-left:auto;"></span>
       </div>

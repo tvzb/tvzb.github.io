@@ -464,14 +464,15 @@ button, .btn-primary, .btn-secondary, .btn-outline, .btn-glass {
 .ch-ttfb { font-size: 0.74rem; color: var(--muted); }
 .cnt-badge {
   display: inline-block;
-  padding: 1px 7px;
+  padding: 3px 10px;
   border-radius: 99px;
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
 }
-.cnt-ok { background: rgba(16, 185, 129, 0.2); color: #34d399; }
-.cnt-warn { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
-.cnt-zero { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+.cnt-ok { background: #059669; color: #ffffff; }
+.cnt-warn { background: #d97706; color: #ffffff; }
+.cnt-zero { background: #dc2626; color: #ffffff; }
 
 /* 宽带测速 */
 .speed-action-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
@@ -775,9 +776,9 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
   .hero-banner h1 { font-size: 2.35rem; }
   .plans-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .compact-kpi-4 { grid-template-columns: repeat(4, 1fr); gap: 12px; }
-  .dl-grid { grid-template-columns: repeat(3, 1fr); }
+  .dl-grid { grid-template-columns: repeat(2, 1fr); }
   .dl-card { flex-direction: column; text-align: center; padding: 20px; }
-  .mine-two-col { grid-template-columns: 1fr 1fr; }
+  .mine-two-col { grid-template-columns: 1fr; }
   .toast { bottom: 28px; }
 }
 
@@ -894,3 +895,65 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
   .home-core-grid { grid-template-columns: 1.15fr 1fr; }
   .channel-list { grid-template-columns: repeat(2, 1fr); gap: 10px; }
 }
+
+/* 深色模式下 VIP 卡片内轮廓按钮保持清晰白字 */
+.vip-hero-card .btn-outline {
+  color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.34);
+  background: rgba(255, 255, 255, 0.08);
+}
+.vip-hero-card .btn-outline:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+/* 浅色主题全面适配：首屏 Hero 与 VIP 会员身份卡 */
+[data-theme="light"] .hero-banner {
+  background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.18), transparent 55%),
+              radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.14), transparent 55%),
+              linear-gradient(145deg, #eff6ff, #f8fafc);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  color: #0f172a;
+}
+[data-theme="light"] .hero-badge {
+  color: #047857;
+  background: rgba(16, 185, 129, 0.14);
+  border-color: rgba(16, 185, 129, 0.35);
+}
+[data-theme="light"] .hero-banner h1 em {
+  background: linear-gradient(90deg, #2563eb, #059669);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+[data-theme="light"] .hero-desc { color: #334155; }
+[data-theme="light"] .btn-glass {
+  background: #ffffff;
+  color: #1e293b;
+  border: 1px solid rgba(15, 23, 42, 0.16);
+}
+[data-theme="light"] .mini-kpi {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(59, 130, 246, 0.18);
+}
+[data-theme="light"] .mini-kpi-val { color: #2563eb; }
+[data-theme="light"] .mini-kpi-lbl { color: #475569; }
+
+[data-theme="light"] .vip-hero-card {
+  background: linear-gradient(135deg, #eff6ff, #eef2ff);
+  border: 1px solid rgba(59, 130, 246, 0.28);
+  color: #0f172a;
+}
+[data-theme="light"] .vip-hero-card .btn-outline {
+  color: #0f172a;
+  border-color: rgba(15, 23, 42, 0.28);
+  background: #ffffff;
+}
+[data-theme="light"] .vip-hero-card .btn-outline:hover {
+  background: #f1f5f9;
+}
+[data-theme="light"] .profile-avatar-lg,
+[data-theme="light"] .avatar-btn {
+  background: linear-gradient(135deg, #dbeafe, #e0e7ff);
+}
+[data-theme="light"] .core-pill.vip { color: #1d4ed8; }
+[data-theme="light"] .core-pill.free { color: #047857; }
+[data-theme="light"] .ch-spd { color: #0284c7; }

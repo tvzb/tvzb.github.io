@@ -103,6 +103,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('addVodSiteBtn')?.addEventListener('click', addVodSiteRow);
   document.getElementById('autoMaskVodBtn')?.addEventListener('click', autoMaskVodAliases);
   document.getElementById('saveVodSitesBtn')?.addEventListener('click', saveVodSitesConfig);
+  document.getElementById('adminTicketSelectAll')?.addEventListener('change', (e) => {
+    document.querySelectorAll('.admin-tk-cb').forEach(cb => { cb.checked = e.target.checked; });
+  });
+  document.getElementById('adminBatchDelTicketsBtn')?.addEventListener('click', adminBatchDeleteTickets);
 });
 
 function showLogin() {
@@ -418,19 +422,27 @@ async function loadTickets() {
     const res = await apiFetch(path);
     const data = await res.json();
     const tbody = document.getElementById('ticketsBody');
+    const selAll = document.getElementById('adminTicketSelectAll');
+    if (selAll) selAll.checked = false;
     if (!data.tickets || data.tickets.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#94a3b8;">暂无工单</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#94a3b8;">暂无工单</td></tr>';
       return;
     }
     const stText = { open: '待回复', replied: '已回复', closed: '已关闭' };
     tbody.innerHTML = data.tickets.map(t => `<tr>
+      <td><input type="checkbox" class="admin-tk-cb" value="${escapeHtml(t.ticket_no)}" style="width:auto;margin:0;"></td>
       <td><code style="font-size:0.78rem;margin:0;padding:2px 6px;">${escapeHtml(t.ticket_no)}</code></td>
       <td>${escapeHtml(t.email)}</td>
       <td>${escapeHtml(t.category)}</td>
-      <td style="max-width:260px;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(t.subject)}</td>
+      <td style="max-width:240px;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(t.subject)}</td>
       <td class="status-${t.status}">${stText[t.status] || t.status}</td>
       <td>${formatTime(t.created_at)}</td>
-      <td><button class="btn-sm btn-extend" onclick='openReplyTicket(${JSON.stringify(t).replace(/'/g, "&#39;")})'>查看 / 回复</button></td>
+      <td>
+        <div class="action-btns">
+          <button class="btn-sm btn-extend" onclick='openReplyTicket(${JSON.stringify(t).replace(/'/g, "&#39;")})'>查看/回复</button>
+          <button class="btn-sm btn-reject" onclick="adminDeleteTicket('${escapeHtml(t.ticket_no)}')">删除</button>
+        </div>
+      </td>
     </tr>`).join('');
   } catch (e) {}
 }
@@ -966,7 +978,7 @@ async function loadVodSitesConfig() {
     const data = await res.json();
     if (!data.ok) return;
     vodCfgState = data.config || { mask_names: true, sites: [] };
-    document.getElementById('vodMaskNamesToggle').checked = vodCfgState.mask_names !== false;
+    document.getElementById('vodMaskNamesToggle').value = vodCfgState.mask_names ? 'true' : 'false';
     renderVodSitesEditor();
   } catch (e) {}
 }
@@ -1043,7 +1055,7 @@ function autoMaskVodAliases() {
 
 async function saveVodSitesConfig() {
   if (!vodCfgState) return;
-  vodCfgState.mask_names = document.getElementById('vodMaskNamesToggle').checked;
+  vodCfgState.mask_names = document.getElementById('vodMaskNamesToggle').value === 'true';
   const msg = document.getElementById('vodCfgMsg');
   msg.textContent = '正在保存至 Cloudflare KV...';
   msg.className = 'msg';
@@ -1059,4 +1071,24 @@ async function saveVodSitesConfig() {
     msg.textContent = '网络错误';
     msg.classList.add('error');
   }
+}
+
+async function adminDeleteTicket(ticketNo) {
+  if (!confirm(`确认删除工单 ${ticketNo}？`)) return;
+  const res = await apiFetch('/api/admin/ticket/delete', { method: 'POST', body: JSON.stringify({ ticketNo }) });
+  const data = await res.json();
+  alert(data.message || data.error);
+  loadTickets();
+  loadStats();
+}
+
+async function adminBatchDeleteTickets() {
+  const checked = Array.from(document.querySelectorAll('.admin-tk-cb:checked')).map(cb => cb.value);
+  if (checked.length === 0) { alert('请先勾选要删除的工单'); return; }
+  if (!confirm(`确认一键批量删除选中的 ${checked.length} 条工单？`)) return;
+  const res = await apiFetch('/api/admin/ticket/batch-delete', { method: 'POST', body: JSON.stringify({ ticketNos: checked }) });
+  const data = await res.json();
+  alert(data.message || data.error);
+  loadTickets();
+  loadStats();
 }

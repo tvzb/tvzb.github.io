@@ -27,7 +27,7 @@ const DEFAULT_VOD_SITES = Array.from({ length: 21 }, (_, i) => ({
 let currentSites = DEFAULT_VOD_SITES.map(s => ({ ...s, status: 'idle', speedMBs: 0, latency: undefined }));
 let dynamicPlans = [];
 let earlyBirdState = null;
-let currentPlanCategory = 'combo';
+let currentPlanCategory = 'all';
 let summaryChannels = [];
 let currentSummaryGroup = 'all';
 let currentTrialDays = 7;
@@ -207,6 +207,10 @@ function bindEvents() {
   document.getElementById('openTicketModalBtn').onclick = openTicketOrAuth;
   document.querySelectorAll('[data-open-ticket]').forEach(btn => { btn.onclick = openTicketOrAuth; });
   document.getElementById('submitTicketBtn').onclick = submitTicket;
+  document.getElementById('userTicketSelectAll')?.addEventListener('change', (e) => {
+    document.querySelectorAll('.user-tk-cb').forEach(cb => { cb.checked = e.target.checked; });
+  });
+  document.getElementById('batchDeleteUserTicketsBtn')?.addEventListener('click', batchDeleteUserTickets);
 }
 
 // ================= 动态加载站点配置、动态套餐、早鸟折扣与点播站 =================
@@ -675,8 +679,15 @@ function renderAccountDashboard(user, orders, tickets) {
     tEl.innerHTML = tickets.map(t => `
       <div class="ticket-rich-card">
         <div class="ticket-head">
-          <span><span class="core-pill vip" style="font-size:0.7rem;padding:2px 7px;">${escapeHtml(t.category)}</span> <b>${escapeHtml(t.subject)}</b></span>
-          ${st[t.status] || t.status}
+          <span style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;">
+            <input type="checkbox" class="user-tk-cb" value="${escapeHtml(t.ticket_no)}" style="width:auto;margin:0;">
+            <span class="core-pill vip" style="font-size:0.7rem;padding:2px 7px;">${escapeHtml(t.category)}</span>
+            <b>${escapeHtml(t.subject)}</b>
+          </span>
+          <span style="display:inline-flex;align-items:center;gap:8px;">
+            ${st[t.status] || t.status}
+            <button type="button" class="btn-outline btn-xs" style="color:var(--danger);border-color:rgba(239,68,68,0.35);padding:2px 8px;" onclick="deleteUserTicket('${escapeHtml(t.ticket_no)}')">删除</button>
+          </span>
         </div>
         <div class="muted-sm" style="font-size:0.74rem;margin-top:4px;">工单号：${escapeHtml(t.ticket_no)} · ${formatDateTime(t.created_at)}</div>
         <div class="ticket-user-bubble">${escapeHtml(t.content)}</div>
@@ -990,4 +1001,34 @@ function formatDateTime(ts) {
   if (!ts) return '-';
   const d = new Date(ts);
   return `${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+}
+
+async function deleteUserTicket(ticketNo) {
+  if (!confirm('确认删除这条工单记录？')) return;
+  const token = localStorage.getItem('tvbox_token');
+  const res = await fetch(API_BASE + '/api/tickets/delete', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+    body: JSON.stringify({ ticketNo })
+  });
+  const data = await res.json();
+  showToast(data.message || data.error);
+  checkLoginState();
+}
+
+async function batchDeleteUserTickets() {
+  const checked = Array.from(document.querySelectorAll('.user-tk-cb:checked')).map(cb => cb.value);
+  if (checked.length === 0) { showToast('请先勾选要删除的工单'); return; }
+  if (!confirm(`确认批量删除选中的 ${checked.length} 条工单？`)) return;
+  const token = localStorage.getItem('tvbox_token');
+  const res = await fetch(API_BASE + '/api/tickets/batch-delete', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+    body: JSON.stringify({ ticketNos: checked })
+  });
+  const data = await res.json();
+  const selAll = document.getElementById('userTicketSelectAll');
+  if (selAll) selAll.checked = false;
+  showToast(data.message || data.error);
+  checkLoginState();
 }

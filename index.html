@@ -123,10 +123,10 @@
           <p class="muted-sm">支持微信 / 支付宝扫码 · 叠加优惠码再减</p>
         </div>
         <div class="seg-tabs" id="planCategoryTabs">
-          <button type="button" class="seg-btn active" data-cat="combo">🔥 全能双享</button>
-          <button type="button" class="seg-btn" data-cat="vod">📺 纯点播</button>
+          <button type="button" class="seg-btn active" data-cat="all">全部</button>
+          <button type="button" class="seg-btn" data-cat="combo">🔥 全能双享</button>
           <button type="button" class="seg-btn" data-cat="live">📡 纯直播</button>
-          <button type="button" class="seg-btn" data-cat="all">全部</button>
+          <button type="button" class="seg-btn" data-cat="vod">📺 纯点播</button>
         </div>
       </div>
 
@@ -230,14 +230,7 @@
           <a id="mobileApkDownloadBtn" class="btn-secondary btn-sm-pad" href="#mine" target="_blank" rel="noopener">获取手机版</a>
         </div>
 
-        <div class="dl-card">
-          <div class="dl-icon">🍎</div>
-          <div class="dl-body">
-            <h3>iPhone / Apple TV</h3>
-            <p class="muted-sm">可用 App Store 的 APTV 等播放器导入独立直播地址</p>
-          </div>
-          <button type="button" class="btn-outline btn-sm-pad" data-open-ticket="true">问客服</button>
-        </div>
+
       </div>
       <p id="downloadNoteText" class="muted-sm" style="margin:10px 0 16px;">💡 下载链接由后台实时维护；如遇失效请点「我的 → 提交工单」获取最新安装包。</p>
 
@@ -335,7 +328,11 @@
                 <h3>💬 我的客服工单</h3>
                 <p class="muted-sm">客服回复将实时同步显示在此</p>
               </div>
-              <button type="button" id="openTicketModalBtn" class="btn-primary btn-xs">+ 提交工单</button>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+                <label style="margin:0;display:inline-flex;align-items:center;gap:4px;font-size:0.78rem;cursor:pointer;"><input type="checkbox" id="userTicketSelectAll" style="width:auto;margin:0;">全选</label>
+                <button type="button" id="batchDeleteUserTicketsBtn" class="btn-outline btn-xs" style="color:var(--danger);border-color:rgba(239,68,68,0.4);">🗑️ 批量删除</button>
+                <button type="button" id="openTicketModalBtn" class="btn-primary btn-xs">+ 提交工单</button>
+              </div>
             </div>
             <div id="userTickets" class="rich-list muted-sm">暂无工单记录</div>
           </div>
@@ -347,7 +344,7 @@
         <div class="card-head-row" style="margin-bottom:0;">
           <div>
             <h3>🛠️ 售后与人工核账服务</h3>
-            <p class="muted-sm" style="margin-top:4px;">人工核账与工单处理时段：每日 <b>08:30–23:30</b>（约 1–3 分钟响应），夜间提交次日早第一时间处理。</p>
+            <p class="muted-sm" style="margin-top:4px;">订单与工单处理时间：每日 <b>08:00–23:00</b>，且 <b>2 小时内回复处理</b>；夜间提交次日 8 时后第一时间处理。</p>
           </div>
           <button type="button" class="btn-secondary btn-sm-pad" data-open-ticket="true">提交工单</button>
         </div>
@@ -466,7 +463,7 @@
         <input id="payLast6" type="text" maxlength="6" pattern="\d{6}" placeholder="例如：890123（请查看账单详情）" required>
       </label>
       <button type="button" id="submitOrderBtn" class="btn-primary block">我已完成支付，提交审核</button>
-      <p class="muted-sm" style="margin-top:8px;text-align:center;">人工核账时段：08:30–23:30 约 1–3 分钟开通，夜间订单次日早第一时间处理</p>
+      <p class="muted-sm" style="margin-top:8px;text-align:center;">订单处理时间：每日 08:00–23:00（2 小时内回复开通），夜间订单次日 8 时后第一时间处理</p>
       <p id="payStatusMsg" class="muted-sm" style="margin-top:8px;text-align:center;"></p>
     </div>
   </div>
