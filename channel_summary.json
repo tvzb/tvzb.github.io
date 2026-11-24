@@ -1,503 +1,533 @@
 {
-  "updated_at": "2026-11-23 22:51:42",
-  "date": "2026-11-23",
-  "total_targets": 49,
+  "updated_at": "2026-11-24 22:43:37",
+  "date": "2026-11-24",
+  "total_targets": 52,
   "total_channels": 49,
-  "total_streams": 370,
-  "hd_streams": 237,
-  "avg_speed_kbs": 2157.4,
-  "avg_ttfb_ms": 593.0,
+  "total_streams": 375,
+  "hd_streams": 243,
+  "avg_speed_kbs": 2713.9,
+  "avg_ttfb_ms": 440.0,
   "collect_threshold": 8,
   "channels": [
     {
       "group": "央视频道",
       "channel": "CCTV-1 综合",
-      "count": 11,
-      "spec": "1920x1080 (H264) [高清流畅|4.6x]",
+      "count": 10,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|4.4x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2304.6,
-      "ttfb_ms": 734.0
+      "speed_kbs": 2836.8,
+      "ttfb_ms": 379.0
     },
     {
       "group": "央视频道",
       "channel": "CCTV-2 财经",
       "count": 14,
-      "spec": "1920x1080 (H264) [高清流畅|5.3x]",
+      "spec": "1920x1080 (H264 50fps) [高清流畅|4.9x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2628.7,
-      "ttfb_ms": 456.0
+      "speed_kbs": 3204.9,
+      "ttfb_ms": 374.0
     },
     {
       "group": "央视频道",
       "channel": "CCTV-3 综艺",
-      "count": 15,
-      "spec": "1920x1080 (H264) [高清流畅|6.7x]",
+      "count": 14,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|4.9x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 3360.3,
-      "ttfb_ms": 536.0
+      "speed_kbs": 3178.4,
+      "ttfb_ms": 372.0
     },
     {
       "group": "央视频道",
       "channel": "CCTV-4 中文国际",
-      "count": 7,
-      "spec": "1920x1080 (H264) [高清流畅|3.6x]",
+      "count": 10,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|5.0x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 1781.7,
-      "ttfb_ms": 445.0
+      "speed_kbs": 3224.9,
+      "ttfb_ms": 371.0
     },
     {
       "group": "央视频道",
       "channel": "CCTV-5 体育",
-      "count": 11,
-      "spec": "1920x1080 (H264) [高清流畅|5.1x]",
+      "count": 12,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|4.2x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2544.4,
-      "ttfb_ms": 489.0
+      "speed_kbs": 2735.9,
+      "ttfb_ms": 358.0
     },
     {
       "group": "央视频道",
       "channel": "CCTV-6 电影",
-      "count": 11,
-      "spec": "1920x1080 (H264 50fps) [高清流畅|3.3x]",
+      "count": 10,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|4.3x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2134.6,
-      "ttfb_ms": 499.0
+      "speed_kbs": 2771.1,
+      "ttfb_ms": 370.0
     },
     {
       "group": "央视频道",
       "channel": "CCTV-7 国防军事",
       "count": 9,
-      "spec": "1920x1080 (H264 50fps) [高清流畅|3.4x]",
+      "spec": "1920x1080 (H264 50fps) [高清流畅|5.1x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2196.1,
-      "ttfb_ms": 478.0
+      "speed_kbs": 3294.8,
+      "ttfb_ms": 371.0
     },
     {
       "group": "央视频道",
       "channel": "CCTV-8 电视剧",
-      "count": 12,
-      "spec": "1920x1080 (H264) [高清流畅|5.1x]",
+      "count": 11,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|5.3x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2540.4,
-      "ttfb_ms": 454.0
+      "speed_kbs": 3447.1,
+      "ttfb_ms": 370.0
     },
     {
       "group": "央视频道",
       "channel": "CCTV-9 纪录",
-      "count": 11,
-      "spec": "1920x1080 (H264) [高清流畅|5.2x]",
+      "count": 10,
+      "spec": "1920x1080 (H264) [高清流畅|5.6x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2621.3,
-      "ttfb_ms": 756.0
+      "speed_kbs": 2783.1,
+      "ttfb_ms": 358.0
     },
     {
       "group": "央视频道",
       "channel": "CCTV-10 科教",
-      "count": 11,
-      "spec": "1920x1080 (H264) [高清流畅|3.0x]",
+      "count": 8,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|4.6x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 1487.9,
-      "ttfb_ms": 451.0
+      "speed_kbs": 2998.8,
+      "ttfb_ms": 378.0
     },
     {
       "group": "央视频道",
       "channel": "CCTV-11 戏曲",
-      "count": 10,
-      "spec": "1920x1080 (H264 50fps) [高清流畅|3.8x]",
+      "count": 9,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|3.9x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2474.7,
-      "ttfb_ms": 509.0
+      "speed_kbs": 2550.6,
+      "ttfb_ms": 370.0
     },
     {
       "group": "央视频道",
       "channel": "CCTV-12 社会与法",
-      "count": 11,
-      "spec": "1920x1080 (H264) [高清流畅|9.2x]",
+      "count": 10,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|5.1x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 4594.4,
-      "ttfb_ms": 455.0
+      "speed_kbs": 3341.2,
+      "ttfb_ms": 375.0
     },
     {
       "group": "央视频道",
       "channel": "CCTV-13 新闻",
-      "count": 13,
-      "spec": "1920x1080 (H264 50fps) [高清流畅|4.0x]",
+      "count": 12,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|5.1x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2614.7,
-      "ttfb_ms": 532.0
+      "speed_kbs": 3306.8,
+      "ttfb_ms": 379.0
     },
     {
       "group": "央视频道",
       "channel": "CCTV-14 少儿",
-      "count": 15,
-      "spec": "1920x1080 (H264 50fps) [高清流畅|3.8x]",
+      "count": 13,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|5.1x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2497.4,
-      "ttfb_ms": 467.0
+      "speed_kbs": 3330.2,
+      "ttfb_ms": 370.0
     },
     {
       "group": "央视频道",
       "channel": "CCTV-15 音乐",
-      "count": 6,
-      "spec": "1920x1080 (H264) [高清流畅|2.8x]",
+      "count": 5,
+      "spec": "1920x1080 (H264) [高清流畅|3.8x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 1393.9,
-      "ttfb_ms": 945.0
+      "speed_kbs": 1924.6,
+      "ttfb_ms": 322.0
     },
     {
       "group": "央视频道",
       "channel": "CCTV-16 奥林匹克",
-      "count": 1,
-      "spec": "1920x1080 (H264 50fps) [高清备用|1.1x]",
+      "count": 2,
+      "spec": "1920x1080 (H264) [高清备用|1.2x]",
       "resolution": "1920x1080",
       "tier": "高清备用",
-      "speed_kbs": 722.0,
-      "ttfb_ms": 498.0
+      "speed_kbs": 604.4,
+      "ttfb_ms": 2125.0
     },
     {
       "group": "央视频道",
       "channel": "CCTV-17 农业农村",
       "count": 5,
-      "spec": "1920x1080 (H264) [高清流畅|4.3x]",
+      "spec": "1920x1080 (H264) [高清流畅|7.5x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2172.7,
-      "ttfb_ms": 501.0
+      "speed_kbs": 3768.8,
+      "ttfb_ms": 392.0
+    },
+    {
+      "group": "央视频道",
+      "channel": "CHC家庭影院",
+      "count": 0,
+      "spec": "--",
+      "resolution": "--",
+      "tier": "维护中",
+      "speed_kbs": 0,
+      "ttfb_ms": 0
+    },
+    {
+      "group": "央视频道",
+      "channel": "CHC动作电影",
+      "count": 0,
+      "spec": "--",
+      "resolution": "--",
+      "tier": "维护中",
+      "speed_kbs": 0,
+      "ttfb_ms": 0
+    },
+    {
+      "group": "央视频道",
+      "channel": "CHC高清电影",
+      "count": 0,
+      "spec": "--",
+      "resolution": "--",
+      "tier": "维护中",
+      "speed_kbs": 0,
+      "ttfb_ms": 0
     },
     {
       "group": "卫视频道",
       "channel": "湖南卫视",
-      "count": 9,
-      "spec": "1920x1080 (H264 50fps) [高清流畅|3.4x]",
+      "count": 8,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|4.6x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2210.4,
-      "ttfb_ms": 466.0
+      "speed_kbs": 3011.5,
+      "ttfb_ms": 373.0
     },
     {
       "group": "卫视频道",
       "channel": "浙江卫视",
-      "count": 15,
-      "spec": "1920x1080 (H264 50fps) [高清流畅|2.9x]",
+      "count": 14,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|3.2x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 1907.7,
-      "ttfb_ms": 482.0
+      "speed_kbs": 2073.9,
+      "ttfb_ms": 372.0
     },
     {
       "group": "卫视频道",
       "channel": "东方卫视",
-      "count": 5,
-      "spec": "1920x1080 (H264 50fps) [高清流畅|4.0x]",
+      "count": 7,
+      "spec": "1920x1080 (H264) [高清流畅|1.9x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2616.1,
-      "ttfb_ms": 538.0
+      "speed_kbs": 940.2,
+      "ttfb_ms": 350.0
     },
     {
       "group": "卫视频道",
       "channel": "江苏卫视",
-      "count": 3,
-      "spec": "1920x1080 (H264) [高清流畅|2.8x]",
+      "count": 5,
+      "spec": "1920x1080 (H264) [高清流畅|7.1x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 1394.7,
-      "ttfb_ms": 425.0
+      "speed_kbs": 3565.4,
+      "ttfb_ms": 386.0
     },
     {
       "group": "卫视频道",
       "channel": "北京卫视",
-      "count": 7,
-      "spec": "1920x1080 (H264 50fps) [高清流畅|4.0x]",
+      "count": 8,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|5.1x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2596.6,
-      "ttfb_ms": 613.0
+      "speed_kbs": 3330.1,
+      "ttfb_ms": 374.0
     },
     {
       "group": "卫视频道",
       "channel": "山东卫视",
-      "count": 6,
-      "spec": "1920x1080 (H264 50fps) [高清流畅|3.1x]",
+      "count": 7,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|2.7x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2036.4,
-      "ttfb_ms": 501.0
+      "speed_kbs": 1748.9,
+      "ttfb_ms": 472.0
     },
     {
       "group": "卫视频道",
       "channel": "广东卫视",
-      "count": 4,
-      "spec": "1920x1080 (H264 50fps) [高清流畅|3.8x]",
+      "count": 8,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|4.6x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2499.1,
-      "ttfb_ms": 467.0
+      "speed_kbs": 2997.5,
+      "ttfb_ms": 361.0
     },
     {
       "group": "卫视频道",
       "channel": "安徽卫视",
-      "count": 4,
-      "spec": "1920x1080 (H264 50fps) [高清流畅|4.0x]",
+      "count": 5,
+      "spec": "1920x1080 (H264) [高清流畅|5.6x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2584.4,
-      "ttfb_ms": 523.0
+      "speed_kbs": 2779.5,
+      "ttfb_ms": 392.0
     },
     {
       "group": "卫视频道",
       "channel": "深圳卫视",
       "count": 3,
-      "spec": "1920x1080 (H264 50fps) [高清流畅|3.4x]",
+      "spec": "1920x1080 (H264 50fps) [高清流畅|5.3x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2204.8,
-      "ttfb_ms": 468.0
+      "speed_kbs": 3425.2,
+      "ttfb_ms": 398.0
     },
     {
       "group": "卫视频道",
       "channel": "辽宁卫视",
-      "count": 6,
-      "spec": "1920x1080 (H264 50fps) [高清流畅|4.1x]",
+      "count": 7,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|4.6x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2676.5,
-      "ttfb_ms": 457.0
+      "speed_kbs": 2996.2,
+      "ttfb_ms": 345.0
     },
     {
       "group": "卫视频道",
       "channel": "湖北卫视",
-      "count": 8,
-      "spec": "1920x1080 (H264) [高清流畅|3.7x]",
+      "count": 7,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|4.3x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 1844.9,
-      "ttfb_ms": 450.0
+      "speed_kbs": 2792.7,
+      "ttfb_ms": 353.0
     },
     {
       "group": "卫视频道",
       "channel": "天津卫视",
-      "count": 5,
-      "spec": "1920x1080 (H264 50fps) [高清流畅|3.4x]",
+      "count": 6,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|4.9x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2189.3,
-      "ttfb_ms": 480.0
+      "speed_kbs": 3184.6,
+      "ttfb_ms": 371.0
     },
     {
       "group": "卫视频道",
       "channel": "四川卫视",
-      "count": 7,
-      "spec": "1920x1080 (H264) [高清流畅|4.4x]",
+      "count": 8,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|5.0x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2194.5,
-      "ttfb_ms": 465.0
+      "speed_kbs": 3235.0,
+      "ttfb_ms": 366.0
     },
     {
       "group": "卫视频道",
       "channel": "河南卫视",
-      "count": 6,
-      "spec": "1920x1080 (H264 125fps) [高清流畅|6.2x]",
+      "count": 7,
+      "spec": "1920x1080 (H264) [高清流畅|5.3x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 4046.2,
-      "ttfb_ms": 2298.0
+      "speed_kbs": 2648.5,
+      "ttfb_ms": 431.0
     },
     {
       "group": "卫视频道",
       "channel": "黑龙江卫视",
-      "count": 6,
-      "spec": "1920x1080 (H264 50fps) [高清流畅|3.3x]",
+      "count": 7,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|4.6x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2152.8,
-      "ttfb_ms": 474.0
+      "speed_kbs": 3016.3,
+      "ttfb_ms": 361.0
     },
     {
       "group": "卫视频道",
       "channel": "江西卫视",
-      "count": 8,
-      "spec": "1920x1080 (H264) [高清流畅|3.5x]",
+      "count": 7,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|4.8x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 1771.3,
-      "ttfb_ms": 545.0
+      "speed_kbs": 3114.8,
+      "ttfb_ms": 357.0
     },
     {
       "group": "卫视频道",
       "channel": "东南卫视",
       "count": 8,
-      "spec": "1920x1080 (H264) [高清流畅|7.0x]",
+      "spec": "1920x1080 (H264) [高清流畅|12.2x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 3513.2,
-      "ttfb_ms": 728.0
+      "speed_kbs": 6097.4,
+      "ttfb_ms": 419.0
     },
     {
       "group": "卫视频道",
       "channel": "河北卫视",
       "count": 8,
-      "spec": "1920x1080 (H264) [高清流畅|3.8x]",
+      "spec": "1920x1080 (H264 50fps) [高清流畅|4.2x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 1897.4,
-      "ttfb_ms": 485.0
+      "speed_kbs": 2752.7,
+      "ttfb_ms": 382.0
     },
     {
       "group": "卫视频道",
       "channel": "重庆卫视",
-      "count": 12,
-      "spec": "1920x1080 (H264 50fps) [高清流畅|3.8x]",
+      "count": 10,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|4.1x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2456.7,
-      "ttfb_ms": 483.0
+      "speed_kbs": 2690.4,
+      "ttfb_ms": 363.0
     },
     {
       "group": "卫视频道",
       "channel": "贵州卫视",
-      "count": 8,
-      "spec": "1920x1080 (H264 50fps) [高清流畅|4.1x]",
+      "count": 9,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|4.7x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2653.3,
-      "ttfb_ms": 455.0
+      "speed_kbs": 3060.4,
+      "ttfb_ms": 365.0
     },
     {
       "group": "卫视频道",
       "channel": "广西卫视",
-      "count": 8,
-      "spec": "1920x1080 (H264) [高清流畅|5.2x]",
+      "count": 6,
+      "spec": "1920x1080 (H264) [高清流畅|4.1x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2575.9,
-      "ttfb_ms": 564.0
+      "speed_kbs": 2057.1,
+      "ttfb_ms": 398.0
     },
     {
       "group": "卫视频道",
       "channel": "吉林卫视",
-      "count": 10,
-      "spec": "1920x1080 (H264) [高清流畅|5.3x]",
+      "count": 8,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|4.6x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2640.5,
-      "ttfb_ms": 452.0
+      "speed_kbs": 2989.2,
+      "ttfb_ms": 363.0
     },
     {
       "group": "卫视频道",
       "channel": "云南卫视",
-      "count": 5,
-      "spec": "1920x1080 (H264 50fps) [高清流畅|4.0x]",
-      "resolution": "1920x1080",
+      "count": 6,
+      "spec": "1280x720 (H264) [高清流畅|10.9x]",
+      "resolution": "1280x720",
       "tier": "高清流畅",
-      "speed_kbs": 2610.7,
-      "ttfb_ms": 482.0
+      "speed_kbs": 3496.5,
+      "ttfb_ms": 187.0
     },
     {
       "group": "卫视频道",
       "channel": "陕西卫视",
-      "count": 3,
-      "spec": "1920x1080 (H264 50fps) [高清流畅|1.4x]",
+      "count": 6,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|4.6x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 880.3,
-      "ttfb_ms": 496.0
+      "speed_kbs": 3020.5,
+      "ttfb_ms": 453.0
     },
     {
       "group": "卫视频道",
       "channel": "山西卫视",
-      "count": 6,
-      "spec": "720x576 (H264) [流畅标清|5.0x]",
-      "resolution": "720x576",
-      "tier": "流畅标清",
-      "speed_kbs": 756.8,
-      "ttfb_ms": 451.0
+      "count": 8,
+      "spec": "1920x1080 (H264 50fps) [高清流畅|3.8x]",
+      "resolution": "1920x1080",
+      "tier": "高清流畅",
+      "speed_kbs": 2496.6,
+      "ttfb_ms": 354.0
     },
     {
       "group": "卫视频道",
       "channel": "内蒙古卫视",
-      "count": 5,
-      "spec": "1920x1080 (H264) [高清流畅|2.4x]",
+      "count": 6,
+      "spec": "1920x1080 (H264) [高清流畅|2.1x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 1182.8,
-      "ttfb_ms": 1523.0
+      "speed_kbs": 1029.3,
+      "ttfb_ms": 1563.0
     },
     {
       "group": "卫视频道",
       "channel": "海南卫视",
       "count": 2,
-      "spec": "720x576 (H264 50fps) [流畅标清|7.6x]",
+      "spec": "720x576 (H264 50fps) [流畅标清|5.6x]",
       "resolution": "720x576",
       "tier": "流畅标清",
-      "speed_kbs": 1146.0,
-      "ttfb_ms": 453.0
+      "speed_kbs": 832.9,
+      "ttfb_ms": 380.0
     },
     {
       "group": "卫视频道",
       "channel": "甘肃卫视",
       "count": 3,
-      "spec": "1920x1080 (H264 50fps) [高清流畅|3.8x]",
+      "spec": "1920x1080 (H264 50fps) [高清流畅|4.7x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 2450.8,
-      "ttfb_ms": 469.0
+      "speed_kbs": 3035.0,
+      "ttfb_ms": 365.0
     },
     {
       "group": "卫视频道",
       "channel": "青海卫视",
-      "count": 2,
-      "spec": "720x576 (H264 50fps) [流畅标清|3.9x]",
+      "count": 1,
+      "spec": "720x576 (H264 50fps) [流畅标清|5.9x]",
       "resolution": "720x576",
       "tier": "流畅标清",
-      "speed_kbs": 591.9,
-      "ttfb_ms": 482.0
+      "speed_kbs": 889.8,
+      "ttfb_ms": 393.0
     },
     {
       "group": "卫视频道",
       "channel": "宁夏卫视",
       "count": 5,
-      "spec": "1920x1080 (H264 50fps) [高清流畅|2.0x]",
+      "spec": "1920x1080 (H264) [高清流畅|3.6x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 1319.8,
-      "ttfb_ms": 469.0
+      "speed_kbs": 1804.4,
+      "ttfb_ms": 458.0
     },
     {
       "group": "卫视频道",
       "channel": "新疆卫视",
-      "count": 8,
-      "spec": "1920x1080 (H264) [高清流畅|2.8x]",
+      "count": 9,
+      "spec": "1920x1080 (H264) [高清流畅|3.9x]",
       "resolution": "1920x1080",
       "tier": "高清流畅",
-      "speed_kbs": 1412.1,
-      "ttfb_ms": 1418.0
+      "speed_kbs": 1968.8,
+      "ttfb_ms": 456.0
     },
     {
       "group": "卫视频道",
       "channel": "西藏卫视",
       "count": 2,
-      "spec": "720x576 (MPEG2VIDEO) [流畅标清|4.2x]",
+      "spec": "720x576 (MPEG2VIDEO) [流畅标清|4.0x]",
       "resolution": "720x576",
       "tier": "流畅标清",
-      "speed_kbs": 629.9,
-      "ttfb_ms": 773.0
+      "speed_kbs": 598.4,
+      "ttfb_ms": 589.0
     }
   ]
 }
