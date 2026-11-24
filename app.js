@@ -32,6 +32,8 @@ let summaryChannels = [];
 let currentSummaryGroup = 'all';
 let currentTrialDays = 7;
 let currentVodCount = 21;
+let currentLiveCount = 49;
+let currentOnsitePrice = 99;
 let couponsEnabled = true;
 let currentUser = null;
 let isRegisterMode = true;
@@ -207,6 +209,7 @@ function bindEvents() {
   document.getElementById('openTicketModalBtn').onclick = openTicketOrAuth;
   document.querySelectorAll('[data-open-ticket]').forEach(btn => { btn.onclick = openTicketOrAuth; });
   document.getElementById('submitTicketBtn').onclick = submitTicket;
+  document.getElementById('submitOnsiteBtn')?.addEventListener('click', submitOnsiteBooking);
   document.getElementById('userTicketSelectAll')?.addEventListener('change', (e) => {
     document.querySelectorAll('.user-tk-cb').forEach(cb => { cb.checked = e.target.checked; });
   });
@@ -233,6 +236,14 @@ async function loadPublicConfigAndSites() {
         const mv = document.getElementById('mineVodCount');
         if (mv) mv.textContent = currentVodCount + ' 条';
       }
+      if (cfg.liveChannelCount !== undefined) {
+        currentLiveCount = Number(cfg.liveChannelCount);
+        document.querySelectorAll('.js-live-count').forEach(el => { el.textContent = String(currentLiveCount); });
+      }
+      if (cfg.onsitePrice !== undefined) {
+        currentOnsitePrice = Number(cfg.onsitePrice);
+        document.querySelectorAll('.onsite-price-txt').forEach(el => { el.textContent = '¥' + currentOnsitePrice; });
+      }
       if (cfg.couponsEnabled !== undefined) {
         couponsEnabled = Boolean(cfg.couponsEnabled);
         document.getElementById('couponSectionWrap')?.classList.toggle('hidden', !couponsEnabled);
@@ -240,7 +251,7 @@ async function loadPublicConfigAndSites() {
       if (Array.isArray(cfg.plans)) {
         dynamicPlans = cfg.plans.map(p => ({
           ...p,
-          desc: (p.desc || '').replace(/\b\d+\s*站/g, `${currentVodCount}站`)
+          desc: (p.desc || '').replace(/\b\d+\s*站/g, `${currentVodCount}站`).replace(/\b\d+\s*台/g, `${currentLiveCount}台`)
         }));
       }
       if (cfg.earlyBird) earlyBirdState = cfg.earlyBird;
@@ -596,9 +607,9 @@ function renderAccountDashboard(user, orders, tickets) {
     <span class="badge ${liveActive ? 'active' : 'expired'}">直播: ${liveActive ? '剩' + daysLeft(user.live_expire_at) + '天' : '免费版'}</span>
   `;
 
-  const allUrl = user.allSubUrl || `${API_BASE}/sub/all?token=${user.token}`;
-  const vodUrl = user.vodSubUrl || `${API_BASE}/sub/vod?token=${user.token}`;
-  const liveUrl = user.liveSubUrl || `${API_BASE}/sub/live?token=${user.token}`;
+  const allUrl = user.allSubUrl || `${API_BASE}/s/${user.token}`;
+  const vodUrl = user.vodSubUrl || `${API_BASE}/v/${user.token}`;
+  const liveUrl = user.liveSubUrl || `${API_BASE}/l/${user.token}`;
 
   document.getElementById('accountInfo').innerHTML = `
     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
@@ -1061,15 +1072,58 @@ function renderApkDownloads(list) {
 }
 
 function openOnsiteBooking() {
-  if (!localStorage.getItem('tvbox_token')) {
-    showToast('请先登录后预约赣州市城区上门安装服务');
-    openAuthModal(true);
+  document.getElementById('onsiteMsg').textContent = '';
+  document.getElementById('onsiteModal').classList.remove('hidden');
+}
+
+async function submitOnsiteBooking() {
+  const name = document.getElementById('osName').value.trim();
+  const phone = document.getElementById('osPhone').value.trim();
+  const address = document.getElementById('osAddress').value.trim();
+  const timeSlot = document.getElementById('osTimeSlot').value;
+  const device = document.getElementById('osDevice').value.trim();
+  const msg = document.getElementById('onsiteMsg');
+
+  if (!phone || !address) {
+    msg.textContent = '请填写联系电话/微信与赣州城区小区地址';
+    msg.style.color = '#ef4444';
     return;
   }
-  const cat = document.getElementById('ticketCategory');
-  if (cat) cat.value = '上门安装预约';
-  document.getElementById('ticketSubject').value = '预约赣州市城区上门安装调试服务 (¥88 送全年全能双享)';
-  document.getElementById('ticketContent').value = '小区/地址：\n联系电话/微信：\n方便上门的时间段：\n电视/盒子品牌型号：';
-  document.getElementById('ticketMsg').textContent = '';
-  document.getElementById('ticketModal').classList.remove('hidden');
+
+  const btn = document.getElementById('submitOnsiteBtn');
+  btn.disabled = true;
+  btn.textContent = '正在提交预约...';
+  try {
+    const headers = { 'Content-Type': 'application/json' };
+    const token = localStorage.getItem('tvbox_token');
+    if (token) headers['Authorization'] = 'Bearer ' + token;
+    const res = await fetch(API_BASE + '/api/onsite-booking', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ name, phone, address, timeSlot, device })
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      msg.textContent = data.error || '提交失败';
+      msg.style.color = '#ef4444';
+    } else {
+      msg.textContent = '✅ ' + (data.message || '预约成功！');
+      msg.style.color = '#10b981';
+      showToast('🎉 上门安装预约已提交！', 3500);
+      if (token) checkLoginState();
+      setTimeout(() => document.getElementById('onsiteModal').classList.add('hidden'), 1200);
+    }
+  } catch (e) {
+    msg.textContent = '网络异常，请重试';
+    msg.style.color = '#ef4444';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '提交上门安装预约（免登录）';
+  }
+}
+
+function openImgLightbox(src) {
+  const lb = document.getElementById('imgLightbox');
+  const im = document.getElementById('lightboxImg');
+  if (lb && im && src) { im.src = src; lb.classList.remove('hidden'); }
 }

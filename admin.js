@@ -792,6 +792,7 @@ async function loadSiteSettings() {
     document.getElementById('setTrialDays').value = s.trial_days ?? 7;
     document.getElementById('setDownloadNote').value = s.download_note || '';
     document.getElementById('setOnsiteEnabled').value = s.onsite_enabled === false ? 'false' : 'true';
+    document.getElementById('setOnsitePrice').value = s.onsite_price ?? 99;
     document.getElementById('setOnsiteTitle').value = s.onsite_title || '赣州市城区专属 · 上门安装调试服务';
     document.getElementById('setOnsiteDesc').value = s.onsite_desc || '上门费 88 元，包含电视/盒子现场安装 TVBox + 线路调试测速 + 赠送全年全能双享会员！';
     apkDownloadsState = Array.isArray(s.apk_downloads) ? s.apk_downloads : [];
@@ -840,6 +841,7 @@ async function saveSiteSettings() {
     apk_downloads: apkDownloadsState,
     download_note: document.getElementById('setDownloadNote').value.trim(),
     onsite_enabled: document.getElementById('setOnsiteEnabled').value === 'true',
+    onsite_price: Number(document.getElementById('setOnsitePrice').value ?? 99),
     onsite_title: document.getElementById('setOnsiteTitle').value.trim(),
     onsite_desc: document.getElementById('setOnsiteDesc').value.trim()
   };

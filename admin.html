@@ -435,14 +435,17 @@
 
       <div style="margin-top:16px;padding:14px;background:#090d16;border:1px solid var(--border);border-radius:10px;">
         <b style="color:#34d399;">🚗 本地增值服务：赣州市城区上门安装调试</b>
-        <div class="form-grid-2" style="margin-top:8px;">
+        <div class="pricing-grid-4" style="margin-top:8px;">
           <label style="margin-top:0;">是否展示上门服务卡片
             <select id="setOnsiteEnabled">
               <option value="true">展示（推荐）</option>
               <option value="false">隐藏</option>
             </select>
           </label>
-          <label style="margin-top:0;">服务标题
+          <label style="margin-top:0;">上门安装费用 (元，默认 99)
+            <input id="setOnsitePrice" type="number" min="0" step="1" value="99">
+          </label>
+          <label style="margin-top:0;grid-column:span 2;">服务标题
             <input id="setOnsiteTitle" type="text" value="赣州市城区专属 · 上门安装调试服务">
           </label>
         </div>
