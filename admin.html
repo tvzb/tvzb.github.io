@@ -4,6 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=5.0, user-scalable=yes">
   <title>TVBox 运营管理后台 V2</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📺</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%230b1120%22/><text x=%2250%25%22 y=%2255%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2266%22>📺</text></svg>">
   <link rel="stylesheet" href="style.css">
   <style>
     body { background: #0b0f19; }
@@ -423,12 +425,31 @@
         </label>
       </div>
 
-      <label>TVBox 电视版安装包下载链接（支持网盘分享链接或直链 URL）
-        <input id="setTvApkUrl" type="url" placeholder="https://...">
-      </label>
-      <label>TVBox 手机版安装包下载链接（选填）
-        <input id="setMobileApkUrl" type="url" placeholder="https://...">
-      </label>
+      <div style="margin-top:16px;padding:14px;background:#090d16;border:1px solid var(--border);border-radius:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;flex-wrap:wrap;">
+          <b>📦 安卓通用 TVBox APK 多版本下载地址管理</b>
+          <button type="button" id="addApkVersionBtn" class="secondary" style="padding:5px 12px;font-size:0.82rem;">+ 新增 APK 版本</button>
+        </div>
+        <div id="apkDownloadsEditor"></div>
+      </div>
+
+      <div style="margin-top:16px;padding:14px;background:#090d16;border:1px solid var(--border);border-radius:10px;">
+        <b style="color:#34d399;">🚗 本地增值服务：赣州市城区上门安装调试</b>
+        <div class="form-grid-2" style="margin-top:8px;">
+          <label style="margin-top:0;">是否展示上门服务卡片
+            <select id="setOnsiteEnabled">
+              <option value="true">展示（推荐）</option>
+              <option value="false">隐藏</option>
+            </select>
+          </label>
+          <label style="margin-top:0;">服务标题
+            <input id="setOnsiteTitle" type="text" value="赣州市城区专属 · 上门安装调试服务">
+          </label>
+        </div>
+        <label style="margin-top:8px;">服务说明文案
+          <input id="setOnsiteDesc" type="text" value="上门费 88 元，包含电视/盒子现场安装 TVBox + 线路调试测速 + 赠送全年全能双享会员！">
+        </label>
+      </div>
       <p id="siteSettingsMsg" class="msg"></p>
     </div>
   </div>

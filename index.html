@@ -4,7 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=5.0, user-scalable=yes">
   <meta name="description" content="TVBox 高速点播与高清直播源订阅中心，支持家庭宽带真实拉流测速、云端专属排序与实时频道状态监测">
-  <title>TVBox影音资源中心 · 告别电视套娃收费</title>
+  <title>TVBox 影音订阅中心 · 告别电视套娃收费</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📺</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%230b1120%22/><text x=%2250%25%22 y=%2255%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2266%22>📺</text></svg>">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,16 +15,16 @@
     <div class="topbar-inner">
       <a class="brand" href="#home" data-nav="home">
         <span class="brand-logo">📺</span>
-        <span class="brand-text">TVBox影音资源中心</span>
+        <span class="brand-text">TVBox 影音</span>
       </a>
 
       <!-- 电脑端分栏导航 -->
       <nav class="desktop-nav" aria-label="主导航">
         <button type="button" class="nav-pill active" data-nav="home">首页</button>
-        <button type="button" class="nav-pill" data-nav="channels">频道详情</button>
+        <button type="button" class="nav-pill" data-nav="channels">频道状态</button>
         <button type="button" class="nav-pill" data-nav="speed">宽带测速</button>
         <button type="button" class="nav-pill" data-nav="guide">下载教程</button>
-        <button type="button" class="nav-pill" data-nav="mine">订单/工单</button>
+        <button type="button" class="nav-pill" data-nav="mine">订单与工单</button>
       </nav>
 
       <!-- 右侧：深浅主题切换 + 登录按钮 / 登录后紧凑头像 -->
@@ -134,6 +136,16 @@
         <div class="card muted-sm" style="text-align:center;">正在加载最新会员套餐...</div>
       </div>
 
+      <!-- 赣州市城区上门安装服务横幅 -->
+      <div id="homeOnsiteBanner" class="onsite-card" style="margin-top:16px;">
+        <div class="onsite-left">
+          <div class="onsite-badge">🚗 本地增值服务 · 赣州市城区</div>
+          <h3 id="homeOnsiteTitle">赣州市城区专属 · 上门安装调试服务</h3>
+          <p id="homeOnsiteDesc" class="muted-sm">上门费 <b>¥88</b>，包含电视/盒子现场安装 TVBox + 线路调试测速 + <b>赠送全年全能双享会员</b>！</p>
+        </div>
+        <button type="button" class="btn-primary btn-sm-pad" onclick="openOnsiteBooking()">预约上门安装</button>
+      </div>
+
 
     </section>
 
@@ -211,28 +223,19 @@
         </div>
       </div>
 
-      <div class="dl-grid">
-        <div class="dl-card">
-          <div class="dl-icon">📺</div>
-          <div class="dl-body">
-            <h3>TVBox 电视版 (APK)</h3>
-            <p class="muted-sm">安卓电视 / 盒子 / 投影仪，支持手机扫码推送</p>
-          </div>
-          <a id="tvApkDownloadBtn" class="btn-primary btn-sm-pad" href="#mine" target="_blank" rel="noopener">获取电视版</a>
+      <p class="muted-sm" style="margin-bottom:12px;">📱 智能电视、机顶盒、投影仪、安卓手机与平板<b>全部通用</b>，请根据设备安卓系统版本选择对应安装包：</p>
+      <div id="apkDownloadsGrid" class="dl-grid"></div>
+      <p id="downloadNoteText" class="muted-sm" style="margin:10px 0 14px;">💡 下载链接由后台实时维护；如遇失效请点击「订单与工单 → 提交工单」获取最新安装包。</p>
+
+      <!-- 下载教程页：赣州市城区上门安装服务醒目卡片 -->
+      <div id="guideOnsiteCard" class="onsite-card" style="margin-bottom:18px;">
+        <div class="onsite-left">
+          <div class="onsite-badge">🚗 怕麻烦 / 家里老人不会装？</div>
+          <h3 id="guideOnsiteTitle">赣州市城区专属 · 上门安装调试服务</h3>
+          <p id="guideOnsiteDesc" class="muted-sm">上门费 <b>¥88</b>，工程师上门现场安装 TVBox 并调试流畅线路，<b>直接赠送全年全能双享会员</b>！</p>
         </div>
-
-        <div class="dl-card">
-          <div class="dl-icon">📱</div>
-          <div class="dl-body">
-            <h3>TVBox 手机版 (APK)</h3>
-            <p class="muted-sm">安卓手机 / 平板触控播放，先试看再装电视</p>
-          </div>
-          <a id="mobileApkDownloadBtn" class="btn-secondary btn-sm-pad" href="#mine" target="_blank" rel="noopener">获取手机版</a>
-        </div>
-
-
+        <button type="button" class="btn-primary btn-sm-pad" onclick="openOnsiteBooking()">立即预约上门</button>
       </div>
-      <p id="downloadNoteText" class="muted-sm" style="margin:10px 0 16px;">💡 下载链接由后台实时维护；如遇失效请点「我的 → 提交工单」获取最新安装包。</p>
 
       <div class="faq-list">
         <details open>
@@ -344,7 +347,7 @@
         <div class="card-head-row" style="margin-bottom:0;">
           <div>
             <h3>🛠️ 售后与人工核账服务</h3>
-            <p class="muted-sm" style="margin-top:4px;">客服时间：每日<b>10:00–23:00</b>，且在<b>1小时内回复和处理</b>。</p></p>
+            <p class="muted-sm" style="margin-top:4px;">订单与工单处理时间：每日 <b>08:00–23:00</b>，且 <b>2 小时内回复处理</b>；夜间提交次日 8 时后第一时间处理。</p>
           </div>
           <button type="button" class="btn-secondary btn-sm-pad" data-open-ticket="true">提交工单</button>
         </div>
@@ -476,6 +479,7 @@
       <label>问题分类
         <select id="ticketCategory">
           <option value="安装配置">安装配置</option>
+          <option value="上门安装预约">上门安装预约 (赣州城区 ¥88)</option>
           <option value="充值核账">充值核账</option>
           <option value="线路反馈">线路反馈</option>
           <option value="其他">其他</option>

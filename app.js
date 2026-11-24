@@ -247,19 +247,20 @@ async function loadPublicConfigAndSites() {
       renderEarlyBirdBanner();
       renderDynamicPlans();
 
-      const tvBtn = document.getElementById('tvApkDownloadBtn');
-      if (tvBtn) {
-        if (cfg.tvApkUrl) { tvBtn.href = cfg.tvApkUrl; tvBtn.textContent = '⬇️ 下载电视版'; }
-        else { tvBtn.removeAttribute('target'); tvBtn.href = '#'; tvBtn.onclick = (e) => { e.preventDefault(); switchView('mine'); showToast('请登录后在工单获取最新电视版安装包'); }; }
-      }
-      const mobBtn = document.getElementById('mobileApkDownloadBtn');
-      if (mobBtn) {
-        if (cfg.mobileApkUrl) { mobBtn.href = cfg.mobileApkUrl; mobBtn.textContent = '⬇️ 下载手机版'; }
-        else { mobBtn.removeAttribute('target'); mobBtn.href = '#'; mobBtn.onclick = (e) => { e.preventDefault(); switchView('mine'); showToast('请登录后在工单获取最新手机版安装包'); }; }
-      }
+      renderApkDownloads(cfg.apkDownloads || []);
       if (cfg.downloadNote) {
         const noteEl = document.getElementById('downloadNoteText');
         if (noteEl) noteEl.textContent = '💡 ' + cfg.downloadNote;
+      }
+      const showOnsite = cfg.onsiteEnabled !== false;
+      ['homeOnsiteBanner', 'guideOnsiteCard'].forEach(id => {
+        document.getElementById(id)?.classList.toggle('hidden', !showOnsite);
+      });
+      if (cfg.onsiteTitle) {
+        ['homeOnsiteTitle', 'guideOnsiteTitle'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = cfg.onsiteTitle; });
+      }
+      if (cfg.onsiteDesc) {
+        ['homeOnsiteDesc', 'guideOnsiteDesc'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = cfg.onsiteDesc; });
       }
     }
   } catch (e) {}
@@ -1031,4 +1032,44 @@ async function batchDeleteUserTickets() {
   if (selAll) selAll.checked = false;
   showToast(data.message || data.error);
   checkLoginState();
+}
+
+function renderApkDownloads(list) {
+  const box = document.getElementById('apkDownloadsGrid');
+  if (!box) return;
+  const items = (Array.isArray(list) && list.length > 0) ? list : [
+    { name: 'TVBox 通用最新版 (Android 5.0+)', desc: '推荐首选！智能电视、机顶盒、投影仪、安卓手机/平板全通用', tag: '🔥 推荐', url: '' },
+    { name: 'TVBox 老旧设备兼容版 (Android 4.x)', desc: '专为安卓 4.1~4.4 老款电视与机顶盒优化，解决解析错误或闪退', tag: '老设备专用', url: '' }
+  ];
+  box.innerHTML = items.map(a => {
+    const hasUrl = a.url && /^https?:\/\//i.test(a.url);
+    const btnHtml = hasUrl
+      ? `<a class="btn-primary btn-sm-pad" href="${escapeHtml(a.url)}" target="_blank" rel="noopener">⬇️ 下载此版本</a>`
+      : `<button type="button" class="btn-secondary btn-sm-pad" onclick="switchView('mine');showToast('请登录后提交工单获取此版本安装包');">联系客服获取</button>`;
+    return `
+      <div class="dl-card">
+        <div class="dl-icon">📦</div>
+        <div class="dl-body">
+          ${a.tag ? `<span class="apk-tag-pill">${escapeHtml(a.tag)}</span>` : ''}
+          <h3>${escapeHtml(a.name)}</h3>
+          <p class="muted-sm">${escapeHtml(a.desc || '')}</p>
+        </div>
+        ${btnHtml}
+      </div>
+    `;
+  }).join('');
+}
+
+function openOnsiteBooking() {
+  if (!localStorage.getItem('tvbox_token')) {
+    showToast('请先登录后预约赣州市城区上门安装服务');
+    openAuthModal(true);
+    return;
+  }
+  const cat = document.getElementById('ticketCategory');
+  if (cat) cat.value = '上门安装预约';
+  document.getElementById('ticketSubject').value = '预约赣州市城区上门安装调试服务 (¥88 送全年全能双享)';
+  document.getElementById('ticketContent').value = '小区/地址：\n联系电话/微信：\n方便上门的时间段：\n电视/盒子品牌型号：';
+  document.getElementById('ticketMsg').textContent = '';
+  document.getElementById('ticketModal').classList.remove('hidden');
 }

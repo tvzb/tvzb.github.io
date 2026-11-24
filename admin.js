@@ -97,6 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('saveTestCfgBtn')?.addEventListener('click', () => saveChannelConfig('testCfgMsg'));
   document.getElementById('previewTestTxtBtn')?.addEventListener('click', previewTestTxt);
   document.getElementById('saveSiteSettingsBtn')?.addEventListener('click', saveSiteSettings);
+  document.getElementById('addApkVersionBtn')?.addEventListener('click', addApkVersionRow);
   document.getElementById('addTierBtn')?.addEventListener('click', addEarlyBirdTier);
   document.getElementById('addPlanBtn')?.addEventListener('click', addNewPlanRow);
   document.getElementById('savePricingBtn')?.addEventListener('click', savePricingConfig);
@@ -780,17 +781,55 @@ async function previewTestTxt() {
 }
 
 // ================= 7. 站点与客户端下载设置 =================
+let apkDownloadsState = [];
+
 async function loadSiteSettings() {
   try {
     const res = await apiFetch('/api/admin/site-settings');
     const data = await res.json();
     if (!data.ok || !data.settings) return;
-    document.getElementById('setTrialDays').value = data.settings.trial_days ?? 7;
-    document.getElementById('setTvApkUrl').value = data.settings.tv_apk_url || '';
-    document.getElementById('setMobileApkUrl').value = data.settings.mobile_apk_url || '';
-    document.getElementById('setDownloadNote').value = data.settings.download_note || '';
+    const s = data.settings;
+    document.getElementById('setTrialDays').value = s.trial_days ?? 7;
+    document.getElementById('setDownloadNote').value = s.download_note || '';
+    document.getElementById('setOnsiteEnabled').value = s.onsite_enabled === false ? 'false' : 'true';
+    document.getElementById('setOnsiteTitle').value = s.onsite_title || '赣州市城区专属 · 上门安装调试服务';
+    document.getElementById('setOnsiteDesc').value = s.onsite_desc || '上门费 88 元，包含电视/盒子现场安装 TVBox + 线路调试测速 + 赠送全年全能双享会员！';
+    apkDownloadsState = Array.isArray(s.apk_downloads) ? s.apk_downloads : [];
+    renderApkDownloadsEditor();
   } catch (e) {}
 }
+
+function renderApkDownloadsEditor() {
+  const box = document.getElementById('apkDownloadsEditor');
+  if (!box) return;
+  if (apkDownloadsState.length === 0) {
+    box.innerHTML = '<p class="muted">暂无 APK 版本，点击右上角「+ 新增 APK 版本」添加。</p>';
+    return;
+  }
+  box.innerHTML = apkDownloadsState.map((a, idx) => `
+    <div class="pricing-row-card" style="background:#131a2a;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <b>版本 #${idx + 1}</b>
+        <button type="button" class="btn-sm btn-reject" onclick="removeApkVersionRow(${idx})">删除</button>
+      </div>
+      <div class="pricing-grid-4">
+        <label>版本名称<input type="text" value="${escapeHtml(a.name || '')}" onchange="updateApkField(${idx}, 'name', this.value)"></label>
+        <label>角标标签<input type="text" value="${escapeHtml(a.tag || '')}" placeholder="如：推荐 / 安卓4.x" onchange="updateApkField(${idx}, 'tag', this.value)"></label>
+        <label style="grid-column:span 2;">下载地址 URL（网盘/直链）<input type="url" value="${escapeHtml(a.url || '')}" placeholder="https://..." onchange="updateApkField(${idx}, 'url', this.value)"></label>
+      </div>
+      <label style="margin-top:6px;font-size:0.78rem;">适用设备/系统说明
+        <input type="text" value="${escapeHtml(a.desc || '')}" style="padding:7px 9px;font-size:0.84rem;margin-top:4px;" onchange="updateApkField(${idx}, 'desc', this.value)">
+      </label>
+    </div>
+  `).join('');
+}
+
+function updateApkField(idx, key, val) { if (apkDownloadsState[idx]) apkDownloadsState[idx][key] = val; }
+function addApkVersionRow() {
+  apkDownloadsState.push({ name: 'TVBox 新版本 (Android 5.0+)', tag: '备用版', desc: '安卓电视/盒子/手机/平板通用', url: '' });
+  renderApkDownloadsEditor();
+}
+function removeApkVersionRow(idx) { apkDownloadsState.splice(idx, 1); renderApkDownloadsEditor(); }
 
 async function saveSiteSettings() {
   const msg = document.getElementById('siteSettingsMsg');
@@ -798,9 +837,11 @@ async function saveSiteSettings() {
   msg.className = 'msg';
   const payload = {
     trial_days: Number(document.getElementById('setTrialDays').value),
-    tv_apk_url: document.getElementById('setTvApkUrl').value.trim(),
-    mobile_apk_url: document.getElementById('setMobileApkUrl').value.trim(),
-    download_note: document.getElementById('setDownloadNote').value.trim()
+    apk_downloads: apkDownloadsState,
+    download_note: document.getElementById('setDownloadNote').value.trim(),
+    onsite_enabled: document.getElementById('setOnsiteEnabled').value === 'true',
+    onsite_title: document.getElementById('setOnsiteTitle').value.trim(),
+    onsite_desc: document.getElementById('setOnsiteDesc').value.trim()
   };
   try {
     const res = await apiFetch('/api/admin/site-settings', { method: 'POST', body: JSON.stringify(payload) });
