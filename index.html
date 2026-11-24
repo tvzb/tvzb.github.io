@@ -22,7 +22,7 @@
         <button type="button" class="nav-pill" data-nav="channels">频道状态</button>
         <button type="button" class="nav-pill" data-nav="speed">宽带测速</button>
         <button type="button" class="nav-pill" data-nav="guide">下载教程</button>
-        <button type="button" class="nav-pill" data-nav="mine">联系客服</button>
+        <button type="button" class="nav-pill" data-nav="mine">订单与工单</button>
       </nav>
 
       <!-- 右侧：深浅主题切换 + 登录按钮 / 登录后紧凑头像 -->
@@ -43,7 +43,7 @@
       <!-- 紧凑极光首屏 -->
       <div class="hero-banner">
         <div class="hero-content">
-          <span class="hero-badge">⚡ 4K 点播 + 49台央卫视直播 · 一链搞定</span>
+          <span class="hero-badge">⚡ <span class="js-vod-count">21</span>条4K专线 + 49台央卫视直播 · 一链搞定</span>
           <h1>装好 TVBox<br><em>全家畅看全网影视</em></h1>
           <p class="hero-desc">告别各大平台套娃会员，一个专属接口同时搞定高速去广告点播与高清直播，云端自动维护永不折腾。</p>
           <div class="hero-cta-row">
@@ -68,6 +68,32 @@
           <div class="mini-kpi">
             <div class="mini-kpi-val" id="homeKpiSpeed">-</div>
             <div class="mini-kpi-lbl">平均首选速</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 首页最显目核心区：专属订阅地址 + 永久免费直播体验源 -->
+      <div class="home-core-grid">
+        <div id="homeSubQuickBox" class="core-sub-card">
+          <div class="core-card-head">
+            <span class="core-pill vip">🔑 我的专属订阅地址</span>
+            <span id="homeSubBadges" class="muted-sm">登录后一键复制</span>
+          </div>
+          <div id="homeSubBody">
+            <p class="muted-sm" style="margin:6px 0 10px;">登录后即可在此直接复制您的<b>「一键全能聚合地址」</b>填入 TVBox，支持点播+直播全自动更新。</p>
+            <button type="button" class="btn-primary btn-sm-pad" onclick="openAuthModal(true)">立即登录 / 领 <span class="js-trial-days">7</span> 天试用</button>
+          </div>
+        </div>
+
+        <div class="core-free-card">
+          <div class="core-card-head">
+            <span class="core-pill free">🆓 永久免费直播体验源</span>
+            <span class="muted-sm">国内直连免翻墙</span>
+          </div>
+          <p class="muted-sm" style="margin:6px 0 8px;">无需注册，直接复制填入 TVBox「直播地址」栏即可畅看高清央卫视体验台。</p>
+          <div class="copy-code-row">
+            <code id="freeLiveUrl" class="inline-code" style="flex:1;">https://tvbox.hahagw.eu.org/sub/free-live</code>
+            <button type="button" class="btn-secondary btn-sm-pad" data-copy-id="freeLiveUrl">一键复制</button>
           </div>
         </div>
       </div>
@@ -108,14 +134,7 @@
         <div class="card muted-sm" style="text-align:center;">正在加载最新会员套餐...</div>
       </div>
 
-      <!-- 紧凑永久免费体验条 -->
-      <div class="free-strip">
-        <div class="free-strip-info">
-          <div class="free-strip-title">🆓 永久免费直播体验源（国内直连免翻墙）</div>
-          <code id="freeLiveUrl" class="inline-code">https://tvbox.hahagw.eu.org/sub/free-live</code>
-        </div>
-        <button type="button" class="btn-secondary btn-sm-pad" data-copy-id="freeLiveUrl">一键复制</button>
-      </div>
+
     </section>
 
     <!-- ==================== 视图 2：实时频道监测 ==================== -->
@@ -156,7 +175,7 @@
       <div class="block-head">
         <div>
           <h2>家庭宽带真实拉流测速</h2>
-          <p class="muted-sm">连家中 Wi-Fi 实测 21 站下载速率，保存后电视重启即按最快排序</p>
+          <p class="muted-sm">连家中 Wi-Fi 实测 <span class="js-vod-count">21</span> 条加密高速专线速率，保存后电视重启即按最快排序</p>
         </div>
       </div>
 
@@ -254,13 +273,13 @@
       </div>
     </section>
 
-    <!-- ==================== 视图 5：个人中心 & 头像设置 & 客服工单 ==================== -->
+    <!-- ==================== 视图 5：订单与工单（全新美观布局） ==================== -->
     <section id="view-mine" class="tab-view">
       <!-- 未登录态 -->
       <div id="mineGuestCard" class="card guest-box">
-        <div style="font-size:2.6rem;margin-bottom:8px;">🎬</div>
-        <h2>登录查看您的专属订阅</h2>
-        <p class="muted-sm" style="margin:8px 0 18px;">新用户注册即送 <b><span class="js-trial-days">7</span> 天点播 + 全频道直播</b>全功能体验，支持自定义头像与专属测速排序。</p>
+        <div style="font-size:2.8rem;margin-bottom:8px;">🧾</div>
+        <h2>登录后管理您的订单与客服工单</h2>
+        <p class="muted-sm" style="margin:8px 0 18px;">新用户注册即送 <b><span class="js-trial-days">7</span> 天全功能试用</b>，会员续费所有期限自动叠加（如 7天试用 + 365天 = 372天）。</p>
         <div class="hero-cta-row" style="justify-content:center;">
           <button type="button" id="mineRegisterBtn" class="btn-primary">免费注册领试用</button>
           <button type="button" id="mineLoginBtn" class="btn-secondary">已有账号登录</button>
@@ -269,8 +288,8 @@
 
       <!-- 已登录态 -->
       <div id="mineAuthedWrap" class="hidden">
-        <!-- 紧凑个人资料卡片（头像选择 + 邮箱 + 退出） -->
-        <div class="card profile-card">
+        <!-- 豪华 VIP 会员身份卡 -->
+        <div class="vip-hero-card">
           <div class="profile-left">
             <button type="button" id="openAvatarPickerBtn" class="profile-avatar-lg" title="点击更换头像">
               <span id="profileAvatarIcon">🎬</span>
@@ -281,40 +300,56 @@
               <div class="profile-badges" id="profileBadges"></div>
             </div>
           </div>
-          <button type="button" id="logout" class="btn-outline btn-sm-pad">退出</button>
+          <div class="vip-card-actions">
+            <button type="button" class="btn-primary btn-sm-pad" data-nav="home">续费 / 叠加时长</button>
+            <button type="button" id="logout" class="btn-outline btn-sm-pad">退出登录</button>
+          </div>
         </div>
 
-        <!-- 专属订阅地址区 -->
+        <!-- 3 格个人数据概览条 -->
+        <div class="mine-kpi-3">
+          <div class="mkpi"><div class="mkpi-num" id="mineOrderCount">0</div><div class="mkpi-lbl">累计订单</div></div>
+          <div class="mkpi"><div class="mkpi-num" id="mineTicketCount">0</div><div class="mkpi-lbl">客服工单</div></div>
+          <div class="mkpi"><div class="mkpi-num" id="mineVodCount">-</div><div class="mkpi-lbl">可用点播专线</div></div>
+        </div>
+
+        <!-- 专属订阅快捷卡片（与首页同步） -->
         <div id="accountInfo" class="card" style="margin-top:14px;"></div>
 
-        <!-- 订单记录 & 客服工单 -->
+        <!-- 订单记录 & 工单对话流 -->
         <div class="mine-two-col">
           <div class="card">
             <div class="card-head-row">
-              <h3>📦 我的订单记录</h3>
-              <button type="button" class="btn-outline btn-xs" data-nav="home">续费 / 升级</button>
+              <div>
+                <h3>📦 我的订单记录</h3>
+                <p class="muted-sm">同类套餐购买期限自动叠加累计</p>
+              </div>
+              <button type="button" class="btn-outline btn-xs" data-nav="home">+ 续费套餐</button>
             </div>
-            <div id="orders" class="list-stack muted-sm">暂无订单记录</div>
+            <div id="orders" class="rich-list muted-sm">暂无订单记录</div>
           </div>
 
           <div class="card">
             <div class="card-head-row">
-              <h3>💬 我的客服工单</h3>
+              <div>
+                <h3>💬 我的客服工单</h3>
+                <p class="muted-sm">客服回复将实时同步显示在此</p>
+              </div>
               <button type="button" id="openTicketModalBtn" class="btn-primary btn-xs">+ 提交工单</button>
             </div>
-            <div id="userTickets" class="list-stack muted-sm">暂无工单记录</div>
+            <div id="userTickets" class="rich-list muted-sm">暂无工单记录</div>
           </div>
         </div>
       </div>
 
-      <!-- 公共售后提示（无论是否登录都能直接提交/了解时段） -->
-      <div class="card" style="margin-top:14px;">
-        <div class="card-head-row">
+      <!-- 公共售后提示 -->
+      <div class="card support-banner-card" style="margin-top:14px;">
+        <div class="card-head-row" style="margin-bottom:0;">
           <div>
-            <h3>🛠️ 售后与人工核账说明</h3>
-            <p class="muted-sm" style="margin-top:4px;">人工核账与工单回复时段：每日 <b>08:30–23:30</b>（约 1–3 分钟开通），夜间订单次日早第一时间处理。</p>
+            <h3>🛠️ 售后与人工核账服务</h3>
+            <p class="muted-sm" style="margin-top:4px;">人工核账与工单处理时段：每日 <b>08:30–23:30</b>（约 1–3 分钟响应），夜间提交次日早第一时间处理。</p>
           </div>
-          <button type="button" class="btn-secondary btn-sm-pad" data-open-ticket="true">联系客服</button>
+          <button type="button" class="btn-secondary btn-sm-pad" data-open-ticket="true">提交工单</button>
         </div>
       </div>
     </section>
@@ -330,7 +365,7 @@
     <button type="button" class="mnav-item" data-nav="channels"><span class="mnav-ico">📡</span><span>频道</span></button>
     <button type="button" class="mnav-item" data-nav="speed"><span class="mnav-ico">⚡</span><span>测速</span></button>
     <button type="button" class="mnav-item" data-nav="guide"><span class="mnav-ico">📖</span><span>教程</span></button>
-    <button type="button" class="mnav-item" data-nav="mine"><span class="mnav-ico" id="bottomMineIcon">👤</span><span>我的</span></button>
+    <button type="button" class="mnav-item" data-nav="mine"><span class="mnav-ico" id="bottomMineIcon">🧾</span><span>订单/工单</span></button>
   </nav>
 
   <!-- 轻提示 Toast 容器 -->
@@ -409,13 +444,15 @@
       <h2>扫码支付并提交订单后 6 位</h2>
       <div id="paymentDetails" class="pay-summary"></div>
 
-      <label>优惠码（选填，可叠加早鸟折扣）
-        <div style="display:flex;gap:8px;margin-top:6px;">
-          <input id="couponInput" type="text" placeholder="如有优惠码请在此输入" style="flex:1;margin-top:0;text-transform:uppercase;">
-          <button type="button" id="verifyCouponBtn" class="btn-secondary" style="white-space:nowrap;">核验</button>
-        </div>
-      </label>
-      <p id="couponMsg" class="muted-sm" style="margin-top:6px;"></p>
+      <div id="couponSectionWrap">
+        <label>优惠码（选填 · 与早鸟折扣不叠加，按原价单独计算）
+          <div style="display:flex;gap:8px;margin-top:6px;">
+            <input id="couponInput" type="text" placeholder="如有优惠码请在此输入" style="flex:1;margin-top:0;text-transform:uppercase;">
+            <button type="button" id="verifyCouponBtn" class="btn-secondary" style="white-space:nowrap;">核验</button>
+          </div>
+        </label>
+        <p id="couponMsg" class="muted-sm" style="margin-top:6px;"></p>
+      </div>
 
       <div class="qr-box">
         <img id="qrImage" src="wechat_qr.png" alt="请使用手机扫码支付">

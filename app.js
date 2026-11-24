@@ -17,30 +17,12 @@ const AVATAR_OPTIONS = [
   { icon: '🍿', label: '爆米花' }
 ];
 
-// 默认点播站（启动后自动通过 /api/vod-sites 与后端实时同步）
-const DEFAULT_VOD_SITES = [
-  { key: '非凡资源', name: '非凡资源', pingUrl: 'https://api.ffzyapi.com/' },
-  { key: '量子资源', name: '量子资源', pingUrl: 'https://cj.lziapi.com/' },
-  { key: '暴风资源', name: '暴风资源', pingUrl: 'https://bfzyapi.com/' },
-  { key: '红牛资源', name: '红牛资源', pingUrl: 'https://www.hongniuzy2.com/' },
-  { key: '极速资源', name: '极速资源', pingUrl: 'https://jszyapi.com/' },
-  { key: '光速资源', name: '光速资源', pingUrl: 'https://api.guangsuapi.com/' },
-  { key: '金鹰资源', name: '金鹰资源', pingUrl: 'https://jyzyapi.com/' },
-  { key: '新浪资源', name: '新浪资源', pingUrl: 'https://api.xinlangapi.com/' },
-  { key: '优质资源', name: '优质资源', pingUrl: 'https://api.yyzy-tv.vip/' },
-  { key: '闪电资源', name: '闪电资源', pingUrl: 'https://xsd.sdzyapi.com/' },
-  { key: '魔都资源', name: '魔都资源', pingUrl: 'https://www.mdzyapi.com/' },
-  { key: '电影天堂', name: '电影天堂', pingUrl: 'https://caiji.dyttzyapi.com/' },
-  { key: '豪华资源', name: '豪华资源', pingUrl: 'https://hhzyapi.com/' },
-  { key: '无尽资源', name: '无尽资源', pingUrl: 'https://api.wujinapi.me/' },
-  { key: '速播资源', name: '速播资源', pingUrl: 'https://subocj.com/' },
-  { key: '如意资源', name: '如意资源', pingUrl: 'https://cj.rycjapi.com/' },
-  { key: '虎牙资源', name: '虎牙资源', pingUrl: 'https://www.huyaapi.com/' },
-  { key: '百度资源', name: '百度资源', pingUrl: 'https://api.apibdzy.com/' },
-  { key: 'U酷资源', name: 'U酷资源', pingUrl: 'https://api.ukuapi88.com/' },
-  { key: 'ikun资源', name: 'iKun资源', pingUrl: 'https://ikunzyapi.com/' },
-  { key: '索尼资源', name: '索尼资源', pingUrl: 'https://suoniapi.com/' }
-];
+// 默认脱敏点播专线（启动后自动通过 /api/vod-sites 与后台实时同步）
+const DEFAULT_VOD_SITES = Array.from({ length: 21 }, (_, i) => ({
+  key: `line_${String(i + 1).padStart(2, '0')}`,
+  name: `极速专线 ${String(i + 1).padStart(2, '0')}`,
+  pingUrl: ''
+}));
 
 let currentSites = DEFAULT_VOD_SITES.map(s => ({ ...s, status: 'idle', speedMBs: 0, latency: undefined }));
 let dynamicPlans = [];
@@ -49,6 +31,8 @@ let currentPlanCategory = 'combo';
 let summaryChannels = [];
 let currentSummaryGroup = 'all';
 let currentTrialDays = 7;
+let currentVodCount = 21;
+let couponsEnabled = true;
 let currentUser = null;
 let isRegisterMode = true;
 let selectedPlan = null;
@@ -239,7 +223,22 @@ async function loadPublicConfigAndSites() {
         currentTrialDays = Number(cfg.trialDays);
         document.querySelectorAll('.js-trial-days').forEach(el => { el.textContent = String(currentTrialDays); });
       }
-      if (Array.isArray(cfg.plans)) dynamicPlans = cfg.plans;
+      if (cfg.vodSiteCount !== undefined) {
+        currentVodCount = Number(cfg.vodSiteCount);
+        document.querySelectorAll('.js-vod-count').forEach(el => { el.textContent = String(currentVodCount); });
+        const mv = document.getElementById('mineVodCount');
+        if (mv) mv.textContent = currentVodCount + ' 条';
+      }
+      if (cfg.couponsEnabled !== undefined) {
+        couponsEnabled = Boolean(cfg.couponsEnabled);
+        document.getElementById('couponSectionWrap')?.classList.toggle('hidden', !couponsEnabled);
+      }
+      if (Array.isArray(cfg.plans)) {
+        dynamicPlans = cfg.plans.map(p => ({
+          ...p,
+          desc: (p.desc || '').replace(/\b\d+\s*站/g, `${currentVodCount}站`)
+        }));
+      }
       if (cfg.earlyBird) earlyBirdState = cfg.earlyBird;
       renderEarlyBirdBanner();
       renderDynamicPlans();
@@ -268,7 +267,10 @@ async function loadPublicConfigAndSites() {
       if (Array.isArray(d.sites) && d.sites.length > 0) {
         currentSites = d.sites.map(s => ({ ...s, status: 'idle', speedMBs: 0, latency: undefined }));
         const btn = document.getElementById('startSpeedTest');
-        if (btn) btn.textContent = `⚡ 开始拉流测速 (${currentSites.length}站)`;
+        if (btn) btn.textContent = `⚡ 开始拉流测速 (${currentSites.length}条专线)`;
+        currentVodCount = currentSites.length;
+        document.querySelectorAll('.js-vod-count').forEach(el => { el.textContent = String(currentVodCount); });
+        const mv = document.getElementById('mineVodCount'); if (mv) mv.textContent = currentVodCount + ' 条';
         renderSiteList();
       }
     }
@@ -625,31 +627,64 @@ function renderAccountDashboard(user, orders, tickets) {
     renderSiteList();
   }
 
+  // 同步把专属订阅地址置顶渲染到「首页」最显目卡片
+  const homeSubBadges = document.getElementById('homeSubBadges');
+  const homeSubBody = document.getElementById('homeSubBody');
+  if (homeSubBadges) {
+    homeSubBadges.innerHTML = `<span class="badge ${vodActive ? 'active' : 'expired'}">点播:${vodActive ? '剩' + daysLeft(user.vod_expire_at) + '天' : '未开'}</span> <span class="badge ${liveActive ? 'active' : 'expired'}">直播:${liveActive ? '剩' + daysLeft(user.live_expire_at) + '天' : '免费'}</span>`;
+  }
+  if (homeSubBody) {
+    homeSubBody.innerHTML = `
+      <p class="muted-sm" style="margin:6px 0 6px;">一键全能聚合地址（复制到 TVBox「配置地址」栏，点播+直播自动同步）：</p>
+      <div class="copy-code-row">
+        <code class="inline-code" style="flex:1;">${allUrl}</code>
+        <button type="button" class="btn-primary btn-sm-pad" onclick="copyText('${allUrl}', this)">一键复制</button>
+      </div>
+    `;
+  }
+
+  document.getElementById('mineOrderCount').textContent = String((orders || []).length);
+  document.getElementById('mineTicketCount').textContent = String((tickets || []).length);
+
   const ordersEl = document.getElementById('orders');
   if (orders && orders.length > 0) {
-    const sm = { pending: '<span style="color:#f59e0b;">⏳ 审核中</span>', approved: '<span style="color:#10b981;">✅ 已开通</span>', rejected: '<span style="color:#ef4444;">❌ 已驳回</span>' };
+    const sm = { pending: '<span style="color:#f59e0b;">⏳ 审核中</span>', approved: '<span style="color:#10b981;">✅ 已开通(已叠加)</span>', rejected: '<span style="color:#ef4444;">❌ 已驳回</span>' };
     ordersEl.innerHTML = orders.map(o => `
-      <div class="stat">
-        <span><b>${escapeHtml(o.plan_name)}</b> · ¥${o.amount}${o.coupon_code ? ' (' + escapeHtml(o.coupon_code) + ')' : ''}</span>
-        <span>${sm[o.status] || o.status}</span>
+      <div class="order-rich-card ${o.status}">
+        <div class="order-rich-top">
+          <span>${escapeHtml(o.plan_name)}</span>
+          <span>${sm[o.status] || o.status}</span>
+        </div>
+        <div class="order-rich-meta">
+          <span>实付 <b style="color:var(--accent);">¥${o.amount}</b>${o.coupon_code ? ' · 优惠: ' + escapeHtml(o.coupon_code) : ''}</span>
+          <span>${escapeHtml(o.pay_method || '')} · 尾号 ${escapeHtml(o.pay_last6)}</span>
+        </div>
+        <div class="order-rich-meta">
+          <span>单号：${escapeHtml(o.order_no)}</span>
+          <span>${formatDateTime(o.created_at)}</span>
+        </div>
       </div>
     `).join('');
   } else {
-    ordersEl.innerHTML = '暂无订单记录';
+    ordersEl.innerHTML = '<div style="text-align:center;padding:18px 0;">暂无订单记录，去首页选择适合您的套餐吧</div>';
   }
 
   const tEl = document.getElementById('userTickets');
   if (tickets && tickets.length > 0) {
-    const st = { open: '<span style="color:#f59e0b;">待回复</span>', replied: '<span style="color:#10b981;">已回复</span>', closed: '<span style="color:#94a3b8;">已关闭</span>' };
+    const st = { open: '<span class="badge expired" style="background:rgba(245,158,11,0.18);color:#fbbf24;">待回复</span>', replied: '<span class="badge active">已回复</span>', closed: '<span class="badge" style="background:rgba(148,163,184,0.18);color:#94a3b8;">已关闭</span>' };
     tEl.innerHTML = tickets.map(t => `
-      <div class="ticket-item">
-        <div class="ticket-head"><b>[${escapeHtml(t.category)}] ${escapeHtml(t.subject)}</b><span>${st[t.status] || t.status}</span></div>
-        <div class="muted-sm" style="margin-top:3px;">${escapeHtml(t.content)}</div>
-        ${t.admin_reply ? `<div class="ticket-reply">💬 客服回复：${escapeHtml(t.admin_reply)}</div>` : ''}
+      <div class="ticket-rich-card">
+        <div class="ticket-head">
+          <span><span class="core-pill vip" style="font-size:0.7rem;padding:2px 7px;">${escapeHtml(t.category)}</span> <b>${escapeHtml(t.subject)}</b></span>
+          ${st[t.status] || t.status}
+        </div>
+        <div class="muted-sm" style="font-size:0.74rem;margin-top:4px;">工单号：${escapeHtml(t.ticket_no)} · ${formatDateTime(t.created_at)}</div>
+        <div class="ticket-user-bubble">${escapeHtml(t.content)}</div>
+        ${t.admin_reply ? `<div class="ticket-admin-bubble"><b>🎧 客服回复</b>${t.replied_at ? ' (' + formatDateTime(t.replied_at) + ')' : ''}：<br>${escapeHtml(t.admin_reply)}</div>` : ''}
       </div>
     `).join('');
   } else {
-    tEl.innerHTML = '暂无工单记录，有问题随时点击右上角提交。';
+    tEl.innerHTML = '<div style="text-align:center;padding:18px 0;">暂无工单记录，有问题随时点击右上角提交</div>';
   }
 }
 
@@ -660,7 +695,7 @@ function renderPaymentSummary() {
   if (appliedCoupon) {
     el.innerHTML =
       `购买套餐：<b>${escapeHtml(selectedPlan.name)}</b><br>` +
-      `原价：<s>¥${appliedCoupon.originalAmount}</s> &nbsp; 累计立省：<b style="color:#f59e0b;">-¥${appliedCoupon.discountAmount}</b><br>` +
+      `原价：<s>¥${appliedCoupon.originalAmount}</s> &nbsp; 优惠码立减：<b style="color:#f59e0b;">-¥${appliedCoupon.discountAmount}</b> (不叠加早鸟)<br>` +
       `折后实付：<b style="color:#10b981;font-size:1.25rem;">¥${appliedCoupon.finalAmount}</b>`;
   } else if (selectedPlan.earlyBirdSaved > 0) {
     el.innerHTML =
@@ -688,7 +723,7 @@ async function verifyCoupon() {
     const data = await res.json();
     if (!res.ok) { appliedCoupon = null; msg.textContent = '❌ ' + (data.error || '无效优惠码'); msg.style.color = '#ef4444'; renderPaymentSummary(); return; }
     appliedCoupon = data;
-    msg.textContent = `✅ 已叠加优惠码 ${data.code}（${data.desc}），请按折后金额扫码！`;
+    msg.textContent = `✅ 已应用优惠码 ${data.code}（${data.desc}，与早鸟不叠加，按原价计算），请按折后金额扫码！`;
     msg.style.color = '#10b981';
     renderPaymentSummary();
   } catch (e) { msg.textContent = '核验失败'; }
@@ -949,4 +984,10 @@ function formatDate(ts) {
 }
 function escapeHtml(str) {
   return String(str || '').replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s]));
+}
+
+function formatDateTime(ts) {
+  if (!ts) return '-';
+  const d = new Date(ts);
+  return `${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
 }

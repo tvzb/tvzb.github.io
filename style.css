@@ -445,7 +445,7 @@ button, .btn-primary, .btn-secondary, .btn-outline, .btn-glass {
 }
 
 /* 响应式频道列表（手机紧凑卡片，不横向溢出） */
-.channel-list { display: flex; flex-direction: column; gap: 8px; max-height: 62vh; overflow-y: auto; }
+.channel-list { display: grid; grid-template-columns: 1fr; gap: 8px; }
 .ch-row-card {
   display: flex;
   justify-content: space-between;
@@ -779,4 +779,118 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
   .dl-card { flex-direction: column; text-align: center; padding: 20px; }
   .mine-two-col { grid-template-columns: 1fr 1fr; }
   .toast { bottom: 28px; }
+}
+
+/* 首页最显目：订阅地址 + 永久免费体验双联卡片 */
+.home-core-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 14px;
+}
+.core-sub-card {
+  background: linear-gradient(145deg, rgba(59, 130, 246, 0.16), rgba(99, 102, 241, 0.1));
+  border: 1.5px solid rgba(59, 130, 246, 0.5);
+  border-radius: 16px;
+  padding: 16px;
+}
+.core-free-card {
+  background: linear-gradient(145deg, rgba(16, 185, 129, 0.12), rgba(14, 165, 233, 0.08));
+  border: 1.5px solid rgba(16, 185, 129, 0.42);
+  border-radius: 16px;
+  padding: 16px;
+}
+.core-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.core-pill {
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+.core-pill.vip { background: rgba(59, 130, 246, 0.22); color: #60a5fa; }
+.core-pill.free { background: rgba(16, 185, 129, 0.22); color: #34d399; }
+.copy-code-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 6px; }
+
+/* 订单与工单页美化 */
+.vip-hero-card {
+  background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.28), transparent 60%),
+              linear-gradient(145deg, #131e3a, #0c1326);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  border-radius: 18px;
+  padding: 18px;
+  color: #f8fafc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.vip-card-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.mine-kpi-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+.mkpi {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 8px;
+  text-align: center;
+}
+.mkpi-num { font-size: 1.25rem; font-weight: 800; color: var(--primary); }
+.mkpi-lbl { font-size: 0.76rem; color: var(--muted); margin-top: 2px; }
+
+.rich-list { display: flex; flex-direction: column; gap: 10px; }
+.order-rich-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: 10px;
+  padding: 12px;
+}
+.order-rich-card.approved { border-left-color: var(--accent); }
+.order-rich-card.pending { border-left-color: var(--warn); }
+.order-rich-card.rejected { border-left-color: var(--danger); }
+.order-rich-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-weight: 700; font-size: 0.9rem; }
+.order-rich-meta { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; margin-top: 6px; font-size: 0.78rem; color: var(--muted); }
+
+.ticket-rich-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+}
+.ticket-user-bubble {
+  margin-top: 8px;
+  padding: 8px 10px;
+  background: rgba(148, 163, 184, 0.1);
+  border-radius: 8px;
+  font-size: 0.84rem;
+  color: var(--text);
+}
+.ticket-admin-bubble {
+  margin-top: 8px;
+  padding: 9px 11px;
+  background: rgba(16, 185, 129, 0.14);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  font-size: 0.84rem;
+  color: var(--text);
+  white-space: pre-wrap;
+}
+.support-banner-card {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(16, 185, 129, 0.06));
+}
+
+@media (min-width: 860px) {
+  .home-core-grid { grid-template-columns: 1.15fr 1fr; }
+  .channel-list { grid-template-columns: repeat(2, 1fr); gap: 10px; }
 }

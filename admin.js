@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.tab-btn[data-tab]').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const tab = btn.dataset.tab;
-      ['orders', 'users', 'tickets', 'coupons', 'pricing', 'livecfg', 'testcfg', 'settings'].forEach(t => {
+      ['orders', 'users', 'tickets', 'coupons', 'pricing', 'vodcfg', 'livecfg', 'testcfg', 'settings'].forEach(t => {
         const cap = t.charAt(0).toUpperCase() + t.slice(1);
         document.getElementById('panel' + cap).classList.toggle('hidden', tab !== t);
       });
@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (tab === 'livecfg' || tab === 'testcfg') loadChannelConfig();
       if (tab === 'settings') loadSiteSettings();
       if (tab === 'pricing') loadPricingConfig();
+      if (tab === 'vodcfg') loadVodSitesConfig();
     };
   });
 
@@ -99,6 +100,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('addTierBtn')?.addEventListener('click', addEarlyBirdTier);
   document.getElementById('addPlanBtn')?.addEventListener('click', addNewPlanRow);
   document.getElementById('savePricingBtn')?.addEventListener('click', savePricingConfig);
+  document.getElementById('addVodSiteBtn')?.addEventListener('click', addVodSiteRow);
+  document.getElementById('autoMaskVodBtn')?.addEventListener('click', autoMaskVodAliases);
+  document.getElementById('saveVodSitesBtn')?.addEventListener('click', saveVodSitesConfig);
 });
 
 function showLogin() {
@@ -817,6 +821,7 @@ async function loadPricingConfig() {
     document.getElementById('ebEnabled').value = pricingState.early_bird?.enabled ? 'true' : 'false';
     document.getElementById('ebTitleInput').value = pricingState.early_bird?.title || '创始会员限时阶梯特惠';
     document.getElementById('ebCountMode').value = pricingState.early_bird?.count_mode || 'paid_users';
+    document.getElementById('couponsMasterEnabled').value = pricingState.coupons_enabled === false ? 'false' : 'true';
     renderTiersEditor();
     renderPlansEditor();
   } catch (e) {}
@@ -929,6 +934,7 @@ function removePlanRow(idx) {
 
 async function savePricingConfig() {
   if (!pricingState) return;
+  pricingState.coupons_enabled = document.getElementById('couponsMasterEnabled').value === 'true';
   pricingState.early_bird = {
     enabled: document.getElementById('ebEnabled').value === 'true',
     title: document.getElementById('ebTitleInput').value.trim() || '创始会员限时阶梯特惠',
@@ -945,6 +951,110 @@ async function savePricingConfig() {
     msg.textContent = data.message || '保存成功！';
     msg.classList.add('ok');
     loadPricingConfig();
+  } catch (e) {
+    msg.textContent = '网络错误';
+    msg.classList.add('error');
+  }
+}
+
+// ================= 9. 后台点播源平台管理（增删、排序、脱敏防泄密） =================
+let vodCfgState = null;
+
+async function loadVodSitesConfig() {
+  try {
+    const res = await apiFetch('/api/admin/vod-sites');
+    const data = await res.json();
+    if (!data.ok) return;
+    vodCfgState = data.config || { mask_names: true, sites: [] };
+    document.getElementById('vodMaskNamesToggle').checked = vodCfgState.mask_names !== false;
+    renderVodSitesEditor();
+  } catch (e) {}
+}
+
+function renderVodSitesEditor() {
+  if (!vodCfgState) return;
+  const list = vodCfgState.sites || [];
+  const enabledCnt = list.filter(s => s.enabled !== false).length;
+  document.getElementById('vodSitesSummary').textContent = `共 ${list.length} 条配置，当前启用 ${enabledCnt} 条（官网与 TVBox 实时同步此数字）`;
+  const box = document.getElementById('vodSitesContainer');
+  if (list.length === 0) {
+    box.innerHTML = '<p class="muted">暂无点播源，点击右上角「+ 新增点播源」添加。</p>';
+    return;
+  }
+  box.innerHTML = list.map((s, idx) => `
+    <div class="pricing-row-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px;flex-wrap:wrap;">
+        <b>#${String(idx + 1).padStart(2, '0')} ${escapeHtml(s.realName || s.key)} <span class="muted" style="font-weight:400;">→ 对外展示：${escapeHtml(s.alias || '')}</span></b>
+        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+          <label style="margin:0;display:inline-flex;align-items:center;gap:4px;"><input type="checkbox" style="width:auto;margin:0;" ${s.enabled !== false ? 'checked' : ''} onchange="updateVodField(${idx}, 'enabled', this.checked)"> 启用</label>
+          <button type="button" class="btn-sm btn-detail" onclick="moveVodSite(${idx}, -1)">↑上移</button>
+          <button type="button" class="btn-sm btn-detail" onclick="moveVodSite(${idx}, 1)">↓下移</button>
+          <button type="button" class="btn-sm btn-reject" onclick="removeVodSite(${idx})">删除</button>
+        </div>
+      </div>
+      <div class="pricing-grid-4">
+        <label>内部真实名称(仅后台可见)<input type="text" value="${escapeHtml(s.realName || s.key)}" onchange="updateVodField(${idx}, 'realName', this.value)"></label>
+        <label>对外脱敏代号(前台/电视显示)<input type="text" value="${escapeHtml(s.alias || '')}" onchange="updateVodField(${idx}, 'alias', this.value)"></label>
+        <label style="grid-column:span 2;">采集站 API 接口地址 (JSON)<input type="url" value="${escapeHtml(s.api || '')}" onchange="updateVodField(${idx}, 'api', this.value)"></label>
+      </div>
+    </div>
+  `).join('');
+}
+
+function updateVodField(idx, key, val) {
+  if (!vodCfgState?.sites?.[idx]) return;
+  vodCfgState.sites[idx][key] = val;
+}
+
+function moveVodSite(idx, delta) {
+  const arr = vodCfgState?.sites || [];
+  const target = idx + delta;
+  if (target < 0 || target >= arr.length) return;
+  [arr[idx], arr[target]] = [arr[target], arr[idx]];
+  renderVodSitesEditor();
+}
+
+function removeVodSite(idx) {
+  if (!confirm('确认删除该点播资源站？')) return;
+  vodCfgState.sites.splice(idx, 1);
+  renderVodSitesEditor();
+}
+
+function addVodSiteRow() {
+  if (!vodCfgState) vodCfgState = { mask_names: true, sites: [] };
+  const n = vodCfgState.sites.length + 1;
+  vodCfgState.sites.push({
+    key: 'vod_' + Date.now().toString().slice(-5),
+    realName: '新点播资源站',
+    alias: `极速专线 ${String(n).padStart(2, '0')}`,
+    api: 'https://',
+    enabled: true
+  });
+  renderVodSitesEditor();
+}
+
+function autoMaskVodAliases() {
+  if (!vodCfgState?.sites) return;
+  vodCfgState.sites.forEach((s, idx) => {
+    s.alias = `极速专线 ${String(idx + 1).padStart(2, '0')}`;
+  });
+  renderVodSitesEditor();
+}
+
+async function saveVodSitesConfig() {
+  if (!vodCfgState) return;
+  vodCfgState.mask_names = document.getElementById('vodMaskNamesToggle').checked;
+  const msg = document.getElementById('vodCfgMsg');
+  msg.textContent = '正在保存至 Cloudflare KV...';
+  msg.className = 'msg';
+  try {
+    const res = await apiFetch('/api/admin/vod-sites', { method: 'POST', body: JSON.stringify(vodCfgState) });
+    const data = await res.json();
+    if (!res.ok) { msg.textContent = data.error || '保存失败'; msg.classList.add('error'); return; }
+    vodCfgState = data.config;
+    renderVodSitesEditor();
+    msg.textContent = data.message || '保存成功！';
+    msg.classList.add('ok');
   } catch (e) {
     msg.textContent = '网络错误';
     msg.classList.add('error');

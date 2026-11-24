@@ -150,6 +150,7 @@
       <button class="tab-btn" data-tab="tickets">📩 客服工单</button>
       <button class="tab-btn" data-tab="coupons">🏷️ 优惠码管理</button>
       <button class="tab-btn" data-tab="pricing">💰 套餐与早鸟折扣</button>
+      <button class="tab-btn" data-tab="vodcfg">🎬 点播源管理</button>
       <button class="tab-btn" data-tab="livecfg">📡 live.txt 采集配置</button>
       <button class="tab-btn" data-tab="testcfg">🧪 test.txt 体验源配置</button>
       <button class="tab-btn" data-tab="settings">⚙️ 站点与下载设置</button>
@@ -255,6 +256,32 @@
       </table>
     </div>
 
+    <!-- 4.8 点播源资源平台管理（增删、排序、脱敏防泄密） -->
+    <div id="panelVodcfg" class="panel hidden">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+        <div>
+          <h3 style="margin-bottom:4px;">🎬 点播源资源平台管理（防泄密脱敏 + 增删排序）</h3>
+          <span class="muted">开启脱敏模式后，官网测速页与 TVBox 客户端只显示「对外脱敏代号」（如极速专线 01），绝不暴露真实采集站名称与接口域名。</span>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button id="autoMaskVodBtn" class="secondary">🪄 一键自动脱敏命名</button>
+          <button id="addVodSiteBtn" class="secondary">+ 新增点播源</button>
+          <button id="saveVodSitesBtn" class="primary">💾 保存点播源到 KV</button>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:14px;padding:12px;background:#090d16;border-radius:8px;border:1px solid var(--border);">
+        <label style="margin:0;display:flex;align-items:center;gap:8px;color:#e2e8f0;">
+          <input id="vodMaskNamesToggle" type="checkbox" checked style="width:auto;margin:0;">
+          <b>对外隐藏真实平台名称（脱敏防泄密模式，强烈推荐开启）</b>
+        </label>
+        <span id="vodSitesSummary" class="muted" style="margin-left:auto;"></span>
+      </div>
+
+      <div id="vodSitesContainer">加载中...</div>
+      <p id="vodCfgMsg" class="msg"></p>
+    </div>
+
     <!-- 5. live.txt 采集频道配置面板 -->
     <div id="panelLivecfg" class="panel hidden">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
@@ -348,6 +375,12 @@
               <option value="paid_users">按已开通付费会员数（推荐）</option>
               <option value="all_users">按总注册用户数</option>
               <option value="approved_orders">按已通过订单总数</option>
+            </select>
+          </label>
+          <label>优惠码功能独立开关（与早鸟不叠加）
+            <select id="couponsMasterEnabled">
+              <option value="true">开启优惠码</option>
+              <option value="false">关闭优惠码</option>
             </select>
           </label>
         </div>
