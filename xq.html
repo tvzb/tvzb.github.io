@@ -1,0 +1,938 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>弈 · 中国象棋 & 暗棋翻翻乐</title>
+<style>
+:root{--bg:#101827;--panel:#1b2738;--line:#35445a;--text:#edf2f7;--muted:#9eacc0;--gold:#d8b56d}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 50% 0,#26364c 0,#101827 55%);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;min-height:100vh}
+.app{max-width:1080px;margin:auto;padding:16px 18px 24px}
+.top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:14px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:40px;height:40px;border:1px solid #64748b;border-radius:12px;display:grid;place-items:center;color:var(--gold);font-size:22px;background:#202e41}
+.brand h1{font-size:19px;margin:0;letter-spacing:2px}
+.brand small{display:block;color:var(--muted);font-size:11px;letter-spacing:1px;margin-top:2px}
+.mode-switch{display:flex;background:#172334;border:1px solid #35445a;border-radius:14px;padding:4px;gap:4px}
+.mode-switch button{border:0;background:transparent;color:var(--muted);padding:8px 16px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer}
+.mode-switch button.active{background:#a77d3f;color:#fff}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 295px;gap:18px;align-items:start}
+.board-card,.side-card{background:linear-gradient(145deg,#1d2a3c,#172334);border:1px solid #35445a;border-radius:20px;box-shadow:0 18px 50px #0003}
+.board-card{padding:12px 14px}
+.players{display:flex;justify-content:space-between;align-items:center;padding:2px 5px 10px}
+.player{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:13px}
+.avatar{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:#2d3b50;font-size:15px;font-weight:bold}
+.avatar.red-av{color:#ff7b75}
+.avatar.black-av{color:#cbd5e1}
+.player.active{color:var(--text)}
+.player.active .avatar{outline:2px solid var(--gold)}
+.thinking{font-size:11px;color:var(--gold);min-height:15px;text-align:right}
+.canvas-wrap{width:100%;max-width:min(640px,calc((100vh - 185px) * 0.88));margin:auto;position:relative;touch-action:manipulation}
+.canvas-wrap.flip-mode{max-width:min(660px,calc((100vh - 185px) * 1.45))}
+canvas{display:block;width:100%;height:auto;border-radius:10px;cursor:pointer;touch-action:manipulation}
+.status{margin:10px 4px 2px;min-height:22px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:#c7d2e1}
+.status strong{color:var(--gold);font-weight:600}
+.side{display:flex;flex-direction:column;gap:13px}
+.side-card{padding:15px}
+.side-card h2{font-size:14px;margin:0 0 11px;letter-spacing:1px}
+.side-choice{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.difficulty{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.side-choice button,.difficulty button,.actions button{border:1px solid #43536a;background:#253449;color:#dbe5f2;border-radius:10px;padding:9px 7px;font-size:12px;cursor:pointer}
+.side-choice button.active,.difficulty button.active{background:#544832;border-color:var(--gold);color:#ffe2a2}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.actions button{padding:10px 8px;font-size:13px}
+.actions button.primary{background:#a77d3f;border-color:#c79b58;color:#fff}
+.actions button:disabled{opacity:.4;cursor:not-allowed}
+.tip{font-size:12px;color:var(--muted);line-height:1.6;margin:10px 1px 0}
+.dead-box{display:flex;flex-wrap:wrap;gap:5px;min-height:28px;margin-top:6px}
+.dead-chip{width:26px;height:26px;border-radius:50%;background:#f0d399;border:1px solid #b4813e;display:grid;place-items:center;font-size:13px;font-weight:bold;font-family:"KaiTi","STKaiti",serif}
+.dead-chip.r{color:#bd241e}
+.dead-chip.b{color:#181818}
+.history{max-height:210px;overflow:auto;font-size:12px;color:#c5d0df}
+.history-row{display:grid;grid-template-columns:30px 1fr 1fr;gap:6px;padding:6px 5px;border-bottom:1px solid #ffffff0d}
+.history-row:nth-child(odd){background:#ffffff06}
+.history-row span:first-child{color:#8292a8}
+.empty{color:#8493a8;text-align:center;padding:14px 0}
+.footer{text-align:center;color:#66778e;font-size:11px;margin-top:16px}
+.modal{position:fixed;inset:0;background:#050b14bb;display:none;place-items:center;padding:20px;z-index:5}
+.modal.show{display:grid}
+.dialog{background:#202e41;border:1px solid #52627a;border-radius:18px;padding:24px;max-width:360px;width:100%;text-align:center}
+.dialog h2{margin:0 0 8px}
+.dialog p{color:var(--muted);font-size:13px}
+.dialog button{margin-top:12px;background:#b78a4b;color:#fff;border:0;border-radius:10px;padding:11px 25px;font-size:14px;cursor:pointer}
+@media(max-width:760px){
+  .app{padding:13px 10px 24px}
+  .layout{grid-template-columns:1fr;gap:12px}
+  .canvas-wrap,.canvas-wrap.flip-mode{max-width:100%}
+  .side{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .history-card{grid-column:1/-1}
+}
+</style>
+</head>
+<body>
+<main class="app">
+  <header class="top">
+    <div class="brand">
+      <div class="logo">弈</div>
+      <div>
+        <h1 id="pageTitle">中国象棋</h1>
+        <small id="pageSub">XIANGQI · PLAY WITH AI</small>
+      </div>
+    </div>
+    <div class="mode-switch">
+      <button type="button" id="modeStandard" class="active" onclick="window.switchMode('standard')">传统象棋</button>
+      <button type="button" id="modeFlip" onclick="window.switchMode('flip')">暗棋翻翻乐</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <section class="board-card">
+      <div class="players">
+        <div id="humanPlayer" class="player active">
+          <span id="humanAvatar" class="avatar red-av">帅</span>
+          <span id="humanLabel">红方 · 你</span>
+        </div>
+        <div>
+          <div id="think" class="thinking"></div>
+          <div id="aiPlayer" class="player">
+            <span id="aiAvatar" class="avatar black-av">将</span>
+            <span id="aiLabel">黑方 · 机器人</span>
+          </div>
+        </div>
+      </div>
+      <div id="canvasWrap" class="canvas-wrap">
+        <canvas id="board" width="900" height="1020"></canvas>
+      </div>
+      <div class="status">
+        <span id="message"><strong>轮到你走棋</strong> · 请点击己方棋子</span>
+        <span id="count">0 回合</span>
+      </div>
+    </section>
+
+    <aside class="side">
+      <section class="side-card" id="sideCard">
+        <h2>阵营选择</h2>
+        <div class="side-choice">
+          <button type="button" id="btnRed" class="active" onclick="window.switchSide('r')">我执红方（先手）</button>
+          <button type="button" id="btnBlack" onclick="window.switchSide('b')">我执黑方（后手）</button>
+        </div>
+        <p class="tip">选择执黑方时，棋盘自动翻转且由机器人先走第一步。</p>
+      </section>
+
+      <section class="side-card" id="deadCard" style="display:none">
+        <h2>阵亡棋子</h2>
+        <div style="font-size:12px;color:#9eacc0">已吃红子：</div>
+        <div id="deadRed" class="dead-box"></div>
+        <div style="font-size:12px;color:#9eacc0;margin-top:8px">已吃黑子：</div>
+        <div id="deadBlack" class="dead-box"></div>
+      </section>
+
+      <section class="side-card">
+        <h2>机器人难度</h2>
+        <div class="difficulty">
+          <button type="button" id="lv1" class="active" onclick="window.setLevel(1)">初级</button>
+          <button type="button" id="lv2" onclick="window.setLevel(2)">中级</button>
+          <button type="button" id="lv3" onclick="window.setLevel(3)">高级</button>
+        </div>
+        <p class="tip">难度越高，机器人思考步数越多。</p>
+      </section>
+
+      <section class="side-card">
+        <h2>对局操作</h2>
+        <div class="actions">
+          <button type="button" id="undo" onclick="window.undoMove()">↶ 悔棋</button>
+          <button type="button" id="hint" onclick="window.showHint()">✦ 提示走法</button>
+          <button type="button" id="restart" class="primary" style="grid-column:1/-1" onclick="window.resetGame()">＋ 重新开始</button>
+        </div>
+        <p class="tip">悔棋将撤销你和机器人的最近一轮操作。</p>
+      </section>
+
+      <section class="side-card history-card">
+        <h2>对局记录</h2>
+        <div id="history" class="history">
+          <div class="empty">棋局开始后，记录会显示在这里</div>
+        </div>
+      </section>
+    </aside>
+  </div>
+  <div class="footer">本地 AI 引擎 · 传统象棋 & 暗棋翻翻乐双模式</div>
+</main>
+
+<div id="modal" class="modal">
+  <div class="dialog">
+    <h2 id="resultTitle">对局结束</h2>
+    <p id="resultText"></p>
+    <button type="button" onclick="window.resetGame()">再来一局</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  const cv = document.getElementById('board');
+  const ctx = cv.getContext('2d');
+  const labels = {
+    r: { K: '帅', A: '仕', E: '相', H: '马', R: '车', C: '炮', P: '兵' },
+    b: { K: '将', A: '士', E: '象', H: '马', R: '车', C: '炮', P: '卒' }
+  };
+  const values = { K: 10000, A: 120, E: 120, H: 300, R: 600, C: 320, P: 70 };
+  const flipRank = { K: 7, A: 6, E: 5, R: 4, H: 3, C: 2, P: 1 };
+  const flipVal = { K: 500, A: 360, E: 260, R: 200, H: 150, C: 240, P: 130 };
+
+  let gameMode = 'standard';
+  let humanSide = 'r';
+  let aiSide = 'b';
+  let sideAssigned = true;
+  let level = 1;
+  let board = [];
+  let turn = 'r';
+  let selected = null;
+  let legal = [];
+  let history = [];
+  let snapshots = [];
+  let posCounts = {};
+  let deadRed = [];
+  let deadBlack = [];
+  let gameOver = false;
+  let hintMove = null;
+  let thinking = false;
+
+  function setMessage(s) {
+    document.getElementById('message').innerHTML = s;
+  }
+
+  function updatePlayerBadges() {
+    const hAv = document.getElementById('humanAvatar');
+    const hLb = document.getElementById('humanLabel');
+    const aAv = document.getElementById('aiAvatar');
+    const aLb = document.getElementById('aiLabel');
+
+    if (gameMode === 'flip' && !sideAssigned) {
+      hAv.textContent = '？';
+      hAv.className = 'avatar';
+      hLb.textContent = '待定 · 你（先手翻子）';
+      aAv.textContent = '？';
+      aAv.className = 'avatar';
+      aLb.textContent = '待定 · 机器人';
+    } else if (humanSide === 'r') {
+      hAv.textContent = '帅';
+      hAv.className = 'avatar red-av';
+      hLb.textContent = '红方 · 你';
+      aAv.textContent = '将';
+      aAv.className = 'avatar black-av';
+      aLb.textContent = '黑方 · 机器人';
+    } else {
+      hAv.textContent = '将';
+      hAv.className = 'avatar black-av';
+      hLb.textContent = '黑方 · 你';
+      aAv.textContent = '帅';
+      aAv.className = 'avatar red-av';
+      aLb.textContent = '红方 · 机器人';
+    }
+    document.getElementById('humanPlayer').classList.toggle('active', turn === humanSide);
+    document.getElementById('aiPlayer').classList.toggle('active', turn === aiSide);
+  }
+
+  function finish(winnerSide, reason) {
+    gameOver = true;
+    thinking = false;
+    document.getElementById('think').textContent = '';
+    let title = '和棋';
+    if (winnerSide === humanSide) title = '恭喜你，获胜！';
+    else if (winnerSide === aiSide) title = '机器人获胜';
+    document.getElementById('resultTitle').textContent = title;
+    document.getElementById('resultText').textContent = reason;
+    document.getElementById('modal').classList.add('show');
+    render();
+  }
+
+  function initialStandard() {
+    return [
+      ['bR', 'bH', 'bE', 'bA', 'bK', 'bA', 'bE', 'bH', 'bR'],
+      [null, null, null, null, null, null, null, null, null],
+      [null, 'bC', null, null, null, null, null, 'bC', null],
+      ['bP', null, 'bP', null, 'bP', null, 'bP', null, 'bP'],
+      [null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null],
+      ['rP', null, 'rP', null, 'rP', null, 'rP', null, 'rP'],
+      [null, 'rC', null, null, null, null, null, 'rC', null],
+      [null, null, null, null, null, null, null, null, null],
+      ['rR', 'rH', 'rE', 'rA', 'rK', 'rA', 'rE', 'rH', 'rR']
+    ];
+  }
+
+  function cloneStd(b) {
+    return b.map(r => r.map(p => (p ? { s: p.s, t: p.t } : null)));
+  }
+  function parseStd(s) {
+    return s ? { s: s[0], t: s[1] } : null;
+  }
+  function stdHash(b, s) {
+    return s + ':' + b.map(r => r.map(p => (p ? p.s + p.t : '--')).join('')).join('');
+  }
+  function insideStd(x, y) {
+    return x >= 0 && x < 9 && y >= 0 && y < 10;
+  }
+  function palaceStd(x, y, s) {
+    return x >= 3 && x <= 5 && (s === 'r' ? y >= 7 && y <= 9 : y >= 0 && y <= 2);
+  }
+
+  function pseudoStd(b, x, y) {
+    const p = b[y][x];
+    if (!p) return [];
+    const out = [];
+    const s = p.s;
+    const add = (a, c) => {
+      if (insideStd(a, c) && (!b[c][a] || b[c][a].s !== s)) out.push([a, c]);
+    };
+    if (p.t === 'K') {
+      for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+        if (palaceStd(x + dx, y + dy, s)) add(x + dx, y + dy);
+      }
+      for (let yy = y + (s === 'r' ? -1 : 1); insideStd(x, yy); yy += (s === 'r' ? -1 : 1)) {
+        if (b[yy][x]) {
+          if (b[yy][x].s !== s && b[yy][x].t === 'K') out.push([x, yy]);
+          break;
+        }
+      }
+    } else if (p.t === 'A') {
+      for (const [dx, dy] of [[1, 1], [1, -1], [-1, 1], [-1, -1]]) {
+        if (palaceStd(x + dx, y + dy, s)) add(x + dx, y + dy);
+      }
+    } else if (p.t === 'E') {
+      for (const [dx, dy] of [[2, 2], [2, -2], [-2, 2], [-2, -2]]) {
+        const a = x + dx, c = y + dy, mx = x + dx / 2, my = y + dy / 2;
+        if (insideStd(a, c) && !b[my][mx] && (s === 'r' ? c >= 5 : c <= 4) && (!b[c][a] || b[c][a].s !== s)) out.push([a, c]);
+      }
+    } else if (p.t === 'H') {
+      for (const [dx, dy] of [[1, 2], [-1, 2], [1, -2], [-1, -2], [2, 1], [2, -1], [-2, 1], [-2, -1]]) {
+        const a = x + dx, c = y + dy;
+        const bx = x + (Math.abs(dx) === 2 ? dx / 2 : 0);
+        const by = y + (Math.abs(dy) === 2 ? dy / 2 : 0);
+        if (insideStd(a, c) && !b[by][bx] && (!b[c][a] || b[c][a].s !== s)) out.push([a, c]);
+      }
+    } else if (p.t === 'R' || p.t === 'C') {
+      for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+        let a = x + dx, c = y + dy, screen = false;
+        while (insideStd(a, c)) {
+          const q = b[c][a];
+          if (p.t === 'R') {
+            if (!q) out.push([a, c]);
+            else { if (q.s !== s) out.push([a, c]); break; }
+          } else {
+            if (!screen) { if (!q) out.push([a, c]); else screen = true; }
+            else if (q) { if (q.s !== s) out.push([a, c]); break; }
+          }
+          a += dx; c += dy;
+        }
+      }
+    } else if (p.t === 'P') {
+      const d = s === 'r' ? -1 : 1;
+      add(x, y + d);
+      if (s === 'r' ? y <= 4 : y >= 5) { add(x - 1, y); add(x + 1, y); }
+    }
+    return out;
+  }
+
+  function kingPosStd(b, s) {
+    for (let y = 0; y < 10; y++) {
+      for (let x = 0; x < 9; x++) {
+        if (b[y][x] && b[y][x].s === s && b[y][x].t === 'K') return [x, y];
+      }
+    }
+    return null;
+  }
+
+  function attackedStd(b, x, y, by) {
+    for (let yy = 0; yy < 10; yy++) {
+      for (let xx = 0; xx < 9; xx++) {
+        const p = b[yy][xx];
+        if (p && p.s === by && pseudoStd(b, xx, yy).some(m => m[0] === x && m[1] === y)) return true;
+      }
+    }
+    return false;
+  }
+
+  function inCheckStd(b, s) {
+    const k = kingPosStd(b, s);
+    return k ? attackedStd(b, k[0], k[1], s === 'r' ? 'b' : 'r') : true;
+  }
+
+  function applyStd(b, m) {
+    const n = cloneStd(b);
+    n[m[3]][m[2]] = n[m[1]][m[0]];
+    n[m[1]][m[0]] = null;
+    return n;
+  }
+
+  function movesForStd(b, s) {
+    const all = [];
+    for (let y = 0; y < 10; y++) {
+      for (let x = 0; x < 9; x++) {
+        const p = b[y][x];
+        if (p && p.s === s) {
+          for (const [a, c] of pseudoStd(b, x, y)) {
+            if (!inCheckStd(applyStd(b, [x, y, a, c]), s)) all.push([x, y, a, c]);
+          }
+        }
+      }
+    }
+    return all;
+  }
+
+  function legalFromStd(x, y) {
+    return pseudoStd(board, x, y).filter(([a, c]) => !inCheckStd(applyStd(board, [x, y, a, c]), turn));
+  }
+
+  // ==================== 翻棋（暗棋）逻辑 ====================
+  function initialFlip() {
+    const pool = [];
+    const counts = { K: 1, A: 2, E: 2, R: 2, H: 2, C: 2, P: 5 };
+    for (const s of ['r', 'b']) {
+      for (const t of Object.keys(counts)) {
+        for (let i = 0; i < counts[t]; i++) pool.push({ s: s, t: t, open: false });
+      }
+    }
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp;
+    }
+    const grid = [];
+    let idx = 0;
+    for (let y = 0; y < 4; y++) {
+      const row = [];
+      for (let x = 0; x < 8; x++) row.push(pool[idx++]);
+      grid.push(row);
+    }
+    return grid;
+  }
+
+  function cloneFlip(b) {
+    return b.map(r => r.map(p => (p ? { s: p.s, t: p.t, open: p.open } : null)));
+  }
+  function insideFlip(x, y) {
+    return x >= 0 && x < 8 && y >= 0 && y < 4;
+  }
+  function canCaptureFlip(att, def) {
+    if (!att || !def || !att.open || !def.open || att.s === def.s) return false;
+    if (att.t === 'P' && def.t === 'K') return true;
+    if (att.t === 'K' && def.t === 'P') return false;
+    return flipRank[att.t] >= flipRank[def.t];
+  }
+
+  function legalMovesFlipFrom(b, x, y) {
+    const p = b[y][x];
+    if (!p || !p.open) return [];
+    const out = [];
+    const dirs = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+    for (const [dx, dy] of dirs) {
+      const a = x + dx, c = y + dy;
+      if (!insideFlip(a, c)) continue;
+      const q = b[c][a];
+      if (!q || (q.open && canCaptureFlip(p, q))) out.push([a, c]);
+    }
+    if (p.t === 'C') {
+      for (const [dx, dy] of dirs) {
+        let a = x + dx, c = y + dy, screen = false;
+        while (insideFlip(a, c)) {
+          const q = b[c][a];
+          if (!screen) { if (q) screen = true; }
+          else if (q) { if (!q.open || q.s !== p.s) out.push([a, c]); break; }
+          a += dx; c += dy;
+        }
+      }
+    }
+    return out;
+  }
+
+  function allActionsFlip(b, side) {
+    const actions = [];
+    for (let y = 0; y < 4; y++) {
+      for (let x = 0; x < 8; x++) {
+        const p = b[y][x];
+        if (!p) continue;
+        if (!p.open) actions.push({ type: 'flip', x: x, y: y });
+        else if (p.s === side) {
+          for (const [a, c] of legalMovesFlipFrom(b, x, y)) {
+            actions.push({ type: 'move', x: x, y: y, a: a, c: c });
+          }
+        }
+      }
+    }
+    return actions;
+  }
+
+  function countPiecesFlip(b, s) {
+    let n = 0;
+    for (let y = 0; y < 4; y++) for (let x = 0; x < 8; x++) if (b[y][x] && b[y][x].s === s) n++;
+    return n;
+  }
+
+  // ==================== 绘制引擎 ====================
+  function toDisplayStd(x, y) {
+    return humanSide === 'r' ? { x: x, y: y } : { x: 8 - x, y: 9 - y };
+  }
+  function fromDisplayStd(dx, dy) {
+    return humanSide === 'r' ? { x: dx, y: dy } : { x: 8 - dx, y: 9 - dy };
+  }
+  function coordStd(x, y) {
+    const d = toDisplayStd(x, y);
+    return { x: 45 + d.x * 101.25, y: 60 + d.y * 100 };
+  }
+  function coordFlip(x, y) {
+    return { x: 105 + x * 100, y: 105 + y * 100 };
+  }
+
+  function drawStar(cx, cy, left, right) {
+    const g = 7, l = 15;
+    ctx.strokeStyle = '#5b3416';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    if (left) {
+      ctx.moveTo(cx - g - l, cy - g); ctx.lineTo(cx - g, cy - g); ctx.lineTo(cx - g, cy - g - l);
+      ctx.moveTo(cx - g - l, cy + g); ctx.lineTo(cx - g, cy + g); ctx.lineTo(cx - g, cy + g + l);
+    }
+    if (right) {
+      ctx.moveTo(cx + g + l, cy - g); ctx.lineTo(cx + g, cy - g); ctx.lineTo(cx + g, cy - g - l);
+      ctx.moveTo(cx + g + l, cy + g); ctx.lineTo(cx + g, cy + g); ctx.lineTo(cx + g, cy + g + l);
+    }
+    ctx.stroke();
+  }
+
+  function drawWoodPiece(cx, cy, side, type, open) {
+    ctx.fillStyle = 'rgba(45,22,5,0.35)';
+    ctx.beginPath(); ctx.arc(cx + 2, cy + 6, 39, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#a87439';
+    ctx.beginPath(); ctx.arc(cx, cy + 3, 39, 0, Math.PI * 2); ctx.fill();
+
+    if (!open) {
+      ctx.fillStyle = '#7a451c';
+      ctx.beginPath(); ctx.arc(cx, cy, 39, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = '#4e270c'; ctx.lineWidth = 2; ctx.stroke();
+      ctx.strokeStyle = '#d8b56d'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(cx, cy, 31, 0, Math.PI * 2); ctx.stroke();
+      ctx.fillStyle = '#d8b56d';
+      ctx.font = 'bold 28px "KaiTi","STKaiti",serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('弈', cx, cy + 1);
+      return;
+    }
+
+    ctx.fillStyle = '#f4dca8';
+    ctx.beginPath(); ctx.arc(cx, cy, 39, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#b4813e'; ctx.lineWidth = 2; ctx.stroke();
+
+    const ink = side === 'r' ? '#bd241e' : '#181818';
+    ctx.strokeStyle = ink; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.arc(cx, cy, 32.5, 0, Math.PI * 2); ctx.stroke();
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(cx, cy, 29.5, 0, Math.PI * 2); ctx.stroke();
+
+    ctx.font = 'bold 39px "KaiTi","STKaiti","FangSong",serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = 'rgba(255,250,235,0.8)';
+    ctx.fillText(labels[side][type], cx + 0.8, cy + 2.2);
+    ctx.fillStyle = ink;
+    ctx.fillText(labels[side][type], cx, cy + 1);
+  }
+
+  function drawStandard() {
+    ctx.clearRect(0, 0, 900, 1020);
+    ctx.fillStyle = '#9e652b'; ctx.fillRect(0, 0, 900, 1020);
+    ctx.fillStyle = '#e5c183'; ctx.fillRect(20, 32, 860, 956);
+    ctx.strokeStyle = '#4e2b10'; ctx.lineWidth = 5; ctx.strokeRect(36, 51, 828, 918);
+    ctx.lineWidth = 2; ctx.strokeRect(45, 60, 810, 900);
+
+    ctx.strokeStyle = '#5b3416'; ctx.lineWidth = 2;
+    for (let dx = 0; dx < 9; dx++) {
+      const xx = 45 + dx * 101.25;
+      ctx.beginPath();
+      if (dx === 0 || dx === 8) { ctx.moveTo(xx, 60); ctx.lineTo(xx, 960); }
+      else { ctx.moveTo(xx, 60); ctx.lineTo(xx, 460); ctx.moveTo(xx, 560); ctx.lineTo(xx, 960); }
+      ctx.stroke();
+    }
+    for (let dy = 0; dy < 10; dy++) {
+      const yy = 60 + dy * 100;
+      ctx.beginPath(); ctx.moveTo(45, yy); ctx.lineTo(855, yy); ctx.stroke();
+    }
+    for (const dy of [0, 7]) {
+      ctx.beginPath();
+      ctx.moveTo(45 + 3 * 101.25, 60 + dy * 100); ctx.lineTo(45 + 5 * 101.25, 60 + (dy + 2) * 100);
+      ctx.moveTo(45 + 5 * 101.25, 60 + dy * 100); ctx.lineTo(45 + 3 * 101.25, 60 + (dy + 2) * 100);
+      ctx.stroke();
+    }
+    for (const dy of [2, 7]) for (const dx of [1, 7]) drawStar(45 + dx * 101.25, 60 + dy * 100, true, true);
+    for (const dy of [3, 6]) for (const dx of [0, 2, 4, 6, 8]) drawStar(45 + dx * 101.25, 60 + dy * 100, dx > 0, dx < 8);
+
+    ctx.fillStyle = '#5b3416';
+    ctx.font = 'bold 38px "KaiTi","STKaiti",serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(humanSide === 'r' ? '楚 河' : '汉 界', 247, 510);
+    ctx.fillText(humanSide === 'r' ? '汉 界' : '楚 河', 653, 510);
+
+    ctx.font = 'bold 16px sans-serif'; ctx.fillStyle = '#f7e5c6';
+    const rNums = ['九', '八', '七', '六', '五', '四', '三', '二', '一'];
+    const bNums = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    const topNums = humanSide === 'r' ? bNums : rNums;
+    const botNums = humanSide === 'r' ? rNums : bNums;
+    for (let dx = 0; dx < 9; dx++) {
+      const xx = 45 + dx * 101.25;
+      ctx.fillText(topNums[dx], xx, 16);
+      ctx.fillText(botNums[dx], xx, 1005);
+    }
+
+    if (selected) {
+      const q = coordStd(selected[0], selected[1]);
+      ctx.strokeStyle = '#1d7a5f'; ctx.lineWidth = 5;
+      ctx.beginPath(); ctx.arc(q.x, q.y, 43, 0, Math.PI * 2); ctx.stroke();
+    }
+    for (const [x, y] of legal) {
+      const q = coordStd(x, y);
+      ctx.beginPath();
+      if (board[y][x]) {
+        ctx.arc(q.x, q.y, 44, 0, Math.PI * 2);
+        ctx.strokeStyle = '#c8322b'; ctx.lineWidth = 4; ctx.stroke();
+      } else {
+        ctx.fillStyle = '#248266'; ctx.arc(q.x, q.y, 9, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+    if (hintMove) {
+      for (const [xx, yy] of [[hintMove[0], hintMove[1]], [hintMove[2], hintMove[3]]]) {
+        const q = coordStd(xx, yy);
+        ctx.strokeStyle = '#1f78d1'; ctx.lineWidth = 5;
+        ctx.beginPath(); ctx.arc(q.x, q.y, 47, 0, Math.PI * 2); ctx.stroke();
+      }
+    }
+    for (let y = 0; y < 10; y++) {
+      for (let x = 0; x < 9; x++) {
+        const p = board[y][x];
+        if (p) { const q = coordStd(x, y); drawWoodPiece(q.x, q.y, p.s, p.t, true); }
+      }
+    }
+  }
+
+  function drawFlip() {
+    ctx.clearRect(0, 0, 910, 510);
+    ctx.fillStyle = '#9e652b'; ctx.fillRect(0, 0, 910, 510);
+    ctx.fillStyle = '#e5c183'; ctx.fillRect(24, 24, 862, 462);
+    ctx.strokeStyle = '#4e2b10'; ctx.lineWidth = 5; ctx.strokeRect(42, 42, 826, 426);
+    ctx.lineWidth = 2; ctx.strokeRect(55, 55, 800, 400);
+
+    ctx.strokeStyle = '#5b3416'; ctx.lineWidth = 2;
+    for (let x = 1; x < 8; x++) {
+      ctx.beginPath(); ctx.moveTo(55 + x * 100, 55); ctx.lineTo(55 + x * 100, 455); ctx.stroke();
+    }
+    for (let y = 1; y < 4; y++) {
+      ctx.beginPath(); ctx.moveTo(55, 55 + y * 100); ctx.lineTo(855, 55 + y * 100); ctx.stroke();
+    }
+
+    if (selected) {
+      const q = coordFlip(selected[0], selected[1]);
+      ctx.strokeStyle = '#1d7a5f'; ctx.lineWidth = 5;
+      ctx.beginPath(); ctx.arc(q.x, q.y, 43, 0, Math.PI * 2); ctx.stroke();
+    }
+    for (const [x, y] of legal) {
+      const q = coordFlip(x, y);
+      ctx.beginPath();
+      if (board[y][x]) {
+        ctx.arc(q.x, q.y, 44, 0, Math.PI * 2);
+        ctx.strokeStyle = '#c8322b'; ctx.lineWidth = 4; ctx.stroke();
+      } else {
+        ctx.fillStyle = '#248266'; ctx.arc(q.x, q.y, 10, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+    if (hintMove) {
+      const pts = hintMove.type === 'flip' ? [[hintMove.x, hintMove.y]] : [[hintMove.x, hintMove.y], [hintMove.a, hintMove.c]];
+      for (const [xx, yy] of pts) {
+        const q = coordFlip(xx, yy);
+        ctx.strokeStyle = '#1f78d1'; ctx.lineWidth = 5;
+        ctx.beginPath(); ctx.arc(q.x, q.y, 47, 0, Math.PI * 2); ctx.stroke();
+      }
+    }
+    for (let y = 0; y < 4; y++) {
+      for (let x = 0; x < 8; x++) {
+        const p = board[y][x];
+        if (p) { const q = coordFlip(x, y); drawWoodPiece(q.x, q.y, p.s, p.t, p.open); }
+      }
+    }
+  }
+
+  function render() {
+    if (gameMode === 'standard') drawStandard();
+    else drawFlip();
+    updatePlayerBadges();
+    document.getElementById('count').textContent = Math.floor(history.length / 2) + ' 回合';
+    document.getElementById('undo').disabled = snapshots.length === 0 || thinking;
+    document.getElementById('hint').disabled = turn !== humanSide || gameOver || thinking;
+    if (gameMode === 'flip') {
+      document.getElementById('deadRed').innerHTML = deadRed.map(t => '<span class="dead-chip r">' + labels.r[t] + '</span>').join('');
+      document.getElementById('deadBlack').innerHTML = deadBlack.map(t => '<span class="dead-chip b">' + labels.b[t] + '</span>').join('');
+    }
+    document.getElementById('history').innerHTML = history.length
+      ? history.reduce((acc, m, i) => {
+          if (i % 2 === 0) acc.push('<div class="history-row"><span>' + (Math.floor(i / 2) + 1) + '</span><span>' + m + '</span><span>' + (history[i + 1] || '') + '</span></div>');
+          return acc;
+        }, []).join('')
+      : '<div class="empty">棋局开始后，记录会显示在这里</div>';
+  }
+
+  function notationStd(m, p, captured) {
+    const [x, y, a, c] = m;
+    return (p.s === 'r' ? '红' : '黑') + labels[p.s][p.t] + ' ' + (x + 1) + ',' + (10 - y) + (captured ? ' 吃 ' : ' 走 ') + (a + 1) + ',' + (10 - c);
+  }
+
+  function commitStd(m) {
+    const [x, y, a, c] = m;
+    const p = board[y][x], captured = board[c][a];
+    snapshots.push({ board: cloneStd(board), turn: turn, history: history.slice(), posCounts: Object.assign({}, posCounts) });
+    history.push(notationStd(m, p, captured));
+    board = applyStd(board, m);
+    turn = turn === 'r' ? 'b' : 'r';
+    const h = stdHash(board, turn);
+    posCounts[h] = (posCounts[h] || 0) + 1;
+    selected = null; legal = []; hintMove = null;
+    render();
+    if (!kingPosStd(board, turn)) { finish(turn === 'r' ? 'b' : 'r', '对方将帅已被吃掉。'); return; }
+    const ms = movesForStd(board, turn);
+    if (!ms.length) { finish(inCheckStd(board, turn) ? (turn === 'r' ? 'b' : 'r') : null, inCheckStd(board, turn) ? '将死！' : '无棋可走，判为和棋。'); return; }
+    if (posCounts[h] >= 3) { finish(null, '同一局面三次重复，判为和棋。'); return; }
+    if (inCheckStd(board, turn)) setMessage('<strong>将军！</strong> ' + (turn === humanSide ? '请应将' : '机器人正在应将'));
+    else setMessage(turn === humanSide ? '<strong>轮到你走棋</strong>' : '<strong>机器人回合</strong>');
+    if (turn === aiSide) setTimeout(aiTurnStd, 80);
+  }
+
+  function evaluateStd(b) {
+    let score = 0;
+    for (let y = 0; y < 10; y++) {
+      for (let x = 0; x < 9; x++) {
+        const p = b[y][x];
+        if (!p) continue;
+        let v = values[p.t];
+        if (p.t === 'P') v += (p.s === 'r' ? 9 - y : y) * 8;
+        if (p.t === 'H' || p.t === 'C') v += (4 - Math.abs(4 - x)) * 4;
+        score += p.s === aiSide ? v : -v;
+      }
+    }
+    return score;
+  }
+
+  function searchStd(b, depth, alpha, beta, side, seen) {
+    const h = stdHash(b, side);
+    if (seen[h] || (posCounts[h] || 0) >= 1) return evaluateStd(b) + (side === aiSide ? -420 : 420);
+    const ms = movesForStd(b, side);
+    if (!ms.length) return inCheckStd(b, side) ? (side === aiSide ? -99999 - depth : 99999 + depth) : 0;
+    if (depth === 0) return evaluateStd(b);
+    ms.sort((m1, m2) => (b[m2[3]][m2[2]] ? values[b[m2[3]][m2[2]].t] : 0) - (b[m1[3]][m1[2]] ? values[b[m1[3]][m1[2]].t] : 0));
+    const nextSeen = Object.assign({}, seen); nextSeen[h] = true;
+    if (side === aiSide) {
+      let best = -Infinity;
+      for (const m of ms) { best = Math.max(best, searchStd(applyStd(b, m), depth - 1, alpha, beta, humanSide, nextSeen)); alpha = Math.max(alpha, best); if (beta <= alpha) break; }
+      return best;
+    } else {
+      let best = Infinity;
+      for (const m of ms) { best = Math.min(best, searchStd(applyStd(b, m), depth - 1, alpha, beta, aiSide, nextSeen)); beta = Math.min(beta, best); if (beta <= alpha) break; }
+      return best;
+    }
+  }
+
+  function chooseAIStd() {
+    const ms = movesForStd(board, aiSide);
+    if (!ms.length) return null;
+    const depth = level === 1 ? 1 : level === 2 ? 2 : 3;
+    let best = -Infinity, choices = [];
+    for (const m of ms) {
+      const nb = applyStd(board, m);
+      const rep = posCounts[stdHash(nb, humanSide)] || 0;
+      const v = searchStd(nb, depth - 1, -Infinity, Infinity, humanSide, {}) - rep * 480;
+      if (v > best) { best = v; choices = [m]; }
+      else if (v === best) choices.push(m);
+    }
+    return choices[Math.floor(Math.random() * choices.length)];
+  }
+
+  function aiTurnStd() {
+    if (gameOver || turn !== aiSide) return;
+    thinking = true; document.getElementById('think').textContent = '机器人思考中…'; render();
+    setTimeout(() => {
+      if (gameOver || turn !== aiSide) return;
+      const m = chooseAIStd();
+      thinking = false; document.getElementById('think').textContent = '';
+      if (m) commitStd(m); else finish(humanSide, '机器人无棋可走。');
+    }, 40);
+  }
+
+  function commitFlip(act) {
+    snapshots.push({ board: cloneFlip(board), turn: turn, humanSide: humanSide, aiSide: aiSide, sideAssigned: sideAssigned, history: history.slice(), deadRed: deadRed.slice(), deadBlack: deadBlack.slice() });
+    if (act.type === 'flip') {
+      const p = board[act.y][act.x];
+      p.open = true;
+      if (!sideAssigned) { humanSide = p.s; aiSide = p.s === 'r' ? 'b' : 'r'; sideAssigned = true; }
+      history.push('翻出 ' + (p.s === 'r' ? '红' : '黑') + labels[p.s][p.t] + ' (' + (act.x + 1) + ',' + (act.y + 1) + ')');
+      turn = turn === humanSide ? aiSide : humanSide;
+    } else {
+      const p = board[act.y][act.x], target = board[act.c][act.a];
+      const sTxt = p.s === 'r' ? '红' : '黑';
+      if (target) {
+        target.open = true;
+        if (target.s === 'r') deadRed.push(target.t); else deadBlack.push(target.t);
+        history.push(sTxt + labels[p.s][p.t] + ' 吃 ' + (target.s === 'r' ? '红' : '黑') + labels[target.s][target.t]);
+      } else {
+        history.push(sTxt + labels[p.s][p.t] + ' 移至 ' + (act.a + 1) + ',' + (act.c + 1));
+      }
+      board[act.c][act.a] = p; board[act.y][act.x] = null;
+      turn = turn === humanSide ? aiSide : humanSide;
+    }
+    selected = null; legal = []; hintMove = null; render();
+    if (countPiecesFlip(board, 'r') === 0) { finish('b', '红方棋子已全部被消灭！'); return; }
+    if (countPiecesFlip(board, 'b') === 0) { finish('r', '黑方棋子已全部被消灭！'); return; }
+    if (!allActionsFlip(board, turn).length) { finish(turn === 'r' ? 'b' : 'r', (turn === 'r' ? '红方' : '黑方') + '已无棋可翻且无路可走！'); return; }
+    if (turn === humanSide) setMessage('<strong>轮到你操作（' + (humanSide === 'r' ? '你执红方' : '你执黑方') + '）</strong> · 可翻暗子或走明子');
+    else { setMessage('<strong>机器人回合</strong>'); setTimeout(aiTurnFlip, 180); }
+  }
+
+  function aiTurnFlip() {
+    if (gameOver || turn !== aiSide) return;
+    thinking = true; document.getElementById('think').textContent = '机器人思考中…'; render();
+    setTimeout(() => {
+      if (gameOver || turn !== aiSide) return;
+      const acts = allActionsFlip(board, aiSide);
+      let best = -Infinity, choice = acts[0];
+      for (const act of acts) {
+        let s = Math.random() * 12;
+        if (act.type === 'flip') {
+          s += level === 1 ? 85 : level === 2 ? 70 : 62;
+          for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+            const nx = act.x + dx, ny = act.y + dy;
+            if (insideFlip(nx, ny) && board[ny][nx] && board[ny][nx].open && board[ny][nx].s === humanSide) s -= 18;
+          }
+        } else {
+          const att = board[act.y][act.x], tgt = board[act.c][act.a];
+          if (tgt) s += tgt.open ? flipVal[tgt.t] * 1.4 : 65;
+          else s += 20;
+          if (level >= 2) {
+            const sim = cloneFlip(board); sim[act.c][act.a] = sim[act.y][act.x]; sim[act.y][act.x] = null;
+            for (const ea of allActionsFlip(sim, humanSide)) {
+              if (ea.type === 'move' && ea.a === act.a && ea.c === act.c) { s -= flipVal[att.t] * (level === 3 ? 1.15 : 0.75); break; }
+            }
+          }
+        }
+        if (s > best) { best = s; choice = act; }
+      }
+      thinking = false; document.getElementById('think').textContent = '';
+      if (choice) commitFlip(choice); else finish(humanSide, '机器人无棋可走。');
+    }, 120);
+  }
+
+  cv.onclick = function (e) {
+    if (gameOver || thinking || turn !== humanSide) return;
+    const rect = cv.getBoundingClientRect();
+    const px = (e.clientX - rect.left) * (cv.width / rect.width);
+    const py = (e.clientY - rect.top) * (cv.height / rect.height);
+    if (gameMode === 'standard') {
+      const dx = Math.round((px - 45) / 101.25), dy = Math.round((py - 60) / 100);
+      if (!insideStd(dx, dy)) return;
+      const real = fromDisplayStd(dx, dy);
+      if (selected && legal.some(([a, c]) => a === real.x && c === real.y)) { commitStd([selected[0], selected[1], real.x, real.y]); return; }
+      const p = board[real.y][real.x];
+      if (p && p.s === humanSide) { selected = [real.x, real.y]; legal = legalFromStd(real.x, real.y); hintMove = null; }
+      else { selected = null; legal = []; }
+      render();
+    } else {
+      const x = Math.round((px - 105) / 100), y = Math.round((py - 105) / 100);
+      if (!insideFlip(x, y)) return;
+      if (selected && legal.some(([a, c]) => a === x && c === y)) { commitFlip({ type: 'move', x: selected[0], y: selected[1], a: x, c: y }); return; }
+      const p = board[y][x];
+      if (p && !p.open) { commitFlip({ type: 'flip', x: x, y: y }); return; }
+      if (p && p.open && p.s === humanSide) { selected = [x, y]; legal = legalMovesFlipFrom(board, x, y); hintMove = null; }
+      else { selected = null; legal = []; }
+      render();
+    }
+  };
+
+  window.resetGame = function () {
+    selected = null; legal = []; history = []; snapshots = []; posCounts = {}; deadRed = []; deadBlack = [];
+    gameOver = false; hintMove = null; thinking = false;
+    document.getElementById('modal').classList.remove('show');
+    document.getElementById('think').textContent = '';
+    const wrap = document.getElementById('canvasWrap');
+    if (gameMode === 'standard') {
+      cv.width = 900; cv.height = 1020; wrap.classList.remove('flip-mode');
+      document.getElementById('pageTitle').textContent = '中国象棋';
+      document.getElementById('pageSub').textContent = 'XIANGQI · PLAY WITH AI';
+      document.getElementById('sideCard').style.display = 'block';
+      document.getElementById('deadCard').style.display = 'none';
+      aiSide = humanSide === 'r' ? 'b' : 'r'; sideAssigned = true;
+      board = initialStandard().map(r => r.map(parseStd)); turn = 'r';
+      posCounts = { [stdHash(board, 'r')]: 1 };
+      render();
+      if (humanSide === 'r') setMessage('<strong>轮到你走棋（红方）</strong> · 请点击红方棋子');
+      else { setMessage('<strong>机器人执红先走…</strong>'); setTimeout(aiTurnStd, 220); }
+    } else {
+      cv.width = 910; cv.height = 510; wrap.classList.add('flip-mode');
+      document.getElementById('pageTitle').textContent = '暗棋翻翻乐';
+      document.getElementById('pageSub').textContent = 'BANQI FLIP CHESS · PLAY WITH AI';
+      document.getElementById('sideCard').style.display = 'none';
+      document.getElementById('deadCard').style.display = 'block';
+      humanSide = 'r'; aiSide = 'b'; sideAssigned = false;
+      board = initialFlip(); turn = 'r';
+      render();
+      setMessage('<strong>翻棋开局</strong> · 点击任意背面棋子，翻出什么颜色你就是哪一方！');
+    }
+  };
+
+  window.switchMode = function (m) {
+    gameMode = m;
+    document.getElementById('modeStandard').classList.toggle('active', m === 'standard');
+    document.getElementById('modeFlip').classList.toggle('active', m === 'flip');
+    window.resetGame();
+  };
+
+  window.switchSide = function (s) {
+    humanSide = s;
+    document.getElementById('btnRed').classList.toggle('active', s === 'r');
+    document.getElementById('btnBlack').classList.toggle('active', s === 'b');
+    window.resetGame();
+  };
+
+  window.setLevel = function (lv) {
+    level = lv;
+    [1, 2, 3].forEach(i => document.getElementById('lv' + i).classList.toggle('active', i === lv));
+  };
+
+  window.undoMove = function () {
+    if (!snapshots.length || thinking) return;
+    const target = snapshots.length >= 2 ? snapshots.length - 2 : 0;
+    const s = snapshots[target];
+    if (gameMode === 'standard') { board = cloneStd(s.board); turn = s.turn; history = s.history.slice(); posCounts = Object.assign({}, s.posCounts); }
+    else { board = cloneFlip(s.board); turn = s.turn; humanSide = s.humanSide; aiSide = s.aiSide; sideAssigned = s.sideAssigned; history = s.history.slice(); deadRed = s.deadRed.slice(); deadBlack = s.deadBlack.slice(); }
+    snapshots = snapshots.slice(0, target); selected = null; legal = []; hintMove = null; gameOver = false;
+    document.getElementById('modal').classList.remove('show');
+    render(); setMessage('已悔棋 · 轮到你操作');
+  };
+
+  window.showHint = function () {
+    if (turn !== humanSide || gameOver || thinking) return;
+    if (gameMode === 'standard') {
+      const ms = movesForStd(board, humanSide);
+      if (!ms.length) return;
+      let best = -Infinity, choice = ms[0];
+      for (const m of ms) {
+        const nb = applyStd(board, m);
+        let v = -(posCounts[stdHash(nb, aiSide)] || 0) * 480;
+        for (let y = 0; y < 10; y++) for (let x = 0; x < 9; x++) if (nb[y][x]) v += nb[y][x].s === humanSide ? values[nb[y][x].t] : -values[nb[y][x].t];
+        if (v > best) { best = v; choice = m; }
+      }
+      hintMove = choice; render(); setMessage('蓝色圆圈表示建议的起点和落点');
+    } else {
+      const acts = allActionsFlip(board, humanSide);
+      if (!acts.length) return;
+      hintMove = acts.find(a => a.type === 'move' && board[a.c][a.a] && board[a.c][a.a].open) || acts[Math.floor(Math.random() * acts.length)];
+      render(); setMessage('蓝色圆圈表示建议翻开或移动的位置');
+    }
+  };
+
+  window.resetGame();
+})();
+</script>
+</body>
+</html>
