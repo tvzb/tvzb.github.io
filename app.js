@@ -1,5 +1,5 @@
 // ⚠️ Cloudflare Worker 后端域名（末尾不要加斜杠）
-const API_BASE = 'https://tvbox.hahagw.eu.org';
+const API_BASE = 'https://tv.171234.xyz';
 
 // 12 款可选用户头像图标
 const AVATAR_OPTIONS = [
