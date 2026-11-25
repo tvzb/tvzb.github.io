@@ -1,4 +1,4 @@
-const API_BASE = 'https://tvbox.hahagw.eu.org';
+const API_BASE = 'https://tv.171234.xyz';
 
 let adminToken = sessionStorage.getItem('tvbox_admin_token') || '';
 let currentOrderStatus = '';
