@@ -1235,10 +1235,11 @@ function openSubQrModal(url, title) {
   modal.classList.remove('hidden');
 }
 
-// ================= 直播页：游客在线试看 (test.txt) =================
+// ================= 直播页：游客在线试看（仅保留网页可播 HTTPS 源 + 多源直切） =================
 let freeLiveGroups = [];
 let activeLiveChannel = null;
 let activeLiveUrlIdx = 0;
+let failedLiveSrcMap = {};
 let activeHls = null;
 
 async function loadFreeLivePlayer() {
@@ -1248,15 +1249,18 @@ async function loadFreeLivePlayer() {
     const res = await fetch(API_BASE + '/api/free-live-list');
     const data = await res.json();
     if (!res.ok || !Array.isArray(data.groups) || data.groups.length === 0) {
-      box.innerHTML = '<span class="muted-sm">体验频道暂未同步，请复制免费地址到 TVBox 观看</span>';
+      box.innerHTML = '<span class="muted-sm">当前暂无支持网页直连播放的 HTTPS 体验源，请复制首页免费地址到 TVBox 观看</span>';
       return;
     }
     freeLiveGroups = data.groups;
     box.innerHTML = freeLiveGroups.map((g, gIdx) => `
       <div class="live-grp-block">
-        <div class="live-grp-title">${escapeHtml(g.name)}</div>
+        <div class="live-grp-title">${escapeHtml(g.name)} (${g.channels.length}台)</div>
         <div class="live-ch-pills">
-          ${g.channels.map((ch, cIdx) => `<button type="button" class="live-ch-pill" data-g="${gIdx}" data-c="${cIdx}" onclick="playFreeLiveChannel(${gIdx}, ${cIdx}, 0)">${escapeHtml(ch.name)}</button>`).join('')}
+          ${g.channels.map((ch, cIdx) => {
+            const cntHtml = ch.urls.length > 1 ? `<span class="live-ch-cnt">${ch.urls.length}源</span>` : '';
+            return `<button type="button" class="live-ch-pill" data-g="${gIdx}" data-c="${cIdx}" onclick="playFreeLiveChannel(${gIdx}, ${cIdx}, 0)">${escapeHtml(ch.name)}${cntHtml}</button>`;
+          }).join('')}
         </div>
       </div>
     `).join('');
@@ -1265,18 +1269,37 @@ async function loadFreeLivePlayer() {
   }
 }
 
-function playFreeLiveChannel(gIdx, cIdx, urlIdx = 0) {
+function renderLiveSourceBar(gIdx, cIdx, ch, currentIdx) {
+  const bar = document.getElementById('liveSourceBar');
+  if (!bar) return;
+  const chKey = `${gIdx}_${cIdx}`;
+  const failedSet = failedLiveSrcMap[chKey] || new Set();
+  bar.classList.remove('hidden');
+  bar.innerHTML = `
+    <span class="live-src-label">📡 ${escapeHtml(ch.name)} 线路 (${ch.urls.length}个)：</span>
+    ${ch.urls.map((_, idx) => {
+      const isCur = idx === currentIdx;
+      const isFail = failedSet.has(idx);
+      const cls = isCur ? 'active' : (isFail ? 'failed' : '');
+      return `<button type="button" class="live-src-btn ${cls}" onclick="playFreeLiveChannel(${gIdx}, ${cIdx}, ${idx}, true)">${isFail ? '✕ ' : ''}线路 ${idx + 1}</button>`;
+    }).join('')}
+  `;
+}
+
+function playFreeLiveChannel(gIdx, cIdx, urlIdx = 0, manual = false) {
   const ch = freeLiveGroups?.[gIdx]?.channels?.[cIdx];
   if (!ch || !ch.urls || ch.urls.length === 0) return;
+  const chKey = `${gIdx}_${cIdx}`;
+  if (!failedLiveSrcMap[chKey]) failedLiveSrcMap[chKey] = new Set();
+  if (manual) failedLiveSrcMap[chKey].delete(urlIdx);
+
   activeLiveChannel = { gIdx, cIdx, ch };
   activeLiveUrlIdx = urlIdx;
 
   document.querySelectorAll('.live-ch-pill').forEach(b => {
     b.classList.toggle('active', Number(b.dataset.g) === gIdx && Number(b.dataset.c) === cIdx);
   });
-
-  const nextBtn = document.getElementById('liveNextSourceBtn');
-  if (nextBtn) nextBtn.classList.toggle('hidden', ch.urls.length <= 1);
+  renderLiveSourceBar(gIdx, cIdx, ch, urlIdx);
 
   const statusEl = document.getElementById('livePlayStatus');
   const overlay = document.getElementById('livePlayerOverlay');
@@ -1293,18 +1316,40 @@ function playFreeLiveChannel(gIdx, cIdx, urlIdx = 0) {
   video.removeAttribute('src');
 
   const onPlayFail = () => {
-    if (urlIdx + 1 < ch.urls.length) {
-      playFreeLiveChannel(gIdx, cIdx, urlIdx + 1);
+    failedLiveSrcMap[chKey].add(urlIdx);
+    renderLiveSourceBar(gIdx, cIdx, ch, urlIdx);
+    const nextUntried = ch.urls.findIndex((_, i) => !failedLiveSrcMap[chKey].has(i));
+    if (!manual && nextUntried >= 0) {
+      playFreeLiveChannel(gIdx, cIdx, nextUntried, false);
     } else {
-      if (statusEl) statusEl.textContent = `${ch.name} · 浏览器受限`;
+      if (statusEl) statusEl.textContent = `${ch.name} · 线路 ${urlIdx + 1} 不可用`;
       if (overlay) overlay.classList.remove('hidden');
-      if (ovTitle) ovTitle.textContent = `「${ch.name}」的源被浏览器 HTTPS/跨域策略拦截`;
-      if (ovSub) ovSub.textContent = '这是浏览器安全限制（电视 TVBox 无此限制），请复制首页免费体验地址填入 TVBox 100% 流畅观看！';
+      if (ovTitle) ovTitle.textContent = `「${ch.name}」线路 ${urlIdx + 1} 暂不可播`;
+      if (ovSub) ovSub.textContent = nextUntried >= 0
+        ? '请点击下方其他可用线路切换，或导入 TVBox 畅看全部 49 台！'
+        : '该频道的网页源受浏览器跨域限制，导入 TVBox 可 100% 流畅观看！';
     }
   };
 
-  if (typeof Hls !== 'undefined' && Hls.isSupported() && (streamUrl.includes('.m3u8') || !streamUrl.includes('.flv'))) {
-    const hls = new Hls({ maxBufferLength: 15, enableWorker: true });
+  const tryPlay = () => {
+    const p = video.play();
+    if (p && typeof p.catch === 'function') {
+      p.catch(() => {
+        // 手机端若被拦截自动播放，尝试静音起播或提示用户点播放键
+        video.muted = true;
+        video.play().then(() => {
+          showToast('已静音起播，点击播放器音量键可开启声音', 2800);
+        }).catch(() => {
+          showToast('请点击播放器中央的播放按钮开始观看', 2800);
+        });
+      });
+    }
+  };
+
+  const canNativeHls = Boolean(video.canPlayType && video.canPlayType('application/vnd.apple.mpegurl'));
+
+  if (typeof Hls !== 'undefined' && Hls.isSupported()) {
+    const hls = new Hls({ maxBufferLength: 15, enableWorker: true, lowLatencyMode: false });
     activeHls = hls;
     let failed = false;
     hls.on(Hls.Events.ERROR, (_, errData) => {
@@ -1317,11 +1362,18 @@ function playFreeLiveChannel(gIdx, cIdx, urlIdx = 0) {
     });
     hls.loadSource(streamUrl);
     hls.attachMedia(video);
-    hls.on(Hls.Events.MANIFEST_PARSED, () => { video.play().catch(() => {}); });
-  } else {
+    hls.on(Hls.Events.MANIFEST_PARSED, tryPlay);
+  } else if (canNativeHls) {
+    // iOS Safari / 部分原生支持 HLS 的手机浏览器
     video.src = streamUrl;
     video.onerror = onPlayFail;
-    video.play().catch(() => {});
+    video.onloadedmetadata = tryPlay;
+    tryPlay();
+  } else {
+    // 安卓浏览器若 hls.js 未加载成功，给出明确提示
+    video.src = streamUrl;
+    video.onerror = onPlayFail;
+    tryPlay();
   }
 }
 
@@ -1329,5 +1381,5 @@ function switchNextLiveSource() {
   if (!activeLiveChannel) return;
   const { gIdx, cIdx, ch } = activeLiveChannel;
   const nextIdx = (activeLiveUrlIdx + 1) % ch.urls.length;
-  playFreeLiveChannel(gIdx, cIdx, nextIdx);
+  playFreeLiveChannel(gIdx, cIdx, nextIdx, true);
 }

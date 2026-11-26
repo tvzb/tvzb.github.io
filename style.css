@@ -1175,3 +1175,53 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
   min-height: 210px;
 }
 .qr-sub-box img, .qr-sub-box canvas { display: block; width: 190px; height: 190px; }
+
+/* 直播页：多源点击切换条与频道源数量角标 */
+.live-source-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 9px 12px;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.live-src-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+  margin-right: 2px;
+}
+.live-src-btn {
+  padding: 4px 11px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+.live-src-btn:hover { border-color: var(--primary); color: var(--primary); }
+.live-src-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.live-src-btn.failed {
+  opacity: 0.5;
+  text-decoration: line-through;
+  color: var(--danger);
+  border-color: rgba(239, 68, 68, 0.35);
+}
+.live-ch-cnt {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 0 5px;
+  border-radius: 99px;
+  font-size: 0.68rem;
+  background: rgba(59, 130, 246, 0.18);
+  color: #60a5fa;
+}
+.live-ch-pill.active .live-ch-cnt {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}

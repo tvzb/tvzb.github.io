@@ -141,30 +141,32 @@
 
     <!-- ==================== 视图 2：实时频道监测 + 免费体验台在线试看 ==================== -->
     <section id="view-channels" class="tab-view">
-      <!-- 游客免登录 · test.txt 网页在线试看 -->
+      <!-- 游客免登录 · test.txt 网页在线试看（仅保留支持网页播放的 HTTPS 源） -->
       <div class="card live-player-card" style="margin-bottom:16px;">
         <div class="card-head-row" style="margin-bottom:10px;flex-wrap:wrap;">
           <div>
             <h3>📺 免费体验台 · 网页在线试看</h3>
-            <p class="muted-sm" style="margin-top:2px;">免登录直接试看 test.txt 体验频道（若部分 HTTP 源被浏览器拦截，自动尝试备用线或导入 TVBox 100% 畅看）</p>
+            <p class="muted-sm" style="margin-top:2px;">已自动筛选支持网页直连播放的 HTTPS 体验源，多源频道支持一键点击切换；完整 49 台请导入 TVBox 观看</p>
           </div>
           <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
             <span id="livePlayStatus" class="badge active" style="background:rgba(59,130,246,0.16);color:#60a5fa;">选择频道开始试看</span>
-            <button type="button" id="liveNextSourceBtn" class="btn-outline btn-xs hidden">🔄 切换备用源</button>
           </div>
         </div>
 
         <div class="live-video-wrap">
-          <video id="liveVideoPlayer" controls playsinline webkit-playsinline preload="none"></video>
+          <video id="liveVideoPlayer" controls playsinline webkit-playsinline x5-playsinline x5-video-player-type="h5" preload="none"></video>
           <div id="livePlayerOverlay" class="live-player-overlay">
             <div style="font-size:2.2rem;margin-bottom:6px;">📡</div>
             <div id="liveOverlayTitle" style="font-weight:700;margin-bottom:4px;">点击下方任意体验频道立即播放</div>
-            <div id="liveOverlaySub" class="muted-sm">支持自动切源试播 · 完整 49 台请复制订阅地址到 TVBox</div>
+            <div id="liveOverlaySub" class="muted-sm">已过滤不兼容源 · 多线路支持自由点击切换</div>
           </div>
         </div>
 
+        <!-- 当前频道多源切换条 -->
+        <div id="liveSourceBar" class="live-source-bar hidden"></div>
+
         <div id="livePlayerGroups" class="live-player-groups" style="margin-top:12px;">
-          <span class="muted-sm">正在加载体验频道列表...</span>
+          <span class="muted-sm">正在加载网页可播体验频道...</span>
         </div>
       </div>
 
@@ -631,7 +633,7 @@
     </div>
   </div>
 
-  <script src="https://cdn.staticfile.net/hls.js/1.5.13/hls.min.js" defer></script>
+  <script src="https://s4.zstatic.net/ajax/libs/hls.js/1.5.13/hls.min.js" defer></script>
   <script src="https://cdn.staticfile.net/qrcodejs/1.0.0/qrcode.min.js" defer></script>
   <script src="app.js"></script>
 </body>
