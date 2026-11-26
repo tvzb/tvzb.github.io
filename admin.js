@@ -134,6 +134,12 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('addTierBtn')?.addEventListener('click', addEarlyBirdTier);
   document.getElementById('addPlanBtn')?.addEventListener('click', addNewPlanRow);
   document.getElementById('savePricingBtn')?.addEventListener('click', savePricingConfig);
+  document.getElementById('reloadVodSitesBtn')?.addEventListener('click', () => loadVodSitesConfig(true));
+  document.getElementById('triggerVodWfBtn')?.addEventListener('click', () => {
+    document.getElementById('vodWfMsg').textContent = '';
+    document.getElementById('vodWorkflowModal').classList.remove('hidden');
+  });
+  document.getElementById('confirmTriggerVodWfBtn')?.addEventListener('click', doTriggerVodWorkflow);
   document.getElementById('addVodSiteBtn')?.addEventListener('click', addVodSiteRow);
   document.getElementById('autoMaskVodBtn')?.addEventListener('click', autoMaskVodAliases);
   document.getElementById('saveVodSitesBtn')?.addEventListener('click', saveVodSitesConfig);
@@ -1253,31 +1259,70 @@ async function savePricingConfig() {
 // ================= 9. 后台点播源平台管理（增删、排序、脱敏防泄密） =================
 let vodCfgState = null;
 
-async function loadVodSitesConfig() {
+async function loadVodSitesConfig(showFeedback = false) {
+  const btn = document.getElementById('reloadVodSitesBtn');
+  if (showFeedback && btn) { btn.disabled = true; btn.textContent = '⏳ 刷新中...'; }
   try {
-    const res = await apiFetch('/api/admin/vod-sites');
+    const res = await apiFetch('/api/admin/vod-sites?_t=' + Date.now());
     const data = await res.json();
-    if (!data.ok) return;
+    if (!data.ok) {
+      if (showFeedback) showAdminToast(data.error || '刷新失败', 'error', 2600);
+      return;
+    }
     vodCfgState = data.config || { mask_names: true, sites: [] };
     document.getElementById('vodMaskNamesToggle').value = vodCfgState.mask_names ? 'true' : 'false';
     renderVodSitesEditor();
-  } catch (e) {}
+    if (showFeedback) {
+      const cnt = (vodCfgState.sites || []).length;
+      showAdminToast(`已刷新！当前共 ${cnt} 个点播平台`, 'ok', 2200);
+    }
+  } catch (e) {
+    if (showFeedback) showAdminToast('网络异常，刷新失败', 'error', 2600);
+  } finally {
+    if (showFeedback && btn) { btn.disabled = false; btn.textContent = '🔄 刷新列表'; }
+  }
 }
 
 function renderVodSitesEditor() {
   if (!vodCfgState) return;
   const list = vodCfgState.sites || [];
   const enabledCnt = list.filter(s => s.enabled !== false).length;
-  document.getElementById('vodSitesSummary').textContent = `共 ${list.length} 条配置，当前启用 ${enabledCnt} 条（官网与 TVBox 实时同步此数字）`;
+  const webOkCnt = list.filter(s => s.enabled !== false && s.webPlayable === true).length;
+  const updStr = vodCfgState.updated_at ? ` · 最近更新: ${String(vodCfgState.updated_at).replace('T', ' ').slice(0, 19)}` : '';
+  const webStr = list.some(s => s.webPlayable !== undefined) ? `，其中网页直连可播 ${webOkCnt} 条` : '';
+  document.getElementById('vodSitesSummary').textContent = `共 ${list.length} 条配置，当前启用 ${enabledCnt} 条${webStr}${updStr}`;
   const box = document.getElementById('vodSitesContainer');
   if (list.length === 0) {
-    box.innerHTML = '<p class="muted">暂无点播源，点击右上角「+ 新增点播源」添加。</p>';
+    box.innerHTML = '<p class="muted">暂无点播源，点击右上角「+ 新增点播源」或「🚀 触发点播体检与豆瓣同步」。</p>';
     return;
   }
-  box.innerHTML = list.map((s, idx) => `
+  box.innerHTML = list.map((s, idx) => {
+    const tags = [];
+    if (s.webPlayable === true) {
+      tags.push('<span style="font-size:0.74rem;padding:2px 7px;border-radius:99px;background:rgba(16,185,129,0.18);color:#34d399;font-weight:700;">🌐 网页可播</span>');
+    } else if (s.webPlayable === false) {
+      tags.push('<span style="font-size:0.74rem;padding:2px 7px;border-radius:99px;background:rgba(148,163,184,0.18);color:#94a3b8;font-weight:600;">📺 仅TVBox</span>');
+    }
+    if (s.healthScore !== undefined) {
+      const scColor = s.healthScore >= 80 ? '#34d399' : (s.healthScore >= 60 ? '#fbbf24' : '#f87171');
+      tags.push(`<span style="font-size:0.74rem;padding:2px 7px;border-radius:99px;background:rgba(59,130,246,0.16);color:${scColor};font-weight:700;">健康分 ${s.healthScore}</span>`);
+    }
+    if (s.resolution) {
+      tags.push(`<span style="font-size:0.74rem;padding:2px 7px;border-radius:99px;background:#1e293b;color:#cbd5e1;">${escapeHtml(s.resolution)}</span>`);
+    }
+    if (s.adCount !== undefined) {
+      const adColor = s.adCount === 0 ? '#34d399' : (s.adCount <= 2 ? '#fbbf24' : '#f87171');
+      tags.push(`<span style="font-size:0.74rem;padding:2px 7px;border-radius:99px;background:#1e293b;color:${adColor};">插播广告:${s.adCount}</span>`);
+    }
+    const tagRow = tags.length > 0 ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;">${tags.join('')}</div>` : '';
+
+    return `
     <div class="pricing-row-card">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px;flex-wrap:wrap;">
-        <b>#${String(idx + 1).padStart(2, '0')} ${escapeHtml(s.realName || s.key)} <span class="muted" style="font-weight:400;">→ 对外展示：${escapeHtml(s.alias || '')}</span></b>
+        <div>
+          <b>#${String(idx + 1).padStart(2, '0')} ${escapeHtml(s.realName || s.key)} <span class="muted" style="font-weight:400;">→ 对外展示：${escapeHtml(s.alias || '')}</span></b>
+          ${tagRow}
+        </div>
         <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
           <label style="margin:0;display:inline-flex;align-items:center;gap:4px;"><input type="checkbox" style="width:auto;margin:0;" ${s.enabled !== false ? 'checked' : ''} onchange="updateVodField(${idx}, 'enabled', this.checked)"> 启用</label>
           <button type="button" class="btn-sm btn-detail" onclick="moveVodSite(${idx}, -1)">↑上移</button>
@@ -1290,8 +1335,42 @@ function renderVodSitesEditor() {
         <label>对外脱敏代号(前台/电视显示)<input type="text" value="${escapeHtml(s.alias || '')}" onchange="updateVodField(${idx}, 'alias', this.value)"></label>
         <label style="grid-column:span 2;">采集站 API 接口地址 (JSON)<input type="url" value="${escapeHtml(s.api || '')}" onchange="updateVodField(${idx}, 'api', this.value)"></label>
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
+}
+
+async function doTriggerVodWorkflow() {
+  const msg = document.getElementById('vodWfMsg');
+  const btn = document.getElementById('confirmTriggerVodWfBtn');
+  msg.textContent = '正在请求 GitHub Actions...';
+  msg.className = 'msg';
+  if (btn) btn.disabled = true;
+  const payload = {
+    run_discovery: document.getElementById('vodWfDiscovery').value,
+    max_sites: document.getElementById('vodWfMaxSites').value,
+    sync_to_kv: document.getElementById('vodWfSyncKv').value,
+    only_web_playable_for_hot: document.getElementById('vodWfOnlyWeb').value
+  };
+  try {
+    const res = await apiFetch('/api/admin/trigger-vod-workflow', { method: 'POST', body: JSON.stringify(payload) });
+    const data = await res.json();
+    if (!res.ok) {
+      msg.textContent = data.error || '触发失败';
+      msg.classList.add('error');
+      showAdminToast(data.error || '触发失败', 'error', 3200);
+    } else {
+      msg.textContent = data.message || '触发成功！';
+      msg.classList.add('ok');
+      showAdminToast('已触发点播体检工作流！约 1~2 分钟后点刷新查看', 'ok', 3200);
+      setTimeout(() => document.getElementById('vodWorkflowModal').classList.add('hidden'), 1200);
+    }
+  } catch (e) {
+    msg.textContent = '网络请求异常';
+    msg.classList.add('error');
+    showAdminToast('网络请求异常', 'error', 3000);
+  } finally {
+    if (btn) btn.disabled = false;
+  }
 }
 
 function updateVodField(idx, key, val) {

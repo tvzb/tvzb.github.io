@@ -330,6 +330,8 @@
           <span class="muted">开启脱敏模式后，官网测速页与 TVBox 客户端只显示「对外脱敏代号」（如极速专线 01），绝不暴露真实采集站名称与接口域名。</span>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button id="reloadVodSitesBtn" class="secondary">🔄 刷新列表</button>
+          <button id="triggerVodWfBtn" class="primary" style="background:linear-gradient(135deg,#059669,#0d9488);">🚀 触发点播体检与豆瓣同步</button>
           <button id="autoMaskVodBtn" class="secondary">🪄 一键自动脱敏命名</button>
           <button id="addVodSiteBtn" class="secondary">+ 新增点播源</button>
           <button id="saveVodSitesBtn" class="primary">💾 保存点播源到 KV</button>
@@ -695,6 +697,44 @@
       </label>
       <button id="confirmTriggerWfBtn" class="primary block">立即触发运行</button>
       <p id="wfMsg" class="msg"></p>
+    </div>
+  </div>
+
+  <!-- 手动触发点播体检与豆瓣热播同步工作流弹窗 -->
+  <div id="vodWorkflowModal" class="modal hidden">
+    <div class="modal-box">
+      <button class="close" data-close="vodWorkflowModal">×</button>
+      <h2>🚀 触发点播源自动体检 + 豆瓣热播同步</h2>
+      <p class="muted" style="margin-bottom:10px;">将通过 Worker 调用 GitHub Actions 运行 <code>vod_hot.yml</code>（约 1~2 分钟完成，完成后点「🔄 刷新列表」查看最新体检结果）。</p>
+      <label>是否从 GitHub 自动发现新点播平台 API
+        <select id="vodWfDiscovery">
+          <option value="true" selected>是（自动发现 + 存量体检）</option>
+          <option value="false">否（仅体检现有与内置站点）</option>
+        </select>
+      </label>
+      <label>保留写入 KV 的优质点播平台上限
+        <select id="vodWfMaxSites">
+          <option value="15">15 个</option>
+          <option value="20">20 个</option>
+          <option value="25" selected>25 个（推荐）</option>
+          <option value="30">30 个</option>
+          <option value="40">40 个</option>
+        </select>
+      </label>
+      <label>是否将体检结果同步写入 KV
+        <select id="vodWfSyncKv">
+          <option value="true" selected>是（正式更新线上点播池与豆瓣热播）</option>
+          <option value="false">否（试跑模式，仅生成体检报告）</option>
+        </select>
+      </label>
+      <label>豆瓣热播网页试看是否仅保留浏览器可播平台
+        <select id="vodWfOnlyWeb">
+          <option value="true" selected>是（仅保留 CORS 实测通过平台，告别点了没反应）</option>
+          <option value="false">否（保留全部健康平台）</option>
+        </select>
+      </label>
+      <button id="confirmTriggerVodWfBtn" class="primary block">立即触发点播体检工作流</button>
+      <p id="vodWfMsg" class="msg"></p>
     </div>
   </div>
 
