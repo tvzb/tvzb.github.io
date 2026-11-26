@@ -18,18 +18,18 @@
         <span class="brand-text">TVBox电视资源</span>
       </a>
 
-      <!-- 电脑端分栏导航 -->
+      <!-- 电脑端分栏导航（5 Tab 黄金布局） -->
       <nav class="desktop-nav" aria-label="主导航">
         <button type="button" class="nav-pill active" data-nav="home">首页</button>
         <button type="button" class="nav-pill" data-nav="channels">直播</button>
         <button type="button" class="nav-pill" data-nav="speed">点播</button>
-        <button type="button" class="nav-pill" data-nav="download">下载</button>
         <button type="button" class="nav-pill" data-nav="install">安装</button>
         <button type="button" class="nav-pill" data-nav="mine">会员</button>
       </nav>
 
-      <!-- 右侧：深浅主题切换 + 登录按钮 / 登录后紧凑头像 -->
+      <!-- 右侧：生态切换 + 深浅主题切换 + 登录按钮 / 登录后紧凑头像 -->
       <div class="topbar-actions">
+        <a href="https://etf.171234.xyz" class="eco-switch-pill" title="前往波幅探长 ETF 监测站" target="_blank" rel="noopener">📈 ETF</a>
         <button type="button" id="themeToggleBtn" class="icon-btn" title="切换深色/浅色主题" aria-label="切换主题">☀️</button>
         <button type="button" id="loginOpen" class="cta-pill">登录 / 领<span class="js-trial-days">7</span>天</button>
         <button type="button" id="userAvatarBtn" class="avatar-btn hidden" title="进入个人中心">
@@ -195,86 +195,107 @@
       <div id="siteList" class="site-grid"></div>
     </section>
 
-    <!-- ==================== 视图 4：APK 下载 ==================== -->
-    <section id="view-download" class="tab-view">
-      <div class="block-head">
-        <div>
-          <h2>TVBox 客户端下载</h2>
-          <p class="muted-sm">智能电视、机顶盒、投影仪、安卓手机与平板<b>全部通用</b>，按安卓系统新旧选择对应版本</p>
-        </div>
-      </div>
-
-      <div id="apkDownloadsGrid" class="dl-grid"></div>
-      <p id="downloadNoteText" class="muted-sm" style="margin:10px 0 16px;">💡 下载链接由后台实时维护；如遇失效请到「个人中心 → 提交工单」获取最新安装包。</p>
-
-      <!-- 赣州市城区上门安装服务卡片 -->
-      <div id="guideOnsiteCard" class="onsite-card">
-        <div class="onsite-left">
-          <div class="onsite-badge">🚗 赣州市城区专属 · 上门费 <span class="onsite-price-txt">¥99</span></div>
-          <h3 id="guideOnsiteTitle">赣州市城区专属 · 上门安装调试服务</h3>
-          <p id="guideOnsiteDesc" class="muted-sm">包含电视/盒子现场安装 TVBox + 家庭宽带调优 + 赠送全年全能双享会员 + 装不好不收费！</p>
-        </div>
-        <button type="button" class="btn-primary btn-sm-pad" onclick="openOnsiteBooking()">免登录一键预约</button>
-      </div>
-    </section>
-
-    <!-- ==================== 视图 5：图文安装教程（预留演示图位） ==================== -->
+    <!-- ==================== 视图 4：安装中心（下载 + 视频教程 + 图文步骤） ==================== -->
     <section id="view-install" class="tab-view">
       <div class="block-head">
         <div>
-          <h2>TVBox 安装与订阅导入教程</h2>
-          <p class="muted-sm">图文步骤演示，小白 3 分钟轻松上手（支持点击图片放大查看）</p>
+          <h2>安装与使用指南</h2>
+          <p class="muted-sm">下载适配客户端 → 观看视频教程 → 3 分钟导入订阅畅看</p>
+        </div>
+        <div class="seg-tabs" id="installSubTabs">
+          <button type="button" class="seg-btn active" data-subtab="sub-download">📦 软件下载</button>
+          <button type="button" class="seg-btn" data-subtab="sub-video">🎬 视频教程</button>
+          <button type="button" class="seg-btn" data-subtab="sub-steps">📖 图文步骤</button>
         </div>
       </div>
 
-      <div class="faq-list">
-        <details open>
-          <summary>第一步：将 TVBox 安装包安装到电视 / 盒子</summary>
-          <p>
-            <b>U 盘安装</b>：下载适配的 <code>.apk</code> 拷入 U 盘根目录插电视 USB，打开电视「文件管理器」点击安装。<br>
-            <b>免 U 盘推送</b>：电视装「甲壳虫 ADB / 当贝助手」，手机与电视连同一 Wi-Fi 直接推送安装。<br>
-            <b>常见品牌提示</b>：小米需允许安装未知来源；华为需关闭「纯净模式」；海信/TCL 可用「聚好看/欢视助手」。
-          </p>
-          <div class="demo-img-box">
-            <img src="images/step1.jpg" alt="第一步安装演示图" loading="lazy" onclick="openImgLightbox(this.src)" onerror="this.parentElement.classList.add('empty-slot')">
-            <div class="demo-img-placeholder">📷 演示图预留位（上传 <code>images/step1.jpg</code> 至网页仓库后自动显示）</div>
-          </div>
-        </details>
+      <!-- 子面板 1：软件下载 -->
+      <div id="sub-download" class="install-subpanel active">
+        <div id="apkDownloadsGrid" class="dl-grid"></div>
+        <p id="downloadNoteText" class="muted-sm" style="margin:10px 0 16px;">💡 下载链接由后台实时维护；如遇失效请到「会员 → 提交工单」获取最新安装包。</p>
 
-        <details open>
-          <summary>第二步：扫码推送或手动输入「超短专属地址」</summary>
-          <p>
-            1. 打开 TVBox 点击右上角 <b>「设置」→「配置地址」</b>。<br>
-            2. <b>扫码推送（最省事）</b>：手机微信扫描电视屏幕二维码，粘贴本站在首页复制的超短专属地址（如 <code>https://tv.171234.xyz/s/6位码</code>），点击推送。<br>
-            3. 也可以直接用遥控器输入这串超短地址，点击 <b>「确定」</b> 返回首页等待 2 秒即可畅看！
-          </p>
-          <div class="demo-img-box">
-            <img src="images/step2.jpg" alt="第二步导入订阅演示图" loading="lazy" onclick="openImgLightbox(this.src)" onerror="this.parentElement.classList.add('empty-slot')">
-            <div class="demo-img-placeholder">📷 演示图预留位（上传 <code>images/step2.jpg</code> 至网页仓库后自动显示）</div>
+        <!-- 赣州市城区上门安装服务卡片 -->
+        <div id="guideOnsiteCard" class="onsite-card">
+          <div class="onsite-left">
+            <div class="onsite-badge">🚗 赣州市城区专属 · 上门费 <span class="onsite-price-txt">¥99</span></div>
+            <h3 id="guideOnsiteTitle">赣州市城区专属 · 上门安装调试服务</h3>
+            <p id="guideOnsiteDesc" class="muted-sm">包含电视/盒子现场安装 TVBox + 家庭宽带调优 + 赠送全年全能双享会员 + 装不好不收费！</p>
           </div>
-        </details>
+          <button type="button" class="btn-primary btn-sm-pad" onclick="openOnsiteBooking()">免登录一键预约</button>
+        </div>
+      </div>
 
-        <details>
-          <summary>第三步：永久免费体验直播源如何导入？</summary>
-          <p>
-            在 TVBox「设置 → <b>直播地址</b>」栏填入极短体验地址 <code>https://tv.171234.xyz/f</code> 即可直接观看高清央卫视体验频道。
-          </p>
-          <div class="demo-img-box">
-            <img src="images/step3.jpg" alt="第三步直播导入演示图" loading="lazy" onclick="openImgLightbox(this.src)" onerror="this.parentElement.classList.add('empty-slot')">
-            <div class="demo-img-placeholder">📷 演示图预留位（上传 <code>images/step3.jpg</code> 至网页仓库后自动显示）</div>
+      <!-- 子面板 2：视频教程 -->
+      <div id="sub-video" class="install-subpanel">
+        <div class="card">
+          <div class="card-head-row">
+            <div>
+              <h3>🎬 TVBox 安装与配置视频演示</h3>
+              <p id="tutorialVideoDesc" class="muted-sm" style="margin-top:4px;">3 分钟手把手演示：TVBox 安装、超短订阅地址导入与换源技巧。</p>
+            </div>
+            <button type="button" class="btn-outline btn-xs" onclick="switchInstallSubTab('sub-steps')">看图文版 →</button>
           </div>
-        </details>
+          <div id="tutorialVideoWrap" class="video-player-box">
+            <div class="video-empty-slot">
+              <div style="font-size:2.2rem;margin-bottom:8px;">🎬</div>
+              <div style="font-weight:700;margin-bottom:4px;">视频教程即将上线</div>
+              <p class="muted-sm">管理员可在后台「站点与下载设置」填入 MP4 直链（推荐 Cloudflare R2）或 B 站嵌入链接，保存后立即在此播放。</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <details>
-          <summary>第四步：切源换线、播放解码与测速排序生效</summary>
-          <p>
-            看直播按遥控器<b>确认键</b>秒切同频道备用高速源；如遇有声无画，在「设置 → 播放器」切换 <b>IJK / EXO</b> 及 <b>硬解 / 软解</b>。网页重新测速保存排序后，彻底退出 TVBox 重启即自动生效。
-          </p>
-          <div class="demo-img-box">
-            <img src="images/step4.jpg" alt="第四步播放设置演示图" loading="lazy" onclick="openImgLightbox(this.src)" onerror="this.parentElement.classList.add('empty-slot')">
-            <div class="demo-img-placeholder">📷 演示图预留位（上传 <code>images/step4.jpg</code> 至网页仓库后自动显示）</div>
-          </div>
-        </details>
+      <!-- 子面板 3：图文步骤 -->
+      <div id="sub-steps" class="install-subpanel">
+        <div class="faq-list">
+          <details open>
+            <summary>第一步：将 TVBox 安装包安装到电视 / 盒子</summary>
+            <p>
+              <b>U 盘安装</b>：下载适配的 <code>.apk</code> 拷入 U 盘根目录插电视 USB，打开电视「文件管理器」点击安装。<br>
+              <b>免 U 盘推送</b>：电视装「甲壳虫 ADB / 当贝助手」，手机与电视连同一 Wi-Fi 直接推送安装。<br>
+              <b>常见品牌提示</b>：小米需允许安装未知来源；华为需关闭「纯净模式」；海信/TCL 可用「聚好看/欢视助手」。
+            </p>
+            <div class="demo-img-box">
+              <img src="images/step1.jpg" alt="第一步安装演示图" loading="lazy" onclick="openImgLightbox(this.src)" onerror="this.parentElement.classList.add('empty-slot')">
+              <div class="demo-img-placeholder">📷 演示图预留位（上传 <code>images/step1.jpg</code> 至网页仓库后自动显示）</div>
+            </div>
+          </details>
+
+          <details open>
+            <summary>第二步：扫码推送或手动输入「超短专属地址」</summary>
+            <p>
+              1. 打开 TVBox 点击右上角 <b>「设置」→「配置地址」</b>。<br>
+              2. <b>扫码推送（最省事）</b>：手机微信扫描电视屏幕二维码，粘贴本站在首页复制的超短专属地址（如 <code>https://tv.171234.xyz/s/6位码</code>），点击推送。<br>
+              3. 也可以直接用遥控器输入这串超短地址，点击 <b>「确定」</b> 返回首页等待 2 秒即可畅看！
+            </p>
+            <div class="demo-img-box">
+              <img src="images/step2.jpg" alt="第二步导入订阅演示图" loading="lazy" onclick="openImgLightbox(this.src)" onerror="this.parentElement.classList.add('empty-slot')">
+              <div class="demo-img-placeholder">📷 演示图预留位（上传 <code>images/step2.jpg</code> 至网页仓库后自动显示）</div>
+            </div>
+          </details>
+
+          <details>
+            <summary>第三步：永久免费体验直播源如何导入？</summary>
+            <p>
+              在 TVBox「设置 → <b>直播地址</b>」栏填入极短体验地址 <code>https://tv.171234.xyz/f</code> 即可直接观看高清央卫视体验频道。
+            </p>
+            <div class="demo-img-box">
+              <img src="images/step3.jpg" alt="第三步直播导入演示图" loading="lazy" onclick="openImgLightbox(this.src)" onerror="this.parentElement.classList.add('empty-slot')">
+              <div class="demo-img-placeholder">📷 演示图预留位（上传 <code>images/step3.jpg</code> 至网页仓库后自动显示）</div>
+            </div>
+          </details>
+
+          <details>
+            <summary>第四步：切源换线、播放解码与测速排序生效</summary>
+            <p>
+              看直播按遥控器<b>确认键</b>秒切同频道备用高速源；如遇有声无画，在「设置 → 播放器」切换 <b>IJK / EXO</b> 及 <b>硬解 / 软解</b>。网页重新测速保存排序后，彻底退出 TVBox 重启即自动生效。
+            </p>
+            <div class="demo-img-box">
+              <img src="images/step4.jpg" alt="第四步播放设置演示图" loading="lazy" onclick="openImgLightbox(this.src)" onerror="this.parentElement.classList.add('empty-slot')">
+              <div class="demo-img-placeholder">📷 演示图预留位（上传 <code>images/step4.jpg</code> 至网页仓库后自动显示）</div>
+            </div>
+          </details>
+        </div>
       </div>
     </section>
 
@@ -373,7 +394,6 @@
     <button type="button" class="mnav-item active" data-nav="home"><span class="mnav-ico">🏠</span><span>首页</span></button>
     <button type="button" class="mnav-item" data-nav="channels"><span class="mnav-ico">📡</span><span>直播</span></button>
     <button type="button" class="mnav-item" data-nav="speed"><span class="mnav-ico">⚡</span><span>点播</span></button>
-    <button type="button" class="mnav-item" data-nav="download"><span class="mnav-ico">⬇️</span><span>下载</span></button>
     <button type="button" class="mnav-item" data-nav="install"><span class="mnav-ico">🛠️</span><span>安装</span></button>
     <button type="button" class="mnav-item" data-nav="mine"><span class="mnav-ico" id="bottomMineIcon">👤</span><span>会员</span></button>
   </nav>

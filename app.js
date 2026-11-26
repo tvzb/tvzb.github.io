@@ -154,6 +154,11 @@ function bindEvents() {
     btn.onclick = () => copyText(document.getElementById(btn.dataset.copyId).textContent, btn);
   });
 
+  // 安装中心子标签切换（下载 / 视频教程 / 图文步骤）
+  document.querySelectorAll('#installSubTabs .seg-btn').forEach(btn => {
+    btn.onclick = () => switchInstallSubTab(btn.dataset.subtab);
+  });
+
   // 套餐分类切换
   document.querySelectorAll('#planCategoryTabs .seg-btn').forEach(btn => {
     btn.onclick = () => {
@@ -263,6 +268,7 @@ async function loadPublicConfigAndSites() {
         const noteEl = document.getElementById('downloadNoteText');
         if (noteEl) noteEl.textContent = '💡 ' + cfg.downloadNote;
       }
+      renderTutorialVideo(cfg.tutorialVideoUrl || '', cfg.tutorialVideoDesc || '');
       const showOnsite = cfg.onsiteEnabled !== false;
       ['homeOnsiteBanner', 'guideOnsiteCard'].forEach(id => {
         document.getElementById(id)?.classList.toggle('hidden', !showOnsite);
@@ -1126,4 +1132,28 @@ function openImgLightbox(src) {
   const lb = document.getElementById('imgLightbox');
   const im = document.getElementById('lightboxImg');
   if (lb && im && src) { im.src = src; lb.classList.remove('hidden'); }
+}
+
+function switchInstallSubTab(subId) {
+  document.querySelectorAll('#installSubTabs .seg-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.subtab === subId);
+  });
+  document.querySelectorAll('.install-subpanel').forEach(p => {
+    p.classList.toggle('active', p.id === subId);
+  });
+}
+
+function renderTutorialVideo(videoUrl, videoDesc) {
+  const descEl = document.getElementById('tutorialVideoDesc');
+  if (descEl && videoDesc) descEl.textContent = videoDesc;
+  const wrap = document.getElementById('tutorialVideoWrap');
+  if (!wrap) return;
+  const url = String(videoUrl || '').trim();
+  if (!url) return;
+
+  if (/\.(mp4|webm|ogg)(\?.*)?$/i.test(url)) {
+    wrap.innerHTML = `<video controls playsinline preload="metadata" src="${escapeHtml(url)}">您的浏览器暂不支持在线播放，请<a href="${escapeHtml(url)}" target="_blank" rel="noopener">点击下载观看</a>。</video>`;
+  } else if (/^(https?:)?\/\//i.test(url)) {
+    wrap.innerHTML = `<div class="video-iframe-wrap"><iframe src="${escapeHtml(url)}" allowfullscreen="true" scrolling="no" frameborder="0" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"></iframe></div>`;
+  }
 }

@@ -979,6 +979,8 @@ async function loadSiteSettings() {
     const s = data.settings;
     document.getElementById('setTrialDays').value = s.trial_days ?? 7;
     document.getElementById('setDownloadNote').value = s.download_note || '';
+    document.getElementById('setTutorialVideoUrl').value = s.tutorial_video_url || '';
+    document.getElementById('setTutorialVideoDesc').value = s.tutorial_video_desc || '';
     document.getElementById('setOnsiteEnabled').value = s.onsite_enabled === false ? 'false' : 'true';
     document.getElementById('setOnsitePrice').value = s.onsite_price ?? 99;
     document.getElementById('setOnsiteTitle').value = s.onsite_title || '赣州市城区专属 · 上门安装调试服务';
@@ -1028,6 +1030,8 @@ async function saveSiteSettings() {
     trial_days: Number(document.getElementById('setTrialDays').value),
     apk_downloads: apkDownloadsState,
     download_note: document.getElementById('setDownloadNote').value.trim(),
+    tutorial_video_url: document.getElementById('setTutorialVideoUrl').value.trim(),
+    tutorial_video_desc: document.getElementById('setTutorialVideoDesc').value.trim(),
     onsite_enabled: document.getElementById('setOnsiteEnabled').value === 'true',
     onsite_price: Number(document.getElementById('setOnsitePrice').value ?? 99),
     onsite_title: document.getElementById('setOnsiteTitle').value.trim(),
