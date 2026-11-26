@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=5.0, user-scalable=yes">
-  <meta name="description" content="TVBox 高速点播与高清直播源订阅，支持家庭宽带真实拉流测速、云端专属排序与实时直播频道监测">
+  <meta name="description" content="TVBox 高清直播与高速点播源订阅，支持实时直播频道监测、家庭宽带真实拉流测速与云端专属排序">
   <title>TVBox电视资源 · 告别电视套娃收费</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📺</text></svg>">
   <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%230b1120%22/><text x=%2250%25%22 y=%2255%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2266%22>📺</text></svg>">
@@ -23,7 +23,7 @@
         <button type="button" class="nav-pill active" data-nav="home">首页</button>
         <button type="button" class="nav-pill" data-nav="channels">直播</button>
         <button type="button" class="nav-pill" data-nav="speed">点播</button>
-        <button type="button" class="nav-pill" data-nav="install">安装</button>
+        <button type="button" class="nav-pill" data-nav="install">指南</button>
         <button type="button" class="nav-pill" data-nav="mine">会员</button>
       </nav>
 
@@ -46,9 +46,9 @@
       <!-- 极简高转化首屏（让专属订阅地址直接进入手机第一屏） -->
       <div class="hero-banner hero-compact">
         <div class="hero-content">
-          <span class="hero-badge">⚡ <span class="js-vod-count">21</span>条4K专线 + <span class="js-live-count">49</span>台央卫视直播 · 一链搞定</span>
+          <span class="hero-badge">⚡ <span class="js-live-count">49</span>台央卫视直播 + <span class="js-vod-count">21</span>条4K点播专线 · 一链搞定</span>
           <h1>装好 TVBox · <em>全家畅看全网影视</em></h1>
-          <p class="hero-desc">告别平台套娃会员，超短专属地址一键导入，点播与高清直播云端自动维护。</p>
+          <p class="hero-desc">告别平台套娃会员，超短专属地址一键导入，高清直播与点播云端自动维护。</p>
           <div class="hero-cta-row">
             <button type="button" id="heroTrialBtn" class="btn-primary btn-glow">🎁 免费领 <span class="js-trial-days">7</span> 天全功能试用</button>
           </div>
@@ -63,7 +63,7 @@
             <span id="homeSubBadges" class="muted-sm">登录后一键复制</span>
           </div>
           <div id="homeSubBody">
-            <p class="muted-sm" style="margin:6px 0 10px;">登录后即可在此直接复制您的<b>「一键全能聚合地址」</b>填入 TVBox，支持点播+直播全自动更新。</p>
+            <p class="muted-sm" style="margin:6px 0 10px;">登录后即可在此直接复制您的<b>「一键全能聚合地址」</b>填入 TVBox，支持直播+点播全自动更新。</p>
             <button type="button" class="btn-primary btn-sm-pad" onclick="openAuthModal(true)">立即登录 / 领 <span class="js-trial-days">7</span> 天试用</button>
           </div>
         </div>
@@ -394,7 +394,7 @@
     <button type="button" class="mnav-item active" data-nav="home"><span class="mnav-ico">🏠</span><span>首页</span></button>
     <button type="button" class="mnav-item" data-nav="channels"><span class="mnav-ico">📡</span><span>直播</span></button>
     <button type="button" class="mnav-item" data-nav="speed"><span class="mnav-ico">⚡</span><span>点播</span></button>
-    <button type="button" class="mnav-item" data-nav="install"><span class="mnav-ico">🛠️</span><span>安装</span></button>
+    <button type="button" class="mnav-item" data-nav="install"><span class="mnav-ico">📖</span><span>指南</span></button>
     <button type="button" class="mnav-item" data-nav="mine"><span class="mnav-ico" id="bottomMineIcon">👤</span><span>会员</span></button>
   </nav>
 

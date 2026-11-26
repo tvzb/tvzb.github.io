@@ -330,7 +330,10 @@ function renderEarlyBirdBanner() {
 function renderDynamicPlans() {
   const grid = document.getElementById('dynamicPlansGrid');
   if (!grid) return;
-  const list = dynamicPlans.filter(p => currentPlanCategory === 'all' || p.category === currentPlanCategory);
+  const catRank = { combo: 1, live: 2, vod: 3 };
+  const list = dynamicPlans
+    .filter(p => currentPlanCategory === 'all' || p.category === currentPlanCategory)
+    .sort((a, b) => (catRank[a.category] || 9) - (catRank[b.category] || 9) || Number(a.sort || 99) - Number(b.sort || 99));
   if (list.length === 0) {
     grid.innerHTML = '<div class="card muted-sm" style="text-align:center;">该分类暂无上架套餐</div>';
     return;
@@ -339,8 +342,8 @@ function renderDynamicPlans() {
   grid.innerHTML = list.map(p => {
     const hasDisc = p.earlyBirdSaved > 0 && p.effectivePrice < p.originalPrice;
     const chips = [];
-    if (p.vodDays > 0) chips.push(`📺 点播 ${p.vodDays} 天`);
     if (p.liveDays > 0) chips.push(`📡 直播 ${p.liveDays} 天`);
+    if (p.vodDays > 0) chips.push(`📺 点播 ${p.vodDays} 天`);
     return `
       <article class="plan-card ${p.featured ? 'featured' : ''}">
         <div>
@@ -609,8 +612,8 @@ function renderAccountDashboard(user, orders, tickets) {
   const liveActive = user.live_expire_at > now;
 
   document.getElementById('profileBadges').innerHTML = `
-    <span class="badge ${vodActive ? 'active' : 'expired'}">点播: ${vodActive ? '剩' + daysLeft(user.vod_expire_at) + '天' : '未开通'}</span>
     <span class="badge ${liveActive ? 'active' : 'expired'}">直播: ${liveActive ? '剩' + daysLeft(user.live_expire_at) + '天' : '免费版'}</span>
+    <span class="badge ${vodActive ? 'active' : 'expired'}">点播: ${vodActive ? '剩' + daysLeft(user.vod_expire_at) + '天' : '未开通'}</span>
   `;
 
   const allUrl = user.allSubUrl || `${API_BASE}/s/${user.token}`;
@@ -623,22 +626,22 @@ function renderAccountDashboard(user, orders, tickets) {
       <button type="button" class="btn-primary btn-sm-pad" onclick="copyText('${allUrl}', this)">一键复制</button>
     </div>
     <code class="inline-code" style="width:100%;">${allUrl}</code>
-    <p class="muted-sm" style="margin-top:8px;">到期时间：点播 ${formatDate(user.vod_expire_at)} · 直播 ${formatDate(user.live_expire_at)}（仅限 TVBox 加载防泄露）</p>
+    <p class="muted-sm" style="margin-top:8px;">到期时间：直播 ${formatDate(user.live_expire_at)} · 点播 ${formatDate(user.vod_expire_at)}（仅限 TVBox 加载防泄露）</p>
     <details style="margin-top:12px;border-top:1px dashed var(--border);padding-top:10px;">
-      <summary style="cursor:pointer;color:var(--muted);font-size:0.84rem;">展开独立点播 / 独立直播分离地址</summary>
-      <div style="margin-top:10px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-          <span class="muted-sm">📺 独立点播</span>
-          <button type="button" class="btn-outline btn-xs" onclick="copyText('${vodUrl}', this)">复制</button>
-        </div>
-        <code class="inline-code" style="width:100%;">${vodUrl}</code>
-      </div>
+      <summary style="cursor:pointer;color:var(--muted);font-size:0.84rem;">展开独立直播 / 独立点播分离地址</summary>
       <div style="margin-top:10px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
           <span class="muted-sm">📡 独立直播</span>
           <button type="button" class="btn-outline btn-xs" onclick="copyText('${liveUrl}', this)">复制</button>
         </div>
         <code class="inline-code" style="width:100%;">${liveUrl}</code>
+      </div>
+      <div style="margin-top:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+          <span class="muted-sm">📺 独立点播</span>
+          <button type="button" class="btn-outline btn-xs" onclick="copyText('${vodUrl}', this)">复制</button>
+        </div>
+        <code class="inline-code" style="width:100%;">${vodUrl}</code>
       </div>
     </details>
   `;
@@ -653,11 +656,11 @@ function renderAccountDashboard(user, orders, tickets) {
   const homeSubBadges = document.getElementById('homeSubBadges');
   const homeSubBody = document.getElementById('homeSubBody');
   if (homeSubBadges) {
-    homeSubBadges.innerHTML = `<span class="badge ${vodActive ? 'active' : 'expired'}">点播:${vodActive ? '剩' + daysLeft(user.vod_expire_at) + '天' : '未开'}</span> <span class="badge ${liveActive ? 'active' : 'expired'}">直播:${liveActive ? '剩' + daysLeft(user.live_expire_at) + '天' : '免费'}</span>`;
+    homeSubBadges.innerHTML = `<span class="badge ${liveActive ? 'active' : 'expired'}">直播:${liveActive ? '剩' + daysLeft(user.live_expire_at) + '天' : '免费'}</span> <span class="badge ${vodActive ? 'active' : 'expired'}">点播:${vodActive ? '剩' + daysLeft(user.vod_expire_at) + '天' : '未开'}</span>`;
   }
   if (homeSubBody) {
     homeSubBody.innerHTML = `
-      <p class="muted-sm" style="margin:6px 0 6px;">一键全能聚合地址（复制到 TVBox「配置地址」栏，点播+直播自动同步）：</p>
+      <p class="muted-sm" style="margin:6px 0 6px;">一键全能聚合地址（复制到 TVBox「配置地址」栏，直播+点播自动同步）：</p>
       <div class="copy-code-row">
         <code class="inline-code" style="flex:1;">${allUrl}</code>
         <button type="button" class="btn-primary btn-sm-pad" onclick="copyText('${allUrl}', this)">一键复制</button>

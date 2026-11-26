@@ -162,8 +162,8 @@
     <!-- 数据看板 -->
     <div class="stats-grid">
       <div class="stat-card"><div class="num" id="statUsers">-</div><div class="label">总用户数</div></div>
-      <div class="stat-card"><div class="num" id="statActiveVod">-</div><div class="label">有效点播会员</div></div>
       <div class="stat-card"><div class="num" id="statActiveLive">-</div><div class="label">有效直播会员</div></div>
+      <div class="stat-card"><div class="num" id="statActiveVod">-</div><div class="label">有效点播会员</div></div>
       <div class="stat-card pending"><div class="num" id="statPending">-</div><div class="label">待审核订单</div></div>
       <div class="stat-card pending"><div class="num" id="statOpenTickets">-</div><div class="label">待回复工单</div></div>
       <div class="stat-card"><div class="num" id="statToday">-</div><div class="label">今日订单</div></div>
@@ -177,9 +177,9 @@
       <button class="tab-btn" data-tab="tickets">📩 客服工单</button>
       <button class="tab-btn" data-tab="coupons">🏷️ 优惠码管理</button>
       <button class="tab-btn" data-tab="pricing">💰 套餐与早鸟折扣</button>
-      <button class="tab-btn" data-tab="vodcfg">🎬 点播源管理</button>
       <button class="tab-btn" data-tab="livecfg">📡 live.txt 采集配置</button>
       <button class="tab-btn" data-tab="testcfg">🧪 test.txt 体验源配置</button>
+      <button class="tab-btn" data-tab="vodcfg">🎬 点播源管理</button>
       <button class="tab-btn" data-tab="settings">⚙️ 站点与下载设置</button>
     </div>
 
@@ -224,8 +224,8 @@
           <tr>
             <th>ID</th>
             <th>邮箱</th>
-            <th>点播到期</th>
             <th>直播到期</th>
+            <th>点播到期</th>
             <th>状态</th>
             <th>注册 IP</th>
             <th>最近活跃</th>
@@ -424,7 +424,7 @@
 
       <!-- 会员套餐列表 -->
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-        <b>📦 会员套餐列表（点播 / 直播 / 全能包）</b>
+        <b>📦 会员套餐列表（全能双享 / 纯直播 / 纯点播）</b>
         <button id="addPlanBtn" class="secondary" style="padding:6px 12px;font-size:0.84rem;">+ 新增套餐</button>
       </div>
       <div id="plansEditorContainer"></div>
@@ -459,7 +459,7 @@
       </div>
 
       <div style="margin-top:16px;padding:14px;background:#090d16;border:1px solid var(--border);border-radius:10px;">
-        <b style="color:#60a5fa;">🎬 使用说明视频教程设置（展示在「安装 → 视频教程」）</b>
+        <b style="color:#60a5fa;">🎬 使用说明视频教程设置（展示在「指南 → 视频教程」）</b>
         <div class="form-grid-2" style="margin-top:8px;">
           <label style="margin-top:0;">视频地址（支持 MP4 直链如 Cloudflare R2，或 B 站 iframe 嵌入链接）
             <input id="setTutorialVideoUrl" type="url" placeholder="https://r2.171234.xyz/tutorial.mp4 或 //player.bilibili.com/player.html?bvid=...">
@@ -500,11 +500,11 @@
       <button class="close" data-close="extendModal">×</button>
       <h2>延长会员时长</h2>
       <p class="muted" id="extendEmail" style="margin-bottom:12px;"></p>
-      <label>增加点播天数
-        <input id="extendVodDays" type="number" min="0" value="0">
-      </label>
       <label>增加直播天数
         <input id="extendLiveDays" type="number" min="0" value="0">
+      </label>
+      <label>增加点播天数
+        <input id="extendVodDays" type="number" min="0" value="0">
       </label>
       <button id="confirmExtendBtn" class="primary block">确认延长</button>
       <p id="extendMsg" class="msg"></p>
@@ -573,8 +573,8 @@
           <select id="cpScope">
             <option value="all">全部套餐</option>
             <option value="combo">仅全能双享包</option>
-            <option value="vod">仅点播会员</option>
             <option value="live">仅直播会员</option>
+            <option value="vod">仅点播会员</option>
           </select>
         </label>
         <label>最低消费门槛 (元)
