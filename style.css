@@ -1226,14 +1226,17 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
   color: #fff;
 }
 
-/* 点播页：热门影片海报网格 */
+/* 点播页：热门影片海报网格（根据影片总数智能调整列数，保持页面饱满） */
 .vod-hot-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(var(--vod-cols-mobile, 2), minmax(0, 1fr));
   gap: 12px;
 }
 @media (min-width: 760px) {
-  .vod-hot-grid { grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .vod-hot-grid {
+    grid-template-columns: repeat(var(--vod-cols-desktop, 5), minmax(0, 1fr));
+    gap: 14px;
+  }
 }
 .vod-card {
   background: var(--card);

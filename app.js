@@ -1432,19 +1432,23 @@ async function loadVodHotMovies() {
       return;
     }
     vodHotMovies = data.movies;
-    grid.innerHTML = vodHotMovies.map((m, idx) => `
+    applySmartVodGridLayout(grid, vodHotMovies.length);
+    grid.innerHTML = vodHotMovies.map((m, idx) => {
+      const rateBadge = m.rate ? `⭐ ${m.rate}` : (m.remarks || '');
+      const typeLabel = m.category === 'movie' ? '🎬 电影' : (m.category === 'tv' ? '📺 电视剧' : (m.type || '热播'));
+      return `
       <div class="vod-card" onclick="openVodMovie(${idx})">
         <div class="vod-poster-wrap">
           <img src="${escapeHtml(m.pic)}" alt="${escapeHtml(m.title)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.opacity='0.2'">
-          ${m.remarks ? `<span class="vod-remarks-tag">${escapeHtml(m.remarks)}</span>` : ''}
+          ${rateBadge ? `<span class="vod-remarks-tag">${escapeHtml(rateBadge)}</span>` : ''}
           <span class="vod-lines-tag">⚡ ${m.sources.length}条专线</span>
         </div>
         <div class="vod-card-info">
           <div class="vod-card-title" title="${escapeHtml(m.title)}">${escapeHtml(m.title)}</div>
-          <div class="vod-card-sub">${escapeHtml([m.year, m.type].filter(Boolean).join(' · ') || '热门精选')}</div>
+          <div class="vod-card-sub">${escapeHtml([typeLabel, m.year, m.remarks && m.rate ? m.remarks : ''].filter(Boolean).join(' · '))}</div>
         </div>
-      </div>
-    `).join('');
+      </div>`;
+    }).join('');
   } catch (e) {
     grid.innerHTML = '<div class="card muted-sm" style="grid-column:1/-1;text-align:center;padding:24px;">热门影片加载失败，请稍后刷新</div>';
   }
@@ -1615,4 +1619,44 @@ function closeVodModal() {
     video.load();
   }
   document.getElementById('vodPlayerModal')?.classList.add('hidden');
+}
+
+// 智能计算海报网格列数：根据实际影片数量自动匹配最饱满的行/列组合
+function applySmartVodGridLayout(gridEl, count) {
+  if (!gridEl || !count) return;
+  const n = Number(count);
+
+  // 电脑端列数（优先 5 / 4 / 3 列整除，否则选最后一行空位最少的列数）
+  let desktopCols = 5;
+  if (n <= 5) {
+    desktopCols = Math.max(2, n);
+  } else if (n % 5 === 0) {
+    desktopCols = 5;
+  } else if (n % 4 === 0) {
+    desktopCols = 4;
+  } else if (n % 3 === 0) {
+    desktopCols = 3;
+  } else {
+    let bestCols = 5;
+    let minEmpty = 99;
+    for (const c of [5, 4, 3]) {
+      const rem = n % c;
+      const empty = rem === 0 ? 0 : c - rem;
+      if (empty < minEmpty) {
+        minEmpty = empty;
+        bestCols = c;
+      }
+    }
+    desktopCols = bestCols;
+  }
+
+  // 手机端列数（偶数默认 2 列完全填满；3 的倍数且为奇数如 3/9/15 用 3 列完全填满）
+  let mobileCols = 2;
+  if (n === 1) mobileCols = 1;
+  else if (n % 2 === 0) mobileCols = 2;
+  else if (n % 3 === 0) mobileCols = 3;
+  else mobileCols = 2;
+
+  gridEl.style.setProperty('--vod-cols-desktop', String(desktopCols));
+  gridEl.style.setProperty('--vod-cols-mobile', String(mobileCols));
 }
