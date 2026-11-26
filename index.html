@@ -40,6 +40,15 @@
     </div>
   </header>
 
+  <!-- 全站顶部公告条（后台 KV 可随时开启/修改） -->
+  <div id="globalAnnouncementBar" class="announce-bar hidden">
+    <div class="announce-inner">
+      <span class="announce-ico">📢</span>
+      <span id="globalAnnouncementText"></span>
+      <button type="button" id="closeAnnouncementBtn" class="announce-close" aria-label="关闭公告">×</button>
+    </div>
+  </div>
+
   <main class="app-main">
     <!-- ==================== 视图 1：首页 & 套餐（高转化首屏） ==================== -->
     <section id="view-home" class="tab-view active">
@@ -130,8 +139,35 @@
 
     </section>
 
-    <!-- ==================== 视图 2：实时频道监测 ==================== -->
+    <!-- ==================== 视图 2：实时频道监测 + 免费体验台在线试看 ==================== -->
     <section id="view-channels" class="tab-view">
+      <!-- 游客免登录 · test.txt 网页在线试看 -->
+      <div class="card live-player-card" style="margin-bottom:16px;">
+        <div class="card-head-row" style="margin-bottom:10px;flex-wrap:wrap;">
+          <div>
+            <h3>📺 免费体验台 · 网页在线试看</h3>
+            <p class="muted-sm" style="margin-top:2px;">免登录直接试看 test.txt 体验频道（若部分 HTTP 源被浏览器拦截，自动尝试备用线或导入 TVBox 100% 畅看）</p>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+            <span id="livePlayStatus" class="badge active" style="background:rgba(59,130,246,0.16);color:#60a5fa;">选择频道开始试看</span>
+            <button type="button" id="liveNextSourceBtn" class="btn-outline btn-xs hidden">🔄 切换备用源</button>
+          </div>
+        </div>
+
+        <div class="live-video-wrap">
+          <video id="liveVideoPlayer" controls playsinline webkit-playsinline preload="none"></video>
+          <div id="livePlayerOverlay" class="live-player-overlay">
+            <div style="font-size:2.2rem;margin-bottom:6px;">📡</div>
+            <div id="liveOverlayTitle" style="font-weight:700;margin-bottom:4px;">点击下方任意体验频道立即播放</div>
+            <div id="liveOverlaySub" class="muted-sm">支持自动切源试播 · 完整 49 台请复制订阅地址到 TVBox</div>
+          </div>
+        </div>
+
+        <div id="livePlayerGroups" class="live-player-groups" style="margin-top:12px;">
+          <span class="muted-sm">正在加载体验频道列表...</span>
+        </div>
+      </div>
+
       <div class="block-head">
         <div>
           <h2>直播源实时监测</h2>
@@ -342,6 +378,21 @@
         <!-- 专属订阅快捷卡片（与首页同步） -->
         <div id="accountInfo" class="card" style="margin-top:14px;"></div>
 
+        <!-- 老带新邀请返时长卡片 -->
+        <div id="inviteCard" class="card invite-card" style="margin-top:14px;">
+          <div class="card-head-row" style="margin-bottom:8px;flex-wrap:wrap;">
+            <div>
+              <h3>🎁 邀请好友 · 双方各送 <span id="inviteRewardDaysTxt">15</span> 天会员</h3>
+              <p class="muted-sm" style="margin-top:2px;">好友通过您的专属链接注册并开通任意付费套餐，双方自动叠加赠送直播+点播时长！</p>
+            </div>
+            <span id="inviteStatsBadge" class="badge active">已成功邀请 0 人</span>
+          </div>
+          <div class="copy-code-row">
+            <code id="myInviteUrlCode" class="inline-code" style="flex:1;">-</code>
+            <button type="button" id="copyInviteUrlBtn" class="btn-primary btn-sm-pad">复制邀请链接</button>
+          </div>
+        </div>
+
         <!-- 订单记录 & 工单对话流 -->
         <div class="mine-two-col">
           <div class="card">
@@ -432,6 +483,9 @@
             </div>
           </label>
           <p class="spam-tip">📮 提示：验证码邮件可能被 QQ / 163 / Gmail 等邮箱误判进<b>「垃圾邮件 / 广告箱」</b>，如 1 分钟未收到请务必先翻看垃圾箱！</p>
+          <label>好友邀请码（选填 · 首次付费双方各送会员时长）
+            <input name="inviteCode" id="registerInviteCode" type="text" maxlength="16" placeholder="如有好友邀请码请填写，无则留空">
+          </label>
         </div>
         <button id="authSubmitBtn" class="btn-primary block" type="submit">立即注册并领取试用</button>
       </form>
@@ -565,6 +619,20 @@
     <img id="lightboxImg" src="" alt="大图预览" style="max-width:94vw;max-height:88vh;border-radius:12px;box-shadow:0 16px 48px rgba(0,0,0,0.6);">
   </div>
 
+  <!-- 订阅地址二维码弹窗 -->
+  <div id="qrSubModal" class="modal hidden">
+    <div class="modal-box" style="text-align:center;max-width:360px;">
+      <button type="button" class="close" data-close="qrSubModal">×</button>
+      <h2 id="qrSubTitle">📱 扫码获取订阅地址</h2>
+      <p class="muted-sm" style="margin:6px 0 14px;">手机扫码或直接扫描电视端推送二维码填入</p>
+      <div id="qrSubBox" class="qr-sub-box"></div>
+      <code id="qrSubUrlText" class="inline-code" style="width:100%;margin-top:12px;"></code>
+      <button type="button" id="qrSubCopyBtn" class="btn-primary block">一键复制地址</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.staticfile.net/hls.js/1.5.13/hls.min.js" defer></script>
+  <script src="https://cdn.staticfile.net/qrcodejs/1.0.0/qrcode.min.js" defer></script>
   <script src="app.js"></script>
 </body>
 </html>

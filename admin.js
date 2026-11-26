@@ -23,6 +23,25 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   document.getElementById('refreshBtn').onclick = loadAll;
 
+  // 两级分组切换（运营中心 / 系统配置）
+  document.querySelectorAll('.admin-grp-btn').forEach(gBtn => {
+    gBtn.onclick = () => {
+      const grp = gBtn.dataset.grp;
+      document.querySelectorAll('.admin-grp-btn').forEach(b => {
+        const active = b.dataset.grp === grp;
+        b.classList.toggle('active', active);
+        b.style.background = active ? '#1e3a8a' : '';
+        b.style.borderColor = active ? '#3b82f6' : '';
+        b.style.color = active ? '#fff' : '';
+      });
+      document.querySelectorAll('.admin-subtabs').forEach(el => {
+        el.classList.toggle('hidden', el.id !== 'subtabs-' + grp);
+      });
+      const firstTab = document.querySelector(`#subtabs-${grp} .tab-btn`);
+      if (firstTab) firstTab.click();
+    };
+  });
+
   // 主选项卡切换
   document.querySelectorAll('.tab-btn[data-tab]').forEach(btn => {
     btn.onclick = () => {
@@ -981,6 +1000,9 @@ async function loadSiteSettings() {
     document.getElementById('setDownloadNote').value = s.download_note || '';
     document.getElementById('setTutorialVideoUrl').value = s.tutorial_video_url || '';
     document.getElementById('setTutorialVideoDesc').value = s.tutorial_video_desc || '';
+    document.getElementById('setAnnouncementEnabled').value = s.announcement_enabled ? 'true' : 'false';
+    document.getElementById('setAnnouncementText').value = s.announcement_text || '';
+    document.getElementById('setInviteRewardDays').value = s.invite_reward_days ?? 15;
     document.getElementById('setOnsiteEnabled').value = s.onsite_enabled === false ? 'false' : 'true';
     document.getElementById('setOnsitePrice').value = s.onsite_price ?? 99;
     document.getElementById('setOnsiteTitle').value = s.onsite_title || '赣州市城区专属 · 上门安装调试服务';
@@ -1032,6 +1054,9 @@ async function saveSiteSettings() {
     download_note: document.getElementById('setDownloadNote').value.trim(),
     tutorial_video_url: document.getElementById('setTutorialVideoUrl').value.trim(),
     tutorial_video_desc: document.getElementById('setTutorialVideoDesc').value.trim(),
+    announcement_enabled: document.getElementById('setAnnouncementEnabled').value === 'true',
+    announcement_text: document.getElementById('setAnnouncementText').value.trim(),
+    invite_reward_days: Number(document.getElementById('setInviteRewardDays').value ?? 15),
     onsite_enabled: document.getElementById('setOnsiteEnabled').value === 'true',
     onsite_price: Number(document.getElementById('setOnsitePrice').value ?? 99),
     onsite_title: document.getElementById('setOnsiteTitle').value.trim(),

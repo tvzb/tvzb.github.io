@@ -1084,3 +1084,94 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
   padding: 42px 20px;
   text-align: center;
 }
+
+/* 全站顶部公告条 */
+.announce-bar {
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.18), rgba(16, 185, 129, 0.16));
+  border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+  font-size: 0.84rem;
+}
+.announce-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.announce-ico { flex-shrink: 0; }
+#globalAnnouncementText { flex: 1; color: var(--text); font-weight: 500; }
+.announce-close {
+  background: transparent;
+  color: var(--muted);
+  border: none;
+  padding: 2px 6px;
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+/* 直播页：游客在线试看播放器 */
+.live-video-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 460px;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.live-video-wrap video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: #000;
+}
+.live-player-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(7, 11, 20, 0.82);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  color: #f8fafc;
+}
+.live-player-overlay.hidden { display: none; }
+.live-grp-block { margin-bottom: 10px; }
+.live-grp-title { font-size: 0.78rem; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+.live-ch-pills { display: flex; flex-wrap: wrap; gap: 7px; }
+.live-ch-pill {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: var(--bg-soft);
+  color: var(--text);
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+.live-ch-pill:hover { border-color: var(--primary); color: var(--primary); }
+.live-ch-pill.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+/* 老带新邀请卡片 */
+.invite-card {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(59, 130, 246, 0.08));
+  border-color: rgba(245, 158, 11, 0.35);
+}
+
+/* 订阅二维码弹窗 */
+.qr-sub-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  padding: 14px;
+  border-radius: 14px;
+  min-width: 210px;
+  min-height: 210px;
+}
+.qr-sub-box img, .qr-sub-box canvas { display: block; width: 190px; height: 190px; }

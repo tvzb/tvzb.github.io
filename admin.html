@@ -170,15 +170,21 @@
       <div class="stat-card revenue"><div class="num" id="statRevenue">-</div><div class="label">累计实收 (元)</div></div>
     </div>
 
-    <!-- 四大核心管理模块选项卡 -->
-    <div class="tabs">
+    <!-- 两级分组导航：运营中心 / 系统配置（手机端更清爽） -->
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px;">
+      <button type="button" class="tab-btn active admin-grp-btn" data-grp="ops" style="background:#1e3a8a;border-color:#3b82f6;color:#fff;">📊 运营中心</button>
+      <button type="button" class="tab-btn admin-grp-btn" data-grp="cfg">⚙️ 系统配置</button>
+    </div>
+    <div class="tabs admin-subtabs" id="subtabs-ops">
       <button class="tab-btn active" data-tab="orders">📦 订单管理</button>
       <button class="tab-btn" data-tab="users">👤 会员管理</button>
       <button class="tab-btn" data-tab="tickets">📩 客服工单</button>
-      <button class="tab-btn" data-tab="coupons">🏷️ 优惠码管理</button>
+    </div>
+    <div class="tabs admin-subtabs hidden" id="subtabs-cfg">
       <button class="tab-btn" data-tab="pricing">💰 套餐与早鸟折扣</button>
-      <button class="tab-btn" data-tab="livecfg">📡 live.txt 采集配置</button>
-      <button class="tab-btn" data-tab="testcfg">🧪 test.txt 体验源配置</button>
+      <button class="tab-btn" data-tab="coupons">🏷️ 优惠码管理</button>
+      <button class="tab-btn" data-tab="livecfg">📡 live.txt 采集</button>
+      <button class="tab-btn" data-tab="testcfg">🧪 test.txt 体验</button>
       <button class="tab-btn" data-tab="vodcfg">🎬 点播源管理</button>
       <button class="tab-btn" data-tab="settings">⚙️ 站点与下载设置</button>
     </div>
@@ -456,6 +462,24 @@
           <button type="button" id="addApkVersionBtn" class="secondary" style="padding:5px 12px;font-size:0.82rem;">+ 新增 APK 版本</button>
         </div>
         <div id="apkDownloadsEditor"></div>
+      </div>
+
+      <div style="margin-top:16px;padding:14px;background:#090d16;border:1px solid var(--border);border-radius:10px;">
+        <b style="color:#fbbf24;">📢 全站顶部公告条 & 🎁 老带新邀请奖励</b>
+        <div class="pricing-grid-4" style="margin-top:8px;">
+          <label style="margin-top:0;">顶部公告条开关
+            <select id="setAnnouncementEnabled">
+              <option value="false">关闭</option>
+              <option value="true">开启展示</option>
+            </select>
+          </label>
+          <label style="margin-top:0;">老带新奖励天数（双方各送，0=关闭）
+            <input id="setInviteRewardDays" type="number" min="0" max="180" value="15">
+          </label>
+          <label style="margin-top:0;grid-column:span 2;">公告条内容文案
+            <input id="setAnnouncementText" type="text" placeholder="如：今日 22:00 线路例行优化，如遇卡顿重启 TVBox 即可恢复。">
+          </label>
+        </div>
       </div>
 
       <div style="margin-top:16px;padding:14px;background:#090d16;border:1px solid var(--border);border-radius:10px;">

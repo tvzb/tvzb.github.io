@@ -51,8 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
   renderAvatarPicker();
   renderSiteList();
   bindEvents();
+  captureInviteRef();
   loadPublicConfigAndSites();
   loadChannelSummary();
+  loadFreeLivePlayer();
   checkLoginState();
 });
 
@@ -158,6 +160,11 @@ function bindEvents() {
   document.querySelectorAll('#installSubTabs .seg-btn').forEach(btn => {
     btn.onclick = () => switchInstallSubTab(btn.dataset.subtab);
   });
+
+  document.getElementById('closeAnnouncementBtn')?.addEventListener('click', () => {
+    document.getElementById('globalAnnouncementBar')?.classList.add('hidden');
+  });
+  document.getElementById('liveNextSourceBtn')?.addEventListener('click', switchNextLiveSource);
 
   // 套餐分类切换
   document.querySelectorAll('#planCategoryTabs .seg-btn').forEach(btn => {
@@ -269,6 +276,15 @@ async function loadPublicConfigAndSites() {
         if (noteEl) noteEl.textContent = '💡 ' + cfg.downloadNote;
       }
       renderTutorialVideo(cfg.tutorialVideoUrl || '', cfg.tutorialVideoDesc || '');
+      if (cfg.announcementEnabled && cfg.announcementText) {
+        const bar = document.getElementById('globalAnnouncementBar');
+        const txt = document.getElementById('globalAnnouncementText');
+        if (bar && txt) { txt.textContent = cfg.announcementText; bar.classList.remove('hidden'); }
+      }
+      if (cfg.inviteRewardDays !== undefined) {
+        const rEl = document.getElementById('inviteRewardDaysTxt');
+        if (rEl) rEl.textContent = String(cfg.inviteRewardDays);
+      }
       const showOnsite = cfg.onsiteEnabled !== false;
       ['homeOnsiteBanner', 'guideOnsiteCard'].forEach(id => {
         document.getElementById(id)?.classList.toggle('hidden', !showOnsite);
@@ -561,9 +577,10 @@ async function handleAuthSubmit(e) {
   const email = fd.get('email');
   const password = fd.get('password');
   const code = fd.get('code') || '';
+  const inviteCode = (fd.get('inviteCode') || localStorage.getItem('tvbox_ref') || '').trim();
 
   const endpoint = isRegisterMode ? '/api/register' : '/api/login';
-  const body = isRegisterMode ? { email, password, code } : { email, password };
+  const body = isRegisterMode ? { email, password, code, inviteCode } : { email, password };
 
   try {
     const res = await fetch(API_BASE + endpoint, {
@@ -623,7 +640,10 @@ function renderAccountDashboard(user, orders, tickets) {
   document.getElementById('accountInfo').innerHTML = `
     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
       <b>🚀 一键全能聚合地址（直接填进 TVBox）</b>
-      <button type="button" class="btn-primary btn-sm-pad" onclick="copyText('${allUrl}', this)">一键复制</button>
+      <div style="display:flex;gap:6px;">
+        <button type="button" class="btn-outline btn-sm-pad" onclick="openSubQrModal('${allUrl}', '一键全能聚合地址')">📱 二维码</button>
+        <button type="button" class="btn-primary btn-sm-pad" onclick="copyText('${allUrl}', this)">一键复制</button>
+      </div>
     </div>
     <code class="inline-code" style="width:100%;">${allUrl}</code>
     <p class="muted-sm" style="margin-top:8px;">到期时间：直播 ${formatDate(user.live_expire_at)} · 点播 ${formatDate(user.vod_expire_at)}（仅限 TVBox 加载防泄露）</p>
@@ -663,10 +683,25 @@ function renderAccountDashboard(user, orders, tickets) {
       <p class="muted-sm" style="margin:6px 0 6px;">一键全能聚合地址（复制到 TVBox「配置地址」栏，直播+点播自动同步）：</p>
       <div class="copy-code-row">
         <code class="inline-code" style="flex:1;">${allUrl}</code>
+        <button type="button" class="btn-outline btn-sm-pad" onclick="openSubQrModal('${allUrl}', '我的专属订阅地址')">📱 二维码</button>
         <button type="button" class="btn-primary btn-sm-pad" onclick="copyText('${allUrl}', this)">一键复制</button>
       </div>
     `;
   }
+
+  // 渲染老带新邀请卡片
+  const invCode = user.invite_code || user.token;
+  const invUrl = `${location.origin}${location.pathname}?ref=${encodeURIComponent(invCode)}`;
+  const invCodeEl = document.getElementById('myInviteUrlCode');
+  const invStatsEl = document.getElementById('inviteStatsBadge');
+  const invDaysEl = document.getElementById('inviteRewardDaysTxt');
+  const invCopyBtn = document.getElementById('copyInviteUrlBtn');
+  if (invCodeEl) invCodeEl.textContent = invUrl;
+  if (invDaysEl && user.invite_reward_days !== undefined) invDaysEl.textContent = String(user.invite_reward_days);
+  if (invStatsEl && user.invite_stats) {
+    invStatsEl.textContent = `已邀请 ${user.invite_stats.count || 0} 人 · 累计获赠 ${user.invite_stats.totalDays || 0} 天`;
+  }
+  if (invCopyBtn) invCopyBtn.onclick = () => copyText(invUrl, invCopyBtn);
 
   document.getElementById('mineOrderCount').textContent = String((orders || []).length);
   document.getElementById('mineTicketCount').textContent = String((tickets || []).length);
@@ -1159,4 +1194,140 @@ function renderTutorialVideo(videoUrl, videoDesc) {
   } else if (/^(https?:)?\/\//i.test(url)) {
     wrap.innerHTML = `<div class="video-iframe-wrap"><iframe src="${escapeHtml(url)}" allowfullscreen="true" scrolling="no" frameborder="0" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"></iframe></div>`;
   }
+}
+
+// ================= 老带新邀请码自动捕获 =================
+function captureInviteRef() {
+  try {
+    const ref = new URLSearchParams(location.search).get('ref');
+    if (ref && /^[a-zA-Z0-9_-]{4,24}$/.test(ref)) {
+      localStorage.setItem('tvbox_ref', ref);
+    }
+    const saved = localStorage.getItem('tvbox_ref') || '';
+    const input = document.getElementById('registerInviteCode');
+    if (input && saved) input.value = saved;
+  } catch (e) {}
+}
+
+// ================= 订阅地址一键二维码弹窗 =================
+function openSubQrModal(url, title) {
+  const modal = document.getElementById('qrSubModal');
+  const box = document.getElementById('qrSubBox');
+  const urlEl = document.getElementById('qrSubUrlText');
+  const titleEl = document.getElementById('qrSubTitle');
+  const copyBtn = document.getElementById('qrSubCopyBtn');
+  if (!modal || !box) return;
+
+  if (titleEl) titleEl.textContent = '📱 ' + (title || '扫码获取订阅地址');
+  if (urlEl) urlEl.textContent = url;
+  if (copyBtn) copyBtn.onclick = () => copyText(url, copyBtn);
+  box.innerHTML = '';
+
+  if (typeof QRCode !== 'undefined') {
+    try {
+      new QRCode(box, { text: url, width: 190, height: 190, colorDark: '#0f172a', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
+    } catch (e) {
+      box.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=190x190&data=${encodeURIComponent(url)}" alt="二维码">`;
+    }
+  } else {
+    box.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=190x190&data=${encodeURIComponent(url)}" alt="二维码">`;
+  }
+  modal.classList.remove('hidden');
+}
+
+// ================= 直播页：游客在线试看 (test.txt) =================
+let freeLiveGroups = [];
+let activeLiveChannel = null;
+let activeLiveUrlIdx = 0;
+let activeHls = null;
+
+async function loadFreeLivePlayer() {
+  const box = document.getElementById('livePlayerGroups');
+  if (!box) return;
+  try {
+    const res = await fetch(API_BASE + '/api/free-live-list');
+    const data = await res.json();
+    if (!res.ok || !Array.isArray(data.groups) || data.groups.length === 0) {
+      box.innerHTML = '<span class="muted-sm">体验频道暂未同步，请复制免费地址到 TVBox 观看</span>';
+      return;
+    }
+    freeLiveGroups = data.groups;
+    box.innerHTML = freeLiveGroups.map((g, gIdx) => `
+      <div class="live-grp-block">
+        <div class="live-grp-title">${escapeHtml(g.name)}</div>
+        <div class="live-ch-pills">
+          ${g.channels.map((ch, cIdx) => `<button type="button" class="live-ch-pill" data-g="${gIdx}" data-c="${cIdx}" onclick="playFreeLiveChannel(${gIdx}, ${cIdx}, 0)">${escapeHtml(ch.name)}</button>`).join('')}
+        </div>
+      </div>
+    `).join('');
+  } catch (e) {
+    box.innerHTML = '<span class="muted-sm">体验频道加载失败，请稍后刷新</span>';
+  }
+}
+
+function playFreeLiveChannel(gIdx, cIdx, urlIdx = 0) {
+  const ch = freeLiveGroups?.[gIdx]?.channels?.[cIdx];
+  if (!ch || !ch.urls || ch.urls.length === 0) return;
+  activeLiveChannel = { gIdx, cIdx, ch };
+  activeLiveUrlIdx = urlIdx;
+
+  document.querySelectorAll('.live-ch-pill').forEach(b => {
+    b.classList.toggle('active', Number(b.dataset.g) === gIdx && Number(b.dataset.c) === cIdx);
+  });
+
+  const nextBtn = document.getElementById('liveNextSourceBtn');
+  if (nextBtn) nextBtn.classList.toggle('hidden', ch.urls.length <= 1);
+
+  const statusEl = document.getElementById('livePlayStatus');
+  const overlay = document.getElementById('livePlayerOverlay');
+  const ovTitle = document.getElementById('liveOverlayTitle');
+  const ovSub = document.getElementById('liveOverlaySub');
+  const video = document.getElementById('liveVideoPlayer');
+  const streamUrl = ch.urls[urlIdx];
+
+  if (statusEl) statusEl.textContent = `${ch.name} · 线路 ${urlIdx + 1}/${ch.urls.length}`;
+  if (overlay) overlay.classList.add('hidden');
+
+  if (activeHls) { activeHls.destroy(); activeHls = null; }
+  video.pause();
+  video.removeAttribute('src');
+
+  const onPlayFail = () => {
+    if (urlIdx + 1 < ch.urls.length) {
+      playFreeLiveChannel(gIdx, cIdx, urlIdx + 1);
+    } else {
+      if (statusEl) statusEl.textContent = `${ch.name} · 浏览器受限`;
+      if (overlay) overlay.classList.remove('hidden');
+      if (ovTitle) ovTitle.textContent = `「${ch.name}」的源被浏览器 HTTPS/跨域策略拦截`;
+      if (ovSub) ovSub.textContent = '这是浏览器安全限制（电视 TVBox 无此限制），请复制首页免费体验地址填入 TVBox 100% 流畅观看！';
+    }
+  };
+
+  if (typeof Hls !== 'undefined' && Hls.isSupported() && (streamUrl.includes('.m3u8') || !streamUrl.includes('.flv'))) {
+    const hls = new Hls({ maxBufferLength: 15, enableWorker: true });
+    activeHls = hls;
+    let failed = false;
+    hls.on(Hls.Events.ERROR, (_, errData) => {
+      if (errData.fatal && !failed) {
+        failed = true;
+        hls.destroy();
+        activeHls = null;
+        onPlayFail();
+      }
+    });
+    hls.loadSource(streamUrl);
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED, () => { video.play().catch(() => {}); });
+  } else {
+    video.src = streamUrl;
+    video.onerror = onPlayFail;
+    video.play().catch(() => {});
+  }
+}
+
+function switchNextLiveSource() {
+  if (!activeLiveChannel) return;
+  const { gIdx, cIdx, ch } = activeLiveChannel;
+  const nextIdx = (activeLiveUrlIdx + 1) % ch.urls.length;
+  playFreeLiveChannel(gIdx, cIdx, nextIdx);
 }
