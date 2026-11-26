@@ -1225,3 +1225,115 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
   background: rgba(255, 255, 255, 0.25);
   color: #fff;
 }
+
+/* 点播页：热门影片海报网格 */
+.vod-hot-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+@media (min-width: 760px) {
+  .vod-hot-grid { grid-template-columns: repeat(4, 1fr); gap: 14px; }
+}
+.vod-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+.vod-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--primary);
+  box-shadow: 0 12px 28px rgba(59, 130, 246, 0.16);
+}
+.vod-poster-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  background: var(--bg-soft);
+  overflow: hidden;
+}
+.vod-poster-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.vod-remarks-tag {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  background: rgba(15, 23, 42, 0.82);
+  color: #f8fafc;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+  backdrop-filter: blur(4px);
+}
+.vod-lines-tag {
+  position: absolute;
+  left: 6px;
+  bottom: 6px;
+  background: rgba(16, 185, 129, 0.88);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+.vod-card-info {
+  padding: 10px 10px 12px;
+}
+.vod-card-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.vod-card-sub {
+  font-size: 0.74rem;
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+.vod-selector-box {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.vod-sel-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.vod-ep-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 110px;
+  overflow-y: auto;
+}
+.vod-ep-btn {
+  padding: 4px 10px;
+  border-radius: 7px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+.vod-ep-btn.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}

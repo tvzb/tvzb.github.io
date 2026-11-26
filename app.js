@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadPublicConfigAndSites();
   loadChannelSummary();
   loadFreeLivePlayer();
+  loadVodHotMovies();
   checkLoginState();
 });
 
@@ -165,6 +166,12 @@ function bindEvents() {
     document.getElementById('globalAnnouncementBar')?.classList.add('hidden');
   });
   document.getElementById('liveNextSourceBtn')?.addEventListener('click', switchNextLiveSource);
+  document.getElementById('closeVodModalBtn')?.addEventListener('click', closeVodModal);
+  document.getElementById('vodLimitActionBtn')?.addEventListener('click', () => {
+    closeVodModal();
+    if (currentUser) switchView('home');
+    else openAuthModal(true);
+  });
 
   // 套餐分类切换
   document.querySelectorAll('#planCategoryTabs .seg-btn').forEach(btn => {
@@ -284,6 +291,10 @@ async function loadPublicConfigAndSites() {
       if (cfg.inviteRewardDays !== undefined) {
         const rEl = document.getElementById('inviteRewardDaysTxt');
         if (rEl) rEl.textContent = String(cfg.inviteRewardDays);
+      }
+      if (cfg.vodPreviewMinutes !== undefined) {
+        vodPreviewMinutes = Number(cfg.vodPreviewMinutes);
+        updateVodPreviewRuleText();
       }
       const showOnsite = cfg.onsiteEnabled !== false;
       ['homeOnsiteBanner', 'guideOnsiteCard'].forEach(id => {
@@ -1382,4 +1393,226 @@ function switchNextLiveSource() {
   const { gIdx, cIdx, ch } = activeLiveChannel;
   const nextIdx = (activeLiveUrlIdx + 1) % ch.urls.length;
   playFreeLiveChannel(gIdx, cIdx, nextIdx, true);
+}
+
+// ================= 点播页：热门精选 8 部 + 选专线试看（与测速联动 + 游客试看计时） =================
+let vodHotMovies = [];
+let vodPreviewMinutes = 10;
+let activeVodMovie = null;
+let activeVodSourceIdx = 0;
+let activeVodEpIdx = 0;
+let activeVodHls = null;
+
+function isVodMemberActive() {
+  return Boolean(currentUser && Number(currentUser.vod_expire_at || 0) > Date.now());
+}
+
+function updateVodPreviewRuleText() {
+  const el = document.getElementById('vodPreviewRuleText');
+  if (!el) return;
+  if (vodPreviewMinutes > 0) {
+    el.textContent = `点击海报选专线直接播（线路自动按您的宽带测速排序）· 游客可试看前 ${vodPreviewMinutes} 分钟，有效点播会员不限时`;
+  } else {
+    el.textContent = '点击海报选专线直接播放，线路自动按您的家庭宽带测速排序';
+  }
+}
+
+async function loadVodHotMovies() {
+  const grid = document.getElementById('vodHotGrid');
+  if (!grid) return;
+  try {
+    const res = await fetch(API_BASE + '/api/vod-hot');
+    const data = await res.json();
+    if (data.previewMinutes !== undefined) {
+      vodPreviewMinutes = Number(data.previewMinutes);
+      updateVodPreviewRuleText();
+    }
+    if (!res.ok || !Array.isArray(data.movies) || data.movies.length === 0) {
+      grid.innerHTML = '<div class="card muted-sm" style="grid-column:1/-1;text-align:center;padding:24px;">热门影片暂未同步，管理员可在后台点击刷新</div>';
+      return;
+    }
+    vodHotMovies = data.movies;
+    grid.innerHTML = vodHotMovies.map((m, idx) => `
+      <div class="vod-card" onclick="openVodMovie(${idx})">
+        <div class="vod-poster-wrap">
+          <img src="${escapeHtml(m.pic)}" alt="${escapeHtml(m.title)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.opacity='0.2'">
+          ${m.remarks ? `<span class="vod-remarks-tag">${escapeHtml(m.remarks)}</span>` : ''}
+          <span class="vod-lines-tag">⚡ ${m.sources.length}条专线</span>
+        </div>
+        <div class="vod-card-info">
+          <div class="vod-card-title" title="${escapeHtml(m.title)}">${escapeHtml(m.title)}</div>
+          <div class="vod-card-sub">${escapeHtml([m.year, m.type].filter(Boolean).join(' · ') || '热门精选')}</div>
+        </div>
+      </div>
+    `).join('');
+  } catch (e) {
+    grid.innerHTML = '<div class="card muted-sm" style="grid-column:1/-1;text-align:center;padding:24px;">热门影片加载失败，请稍后刷新</div>';
+  }
+}
+
+function getSortedMovieSources(movie) {
+  const rankMap = new Map();
+  const speedMap = new Map();
+  currentSites.forEach((s, i) => {
+    rankMap.set(s.key, i);
+    if (s.status === 'ok' && s.speedMBs > 0) speedMap.set(s.key, s.speedMBs);
+  });
+  return [...(movie.sources || [])]
+    .map(src => ({
+      ...src,
+      _rank: rankMap.has(src.siteKey) ? rankMap.get(src.siteKey) : 9999,
+      _speedMBs: speedMap.get(src.siteKey) || 0
+    }))
+    .sort((a, b) => a._rank - b._rank);
+}
+
+function openVodMovie(idx) {
+  const m = vodHotMovies[idx];
+  if (!m) return;
+  activeVodMovie = { ...m, sortedSources: getSortedMovieSources(m) };
+  activeVodSourceIdx = 0;
+  activeVodEpIdx = 0;
+
+  document.getElementById('vodModalTitle').textContent = m.title;
+  document.getElementById('vodModalMeta').textContent = [m.year, m.type, m.remarks].filter(Boolean).join(' · ') || '高清专线';
+  document.getElementById('vodModalBlurb').textContent = m.blurb || '点击下方专线即可流畅试看，支持与家庭宽带测速结果自动联动。';
+  document.getElementById('vodLimitOverlay').classList.add('hidden');
+
+  const timerBadge = document.getElementById('vodPreviewTimerBadge');
+  if (isVodMemberActive()) {
+    timerBadge.className = 'badge active';
+    timerBadge.textContent = '👑 尊享会员 · 不限时';
+  } else if (vodPreviewMinutes > 0) {
+    timerBadge.className = 'badge expired';
+    timerBadge.textContent = `⏱️ 游客试看前 ${vodPreviewMinutes} 分钟`;
+  } else {
+    timerBadge.className = 'badge active';
+    timerBadge.textContent = '🆓 限时免费试看';
+  }
+
+  document.getElementById('vodPlayerModal').classList.remove('hidden');
+  renderVodSelectorsAndPlay();
+}
+
+function renderVodSelectorsAndPlay() {
+  if (!activeVodMovie) return;
+  const sources = activeVodMovie.sortedSources || [];
+  if (sources.length === 0) return;
+  if (activeVodSourceIdx >= sources.length) activeVodSourceIdx = 0;
+
+  const lineBox = document.getElementById('vodLinePills');
+  lineBox.innerHTML = sources.map((s, i) => {
+    const spdTag = s._speedMBs > 0 ? ` · ${s._speedMBs.toFixed(1)}M/s` : '';
+    return `<button type="button" class="live-ch-pill ${i === activeVodSourceIdx ? 'active' : ''}" onclick="selectVodSource(${i})">${escapeHtml(s.siteName)}${spdTag}</button>`;
+  }).join('');
+
+  const curSrc = sources[activeVodSourceIdx];
+  const eps = curSrc.episodes || [];
+  if (activeVodEpIdx >= eps.length) activeVodEpIdx = 0;
+
+  const epWrap = document.getElementById('vodEpWrap');
+  const epBox = document.getElementById('vodEpPills');
+  if (eps.length > 1) {
+    epWrap.classList.remove('hidden');
+    epBox.innerHTML = eps.map((ep, i) =>
+      `<button type="button" class="vod-ep-btn ${i === activeVodEpIdx ? 'active' : ''}" onclick="selectVodEpisode(${i})">${escapeHtml(ep.name)}</button>`
+    ).join('');
+  } else {
+    epWrap.classList.add('hidden');
+  }
+
+  if (eps[activeVodEpIdx]) {
+    playVodStreamUrl(eps[activeVodEpIdx].url);
+  }
+}
+
+function selectVodSource(idx) {
+  activeVodSourceIdx = idx;
+  renderVodSelectorsAndPlay();
+}
+
+function selectVodEpisode(idx) {
+  activeVodEpIdx = idx;
+  renderVodSelectorsAndPlay();
+}
+
+function playVodStreamUrl(streamUrl) {
+  const video = document.getElementById('vodVideoPlayer');
+  const overlay = document.getElementById('vodLimitOverlay');
+  if (!video) return;
+  overlay.classList.add('hidden');
+
+  if (activeVodHls) { activeVodHls.destroy(); activeVodHls = null; }
+  video.pause();
+  video.removeAttribute('src');
+
+  // 游客试看时长监控（付费会员不限时）
+  const limitSec = (!isVodMemberActive() && vodPreviewMinutes > 0) ? vodPreviewMinutes * 60 : 0;
+  const timerBadge = document.getElementById('vodPreviewTimerBadge');
+
+  video.ontimeupdate = () => {
+    if (limitSec <= 0) return;
+    const rem = Math.max(0, Math.ceil(limitSec - video.currentTime));
+    const mm = String(Math.floor(rem / 60)).padStart(2, '0');
+    const ss = String(rem % 60).padStart(2, '0');
+    if (timerBadge) timerBadge.textContent = `⏱️ 试看剩余 ${mm}:${ss}`;
+    if (video.currentTime >= limitSec) {
+      video.pause();
+      if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+      document.getElementById('vodLimitTitle').textContent = `试看已达上限（前 ${vodPreviewMinutes} 分钟）`;
+      overlay.classList.remove('hidden');
+    }
+  };
+  video.onseeking = () => {
+    if (limitSec > 0 && video.currentTime > limitSec) {
+      video.currentTime = Math.max(0, limitSec - 1);
+      showToast(`游客最多可试看前 ${vodPreviewMinutes} 分钟，开通会员不限时！`);
+    }
+  };
+
+  const tryPlay = () => {
+    const p = video.play();
+    if (p && typeof p.catch === 'function') {
+      p.catch(() => {
+        video.muted = true;
+        video.play().then(() => showToast('已静音起播，点击音量键开启声音', 2500)).catch(() => {});
+      });
+    }
+  };
+
+  const canNativeHls = Boolean(video.canPlayType && video.canPlayType('application/vnd.apple.mpegurl'));
+  if (typeof Hls !== 'undefined' && Hls.isSupported()) {
+    const hls = new Hls({ maxBufferLength: 20, enableWorker: true });
+    activeVodHls = hls;
+    hls.on(Hls.Events.ERROR, (_, errData) => {
+      if (errData.fatal) {
+        hls.destroy();
+        activeVodHls = null;
+        showToast('当前专线加载异常，请点击下方切换其他专线', 3000);
+      }
+    });
+    hls.loadSource(streamUrl);
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED, tryPlay);
+  } else if (canNativeHls) {
+    video.src = streamUrl;
+    video.onloadedmetadata = tryPlay;
+    tryPlay();
+  } else {
+    video.src = streamUrl;
+    tryPlay();
+  }
+}
+
+function closeVodModal() {
+  const video = document.getElementById('vodVideoPlayer');
+  if (activeVodHls) { activeVodHls.destroy(); activeVodHls = null; }
+  if (video) {
+    video.pause();
+    video.ontimeupdate = null;
+    video.onseeking = null;
+    video.removeAttribute('src');
+    video.load();
+  }
+  document.getElementById('vodPlayerModal')?.classList.add('hidden');
 }

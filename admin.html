@@ -483,6 +483,21 @@
       </div>
 
       <div style="margin-top:16px;padding:14px;background:#090d16;border:1px solid var(--border);border-radius:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+          <b style="color:#a78bfa;">🍿 点播页「热门影片精选」与游客试看限制</b>
+          <button type="button" id="refreshVodHotBtn" class="secondary" style="padding:5px 12px;font-size:0.82rem;">🔄 立即刷新热门影片缓存</button>
+        </div>
+        <div class="form-grid-2">
+          <label style="margin-top:0;">首页/点播页展示热门影片数量（默认 8 部，1~20）
+            <input id="setVodHotCount" type="number" min="1" max="20" value="8">
+          </label>
+          <label style="margin-top:0;">游客试看时长限制（分钟，默认 10；填 0=不限制，付费会员始终不限时）
+            <input id="setVodPreviewMinutes" type="number" min="0" max="180" value="10">
+          </label>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;padding:14px;background:#090d16;border:1px solid var(--border);border-radius:10px;">
         <b style="color:#60a5fa;">🎬 使用说明视频教程设置（展示在「指南 → 视频教程」）</b>
         <div class="form-grid-2" style="margin-top:8px;">
           <label style="margin-top:0;">视频地址（支持 MP4 直链如 Cloudflare R2，或 B 站 iframe 嵌入链接）

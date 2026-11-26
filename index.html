@@ -201,12 +201,24 @@
       </div>
     </section>
 
-    <!-- ==================== 视图 3：家庭宽带真实拉流测速 ==================== -->
+    <!-- ==================== 视图 3：点播精选试看 + 家庭宽带真实拉流测速 ==================== -->
     <section id="view-speed" class="tab-view">
-      <div class="block-head">
+      <!-- 热门影片精选（后台可设数量与游客试看时长，线路自动与下方测速结果联动） -->
+      <div class="block-head" style="margin-top:4px;">
         <div>
-          <h2>家庭宽带真实拉流测速</h2>
-          <p class="muted-sm">连家中 Wi-Fi 实测 <span class="js-vod-count">21</span> 条加密高速专线速率，保存后电视重启即按最快排序</p>
+          <h2>🎬 热门影片精选 · 在线试看</h2>
+          <p id="vodPreviewRuleText" class="muted-sm">点击海报选专线直接播放，线路自动按您的家庭宽带测速排序 · 付费会员不限时</p>
+        </div>
+      </div>
+
+      <div id="vodHotGrid" class="vod-hot-grid">
+        <div class="card muted-sm" style="grid-column:1/-1;text-align:center;padding:24px;">正在加载热门精选影片...</div>
+      </div>
+
+      <div class="block-head" style="margin-top:26px;">
+        <div>
+          <h2>⚡ 家庭宽带真实拉流测速</h2>
+          <p class="muted-sm">连家中 Wi-Fi 实测 <span class="js-vod-count">21</span> 条加密高速专线速率，测速后上方影片与电视端均自动按最快排序</p>
         </div>
       </div>
 
@@ -619,6 +631,44 @@
   <!-- 教程图片点击放大灯箱 -->
   <div id="imgLightbox" class="modal hidden" onclick="this.classList.add('hidden')">
     <img id="lightboxImg" src="" alt="大图预览" style="max-width:94vw;max-height:88vh;border-radius:12px;box-shadow:0 16px 48px rgba(0,0,0,0.6);">
+  </div>
+
+  <!-- 点播热门影片在线试看弹窗 -->
+  <div id="vodPlayerModal" class="modal hidden">
+    <div class="modal-box wide">
+      <button type="button" class="close" id="closeVodModalBtn">×</button>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-right:28px;">
+        <h2 id="vodModalTitle" style="font-size:1.15rem;">影片播放</h2>
+        <span id="vodModalMeta" class="badge active" style="background:rgba(59,130,246,0.16);color:#60a5fa;"></span>
+        <span id="vodPreviewTimerBadge" class="badge expired" style="margin-left:auto;"></span>
+      </div>
+      <p id="vodModalBlurb" class="muted-sm" style="margin:6px 0 10px;"></p>
+
+      <div class="live-video-wrap">
+        <video id="vodVideoPlayer" controls playsinline webkit-playsinline x5-playsinline x5-video-player-type="h5" preload="none"></video>
+        <div id="vodLimitOverlay" class="live-player-overlay hidden">
+          <div style="font-size:2.2rem;margin-bottom:6px;">🎬</div>
+          <div id="vodLimitTitle" style="font-weight:800;font-size:1.05rem;margin-bottom:6px;">游客试看时间已结束</div>
+          <p id="vodLimitSub" class="muted-sm" style="max-width:360px;margin-bottom:14px;color:#cbd5e1;">画质和速度满意吗？注册即送全功能免费试用，开通点播会员网页端不限时畅看，更支持导入 TVBox 电视大屏看全网 4K！</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+            <button type="button" id="vodLimitActionBtn" class="btn-primary btn-sm-pad">🎁 免费领试用 / 开通会员</button>
+            <button type="button" class="btn-outline btn-sm-pad" style="color:#fff;border-color:rgba(255,255,255,0.35);" onclick="closeVodModal()">先逛逛</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 资源专线切换（自动与测速结果联动排序并显示网速） -->
+      <div class="vod-selector-box">
+        <div class="vod-sel-title">⚡ 选择播放专线（已按您的宽带测速排序）：</div>
+        <div id="vodLinePills" class="live-ch-pills"></div>
+      </div>
+
+      <!-- 选集区 -->
+      <div id="vodEpWrap" class="vod-selector-box hidden">
+        <div class="vod-sel-title">📺 选择剧集：</div>
+        <div id="vodEpPills" class="vod-ep-pills"></div>
+      </div>
+    </div>
   </div>
 
   <!-- 订阅地址二维码弹窗 -->

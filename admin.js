@@ -116,6 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('saveTestCfgBtn')?.addEventListener('click', () => saveChannelConfig('testCfgMsg'));
   document.getElementById('previewTestTxtBtn')?.addEventListener('click', previewTestTxt);
   document.getElementById('saveSiteSettingsBtn')?.addEventListener('click', saveSiteSettings);
+  document.getElementById('refreshVodHotBtn')?.addEventListener('click', refreshVodHotCacheAdmin);
   document.getElementById('addApkVersionBtn')?.addEventListener('click', addApkVersionRow);
   document.getElementById('addTierBtn')?.addEventListener('click', addEarlyBirdTier);
   document.getElementById('addPlanBtn')?.addEventListener('click', addNewPlanRow);
@@ -1003,6 +1004,8 @@ async function loadSiteSettings() {
     document.getElementById('setAnnouncementEnabled').value = s.announcement_enabled ? 'true' : 'false';
     document.getElementById('setAnnouncementText').value = s.announcement_text || '';
     document.getElementById('setInviteRewardDays').value = s.invite_reward_days ?? 15;
+    document.getElementById('setVodHotCount').value = s.vod_hot_count ?? 8;
+    document.getElementById('setVodPreviewMinutes').value = s.vod_preview_minutes ?? 10;
     document.getElementById('setOnsiteEnabled').value = s.onsite_enabled === false ? 'false' : 'true';
     document.getElementById('setOnsitePrice').value = s.onsite_price ?? 99;
     document.getElementById('setOnsiteTitle').value = s.onsite_title || '赣州市城区专属 · 上门安装调试服务';
@@ -1057,6 +1060,8 @@ async function saveSiteSettings() {
     announcement_enabled: document.getElementById('setAnnouncementEnabled').value === 'true',
     announcement_text: document.getElementById('setAnnouncementText').value.trim(),
     invite_reward_days: Number(document.getElementById('setInviteRewardDays').value ?? 15),
+    vod_hot_count: Number(document.getElementById('setVodHotCount').value ?? 8),
+    vod_preview_minutes: Number(document.getElementById('setVodPreviewMinutes').value ?? 10),
     onsite_enabled: document.getElementById('setOnsiteEnabled').value === 'true',
     onsite_price: Number(document.getElementById('setOnsitePrice').value ?? 99),
     onsite_title: document.getElementById('setOnsiteTitle').value.trim(),
@@ -1351,4 +1356,24 @@ async function adminBatchDeleteTickets() {
   alert(data.message || data.error);
   loadTickets();
   loadStats();
+}
+
+async function refreshVodHotCacheAdmin() {
+  const btn = document.getElementById('refreshVodHotBtn');
+  const msg = document.getElementById('siteSettingsMsg');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ 正在抓取各专线热门片...'; }
+  if (msg) { msg.textContent = '正在从已启用的点播专线聚合热门影片，请稍候 5~10 秒...'; msg.className = 'msg'; }
+  try {
+    const res = await apiFetch('/api/admin/vod-hot/refresh', { method: 'POST' });
+    const data = await res.json();
+    if (!res.ok) {
+      if (msg) { msg.textContent = data.error || '刷新失败'; msg.classList.add('error'); }
+    } else {
+      if (msg) { msg.textContent = '✅ ' + (data.message || '热门影片缓存已刷新'); msg.classList.add('ok'); }
+    }
+  } catch (e) {
+    if (msg) { msg.textContent = '网络异常，请重试'; msg.classList.add('error'); }
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = '🔄 立即刷新热门影片缓存'; }
+  }
 }
