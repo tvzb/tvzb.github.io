@@ -1518,8 +1518,96 @@ function getSortedMovieSources(movie) {
 
 let activeVodSiteKey = '';
 let vodLoadTimer = null;
+// 按平台累计真实网络切片样本（自动过滤浏览器本地缓存，支持拖动进度条冷启动高权重采样）
+const vodSpeedSamplesMap = new Map();
 
-function syncVodSpeedToGlobalSites(siteKey, status, speedMBs, latency) {
+function inspectRealNetworkTransfer(fragUrl, fallbackBytes, fallbackMs) {
+  let realBytes = Number(fallbackBytes || 0);
+  let realMs = Number(fallbackMs || 0);
+
+  // 通过 PerformanceResourceTiming 精确识别浏览器缓存命中（transferSize === 0）
+  if (fragUrl && typeof performance !== 'undefined' && typeof performance.getEntriesByName === 'function') {
+    const entries = performance.getEntriesByName(fragUrl);
+    if (entries && entries.length > 0) {
+      const ent = entries[entries.length - 1];
+      if (typeof ent.transferSize === 'number') {
+        // transferSize === 0 且 duration 极短或已有解码大小 => 100% 命中本地缓存，直接剔除！
+        if (ent.transferSize === 0 && (ent.decodedBodySize > 0 || ent.duration < 80)) {
+          return { valid: false, reason: 'browser_cache' };
+        }
+        if (ent.transferSize > 0) {
+          realBytes = ent.transferSize;
+        }
+      }
+      if (ent.responseEnd > 0 && ent.requestStart > 0 && ent.responseEnd > ent.requestStart) {
+        realMs = ent.responseEnd - ent.requestStart;
+      }
+    }
+  }
+
+  // 过滤过小切片（如 < 64KB 的短片段受握手耗时干扰大）
+  if (realBytes < 64 * 1024) {
+    return { valid: false, reason: 'too_small' };
+  }
+
+  const safeMs = Math.max(15, realMs);
+  let speedMBs = (realBytes / (1024 * 1024)) / (safeMs / 1000);
+
+  // 兜底防缓存伪高速度：低于 25ms 且速率超 25MB/s 属于未带 transferSize 标记的本地内存/磁盘缓存读取
+  if (safeMs < 25 && speedMBs > 25) {
+    return { valid: false, reason: 'fast_local_cache' };
+  }
+
+  // 单样本物理合理上限封顶 35MB/s（约 280Mbps），避免瞬时突发冲高平均值
+  speedMBs = Math.min(35, Math.max(0.05, speedMBs));
+  return { valid: true, speedMBs, realBytes, realMs: safeMs };
+}
+
+function recordVodNetworkSample(siteKey, speedMBs, latencyMs, weight = 1.0, isSeek = false) {
+  if (!siteKey) return;
+  let bucket = vodSpeedSamplesMap.get(siteKey);
+  if (!bucket) {
+    bucket = { samples: [], avgSpeedMBs: 0, avgLatencyMs: 9999 };
+    vodSpeedSamplesMap.set(siteKey, bucket);
+  }
+
+  bucket.samples.push({
+    speedMBs: Number(speedMBs),
+    latencyMs: Math.max(10, Math.round(Number(latencyMs || 100))),
+    weight: Number(weight || 1.0),
+    isSeek: Boolean(isSeek),
+    ts: Date.now()
+  });
+  // 保留最近 8 个有效网络样本进行持续滑动平均
+  if (bucket.samples.length > 8) {
+    bucket.samples.shift();
+  }
+
+  // 样本 >= 4 个时执行去极值（剔除最高 1 个突发峰；>= 5 个时同时剔除最低 1 个抖动谷）
+  let calcList = [...bucket.samples];
+  if (calcList.length >= 4) {
+    calcList.sort((a, b) => a.speedMBs - b.speedMBs);
+    calcList.pop();
+    if (calcList.length >= 4) calcList.shift();
+  }
+
+  let wSum = 0;
+  let spdWeightedSum = 0;
+  let latWeightedSum = 0;
+  for (const it of calcList) {
+    wSum += it.weight;
+    spdWeightedSum += it.speedMBs * it.weight;
+    latWeightedSum += it.latencyMs * it.weight;
+  }
+
+  bucket.avgSpeedMBs = wSum > 0 ? (spdWeightedSum / wSum) : speedMBs;
+  bucket.avgLatencyMs = wSum > 0 ? Math.round(latWeightedSum / wSum) : Math.round(latencyMs);
+
+  // 更新数据但不立即重排弹窗按钮（等切换平台时再重排，防止按钮在手指下突然跳动）
+  syncVodSpeedToGlobalSites(siteKey, 'ok', bucket.avgSpeedMBs, bucket.avgLatencyMs, false);
+}
+
+function syncVodSpeedToGlobalSites(siteKey, status, speedMBs, latency, resortModal = false) {
   const target = currentSites.find(s => s.key === siteKey);
   if (target) {
     target.status = status;
@@ -1542,7 +1630,9 @@ function syncVodSpeedToGlobalSites(siteKey, status, speedMBs, latency) {
       src._speedMBs = status === 'ok' ? Number(speedMBs || 0) : 0;
       src._latency = status === 'ok' ? Math.round(Number(latency || 0)) : 9999;
     }
-    sortActiveVodSources();
+    if (resortModal) {
+      sortActiveVodSources();
+    }
     renderVodLinePillsOnly();
   }
 }
@@ -1569,19 +1659,30 @@ function renderVodLinePillsOnly() {
   const sources = activeVodMovie.sortedSources || [];
   const lineBox = document.getElementById('vodLinePills');
   if (!lineBox) return;
-  lineBox.innerHTML = sources.map((s, i) => {
+  lineBox.innerHTML = sources.map((s) => {
     const isCur = s.siteKey === activeVodSiteKey;
+    const bucket = vodSpeedSamplesMap.get(s.siteKey);
+    const sampleCnt = bucket ? bucket.samples.length : 0;
     let tag = '';
     let extraCls = '';
     if (s._status === 'testing') {
       tag = ' · 测速中…';
+    } else if (s._status === 'seeking') {
+      tag = s._speedMBs > 0 ? ` · ${s._speedMBs.toFixed(1)}M/s(拖动校准中)` : ' · 拖动测速中…';
     } else if (s._status === 'ok') {
-      tag = s._speedMBs > 0 ? ` · ${s._speedMBs.toFixed(1)}M/s` : (s._latency < 9000 ? ` · ${s._latency}ms` : ' · 可用');
+      if (s._speedMBs > 0) {
+        tag = ` · ${s._speedMBs.toFixed(1)}M/s`;
+      } else if (s._latency < 9000) {
+        tag = ` · ${s._latency}ms`;
+      } else {
+        tag = ' · 可用';
+      }
     } else if (s._status === 'failed') {
       tag = ' · 受限/超时';
       extraCls = ' failed';
     }
-    return `<button type="button" class="live-ch-pill ${isCur ? 'active' : ''}${extraCls}" onclick="selectVodSourceByKey('${escapeHtml(s.siteKey)}')">${escapeHtml(s.siteName)}${tag}</button>`;
+    const titleHint = sampleCnt > 0 ? `已采样 ${sampleCnt} 个真实网络切片（已剔除本地缓存）` : '点击播放自动测速，拖动进度条可校准真实加载速度';
+    return `<button type="button" title="${titleHint}" class="live-ch-pill ${isCur ? 'active' : ''}${extraCls}" onclick="selectVodSourceByKey('${escapeHtml(s.siteKey)}')">${escapeHtml(s.siteName)}${tag}</button>`;
   }).join('');
 }
 
@@ -1593,11 +1694,12 @@ function openVodMovie(idx) {
 
   const sources = getSortedMovieSources(m).map(s => {
     const g = currentSites.find(x => x.key === s.siteKey);
+    const bucket = vodSpeedSamplesMap.get(s.siteKey);
     return {
       ...s,
-      _status: g?.status || 'idle',
-      _speedMBs: g?.speedMBs || 0,
-      _latency: g?.latency || 9999
+      _status: bucket ? 'ok' : (g?.status || 'idle'),
+      _speedMBs: bucket ? bucket.avgSpeedMBs : (g?.speedMBs || 0),
+      _latency: bucket ? bucket.avgLatencyMs : (g?.latency || 9999)
     };
   });
   activeVodMovie = { ...m, sortedSources: sources };
@@ -1608,7 +1710,7 @@ function openVodMovie(idx) {
 
   document.getElementById('vodModalTitle').textContent = m.title;
   document.getElementById('vodModalMeta').textContent = [m.year, m.type, m.remarks].filter(Boolean).join(' · ') || '高清专线';
-  document.getElementById('vodModalBlurb').textContent = m.blurb || '点击下方专线即可流畅试看，系统自动记录各专线网速并按快慢排序。';
+  document.getElementById('vodModalBlurb').textContent = m.blurb || '播放与拖动进度条时自动剔除本地缓存、计算真实平均加载速度并排序。';
   document.getElementById('vodLimitOverlay').classList.add('hidden');
 
   const timerBadge = document.getElementById('vodPreviewTimerBadge');
@@ -1660,6 +1762,8 @@ function renderVodSelectorsAndPlay() {
 }
 
 function selectVodSourceByKey(siteKey) {
+  // 切换平台时，将上一平台已累计的真实平均网速进行一次整体排序，保证排序实时更新且不跳手
+  sortActiveVodSources();
   activeVodSiteKey = siteKey;
   renderVodSelectorsAndPlay();
 }
@@ -1687,34 +1791,51 @@ function playVodStreamUrl(streamUrl, siteKey) {
   video.onloadedmetadata = null;
   video.removeAttribute('src');
 
-  // 标记当前专线为加载测速中
+  // 若该平台尚无真实测速数据，标记为测速中；若已有真实测速数据，切回来时保留原有真实速度不被缓存覆盖
+  const existingBucket = siteKey ? vodSpeedSamplesMap.get(siteKey) : null;
   if (activeVodMovie && siteKey) {
     const cur = activeVodMovie.sortedSources.find(s => s.siteKey === siteKey);
-    if (cur && cur._status !== 'ok') {
-      cur._status = 'testing';
+    if (cur) {
+      if (existingBucket && existingBucket.samples.length > 0) {
+        cur._status = 'ok';
+        cur._speedMBs = existingBucket.avgSpeedMBs;
+        cur._latency = existingBucket.avgLatencyMs;
+      } else if (cur._status !== 'ok') {
+        cur._status = 'testing';
+      }
       renderVodLinePillsOnly();
     }
   }
 
   const startTs = performance.now();
-  let settled = false;
+  let connected = false;
+  let lastSeekTs = 0;
+  let seekPending = false;
+
   const markFail = (reasonMsg) => {
-    if (settled) return;
-    settled = true;
+    if (connected) return;
+    connected = true;
     if (vodLoadTimer) { clearTimeout(vodLoadTimer); vodLoadTimer = null; }
-    if (siteKey) syncVodSpeedToGlobalSites(siteKey, 'failed', 0, 9999);
+    if (siteKey) syncVodSpeedToGlobalSites(siteKey, 'failed', 0, 9999, true);
     showToast(reasonMsg || '该专线受浏览器跨域限制或超时，请切换其他专线（TVBox 端可正常播）', 3200);
   };
-  const markSuccess = (speedMBs, latencyMs) => {
-    if (settled) return;
-    settled = true;
-    if (vodLoadTimer) { clearTimeout(vodLoadTimer); vodLoadTimer = null; }
-    if (siteKey) syncVodSpeedToGlobalSites(siteKey, 'ok', speedMBs, latencyMs);
+  const markConnected = (fallbackLatencyMs) => {
+    if (!connected) {
+      connected = true;
+      if (vodLoadTimer) { clearTimeout(vodLoadTimer); vodLoadTimer = null; }
+      // 若尚未收到非缓存切片（例如切回刚看过的平台），至少保留已有真实速度或起播延迟
+      if (siteKey && (!existingBucket || existingBucket.samples.length === 0)) {
+        const cur = activeVodMovie?.sortedSources?.find(s => s.siteKey === siteKey);
+        if (cur && cur._status !== 'ok') {
+          syncVodSpeedToGlobalSites(siteKey, 'ok', 0, fallbackLatencyMs, false);
+        }
+      }
+    }
   };
 
-  // 8 秒加载超时保护，防止个别卡死平台毫无反应
+  // 8 秒初始连接超时保护
   vodLoadTimer = setTimeout(() => {
-    if (!settled) {
+    if (!connected) {
       if (activeVodHls) { activeVodHls.destroy(); activeVodHls = null; }
       markFail('当前专线连接超时(8s)，已自动标记并下沉排序，请点其他专线');
     }
@@ -1737,10 +1858,22 @@ function playVodStreamUrl(streamUrl, siteKey) {
       overlay.classList.remove('hidden');
     }
   };
+
+  // 监听用户拖动进度条（Seeking）：拖动到未缓冲时间点会触发冷启动拉流，给予 2 倍高权重采样！
   video.onseeking = () => {
     if (limitSec > 0 && video.currentTime > limitSec) {
       video.currentTime = Math.max(0, limitSec - 1);
       showToast(`游客最多可试看前 ${vodPreviewMinutes} 分钟，开通会员不限时！`);
+      return;
+    }
+    lastSeekTs = performance.now();
+    seekPending = true;
+    if (activeVodMovie && siteKey) {
+      const cur = activeVodMovie.sortedSources.find(s => s.siteKey === siteKey);
+      if (cur && cur._status !== 'failed') {
+        cur._status = 'seeking';
+        renderVodLinePillsOnly();
+      }
     }
   };
 
@@ -1764,16 +1897,40 @@ function playVodStreamUrl(streamUrl, siteKey) {
       manifestLatency = Math.max(10, Math.round(performance.now() - startTs));
       tryPlay();
     });
-    // 真实监听首个 TS 切片下载完成，精确计算该平台到用户宽带的 MB/s 速率
+
+    // 持续监听播放与拖动过程中加载的每个 TS 切片，剔除本地缓存后计算加权平均速度
     hls.on(Hls.Events.FRAG_LOADED, (_, data) => {
-      if (settled) return;
-      const st = data?.frag?.stats || data?.stats || {};
-      const loadedBytes = st.loaded || st.total || 0;
-      const loadMs = Math.max(10, (st.loading?.end || performance.now()) - (st.loading?.start || startTs));
-      const speedMBs = loadedBytes > 0 ? (loadedBytes / (1024 * 1024)) / (loadMs / 1000) : 0;
-      const lat = manifestLatency || Math.round(performance.now() - startTs);
-      markSuccess(speedMBs, lat);
+      const now = performance.now();
+      const baseLat = manifestLatency || Math.max(10, Math.round(now - startTs));
+      markConnected(baseLat);
+
+      const frag = data?.frag || {};
+      const st = frag.stats || data?.stats || {};
+      const fallbackBytes = st.loaded || st.total || 0;
+      const fallbackMs = Math.max(15, (st.loading?.end || now) - (st.loading?.start || startTs));
+
+      const check = inspectRealNetworkTransfer(frag.url, fallbackBytes, fallbackMs);
+      if (!check.valid) {
+        // 命中本地缓存切片时，恢复状态显示（不计入假高网速）
+        if (activeVodMovie && siteKey) {
+          const cur = activeVodMovie.sortedSources.find(s => s.siteKey === siteKey);
+          if (cur && cur._status === 'seeking') {
+            cur._status = 'ok';
+            renderVodLinePillsOnly();
+          }
+        }
+        return;
+      }
+
+      // 判断是否为拖动进度条后的冷启动加载切片（10秒窗口内）
+      const isSeekBurst = seekPending && (now - lastSeekTs <= 10000);
+      const sampleLatency = isSeekBurst ? Math.max(15, Math.round(now - lastSeekTs)) : baseLat;
+      const weight = isSeekBurst ? 2.0 : 1.0;
+      if (isSeekBurst) seekPending = false;
+
+      recordVodNetworkSample(siteKey, check.speedMBs, sampleLatency, weight, isSeekBurst);
     });
+
     hls.on(Hls.Events.ERROR, (_, errData) => {
       if (errData.fatal) {
         hls.destroy();
@@ -1787,7 +1944,7 @@ function playVodStreamUrl(streamUrl, siteKey) {
     video.src = streamUrl;
     video.onloadedmetadata = () => {
       const lat = Math.max(10, Math.round(performance.now() - startTs));
-      markSuccess(0, lat);
+      markConnected(lat);
       tryPlay();
     };
     video.onerror = () => markFail();
@@ -1796,7 +1953,7 @@ function playVodStreamUrl(streamUrl, siteKey) {
     video.src = streamUrl;
     video.onloadedmetadata = () => {
       const lat = Math.max(10, Math.round(performance.now() - startTs));
-      markSuccess(0, lat);
+      markConnected(lat);
       tryPlay();
     };
     video.onerror = () => markFail();
