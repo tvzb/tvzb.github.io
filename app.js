@@ -83,6 +83,11 @@ function showToast(msg, duration = 2600) {
 
 // ================= App 级分栏视图切换 =================
 function switchView(tabName) {
+  // 离开对应页面时自动停止并销毁播放器，防止后台串音和偷跑流量
+  if (tabName !== 'channels' && typeof stopFreeLivePlayer === 'function') stopFreeLivePlayer();
+  if (tabName !== 'speed' && typeof closeVodModal === 'function') closeVodModal();
+  if (tabName !== 'install' && typeof stopTutorialVideo === 'function') stopTutorialVideo();
+
   document.querySelectorAll('.tab-view').forEach(v => v.classList.remove('active'));
   const target = document.getElementById('view-' + tabName);
   if (target) target.classList.add('active');
@@ -1184,12 +1189,25 @@ function openImgLightbox(src) {
 }
 
 function switchInstallSubTab(subId) {
+  if (subId !== 'sub-video' && typeof stopTutorialVideo === 'function') stopTutorialVideo();
   document.querySelectorAll('#installSubTabs .seg-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.subtab === subId);
   });
   document.querySelectorAll('.install-subpanel').forEach(p => {
     p.classList.toggle('active', p.id === subId);
   });
+}
+
+function stopTutorialVideo() {
+  const wrap = document.getElementById('tutorialVideoWrap');
+  if (!wrap) return;
+  const v = wrap.querySelector('video');
+  if (v && !v.paused) v.pause();
+  const ifr = wrap.querySelector('iframe');
+  if (ifr && ifr.src) {
+    const src = ifr.src;
+    ifr.src = src;
+  }
 }
 
 function renderTutorialVideo(videoUrl, videoDesc) {
@@ -1297,7 +1315,35 @@ function renderLiveSourceBar(gIdx, cIdx, ch, currentIdx) {
   `;
 }
 
+function stopFreeLivePlayer() {
+  if (activeHls) {
+    activeHls.destroy();
+    activeHls = null;
+  }
+  const video = document.getElementById('liveVideoPlayer');
+  if (video) {
+    video.pause();
+    video.onerror = null;
+    video.onloadedmetadata = null;
+    video.removeAttribute('src');
+    video.load();
+  }
+  activeLiveChannel = null;
+  document.querySelectorAll('.live-ch-pill').forEach(b => b.classList.remove('active'));
+  document.getElementById('liveSourceBar')?.classList.add('hidden');
+  const statusEl = document.getElementById('livePlayStatus');
+  if (statusEl) statusEl.textContent = '选择频道开始试看';
+  const overlay = document.getElementById('livePlayerOverlay');
+  if (overlay) overlay.classList.remove('hidden');
+  const ovTitle = document.getElementById('liveOverlayTitle');
+  if (ovTitle) ovTitle.textContent = '点击下方任意体验频道立即播放';
+  const ovSub = document.getElementById('liveOverlaySub');
+  if (ovSub) ovSub.textContent = '已过滤不兼容源 · 多线路支持自由点击切换';
+}
+
 function playFreeLiveChannel(gIdx, cIdx, urlIdx = 0, manual = false) {
+  if (typeof closeVodModal === 'function') closeVodModal();
+  if (typeof stopTutorialVideo === 'function') stopTutorialVideo();
   const ch = freeLiveGroups?.[gIdx]?.channels?.[cIdx];
   if (!ch || !ch.urls || ch.urls.length === 0) return;
   const chKey = `${gIdx}_${cIdx}`;
@@ -1471,6 +1517,8 @@ function getSortedMovieSources(movie) {
 }
 
 function openVodMovie(idx) {
+  if (typeof stopFreeLivePlayer === 'function') stopFreeLivePlayer();
+  if (typeof stopTutorialVideo === 'function') stopTutorialVideo();
   const m = vodHotMovies[idx];
   if (!m) return;
   activeVodMovie = { ...m, sortedSources: getSortedMovieSources(m) };
@@ -1660,3 +1708,15 @@ function applySmartVodGridLayout(gridEl, count) {
   gridEl.style.setProperty('--vod-cols-desktop', String(desktopCols));
   gridEl.style.setProperty('--vod-cols-mobile', String(mobileCols));
 }
+
+// 手机切后台或息屏时自动暂停播放，防止后台偷跑流量或持续出声
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    const liveV = document.getElementById('liveVideoPlayer');
+    if (liveV && !liveV.paused) liveV.pause();
+    const vodV = document.getElementById('vodVideoPlayer');
+    if (vodV && !vodV.paused) vodV.pause();
+    const tutV = document.querySelector('#tutorialVideoWrap video');
+    if (tutV && !tutV.paused) tutV.pause();
+  }
+});
