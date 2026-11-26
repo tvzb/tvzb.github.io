@@ -1,3 +1,16 @@
+let adminToastTimer = null;
+function showAdminToast(text, type = 'ok', duration = 2600) {
+  const box = document.getElementById('adminCenterToast');
+  if (!box) return;
+  box.textContent = (type === 'ok' ? '✅ ' : (type === 'error' ? '❌ ' : '⏳ ')) + text;
+  box.className = 'admin-center-toast ' + (type === 'ok' ? 'ok' : (type === 'error' ? 'error' : ''));
+  box.classList.remove('hidden');
+  clearTimeout(adminToastTimer);
+  if (duration > 0) {
+    adminToastTimer = setTimeout(() => box.classList.add('hidden'), duration);
+  }
+}
+
 const API_BASE = 'https://tv.171234.xyz';
 
 let adminToken = sessionStorage.getItem('tvbox_admin_token') || '';
@@ -957,9 +970,10 @@ async function saveChannelConfig(msgElId) {
       body: JSON.stringify(channelCfgState)
     });
     const data = await res.json();
-    if (!res.ok) { msg.textContent = data.error || '保存失败'; msg.classList.add('error'); return; }
+    if (!res.ok) { msg.textContent = data.error || '保存失败'; msg.classList.add('error'); showAdminToast(data.error || '保存失败', 'error', 3200); return; }
     msg.textContent = data.message || '保存成功！';
     msg.classList.add('ok');
+    showAdminToast(data.message || '保存成功！', 'ok', 2600);
   } catch (e) {
     msg.textContent = '网络错误';
     msg.classList.add('error');
@@ -1004,7 +1018,7 @@ async function loadSiteSettings() {
     document.getElementById('setAnnouncementEnabled').value = s.announcement_enabled ? 'true' : 'false';
     document.getElementById('setAnnouncementText').value = s.announcement_text || '';
     document.getElementById('setInviteRewardDays').value = s.invite_reward_days ?? 15;
-    document.getElementById('setVodHotCount').value = s.vod_hot_count ?? 8;
+    document.getElementById('setVodHotCount').value = s.vod_hot_count ?? 10;
     document.getElementById('setVodPreviewMinutes').value = s.vod_preview_minutes ?? 10;
     document.getElementById('setOnsiteEnabled').value = s.onsite_enabled === false ? 'false' : 'true';
     document.getElementById('setOnsitePrice').value = s.onsite_price ?? 99;
@@ -1060,7 +1074,7 @@ async function saveSiteSettings() {
     announcement_enabled: document.getElementById('setAnnouncementEnabled').value === 'true',
     announcement_text: document.getElementById('setAnnouncementText').value.trim(),
     invite_reward_days: Number(document.getElementById('setInviteRewardDays').value ?? 15),
-    vod_hot_count: Number(document.getElementById('setVodHotCount').value ?? 8),
+    vod_hot_count: Number(document.getElementById('setVodHotCount').value ?? 10),
     vod_preview_minutes: Number(document.getElementById('setVodPreviewMinutes').value ?? 10),
     onsite_enabled: document.getElementById('setOnsiteEnabled').value === 'true',
     onsite_price: Number(document.getElementById('setOnsitePrice').value ?? 99),
@@ -1070,9 +1084,10 @@ async function saveSiteSettings() {
   try {
     const res = await apiFetch('/api/admin/site-settings', { method: 'POST', body: JSON.stringify(payload) });
     const data = await res.json();
-    if (!res.ok) { msg.textContent = data.error || '保存失败'; msg.classList.add('error'); return; }
+    if (!res.ok) { msg.textContent = data.error || '保存失败'; msg.classList.add('error'); showAdminToast(data.error || '保存失败', 'error', 3200); return; }
     msg.textContent = data.message || '保存成功！';
     msg.classList.add('ok');
+    showAdminToast(data.message || '保存成功！', 'ok', 2600);
   } catch (e) {
     msg.textContent = '网络错误';
     msg.classList.add('error');
@@ -1224,9 +1239,10 @@ async function savePricingConfig() {
   try {
     const res = await apiFetch('/api/admin/pricing-config', { method: 'POST', body: JSON.stringify(pricingState) });
     const data = await res.json();
-    if (!res.ok) { msg.textContent = data.error || '保存失败'; msg.classList.add('error'); return; }
+    if (!res.ok) { msg.textContent = data.error || '保存失败'; msg.classList.add('error'); showAdminToast(data.error || '保存失败', 'error', 3200); return; }
     msg.textContent = data.message || '保存成功！';
     msg.classList.add('ok');
+    showAdminToast(data.message || '保存成功！', 'ok', 2600);
     loadPricingConfig();
   } catch (e) {
     msg.textContent = '网络错误';
@@ -1327,11 +1343,12 @@ async function saveVodSitesConfig() {
   try {
     const res = await apiFetch('/api/admin/vod-sites', { method: 'POST', body: JSON.stringify(vodCfgState) });
     const data = await res.json();
-    if (!res.ok) { msg.textContent = data.error || '保存失败'; msg.classList.add('error'); return; }
+    if (!res.ok) { msg.textContent = data.error || '保存失败'; msg.classList.add('error'); showAdminToast(data.error || '保存失败', 'error', 3200); return; }
     vodCfgState = data.config;
     renderVodSitesEditor();
     msg.textContent = data.message || '保存成功！';
     msg.classList.add('ok');
+    showAdminToast(data.message || '点播源配置已保存！', 'ok', 2600);
   } catch (e) {
     msg.textContent = '网络错误';
     msg.classList.add('error');
@@ -1368,8 +1385,10 @@ async function refreshVodHotCacheAdmin() {
     const data = await res.json();
     if (!res.ok) {
       if (msg) { msg.textContent = data.error || '刷新失败'; msg.classList.add('error'); }
+      showAdminToast(data.error || '刷新失败', 'error', 3200);
     } else {
       if (msg) { msg.textContent = '✅ ' + (data.message || '热门影片缓存已刷新'); msg.classList.add('ok'); }
+      showAdminToast(data.message || '热门影片缓存已刷新！', 'ok', 2800);
     }
   } catch (e) {
     if (msg) { msg.textContent = '网络异常，请重试'; msg.classList.add('error'); }

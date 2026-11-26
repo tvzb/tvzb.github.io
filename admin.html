@@ -135,6 +135,35 @@
     .ch-chip.dragging { opacity: 0.4; }
     .ch-chip.drag-over { border-color: #34d399; background: rgba(16, 185, 129, 0.2); }
     .drag-handle { color: #64748b; font-size: 0.78rem; margin-right: 2px; user-select: none; }
+    .admin-center-toast {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      min-width: 280px;
+      max-width: 88vw;
+      padding: 24px 32px;
+      border-radius: 18px;
+      background: rgba(15, 23, 42, 0.96);
+      border: 2px solid var(--primary);
+      color: #f8fafc;
+      font-size: 1.28rem;
+      font-weight: 800;
+      text-align: center;
+      line-height: 1.5;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(12px);
+      animation: fadeIn 0.18s ease;
+    }
+    .admin-center-toast.ok {
+      border-color: #10b981;
+      color: #34d399;
+    }
+    .admin-center-toast.error {
+      border-color: #ef4444;
+      color: #f87171;
+    }
   </style>
 </head>
 <body>
@@ -488,8 +517,8 @@
           <button type="button" id="refreshVodHotBtn" class="secondary" style="padding:5px 12px;font-size:0.82rem;">🔄 立即刷新热门影片缓存</button>
         </div>
         <div class="form-grid-2">
-          <label style="margin-top:0;">首页/点播页展示热门影片数量（默认 8 部，1~20）
-            <input id="setVodHotCount" type="number" min="1" max="20" value="8">
+          <label style="margin-top:0;">豆瓣热播展示总数（默认 10 部 = 电影5部 + 电视剧5部）
+            <input id="setVodHotCount" type="number" min="2" max="20" value="10">
           </label>
           <label style="margin-top:0;">游客试看时长限制（分钟，默认 10；填 0=不限制，付费会员始终不限时）
             <input id="setVodPreviewMinutes" type="number" min="0" max="180" value="10">
@@ -668,6 +697,9 @@
       <p id="wfMsg" class="msg"></p>
     </div>
   </div>
+
+  <!-- 居中大字保存结果提示弹窗 -->
+  <div id="adminCenterToast" class="admin-center-toast hidden"></div>
 
   <script src="admin.js"></script>
 </body>

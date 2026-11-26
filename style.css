@@ -1340,3 +1340,10 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
   color: #fff;
   border-color: var(--primary);
 }
+
+.live-ch-pill.failed {
+  opacity: 0.52;
+  color: var(--danger);
+  border-color: rgba(239, 68, 68, 0.35);
+  text-decoration: line-through;
+}

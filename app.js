@@ -1516,18 +1516,99 @@ function getSortedMovieSources(movie) {
     .sort((a, b) => a._rank - b._rank);
 }
 
+let activeVodSiteKey = '';
+let vodLoadTimer = null;
+
+function syncVodSpeedToGlobalSites(siteKey, status, speedMBs, latency) {
+  const target = currentSites.find(s => s.key === siteKey);
+  if (target) {
+    target.status = status;
+    target.speedMBs = status === 'ok' ? Number(speedMBs || 0) : 0;
+    target.latency = status === 'ok' ? Math.round(Number(latency || 0)) : 9999;
+    currentSites.sort((a, b) => {
+      if (a.status === 'ok' && b.status !== 'ok') return -1;
+      if (a.status !== 'ok' && b.status === 'ok') return 1;
+      if (a.status === 'failed' && b.status !== 'failed') return 1;
+      if (a.status !== 'failed' && b.status === 'failed') return -1;
+      if (b.speedMBs !== a.speedMBs) return b.speedMBs - a.speedMBs;
+      return (a.latency || 9999) - (b.latency || 9999);
+    });
+    renderSiteList();
+  }
+  if (activeVodMovie && Array.isArray(activeVodMovie.sortedSources)) {
+    const src = activeVodMovie.sortedSources.find(s => s.siteKey === siteKey);
+    if (src) {
+      src._status = status;
+      src._speedMBs = status === 'ok' ? Number(speedMBs || 0) : 0;
+      src._latency = status === 'ok' ? Math.round(Number(latency || 0)) : 9999;
+    }
+    sortActiveVodSources();
+    renderVodLinePillsOnly();
+  }
+}
+
+function sortActiveVodSources() {
+  if (!activeVodMovie || !Array.isArray(activeVodMovie.sortedSources)) return;
+  activeVodMovie.sortedSources.sort((a, b) => {
+    const aOk = a._status === 'ok' ? 1 : 0;
+    const bOk = b._status === 'ok' ? 1 : 0;
+    if (aOk !== bOk) return bOk - aOk;
+    const aFail = a._status === 'failed' ? 1 : 0;
+    const bFail = b._status === 'failed' ? 1 : 0;
+    if (aFail !== bFail) return aFail - bFail;
+    if ((b._speedMBs || 0) !== (a._speedMBs || 0)) return (b._speedMBs || 0) - (a._speedMBs || 0);
+    if ((a._latency || 9999) !== (b._latency || 9999)) return (a._latency || 9999) - (b._latency || 9999);
+    return (a._rank || 9999) - (b._rank || 9999);
+  });
+  const newIdx = activeVodMovie.sortedSources.findIndex(s => s.siteKey === activeVodSiteKey);
+  if (newIdx >= 0) activeVodSourceIdx = newIdx;
+}
+
+function renderVodLinePillsOnly() {
+  if (!activeVodMovie) return;
+  const sources = activeVodMovie.sortedSources || [];
+  const lineBox = document.getElementById('vodLinePills');
+  if (!lineBox) return;
+  lineBox.innerHTML = sources.map((s, i) => {
+    const isCur = s.siteKey === activeVodSiteKey;
+    let tag = '';
+    let extraCls = '';
+    if (s._status === 'testing') {
+      tag = ' · 测速中…';
+    } else if (s._status === 'ok') {
+      tag = s._speedMBs > 0 ? ` · ${s._speedMBs.toFixed(1)}M/s` : (s._latency < 9000 ? ` · ${s._latency}ms` : ' · 可用');
+    } else if (s._status === 'failed') {
+      tag = ' · 受限/超时';
+      extraCls = ' failed';
+    }
+    return `<button type="button" class="live-ch-pill ${isCur ? 'active' : ''}${extraCls}" onclick="selectVodSourceByKey('${escapeHtml(s.siteKey)}')">${escapeHtml(s.siteName)}${tag}</button>`;
+  }).join('');
+}
+
 function openVodMovie(idx) {
   if (typeof stopFreeLivePlayer === 'function') stopFreeLivePlayer();
   if (typeof stopTutorialVideo === 'function') stopTutorialVideo();
   const m = vodHotMovies[idx];
   if (!m) return;
-  activeVodMovie = { ...m, sortedSources: getSortedMovieSources(m) };
+
+  const sources = getSortedMovieSources(m).map(s => {
+    const g = currentSites.find(x => x.key === s.siteKey);
+    return {
+      ...s,
+      _status: g?.status || 'idle',
+      _speedMBs: g?.speedMBs || 0,
+      _latency: g?.latency || 9999
+    };
+  });
+  activeVodMovie = { ...m, sortedSources: sources };
+  sortActiveVodSources();
   activeVodSourceIdx = 0;
+  activeVodSiteKey = activeVodMovie.sortedSources[0]?.siteKey || '';
   activeVodEpIdx = 0;
 
   document.getElementById('vodModalTitle').textContent = m.title;
   document.getElementById('vodModalMeta').textContent = [m.year, m.type, m.remarks].filter(Boolean).join(' · ') || '高清专线';
-  document.getElementById('vodModalBlurb').textContent = m.blurb || '点击下方专线即可流畅试看，支持与家庭宽带测速结果自动联动。';
+  document.getElementById('vodModalBlurb').textContent = m.blurb || '点击下方专线即可流畅试看，系统自动记录各专线网速并按快慢排序。';
   document.getElementById('vodLimitOverlay').classList.add('hidden');
 
   const timerBadge = document.getElementById('vodPreviewTimerBadge');
@@ -1550,15 +1631,15 @@ function renderVodSelectorsAndPlay() {
   if (!activeVodMovie) return;
   const sources = activeVodMovie.sortedSources || [];
   if (sources.length === 0) return;
-  if (activeVodSourceIdx >= sources.length) activeVodSourceIdx = 0;
 
-  const lineBox = document.getElementById('vodLinePills');
-  lineBox.innerHTML = sources.map((s, i) => {
-    const spdTag = s._speedMBs > 0 ? ` · ${s._speedMBs.toFixed(1)}M/s` : '';
-    return `<button type="button" class="live-ch-pill ${i === activeVodSourceIdx ? 'active' : ''}" onclick="selectVodSource(${i})">${escapeHtml(s.siteName)}${spdTag}</button>`;
-  }).join('');
+  let curSrc = sources.find(s => s.siteKey === activeVodSiteKey);
+  if (!curSrc) {
+    curSrc = sources[0];
+    activeVodSiteKey = curSrc.siteKey;
+  }
+  activeVodSourceIdx = sources.indexOf(curSrc);
+  renderVodLinePillsOnly();
 
-  const curSrc = sources[activeVodSourceIdx];
   const eps = curSrc.episodes || [];
   if (activeVodEpIdx >= eps.length) activeVodEpIdx = 0;
 
@@ -1574,13 +1655,18 @@ function renderVodSelectorsAndPlay() {
   }
 
   if (eps[activeVodEpIdx]) {
-    playVodStreamUrl(eps[activeVodEpIdx].url);
+    playVodStreamUrl(eps[activeVodEpIdx].url, curSrc.siteKey);
   }
 }
 
-function selectVodSource(idx) {
-  activeVodSourceIdx = idx;
+function selectVodSourceByKey(siteKey) {
+  activeVodSiteKey = siteKey;
   renderVodSelectorsAndPlay();
+}
+
+function selectVodSource(idx) {
+  const s = activeVodMovie?.sortedSources?.[idx];
+  if (s) selectVodSourceByKey(s.siteKey);
 }
 
 function selectVodEpisode(idx) {
@@ -1588,15 +1674,51 @@ function selectVodEpisode(idx) {
   renderVodSelectorsAndPlay();
 }
 
-function playVodStreamUrl(streamUrl) {
+function playVodStreamUrl(streamUrl, siteKey) {
   const video = document.getElementById('vodVideoPlayer');
   const overlay = document.getElementById('vodLimitOverlay');
   if (!video) return;
   overlay.classList.add('hidden');
 
+  if (vodLoadTimer) { clearTimeout(vodLoadTimer); vodLoadTimer = null; }
   if (activeVodHls) { activeVodHls.destroy(); activeVodHls = null; }
   video.pause();
+  video.onerror = null;
+  video.onloadedmetadata = null;
   video.removeAttribute('src');
+
+  // 标记当前专线为加载测速中
+  if (activeVodMovie && siteKey) {
+    const cur = activeVodMovie.sortedSources.find(s => s.siteKey === siteKey);
+    if (cur && cur._status !== 'ok') {
+      cur._status = 'testing';
+      renderVodLinePillsOnly();
+    }
+  }
+
+  const startTs = performance.now();
+  let settled = false;
+  const markFail = (reasonMsg) => {
+    if (settled) return;
+    settled = true;
+    if (vodLoadTimer) { clearTimeout(vodLoadTimer); vodLoadTimer = null; }
+    if (siteKey) syncVodSpeedToGlobalSites(siteKey, 'failed', 0, 9999);
+    showToast(reasonMsg || '该专线受浏览器跨域限制或超时，请切换其他专线（TVBox 端可正常播）', 3200);
+  };
+  const markSuccess = (speedMBs, latencyMs) => {
+    if (settled) return;
+    settled = true;
+    if (vodLoadTimer) { clearTimeout(vodLoadTimer); vodLoadTimer = null; }
+    if (siteKey) syncVodSpeedToGlobalSites(siteKey, 'ok', speedMBs, latencyMs);
+  };
+
+  // 8 秒加载超时保护，防止个别卡死平台毫无反应
+  vodLoadTimer = setTimeout(() => {
+    if (!settled) {
+      if (activeVodHls) { activeVodHls.destroy(); activeVodHls = null; }
+      markFail('当前专线连接超时(8s)，已自动标记并下沉排序，请点其他专线');
+    }
+  }, 8000);
 
   // 游客试看时长监控（付费会员不限时）
   const limitSec = (!isVodMemberActive() && vodPreviewMinutes > 0) ? vodPreviewMinutes * 60 : 0;
@@ -1636,33 +1758,62 @@ function playVodStreamUrl(streamUrl) {
   if (typeof Hls !== 'undefined' && Hls.isSupported()) {
     const hls = new Hls({ maxBufferLength: 20, enableWorker: true });
     activeVodHls = hls;
+    let manifestLatency = 0;
+
+    hls.on(Hls.Events.MANIFEST_PARSED, () => {
+      manifestLatency = Math.max(10, Math.round(performance.now() - startTs));
+      tryPlay();
+    });
+    // 真实监听首个 TS 切片下载完成，精确计算该平台到用户宽带的 MB/s 速率
+    hls.on(Hls.Events.FRAG_LOADED, (_, data) => {
+      if (settled) return;
+      const st = data?.frag?.stats || data?.stats || {};
+      const loadedBytes = st.loaded || st.total || 0;
+      const loadMs = Math.max(10, (st.loading?.end || performance.now()) - (st.loading?.start || startTs));
+      const speedMBs = loadedBytes > 0 ? (loadedBytes / (1024 * 1024)) / (loadMs / 1000) : 0;
+      const lat = manifestLatency || Math.round(performance.now() - startTs);
+      markSuccess(speedMBs, lat);
+    });
     hls.on(Hls.Events.ERROR, (_, errData) => {
       if (errData.fatal) {
         hls.destroy();
         activeVodHls = null;
-        showToast('当前专线加载异常，请点击下方切换其他专线', 3000);
+        markFail('该专线被浏览器跨域拦截或无法播放，已自动标记，请换其他专线');
       }
     });
     hls.loadSource(streamUrl);
     hls.attachMedia(video);
-    hls.on(Hls.Events.MANIFEST_PARSED, tryPlay);
   } else if (canNativeHls) {
     video.src = streamUrl;
-    video.onloadedmetadata = tryPlay;
+    video.onloadedmetadata = () => {
+      const lat = Math.max(10, Math.round(performance.now() - startTs));
+      markSuccess(0, lat);
+      tryPlay();
+    };
+    video.onerror = () => markFail();
     tryPlay();
   } else {
     video.src = streamUrl;
+    video.onloadedmetadata = () => {
+      const lat = Math.max(10, Math.round(performance.now() - startTs));
+      markSuccess(0, lat);
+      tryPlay();
+    };
+    video.onerror = () => markFail();
     tryPlay();
   }
 }
 
 function closeVodModal() {
+  if (vodLoadTimer) { clearTimeout(vodLoadTimer); vodLoadTimer = null; }
   const video = document.getElementById('vodVideoPlayer');
   if (activeVodHls) { activeVodHls.destroy(); activeVodHls = null; }
   if (video) {
     video.pause();
     video.ontimeupdate = null;
     video.onseeking = null;
+    video.onerror = null;
+    video.onloadedmetadata = null;
     video.removeAttribute('src');
     video.load();
   }
