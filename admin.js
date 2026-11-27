@@ -39,11 +39,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('loginBtn').onclick = doLogin;
   document.getElementById('adminPassword').onkeydown = (e) => { if (e.key === 'Enter') doLogin(); };
-  document.getElementById('logoutBtn').onclick = () => {
+  const doLogout = () => {
     sessionStorage.removeItem('tvbox_admin_token');
     adminToken = '';
     showLogin();
   };
+  document.getElementById('logoutBtn').onclick = doLogout;
+  document.getElementById('logoutBtnMobile')?.addEventListener('click', doLogout);
   document.getElementById('refreshBtn').onclick = loadAll;
 
   // 侧边栏导航切换
@@ -54,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const tab = btn.dataset.tab;
       const titleEl = document.getElementById('topbarPageTitle');
       const crumbEl = document.getElementById('topbarPageCrumb');
-      if (titleEl) titleEl.textContent = btn.querySelector('span')?.textContent || btn.textContent.trim();
+      const ico = btn.querySelector('.nav-ico')?.textContent || ''; const txt = btn.querySelector('.nav-txt')?.textContent || btn.textContent.trim(); if (titleEl) titleEl.textContent = (ico ? ico + ' ' : '') + txt;
       if (crumbEl && btn.dataset.crumb) crumbEl.textContent = btn.dataset.crumb;
 
       ['orders', 'users', 'tickets', 'coupons', 'pricing', 'vodcfg', 'livecfg', 'testcfg', 'settings'].forEach(t => {
@@ -1421,12 +1423,20 @@ function addVodSiteRow() {
   renderVodSitesEditor();
 }
 
+function cleanAdminSiteName(name) {
+  const s = String(name || '').trim();
+  const c = s.replace(/(?:资源网|资源站|资源)+$/, '').trim();
+  return c || s;
+}
+
 function autoMaskVodAliases() {
   if (!vodCfgState?.sites) return;
   vodCfgState.sites.forEach((s, idx) => {
+    if (s.realName) s.realName = cleanAdminSiteName(s.realName);
     s.alias = indexToRouteAlias(idx);
   });
   renderVodSitesEditor();
+  showAdminToast('已批量去除“资源”两字并按 路线A/B 编号，请点保存生效', 'ok', 2600);
 }
 
 async function saveVodSitesConfig() {

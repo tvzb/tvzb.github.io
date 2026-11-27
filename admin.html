@@ -79,17 +79,23 @@
     .brand-title { font-weight: 800; font-size: 1rem; letter-spacing: 0.2px; }
     .brand-sub { font-size: 0.75rem; color: var(--muted); }
 
+    .nav-group { margin-bottom: 8px; }
     .nav-section-label {
       font-size: 0.72rem; font-weight: 700; color: #64748b; letter-spacing: 0.9px;
-      padding: 12px 12px 6px; text-transform: uppercase;
+      padding: 10px 12px 6px; text-transform: uppercase;
     }
+    .nav-group-grid { display: flex; flex-direction: column; gap: 4px; }
     .nav-item {
-      width: 100%; display: flex; align-items: center; justify-content: space-between;
-      padding: 10px 13px; margin-bottom: 4px; border-radius: 10px;
+      position: relative;
+      width: 100%; display: flex; align-items: center; gap: 9px;
+      padding: 10px 13px; border-radius: 10px;
       background: transparent; border: 1px solid transparent;
       color: var(--muted); font-size: 0.89rem; font-weight: 600;
       cursor: pointer; text-align: left; transition: all 0.16s ease;
     }
+    .nav-item .nav-ico { font-size: 1rem; line-height: 1; flex-shrink: 0; }
+    .nav-item .nav-txt { flex: 1; min-width: 0; }
+    .nav-item .nav-pill-badge { margin-left: auto; }
     .nav-item:hover { background: rgba(148, 163, 184, 0.08); color: #f8fafc; }
     .nav-item.active {
       background: linear-gradient(90deg, rgba(59, 130, 246, 0.22), rgba(59, 130, 246, 0.06));
@@ -111,6 +117,11 @@
       color: #cbd5e1; background: rgba(148, 163, 184, 0.09); text-decoration: none;
     }
     .sidebar-link:hover { background: rgba(148, 163, 184, 0.16); }
+    .sidebar-mobile-actions { display: none; }
+    @media (max-width: 960px) {
+      .sidebar-mobile-actions { display: flex !important; }
+      .sidebar-desktop-footer { display: none !important; }
+    }
 
     /* 主内容与吸顶栏 */
     .admin-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
@@ -316,19 +327,65 @@
     .admin-center-toast.ok { border-color: var(--accent); color: #34d399; }
     .admin-center-toast.error { border-color: var(--danger); color: #f87171; }
 
-    /* 手机端自适应 */
+    /* 手机端深度优化：全功能 3 列宫格一屏直达，彻底告别单行左右手划 */
     @media (max-width: 960px) {
       .admin-shell { flex-direction: column; }
       .admin-sidebar {
-        width: 100%; height: auto; position: static; padding: 12px 14px;
+        width: 100%; height: auto; position: static; padding: 14px 14px 12px;
         border-right: none; border-bottom: 1px solid var(--border);
       }
-      .brand-box { padding-bottom: 10px; margin-bottom: 8px; }
-      .nav-section-label { display: none; }
-      .sidebar-nav-list { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; }
-      .nav-item { width: auto; white-space: nowrap; padding: 7px 12px; margin-bottom: 0; }
-      .sidebar-footer { flex-direction: row; margin-top: 8px; padding-top: 8px; }
-      .topbar, .content-body { padding-left: 14px; padding-right: 14px; }
+      .sidebar-head-row {
+        display: flex; align-items: center; justify-content: space-between; gap: 10px;
+        padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid var(--border);
+      }
+      .brand-box { padding: 0; margin: 0; border-bottom: none; }
+      .sidebar-footer {
+        display: flex; flex-direction: row; gap: 6px; margin-top: 0; padding-top: 0; border-top: none;
+      }
+      .sidebar-link { padding: 6px 10px; font-size: 0.78rem; white-space: nowrap; }
+      #logoutBtn { width: auto !important; padding: 6px 10px; font-size: 0.78rem !important; white-space: nowrap; }
+
+      .nav-group { margin-bottom: 10px; }
+      .nav-group:last-child { margin-bottom: 0; }
+      .nav-section-label {
+        display: block; padding: 2px 2px 6px; font-size: 0.71rem; color: #64748b;
+      }
+      .nav-group-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 7px;
+      }
+      .nav-item {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        padding: 10px 6px;
+        text-align: center;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 11px;
+        font-size: 0.79rem;
+      }
+      .nav-item.active {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.28), rgba(59, 130, 246, 0.14));
+        border-color: rgba(59, 130, 246, 0.55);
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.22);
+      }
+      .nav-item .nav-ico { font-size: 1.18rem; }
+      .nav-item .nav-txt { flex: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+      .nav-item .nav-pill-badge {
+        position: absolute; top: 5px; right: 6px; margin-left: 0;
+        padding: 0 6px; font-size: 0.68rem; line-height: 1.45;
+      }
+
+      .topbar { padding: 12px 14px; }
+      .topbar h1 { font-size: 1.05rem; }
+      .content-body { padding: 16px 14px 40px; }
+      .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin-bottom: 16px; }
+      .stat-card { padding: 12px; }
+      .stat-card .num { font-size: 1.38rem; }
+      .panel { padding: 16px 14px; border-radius: 14px; }
       .form-grid-2, .tier-row { grid-template-columns: 1fr; }
     }
   </style>
@@ -350,52 +407,66 @@
 
   <!-- 管理主界面 -->
   <div id="adminPage" class="admin-shell hidden">
-    <!-- 左侧固定导航 -->
+    <!-- 左侧固定导航（手机端自动变为 3 列九宫格，一屏直达无需手划） -->
     <aside class="admin-sidebar">
-      <div class="brand-box">
-        <div class="brand-icon">📺</div>
-        <div>
-          <div class="brand-title">TVBox 运营台</div>
-          <div class="brand-sub">tv.171234.xyz</div>
+      <div class="sidebar-head-row">
+        <div class="brand-box">
+          <div class="brand-icon">📺</div>
+          <div>
+            <div class="brand-title">TVBox 运营台</div>
+            <div class="brand-sub">tv.171234.xyz</div>
+          </div>
+        </div>
+        <div class="sidebar-footer sidebar-mobile-actions">
+          <a class="sidebar-link" href="https://tv.171234.xyz" target="_blank" rel="noopener">↗ 官网</a>
+          <button id="logoutBtnMobile" class="outline" style="font-size:0.78rem;padding:6px 10px;">退出</button>
         </div>
       </div>
 
       <div class="sidebar-nav-list">
-        <div class="nav-section-label">运营中心</div>
-        <button type="button" class="nav-item active" data-tab="orders" data-crumb="运营中心 / 订单审核">
-          <span>📦 订单管理</span>
-          <span id="navBadgePending" class="nav-pill-badge zero">0</span>
-        </button>
-        <button type="button" class="nav-item" data-tab="users" data-crumb="运营中心 / 会员管理">
-          <span>👤 会员管理</span>
-        </button>
-        <button type="button" class="nav-item" data-tab="tickets" data-crumb="运营中心 / 客服工单">
-          <span>📩 客服工单</span>
-          <span id="navBadgeTickets" class="nav-pill-badge zero">0</span>
-        </button>
+        <div class="nav-group">
+          <div class="nav-section-label">运营中心</div>
+          <div class="nav-group-grid">
+            <button type="button" class="nav-item active" data-tab="orders" data-crumb="运营中心 / 订单审核">
+              <span class="nav-ico">📦</span><span class="nav-txt">订单管理</span>
+              <span id="navBadgePending" class="nav-pill-badge zero">0</span>
+            </button>
+            <button type="button" class="nav-item" data-tab="users" data-crumb="运营中心 / 会员管理">
+              <span class="nav-ico">👤</span><span class="nav-txt">会员管理</span>
+            </button>
+            <button type="button" class="nav-item" data-tab="tickets" data-crumb="运营中心 / 客服工单">
+              <span class="nav-ico">📩</span><span class="nav-txt">客服工单</span>
+              <span id="navBadgeTickets" class="nav-pill-badge zero">0</span>
+            </button>
+          </div>
+        </div>
 
-        <div class="nav-section-label">配置与自动化</div>
-        <button type="button" class="nav-item" data-tab="pricing" data-crumb="系统配置 / 套餐与早鸟（全能双享-点播-直播）">
-          <span>💰 套餐与早鸟</span>
-        </button>
-        <button type="button" class="nav-item" data-tab="coupons" data-crumb="系统配置 / 优惠码管理">
-          <span>🏷️ 优惠码管理</span>
-        </button>
-        <button type="button" class="nav-item" data-tab="vodcfg" data-crumb="系统配置 / 点播平台管理">
-          <span>🎬 点播平台管理</span>
-        </button>
-        <button type="button" class="nav-item" data-tab="livecfg" data-crumb="系统配置 / 直播采集配置">
-          <span>📡 直播采集配置</span>
-        </button>
-        <button type="button" class="nav-item" data-tab="testcfg" data-crumb="系统配置 / 免费体验源">
-          <span>🧪 体验源配置</span>
-        </button>
-        <button type="button" class="nav-item" data-tab="settings" data-crumb="系统配置 / 站点与下载设置">
-          <span>⚙️ 站点与下载</span>
-        </button>
+        <div class="nav-group">
+          <div class="nav-section-label">配置与自动化</div>
+          <div class="nav-group-grid">
+            <button type="button" class="nav-item" data-tab="pricing" data-crumb="系统配置 / 套餐与早鸟（全能双享-点播-直播）">
+              <span class="nav-ico">💰</span><span class="nav-txt">套餐早鸟</span>
+            </button>
+            <button type="button" class="nav-item" data-tab="coupons" data-crumb="系统配置 / 优惠码管理">
+              <span class="nav-ico">🏷️</span><span class="nav-txt">优惠码</span>
+            </button>
+            <button type="button" class="nav-item" data-tab="vodcfg" data-crumb="系统配置 / 点播平台管理">
+              <span class="nav-ico">🎬</span><span class="nav-txt">点播平台</span>
+            </button>
+            <button type="button" class="nav-item" data-tab="livecfg" data-crumb="系统配置 / 直播采集配置">
+              <span class="nav-ico">📡</span><span class="nav-txt">直播采集</span>
+            </button>
+            <button type="button" class="nav-item" data-tab="testcfg" data-crumb="系统配置 / 免费体验源">
+              <span class="nav-ico">🧪</span><span class="nav-txt">体验源</span>
+            </button>
+            <button type="button" class="nav-item" data-tab="settings" data-crumb="系统配置 / 站点与下载设置">
+              <span class="nav-ico">⚙️</span><span class="nav-txt">站点设置</span>
+            </button>
+          </div>
+        </div>
       </div>
 
-      <div class="sidebar-footer">
+      <div class="sidebar-footer sidebar-desktop-footer">
         <a class="sidebar-link" href="https://tv.171234.xyz" target="_blank" rel="noopener">↗ 打开前台官网</a>
         <button id="logoutBtn" class="outline" style="width:100%;font-size:0.82rem;">退出登录</button>
       </div>
@@ -654,7 +725,7 @@
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
               <button id="reloadVodSitesBtn" class="secondary">🔄 刷新列表</button>
               <button id="triggerVodWfBtn" class="primary" style="background:linear-gradient(135deg,#059669,#0d9488);">🚀 触发点播体检与豆瓣同步</button>
-              <button id="autoMaskVodBtn" class="secondary">🪄 一键命名(路线A/B)</button>
+              <button id="autoMaskVodBtn" class="secondary">🪄 一键去“资源”与路线命名</button>
               <button id="addVodSiteBtn" class="secondary">+ 新增点播源</button>
               <button id="saveVodSitesBtn" class="primary">💾 保存点播源到 KV</button>
             </div>

@@ -970,10 +970,35 @@ function stripSiteKeyMaskClient(siteKey) {
 }
 
 function cleanBaseSiteName(name) {
-  return String(name || '')
+  const s = String(name || '')
     .replace(/^\d+[丨·.\-\s]+/, '')
     .replace(/\d{2}$/, '')
     .trim();
+  const stripped = s.replace(/(?:资源网|资源站|资源)+$/, '').trim();
+  return stripped || s;
+}
+
+function applySmartSiteGridLayout(gridEl, count) {
+  if (!gridEl || !count) return;
+  const n = Number(count);
+  // 电脑端在 3~4 列之间智能选出最饱满、卡片宽敞不挤压的列数（绝不出现 6 列竖排挤压）
+  let desktopCols = 4;
+  if (n <= 3) {
+    desktopCols = Math.max(1, n);
+  } else if (n % 4 === 0) {
+    desktopCols = 4;
+  } else if (n % 3 === 0) {
+    desktopCols = 3;
+  } else {
+    const empty4 = 4 - (n % 4);
+    const empty3 = 3 - (n % 3);
+    desktopCols = empty3 < empty4 ? 3 : 4;
+  }
+  const tabletCols = n === 1 ? 1 : 2;
+  const mobileCols = n === 1 ? 1 : 2;
+  gridEl.style.setProperty('--site-cols-desktop', String(desktopCols));
+  gridEl.style.setProperty('--site-cols-tablet', String(tabletCols));
+  gridEl.style.setProperty('--site-cols-mobile', String(mobileCols));
 }
 
 // ================= V19 千人千面双维度测速与排序引擎（网页端 vs TVBox 端各自最优） =================
@@ -1167,6 +1192,8 @@ function renderSiteList() {
     badge.textContent = `全部 ${list.length} 条路线 · 网页可播 ${webOkCnt} · 仅电视 ${corsCnt}${timeoutCnt > 0 ? ' · 超时 ' + timeoutCnt : ''}`;
   }
 
+  applySmartSiteGridLayout(box, list.length);
+
   let rankSeq = 0;
   box.innerHTML = list.map((site, idx) => {
     const m = getSiteMetric(site.rawKey);
@@ -1183,31 +1210,50 @@ function renderSiteList() {
 
     let tagHtml = '<span class="site-mode-tag unknown">待测</span>';
     let cardCls = '';
-    let metricHtml = '<span class="muted-sm">待校准</span>';
+    let speedHtml = '<span class="muted-sm">待校准</span>';
+    let subNote = '点击看片测速';
 
     if (m.webState === 'ok') {
-      tagHtml = '<span class="site-mode-tag web">🌐网页+电视</span>';
+      tagHtml = '<span class="site-mode-tag web">🌐 网页+电视</span>';
       cardCls = 'ok';
       const spdCls = m.speedMBs >= 3 ? 'speed-fast' : (m.speedMBs >= 1 ? 'speed-mid' : 'speed-slow');
-      const latTxt = m.latencyMs < 9000 ? `${m.latencyMs}ms` : '';
-      metricHtml = `<div class="speed-val ${spdCls}">${m.speedMBs > 0 ? m.speedMBs.toFixed(1) + 'M/s' : '流畅'}</div><div class="muted-sm">${latTxt}</div>`;
+      speedHtml = `<span class="speed-val ${spdCls}">${m.speedMBs > 0 ? m.speedMBs.toFixed(1) + 'M/s' : '流畅'}</span>`;
+      subNote = m.latencyMs < 9000 ? `延迟 ${m.latencyMs}ms` : '实测流畅';
     } else if (m.webState === 'web_ready') {
-      tagHtml = '<span class="site-mode-tag ready">🌐网页+电视</span>';
+      tagHtml = '<span class="site-mode-tag ready">🌐 网页+电视</span>';
       cardCls = 'ok';
-      metricHtml = `<div class="speed-val speed-mid">${m.probeMs < 9000 ? m.probeMs + 'ms' : '连通'}</div><div class="muted-sm">看片测均速</div>`;
+      speedHtml = `<span class="speed-val speed-mid">${m.probeMs < 9000 ? m.probeMs + 'ms' : '连通'}</span>`;
+      subNote = '看片测均速';
     } else if (m.webState === 'cors') {
-      tagHtml = '<span class="site-mode-tag cors">📺电视畅看</span>';
+      tagHtml = '<span class="site-mode-tag cors">📺 仅电视</span>';
       cardCls = activeSiteRankView === 'tvbox' ? 'ok' : '';
-      metricHtml = `<div class="speed-val ${activeSiteRankView === 'tvbox' ? 'speed-mid' : ''}" style="${activeSiteRankView === 'tvbox' ? '' : 'color:#94a3b8;'}">${m.probeMs < 9000 ? m.probeMs + 'ms' : '电视可用'}</div><div class="muted-sm">网页跨域受限</div>`;
+      const clrStyle = activeSiteRankView === 'tvbox' ? '' : 'color:#94a3b8;';
+      const clsStr = activeSiteRankView === 'tvbox' ? 'speed-mid' : '';
+      speedHtml = `<span class="speed-val ${clsStr}" style="${clrStyle}">${m.probeMs < 9000 ? m.probeMs + 'ms' : '可用'}</span>`;
+      subNote = '网页跨域受限';
     } else if (m.webState === 'timeout') {
       tagHtml = '<span class="site-mode-tag timeout">连接超时</span>';
       cardCls = 'failed';
-      metricHtml = '<span class="speed-slow">超时</span>';
+      speedHtml = '<span class="speed-val speed-slow">超时</span>';
+      subNote = '暂不可达';
     }
 
     const badgeClass = (isTopGood && rankNum <= 3 && isMeasured) ? 'rank-badge top3' : 'rank-badge';
     const badgeText = String(idx + 1).padStart(2, '0');
-    return `<div class="site-card ${cardCls}"><div class="site-title"><span class="${badgeClass}">${badgeText}</span><span>${escapeHtml(title)}${tagHtml}</span></div><div class="site-metrics">${metricHtml}</div></div>`;
+    return `
+      <div class="site-card ${cardCls}">
+        <div class="site-card-top">
+          <div class="site-title">
+            <span class="${badgeClass}">${badgeText}</span>
+            <span class="site-name-txt" title="${escapeHtml(title)}">${escapeHtml(title)}</span>
+          </div>
+          <div class="site-metrics">${speedHtml}</div>
+        </div>
+        <div class="site-card-bot">
+          ${tagHtml}
+          <span class="site-sub-note">${subNote}</span>
+        </div>
+      </div>`;
   }).join('');
 }
 
