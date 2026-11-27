@@ -131,7 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('addPlanBtn')?.addEventListener('click', addNewPlanRow);
   document.getElementById('savePricingBtn')?.addEventListener('click', savePricingConfig);
   document.getElementById('reloadVodSitesBtn')?.addEventListener('click', () => loadVodSitesConfig(true));
-  document.getElementById('resetWebStatusBtn')?.addEventListener('click', resetVodWebStatusMap);
   document.getElementById('triggerVodWfBtn')?.addEventListener('click', () => {
     document.getElementById('vodWfMsg').textContent = '';
     document.getElementById('vodWorkflowModal').classList.remove('hidden');
@@ -1309,10 +1308,8 @@ function renderVodSitesEditor() {
   if (!vodCfgState) return;
   const list = vodCfgState.sites || [];
   const enabledCnt = list.filter(s => s.enabled !== false).length;
-  const webOkCnt = list.filter(s => s.enabled !== false && s.webStatus === 'web').length;
-  const tvOnlyCnt = list.filter(s => s.enabled !== false && s.webStatus === 'tvbox').length;
   const updStr = vodCfgState.updated_at ? ` · 最近更新: ${String(vodCfgState.updated_at).replace('T', ' ').slice(0, 19)}` : '';
-  const webStr = `（实测网页可播 ${webOkCnt} 条 / 仅TVBox ${tvOnlyCnt} 条）`;
+  const webStr = '（全平台完整保留，各用户端按自家宽带独立测速排序）';
   document.getElementById('vodSitesSummary').textContent = `共 ${list.length} 条配置，当前启用 ${enabledCnt} 条${webStr}${updStr}`;
   const box = document.getElementById('vodSitesContainer');
   if (list.length === 0) {
@@ -1321,14 +1318,7 @@ function renderVodSitesEditor() {
   }
   box.innerHTML = list.map((s, idx) => {
     const tags = [];
-    if (s.webStatus === 'web') {
-      const spdTxt = s.globalSpeedMBs > 0 ? ` · 全站均速 ${Number(s.globalSpeedMBs).toFixed(1)}M/s` : '';
-      tags.push(`<span style="font-size:0.74rem;padding:2px 8px;border-radius:99px;background:rgba(16,185,129,0.2);color:#34d399;font-weight:800;">🌐 网页可播${spdTxt}</span>`);
-    } else if (s.webStatus === 'tvbox') {
-      tags.push('<span style="font-size:0.74rem;padding:2px 8px;border-radius:99px;background:rgba(245,158,11,0.18);color:#fbbf24;font-weight:800;">📺 仅TVBox(实测)</span>');
-    } else {
-      tags.push('<span style="font-size:0.74rem;padding:2px 8px;border-radius:99px;background:rgba(59,130,246,0.15);color:#60a5fa;font-weight:700;">⏳ 网页待实测</span>');
-    }
+    tags.push(`<span style="font-size:0.74rem;padding:2px 8px;border-radius:99px;background:rgba(16,185,129,0.18);color:#34d399;font-weight:700;">固定代号 ${escapeHtml(s.alias || indexToRouteAlias(idx))}</span>`);
     if (s.healthScore !== undefined) {
       const scColor = s.healthScore >= 80 ? '#34d399' : (s.healthScore >= 60 ? '#fbbf24' : '#f87171');
       tags.push(`<span style="font-size:0.74rem;padding:2px 7px;border-radius:99px;background:rgba(59,130,246,0.16);color:${scColor};font-weight:700;">健康分 ${s.healthScore}</span>`);

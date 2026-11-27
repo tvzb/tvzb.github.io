@@ -1585,3 +1585,27 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
 .poster-save-tip b {
   color: #34d399;
 }
+
+/* V19: 网页跨域受限但电视可用路线徽章与按钮样式 */
+.live-ch-pill.cors-only {
+  opacity: 0.68;
+  border-style: dashed;
+  border-color: rgba(148, 163, 184, 0.35);
+  color: var(--muted);
+}
+.live-ch-pill.cors-only:hover {
+  opacity: 0.95;
+  border-color: var(--primary);
+}
+.site-mode-tag.cors {
+  background: rgba(245, 158, 11, 0.16);
+  color: #fbbf24;
+}
+.site-mode-tag.ready {
+  background: rgba(6, 182, 212, 0.16);
+  color: #22d3ee;
+}
+.site-mode-tag.timeout {
+  background: rgba(239, 68, 68, 0.16);
+  color: #f87171;
+}

@@ -251,6 +251,15 @@
               <button type="button" class="btn-outline btn-sm-pad" style="color:#fff;border-color:rgba(255,255,255,0.35);" onclick="closeVodModal()">收起</button>
             </div>
           </div>
+          <div id="vodTvOnlyOverlay" class="live-player-overlay hidden">
+            <div style="font-size:2.2rem;margin-bottom:6px;">📺</div>
+            <div id="vodTvOnlyTitle" style="font-weight:800;font-size:1.05rem;margin-bottom:6px;">该路线受浏览器跨域限制，电视端可畅看</div>
+            <p id="vodTvOnlySub" class="muted-sm" style="max-width:380px;margin-bottom:14px;color:#cbd5e1;">平台本身完全正常，只是浏览器安全策略禁止网页直接拉流。您可点击下方其他网页路线，或导入 TVBox 电视大屏秒播全集！</p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+              <button type="button" class="btn-primary btn-sm-pad" onclick="switchView('home')">📺 复制 TVBox 订阅地址</button>
+              <button type="button" class="btn-outline btn-sm-pad" style="color:#fff;border-color:rgba(255,255,255,0.35);" onclick="document.getElementById('vodTvOnlyOverlay').classList.add('hidden')">我知道了</button>
+            </div>
+          </div>
         </div>
 
         <!-- 网页可播路线切换（自动按实测网速由快到慢排序：路线A01、路线D02...） -->
@@ -275,17 +284,23 @@
 
       <div class="block-head" style="margin-top:28px;">
         <div>
-          <h2>⚡ 网页可播路线 · 智能网速排行</h2>
-          <p id="webSitesRankDesc" class="muted-sm">全站按真实点播均速默认排好序（路线A最快）；您在上方点播看片后，将自动按您家中宽带网速重新排序并同步至电视端</p>
+          <h2>⚡ 我的专属路线 · 智能测速排行（全平台完整保留）</h2>
+          <p id="webSitesRankDesc" class="muted-sm">千人千面独立测速，绝不互相干扰：网页看片自动剔除缓存测均速，后台静默校准各路线延迟，网页端与 TVBox 各自按您家宽带最优排序</p>
         </div>
-        <button type="button" id="saveCustomOrder" class="btn-secondary btn-sm-pad">💾 手动同步排序到 TVBox</button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+          <div class="seg-tabs" id="siteRankViewTabs">
+            <button type="button" class="seg-btn active" data-rview="web">🌐 网页顺序</button>
+            <button type="button" class="seg-btn" data-rview="tvbox">📺 TVBox顺序</button>
+          </div>
+          <button type="button" id="reprobeLatencyBtn" class="btn-outline btn-sm-pad">🔄 校准延迟</button>
+          <button type="button" id="saveCustomOrder" class="btn-secondary btn-sm-pad">💾 同步云端</button>
+        </div>
       </div>
 
       <div class="speed-opts-bar">
-        <label><input type="checkbox" id="optTagRank" checked> 名称标速序(如 路线A01)</label>
-        <label><input type="checkbox" id="optShowSpeed"> 显示测速(M/s)</label>
-        <label><input type="checkbox" id="optHideFailed" checked> 隐藏超时站</label>
-        <span id="speedModeBadge" class="muted-sm" style="margin-left:auto;">🌐 仅展示网页可播路线</span>
+        <label><input type="checkbox" id="optTagRank" checked> 名称标速序(如 路线D01)</label>
+        <label><input type="checkbox" id="optShowSpeed"> 电视端显示均速(M/s)</label>
+        <span id="speedModeBadge" class="muted-sm" style="margin-left:auto;">已保留全部路线 · 就绪</span>
       </div>
 
       <div id="siteList" class="site-grid"></div>

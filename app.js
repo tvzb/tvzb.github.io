@@ -29,13 +29,14 @@ function indexToRouteAlias(idx) {
 }
 
 const DEFAULT_VOD_SITES = Array.from({ length: 21 }, (_, i) => ({
-  key: `line_${String(i + 1).padStart(2, '0')}`,
+  key: `route_site_${String(i + 1).padStart(2, '0')}`,
+  rawKey: `site_${String(i + 1).padStart(2, '0')}`,
   name: indexToRouteAlias(i),
-  pingUrl: '',
-  webStatus: 'unknown'
+  defaultRank: i + 1,
+  healthScore: 0
 }));
 
-let currentSites = DEFAULT_VOD_SITES.map(s => ({ ...s, status: 'idle', speedMBs: 0, latency: undefined }));
+let currentSites = DEFAULT_VOD_SITES.map(s => ({ ...s }));
 let dynamicPlans = [];
 let earlyBirdState = null;
 let currentPlanCategory = 'all';
@@ -108,6 +109,8 @@ function switchView(tabName) {
       el.classList.toggle('active', el.dataset.nav === tabName);
     }
   });
+  if (tabName === 'speed') scheduleSilentSiteCalibration(false);
+  if (tabName !== 'speed') document.getElementById('vodTvOnlyOverlay')?.classList.add('hidden');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -215,8 +218,17 @@ function bindEvents() {
   });
   document.getElementById('channelSearch')?.addEventListener('input', renderChannelSummaryList);
 
-  // 路线排序同步 & 安装大全搜索筛选
+  // 路线排序同步 & 双端视图切换 & 安装大全搜索筛选
   document.getElementById('saveCustomOrder')?.addEventListener('click', saveCustomOrder);
+  document.getElementById('reprobeLatencyBtn')?.addEventListener('click', () => scheduleSilentSiteCalibration(true));
+  document.querySelectorAll('#siteRankViewTabs .seg-btn').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('#siteRankViewTabs .seg-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeSiteRankView = btn.dataset.rview || 'web';
+      renderSiteList();
+    };
+  });
   document.getElementById('brandGuideSearch')?.addEventListener('input', filterBrandGuides);
   document.querySelectorAll('#brandCatTabs .seg-btn').forEach(btn => {
     btn.onclick = () => {
@@ -226,7 +238,12 @@ function bindEvents() {
     };
   });
   ['optTagRank', 'optShowSpeed'].forEach(id => {
-    document.getElementById(id)?.addEventListener('change', renderSiteList);
+    document.getElementById(id)?.addEventListener('change', () => {
+      renderSiteList();
+      renderVodLinePillsOnly();
+      persistPersonalVodState();
+      autoSyncUserOrderQuietly();
+    });
   });
 
   // 支付与优惠码
@@ -342,27 +359,21 @@ async function loadPublicConfigAndSites() {
     if (r2.ok) {
       const d = await r2.json();
       if (Array.isArray(d.sites) && d.sites.length > 0) {
-        currentSites = d.sites.map(s => ({
-          ...s,
-          status: (s.globalSpeedMBs > 0 || s.webStatus === 'web') ? 'ok' : 'idle',
-          speedMBs: Number(s.globalSpeedMBs || 0),
-          latency: s.globalLatencyMs && s.globalLatencyMs < 9000 ? s.globalLatencyMs : undefined,
-          _isGlobalDefault: true,
-          webStatus: s.webStatus || 'unknown'
+        currentSites = d.sites.map((s, i) => ({
+          key: s.key,
+          rawKey: s.rawKey || stripSiteKeyMaskClient(s.key),
+          name: s.name,
+          defaultRank: Number(s.defaultRank || (i + 1)),
+          healthScore: Number(s.healthScore || 0)
         }));
-        applyLocalSmartVodOrder();
-        const totalAll = Number(d.count || currentSites.length);
-        const tvOnly = Number(d.tvboxOnlyCount || 0);
-        currentVodCount = totalAll;
+        hydratePersonalVodState();
+        currentVodCount = currentSites.length;
         document.querySelectorAll('.js-vod-count').forEach(el => { el.textContent = String(currentVodCount); });
         const mv = document.getElementById('mineVodCount'); if (mv) mv.textContent = currentVodCount + ' 条';
-        const badge = document.getElementById('speedModeBadge');
-        if (badge) {
-          badge.textContent = tvOnly > 0
-            ? `🌐 网页可播 ${currentSites.length} 条（已自动屏蔽 ${tvOnly} 条仅 TVBox 路线）`
-            : `🌐 网页可播 ${currentSites.length} 条路线`;
-        }
         renderSiteList();
+        if (document.getElementById('view-speed')?.classList.contains('active')) {
+          scheduleSilentSiteCalibration(false);
+        }
       }
     }
   } catch (e) {}
@@ -722,10 +733,8 @@ function renderAccountDashboard(user, orders, tickets) {
     </details>
   `;
 
-  if (user.site_order && user.site_order.length > 0) {
-    const orderMap = new Map(user.site_order.map((k, i) => [k, i]));
-    currentSites.sort((a, b) => (orderMap.has(a.key) ? orderMap.get(a.key) : 999) - (orderMap.has(b.key) ? orderMap.get(b.key) : 999));
-    renderSiteList();
+  if (user.site_config || (user.site_order && user.site_order.length > 0)) {
+    mergeCloudPersonalVodConfig(user.site_config || { order: user.site_order });
   }
 
   // 同步把专属订阅地址置顶渲染到「首页」最显目卡片
@@ -956,6 +965,10 @@ async function confirmResetPassword() {
 }
 
 // ================= 本地家庭宽带真实拉流测速 =================
+function stripSiteKeyMaskClient(siteKey) {
+  return String(siteKey || '').replace(/^(?:line_\d+_|route_)/, '').trim();
+}
+
 function cleanBaseSiteName(name) {
   return String(name || '')
     .replace(/^\d+[丨·.\-\s]+/, '')
@@ -963,57 +976,365 @@ function cleanBaseSiteName(name) {
     .trim();
 }
 
-function formatSiteTitle(site, rankIndex) {
-  const tagRank = document.getElementById('optTagRank')?.checked ?? true;
-  const showSpeed = document.getElementById('optShowSpeed')?.checked ?? false;
-  const base = cleanBaseSiteName(site.name);
-  if (site.status === 'failed') return `❌ ${base}`;
-  let t = base;
-  if (tagRank && (site.status === 'ok' || site._hasSavedRank)) {
-    t = `${base}${String(rankIndex).padStart(2, '0')}`;
-  }
-  if (showSpeed && site.speedMBs > 0) t += ` [${site.speedMBs.toFixed(1)}M]`;
-  return t;
+// ================= V19 千人千面双维度测速与排序引擎（网页端 vs TVBox 端各自最优） =================
+const PERSONAL_VOD_STORAGE_KEY = 'tvbox_personal_vod_v2';
+let activeSiteRankView = 'web'; // 'web' | 'tvbox'
+let personalVodMetrics = {};    // { [rawKey]: { webState, speedMBs, latencyMs, probeMs, updatedAt } }
+let personalSavedTvOrder = [];  // 历史云端保存的 TVBox 顺序（冷启动兜底）
+let personalSavedWebOrder = []; // 历史云端保存的 Web 顺序
+let silentCalibrationRunning = false;
+let silentCalibrationDoneTs = 0;
+
+function getSiteMetric(rawKey) {
+  const rk = stripSiteKeyMaskClient(rawKey);
+  return personalVodMetrics[rk] || { webState: 'idle', speedMBs: 0, latencyMs: 9999, probeMs: 9999, updatedAt: 0 };
 }
 
-function getWebStatusTagHtml(webStatus) {
-  if (webStatus === 'web') return '<span class="site-mode-tag web">🌐网页</span>';
-  if (webStatus === 'tvbox') return '<span class="site-mode-tag tvbox">📺仅TVBox</span>';
-  return '<span class="site-mode-tag unknown">待实测</span>';
+function setSiteMetric(rawKey, patch) {
+  const rk = stripSiteKeyMaskClient(rawKey);
+  if (!rk) return;
+  const prev = getSiteMetric(rk);
+  personalVodMetrics[rk] = {
+    ...prev,
+    ...patch,
+    updatedAt: Date.now()
+  };
+}
+
+function hydratePersonalVodState() {
+  try {
+    const raw = localStorage.getItem(PERSONAL_VOD_STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === 'object') {
+        if (parsed.metrics && typeof parsed.metrics === 'object') {
+          personalVodMetrics = { ...parsed.metrics, ...personalVodMetrics };
+        }
+        if (Array.isArray(parsed.order) && personalSavedTvOrder.length === 0) {
+          personalSavedTvOrder = parsed.order;
+        }
+        if (Array.isArray(parsed.webOrder) && personalSavedWebOrder.length === 0) {
+          personalSavedWebOrder = parsed.webOrder;
+        }
+        if (parsed.tagRank !== undefined) {
+          const el = document.getElementById('optTagRank');
+          if (el) el.checked = Boolean(parsed.tagRank);
+        }
+        if (parsed.showSpeed !== undefined) {
+          const el = document.getElementById('optShowSpeed');
+          if (el) el.checked = Boolean(parsed.showSpeed);
+        }
+      }
+    }
+  } catch (e) {}
+}
+
+function mergeCloudPersonalVodConfig(cfg) {
+  if (!cfg || typeof cfg !== 'object') return;
+  if (cfg.metrics && typeof cfg.metrics === 'object') {
+    for (const [k, v] of Object.entries(cfg.metrics)) {
+      const rk = stripSiteKeyMaskClient(k);
+      if (!rk || !v) continue;
+      const local = personalVodMetrics[rk];
+      if (!local || Number(v.updatedAt || 0) > Number(local.updatedAt || 0)) {
+        personalVodMetrics[rk] = {
+          webState: v.webState || 'idle',
+          speedMBs: Number(v.speedMBs || 0),
+          latencyMs: Number(v.latencyMs || 9999),
+          probeMs: Number(v.probeMs || 9999),
+          updatedAt: Number(v.updatedAt || 0)
+        };
+      }
+    }
+  }
+  if (Array.isArray(cfg.order) && cfg.order.length > 0) {
+    personalSavedTvOrder = cfg.order.map(stripSiteKeyMaskClient);
+  }
+  if (Array.isArray(cfg.webOrder) && cfg.webOrder.length > 0) {
+    personalSavedWebOrder = cfg.webOrder.map(stripSiteKeyMaskClient);
+  }
+  if (cfg.tagRank !== undefined) {
+    const el = document.getElementById('optTagRank');
+    if (el) el.checked = Boolean(cfg.tagRank);
+  }
+  if (cfg.showSpeed !== undefined) {
+    const el = document.getElementById('optShowSpeed');
+    if (el) el.checked = Boolean(cfg.showSpeed);
+  }
+  persistPersonalVodState();
+  renderSiteList();
+  if (activeVodMovie) {
+    resortActiveMovieSourcesForWeb();
+    renderVodLinePillsOnly();
+  }
+}
+
+// 网页端个人排序：实测流畅均速(降序) > 静默探测支持网页跨域(延迟升序) > 未测 > 网页跨域受限(沉底不删) > 超时(沉底不删)
+function compareForWeb(rawA, rawB, defRankA = 9999, defRankB = 9999) {
+  const mA = getSiteMetric(rawA);
+  const mB = getSiteMetric(rawB);
+  const tierOf = (m) => {
+    if (m.webState === 'ok') return 1;
+    if (m.webState === 'web_ready') return 2;
+    if (m.webState === 'idle') return 3;
+    if (m.webState === 'cors') return 4;
+    return 5;
+  };
+  const tA = tierOf(mA);
+  const tB = tierOf(mB);
+  if (tA !== tB) return tA - tB;
+
+  if (tA === 1) {
+    if ((mB.speedMBs || 0) !== (mA.speedMBs || 0)) return (mB.speedMBs || 0) - (mA.speedMBs || 0);
+    if ((mA.latencyMs || 9999) !== (mB.latencyMs || 9999)) return (mA.latencyMs || 9999) - (mB.latencyMs || 9999);
+  }
+  if (tA === 2 || tA === 4) {
+    if ((mA.probeMs || 9999) !== (mB.probeMs || 9999)) return (mA.probeMs || 9999) - (mB.probeMs || 9999);
+  }
+  const savedIdxA = personalSavedWebOrder.indexOf(rawA);
+  const savedIdxB = personalSavedWebOrder.indexOf(rawB);
+  if (savedIdxA >= 0 && savedIdxB >= 0 && savedIdxA !== savedIdxB) return savedIdxA - savedIdxB;
+  return defRankA - defRankB;
+}
+
+// TVBox 端个人排序：实测均速(降序) > 网络连通站[含网页CORS受限的国内大站!](延迟升序) > 未测 > 真超时站(沉底不删)
+function compareForTvBox(rawA, rawB, defRankA = 9999, defRankB = 9999) {
+  const mA = getSiteMetric(rawA);
+  const mB = getSiteMetric(rawB);
+  const tierOf = (m) => {
+    if (m.speedMBs > 0) return 1;
+    if (m.webState === 'ok' || m.webState === 'web_ready' || m.webState === 'cors') return 2;
+    if (m.webState === 'idle') return 3;
+    return 4;
+  };
+  const tA = tierOf(mA);
+  const tB = tierOf(mB);
+  if (tA !== tB) return tA - tB;
+
+  if (tA === 1) {
+    if ((mB.speedMBs || 0) !== (mA.speedMBs || 0)) return (mB.speedMBs || 0) - (mA.speedMBs || 0);
+    return (mA.latencyMs || 9999) - (mB.latencyMs || 9999);
+  }
+  if (tA === 2) {
+    const latA = (mA.probeMs < 9000 ? mA.probeMs : mA.latencyMs) || 9999;
+    const latB = (mB.probeMs < 9000 ? mB.probeMs : mB.latencyMs) || 9999;
+    if (latA !== latB) return latA - latB;
+  }
+  const savedIdxA = personalSavedTvOrder.indexOf(rawA);
+  const savedIdxB = personalSavedTvOrder.indexOf(rawB);
+  if (savedIdxA >= 0 && savedIdxB >= 0 && savedIdxA !== savedIdxB) return savedIdxA - savedIdxB;
+  return defRankA - defRankB;
+}
+
+function getSortedSitesForView(viewMode = 'web') {
+  const cmp = viewMode === 'tvbox' ? compareForTvBox : compareForWeb;
+  return [...currentSites].sort((a, b) => cmp(a.rawKey, b.rawKey, a.defaultRank || 9999, b.defaultRank || 9999));
+}
+
+function persistPersonalVodState() {
+  try {
+    const tvList = getSortedSitesForView('tvbox').map(s => s.rawKey);
+    const webList = getSortedSitesForView('web').map(s => s.rawKey);
+    const payload = {
+      v: 2,
+      order: tvList,
+      webOrder: webList,
+      metrics: personalVodMetrics,
+      tagRank: document.getElementById('optTagRank')?.checked ?? true,
+      showSpeed: document.getElementById('optShowSpeed')?.checked ?? false
+    };
+    localStorage.setItem(PERSONAL_VOD_STORAGE_KEY, JSON.stringify(payload));
+  } catch (e) {}
 }
 
 function renderSiteList() {
   const box = document.getElementById('siteList');
   if (!box) return;
-  let validRank = 0;
-  box.innerHTML = currentSites.map((site, idx) => {
-    if (site.status === 'ok' || site._hasSavedRank) validRank++;
-    const rankNum = (site.status === 'ok' || site._hasSavedRank) ? validRank : idx + 1;
-    const title = formatSiteTitle(site, rankNum);
-    const modeTag = getWebStatusTagHtml(site.webStatus);
-    let metricHtml = '<span class="muted-sm">待测</span>';
-    if (site.status === 'testing') metricHtml = '<span style="color:#3b82f6;">测速中</span>';
-    else if (site.status === 'ok') {
-      const cls = site.speedMBs >= 3 ? 'speed-fast' : (site.speedMBs >= 1 ? 'speed-mid' : 'speed-slow');
-      metricHtml = `<div class="speed-val ${cls}">${site.speedMBs > 0 ? site.speedMBs.toFixed(1) + 'M/s' : '可用'}</div><div class="muted-sm">${site.latency || '-'}ms</div>`;
-    } else if (site.status === 'failed') metricHtml = '<span class="speed-slow">超时</span>';
+  const list = getSortedSitesForView(activeSiteRankView);
+  const tagRank = document.getElementById('optTagRank')?.checked ?? true;
+  const showSpeed = document.getElementById('optShowSpeed')?.checked ?? false;
 
-    const badgeClass = (site.status === 'ok' && validRank <= 3) ? 'rank-badge top3' : 'rank-badge';
-    const badgeText = String(rankNum).padStart(2, '0');
-    return `<div class="site-card ${site.status || ''}"><div class="site-title"><span class="${badgeClass}">${badgeText}</span><span>${escapeHtml(title)}${modeTag}</span></div><div class="site-metrics">${metricHtml}</div></div>`;
+  let webOkCnt = 0, corsCnt = 0, timeoutCnt = 0;
+  list.forEach(s => {
+    const m = getSiteMetric(s.rawKey);
+    if (m.webState === 'ok' || m.webState === 'web_ready') webOkCnt++;
+    else if (m.webState === 'cors') corsCnt++;
+    else if (m.webState === 'timeout') timeoutCnt++;
+  });
+
+  const badge = document.getElementById('speedModeBadge');
+  if (badge && !silentCalibrationRunning) {
+    badge.textContent = `全部 ${list.length} 条路线 · 网页可播 ${webOkCnt} · 仅电视 ${corsCnt}${timeoutCnt > 0 ? ' · 超时 ' + timeoutCnt : ''}`;
+  }
+
+  let rankSeq = 0;
+  box.innerHTML = list.map((site, idx) => {
+    const m = getSiteMetric(site.rawKey);
+    const base = cleanBaseSiteName(site.name);
+    const isMeasured = m.webState !== 'idle';
+    const isTopGood = activeSiteRankView === 'tvbox'
+      ? (m.webState !== 'timeout')
+      : (m.webState === 'ok' || m.webState === 'web_ready');
+
+    if (isTopGood) rankSeq++;
+    const rankNum = isTopGood ? rankSeq : (idx + 1);
+    let title = (tagRank && isTopGood && isMeasured) ? `${base}${String(rankNum).padStart(2, '0')}` : base;
+    if (showSpeed && m.speedMBs > 0) title += ` [${m.speedMBs.toFixed(1)}M]`;
+
+    let tagHtml = '<span class="site-mode-tag unknown">待测</span>';
+    let cardCls = '';
+    let metricHtml = '<span class="muted-sm">待校准</span>';
+
+    if (m.webState === 'ok') {
+      tagHtml = '<span class="site-mode-tag web">🌐网页+电视</span>';
+      cardCls = 'ok';
+      const spdCls = m.speedMBs >= 3 ? 'speed-fast' : (m.speedMBs >= 1 ? 'speed-mid' : 'speed-slow');
+      const latTxt = m.latencyMs < 9000 ? `${m.latencyMs}ms` : '';
+      metricHtml = `<div class="speed-val ${spdCls}">${m.speedMBs > 0 ? m.speedMBs.toFixed(1) + 'M/s' : '流畅'}</div><div class="muted-sm">${latTxt}</div>`;
+    } else if (m.webState === 'web_ready') {
+      tagHtml = '<span class="site-mode-tag ready">🌐网页+电视</span>';
+      cardCls = 'ok';
+      metricHtml = `<div class="speed-val speed-mid">${m.probeMs < 9000 ? m.probeMs + 'ms' : '连通'}</div><div class="muted-sm">看片测均速</div>`;
+    } else if (m.webState === 'cors') {
+      tagHtml = '<span class="site-mode-tag cors">📺电视畅看</span>';
+      cardCls = activeSiteRankView === 'tvbox' ? 'ok' : '';
+      metricHtml = `<div class="speed-val ${activeSiteRankView === 'tvbox' ? 'speed-mid' : ''}" style="${activeSiteRankView === 'tvbox' ? '' : 'color:#94a3b8;'}">${m.probeMs < 9000 ? m.probeMs + 'ms' : '电视可用'}</div><div class="muted-sm">网页跨域受限</div>`;
+    } else if (m.webState === 'timeout') {
+      tagHtml = '<span class="site-mode-tag timeout">连接超时</span>';
+      cardCls = 'failed';
+      metricHtml = '<span class="speed-slow">超时</span>';
+    }
+
+    const badgeClass = (isTopGood && rankNum <= 3 && isMeasured) ? 'rank-badge top3' : 'rank-badge';
+    const badgeText = String(idx + 1).padStart(2, '0');
+    return `<div class="site-card ${cardCls}"><div class="site-title"><span class="${badgeClass}">${badgeText}</span><span>${escapeHtml(title)}${tagHtml}</span></div><div class="site-metrics">${metricHtml}</div></div>`;
   }).join('');
+}
+
+// 后台静默轻量校准：只用热播片单里的 CDN .m3u8 地址，绝不泄露采集站域名，不伪造 MB/s，精准区分「网页可播 / 电视可用(CORS) / 真超时」
+async function probeSingleStreamConnectivity(streamUrl) {
+  const sep = streamUrl.includes('?') ? '&' : '?';
+  const testUrl = `${streamUrl}${sep}_p=${Date.now()}`;
+  const t0 = performance.now();
+  try {
+    const resp = await fetch(testUrl, { mode: 'cors', cache: 'no-store', signal: AbortSignal.timeout(2800) });
+    const ms = Math.max(15, Math.round(performance.now() - t0));
+    if (resp.ok) {
+      return { state: 'web_ready', probeMs: ms };
+    }
+    return { state: 'cors', probeMs: ms };
+  } catch (err) {
+    if (err && err.name === 'TimeoutError') {
+      return { state: 'timeout', probeMs: 9999 };
+    }
+    const t1 = performance.now();
+    try {
+      await fetch(testUrl, { mode: 'no-cors', cache: 'no-store', signal: AbortSignal.timeout(3000) });
+      const ms2 = Math.max(15, Math.round(performance.now() - t1));
+      return { state: 'cors', probeMs: ms2 };
+    } catch (err2) {
+      return { state: 'timeout', probeMs: 9999 };
+    }
+  }
+}
+
+async function scheduleSilentSiteCalibration(force = false) {
+  if (silentCalibrationRunning) return;
+  if (!force && Date.now() - silentCalibrationDoneTs < 6 * 3600 * 1000 && Object.keys(personalVodMetrics).length > 0) {
+    return;
+  }
+  if (!Array.isArray(vodHotMovies) || vodHotMovies.length === 0 || currentSites.length === 0) return;
+
+  const sampleUrlMap = new Map();
+  for (const m of vodHotMovies) {
+    for (const src of (m.sources || [])) {
+      const rk = src.rawKey || stripSiteKeyMaskClient(src.siteKey);
+      const firstEp = src.episodes?.[0]?.url;
+      if (rk && firstEp && !sampleUrlMap.has(rk)) {
+        sampleUrlMap.set(rk, firstEp);
+      }
+    }
+  }
+
+  const now = Date.now();
+  const targets = currentSites.filter(s => {
+    if (!sampleUrlMap.has(s.rawKey)) return false;
+    if (force) return true;
+    const m = getSiteMetric(s.rawKey);
+    if (m.webState === 'ok' && m.speedMBs > 0 && (now - m.updatedAt < 6 * 3600 * 1000)) return false;
+    return m.webState === 'idle' || (now - m.updatedAt > 6 * 3600 * 1000);
+  });
+
+  if (targets.length === 0) return;
+
+  silentCalibrationRunning = true;
+  const badge = document.getElementById('speedModeBadge');
+  const reprobeBtn = document.getElementById('reprobeLatencyBtn');
+  if (reprobeBtn) { reprobeBtn.disabled = true; reprobeBtn.textContent = '⏳ 校准中...'; }
+
+  let done = 0;
+  const queue = [...targets];
+  const worker = async () => {
+    while (queue.length > 0) {
+      const site = queue.shift();
+      const url = sampleUrlMap.get(site.rawKey);
+      if (!url) continue;
+      const res = await probeSingleStreamConnectivity(url);
+      const prev = getSiteMetric(site.rawKey);
+      if (res.state === 'web_ready') {
+        setSiteMetric(site.rawKey, {
+          webState: prev.webState === 'ok' ? 'ok' : 'web_ready',
+          probeMs: res.probeMs
+        });
+      } else if (res.state === 'cors') {
+        setSiteMetric(site.rawKey, {
+          webState: 'cors',
+          speedMBs: 0,
+          probeMs: res.probeMs
+        });
+      } else {
+        setSiteMetric(site.rawKey, {
+          webState: 'timeout',
+          speedMBs: 0,
+          probeMs: 9999
+        });
+      }
+      done++;
+      if (badge) badge.textContent = `⚡ 静默校准您家宽带延迟 (${done}/${targets.length})...`;
+      renderSiteList();
+    }
+  };
+
+  try {
+    await Promise.all([worker(), worker(), worker()]);
+    silentCalibrationDoneTs = Date.now();
+    persistPersonalVodState();
+    autoSyncUserOrderQuietly();
+    if (activeVodMovie) {
+      resortActiveMovieSourcesForWeb();
+      renderVodLinePillsOnly();
+    }
+    if (force) showToast('✅ 已按您当前宽带完成全平台延迟校准并排序！', 2800);
+  } finally {
+    silentCalibrationRunning = false;
+    if (reprobeBtn) { reprobeBtn.disabled = false; reprobeBtn.textContent = '🔄 校准延迟'; }
+    renderSiteList();
+  }
 }
 
 async function saveCustomOrder() {
   const token = localStorage.getItem('tvbox_token');
-  if (!token) { showToast('请先登录后再保存排序'); openAuthModal(true); return; }
-  const hideFailed = document.getElementById('optHideFailed')?.checked ?? true;
+  if (!token) { showToast('请先登录后再同步个人排序到云端'); openAuthModal(false); return; }
   const tagRank = document.getElementById('optTagRank')?.checked ?? true;
-  const siteOrder = currentSites.filter(s => !(hideFailed && s.status === 'failed')).map(s => s.key);
+  const showSpeed = document.getElementById('optShowSpeed')?.checked ?? false;
+  const siteOrder = getSortedSitesForView('tvbox').map(s => s.rawKey);
+  const webOrder = getSortedSitesForView('web').map(s => s.rawKey);
+  persistPersonalVodState();
+
   const res = await fetch(API_BASE + '/api/save-order', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-    body: JSON.stringify({ siteOrder, tagRank, hideFailed })
+    body: JSON.stringify({ siteOrder, webOrder, metrics: personalVodMetrics, tagRank, showSpeed })
   });
   const data = await res.json();
   showToast(data.message || data.error, 3200);
@@ -1413,7 +1734,7 @@ function switchNextLiveSource() {
   playFreeLiveChannel(gIdx, cIdx, nextIdx, true);
 }
 
-// ================= 点播页：内嵌式播放 + 众包实测网页/TVBox归类 + 自动测速排序(路线A01) =================
+// ================= 点播页：内嵌式播放 + 个人实测均速排序 + 跨域无感自动接力 =================
 let vodHotMovies = [];
 let vodSearchResults = [];
 let vodSearchMode = false;
@@ -1429,8 +1750,6 @@ let vodLoadTimer = null;
 let autoSaveOrderTimer = null;
 
 const vodSpeedSamplesMap = new Map();
-const reportedWebStatusSession = new Map();
-const SMART_ORDER_STORAGE_KEY = 'tvbox_smart_vod_order_v1';
 
 function isVodMemberActive() {
   return Boolean(currentUser && Number(currentUser.vod_expire_at || 0) > Date.now());
@@ -1440,52 +1759,10 @@ function updateVodPreviewRuleText() {
   const el = document.getElementById('vodPreviewRuleText');
   if (!el) return;
   if (vodPreviewMinutes > 0) {
-    el.textContent = `点击海报在上方展开播放（播放后自动测速并按 路线A01 排序）· 游客可试看前 ${vodPreviewMinutes} 分钟，有效会员不限时`;
+    el.textContent = `点击海报在上方展开播放，全平台完整保留，自动按您家宽带均速排序（如 路线D01）· 游客试看前 ${vodPreviewMinutes} 分钟，会员不限时`;
   } else {
-    el.textContent = '点击海报在上方展开播放，自动剔除仅 TVBox 源并按实测网速智能排序';
+    el.textContent = '点击海报在上方展开播放，全平台完整保留，自动按您家宽带均速排序';
   }
-}
-
-function persistLocalSmartVodOrder() {
-  try {
-    const data = {
-      order: currentSites.map(s => s.key),
-      metrics: {}
-    };
-    currentSites.forEach(s => {
-      if (s.status === 'ok' && (s.speedMBs > 0 || s.latency < 9000)) {
-        data.metrics[s.key] = { speedMBs: Number(s.speedMBs || 0), latency: Number(s.latency || 9999) };
-      }
-    });
-    localStorage.setItem(SMART_ORDER_STORAGE_KEY, JSON.stringify(data));
-  } catch (e) {}
-}
-
-function applyLocalSmartVodOrder() {
-  try {
-    const raw = localStorage.getItem(SMART_ORDER_STORAGE_KEY);
-    if (!raw) return;
-    const saved = JSON.parse(raw);
-    const order = Array.isArray(saved.order) ? saved.order : [];
-    const metrics = saved.metrics || {};
-    if (order.length === 0) return;
-
-    const orderMap = new Map(order.map((k, i) => [k, i]));
-    currentSites.forEach(s => {
-      if (orderMap.has(s.key)) s._hasSavedRank = true;
-      const m = metrics[s.key];
-      if (m && s.status === 'idle') {
-        s.status = 'ok';
-        s.speedMBs = Number(m.speedMBs || 0);
-        s.latency = Number(m.latency || 9999);
-      }
-    });
-    currentSites.sort((a, b) => {
-      const ia = orderMap.has(a.key) ? orderMap.get(a.key) : 9999;
-      const ib = orderMap.has(b.key) ? orderMap.get(b.key) : 9999;
-      return ia - ib;
-    });
-  } catch (e) {}
 }
 
 function autoSyncUserOrderQuietly() {
@@ -1494,67 +1771,18 @@ function autoSyncUserOrderQuietly() {
   clearTimeout(autoSaveOrderTimer);
   autoSaveOrderTimer = setTimeout(async () => {
     try {
-      const hideFailed = document.getElementById('optHideFailed')?.checked ?? true;
       const tagRank = document.getElementById('optTagRank')?.checked ?? true;
-      const siteOrder = currentSites.filter(s => !(hideFailed && s.status === 'failed')).map(s => s.key);
+      const showSpeed = document.getElementById('optShowSpeed')?.checked ?? false;
+      const siteOrder = getSortedSitesForView('tvbox').map(s => s.rawKey);
+      const webOrder = getSortedSitesForView('web').map(s => s.rawKey);
       if (siteOrder.length === 0) return;
       await fetch(API_BASE + '/api/save-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-        body: JSON.stringify({ siteOrder, tagRank, hideFailed })
+        body: JSON.stringify({ siteOrder, webOrder, metrics: personalVodMetrics, tagRank, showSpeed })
       });
     } catch (e) {}
-  }, 2500);
-}
-
-// 众包上报：某平台在真实浏览器播放成功/失败后，实时同步给后端，全站所有用户共享归类
-const reportedSpeedSession = new Set();
-
-async function reportSiteWebPlayability(siteKey, playable, speedMBs = 0, latencyMs = 0) {
-  if (!siteKey) return;
-  const newStatus = playable ? 'web' : 'tvbox';
-  const g = currentSites.find(s => s.key === siteKey);
-  if (g) {
-    g.webStatus = newStatus;
-    if (!playable) {
-      currentSites = currentSites.filter(x => x.key !== siteKey);
-    }
-    renderSiteList();
-  }
-
-  const hasSpeed = playable && Number(speedMBs) >= 0.05;
-  if (!hasSpeed && reportedWebStatusSession.get(siteKey) === newStatus) return;
-  if (hasSpeed && reportedSpeedSession.has(siteKey)) return;
-  reportedWebStatusSession.set(siteKey, newStatus);
-  if (hasSpeed) reportedSpeedSession.add(siteKey);
-
-  if (!playable) {
-    [vodHotMovies, vodSearchResults].forEach(list => {
-      list.forEach(m => {
-        if (Array.isArray(m.sources)) {
-          const before = m.sources.length;
-          m.sources = m.sources.filter(src => src.siteKey !== siteKey);
-          if (m.sources.length < before) {
-            m.tvboxOnlyCount = (m.tvboxOnlyCount || 0) + (before - m.sources.length);
-          }
-        }
-      });
-    });
-    renderVodHotGrid();
-  }
-
-  try {
-    await fetch(API_BASE + '/api/vod-web-report', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        siteKey,
-        playable: Boolean(playable),
-        speedMBs: hasSpeed ? Number(Number(speedMBs).toFixed(2)) : 0,
-        latencyMs: Number(latencyMs || 0)
-      })
-    });
-  } catch (e) {}
+  }, 2600);
 }
 
 function getCurrentVodList() {
@@ -1580,7 +1808,7 @@ function renderVodHotGrid() {
   const list = getCurrentVodList();
   if (!Array.isArray(list) || list.length === 0) {
     if (vodSearchMode) {
-      grid.innerHTML = '<div class="card muted-sm" style="grid-column:1/-1;text-align:center;padding:28px;">未搜到匹配的可播影片，请尝试缩短或更换关键词（如只输片名核心字）</div>';
+      grid.innerHTML = '<div class="card muted-sm" style="grid-column:1/-1;text-align:center;padding:28px;">未搜到匹配的影片，请尝试缩短或更换关键词（如只输片名核心字）</div>';
     }
     return;
   }
@@ -1589,14 +1817,14 @@ function renderVodHotGrid() {
     const rateBadge = m.rate ? `⭐ ${m.rate}` : (m.remarks || '');
     const cls = classifyMovieTypeClient(m);
     const isPlaying = idx === activeVodMovieIdx;
-    const webCnt = (m.sources || []).length;
+    const totalCnt = (m.sources || []).length;
     return `
     <div class="vod-card ${isPlaying ? 'playing' : ''}" onclick="openVodMovie(${idx})">
       <div class="vod-poster-wrap">
         <img src="${escapeHtml(m.pic)}" alt="${escapeHtml(m.title)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.opacity='0.2'">
         ${isPlaying ? '<span class="vod-playing-pill">▶ 正在播放</span>' : ''}
         ${rateBadge ? `<span class="vod-remarks-tag">${escapeHtml(rateBadge)}</span>` : ''}
-        <span class="vod-lines-tag">🌐 ${webCnt}条网页路线</span>
+        <span class="vod-lines-tag">⚡ ${totalCnt}条路线</span>
       </div>
       <div class="vod-card-info">
         <div class="vod-card-title" title="${escapeHtml(m.title)}">${escapeHtml(m.title)}</div>
@@ -1615,7 +1843,6 @@ async function runVodSearch() {
     return;
   }
 
-  // 方案 1：必须登录才能搜索（引导免费登录/注册领试用）
   const token = localStorage.getItem('tvbox_token');
   if (!token) {
     showToast(`登录后即可全网搜片与短剧（注册即送 ${currentTrialDays} 天免费试用）`, 3200);
@@ -1631,7 +1858,7 @@ async function runVodSearch() {
 
   if (btn) { btn.disabled = true; btn.textContent = '搜片中...'; }
   if (grid) {
-    grid.innerHTML = `<div class="card muted-sm" style="grid-column:1/-1;text-align:center;padding:28px;">🔍 正在并发检索全网高速路线，查找「${escapeHtml(wd)}」...</div>`;
+    grid.innerHTML = `<div class="card muted-sm" style="grid-column:1/-1;text-align:center;padding:28px;">🔍 正在全平台并发检索「${escapeHtml(wd)}」...</div>`;
   }
 
   try {
@@ -1664,7 +1891,7 @@ async function runVodSearch() {
     if (banner) banner.classList.remove('hidden');
     if (bannerTxt) {
       const cacheTag = data.cached ? ' · 秒级缓存' : '';
-      bannerTxt.textContent = `🔍 「${wd}」共找到 ${vodSearchResults.length} 部可播影片/短剧${cacheTag}`;
+      bannerTxt.textContent = `🔍 「${wd}」共找到 ${vodSearchResults.length} 部影片/短剧（全平台完整收录）${cacheTag}`;
     }
     renderVodHotGrid();
   } catch (e) {
@@ -1703,29 +1930,29 @@ async function loadVodHotMovies() {
     }
     vodHotMovies = data.movies;
     renderVodHotGrid();
+    if (document.getElementById('view-speed')?.classList.contains('active')) {
+      scheduleSilentSiteCalibration(false);
+    }
   } catch (e) {
     grid.innerHTML = '<div class="card muted-sm" style="grid-column:1/-1;text-align:center;padding:24px;">热门影片加载失败，请稍后刷新</div>';
   }
 }
 
-function getSortedMovieSources(movie) {
-  const rankMap = new Map();
-  const speedMap = new Map();
-  currentSites.forEach((s, i) => {
-    rankMap.set(s.key, i);
-    if (s.status === 'ok' && s.speedMBs > 0) speedMap.set(s.key, s.speedMBs);
-  });
+function getSortedMovieSourcesForWeb(movie) {
   return [...(movie.sources || [])]
-    .filter(src => {
-      const g = currentSites.find(x => x.key === src.siteKey);
-      return !(g && g.webStatus === 'tvbox');
-    })
-    .map(src => ({
+    .map((src, idx) => ({
       ...src,
-      _rank: rankMap.has(src.siteKey) ? rankMap.get(src.siteKey) : 9999,
-      _speedMBs: speedMap.get(src.siteKey) || 0
+      rawKey: src.rawKey || stripSiteKeyMaskClient(src.siteKey),
+      _defaultRank: Number(src.defaultRank || (idx + 1))
     }))
-    .sort((a, b) => a._rank - b._rank);
+    .sort((a, b) => compareForWeb(a.rawKey, b.rawKey, a._defaultRank, b._defaultRank));
+}
+
+function resortActiveMovieSourcesForWeb() {
+  if (!activeVodMovie || !Array.isArray(activeVodMovie.sortedSources)) return;
+  activeVodMovie.sortedSources.sort((a, b) => compareForWeb(a.rawKey, b.rawKey, a._defaultRank || 9999, b._defaultRank || 9999));
+  const newIdx = activeVodMovie.sortedSources.findIndex(s => s.siteKey === activeVodSiteKey);
+  if (newIdx >= 0) activeVodSourceIdx = newIdx;
 }
 
 function inspectRealNetworkTransfer(fragUrl, fallbackBytes, fallbackMs) {
@@ -1755,12 +1982,13 @@ function inspectRealNetworkTransfer(fragUrl, fallbackBytes, fallbackMs) {
   return { valid: true, speedMBs, realBytes, realMs: safeMs };
 }
 
-function recordVodNetworkSample(siteKey, speedMBs, latencyMs, weight = 1.0, isSeek = false) {
-  if (!siteKey) return;
-  let bucket = vodSpeedSamplesMap.get(siteKey);
+function recordVodNetworkSample(rawKey, speedMBs, latencyMs, weight = 1.0, isSeek = false) {
+  const rk = stripSiteKeyMaskClient(rawKey);
+  if (!rk) return;
+  let bucket = vodSpeedSamplesMap.get(rk);
   if (!bucket) {
     bucket = { samples: [], avgSpeedMBs: 0, avgLatencyMs: 9999 };
-    vodSpeedSamplesMap.set(siteKey, bucket);
+    vodSpeedSamplesMap.set(rk, bucket);
   }
   bucket.samples.push({
     speedMBs: Number(speedMBs),
@@ -1786,59 +2014,15 @@ function recordVodNetworkSample(siteKey, speedMBs, latencyMs, weight = 1.0, isSe
   bucket.avgSpeedMBs = wSum > 0 ? (spdSum / wSum) : speedMBs;
   bucket.avgLatencyMs = wSum > 0 ? Math.round(latSum / wSum) : Math.round(latencyMs);
 
-  // 采样达到 2 个切片或拖动冷启动切片时，将真实均速上报给全站作为整站默认测速基准
-  if (bucket.samples.length >= 2 || isSeek) {
-    reportSiteWebPlayability(siteKey, true, bucket.avgSpeedMBs, bucket.avgLatencyMs);
-  }
-  syncVodSpeedToGlobalSites(siteKey, 'ok', bucket.avgSpeedMBs, bucket.avgLatencyMs, false);
-}
-
-function syncVodSpeedToGlobalSites(siteKey, status, speedMBs, latency, resortModal = false) {
-  const target = currentSites.find(s => s.key === siteKey);
-  if (target) {
-    target.status = status;
-    target._hasSavedRank = true;
-    target.speedMBs = status === 'ok' ? Number(speedMBs || 0) : 0;
-    target.latency = status === 'ok' ? Math.round(Number(latency || 0)) : 9999;
-    currentSites.sort((a, b) => {
-      if (a.status === 'ok' && b.status !== 'ok') return -1;
-      if (a.status !== 'ok' && b.status === 'ok') return 1;
-      if (a.status === 'failed' && b.status !== 'failed') return 1;
-      if (a.status !== 'failed' && b.status === 'failed') return -1;
-      if (b.speedMBs !== a.speedMBs) return b.speedMBs - a.speedMBs;
-      return (a.latency || 9999) - (b.latency || 9999);
-    });
-    persistLocalSmartVodOrder();
-    autoSyncUserOrderQuietly();
-    renderSiteList();
-  }
-  if (activeVodMovie && Array.isArray(activeVodMovie.sortedSources)) {
-    const src = activeVodMovie.sortedSources.find(s => s.siteKey === siteKey);
-    if (src) {
-      src._status = status;
-      src._speedMBs = status === 'ok' ? Number(speedMBs || 0) : 0;
-      src._latency = status === 'ok' ? Math.round(Number(latency || 0)) : 9999;
-    }
-    if (resortModal) sortActiveVodSources();
-    renderVodLinePillsOnly();
-  }
-}
-
-function sortActiveVodSources() {
-  if (!activeVodMovie || !Array.isArray(activeVodMovie.sortedSources)) return;
-  activeVodMovie.sortedSources.sort((a, b) => {
-    const aOk = a._status === 'ok' ? 1 : 0;
-    const bOk = b._status === 'ok' ? 1 : 0;
-    if (aOk !== bOk) return bOk - aOk;
-    const aFail = a._status === 'failed' ? 1 : 0;
-    const bFail = b._status === 'failed' ? 1 : 0;
-    if (aFail !== bFail) return aFail - bFail;
-    if ((b._speedMBs || 0) !== (a._speedMBs || 0)) return (b._speedMBs || 0) - (a._speedMBs || 0);
-    if ((a._latency || 9999) !== (b._latency || 9999)) return (a._latency || 9999) - (b._latency || 9999);
-    return (a._rank || 9999) - (b._rank || 9999);
+  setSiteMetric(rk, {
+    webState: 'ok',
+    speedMBs: Number(bucket.avgSpeedMBs.toFixed(2)),
+    latencyMs: bucket.avgLatencyMs
   });
-  const newIdx = activeVodMovie.sortedSources.findIndex(s => s.siteKey === activeVodSiteKey);
-  if (newIdx >= 0) activeVodSourceIdx = newIdx;
+  persistPersonalVodState();
+  autoSyncUserOrderQuietly();
+  renderSiteList();
+  renderVodLinePillsOnly();
 }
 
 function renderVodLinePillsOnly() {
@@ -1847,33 +2031,56 @@ function renderVodLinePillsOnly() {
   const lineBox = document.getElementById('vodLinePills');
   if (!lineBox) return;
 
-  let okRank = 0;
+  const tagRank = document.getElementById('optTagRank')?.checked ?? true;
+  let webRank = 0;
+  let corsCount = 0;
+
   lineBox.innerHTML = sources.map((s) => {
     const isCur = s.siteKey === activeVodSiteKey;
-    const bucket = vodSpeedSamplesMap.get(s.siteKey);
-    const sampleCnt = bucket ? bucket.samples.length : 0;
+    const m = getSiteMetric(s.rawKey);
+    const bucket = vodSpeedSamplesMap.get(s.rawKey);
     const baseName = cleanBaseSiteName(s.siteName);
+
     let displayTitle = baseName;
     let tag = '';
     let extraCls = '';
 
-    if (s._status === 'testing') {
-      tag = ' · 测速中…';
-    } else if (s._status === 'seeking') {
-      okRank++;
-      displayTitle = `${baseName}${String(okRank).padStart(2, '0')}`;
-      tag = s._speedMBs > 0 ? ` · ${s._speedMBs.toFixed(1)}M/s(校准中)` : ' · 拖动测速中…';
-    } else if (s._status === 'ok') {
-      okRank++;
-      displayTitle = `${baseName}${String(okRank).padStart(2, '0')}`;
-      tag = s._speedMBs > 0 ? ` · ${s._speedMBs.toFixed(1)}M/s` : (s._latency < 9000 ? ` · ${s._latency}ms` : ' · 网页可播');
-    } else if (s._status === 'failed') {
-      tag = ' · 已归为TVBox';
+    if (s._liveState === 'testing') {
+      tag = ' · 连接中…';
+    } else if (s._liveState === 'seeking') {
+      webRank++;
+      if (tagRank) displayTitle = `${baseName}${String(webRank).padStart(2, '0')}`;
+      tag = m.speedMBs > 0 ? ` · ${m.speedMBs.toFixed(1)}M/s(校准中)` : ' · 拖动测速中…';
+    } else if (m.webState === 'ok') {
+      webRank++;
+      if (tagRank) displayTitle = `${baseName}${String(webRank).padStart(2, '0')}`;
+      tag = m.speedMBs > 0 ? ` · ${m.speedMBs.toFixed(1)}M/s` : (m.latencyMs < 9000 ? ` · ${m.latencyMs}ms` : ' · 流畅');
+    } else if (m.webState === 'web_ready') {
+      webRank++;
+      if (tagRank) displayTitle = `${baseName}${String(webRank).padStart(2, '0')}`;
+      tag = m.probeMs < 9000 ? ` · ${m.probeMs}ms` : ' · 网页可播';
+    } else if (m.webState === 'cors') {
+      corsCount++;
+      tag = ' · 📺仅电视';
+      extraCls = ' cors-only';
+    } else if (m.webState === 'timeout') {
+      tag = ' · 超时';
       extraCls = ' failed';
     }
-    const titleHint = sampleCnt > 0 ? `已采样 ${sampleCnt} 个真实网络切片（已剔除本地缓存）` : '点击播放自动测速并按快慢编号';
-    return `<button type="button" title="${titleHint}" class="live-ch-pill ${isCur ? 'active' : ''}${extraCls}" onclick="selectVodSourceByKey('${escapeHtml(s.siteKey)}')">${escapeHtml(displayTitle)}${tag}</button>`;
+
+    const hint = bucket && bucket.samples.length > 0
+      ? `个人已采样 ${bucket.samples.length} 个真实网络切片（已剔除本地缓存）`
+      : (m.webState === 'cors' ? '浏览器跨域受限，导入 TVBox 电视端可直接畅看' : '点击播放自动按您家宽带测速排序');
+
+    return `<button type="button" title="${hint}" class="live-ch-pill ${isCur ? 'active' : ''}${extraCls}" onclick="selectVodSourceByKey('${escapeHtml(s.siteKey)}', true)">${escapeHtml(displayTitle)}${tag}</button>`;
   }).join('');
+
+  const tvHint = document.getElementById('vodTvboxOnlyHint');
+  if (tvHint) {
+    tvHint.textContent = corsCount > 0
+      ? `共 ${sources.length} 条路线（末尾 ${corsCount} 条浏览器受限，TVBox 电视端全部可用）`
+      : `共 ${sources.length} 条路线（均已按您家宽带排序）`;
+  }
 }
 
 function openVodMovie(idx) {
@@ -1883,33 +2090,18 @@ function openVodMovie(idx) {
   if (!m) return;
   activeVodMovieIdx = idx;
 
-  const sources = getSortedMovieSources(m).map(s => {
-    const g = currentSites.find(x => x.key === s.siteKey);
-    const bucket = vodSpeedSamplesMap.get(s.siteKey);
-    return {
-      ...s,
-      _status: bucket ? 'ok' : (g?.status || 'idle'),
-      _speedMBs: bucket ? bucket.avgSpeedMBs : (g?.speedMBs || 0),
-      _latency: bucket ? bucket.avgLatencyMs : (g?.latency || 9999)
-    };
-  });
+  const sources = getSortedMovieSourcesForWeb(m);
   activeVodMovie = { ...m, sortedSources: sources };
-  sortActiveVodSources();
   activeVodSourceIdx = 0;
-  activeVodSiteKey = activeVodMovie.sortedSources[0]?.siteKey || '';
+  activeVodSiteKey = sources[0]?.siteKey || '';
   activeVodEpIdx = 0;
 
   const cls = classifyMovieTypeClient(m);
   document.getElementById('vodModalTitle').textContent = m.title;
   document.getElementById('vodModalMeta').textContent = [cls.label, m.year, m.remarks].filter(Boolean).join(' · ') || '高清路线';
-  document.getElementById('vodModalBlurb').textContent = m.blurb || '播放与拖动进度条自动剔除本地缓存、计算真实均速并智能编号排序。';
-  document.getElementById('vodLimitOverlay').classList.add('hidden');
-
-  const tvHint = document.getElementById('vodTvboxOnlyHint');
-  if (tvHint) {
-    const tvCnt = Number(m.tvboxOnlyCount || 0);
-    tvHint.textContent = tvCnt > 0 ? `📺 另有 ${tvCnt} 条仅 TVBox 路线（导入电视端畅看）` : '';
-  }
+  document.getElementById('vodModalBlurb').textContent = m.blurb || '全平台完整保留：网页端优先为您起播高速路线，遇浏览器跨域受限自动无缝切换，并在您的个人设备记录最优排序。';
+  document.getElementById('vodLimitOverlay')?.classList.add('hidden');
+  document.getElementById('vodTvOnlyOverlay')?.classList.add('hidden');
 
   const timerBadge = document.getElementById('vodPreviewTimerBadge');
   if (isVodMemberActive()) {
@@ -1923,22 +2115,21 @@ function openVodMovie(idx) {
     timerBadge.textContent = '🆓 限时免费试看';
   }
 
-  // 内嵌展开：播放器显示在海报列表上方，海报列表自然下移
   const stage = document.getElementById('vodInlineStage');
   if (stage) {
     stage.classList.remove('hidden');
     stage.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
   renderVodHotGrid();
-  renderVodSelectorsAndPlay();
+  renderVodSelectorsAndPlay(true, new Set());
 }
 
-function renderVodSelectorsAndPlay() {
+function renderVodSelectorsAndPlay(allowAutoRelay = true, triedRawKeys = new Set()) {
   if (!activeVodMovie) return;
   const sources = activeVodMovie.sortedSources || [];
   if (sources.length === 0) {
     const lineBox = document.getElementById('vodLinePills');
-    if (lineBox) lineBox.innerHTML = '<span class="muted-sm">该影片当前仅支持在 TVBox 电视端播放，暂无网页直连路线。</span>';
+    if (lineBox) lineBox.innerHTML = '<span class="muted-sm">该影片暂无可用播放路线。</span>';
     return;
   }
 
@@ -1965,31 +2156,40 @@ function renderVodSelectorsAndPlay() {
   }
 
   if (eps[activeVodEpIdx]) {
-    playVodStreamUrl(eps[activeVodEpIdx].url, curSrc.siteKey);
+    playVodStreamUrl(eps[activeVodEpIdx].url, curSrc, allowAutoRelay, triedRawKeys);
   }
 }
 
-function selectVodSourceByKey(siteKey) {
-  sortActiveVodSources();
+function selectVodSourceByKey(siteKey, isManualClick = false) {
+  resortActiveMovieSourcesForWeb();
   activeVodSiteKey = siteKey;
-  renderVodSelectorsAndPlay();
+  const curSrc = activeVodMovie?.sortedSources?.find(s => s.siteKey === siteKey);
+  const m = curSrc ? getSiteMetric(curSrc.rawKey) : null;
+  const allowRelay = !(isManualClick && m && m.webState === 'cors');
+  renderVodSelectorsAndPlay(allowRelay, new Set());
 }
 
 function selectVodSource(idx) {
   const s = activeVodMovie?.sortedSources?.[idx];
-  if (s) selectVodSourceByKey(s.siteKey);
+  if (s) selectVodSourceByKey(s.siteKey, true);
 }
 
 function selectVodEpisode(idx) {
   activeVodEpIdx = idx;
-  renderVodSelectorsAndPlay();
+  renderVodSelectorsAndPlay(true, new Set());
 }
 
-function playVodStreamUrl(streamUrl, siteKey) {
+function playVodStreamUrl(streamUrl, srcObj, allowAutoRelay = true, triedRawKeys = new Set()) {
   const video = document.getElementById('vodVideoPlayer');
   const overlay = document.getElementById('vodLimitOverlay');
-  if (!video) return;
-  overlay.classList.add('hidden');
+  const tvOnlyOverlay = document.getElementById('vodTvOnlyOverlay');
+  if (!video || !srcObj) return;
+  overlay?.classList.add('hidden');
+  tvOnlyOverlay?.classList.add('hidden');
+
+  const siteKey = srcObj.siteKey;
+  const rawKey = srcObj.rawKey || stripSiteKeyMaskClient(siteKey);
+  triedRawKeys.add(rawKey);
 
   if (vodLoadTimer) { clearTimeout(vodLoadTimer); vodLoadTimer = null; }
   if (activeVodHls) { activeVodHls.destroy(); activeVodHls = null; }
@@ -1998,59 +2198,104 @@ function playVodStreamUrl(streamUrl, siteKey) {
   video.onloadedmetadata = null;
   video.removeAttribute('src');
 
-  const existingBucket = siteKey ? vodSpeedSamplesMap.get(siteKey) : null;
-  if (activeVodMovie && siteKey) {
-    const cur = activeVodMovie.sortedSources.find(s => s.siteKey === siteKey);
-    if (cur) {
-      if (existingBucket && existingBucket.samples.length > 0) {
-        cur._status = 'ok';
-        cur._speedMBs = existingBucket.avgSpeedMBs;
-        cur._latency = existingBucket.avgLatencyMs;
-      } else if (cur._status !== 'ok') {
-        cur._status = 'testing';
-      }
-      renderVodLinePillsOnly();
-    }
-  }
+  (activeVodMovie?.sortedSources || []).forEach(s => { s._liveState = ''; });
+  srcObj._liveState = 'testing';
+  renderVodLinePillsOnly();
 
   const startTs = performance.now();
   let connected = false;
+  let handledFailure = false;
   let lastSeekTs = 0;
   let seekPending = false;
 
-  const markFail = (reasonMsg) => {
-    if (connected) return;
-    connected = true;
+  const handleFailureAndRelay = async (isTimeout) => {
+    if (connected || handledFailure) return;
+    handledFailure = true;
     if (vodLoadTimer) { clearTimeout(vodLoadTimer); vodLoadTimer = null; }
-    if (siteKey) {
-      syncVodSpeedToGlobalSites(siteKey, 'failed', 0, 9999, true);
-      reportSiteWebPlayability(siteKey, false);
+    if (activeVodHls) { activeVodHls.destroy(); activeVodHls = null; }
+    srcObj._liveState = '';
+
+    let finalState = 'timeout';
+    let probeMs = 9999;
+    if (!isTimeout) {
+      const tProbe = performance.now();
+      try {
+        await fetch(streamUrl, { mode: 'no-cors', cache: 'no-store', signal: AbortSignal.timeout(3000) });
+        finalState = 'cors';
+        probeMs = Math.max(15, Math.round(performance.now() - tProbe));
+      } catch (e) {
+        finalState = 'timeout';
+        probeMs = 9999;
+      }
     }
-    showToast(reasonMsg || '该路线浏览器无法播放，已自动归类为「仅TVBox」，后续网页端不再展示', 3400);
+
+    setSiteMetric(rawKey, {
+      webState: finalState,
+      speedMBs: 0,
+      probeMs
+    });
+    persistPersonalVodState();
+    autoSyncUserOrderQuietly();
+    renderSiteList();
+    resortActiveMovieSourcesForWeb();
+    renderVodLinePillsOnly();
+
+    if (allowAutoRelay && triedRawKeys.size < 6 && activeVodMovie) {
+      const nextCandidate = activeVodMovie.sortedSources.find(s => {
+        if (triedRawKeys.has(s.rawKey)) return false;
+        const sm = getSiteMetric(s.rawKey);
+        return sm.webState !== 'cors' && sm.webState !== 'timeout';
+      });
+      if (nextCandidate) {
+        const failedBase = cleanBaseSiteName(srcObj.siteName);
+        const nextBase = cleanBaseSiteName(nextCandidate.siteName);
+        showToast(
+          finalState === 'cors'
+            ? `${failedBase} 浏览器受限(电视端可用)，已自动切至 ${nextBase}…`
+            : `${failedBase} 连接超时，已自动切至 ${nextBase}…`,
+          2400
+        );
+        activeVodSiteKey = nextCandidate.siteKey;
+        renderVodSelectorsAndPlay(true, triedRawKeys);
+        return;
+      }
+    }
+
+    if (finalState === 'cors' && tvOnlyOverlay) {
+      const titleEl = document.getElementById('vodTvOnlyTitle');
+      if (titleEl) {
+        titleEl.textContent = `${cleanBaseSiteName(srcObj.siteName)} 受浏览器跨域限制，TVBox 电视端畅看`;
+      }
+      tvOnlyOverlay.classList.remove('hidden');
+    } else {
+      showToast(`${cleanBaseSiteName(srcObj.siteName)} 连接超时，请切换其他路线或在 TVBox 电视端播放`, 3200);
+    }
   };
 
   const markConnected = (fallbackLatencyMs) => {
     if (!connected) {
       connected = true;
       if (vodLoadTimer) { clearTimeout(vodLoadTimer); vodLoadTimer = null; }
-      if (siteKey) {
-        reportSiteWebPlayability(siteKey, true);
-        if (!existingBucket || existingBucket.samples.length === 0) {
-          const cur = activeVodMovie?.sortedSources?.find(s => s.siteKey === siteKey);
-          if (cur && cur._status !== 'ok') {
-            syncVodSpeedToGlobalSites(siteKey, 'ok', 0, fallbackLatencyMs, false);
-          }
-        }
+      srcObj._liveState = '';
+      const prev = getSiteMetric(rawKey);
+      if (prev.webState !== 'ok') {
+        setSiteMetric(rawKey, {
+          webState: 'ok',
+          latencyMs: Math.round(fallbackLatencyMs)
+        });
+        persistPersonalVodState();
+        autoSyncUserOrderQuietly();
+        renderSiteList();
       }
+      renderVodLinePillsOnly();
     }
   };
 
   vodLoadTimer = setTimeout(() => {
     if (!connected) {
-      if (activeVodHls) { activeVodHls.destroy(); activeVodHls = null; }
-      markFail('当前路线连接超时(8s)，已自动归为「仅TVBox」并隐藏，请切换其他路线');
+      handleFailureAndRelay(true);
     }
-  }, 8000);
+  }, 7500);
 
   const limitSec = (!isVodMemberActive() && vodPreviewMinutes > 0) ? vodPreviewMinutes * 60 : 0;
   const timerBadge = document.getElementById('vodPreviewTimerBadge');
@@ -2065,7 +2310,7 @@ function playVodStreamUrl(streamUrl, siteKey) {
       video.pause();
       if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
       document.getElementById('vodLimitTitle').textContent = `试看已达上限（前 ${vodPreviewMinutes} 分钟）`;
-      overlay.classList.remove('hidden');
+      overlay?.classList.remove('hidden');
     }
   };
 
@@ -2077,13 +2322,8 @@ function playVodStreamUrl(streamUrl, siteKey) {
     }
     lastSeekTs = performance.now();
     seekPending = true;
-    if (activeVodMovie && siteKey) {
-      const cur = activeVodMovie.sortedSources.find(s => s.siteKey === siteKey);
-      if (cur && cur._status !== 'failed') {
-        cur._status = 'seeking';
-        renderVodLinePillsOnly();
-      }
-    }
+    srcObj._liveState = 'seeking';
+    renderVodLinePillsOnly();
   };
 
   const tryPlay = () => {
@@ -2118,12 +2358,9 @@ function playVodStreamUrl(streamUrl, siteKey) {
 
       const check = inspectRealNetworkTransfer(frag.url, fallbackBytes, fallbackMs);
       if (!check.valid) {
-        if (activeVodMovie && siteKey) {
-          const cur = activeVodMovie.sortedSources.find(s => s.siteKey === siteKey);
-          if (cur && cur._status === 'seeking') {
-            cur._status = 'ok';
-            renderVodLinePillsOnly();
-          }
+        if (srcObj._liveState === 'seeking') {
+          srcObj._liveState = '';
+          renderVodLinePillsOnly();
         }
         return;
       }
@@ -2131,13 +2368,13 @@ function playVodStreamUrl(streamUrl, siteKey) {
       const sampleLatency = isSeekBurst ? Math.max(15, Math.round(now - lastSeekTs)) : baseLat;
       const weight = isSeekBurst ? 2.0 : 1.0;
       if (isSeekBurst) seekPending = false;
-      recordVodNetworkSample(siteKey, check.speedMBs, sampleLatency, weight, isSeekBurst);
+      srcObj._liveState = '';
+      recordVodNetworkSample(rawKey, check.speedMBs, sampleLatency, weight, isSeekBurst);
     });
     hls.on(Hls.Events.ERROR, (_, errData) => {
       if (errData.fatal) {
-        hls.destroy();
-        activeVodHls = null;
-        markFail('该路线被浏览器跨域拦截，已自动归类为「仅TVBox」，后续网页端不再显示');
+        const isTimeout = errData.details === Hls.ErrorDetails.MANIFEST_LOAD_TIMEOUT || errData.details === Hls.ErrorDetails.FRAG_LOAD_TIMEOUT;
+        handleFailureAndRelay(isTimeout);
       }
     });
     hls.loadSource(streamUrl);
@@ -2148,7 +2385,7 @@ function playVodStreamUrl(streamUrl, siteKey) {
       markConnected(Math.max(10, Math.round(performance.now() - startTs)));
       tryPlay();
     };
-    video.onerror = () => markFail();
+    video.onerror = () => handleFailureAndRelay(false);
     tryPlay();
   } else {
     video.src = streamUrl;
@@ -2156,7 +2393,7 @@ function playVodStreamUrl(streamUrl, siteKey) {
       markConnected(Math.max(10, Math.round(performance.now() - startTs)));
       tryPlay();
     };
-    video.onerror = () => markFail();
+    video.onerror = () => handleFailureAndRelay(false);
     tryPlay();
   }
 }
@@ -2176,6 +2413,7 @@ function closeVodModal() {
   }
   activeVodMovieIdx = -1;
   document.getElementById('vodInlineStage')?.classList.add('hidden');
+  document.getElementById('vodTvOnlyOverlay')?.classList.add('hidden');
   renderVodHotGrid();
 }
 
