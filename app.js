@@ -765,8 +765,17 @@ function renderAccountDashboard(user, orders, tickets) {
   const invCopyBtn = document.getElementById('copyInviteUrlBtn');
   if (invCodeEl) invCodeEl.textContent = invUrl;
   if (invDaysEl && user.invite_reward_days !== undefined) invDaysEl.textContent = String(user.invite_reward_days);
-  if (invStatsEl && user.invite_stats) {
-    invStatsEl.textContent = `已邀请 ${user.invite_stats.count || 0} 人 · 累计获赠 ${user.invite_stats.totalDays || 0} 天`;
+  const rewardDaysNum = Number(user.invite_reward_days ?? 15);
+  const invStats = user.invite_stats || { count: 0, registeredCount: 0, totalDays: 0, records: [] };
+  const invRecords = Array.isArray(invStats.records) ? invStats.records : [];
+  const regCnt = Math.max(Number(invStats.registeredCount || 0), Number(invStats.count || 0), invRecords.length);
+  const paidCnt = Number(invStats.count || 0);
+  const totalGiftDays = Number(invStats.totalDays || 0);
+
+  if (invStatsEl) {
+    invStatsEl.textContent = regCnt > paidCnt
+      ? `已邀 ${regCnt} 人（${paidCnt} 人已付）· 获赠 ${totalGiftDays} 天`
+      : `已邀 ${paidCnt} 人 · 累计获赠 ${totalGiftDays} 天`;
   }
   if (invCopyBtn) invCopyBtn.onclick = () => copyText(invUrl, invCopyBtn);
   const invPosterBtn = document.getElementById('openInvitePosterBtn');
@@ -774,8 +783,70 @@ function renderAccountDashboard(user, orders, tickets) {
     invPosterBtn.onclick = () => openInvitePosterModal({
       invUrl,
       invCode,
-      rewardDays: Number(user.invite_reward_days ?? 15)
+      rewardDays: rewardDaysNum
     });
+  }
+
+  // 受邀人自己的首单获赠提示
+  const recNotice = document.getElementById('inviteReceivedNotice');
+  if (recNotice) {
+    const rcv = user.invite_received;
+    if (rcv && rcv.bound) {
+      recNotice.classList.remove('hidden', 'rewarded', 'pending');
+      if (rcv.rewarded) {
+        recNotice.classList.add('rewarded');
+        const tStr = rcv.rewardedAt ? ` · ${formatDateTime(rcv.rewardedAt)}` : '';
+        recNotice.innerHTML = `<span>🎉 <b>受邀首单福利已到账</b>：已叠加获赠 <b>+${rcv.rewardDays || rewardDaysNum} 天</b>（点播+直播）${tStr}</span>`;
+      } else {
+        recNotice.classList.add('pending');
+        recNotice.innerHTML = `
+          <span>🎁 <b>受邀福利待解锁</b>：首次开通任意付费套餐，您与邀请人各立赠 <b>+${rcv.rewardDays || rewardDaysNum} 天</b>（点播+直播）！</span>
+          <button type="button" class="btn-outline btn-xs" onclick="switchView('home')">去选套餐 →</button>
+        `;
+      }
+    } else {
+      recNotice.classList.add('hidden');
+      recNotice.innerHTML = '';
+    }
+  }
+
+  // 邀请人逐条邀请与获赠明细
+  const detailsWrap = document.getElementById('inviteDetailsWrap');
+  const detailsSum = document.getElementById('inviteDetailsSummary');
+  const recordsList = document.getElementById('inviteRecordsList');
+  if (detailsSum) {
+    detailsSum.textContent = invRecords.length > 0
+      ? `📋 邀请与获赠明细（${invRecords.length} 条记录 · 累计 +${totalGiftDays} 天）`
+      : `📋 邀请与获赠明细（暂无记录）`;
+  }
+  if (detailsWrap) {
+    detailsWrap.open = invRecords.length > 0;
+  }
+  if (recordsList) {
+    if (invRecords.length > 0) {
+      recordsList.innerHTML = invRecords.map(r => {
+        const isRewarded = r.status === 'rewarded';
+        const timeStr = isRewarded
+          ? (r.rewardedAt ? `到账：${formatDateTime(r.rewardedAt)}` : '已到账')
+          : (r.registeredAt ? `注册：${formatDateTime(r.registeredAt)}` : '已注册');
+        const planTxt = isRewarded && r.planName ? ` · 开通「${escapeHtml(r.planName)}」` : '';
+        const badgeHtml = isRewarded
+          ? `<span class="invite-rec-badge rewarded">✅ +${Number(r.days || rewardDaysNum)} 天（点播+直播）</span>`
+          : `<span class="invite-rec-badge pending">⏳ 已注册 · 待首单付费</span>`;
+        return `
+          <div class="invite-rec-row">
+            <div class="invite-rec-left">
+              <span class="invite-rec-email">${escapeHtml(r.emailMasked || '好友***')}</span>
+              <span class="invite-rec-meta">${timeStr}${planTxt}</span>
+            </div>
+            <div class="invite-rec-right">${badgeHtml}</div>
+          </div>`;
+      }).join('');
+    } else if (paidCnt > 0) {
+      recordsList.innerHTML = `<p class="muted-sm" style="margin:4px 0 0;">历史已成功邀请 <b>${paidCnt}</b> 人，累计获赠 <b>+${totalGiftDays} 天</b>（此后新增邀请将逐条展示明细）。</p>`;
+    } else {
+      recordsList.innerHTML = `<p class="muted-sm" style="margin:4px 0 0;">暂无邀请记录，复制链接或生成专属海报发给好友，好友首单付费后双方各得 <b>+${rewardDaysNum} 天</b>（点播+直播）！</p>`;
+    }
   }
 
   document.getElementById('mineOrderCount').textContent = String((orders || []).length);

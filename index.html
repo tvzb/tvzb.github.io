@@ -637,6 +637,17 @@
             <button type="button" id="copyInviteUrlBtn" class="btn-primary btn-sm-pad">📋 复制邀请链接</button>
             <button type="button" id="openInvitePosterBtn" class="btn-outline btn-sm-pad">🖼️ 生成邀请海报</button>
           </div>
+
+          <!-- 受邀人专属首单福利状态提示（仅被邀请注册的用户可见） -->
+          <div id="inviteReceivedNotice" class="invite-received-banner hidden"></div>
+
+          <!-- 邀请人逐条邀请与获赠明细 -->
+          <details id="inviteDetailsWrap" class="invite-details-wrap">
+            <summary id="inviteDetailsSummary">📋 邀请与获赠明细（0 条）</summary>
+            <div id="inviteRecordsList" class="invite-records-list">
+              <p class="muted-sm" style="margin:6px 0 0;">暂无邀请记录，分享链接或生成海报发给好友，好友首单付费后双方各得会员时长！</p>
+            </div>
+          </details>
         </div>
 
         <!-- 订单记录 & 工单对话流 -->
