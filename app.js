@@ -183,6 +183,11 @@ function bindEvents() {
   });
   document.getElementById('liveNextSourceBtn')?.addEventListener('click', switchNextLiveSource);
   document.getElementById('closeVodModalBtn')?.addEventListener('click', closeVodModal);
+  document.getElementById('vodSearchForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    runVodSearch();
+  });
+  document.getElementById('vodSearchResetBtn')?.addEventListener('click', exitVodSearchMode);
   document.getElementById('vodLimitActionBtn')?.addEventListener('click', () => {
     closeVodModal();
     if (currentUser) switchView('home');
@@ -1402,6 +1407,9 @@ function switchNextLiveSource() {
 
 // ================= 点播页：内嵌式播放 + 众包实测网页/TVBox归类 + 自动测速排序(路线A01) =================
 let vodHotMovies = [];
+let vodSearchResults = [];
+let vodSearchMode = false;
+let vodSearchKeyword = '';
 let vodPreviewMinutes = 10;
 let activeVodMovie = null;
 let activeVodMovieIdx = -1;
@@ -1513,14 +1521,16 @@ async function reportSiteWebPlayability(siteKey, playable, speedMBs = 0, latency
   if (hasSpeed) reportedSpeedSession.add(siteKey);
 
   if (!playable) {
-    vodHotMovies.forEach(m => {
-      if (Array.isArray(m.sources)) {
-        const before = m.sources.length;
-        m.sources = m.sources.filter(src => src.siteKey !== siteKey);
-        if (m.sources.length < before) {
-          m.tvboxOnlyCount = (m.tvboxOnlyCount || 0) + (before - m.sources.length);
+    [vodHotMovies, vodSearchResults].forEach(list => {
+      list.forEach(m => {
+        if (Array.isArray(m.sources)) {
+          const before = m.sources.length;
+          m.sources = m.sources.filter(src => src.siteKey !== siteKey);
+          if (m.sources.length < before) {
+            m.tvboxOnlyCount = (m.tvboxOnlyCount || 0) + (before - m.sources.length);
+          }
         }
-      }
+      });
     });
     renderVodHotGrid();
   }
@@ -1539,7 +1549,15 @@ async function reportSiteWebPlayability(siteKey, playable, speedMBs = 0, latency
   } catch (e) {}
 }
 
+function getCurrentVodList() {
+  return vodSearchMode ? vodSearchResults : vodHotMovies;
+}
+
 function classifyMovieTypeClient(m) {
+  const rawType = String(m.type || '');
+  if (m.category === 'short' || /短剧|微剧/.test(rawType)) {
+    return { category: 'short', label: '📱 短剧' };
+  }
   const remarks = String(m.remarks || '');
   const epNames = (m.sources || []).flatMap(s => (s.episodes || []).map(e => String(e.name || '')));
   const txt = `${remarks} ${epNames.join(' ')}`;
@@ -1550,9 +1568,16 @@ function classifyMovieTypeClient(m) {
 
 function renderVodHotGrid() {
   const grid = document.getElementById('vodHotGrid');
-  if (!grid || !Array.isArray(vodHotMovies) || vodHotMovies.length === 0) return;
-  applySmartVodGridLayout(grid, vodHotMovies.length);
-  grid.innerHTML = vodHotMovies.map((m, idx) => {
+  if (!grid) return;
+  const list = getCurrentVodList();
+  if (!Array.isArray(list) || list.length === 0) {
+    if (vodSearchMode) {
+      grid.innerHTML = '<div class="card muted-sm" style="grid-column:1/-1;text-align:center;padding:28px;">未搜到匹配的可播影片，请尝试缩短或更换关键词（如只输片名核心字）</div>';
+    }
+    return;
+  }
+  applySmartVodGridLayout(grid, list.length);
+  grid.innerHTML = list.map((m, idx) => {
     const rateBadge = m.rate ? `⭐ ${m.rate}` : (m.remarks || '');
     const cls = classifyMovieTypeClient(m);
     const isPlaying = idx === activeVodMovieIdx;
@@ -1571,6 +1596,87 @@ function renderVodHotGrid() {
       </div>
     </div>`;
   }).join('');
+}
+
+async function runVodSearch() {
+  const input = document.getElementById('vodSearchInput');
+  const wd = (input?.value || '').trim();
+  if (wd.length < 2) {
+    showToast('请至少输入 2 个字再搜索', 2400);
+    input?.focus();
+    return;
+  }
+
+  // 方案 1：必须登录才能搜索（引导免费登录/注册领试用）
+  const token = localStorage.getItem('tvbox_token');
+  if (!token) {
+    showToast(`登录后即可全网搜片与短剧（注册即送 ${currentTrialDays} 天免费试用）`, 3200);
+    openAuthModal(false);
+    return;
+  }
+
+  const btn = document.getElementById('vodSearchBtn');
+  const resetBtn = document.getElementById('vodSearchResetBtn');
+  const banner = document.getElementById('vodSearchBanner');
+  const bannerTxt = document.getElementById('vodSearchBannerText');
+  const grid = document.getElementById('vodHotGrid');
+
+  if (btn) { btn.disabled = true; btn.textContent = '搜片中...'; }
+  if (grid) {
+    grid.innerHTML = `<div class="card muted-sm" style="grid-column:1/-1;text-align:center;padding:28px;">🔍 正在并发检索全网高速路线，查找「${escapeHtml(wd)}」...</div>`;
+  }
+
+  try {
+    const res = await fetch(API_BASE + '/api/vod-search?wd=' + encodeURIComponent(wd), {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const data = await res.json();
+    if (res.status === 401) {
+      showToast(data.error || '请重新登录后再搜索', 3000);
+      openAuthModal(false);
+      renderVodHotGrid();
+      return;
+    }
+    if (!res.ok) {
+      showToast(data.error || '搜索失败，请稍后重试', 3000);
+      renderVodHotGrid();
+      return;
+    }
+
+    if (data.previewMinutes !== undefined) {
+      vodPreviewMinutes = Number(data.previewMinutes);
+      updateVodPreviewRuleText();
+    }
+    vodSearchMode = true;
+    vodSearchKeyword = wd;
+    vodSearchResults = Array.isArray(data.movies) ? data.movies : [];
+    activeVodMovieIdx = -1;
+
+    if (resetBtn) resetBtn.classList.remove('hidden');
+    if (banner) banner.classList.remove('hidden');
+    if (bannerTxt) {
+      const cacheTag = data.cached ? ' · 秒级缓存' : '';
+      bannerTxt.textContent = `🔍 「${wd}」共找到 ${vodSearchResults.length} 部可播影片/短剧${cacheTag}`;
+    }
+    renderVodHotGrid();
+  } catch (e) {
+    showToast('搜索网络异常，请稍后重试', 2800);
+    renderVodHotGrid();
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = '搜片'; }
+  }
+}
+
+function exitVodSearchMode() {
+  vodSearchMode = false;
+  vodSearchKeyword = '';
+  vodSearchResults = [];
+  activeVodMovieIdx = -1;
+  const input = document.getElementById('vodSearchInput');
+  if (input) input.value = '';
+  document.getElementById('vodSearchResetBtn')?.classList.add('hidden');
+  document.getElementById('vodSearchBanner')?.classList.add('hidden');
+  renderVodHotGrid();
 }
 
 async function loadVodHotMovies() {
@@ -1765,7 +1871,7 @@ function renderVodLinePillsOnly() {
 function openVodMovie(idx) {
   if (typeof stopFreeLivePlayer === 'function') stopFreeLivePlayer();
   if (typeof stopTutorialVideo === 'function') stopTutorialVideo();
-  const m = vodHotMovies[idx];
+  const m = getCurrentVodList()[idx];
   if (!m) return;
   activeVodMovieIdx = idx;
 

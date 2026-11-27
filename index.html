@@ -206,12 +206,23 @@
 
     <!-- ==================== 视图 3：点播精选试看 + 家庭宽带真实拉流测速 ==================== -->
     <section id="view-speed" class="tab-view">
-      <!-- 热门影片精选（内嵌式展开播放，点击海报影片列表自然下移，不再弹窗） -->
+      <!-- 热门影片精选 + 全网搜片（内嵌式展开播放，点击海报影片列表自然下移） -->
       <div class="block-head" style="margin-top:4px;">
         <div>
-          <h2>🎬 豆瓣热播精选 · 在线试看</h2>
-          <p id="vodPreviewRuleText" class="muted-sm">点击任意海报即可在上方展开播放，线路自动剔除仅 TVBox 源并按您的宽带实测网速排序</p>
+          <h2>🎬 豆瓣热播精选 · 全网搜片试看</h2>
+          <p id="vodPreviewRuleText" class="muted-sm">点击海报即可展开播放，支持搜索全网电影、电视剧、动漫与短剧（登录后可用）</p>
         </div>
+      </div>
+
+      <!-- 全网搜片栏（方案 1：登录用户可搜全网电影/剧集/短剧，严格过滤涉黄） -->
+      <form id="vodSearchForm" class="vod-search-bar">
+        <input id="vodSearchInput" type="text" maxlength="30" placeholder="🔍 搜电影、电视剧、动漫、短剧（输入片名，登录后可用）..." autocomplete="off">
+        <button type="submit" id="vodSearchBtn" class="btn-primary btn-sm-pad">搜片</button>
+        <button type="button" id="vodSearchResetBtn" class="btn-outline btn-sm-pad hidden">返回热播</button>
+      </form>
+      <div id="vodSearchBanner" class="vod-search-banner hidden">
+        <span id="vodSearchBannerText"></span>
+        <button type="button" class="btn-outline btn-xs" onclick="exitVodSearchMode()">← 返回豆瓣热播</button>
       </div>
 
       <!-- 内嵌式点播播放舞台（默认收起；点击影片后展开，下方海报列表自然下移） -->

@@ -1487,3 +1487,46 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
   gap: 10px;
   margin-top: 6px;
 }
+
+/* V16: 点播页全网搜片栏 */
+.vod-search-bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.vod-search-bar input {
+  flex: 1;
+  min-width: 0;
+  margin-top: 0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+.vod-search-bar input:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.16);
+}
+.vod-search-bar button {
+  white-space: nowrap;
+  margin-top: 0 !important;
+  flex-shrink: 0;
+}
+.vod-search-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 9px 14px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  font-size: 0.84rem;
+  font-weight: 600;
+}
