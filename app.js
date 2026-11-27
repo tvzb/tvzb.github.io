@@ -126,7 +126,7 @@ function bindEvents() {
   });
 
   // 登录/注册入口
-  document.getElementById('loginOpen').onclick = () => openAuthModal(true);
+  document.getElementById('loginOpen').onclick = () => openAuthModal(false);
   document.getElementById('heroTrialBtn').onclick = () => {
     if (currentUser) { switchView('mine'); return; }
     openAuthModal(true);
@@ -210,9 +210,16 @@ function bindEvents() {
   });
   document.getElementById('channelSearch')?.addEventListener('input', renderChannelSummaryList);
 
-  // 宽带测速
-  document.getElementById('startSpeedTest').onclick = runSpeedTest;
-  document.getElementById('saveCustomOrder').onclick = saveCustomOrder;
+  // 路线排序同步 & 安装大全搜索筛选
+  document.getElementById('saveCustomOrder')?.addEventListener('click', saveCustomOrder);
+  document.getElementById('brandGuideSearch')?.addEventListener('input', filterBrandGuides);
+  document.querySelectorAll('#brandCatTabs .seg-btn').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('#brandCatTabs .seg-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filterBrandGuides();
+    };
+  });
   ['optTagRank', 'optShowSpeed'].forEach(id => {
     document.getElementById(id)?.addEventListener('change', renderSiteList);
   });
@@ -330,13 +337,26 @@ async function loadPublicConfigAndSites() {
     if (r2.ok) {
       const d = await r2.json();
       if (Array.isArray(d.sites) && d.sites.length > 0) {
-        currentSites = d.sites.map(s => ({ ...s, status: 'idle', speedMBs: 0, latency: undefined, webStatus: s.webStatus || 'unknown' }));
+        currentSites = d.sites.map(s => ({
+          ...s,
+          status: (s.globalSpeedMBs > 0 || s.webStatus === 'web') ? 'ok' : 'idle',
+          speedMBs: Number(s.globalSpeedMBs || 0),
+          latency: s.globalLatencyMs && s.globalLatencyMs < 9000 ? s.globalLatencyMs : undefined,
+          _isGlobalDefault: true,
+          webStatus: s.webStatus || 'unknown'
+        }));
         applyLocalSmartVodOrder();
-        const btn = document.getElementById('startSpeedTest');
-        if (btn) btn.textContent = `⚡ 开始拉流测速 (${currentSites.length}条路线)`;
-        currentVodCount = currentSites.length;
+        const totalAll = Number(d.count || currentSites.length);
+        const tvOnly = Number(d.tvboxOnlyCount || 0);
+        currentVodCount = totalAll;
         document.querySelectorAll('.js-vod-count').forEach(el => { el.textContent = String(currentVodCount); });
         const mv = document.getElementById('mineVodCount'); if (mv) mv.textContent = currentVodCount + ' 条';
+        const badge = document.getElementById('speedModeBadge');
+        if (badge) {
+          badge.textContent = tvOnly > 0
+            ? `🌐 网页可播 ${currentSites.length} 条（已自动屏蔽 ${tvOnly} 条仅 TVBox 路线）`
+            : `🌐 网页可播 ${currentSites.length} 条路线`;
+        }
         renderSiteList();
       }
     }
@@ -543,7 +563,7 @@ function openAuthModal(registerMode) {
 
   if (isRegisterMode) {
     document.getElementById('authTitle').textContent = `注册并领取 ${currentTrialDays} 天全功能免费试用`;
-    document.getElementById('authSubtitle').classList.remove('hidden');
+    document.getElementById('authSubtitle')?.classList.add('hidden');
     document.getElementById('codeRow').classList.remove('hidden');
     document.getElementById('authSubmitBtn').textContent = '立即注册并领取试用';
     document.getElementById('authSwitchText').textContent = '已有账号？';
@@ -666,15 +686,18 @@ function renderAccountDashboard(user, orders, tickets) {
   const liveUrl = user.liveSubUrl || `${API_BASE}/l/${user.token}`;
 
   document.getElementById('accountInfo').innerHTML = `
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
-      <b>🚀 一键全能聚合地址（直接填进 TVBox）</b>
-      <div style="display:flex;gap:6px;">
-        <button type="button" class="btn-outline btn-sm-pad" onclick="openSubQrModal('${allUrl}', '一键全能聚合地址')">📱 二维码</button>
-        <button type="button" class="btn-primary btn-sm-pad" onclick="copyText('${allUrl}', this)">一键复制</button>
-      </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
+      <b>🚀 一键全能聚合地址</b>
+      <span class="muted-sm" style="font-size:0.74rem;">直接填进 TVBox</span>
     </div>
-    <code class="inline-code" style="width:100%;">${allUrl}</code>
-    <p class="muted-sm" style="margin-top:8px;">到期时间：直播 ${formatDate(user.live_expire_at)} · 点播 ${formatDate(user.vod_expire_at)}（仅限 TVBox 加载防泄露）</p>
+    <div class="sub-url-box">
+      <code class="sub-url-code">${allUrl}</code>
+    </div>
+    <div class="sub-btn-pair">
+      <button type="button" class="btn-primary btn-sm-pad" onclick="copyText('${allUrl}', this)">📋 一键复制</button>
+      <button type="button" class="btn-outline btn-sm-pad" onclick="openSubQrModal('${allUrl}', '一键全能聚合地址')">📱 扫码导入</button>
+    </div>
+    <p class="muted-sm" style="margin-top:10px;">到期时间：直播 ${formatDate(user.live_expire_at)} · 点播 ${formatDate(user.vod_expire_at)}（仅限 TVBox 加载防泄露）</p>
     <details style="margin-top:12px;border-top:1px dashed var(--border);padding-top:10px;">
       <summary style="cursor:pointer;color:var(--muted);font-size:0.84rem;">展开独立直播 / 独立点播分离地址</summary>
       <div style="margin-top:10px;">
@@ -708,11 +731,13 @@ function renderAccountDashboard(user, orders, tickets) {
   }
   if (homeSubBody) {
     homeSubBody.innerHTML = `
-      <p class="muted-sm" style="margin:6px 0 6px;">一键全能聚合地址（复制到 TVBox「配置地址」栏，直播+点播自动同步）：</p>
-      <div class="copy-code-row">
-        <code class="inline-code" style="flex:1;">${allUrl}</code>
-        <button type="button" class="btn-outline btn-sm-pad" onclick="openSubQrModal('${allUrl}', '我的专属订阅地址')">📱 二维码</button>
-        <button type="button" class="btn-primary btn-sm-pad" onclick="copyText('${allUrl}', this)">一键复制</button>
+      <p class="muted-sm" style="margin:6px 0 10px;">填入 TVBox「配置地址」栏，直播与点播全自动更新。</p>
+      <div class="sub-url-box">
+        <code class="sub-url-code">${allUrl}</code>
+      </div>
+      <div class="sub-btn-pair">
+        <button type="button" class="btn-primary btn-sm-pad" onclick="copyText('${allUrl}', this)">📋 一键复制</button>
+        <button type="button" class="btn-outline btn-sm-pad" onclick="openSubQrModal('${allUrl}', '我的专属订阅地址')">📱 扫码导入</button>
       </div>
     `;
   }
@@ -966,102 +991,6 @@ function renderSiteList() {
   }).join('');
 }
 
-async function measureRealSlice(tsUrl) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 5000);
-  const url = tsUrl + (tsUrl.includes('?') ? '&' : '?') + '_t=' + Date.now();
-  const start = performance.now();
-  try {
-    const resp = await fetch(url, { mode: 'cors', cache: 'no-store', signal: controller.signal });
-    if (!resp.ok) throw new Error('HTTP ' + resp.status);
-    const latency = Math.round(performance.now() - start);
-    const reader = resp.body?.getReader();
-    let downloaded = 0;
-    const dlStart = performance.now();
-    if (reader) {
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        downloaded += value.byteLength;
-        if (downloaded >= 1.5 * 1024 * 1024) { controller.abort(); break; }
-      }
-    } else downloaded = (await resp.arrayBuffer()).byteLength;
-    const sec = Math.max((performance.now() - dlStart) / 1000, 0.05);
-    return { speedMBs: (downloaded / (1024 * 1024)) / sec, latency };
-  } catch (err) {
-    if (err.name === 'AbortError') throw err;
-    const s2 = performance.now();
-    await fetch(url, { mode: 'no-cors', cache: 'no-store', signal: controller.signal });
-    const ms = Math.max(performance.now() - s2, 50);
-    return { speedMBs: 1.0 / (ms / 1000), latency: Math.round(ms) };
-  } finally { clearTimeout(timer); }
-}
-
-async function runSpeedTest() {
-  const btn = document.getElementById('startSpeedTest');
-  const progressWrap = document.getElementById('speedProgressWrap');
-  const progressFill = document.getElementById('speedProgressFill');
-  const statusText = document.getElementById('speedStatusText');
-  const countText = document.getElementById('speedCountText');
-  const modeBadge = document.getElementById('speedModeBadge');
-
-  btn.disabled = true;
-  btn.textContent = '⏳ 测速中...';
-  progressWrap.classList.remove('hidden');
-  progressFill.style.width = '0%';
-  currentSites.forEach(s => { s.status = 'idle'; s.speedMBs = 0; s.latency = 9999; });
-  renderSiteList();
-
-  let samples = {};
-  try {
-    statusText.textContent = '正在获取视频切片样本...';
-    const [r1, r2] = await Promise.all([
-      fetch(API_BASE + '/api/vod-samples?batch=1').then(r => r.ok ? r.json() : {}),
-      fetch(API_BASE + '/api/vod-samples?batch=2').then(r => r.ok ? r.json() : {})
-    ]);
-    samples = { ...r1, ...r2 };
-    modeBadge.textContent = '切片实测';
-  } catch { modeBadge.textContent = '延迟模式'; }
-
-  let finished = 0;
-  const total = currentSites.length;
-  const queue = [...currentSites];
-  async function worker() {
-    while (queue.length > 0) {
-      const site = queue.shift();
-      site.status = 'testing';
-      statusText.textContent = `实测：${site.name}...`;
-      renderSiteList();
-      try {
-        const sample = samples[site.key];
-        if (sample?.tsUrl) {
-          const res = await measureRealSlice(sample.tsUrl);
-          site.status = 'ok'; site.speedMBs = res.speedMBs; site.latency = res.latency;
-        } else {
-          const s0 = performance.now();
-          await fetch(site.pingUrl, { mode: 'no-cors', cache: 'no-store', signal: AbortSignal.timeout(4000) });
-          site.status = 'ok'; site.speedMBs = 0; site.latency = Math.round(performance.now() - s0);
-        }
-      } catch { site.status = 'failed'; site.speedMBs = 0; site.latency = 9999; }
-
-      finished++;
-      countText.textContent = `${finished} / ${total}`;
-      progressFill.style.width = `${Math.round((finished / total) * 100)}%`;
-      currentSites.sort((a, b) => {
-        if (a.status === 'ok' && b.status !== 'ok') return -1;
-        if (a.status !== 'ok' && b.status === 'ok') return 1;
-        if (b.speedMBs !== a.speedMBs) return b.speedMBs - a.speedMBs;
-        return a.latency - b.latency;
-      });
-      renderSiteList();
-    }
-  }
-  await Promise.all([worker(), worker(), worker()]);
-  persistLocalSmartVodOrder(); autoSyncUserOrderQuietly(); statusText.textContent = '✅ 测速完成！已自动按网速由快到慢排序（登录用户已自动同步云端）';
-  btn.disabled = false;
-  btn.textContent = '⚡ 重新测速';
-}
-
 async function saveCustomOrder() {
   const token = localStorage.getItem('tvbox_token');
   if (!token) { showToast('请先登录后再保存排序'); openAuthModal(true); return; }
@@ -1219,7 +1148,7 @@ function openImgLightbox(src) {
 }
 
 function switchInstallSubTab(subId) {
-  if (subId !== 'sub-video' && typeof stopTutorialVideo === 'function') stopTutorialVideo();
+  if (subId !== 'sub-guide-dl' && typeof stopTutorialVideo === 'function') stopTutorialVideo();
   document.querySelectorAll('#installSubTabs .seg-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.subtab === subId);
   });
@@ -1563,20 +1492,26 @@ function autoSyncUserOrderQuietly() {
 }
 
 // 众包上报：某平台在真实浏览器播放成功/失败后，实时同步给后端，全站所有用户共享归类
-async function reportSiteWebPlayability(siteKey, playable) {
+const reportedSpeedSession = new Set();
+
+async function reportSiteWebPlayability(siteKey, playable, speedMBs = 0, latencyMs = 0) {
   if (!siteKey) return;
   const newStatus = playable ? 'web' : 'tvbox';
-  // 更新本地全局站点状态
   const g = currentSites.find(s => s.key === siteKey);
   if (g) {
     g.webStatus = newStatus;
+    if (!playable) {
+      currentSites = currentSites.filter(x => x.key !== siteKey);
+    }
     renderSiteList();
   }
-  // 同一会话内避免对同一状态重复发请求
-  if (reportedWebStatusSession.get(siteKey) === newStatus) return;
-  reportedWebStatusSession.set(siteKey, newStatus);
 
-  // 若被判定为仅 TVBox，同步从当前页面其他影片的网页路线缓存中剔除
+  const hasSpeed = playable && Number(speedMBs) >= 0.05;
+  if (!hasSpeed && reportedWebStatusSession.get(siteKey) === newStatus) return;
+  if (hasSpeed && reportedSpeedSession.has(siteKey)) return;
+  reportedWebStatusSession.set(siteKey, newStatus);
+  if (hasSpeed) reportedSpeedSession.add(siteKey);
+
   if (!playable) {
     vodHotMovies.forEach(m => {
       if (Array.isArray(m.sources)) {
@@ -1594,7 +1529,12 @@ async function reportSiteWebPlayability(siteKey, playable) {
     await fetch(API_BASE + '/api/vod-web-report', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ siteKey, playable: Boolean(playable) })
+      body: JSON.stringify({
+        siteKey,
+        playable: Boolean(playable),
+        speedMBs: hasSpeed ? Number(Number(speedMBs).toFixed(2)) : 0,
+        latencyMs: Number(latencyMs || 0)
+      })
     });
   } catch (e) {}
 }
@@ -1732,6 +1672,10 @@ function recordVodNetworkSample(siteKey, speedMBs, latencyMs, weight = 1.0, isSe
   bucket.avgSpeedMBs = wSum > 0 ? (spdSum / wSum) : speedMBs;
   bucket.avgLatencyMs = wSum > 0 ? Math.round(latSum / wSum) : Math.round(latencyMs);
 
+  // 采样达到 2 个切片或拖动冷启动切片时，将真实均速上报给全站作为整站默认测速基准
+  if (bucket.samples.length >= 2 || isSeek) {
+    reportSiteWebPlayability(siteKey, true, bucket.avgSpeedMBs, bucket.avgLatencyMs);
+  }
   syncVodSpeedToGlobalSites(siteKey, 'ok', bucket.avgSpeedMBs, bucket.avgLatencyMs, false);
 }
 
@@ -2172,3 +2116,19 @@ document.addEventListener('visibilitychange', () => {
     if (tutV && !tutV.paused) tutV.pause();
   }
 });
+
+// ================= 安装大全：品牌搜索与设备分类筛选 =================
+function filterBrandGuides() {
+  const q = (document.getElementById('brandGuideSearch')?.value || '').trim().toLowerCase();
+  const activeCatBtn = document.querySelector('#brandCatTabs .seg-btn.active');
+  const cat = activeCatBtn ? activeCatBtn.dataset.bcat : 'all';
+  const items = document.querySelectorAll('#brandGuideList .brand-item');
+  items.forEach(el => {
+    const itemCat = el.dataset.bcat || '';
+    const kw = ((el.dataset.keywords || '') + ' ' + (el.querySelector('summary')?.textContent || '')).toLowerCase();
+    const catOk = (cat === 'all' || itemCat === cat);
+    const qOk = (!q || kw.includes(q));
+    el.classList.toggle('hidden', !(catOk && qOk));
+    if (q && catOk && qOk) el.open = true;
+  });
+}

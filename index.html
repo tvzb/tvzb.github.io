@@ -82,10 +82,13 @@
             <span class="core-pill free">🆓 永久免费直播体验源</span>
             <span class="muted-sm">国内直连免翻墙</span>
           </div>
-          <p class="muted-sm" style="margin:6px 0 8px;">无需注册，直接复制填入 TVBox「直播地址」栏即可畅看高清央卫视体验台。</p>
-          <div class="copy-code-row">
-            <code id="freeLiveUrl" class="inline-code" style="flex:1;">https://tv.171234.xyz/f</code>
-            <button type="button" class="btn-secondary btn-sm-pad" data-copy-id="freeLiveUrl">一键复制</button>
+          <p class="muted-sm" style="margin:6px 0 10px;">无需注册，填入 TVBox「直播地址」栏即可畅看高清央卫视体验台。</p>
+          <div class="sub-url-box">
+            <code id="freeLiveUrl" class="sub-url-code">https://tv.171234.xyz/f</code>
+          </div>
+          <div class="sub-btn-pair">
+            <button type="button" class="btn-secondary btn-sm-pad" data-copy-id="freeLiveUrl">📋 一键复制</button>
+            <button type="button" class="btn-outline btn-sm-pad" onclick="openSubQrModal(document.getElementById('freeLiveUrl').textContent.trim(), '永久免费直播体验源')">📱 扫码导入</button>
           </div>
         </div>
       </div>
@@ -259,56 +262,65 @@
         <div class="card muted-sm" style="grid-column:1/-1;text-align:center;padding:24px;">正在加载热门精选影片...</div>
       </div>
 
-      <div class="block-head" style="margin-top:26px;">
+      <div class="block-head" style="margin-top:28px;">
         <div>
-          <h2>⚡ 家庭宽带真实拉流测速</h2>
-          <p class="muted-sm">连家中 Wi-Fi 实测 <span class="js-vod-count">21</span> 条加密高速专线速率，测速后上方影片与电视端均自动按最快排序</p>
+          <h2>⚡ 网页可播路线 · 智能网速排行</h2>
+          <p id="webSitesRankDesc" class="muted-sm">全站按真实点播均速默认排好序（路线A最快）；您在上方点播看片后，将自动按您家中宽带网速重新排序并同步至电视端</p>
         </div>
-      </div>
-
-      <div class="speed-action-bar">
-        <button type="button" id="startSpeedTest" class="btn-primary">⚡ 开始拉流测速</button>
-        <button type="button" id="saveCustomOrder" class="btn-secondary">💾 保存我的排序</button>
+        <button type="button" id="saveCustomOrder" class="btn-secondary btn-sm-pad">💾 手动同步排序到 TVBox</button>
       </div>
 
       <div class="speed-opts-bar">
         <label><input type="checkbox" id="optTagRank" checked> 名称标速序(如 路线A01)</label>
         <label><input type="checkbox" id="optShowSpeed"> 显示测速(M/s)</label>
         <label><input type="checkbox" id="optHideFailed" checked> 隐藏超时站</label>
-        <span id="speedModeBadge" class="muted-sm" style="margin-left:auto;">就绪</span>
-      </div>
-
-      <div id="speedProgressWrap" class="progress-wrap hidden">
-        <div class="progress-meta">
-          <span id="speedStatusText">准备测速...</span>
-          <span id="speedCountText">0 / 21</span>
-        </div>
-        <div class="eb-progress-track"><div id="speedProgressFill" class="eb-progress-fill" style="width:0%"></div></div>
+        <span id="speedModeBadge" class="muted-sm" style="margin-left:auto;">🌐 仅展示网页可播路线</span>
       </div>
 
       <div id="siteList" class="site-grid"></div>
     </section>
 
-    <!-- ==================== 视图 4：安装中心（下载 + 视频教程 + 图文步骤） ==================== -->
+    <!-- ==================== 视图 4：安装与使用指南（教程/下载 + 安装大全） ==================== -->
     <section id="view-install" class="tab-view">
       <div class="block-head">
         <div>
           <h2>安装与使用指南</h2>
-          <p class="muted-sm">下载适配客户端 → 观看视频教程 → 3 分钟导入订阅畅看</p>
+          <p class="muted-sm">先看 3 分钟视频下载适配安装包，或按自家电视/盒子品牌查阅专属安装大全</p>
         </div>
         <div class="seg-tabs" id="installSubTabs">
-          <button type="button" class="seg-btn active" data-subtab="sub-download">📦 软件下载</button>
-          <button type="button" class="seg-btn" data-subtab="sub-video">🎬 视频教程</button>
-          <button type="button" class="seg-btn" data-subtab="sub-steps">📖 图文步骤</button>
+          <button type="button" class="seg-btn active" data-subtab="sub-guide-dl">🎬 教程/下载</button>
+          <button type="button" class="seg-btn" data-subtab="sub-brands">📺 安装大全</button>
         </div>
       </div>
 
-      <!-- 子面板 1：软件下载 -->
-      <div id="sub-download" class="install-subpanel active">
-        <div id="apkDownloadsGrid" class="dl-grid"></div>
-        <p id="downloadNoteText" class="muted-sm" style="margin:10px 0 16px;">💡 下载链接由后台实时维护；如遇失效请到「会员 → 提交工单」获取最新安装包。</p>
+      <!-- 子面板 1：教程/下载（上面是视频教程，下面是软件下载） -->
+      <div id="sub-guide-dl" class="install-subpanel active">
+        <div class="card" style="margin-bottom:18px;">
+          <div class="card-head-row">
+            <div>
+              <h3>🎬 TVBox 安装与订阅导入视频教程</h3>
+              <p id="tutorialVideoDesc" class="muted-sm" style="margin-top:4px;">3 分钟手把手演示：TVBox 安装、超短专属地址扫码推送与换源技巧。</p>
+            </div>
+            <button type="button" class="btn-outline btn-xs" onclick="switchInstallSubTab('sub-brands')">按品牌查安装大全 →</button>
+          </div>
+          <div id="tutorialVideoWrap" class="video-player-box">
+            <div class="video-empty-slot">
+              <div style="font-size:2.2rem;margin-bottom:8px;">🎬</div>
+              <div style="font-weight:700;margin-bottom:4px;">视频教程即将上线</div>
+              <p class="muted-sm">管理员可在后台「站点与下载」填入 MP4 直链或 B 站嵌入链接，保存后立即在此播放。</p>
+            </div>
+          </div>
+        </div>
 
-        <!-- 赣州市城区上门安装服务卡片 -->
+        <div class="block-head" style="margin-bottom:10px;">
+          <div>
+            <h3 style="font-size:1.05rem;">📦 TVBox 适配客户端下载</h3>
+            <p class="muted-sm">根据电视/盒子系统版本选择对应安装包（安卓 5.0+ 首选通用最新版，老电视选 4.x 兼容版）</p>
+          </div>
+        </div>
+        <div id="apkDownloadsGrid" class="dl-grid"></div>
+        <p id="downloadNoteText" class="muted-sm" style="margin:10px 0 18px;">💡 下载链接由后台实时维护；如遇失效请到「会员 → 提交工单」获取最新安装包。</p>
+
         <div id="guideOnsiteCard" class="onsite-card">
           <div class="onsite-left">
             <div class="onsite-badge">🚗 赣州市城区专属 · 上门费 <span class="onsite-price-txt">¥99</span></div>
@@ -319,74 +331,221 @@
         </div>
       </div>
 
-      <!-- 子面板 2：视频教程 -->
-      <div id="sub-video" class="install-subpanel">
-        <div class="card">
-          <div class="card-head-row">
-            <div>
-              <h3>🎬 TVBox 安装与配置视频演示</h3>
-              <p id="tutorialVideoDesc" class="muted-sm" style="margin-top:4px;">3 分钟手把手演示：TVBox 安装、超短订阅地址导入与换源技巧。</p>
-            </div>
-            <button type="button" class="btn-outline btn-xs" onclick="switchInstallSubTab('sub-steps')">看图文版 →</button>
-          </div>
-          <div id="tutorialVideoWrap" class="video-player-box">
-            <div class="video-empty-slot">
-              <div style="font-size:2.2rem;margin-bottom:8px;">🎬</div>
-              <div style="font-weight:700;margin-bottom:4px;">视频教程即将上线</div>
-              <p class="muted-sm">管理员可在后台「站点与下载设置」填入 MP4 直链（推荐 Cloudflare R2）或 B 站嵌入链接，保存后立即在此播放。</p>
-            </div>
+      <!-- 子面板 2：安装大全（全品牌电视/盒子/投影仪分类检索 + 展开详细教程 + 通用配置步骤） -->
+      <div id="sub-brands" class="install-subpanel">
+        <div class="brand-search-bar">
+          <input id="brandGuideSearch" type="text" placeholder="🔍 输入电视或盒子品牌快速查找（如：小米、华为、海信、TCL、创维、索尼、N1、三星...）">
+          <div class="seg-tabs" id="brandCatTabs">
+            <button type="button" class="seg-btn active" data-bcat="all">全部设备</button>
+            <button type="button" class="seg-btn" data-bcat="tv">📺 智能电视</button>
+            <button type="button" class="seg-btn" data-bcat="box">📦 盒子/投影</button>
+            <button type="button" class="seg-btn" data-bcat="config">⚙️ 通用配置</button>
           </div>
         </div>
-      </div>
 
-      <!-- 子面板 3：图文步骤 -->
-      <div id="sub-steps" class="install-subpanel">
-        <div class="faq-list">
-          <details open>
-            <summary>第一步：将 TVBox 安装包安装到电视 / 盒子</summary>
-            <p>
-              <b>U 盘安装</b>：下载适配的 <code>.apk</code> 拷入 U 盘根目录插电视 USB，打开电视「文件管理器」点击安装。<br>
-              <b>免 U 盘推送</b>：电视装「甲壳虫 ADB / 当贝助手」，手机与电视连同一 Wi-Fi 直接推送安装。<br>
-              <b>常见品牌提示</b>：小米需允许安装未知来源；华为需关闭「纯净模式」；海信/TCL 可用「聚好看/欢视助手」。
-            </p>
-            <div class="demo-img-box">
-              <img src="images/step1.jpg" alt="第一步安装演示图" loading="lazy" onclick="openImgLightbox(this.src)" onerror="this.parentElement.classList.add('empty-slot')">
-              <div class="demo-img-placeholder">📷 演示图预留位（上传 <code>images/step1.jpg</code> 至网页仓库后自动显示）</div>
+        <div id="brandGuideList" class="faq-list">
+          <details class="brand-item" data-bcat="tv" data-keywords="小米 红米 xiaomi redmi miui 澎湃">
+            <summary><span class="brand-tag tv">电视</span> 小米电视 / 红米 Redmi 电视（含澎湃 OS）</summary>
+            <div class="brand-body">
+              <p><b>✅ 第一步：开启允许安装未知来源</b><br>
+              打开电视「设置」→「账号与安全」→ 将<b>「安装未知来源的应用」</b>与<b>「ADB 调试」</b>均设为<b>允许/开启</b>。</p>
+              <p><b>✅ 方法 A：U 盘直接安装（最稳定）</b><br>
+              1. 下载 TVBox <code>.apk</code> 拷到 FAT32 格式 U 盘根目录。<br>
+              2. 插入电视 USB 口，打开<b>「高清播放器」</b>或<b>「小米电视管家 → 文件管理」</b>找到 U 盘里的安装包点击安装。<br>
+              3. 若新版系统隐藏了 APK 文件，把文件后缀从 <code>.apk</code> 改为 <code>.apk1</code>，或用应用商店内的「欢视助手 / 小白文件管理」读取安装。</p>
+              <p><b>✅ 方法 B：免 U 盘手机无线推送</b><br>
+              手机与电视连同一 Wi-Fi，手机安装<b>「小米电视助手」</b>或<b>「甲壳虫 ADB 助手」</b>，连接电视 IP 后直接推送手机里下载好的 APK 一键安装。</p>
             </div>
           </details>
 
-          <details open>
-            <summary>第二步：扫码推送或手动输入「超短专属地址」</summary>
-            <p>
-              1. 打开 TVBox 点击右上角 <b>「设置」→「配置地址」</b>。<br>
-              2. <b>扫码推送（最省事）</b>：手机微信扫描电视屏幕二维码，粘贴本站在首页复制的超短专属地址（如 <code>https://tv.171234.xyz/s/6位码</code>），点击推送。<br>
-              3. 也可以直接用遥控器输入这串超短地址，点击 <b>「确定」</b> 返回首页等待 2 秒即可畅看！
-            </p>
-            <div class="demo-img-box">
-              <img src="images/step2.jpg" alt="第二步导入订阅演示图" loading="lazy" onclick="openImgLightbox(this.src)" onerror="this.parentElement.classList.add('empty-slot')">
-              <div class="demo-img-placeholder">📷 演示图预留位（上传 <code>images/step2.jpg</code> 至网页仓库后自动显示）</div>
+          <details class="brand-item" data-bcat="tv" data-keywords="华为 荣耀 智慧屏 huawei honor 鸿蒙 harmonyos">
+            <summary><span class="brand-tag tv">电视</span> 华为智慧屏 / 荣耀智慧屏（HarmonyOS）</summary>
+            <div class="brand-body">
+              <p><b>✅ 第一步：关闭纯净模式（关键！）</b><br>
+              进入「设置」→「系统和更新」→「纯净模式」→ 选择<b>「关闭/退出」</b>；再进入「安全」→ 开启<b>「允许安装来自外部来源的应用」</b>。</p>
+              <p><b>✅ 方法 A：U 盘安装</b><br>
+              将 TVBox <code>.apk</code> 存入 U 盘插到智慧屏 USB 口，打开「媒体中心」→「U 盘」→「文件」找到安装包点击安装，提示风险点「继续安装」。</p>
+              <p><b>✅ 方法 B：手机无线推送</b><br>
+              在智慧屏应用市场搜装「当贝助手 / 悟空遥控器」，或开启开发者模式网络调试后用手机「甲壳虫 ADB」直推。</p>
             </div>
           </details>
 
-          <details>
-            <summary>第三步：永久免费体验直播源如何导入？</summary>
-            <p>
-              在 TVBox「设置 → <b>直播地址</b>」栏填入极短体验地址 <code>https://tv.171234.xyz/f</code> 即可直接观看高清央卫视体验频道。
-            </p>
-            <div class="demo-img-box">
-              <img src="images/step3.jpg" alt="第三步直播导入演示图" loading="lazy" onclick="openImgLightbox(this.src)" onerror="this.parentElement.classList.add('empty-slot')">
-              <div class="demo-img-placeholder">📷 演示图预留位（上传 <code>images/step3.jpg</code> 至网页仓库后自动显示）</div>
+          <details class="brand-item" data-bcat="tv" data-keywords="海信 hisense vidda 聚好看">
+            <summary><span class="brand-tag tv">电视</span> 海信电视 / Vidda 电视（聚好看系统）</summary>
+            <div class="brand-body">
+              <p><b>✅ 第一步：开启商场模式（解决 U 盘不显示 APK）</b><br>
+              进入电视「设置」→「通用」→「使用模式」→ 切换为<b>「商场模式」</b>（装完软件后可再切回「家庭模式」）。</p>
+              <p><b>✅ 方法 A：U 盘安装</b><br>
+              插入拷有 TVBox APK 的 U 盘，打开电视「媒体中心」→「U 盘」，按遥控器<b>「菜单键」</b>选择「全部文件」，找到安装包点击安装。</p>
+              <p><b>✅ 方法 B：海信爱家 / 聚好看推送</b><br>
+              手机与电视同 Wi-Fi，打开官方「海信爱家」App → 工具箱 → 传文件/投应用，选择已下载的 APK 推送至电视安装。</p>
             </div>
           </details>
 
-          <details>
-            <summary>第四步：切源换线、播放解码与测速排序生效</summary>
-            <p>
-              看直播按遥控器<b>确认键</b>秒切同频道备用高速源；如遇有声无画，在「设置 → 播放器」切换 <b>IJK / EXO</b> 及 <b>硬解 / 软解</b>。网页重新测速保存排序后，彻底退出 TVBox 重启即自动生效。
-            </p>
-            <div class="demo-img-box">
-              <img src="images/step4.jpg" alt="第四步播放设置演示图" loading="lazy" onclick="openImgLightbox(this.src)" onerror="this.parentElement.classList.add('empty-slot')">
-              <div class="demo-img-placeholder">📷 演示图预留位（上传 <code>images/step4.jpg</code> 至网页仓库后自动显示）</div>
+          <details class="brand-item" data-bcat="tv" data-keywords="tcl 雷鸟 ffalcon 灵控桌面 乐华">
+            <summary><span class="brand-tag tv">电视</span> TCL 电视 / 雷鸟电视（灵控桌面）</summary>
+            <div class="brand-body">
+              <p><b>✅ 方法 A：电视卫士极速安装（推荐）</b><br>
+              将 TVBox <code>.apk</code> 拷入 U 盘插入电视 USB 口，打开电视桌面<b>「电视卫士」→「应用管理」→「极速安装」</b>，选中 U 盘安装包即可跳过拦截直接安装。</p>
+              <p><b>✅ 方法 B：修改后缀名绕过拦截</b><br>
+              若新版系统提示禁止安装，先在自带应用商店装「欢视助手」或「当贝助手」，将 U 盘里的 APK 后缀改为 <code>.apk1</code>，再通过助手的文件管理点击安装。</p>
+              <p><b>✅ 方法 C：局域网扫码推送</b><br>
+              打开「电视卫士 / 欢视助手 → 文件传输」，手机浏览器扫码上传 APK 文件直接安装。</p>
+            </div>
+          </details>
+
+          <details class="brand-item" data-bcat="tv" data-keywords="创维 酷开 skyworth coocaa">
+            <summary><span class="brand-tag tv">电视</span> 创维电视 / 酷开电视（酷开系统）</summary>
+            <div class="brand-body">
+              <p><b>✅ 方法 A：应用调试密码安装（创维/酷开专属神技）</b><br>
+              1. 在电视应用圈搜索<b>「YYTS」</b>（应用调试）并下载打开。<br>
+              2. 输入官方调试密码 <code>69573028</code>（老机型可试 <code>123456</code>）点击确认，系统会自动解锁 U 盘安装包识别！<br>
+              3. 插入拷有 TVBox APK 的 U 盘，直接点击安装即可。</p>
+              <p><b>✅ 方法 B：手机「电视派」推送</b><br>
+              手机下载「酷开电视派 / 悟空遥控」，连同一 Wi-Fi 后使用「本地应用推送」直接安装。</p>
+            </div>
+          </details>
+
+          <details class="brand-item" data-bcat="tv" data-keywords="长虹 changhong chiq">
+            <summary><span class="brand-tag tv">电视</span> 长虹电视 / CHiQ 电视</summary>
+            <div class="brand-body">
+              <p><b>✅ 方法 A：媒体中心 U 盘直装</b><br>
+              进入电视「设置 → 安全」开启<b>「允许安装未知来源应用」</b>；插入 U 盘打开「媒体中心 / 文件管理」找到 TVBox APK 点击安装。</p>
+              <p><b>✅ 方法 B：欢视助手扫码传装</b><br>
+              在长虹应用商店安装「欢视助手」或「当贝助手」，手机扫码把下载好的 APK 无线传到电视上安装。</p>
+            </div>
+          </details>
+
+          <details class="brand-item" data-bcat="tv" data-keywords="康佳 konka kktv">
+            <summary><span class="brand-tag tv">电视</span> 康佳电视 / KKTV</summary>
+            <div class="brand-body">
+              <p><b>✅ U 盘安装</b><br>
+              将 TVBox APK 拷入 U 盘插入电视 USB 口（早期安卓 4.x 康佳老电视请选本站<b>「Android 4.x 兼容版」</b>），打开「文件管理 / 多媒体」找到安装包点击安装。<br>
+              <b>✅ 手机无线推送</b>：在电视应用商店装「易互动」或「当贝助手」，手机同 Wi-Fi 直接推送安装。</p>
+            </div>
+          </details>
+
+          <details class="brand-item" data-bcat="tv" data-keywords="海尔 haier 统帅 leader 卡萨帝">
+            <summary><span class="brand-tag tv">电视</span> 海尔电视 / 统帅 / 卡萨帝电视</summary>
+            <div class="brand-body">
+              <p><b>✅ U 盘安装步骤</b><br>
+              1. U 盘拷入 TVBox APK 插入电视 USB 口，打开「多媒体」或「应用管理 → 本地安装」直接点击安装。<br>
+              2. 若部分新款海尔屏蔽了直接识别，先在应用商店装「小白文件管理器 / 当贝助手」，再通过该软件读取 U 盘安装。</p>
+            </div>
+          </details>
+
+          <details class="brand-item" data-bcat="tv" data-keywords="索尼 sony bravia google tv">
+            <summary><span class="brand-tag tv">电视</span> 索尼电视 Sony（国行安卓 / 海外 Google TV）</summary>
+            <div class="brand-body">
+              <p><b>✅ 第一步：开启未知来源权限</b><br>
+              进入「设置」→「应用」→「安全和限制」→「未知来源」→ 打开文件管理器的安装权限。</p>
+              <p><b>✅ 安装方法</b><br>
+              1. <b>国行索尼</b>：电视应用商店搜「应用助手」或「当贝助手」打开，插上 U 盘直接点击安装 TVBox APK。<br>
+              2. <b>海外 Google TV</b>：在 Play 商店装「Send Files to TV」或「X-plore」，手机同 Wi-Fi 传送 APK 安装。<br>
+              3. <b>解码建议</b>：索尼芯片性能强悍，TVBox 内选 <b>EXO 播放器 + 硬解</b> 可丝滑硬解 4K。</p>
+            </div>
+          </details>
+
+          <details class="brand-item" data-bcat="tv" data-keywords="飞利浦 夏普 东芝 松下 乐视 暴风 风行 philips sharp toshiba panasonic letv">
+            <summary><span class="brand-tag tv">电视</span> 飞利浦 / 夏普 / 东芝 / 松下 / 乐视等安卓电视</summary>
+            <div class="brand-body">
+              <p><b>✅ 通用 U 盘安装法（适用绝大多数安卓内核电视）</b><br>
+              1. 到电视「设置 → 通用/安全」开启<b>「允许安装未知来源应用」</b>。<br>
+              2. <b>2017 年以后机型</b>下载「通用最新版 (Android 5.0+)」；<b>2016 年前老机型</b>下载「老旧设备兼容版 (Android 4.x)」。<br>
+              3. U 盘插电视 USB 口，打开「文件管理 / 媒体中心」点击安装；若看不到 APK，先在自带应用商店装「小白文件管理 / 当贝助手」再打开 U 盘即可。</p>
+            </div>
+          </details>
+
+          <details class="brand-item" data-bcat="tv" data-keywords="三星 lg 三洋 老电视 非智能 samsung webos tizen">
+            <summary><span class="brand-tag warn">必看</span> 三星 / LG / 非智能老款 LED 电视（无安卓系统）</summary>
+            <div class="brand-body">
+              <p><b>⚠️ 重要提示</b><br>
+              三星电视（Tizen 系统）、LG 电视（WebOS 系统）以及早期非智能 LED 电视（如老款三洋、松下、夏普等）<b>底层不是安卓系统，无法直接安装 APK</b>。</p>
+              <p><b>✅ 最佳方案</b><br>
+              花几十到两百元配一个外接安卓盒子（如 <b>斐讯 N1、当贝盒子、小米盒子、腾讯极光盒子</b>），用 HDMI 线插电视，遥控器切换信号源到对应 HDMI 口即可畅看 TVBox，流畅度还远超普通电视自带芯片！</p>
+            </div>
+          </details>
+
+          <details class="brand-item" data-bcat="box" data-keywords="小米盒子 xiaomi box">
+            <summary><span class="brand-tag box">盒子</span> 小米盒子（全系列通用）</summary>
+            <div class="brand-body">
+              <p><b>✅ 步骤 1</b>：进入「设置 → 账号与安全」→ 将「安装未知来源的应用」和「ADB 调试」设为<b>允许</b>。<br>
+              <b>✅ 步骤 2</b>：U 盘拷入 TVBox APK 插到盒子 USB 口，弹窗选「打开」（或进「高清播放器 → 设备」）点击安装。<br>
+              <b>✅ 免 U 盘法</b>：手机装「小米电视助手 / 甲壳虫 ADB」，连同一 Wi-Fi 直接推送安装。</p>
+            </div>
+          </details>
+
+          <details class="brand-item" data-bcat="box" data-keywords="当贝 极米 坚果 峰米 投影仪 dangbei xgimi jmgo">
+            <summary><span class="brand-tag box">盒子/投影</span> 当贝盒子 / 极米 / 坚果 / 峰米投影仪</summary>
+            <div class="brand-body">
+              <p><b>✅ 零限制秒装法</b><br>
+              1. <b>U 盘直装</b>：插入 U 盘，打开自带「文件管理器」点击 TVBox APK 直接安装。<br>
+              2. <b>网页免 U 盘快传</b>：打开自带「当贝助手 / 文件传输」，手机浏览器扫屏幕二维码，直接把手机里的 APK 传过去安装。</p>
+            </div>
+          </details>
+
+          <details class="brand-item" data-bcat="box" data-keywords="天猫魔盒 yunos 阿里">
+            <summary><span class="brand-tag box">盒子</span> 天猫魔盒（YunOS 系统防删避坑）</summary>
+            <div class="brand-body">
+              <p><b>✅ 安装与避坑</b><br>
+              1. U 盘拷入 APK 插上天猫魔盒，弹窗选<b>「应用」</b>即可看到安装包并点击安装。<br>
+              2. 老款魔盒多为 Android 4.4 内核，若提示“解析包出错”，请换本站的<b>「Android 4.x 兼容版」</b>。<br>
+              3. 装完后尽量不要点系统的强制升级弹窗，避免第三方软件被清理。</p>
+            </div>
+          </details>
+
+          <details class="brand-item" data-bcat="box" data-keywords="斐讯 n1 外贸盒子 yyf 晶晨 s905 电视盒子">
+            <summary><span class="brand-tag box">盒子</span> 斐讯 N1 / 外贸盒子（YYF / 安卓 TV 精简固件）</summary>
+            <div class="brand-body">
+              <p><b>✅ 零广告神机安装法</b><br>
+              1. <b>U 盘直装</b>：插上 U 盘，打开「文件管理器 / 小白文件管理」直接点 TVBox APK 安装。<br>
+              2. <b>手机 ADB 秒推</b>：在盒子设置里记下局域网 IP（如 <code>192.168.1.x</code>），手机打开「甲壳虫 ADB 助手」输入 IP 连接直推 APK。<br>
+              3. <b>解码建议</b>：配合 TVBox 内置 <b>IJK 软硬解切换</b>，高清直播与 4K 点播均可丝滑秒开。</p>
+            </div>
+          </details>
+
+          <details class="brand-item" data-bcat="box" data-keywords="腾讯极光 创维小湃 泰捷 迪优美特 开博尔">
+            <summary><span class="brand-tag box">盒子</span> 腾讯极光盒子 / 创维小湃 / 泰捷等主流安卓盒子</summary>
+            <div class="brand-body">
+              <p><b>✅ 安装步骤</b><br>
+              1. 进入盒子「设置 → 安全/通用」开启「允许安装未知来源应用」。<br>
+              2. U 盘拷入 TVBox APK 插上盒子，在「文件管理 / 我的应用 → 本地安装」点击安装即可；腾讯极光盒子也可在微信搜「极光盒子助手」远程推送 APK。</p>
+            </div>
+          </details>
+
+          <details class="brand-item" data-bcat="box" data-keywords="移动 魔百盒 电信 悦me 联通 沃家 运营商 机顶盒 华为悦盒 中兴">
+            <summary><span class="brand-tag warn">特殊</span> 运营商机顶盒（移动魔百盒 / 电信悦me / 联通沃家）</summary>
+            <div class="brand-body">
+              <p><b>⚠️ 说明</b><br>
+              宽带赠送的运营商机顶盒出厂默认锁定安装权限。需先按机身背面型号（如 CM311-1a、EC6108V9 等）搜「开启 ADB / 刷当贝或 YYF 精简固件」解锁后才能装 TVBox；若嫌刷机麻烦，直接配一个百元内纯安卓盒子更省心。</p>
+            </div>
+          </details>
+
+          <details class="brand-item" data-bcat="box" data-keywords="手机 平板 安卓 车机 苹果 ios android">
+            <summary><span class="brand-tag box">移动/车机</span> 安卓手机 / 平板 / 车机 & 苹果手机说明</summary>
+            <div class="brand-body">
+              <p><b>✅ 安卓手机 / 平板 / 车机</b>：在「教程/下载」页直接下载 TVBox 通用最新版 APK 安装，导入同一条超短地址即可与电视共享。<br>
+              <b>✅ 苹果 iPhone / iPad</b>：苹果不支持安卓 APK，直接用 Safari 打开本站 <code>tv.171234.xyz</code> 即可免装软件在线看直播与点播！</p>
+            </div>
+          </details>
+
+          <details class="brand-item" data-bcat="config" data-keywords="配置 订阅 导入 扫码 直播 点播 换源 通用" open>
+            <summary><span class="brand-tag cfg">通用配置</span> 装好 TVBox 后：如何导入专属订阅地址（4 步搞定）</summary>
+            <div class="brand-body">
+              <p><b>第 1 步</b>：打开 TVBox 点右上角<b>「设置」→「配置地址」</b>（仅用免费体验直播请点「直播地址」）。</p>
+              <p><b>第 2 步（扫码推送最省事）</b>：用手机微信扫描电视屏幕弹出的推送二维码，粘贴在本站首页复制的超短专属地址（如 <code>https://tv.171234.xyz/s/6位码</code>），点击推送，遥控器点<b>「确定」</b>返回首页等待 2 秒即可加载全部直播与点播！</p>
+              <p><b>第 3 步（永久免费直播体验）</b>：在 TVBox「设置 → 直播地址」填入 <code>https://tv.171234.xyz/f</code> 即可免费畅看高清央卫视体验台。</p>
+              <p><b>第 4 步（换源与智能排序生效）</b>：看直播按遥控器<b>确认键</b>秒切同频道备用高速源；若遇个别源有声无画，在「设置 → 播放器」切换 <b>IJK / EXO</b> 及 <b>硬解 / 软解</b>；在网页点播看过片后，专属最快路线排序会自动同步，彻底退出 TVBox 重启即生效。</p>
+              <div class="demo-img-grid">
+                <div class="demo-img-box">
+                  <img src="images/step1.jpg" alt="安装演示图" loading="lazy" onclick="openImgLightbox(this.src)" onerror="this.parentElement.classList.add('empty-slot')">
+                  <div class="demo-img-placeholder">📷 演示图 1（<code>images/step1.jpg</code>）</div>
+                </div>
+                <div class="demo-img-box">
+                  <img src="images/step2.jpg" alt="导入订阅演示图" loading="lazy" onclick="openImgLightbox(this.src)" onerror="this.parentElement.classList.add('empty-slot')">
+                  <div class="demo-img-placeholder">📷 演示图 2（<code>images/step2.jpg</code>）</div>
+                </div>
+              </div>
             </div>
           </details>
         </div>
@@ -524,8 +683,8 @@
   <div id="authModal" class="modal hidden">
     <div class="modal-box">
       <button type="button" class="close" data-close="authModal">×</button>
-      <h2 id="authTitle">注册并领取 7 天全功能免费试用</h2>
-      <p id="authSubtitle" class="muted-sm" style="margin:6px 0 12px;">支持 QQ、163、126、新浪、Outlook、Gmail、iCloud 等常用邮箱</p>
+      <h2 id="authTitle">会员登录</h2>
+      <p id="authSubtitle" class="muted-sm hidden" style="margin:6px 0 12px;"></p>
       <form id="authForm">
         <label>常用邮箱
           <input name="email" type="email" placeholder="例如：123456@qq.com" required>
@@ -540,7 +699,7 @@
               <button type="button" id="sendCodeBtn" class="btn-secondary" style="white-space:nowrap;">获取验证码</button>
             </div>
           </label>
-          <p class="spam-tip">📮 提示：验证码邮件可能被 QQ / 163 / Gmail 等邮箱误判进<b>「垃圾邮件 / 广告箱」</b>，如 1 分钟未收到请务必先翻看垃圾箱！</p>
+          <p class="spam-tip">📮 支持 QQ / 163 / Gmail 等常用邮箱；若 1 分钟未收到验证码，请先翻看<b>「垃圾邮件 / 广告箱」</b>。</p>
           <label>好友邀请码（选填 · 首次付费双方各送会员时长）
             <input name="inviteCode" id="registerInviteCode" type="text" maxlength="16" placeholder="如有好友邀请码请填写，无则留空">
           </label>

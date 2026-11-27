@@ -1409,3 +1409,81 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
   background: rgba(59, 130, 246, 0.14);
   color: #60a5fa;
 }
+
+/* V15: 订阅地址卡片 3 层清爽布局（彻底解决手机端二维码与链接挤压换行问题） */
+.sub-url-box {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.sub-url-code {
+  display: block;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.86rem;
+  color: #34d399;
+  white-space: nowrap;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+.sub-btn-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
+.sub-btn-pair button {
+  width: 100%;
+  justify-content: center;
+  margin-top: 0 !important;
+}
+
+/* V15: 安装大全搜索条与品牌分类标签 */
+.brand-search-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.brand-search-bar input {
+  width: 100%;
+  margin-top: 0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+.brand-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 6px;
+  margin-right: 7px;
+  vertical-align: middle;
+}
+.brand-tag.tv { background: rgba(59, 130, 246, 0.18); color: #60a5fa; }
+.brand-tag.box { background: rgba(16, 185, 129, 0.18); color: #34d399; }
+.brand-tag.warn { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+.brand-tag.cfg { background: rgba(168, 85, 247, 0.2); color: #c084fc; }
+.brand-body {
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.86rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+.brand-body b { color: var(--text); }
+.demo-img-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  margin-top: 6px;
+}

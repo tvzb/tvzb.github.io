@@ -1322,7 +1322,8 @@ function renderVodSitesEditor() {
   box.innerHTML = list.map((s, idx) => {
     const tags = [];
     if (s.webStatus === 'web') {
-      tags.push('<span style="font-size:0.74rem;padding:2px 8px;border-radius:99px;background:rgba(16,185,129,0.2);color:#34d399;font-weight:800;">🌐 网页可播(实测)</span>');
+      const spdTxt = s.globalSpeedMBs > 0 ? ` · 全站均速 ${Number(s.globalSpeedMBs).toFixed(1)}M/s` : '';
+      tags.push(`<span style="font-size:0.74rem;padding:2px 8px;border-radius:99px;background:rgba(16,185,129,0.2);color:#34d399;font-weight:800;">🌐 网页可播${spdTxt}</span>`);
     } else if (s.webStatus === 'tvbox') {
       tags.push('<span style="font-size:0.74rem;padding:2px 8px;border-radius:99px;background:rgba(245,158,11,0.18);color:#fbbf24;font-weight:800;">📺 仅TVBox(实测)</span>');
     } else {
