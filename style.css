@@ -1530,3 +1530,58 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
   font-size: 0.84rem;
   font-weight: 600;
 }
+
+/* V17: 专属邀请裂变海报弹窗 */
+.poster-modal-box {
+  max-width: 410px !important;
+  padding: 18px 18px 20px !important;
+}
+.poster-theme-tabs {
+  display: inline-flex;
+  gap: 6px;
+}
+.poster-theme-btn {
+  padding: 4px 10px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  border-radius: 99px;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  cursor: pointer;
+}
+.poster-theme-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+.poster-preview-wrap {
+  background: #060a14;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 8px;
+  text-align: center;
+  min-height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#invitePosterImg {
+  width: 100%;
+  max-height: 62vh;
+  object-fit: contain;
+  border-radius: 10px;
+  display: block;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  -webkit-touch-callout: default;
+  user-select: auto;
+}
+.poster-save-tip {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 10px 0 0;
+}
+.poster-save-tip b {
+  color: #34d399;
+}

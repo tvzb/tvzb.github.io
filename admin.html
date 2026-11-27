@@ -339,7 +339,7 @@
     <div class="login-box">
       <div class="login-logo">📺</div>
       <h2>TVBox 运营管理中枢</h2>
-      <p class="login-sub">171234.xyz 全站会员 · 直播源 · 点播平台控制台</p>
+      <p class="login-sub">171234.xyz 全站会员 · 点播平台 · 直播源控制台</p>
       <label>管理员密钥
         <input id="adminPassword" type="password" placeholder="请输入 ADMIN_SECRET" autocomplete="current-password">
       </label>
@@ -375,20 +375,20 @@
         </button>
 
         <div class="nav-section-label">配置与自动化</div>
-        <button type="button" class="nav-item" data-tab="pricing" data-crumb="系统配置 / 套餐与早鸟（全能双享-直播-点播）">
+        <button type="button" class="nav-item" data-tab="pricing" data-crumb="系统配置 / 套餐与早鸟（全能双享-点播-直播）">
           <span>💰 套餐与早鸟</span>
         </button>
         <button type="button" class="nav-item" data-tab="coupons" data-crumb="系统配置 / 优惠码管理">
           <span>🏷️ 优惠码管理</span>
+        </button>
+        <button type="button" class="nav-item" data-tab="vodcfg" data-crumb="系统配置 / 点播平台管理">
+          <span>🎬 点播平台管理</span>
         </button>
         <button type="button" class="nav-item" data-tab="livecfg" data-crumb="系统配置 / 直播采集配置">
           <span>📡 直播采集配置</span>
         </button>
         <button type="button" class="nav-item" data-tab="testcfg" data-crumb="系统配置 / 免费体验源">
           <span>🧪 体验源配置</span>
-        </button>
-        <button type="button" class="nav-item" data-tab="vodcfg" data-crumb="系统配置 / 点播平台管理">
-          <span>🎬 点播平台管理</span>
         </button>
         <button type="button" class="nav-item" data-tab="settings" data-crumb="系统配置 / 站点与下载设置">
           <span>⚙️ 站点与下载</span>
@@ -418,8 +418,8 @@
         <!-- 核心数据看板 -->
         <div class="stats-grid">
           <div class="stat-card"><div class="label">总注册用户</div><div class="num" id="statUsers">-</div></div>
-          <div class="stat-card c-live"><div class="label">有效直播会员</div><div class="num" id="statActiveLive">-</div></div>
           <div class="stat-card c-vod"><div class="label">有效点播会员</div><div class="num" id="statActiveVod">-</div></div>
+          <div class="stat-card c-live"><div class="label">有效直播会员</div><div class="num" id="statActiveLive">-</div></div>
           <div class="stat-card pending"><div class="label">待审核订单</div><div class="num" id="statPending">-</div></div>
           <div class="stat-card pending"><div class="label">待回复工单</div><div class="num" id="statOpenTickets">-</div></div>
           <div class="stat-card"><div class="label">今日订单数</div><div class="num" id="statToday">-</div></div>
@@ -467,8 +467,8 @@
               <tr>
                 <th>ID</th>
                 <th>邮箱</th>
-                <th>直播到期</th>
                 <th>点播到期</th>
+                <th>直播到期</th>
                 <th>状态</th>
                 <th>注册 IP</th>
                 <th>最近活跃</th>
@@ -512,7 +512,7 @@
           <div class="panel-head">
             <div>
               <h3>🏷️ 优惠码与促销券管理</h3>
-              <span class="muted">支持立减（元）或百分比折扣，适用范围按「全能双享 / 纯直播 / 纯点播」设置。</span>
+              <span class="muted">支持立减（元）或百分比折扣，适用范围按「全能双享 / 纯点播 / 纯直播」设置。</span>
             </div>
             <button id="openCreateCouponBtn" class="primary">+ 新建优惠码</button>
           </div>
@@ -538,7 +538,7 @@
           <div class="panel-head">
             <div>
               <h3>💰 会员套餐与阶梯早鸟折扣管理</h3>
-              <span class="muted">全站与后台套餐严格按「🔥 全能双享 → 📡 纯直播 → 📺 纯点播」顺序排列。</span>
+              <span class="muted">全站与后台套餐严格按「🔥 全能双享 → 🎬 纯点播 → 📡 纯直播」顺序排列。</span>
             </div>
             <button id="savePricingBtn" class="primary">💾 保存全部套餐与早鸟配置</button>
           </div>
@@ -580,7 +580,7 @@
           </div>
 
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
-            <b style="font-size:0.98rem;">📦 会员套餐列表（严格顺序：🔥 全能双享 → 📡 纯直播 → 📺 纯点播）</b>
+            <b style="font-size:0.98rem;">📦 会员套餐列表（严格顺序：🔥 全能双享 → 🎬 纯点播 → 📡 纯直播）</b>
             <button id="addPlanBtn" class="secondary">+ 新增套餐</button>
           </div>
           <div id="plansEditorContainer"></div>
@@ -780,11 +780,11 @@
       <button class="close" data-close="extendModal">×</button>
       <h2>延长会员时长</h2>
       <p class="muted" id="extendEmail" style="margin-bottom:12px;"></p>
-      <label>增加直播天数
-        <input id="extendLiveDays" type="number" min="0" value="0">
-      </label>
       <label>增加点播天数
         <input id="extendVodDays" type="number" min="0" value="0">
+      </label>
+      <label>增加直播天数
+        <input id="extendLiveDays" type="number" min="0" value="0">
       </label>
       <button id="confirmExtendBtn" class="primary block">确认延长</button>
       <p id="extendMsg" class="msg"></p>
@@ -853,8 +853,8 @@
           <select id="cpScope">
             <option value="all">全部套餐</option>
             <option value="combo">仅全能双享包</option>
-            <option value="live">仅直播会员</option>
             <option value="vod">仅点播会员</option>
+            <option value="live">仅直播会员</option>
           </select>
         </label>
         <label>最低消费门槛 (元)

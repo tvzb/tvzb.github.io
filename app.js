@@ -399,7 +399,7 @@ function renderEarlyBirdBanner() {
 function renderDynamicPlans() {
   const grid = document.getElementById('dynamicPlansGrid');
   if (!grid) return;
-  const catRank = { combo: 1, live: 2, vod: 3 };
+  const catRank = { combo: 1, vod: 2, live: 3 };
   const list = dynamicPlans
     .filter(p => currentPlanCategory === 'all' || p.category === currentPlanCategory)
     .sort((a, b) => (catRank[a.category] || 9) - (catRank[b.category] || 9) || Number(a.sort || 99) - Number(b.sort || 99));
@@ -411,8 +411,8 @@ function renderDynamicPlans() {
   grid.innerHTML = list.map(p => {
     const hasDisc = p.earlyBirdSaved > 0 && p.effectivePrice < p.originalPrice;
     const chips = [];
+    if (p.vodDays > 0) chips.push(`🎬 点播 ${p.vodDays} 天`);
     if (p.liveDays > 0) chips.push(`📡 直播 ${p.liveDays} 天`);
-    if (p.vodDays > 0) chips.push(`📺 点播 ${p.vodDays} 天`);
     return `
       <article class="plan-card ${p.featured ? 'featured' : ''}">
         <div>
@@ -682,8 +682,8 @@ function renderAccountDashboard(user, orders, tickets) {
   const liveActive = user.live_expire_at > now;
 
   document.getElementById('profileBadges').innerHTML = `
-    <span class="badge ${liveActive ? 'active' : 'expired'}">直播: ${liveActive ? '剩' + daysLeft(user.live_expire_at) + '天' : '免费版'}</span>
     <span class="badge ${vodActive ? 'active' : 'expired'}">点播: ${vodActive ? '剩' + daysLeft(user.vod_expire_at) + '天' : '未开通'}</span>
+    <span class="badge ${liveActive ? 'active' : 'expired'}">直播: ${liveActive ? '剩' + daysLeft(user.live_expire_at) + '天' : '免费版'}</span>
   `;
 
   const allUrl = user.allSubUrl || `${API_BASE}/s/${user.token}`;
@@ -702,22 +702,22 @@ function renderAccountDashboard(user, orders, tickets) {
       <button type="button" class="btn-primary btn-sm-pad" onclick="copyText('${allUrl}', this)">📋 一键复制</button>
       <button type="button" class="btn-outline btn-sm-pad" onclick="openSubQrModal('${allUrl}', '一键全能聚合地址')">📱 扫码导入</button>
     </div>
-    <p class="muted-sm" style="margin-top:10px;">到期时间：直播 ${formatDate(user.live_expire_at)} · 点播 ${formatDate(user.vod_expire_at)}（仅限 TVBox 加载防泄露）</p>
+    <p class="muted-sm" style="margin-top:10px;">到期时间：点播 ${formatDate(user.vod_expire_at)} · 直播 ${formatDate(user.live_expire_at)}（仅限 TVBox 加载防泄露）</p>
     <details style="margin-top:12px;border-top:1px dashed var(--border);padding-top:10px;">
-      <summary style="cursor:pointer;color:var(--muted);font-size:0.84rem;">展开独立直播 / 独立点播分离地址</summary>
+      <summary style="cursor:pointer;color:var(--muted);font-size:0.84rem;">展开独立点播 / 独立直播分离地址</summary>
+      <div style="margin-top:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+          <span class="muted-sm">🎬 独立点播</span>
+          <button type="button" class="btn-outline btn-xs" onclick="copyText('${vodUrl}', this)">复制</button>
+        </div>
+        <code class="inline-code" style="width:100%;">${vodUrl}</code>
+      </div>
       <div style="margin-top:10px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
           <span class="muted-sm">📡 独立直播</span>
           <button type="button" class="btn-outline btn-xs" onclick="copyText('${liveUrl}', this)">复制</button>
         </div>
         <code class="inline-code" style="width:100%;">${liveUrl}</code>
-      </div>
-      <div style="margin-top:10px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-          <span class="muted-sm">📺 独立点播</span>
-          <button type="button" class="btn-outline btn-xs" onclick="copyText('${vodUrl}', this)">复制</button>
-        </div>
-        <code class="inline-code" style="width:100%;">${vodUrl}</code>
       </div>
     </details>
   `;
@@ -732,11 +732,11 @@ function renderAccountDashboard(user, orders, tickets) {
   const homeSubBadges = document.getElementById('homeSubBadges');
   const homeSubBody = document.getElementById('homeSubBody');
   if (homeSubBadges) {
-    homeSubBadges.innerHTML = `<span class="badge ${liveActive ? 'active' : 'expired'}">直播:${liveActive ? '剩' + daysLeft(user.live_expire_at) + '天' : '免费'}</span> <span class="badge ${vodActive ? 'active' : 'expired'}">点播:${vodActive ? '剩' + daysLeft(user.vod_expire_at) + '天' : '未开'}</span>`;
+    homeSubBadges.innerHTML = `<span class="badge ${vodActive ? 'active' : 'expired'}">点播:${vodActive ? '剩' + daysLeft(user.vod_expire_at) + '天' : '未开'}</span> <span class="badge ${liveActive ? 'active' : 'expired'}">直播:${liveActive ? '剩' + daysLeft(user.live_expire_at) + '天' : '免费'}</span>`;
   }
   if (homeSubBody) {
     homeSubBody.innerHTML = `
-      <p class="muted-sm" style="margin:6px 0 10px;">填入 TVBox「配置地址」栏，直播与点播全自动更新。</p>
+      <p class="muted-sm" style="margin:6px 0 10px;">填入 TVBox「配置地址」栏，点播与直播全自动更新。</p>
       <div class="sub-url-box">
         <code class="sub-url-code">${allUrl}</code>
       </div>
@@ -760,6 +760,14 @@ function renderAccountDashboard(user, orders, tickets) {
     invStatsEl.textContent = `已邀请 ${user.invite_stats.count || 0} 人 · 累计获赠 ${user.invite_stats.totalDays || 0} 天`;
   }
   if (invCopyBtn) invCopyBtn.onclick = () => copyText(invUrl, invCopyBtn);
+  const invPosterBtn = document.getElementById('openInvitePosterBtn');
+  if (invPosterBtn) {
+    invPosterBtn.onclick = () => openInvitePosterModal({
+      invUrl,
+      invCode,
+      rewardDays: Number(user.invite_reward_days ?? 15)
+    });
+  }
 
   document.getElementById('mineOrderCount').textContent = String((orders || []).length);
   document.getElementById('mineTicketCount').textContent = String((tickets || []).length);
@@ -2237,4 +2245,329 @@ function filterBrandGuides() {
     el.classList.toggle('hidden', !(catOk && qOk));
     if (q && catOk && qOk) el.open = true;
   });
+}
+
+
+// ================= 专属邀请裂变海报生成（纯前端 Canvas 高清合成，支持微信长按保存/转发） =================
+let activeInvitePosterMeta = null;
+let activePosterTheme = 'cinema';
+let activePosterDataUrl = '';
+
+function drawRoundedRectPath(ctx, x, y, w, h, r) {
+  const rad = Math.min(r, w / 2, h / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + rad, y);
+  ctx.arcTo(x + w, y, x + w, y + h, rad);
+  ctx.arcTo(x + w, y + h, x, y + h, rad);
+  ctx.arcTo(x, y + h, x, y, rad);
+  ctx.arcTo(x, y, x + w, y, rad);
+  ctx.closePath();
+}
+
+function generateLocalQrCanvas(text, size = 240) {
+  return new Promise((resolve) => {
+    if (typeof QRCode !== 'undefined') {
+      try {
+        const tmp = document.createElement('div');
+        tmp.style.cssText = 'position:fixed;left:-9999px;top:-9999px;visibility:hidden;';
+        document.body.appendChild(tmp);
+        new QRCode(tmp, {
+          text,
+          width: size,
+          height: size,
+          colorDark: '#0f172a',
+          colorLight: '#ffffff',
+          correctLevel: QRCode.CorrectLevel.M
+        });
+        setTimeout(() => {
+          const qrCanvas = tmp.querySelector('canvas');
+          const qrImg = tmp.querySelector('img');
+          if (qrCanvas) {
+            const copyC = document.createElement('canvas');
+            copyC.width = qrCanvas.width;
+            copyC.height = qrCanvas.height;
+            copyC.getContext('2d').drawImage(qrCanvas, 0, 0);
+            tmp.remove();
+            resolve(copyC);
+            return;
+          }
+          if (qrImg && qrImg.src) {
+            const img = new Image();
+            img.onload = () => { tmp.remove(); resolve(img); };
+            img.onerror = () => { tmp.remove(); resolve(null); };
+            img.src = qrImg.src;
+            return;
+          }
+          tmp.remove();
+          resolve(null);
+        }, 60);
+        return;
+      } catch (e) {}
+    }
+    // 兜底远程二维码（带 anonymous CORS，避免污染 Canvas）
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => resolve(img);
+    img.onerror = () => resolve(null);
+    img.src = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(text)}`;
+  });
+}
+
+async function renderInvitePosterImage(themeKey = 'cinema') {
+  if (!activeInvitePosterMeta) return;
+  activePosterTheme = themeKey;
+
+  const loadingEl = document.getElementById('invitePosterLoading');
+  const imgEl = document.getElementById('invitePosterImg');
+  if (loadingEl) { loadingEl.textContent = '正在合成高清专属海报...'; loadingEl.classList.remove('hidden'); }
+  if (imgEl) imgEl.classList.add('hidden');
+
+  const { invUrl, invCode, rewardDays } = activeInvitePosterMeta;
+  const trialDays = Number(currentTrialDays || 7);
+  const liveCnt = Number(currentLiveCount || 49);
+  const vodCnt = Number(currentVodCount || 21);
+
+  const palettes = {
+    cinema: {
+      bgTop: '#070d1f',
+      bgMid: '#0f1f44',
+      bgBot: '#091124',
+      glow1: 'rgba(59, 130, 246, 0.36)',
+      glow2: 'rgba(16, 185, 129, 0.24)',
+      accentText: '#38bdf8',
+      ribbonStart: '#2563eb',
+      ribbonEnd: '#06b6d4',
+      cardBg: 'rgba(15, 23, 42, 0.72)',
+      cardBorder: 'rgba(96, 165, 250, 0.28)',
+      qrAccent: '#2563eb'
+    },
+    gold: {
+      bgTop: '#24090d',
+      bgMid: '#451218',
+      bgBot: '#1b070a',
+      glow1: 'rgba(245, 158, 11, 0.34)',
+      glow2: 'rgba(239, 68, 68, 0.26)',
+      accentText: '#fcd34d',
+      ribbonStart: '#d97706',
+      ribbonEnd: '#f59e0b',
+      cardBg: 'rgba(44, 14, 18, 0.76)',
+      cardBorder: 'rgba(251, 191, 36, 0.34)',
+      qrAccent: '#b45309'
+    }
+  };
+  const pal = palettes[themeKey] || palettes.cinema;
+
+  const W = 750;
+  const H = 1180;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  const fontStack = '"PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, sans-serif';
+
+  // 1. 背景深色渐变
+  const bgGrad = ctx.createLinearGradient(0, 0, W, H);
+  bgGrad.addColorStop(0, pal.bgTop);
+  bgGrad.addColorStop(0.5, pal.bgMid);
+  bgGrad.addColorStop(1, pal.bgBot);
+  ctx.fillStyle = bgGrad;
+  ctx.fillRect(0, 0, W, H);
+
+  // 2. 氛围光晕装饰
+  const g1 = ctx.createRadialGradient(140, 140, 20, 140, 140, 380);
+  g1.addColorStop(0, pal.glow1);
+  g1.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = g1;
+  ctx.fillRect(0, 0, W, H);
+
+  const g2 = ctx.createRadialGradient(640, 680, 20, 640, 680, 360);
+  g2.addColorStop(0, pal.glow2);
+  g2.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = g2;
+  ctx.fillRect(0, 0, W, H);
+
+  // 3. 顶部品牌徽章
+  drawRoundedRectPath(ctx, 185, 58, 380, 50, 25);
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.22)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = '#f8fafc';
+  ctx.font = `700 23px ${fontStack}`;
+  ctx.fillText('📺  TVBox 电视影视 · tv.171234.xyz', W / 2, 83);
+
+  // 4. 主标题（高转化大字）
+  ctx.fillStyle = '#ffffff';
+  ctx.font = `900 58px ${fontStack}`;
+  ctx.fillText('告别电视套娃收费', W / 2, 182);
+
+  ctx.fillStyle = pal.accentText;
+  ctx.font = `800 40px ${fontStack}`;
+  ctx.fillText('一链畅看全网 4K 大片 & 央卫视', W / 2, 248);
+
+  // 5. 福利横幅（免费试用 + 双方各送会员天数）
+  drawRoundedRectPath(ctx, 56, 304, W - 112, 118, 22);
+  const ribGrad = ctx.createLinearGradient(56, 304, W - 56, 422);
+  ribGrad.addColorStop(0, pal.ribbonStart);
+  ribGrad.addColorStop(1, pal.ribbonEnd);
+  ctx.fillStyle = ribGrad;
+  ctx.fill();
+
+  ctx.fillStyle = '#ffffff';
+  ctx.font = `900 34px ${fontStack}`;
+  ctx.fillText(`🎁 扫码免费领 ${trialDays} 天全功能试用`, W / 2, 345);
+  ctx.font = `700 23px ${fontStack}`;
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.94)';
+  const subBonus = rewardDays > 0
+    ? `通过好友邀请开通任意套餐 · 双方再各送 ${rewardDays} 天会员`
+    : '注册即领专属超短地址 · 电视/盒子/手机全通用';
+  ctx.fillText(subBonus, W / 2, 390);
+
+  // 6. 三大核心卖点卡片
+  const perks = [
+    { icon: '🎬', title: `${vodCnt} 条高速 4K 点播路线`, sub: '全网电影/热剧/动漫/短剧随心搜 · 手机网页直接播' },
+    { icon: '📡', title: `${liveCnt} 台高清央卫视直播`, sub: '毫秒切台 · 多源自动测速维护 · 告别失效卡顿' },
+    { icon: '⚡', title: '超短地址 3 分钟装好', sub: '支持小米/华为/海信/TCL/创维电视、盒子与手机' }
+  ];
+
+  let curY = 454;
+  for (const pk of perks) {
+    drawRoundedRectPath(ctx, 56, curY, W - 112, 102, 18);
+    ctx.fillStyle = pal.cardBg;
+    ctx.fill();
+    ctx.strokeStyle = pal.cardBorder;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    ctx.textAlign = 'center';
+    ctx.font = `40px ${fontStack}`;
+    ctx.fillText(pk.icon, 112, curY + 52);
+
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#f8fafc';
+    ctx.font = `800 27px ${fontStack}`;
+    ctx.fillText(pk.title, 158, curY + 38);
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = `500 21px ${fontStack}`;
+    ctx.fillText(pk.sub, 158, curY + 72);
+
+    curY += 118;
+  }
+
+  // 7. 底部白色二维码卡片（确保微信/相机 100% 秒识别）
+  const cardTop = 830;
+  const cardH = 294;
+  drawRoundedRectPath(ctx, 56, cardTop, W - 112, cardH, 26);
+  ctx.fillStyle = '#ffffff';
+  ctx.fill();
+
+  // 绘制二维码
+  const qrSource = await generateLocalQrCanvas(invUrl, 230);
+  const qrBoxX = 88;
+  const qrBoxY = cardTop + 32;
+  const qrSize = 230;
+
+  if (qrSource) {
+    ctx.drawImage(qrSource, qrBoxX, qrBoxY, qrSize, qrSize);
+  } else {
+    drawRoundedRectPath(ctx, qrBoxX, qrBoxY, qrSize, qrSize, 12);
+    ctx.fillStyle = '#f1f5f9';
+    ctx.fill();
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#64748b';
+    ctx.font = `700 20px ${fontStack}`;
+    ctx.fillText('二维码生成失败', qrBoxX + qrSize / 2, qrBoxY + qrSize / 2);
+  }
+
+  // 右侧引导文案
+  const rx = 346;
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#0f172a';
+  ctx.font = `900 32px ${fontStack}`;
+  ctx.fillText('长按识别二维码', rx, cardTop + 72);
+
+  ctx.fillStyle = pal.qrAccent;
+  ctx.font = `800 25px ${fontStack}`;
+  ctx.fillText(`立领 ${trialDays} 天免费全功能试用`, rx, cardTop + 116);
+
+  // 邀请码胶囊
+  drawRoundedRectPath(ctx, rx, cardTop + 144, 314, 46, 12);
+  ctx.fillStyle = '#f1f5f9';
+  ctx.fill();
+  ctx.fillStyle = '#334155';
+  ctx.font = `700 22px ${fontStack}`;
+  ctx.fillText(`专属邀请码：${invCode}`, rx + 16, cardTop + 167);
+
+  // 微信打开小提示（防拦截）
+  ctx.fillStyle = '#64748b';
+  ctx.font = `500 19px ${fontStack}`;
+  ctx.fillText('微信扫码若提示非官方页面，', rx, cardTop + 224);
+  ctx.fillText('点右上角「浏览器打开」即可畅享', rx, cardTop + 252);
+
+  // 底部小字网址
+  ctx.textAlign = 'center';
+  ctx.fillStyle = 'rgba(226, 232, 240, 0.58)';
+  ctx.font = `600 19px ${fontStack}`;
+  ctx.fillText('官网直达：https://tv.171234.xyz  ·  云端自动维护', W / 2, H - 26);
+
+  try {
+    activePosterDataUrl = canvas.toDataURL('image/png');
+    if (imgEl) {
+      imgEl.src = activePosterDataUrl;
+      imgEl.classList.remove('hidden');
+    }
+    if (loadingEl) loadingEl.classList.add('hidden');
+  } catch (e) {
+    if (loadingEl) loadingEl.textContent = '海报合成受浏览器限制，请点击下方「复制推广文案」分享';
+  }
+}
+
+function openInvitePosterModal(meta) {
+  activeInvitePosterMeta = meta;
+  const modal = document.getElementById('invitePosterModal');
+  if (!modal) return;
+  modal.classList.remove('hidden');
+
+  // 绑定风格切换按钮
+  document.querySelectorAll('#posterThemeTabs .poster-theme-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.ptheme === activePosterTheme);
+    btn.onclick = () => {
+      document.querySelectorAll('#posterThemeTabs .poster-theme-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderInvitePosterImage(btn.dataset.ptheme);
+    };
+  });
+
+  // 绑定下载图片按钮
+  const dlBtn = document.getElementById('downloadPosterBtn');
+  if (dlBtn) {
+    dlBtn.onclick = () => {
+      if (!activePosterDataUrl) { showToast('海报尚未生成完成'); return; }
+      const a = document.createElement('a');
+      a.href = activePosterDataUrl;
+      a.download = `TVBox邀请海报_${meta.invCode}.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      showToast('✅ 海报已开始下载（手机端也可直接长按图片保存）', 2800);
+    };
+  }
+
+  // 绑定一键复制推广文案按钮
+  const copyTxtBtn = document.getElementById('copyPosterTextBtn');
+  if (copyTxtBtn) {
+    copyTxtBtn.onclick = () => {
+      const trialDays = Number(currentTrialDays || 7);
+      const rewardTxt = meta.rewardDays > 0 ? `开通任意套餐你我还能各白嫖 ${meta.rewardDays} 天！` : '';
+      const text = `推荐一个超好用的电视/手机看片神器！告别各种电视套娃会员，全网4K电影/电视剧/短剧随心搜着看 + ${currentLiveCount}台高清央卫视直播！点我专属链接注册直接领 ${trialDays} 天免费试用，${rewardTxt} 👉 ${meta.invUrl}`;
+      copyText(text, copyTxtBtn);
+    };
+  }
+
+  renderInvitePosterImage(activePosterTheme);
 }

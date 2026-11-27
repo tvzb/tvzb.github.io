@@ -286,7 +286,7 @@ async function openOrderDetail(orderNo) {
         <b>下单时间</b><span>${formatFullTime(o.created_at)}</span>
         <b>处理时间</b><span>${o.handled_at ? formatFullTime(o.handled_at) : '未处理'}</span>
         <b>处理备注</b><span>${escapeHtml(o.admin_note || '-')}</span>
-        <b>用户当前权益</b><span>直播至 ${formatDate(u.live_expire_at)} / 点播至 ${formatDate(u.vod_expire_at)}</span>
+        <b>用户当前权益</b><span>点播至 ${formatDate(u.vod_expire_at)} / 直播至 ${formatDate(u.live_expire_at)}</span>
       </div>
     `;
   } catch (e) {
@@ -331,8 +331,8 @@ async function loadUsers(q = '') {
       return `<tr>
         <td>${u.id}</td>
         <td>${escapeHtml(u.email)}</td>
-        <td class="${liveCls}">${formatDate(u.live_expire_at)}</td>
         <td class="${vodCls}">${formatDate(u.vod_expire_at)}</td>
+        <td class="${liveCls}">${formatDate(u.live_expire_at)}</td>
         <td>${stateHtml}</td>
         <td>${escapeHtml(u.register_ip || '-')}</td>
         <td>${u.last_active_at ? formatTime(u.last_active_at) : '-'}</td>
@@ -372,17 +372,17 @@ async function openUserDetail(userId) {
       <div class="detail-kv">
         <b>用户 ID / 邮箱</b><span>#${u.id} · ${escapeHtml(u.email)}</span>
         <b>专属 Token</b><span><code style="margin:0;padding:2px 6px;">${escapeHtml(u.token)}</code> <button class="btn-sm btn-reject" style="margin-left:8px;" onclick="resetUserToken(${u.id})">重置 Token</button></span>
-        <b>直播 / 点播到期</b><span>直播：${formatDate(u.live_expire_at)} &nbsp;|&nbsp; 点播：${formatDate(u.vod_expire_at)}</span>
+        <b>点播 / 直播到期</b><span>点播：${formatDate(u.vod_expire_at)} &nbsp;|&nbsp; 直播：${formatDate(u.live_expire_at)}</span>
         <b>注册 IP / 24h IP数</b><span>${escapeHtml(u.register_ip || '-')} &nbsp;|&nbsp; 近24h活跃IP：${ipWarn}</span>
         <b>注册时间</b><span>${formatFullTime(u.created_at)}</span>
       </div>
 
       <label>精确设定到期日期（留空则不修改）
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:6px;">
-          <span class="muted">直播至</span>
-          <input id="editLiveDate" type="date" value="${u.live_expire_at > 0 ? formatDate(u.live_expire_at) : ''}" style="width:155px;margin-top:0;">
           <span class="muted">点播至</span>
           <input id="editVodDate" type="date" value="${u.vod_expire_at > 0 ? formatDate(u.vod_expire_at) : ''}" style="width:155px;margin-top:0;">
+          <span class="muted">直播至</span>
+          <input id="editLiveDate" type="date" value="${u.live_expire_at > 0 ? formatDate(u.live_expire_at) : ''}" style="width:155px;margin-top:0;">
           <button class="secondary" style="padding:8px 14px;" onclick="saveUserExactExpire(${u.id})">更新到期日</button>
         </div>
       </label>
@@ -535,7 +535,7 @@ async function loadCoupons() {
       tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#94a3b8;">暂无优惠码，点击右上角创建</td></tr>';
       return;
     }
-    const scopeMap = { all: '全部套餐', combo: '仅全能包', live: '仅直播', vod: '仅点播' };
+    const scopeMap = { all: '全部套餐', combo: '仅全能包', vod: '仅点播', live: '仅直播' };
     tbody.innerHTML = data.coupons.map(c => {
       const desc = c.type === 'fixed' ? `立减 ¥${c.value}` : `${(c.value / 10).toFixed(1)} 折`;
       const limit = c.max_uses > 0 ? `${c.used_count} / ${c.max_uses}` : `${c.used_count} / 不限`;
@@ -1165,11 +1165,11 @@ function removeTier(idx) {
   renderTiersEditor();
 }
 
-const PLAN_CAT_RANK = { combo: 1, live: 2, vod: 3 };
+const PLAN_CAT_RANK = { combo: 1, vod: 2, live: 3 };
 const PLAN_CAT_META = {
   combo: { label: '🔥 全能双享', cls: 'combo' },
-  live:  { label: '📡 纯直播',   cls: 'live' },
-  vod:   { label: '📺 纯点播',   cls: 'vod' }
+  vod:   { label: '🎬 纯点播',   cls: 'vod' },
+  live:  { label: '📡 纯直播',   cls: 'live' }
 };
 
 function sortPlansStrictOrder(plans) {
@@ -1202,16 +1202,16 @@ function renderPlansEditor() {
       <div class="pricing-grid-4">
         <label>套餐代码(唯一)<input type="text" value="${escapeHtml(p.code)}" onchange="updatePlanField(${idx}, 'code', this.value)"></label>
         <label>套餐名称<input type="text" value="${escapeHtml(p.name)}" onchange="updatePlanField(${idx}, 'name', this.value)"></label>
-        <label>所属分类（全能双享-直播-点播）
+        <label>所属分类（全能双享-点播-直播）
           <select onchange="updatePlanField(${idx}, 'category', this.value); renderPlansEditor();">
             <option value="combo" ${p.category === 'combo' ? 'selected' : ''}>🔥 全能双享包</option>
+            <option value="vod" ${p.category === 'vod' ? 'selected' : ''}>🎬 纯点播</option>
             <option value="live" ${p.category === 'live' ? 'selected' : ''}>📡 纯直播</option>
-            <option value="vod" ${p.category === 'vod' ? 'selected' : ''}>📺 纯点播</option>
           </select>
         </label>
         <label>原价 (元)<input type="number" step="0.1" min="0.1" value="${p.price}" onchange="updatePlanField(${idx}, 'price', Number(this.value))"></label>
-        <label>直播天数<input type="number" min="0" value="${p.liveDays}" onchange="updatePlanField(${idx}, 'liveDays', Number(this.value))"></label>
         <label>点播天数<input type="number" min="0" value="${p.vodDays}" onchange="updatePlanField(${idx}, 'vodDays', Number(this.value))"></label>
+        <label>直播天数<input type="number" min="0" value="${p.liveDays}" onchange="updatePlanField(${idx}, 'liveDays', Number(this.value))"></label>
         <label>角标文案<input type="text" value="${escapeHtml(p.tag || '')}" onchange="updatePlanField(${idx}, 'tag', this.value)"></label>
         <label>组内排序权重<input type="number" value="${p.sort || (idx + 1)}" onchange="updatePlanField(${idx}, 'sort', Number(this.value))"></label>
       </div>
@@ -1234,7 +1234,7 @@ function addNewPlanRow() {
     code: 'custom_' + Date.now().toString().slice(-4),
     name: '新自定义套餐',
     category: 'combo',
-    desc: '直播 + 点播尊享权益',
+    desc: '点播 + 直播尊享权益',
     price: 19.9,
     vodDays: 90,
     liveDays: 90,
